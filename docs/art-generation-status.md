@@ -2,7 +2,7 @@
 
 > 当前 session 边界：只生成和整理视觉美术素材；不改代码、不改逻辑、不做 Flutter/Flame、不做数据转换。
 >
-> 当前风格基准：奶油卡通可爱风（creamy cartoon cute），v4 Golden Set 已作为 polish 方向参考：`assets/art/samples/petopia-golden-v4-contact-sheet.png`。要求更鲜艳、更卡通，避免整体偏黄。
+> 当前风格基准：奶油卡通可爱风（creamy cartoon cute），v5 Golden Set 已作为最新 polish 方向参考：`assets/art/samples/petopia-golden-v5-contact-sheet.png`。要求更鲜艳、更卡通，避免整体偏黄，并遵守 full-bleed/分层/无文字硬约束。
 
 ## 生产原则
 
@@ -17,6 +17,8 @@
 - [x] 风格样张 v3：`assets/art/samples/petopia-yard-style-sample-v3.png`
 - [x] v4 Golden Set 合辑：`assets/art/samples/petopia-golden-v4-contact-sheet.png`
 - [x] v4 Golden Set 单张：yard / cat growth / visitor / postcard / UI board，见 `docs/art-polish-v4-golden-set.md`
+- [x] v5 Golden Set 合辑：`assets/art/samples/petopia-golden-v5-contact-sheet.png`
+- [x] v5 Golden Set 单张：full-bleed yard / travel-stage cat growth / natural visitor / V2 postcard / no-text UI board，见 `docs/art-polish-v5-golden-set.md`
 
 ## 当前批次
 
@@ -109,6 +111,16 @@ Batch H / v4 Golden Set polish samples:
 - [x] `petopia-golden-v4-contact-sheet`: `assets/art/samples/petopia-golden-v4-contact-sheet.png`
 - [x] v4 polish standard doc: `docs/art-polish-v4-golden-set.md`
 
+Batch I / v5 Golden Set polish samples:
+
+- [x] `petopia-golden-v5-yard-main`: `assets/art/samples/petopia-golden-v5-yard-main.png`
+- [x] `petopia-golden-v5-cat-growth-travel`: `assets/art/samples/petopia-golden-v5-cat-growth-travel.png`
+- [x] `petopia-golden-v5-visitor-sparrow-natural`: `assets/art/samples/petopia-golden-v5-visitor-sparrow-natural.png`
+- [x] `petopia-golden-v5-postcard-lighthouse-bay-v2`: `assets/art/samples/petopia-golden-v5-postcard-lighthouse-bay-v2.png`
+- [x] `petopia-golden-v5-ui-board`: `assets/art/samples/petopia-golden-v5-ui-board.png`
+- [x] `petopia-golden-v5-contact-sheet`: `assets/art/samples/petopia-golden-v5-contact-sheet.png`
+- [x] v5 polish standard doc: `docs/art-polish-v5-golden-set.md`
+
 ## 待确认/待修规格
 
 - [ ] 全屏源文件尺寸口径：`1290x2796` vs `1080x1920 @1x`。
@@ -127,7 +139,7 @@ Batch H / v4 Golden Set polish samples:
 - Pet domain 已生成形态 `240/240`、图鉴 `28`、通用动作模板 `96`、性格模板 `100`、彩蛋特效 `4`。动作资产当前为 stageC 主模板 + var01 别名。
 - Postcard domain 已生成背景 `40/40`、姿态 `96/96`、滤镜 `6/6`、贴纸 `61`、邮戳 `40/40`、特例 `20/20`、chrome `10/10`。
 - UI domain 已生成 `178` 个 `ui_*.png` 主资产。
-- 当前 `assets/art` PNG 总数：`1267`（含 QA chroma 源、样张、sheet、单件、sprite sheet）。
+- 当前 `assets/art` PNG 总数：`1273`（含 QA chroma 源、样张、sheet、单件、sprite sheet）。
 
 ## QA 备注
 
@@ -137,4 +149,4 @@ Batch H / v4 Golden Set polish samples:
 - 明信片背景/特例当前为程序化水彩首版，用于全量闭合 asset_id；最终商店级背景建议后续对 40 张逐张用 imagegen 或人工重绘升级。
 - 院子豪华度 delta 层当前由相邻完整层差分生成，适合作为首版递进素材；最终升级演出建议人工整理每阶新增结构。
 - UI 当前为 @1x 主 PNG；@2x/@3x 批量导出可在终稿尺寸冻结后统一生成。
-- v4 Golden Set 已生成，用于后续批量 polish 的统一质量标尺；访客样张当前更适合作为圆润访客质量标准，不作为麻雀最终物种定稿。
+- v5 Golden Set 已生成并取代 v4 作为后续批量 polish 的统一质量标尺：院子主屏 full-bleed 无外框、成长 D 档带旅装、访客自然无统一配饰、明信片采用 V2 在场构图、UI 底图无可读文字。

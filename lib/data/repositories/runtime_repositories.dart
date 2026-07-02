@@ -8,7 +8,8 @@ import '../isar/isar_documents.dart';
 
 class PetopiaRepositories {
   PetopiaRepositories(Isar isar)
-    : pets = PetRepository(isar),
+    : _isar = isar,
+      pets = PetRepository(isar),
       wallet = CurrencyWalletRepository(isar),
       yard = YardStateRepository(isar),
       journeys = JourneyRepository(isar),
@@ -18,6 +19,7 @@ class PetopiaRepositories {
       jobs = ScheduledJobRepository(isar),
       settings = SettingsRepository(isar);
 
+  final Isar _isar;
   final PetRepository pets;
   final CurrencyWalletRepository wallet;
   final YardStateRepository yard;
@@ -27,6 +29,88 @@ class PetopiaRepositories {
   final VisitorLogRepository visitorLogs;
   final ScheduledJobRepository jobs;
   final SettingsRepository settings;
+
+  Future<RuntimeRepositorySnapshot> exportSnapshot() async {
+    return RuntimeRepositorySnapshot(
+      pets: await pets.getAll(),
+      wallet: await wallet.get(),
+      yard: await yard.get(),
+      journeys: await journeys.getAll(),
+      clues: await clues.getAll(),
+      achievements: await achievements.getAll(),
+      visitorLogs: await visitorLogs.getAll(),
+      jobs: await jobs.getAll(),
+      settings: await settings.get(),
+    );
+  }
+
+  Future<void> replaceAll(RuntimeRepositorySnapshot snapshot) {
+    return _isar.writeTxn(() async {
+      await _isar.petDocs.clear();
+      await _isar.currencyWalletDocs.clear();
+      await _isar.yardStateDocs.clear();
+      await _isar.journeyDocs.clear();
+      await _isar.clueCounterDocs.clear();
+      await _isar.achievementProgressDocs.clear();
+      await _isar.visitorLogEntryDocs.clear();
+      await _isar.scheduledJobDocs.clear();
+      await _isar.settingsDocs.clear();
+
+      await _isar.petDocs.putAll(snapshot.pets.map(PetDoc.fromDomain).toList());
+      if (snapshot.wallet != null) {
+        await _isar.currencyWalletDocs.put(
+          CurrencyWalletDoc.fromDomain(snapshot.wallet!),
+        );
+      }
+      if (snapshot.yard != null) {
+        await _isar.yardStateDocs.put(YardStateDoc.fromDomain(snapshot.yard!));
+      }
+      await _isar.journeyDocs.putAll(
+        snapshot.journeys.map(JourneyDoc.fromDomain).toList(),
+      );
+      await _isar.clueCounterDocs.putAll(
+        snapshot.clues.map(ClueCounterDoc.fromDomain).toList(),
+      );
+      await _isar.achievementProgressDocs.putAll(
+        snapshot.achievements.map(AchievementProgressDoc.fromDomain).toList(),
+      );
+      await _isar.visitorLogEntryDocs.putAll(
+        snapshot.visitorLogs.map(VisitorLogEntryDoc.fromDomain).toList(),
+      );
+      await _isar.scheduledJobDocs.putAll(
+        snapshot.jobs.map(ScheduledJobDoc.fromDomain).toList(),
+      );
+      if (snapshot.settings != null) {
+        await _isar.settingsDocs.put(
+          SettingsDoc.fromDomain(snapshot.settings!),
+        );
+      }
+    });
+  }
+}
+
+class RuntimeRepositorySnapshot {
+  const RuntimeRepositorySnapshot({
+    required this.pets,
+    required this.wallet,
+    required this.yard,
+    required this.journeys,
+    required this.clues,
+    required this.achievements,
+    required this.visitorLogs,
+    required this.jobs,
+    required this.settings,
+  });
+
+  final List<Pet> pets;
+  final CurrencyWallet? wallet;
+  final YardState? yard;
+  final List<Journey> journeys;
+  final List<ClueCounter> clues;
+  final List<AchievementProgress> achievements;
+  final List<VisitorLogEntry> visitorLogs;
+  final List<ScheduledJob> jobs;
+  final Settings? settings;
 }
 
 class PetRepository {

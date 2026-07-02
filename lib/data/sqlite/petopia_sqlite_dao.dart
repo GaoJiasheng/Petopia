@@ -125,64 +125,65 @@ class PetopiaSqliteDao {
 
   Future<void> migrate() => PetopiaSqliteSchema.migrate(_db);
 
+  Future<PetopiaSqliteSnapshot> exportSnapshot() async {
+    final expRows = await _db.query(
+      'exp_log',
+      orderBy: 'timestamp ASC, id ASC',
+    );
+    final currencyRows = await _db.query(
+      'currency_log',
+      orderBy: 'timestamp ASC, id ASC',
+    );
+    final postcardRows = await _db.query(
+      'postcard',
+      orderBy: 'sent_at ASC, id ASC',
+    );
+    final eventRows = await _db.query('event_log', orderBy: 'date ASC, id ASC');
+
+    return PetopiaSqliteSnapshot(
+      expLogs: expRows.map(_expLogFromRow).toList(),
+      currencyLogs: currencyRows.map(_currencyLogFromRow).toList(),
+      postcards: postcardRows.map(_postcardFromRow).toList(),
+      eventLogs: eventRows.map(_eventLogFromRow).toList(),
+    );
+  }
+
+  Future<void> replaceAll(PetopiaSqliteSnapshot snapshot) {
+    return _db.transaction((txn) async {
+      await txn.delete('exp_log');
+      await txn.delete('currency_log');
+      await txn.delete('postcard');
+      await txn.delete('event_log');
+
+      for (final entry in snapshot.expLogs) {
+        await _insertExpLog(txn, entry);
+      }
+      for (final entry in snapshot.currencyLogs) {
+        await _insertCurrencyLog(txn, entry);
+      }
+      for (final postcard in snapshot.postcards) {
+        await _insertPostcard(txn, postcard);
+      }
+      for (final entry in snapshot.eventLogs) {
+        await _insertEventLog(txn, entry);
+      }
+    });
+  }
+
   Future<void> insertExpLog(ExpLogEntry entry) {
-    return _db.insert('exp_log', <String, Object?>{
-      'id': entry.id,
-      'pet_id': entry.petId,
-      'timestamp': _ms(entry.timestamp),
-      'source_type': entry.sourceType.name,
-      'source_ref': entry.sourceRef,
-      'delta': entry.delta,
-      'level_at': entry.levelAt,
-      'exp_after': entry.expAfter,
-      'note': entry.note,
-    }, conflictAlgorithm: ConflictAlgorithm.abort);
+    return _insertExpLog(_db, entry);
   }
 
   Future<void> insertCurrencyLog(CurrencyLog entry) {
-    return _db.insert('currency_log', <String, Object?>{
-      'id': entry.id,
-      'timestamp': _ms(entry.timestamp),
-      'delta': entry.delta,
-      'reason': entry.reason.name,
-      'ref': entry.ref,
-      'balance_after': entry.balanceAfter,
-    }, conflictAlgorithm: ConflictAlgorithm.abort);
+    return _insertCurrencyLog(_db, entry);
   }
 
   Future<void> insertPostcard(Postcard postcard) {
-    return _db.insert('postcard', <String, Object?>{
-      'id': postcard.id,
-      'pet_id': postcard.petId,
-      'journey_id': postcard.journeyId,
-      'location_id': postcard.locationId,
-      'seq': postcard.seq,
-      'sent_at': _ms(postcard.sentAt),
-      'received_at': postcard.receivedAt == null
-          ? null
-          : _ms(postcard.receivedAt!),
-      'season': postcard.season.name,
-      'time_of_day': postcard.timeOfDay.name,
-      'weather': postcard.weather.name,
-      'encounter_id': postcard.encounterId,
-      'incident_id': postcard.incidentId,
-      'body_text': postcard.bodyText,
-      'photo_asset_id': postcard.photoAssetId,
-      'stamp_id': postcard.stampId,
-      'clue_to_pet': postcard.clueToPet,
-      'clue_to_visitor': postcard.clueToVisitor,
-    }, conflictAlgorithm: ConflictAlgorithm.abort);
+    return _insertPostcard(_db, postcard);
   }
 
   Future<void> insertEventLog(EventLogEntry entry) {
-    return _db.insert('event_log', <String, Object?>{
-      'id': entry.id,
-      'event_id': entry.eventId,
-      'pet_id': entry.petId,
-      'date': _ms(entry.date),
-      'choice_idx': entry.choiceIdx,
-      'exp_granted': entry.expGranted,
-    }, conflictAlgorithm: ConflictAlgorithm.abort);
+    return _insertEventLog(_db, entry);
   }
 
   Future<List<ExpLogEntry>> expLogsForPet(
@@ -300,6 +301,80 @@ class PetopiaSqliteDao {
   }
 
   Future<void> close() => _db.close();
+}
+
+class PetopiaSqliteSnapshot {
+  const PetopiaSqliteSnapshot({
+    required this.expLogs,
+    required this.currencyLogs,
+    required this.postcards,
+    required this.eventLogs,
+  });
+
+  final List<ExpLogEntry> expLogs;
+  final List<CurrencyLog> currencyLogs;
+  final List<Postcard> postcards;
+  final List<EventLogEntry> eventLogs;
+}
+
+Future<void> _insertExpLog(DatabaseExecutor db, ExpLogEntry entry) {
+  return db.insert('exp_log', <String, Object?>{
+    'id': entry.id,
+    'pet_id': entry.petId,
+    'timestamp': _ms(entry.timestamp),
+    'source_type': entry.sourceType.name,
+    'source_ref': entry.sourceRef,
+    'delta': entry.delta,
+    'level_at': entry.levelAt,
+    'exp_after': entry.expAfter,
+    'note': entry.note,
+  }, conflictAlgorithm: ConflictAlgorithm.abort);
+}
+
+Future<void> _insertCurrencyLog(DatabaseExecutor db, CurrencyLog entry) {
+  return db.insert('currency_log', <String, Object?>{
+    'id': entry.id,
+    'timestamp': _ms(entry.timestamp),
+    'delta': entry.delta,
+    'reason': entry.reason.name,
+    'ref': entry.ref,
+    'balance_after': entry.balanceAfter,
+  }, conflictAlgorithm: ConflictAlgorithm.abort);
+}
+
+Future<void> _insertPostcard(DatabaseExecutor db, Postcard postcard) {
+  return db.insert('postcard', <String, Object?>{
+    'id': postcard.id,
+    'pet_id': postcard.petId,
+    'journey_id': postcard.journeyId,
+    'location_id': postcard.locationId,
+    'seq': postcard.seq,
+    'sent_at': _ms(postcard.sentAt),
+    'received_at': postcard.receivedAt == null
+        ? null
+        : _ms(postcard.receivedAt!),
+    'season': postcard.season.name,
+    'time_of_day': postcard.timeOfDay.name,
+    'weather': postcard.weather.name,
+    'encounter_id': postcard.encounterId,
+    'incident_id': postcard.incidentId,
+    'body_text': postcard.bodyText,
+    'photo_asset_id': postcard.photoAssetId,
+    'stamp_id': postcard.stampId,
+    'clue_to_pet': postcard.clueToPet,
+    'clue_to_visitor': postcard.clueToVisitor,
+  }, conflictAlgorithm: ConflictAlgorithm.abort);
+}
+
+Future<void> _insertEventLog(DatabaseExecutor db, EventLogEntry entry) {
+  return db.insert('event_log', <String, Object?>{
+    'id': entry.id,
+    'event_id': entry.eventId,
+    'pet_id': entry.petId,
+    'date': _ms(entry.date),
+    'choice_idx': entry.choiceIdx,
+    'exp_granted': entry.expGranted,
+  }, conflictAlgorithm: ConflictAlgorithm.abort);
 }
 
 _QueryParts _rangeWhere(String column, DateTime? from, DateTime? to) {

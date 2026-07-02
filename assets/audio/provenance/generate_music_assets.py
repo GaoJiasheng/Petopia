@@ -266,6 +266,9 @@ PROG = [
 ]
 MOTIF = [72, 76, 79, 81, 79, 76, 74, 72]
 MOTIF_DURS = [0.5, 0.5, 0.75, 0.75, 0.5, 0.5, 0.75, 1.0]
+MOTIF_B = [72, 74, 76, 79, 83, 81, 79, 76]
+MOTIF_ANSWER = [79, 76, 74, 72, 69, 72]
+MOTIF_TENDER = [72, 71, 69, 67, 69, 72]
 
 
 def add_chord_pad(buf: np.ndarray, start: float, dur: float, chord: list[int], instr: str, amp: float, name: str) -> None:
@@ -273,6 +276,35 @@ def add_chord_pad(buf: np.ndarray, start: float, dur: float, chord: list[int], i
     for i, midi in enumerate(notes):
         pan = -0.32 + 0.64 * (i / max(1, len(notes) - 1))
         add_note(buf, start, dur, midi, instr, amp / (len(notes) ** 0.65), pan, f"{name}:{midi}")
+
+
+def add_phrase(
+    buf: np.ndarray,
+    start: float,
+    bt: float,
+    notes: list[int],
+    instr: str,
+    amp: float,
+    pan: float,
+    name: str,
+    shift: int = 0,
+    stretch: float = 1.0,
+    sparse: bool = False,
+) -> None:
+    cur = start
+    for idx, midi in enumerate(notes):
+        dur_beats = (MOTIF_DURS[idx] if idx < len(MOTIF_DURS) else 0.65) * stretch
+        if sparse and idx % 2 == 1:
+            cur += dur_beats * bt
+            continue
+        add_note(buf, cur, max(0.18, dur_beats * bt * 0.92), midi + shift, instr, amp, pan, f"{name}:{idx}")
+        cur += dur_beats * bt
+
+
+def add_phrase_swell(buf: np.ndarray, start: float, bt: float, root: int, amp: float, name: str) -> None:
+    add_note(buf, start, 2.4 * bt, root, "felt_piano", amp, -0.2, f"{name}:root")
+    add_note(buf, start + 0.18 * bt, 2.2 * bt, root + 7, "vibraphone", amp * 0.7, 0.15, f"{name}:fifth")
+    add_note(buf, start + 0.36 * bt, 2.0 * bt, root + 12, "music_box", amp * 0.45, 0.35, f"{name}:top")
 
 
 def render_yard(asset_id: str, variant: str, bpm: float, bars: int, melody_instr: str, melody_shift: int) -> tuple[dict, dict]:
@@ -311,23 +343,50 @@ def render_yard(asset_id: str, variant: str, bpm: float, bars: int, melody_instr
 
         for j, midi in enumerate([chord[4] + 12, chord[3] + 12, chord[5] + 12, chord[4] + 12]):
             add_note(lux_a, t0 + (j + 0.25) * bt, 0.55 * bt, midi, "pizz_strings", 0.16, -0.25 + 0.16 * j, f"{asset_id}:pizz:{bar}:{j}")
-        if bar % 8 in (6, 7):
-            add_note(lux_a, t0 + 1.1 * bt, 1.2 * bt, 76 + melody_shift + (2 if bar % 8 == 7 else 0), "whistle", 0.20, 0.35, f"{asset_id}:wh:{bar}")
+        if bar % 8 in (5, 6, 7):
+            reply_note = 76 + melody_shift + (2 if bar % 8 == 7 else 0)
+            add_note(lux_a, t0 + 1.1 * bt, 1.2 * bt, reply_note, "whistle", 0.20, 0.35, f"{asset_id}:wh:{bar}")
+        if bar % 8 == 7:
+            add_phrase_swell(texture, t0 + 2.35 * bt, bt, chord[2] + 12, 0.055 if variant != "night" else 0.035, f"{asset_id}:swell:{bar}")
 
         if bar % 2 == 0:
             add_chord_pad(lux_b, t0, bd * 2, chord, "accordion", 0.17, f"{asset_id}:acc:{bar}")
             add_note(lux_b, t0 + bd * 0.55, bd * 1.1, chord[2] + 12, "hum", 0.18, -0.18, f"{asset_id}:hum:{bar}")
 
         breath = asset_id == "bgm_yard_day" and 20 <= bar < 28
+        section = (bar // 8) % 6
+        phrase_notes = MOTIF if section in (0, 3, 5) else MOTIF_B
         if bar % 8 in (0, 1, 2, 3) and not breath:
-            cur = t0 + (0.25 if variant == "day" else 0.5) * bt
-            for idx, midi in enumerate(MOTIF):
-                dur_beats = MOTIF_DURS[idx] * (1.15 if variant == "dusk" else (1.45 if variant == "night" else 1.0))
-                if variant == "night" and idx % 2 == 1:
-                    cur += dur_beats * bt
-                    continue
-                add_note(melody, cur, max(0.18, dur_beats * bt * 0.92), midi + melody_shift, melody_instr, 0.34 if variant != "night" else 0.24, 0.05, f"{asset_id}:mel:{bar}:{idx}")
-                cur += dur_beats * bt
+            add_phrase(
+                melody,
+                t0 + (0.25 if variant == "day" else 0.5) * bt,
+                bt,
+                phrase_notes,
+                melody_instr,
+                0.34 if variant != "night" else 0.24,
+                0.05,
+                f"{asset_id}:mel:{bar}",
+                shift=melody_shift,
+                stretch=1.15 if variant == "dusk" else (1.45 if variant == "night" else 1.0),
+                sparse=variant == "night",
+            )
+        if bar % 8 in (4, 5) and not breath:
+            answer_instr = "music_box" if variant == "night" else ("kalimba" if variant == "day" else "ocarina")
+            add_phrase(
+                melody,
+                t0 + 0.6 * bt,
+                bt,
+                MOTIF_ANSWER,
+                answer_instr,
+                0.20 if variant != "night" else 0.14,
+                -0.18,
+                f"{asset_id}:answer:{bar}",
+                shift=melody_shift,
+                stretch=1.25 if variant != "day" else 1.0,
+                sparse=variant == "night",
+            )
+        if bar == bars - 1:
+            add_phrase(melody, t0 + 2.0 * bt, bt, [67, 69, 71, 72], melody_instr, 0.18, 0.22, f"{asset_id}:pickup", shift=melody_shift, stretch=0.7)
 
     add_air(stems[f"{asset_id}__st3_texture"], 0.0055 if variant != "night" else 0.004, f"{asset_id}:air")
     return stems, loop_meta(length, bpm, bars)
@@ -358,21 +417,30 @@ def render_season(asset_id: str, season: str, variant: str, bpm: float, bars: in
             if bar % 4 in (0, 2):
                 for j, midi in enumerate([76, 79, 81, 79]):
                     add_note(buf, t0 + (0.3 + j * 0.45) * bt, 0.42 * bt, midi, "recorder", 0.14, -0.2 + 0.13 * j, f"{stem_id}:spring:{bar}:{j}")
+            if bar % 8 == 5:
+                add_phrase(buf, t0 + 0.25 * bt, bt, [84, 83, 79, 76], "music_box", 0.10, 0.28, f"{stem_id}:spring_reply:{bar}", stretch=0.8)
             add_noise_burst(buf, t0 + 3.2 * bt, 0.16, 0.010, 0.3, "paper", f"{stem_id}:windbell:{bar}")
         elif season == "summer":
             for j, midi in enumerate([chord[3] + 12, chord[4] + 12]):
                 add_note(buf, t0 + (0.5 + j) * bt, 0.5 * bt, midi, "marimba", 0.16, -0.22 if j == 0 else 0.24, f"{stem_id}:summer:{bar}:{j}")
             if bar % 2 == 0:
                 add_noise_burst(buf, t0 + 2.5 * bt, 0.08, 0.012, 0.1, "shaker", f"{stem_id}:sumshake:{bar}")
+            if bar % 8 in (3, 7):
+                add_phrase(buf, t0 + 0.15 * bt, bt, [79, 81, 83, 81, 79], "marimba", 0.12, 0.18, f"{stem_id}:summer_hook:{bar}", stretch=0.65)
         elif season == "autumn":
             if bar % 2 == 0:
                 add_note(buf, t0 + 0.2 * bt, bd * 1.4, chord[3] + 12, "accordion", 0.13, -0.1, f"{stem_id}:autacc:{bar}")
                 add_note(buf, t0 + 2.3 * bt, 0.8 * bt, chord[4] + 12, "nylon_guitar", 0.14, 0.25, f"{stem_id}:autg:{bar}")
+            if bar % 8 == 6:
+                for j, midi in enumerate([81, 79, 76, 74, 72]):
+                    add_note(buf, t0 + (0.15 + j * 0.45) * bt, 0.55 * bt, midi, "accordion", 0.11, -0.22 + 0.1 * j, f"{stem_id}:autfall:{bar}:{j}")
         else:
             if bar % 2 == 0:
                 for j, midi in enumerate([chord[2] + 24, chord[4] + 24, chord[5] + 24]):
                     add_note(buf, t0 + (0.4 + j * 0.75) * bt, 1.4 * bt, midi, "celesta", 0.12, -0.25 + 0.25 * j, f"{stem_id}:winter:{bar}:{j}")
                 add_chord_pad(buf, t0, bd * 2, [m + 12 for m in chord], "clarinet", 0.055, f"{stem_id}:winterpad:{bar}")
+            if bar % 8 in (0, 7):
+                add_phrase_swell(buf, t0 + 2.6 * bt, bt, chord[2] + 24, 0.045, f"{stem_id}:winter_glow:{bar}")
     add_air(buf, 0.0035, f"{stem_id}:air")
     meta = loop_meta(length, bpm, bars)
     meta["season_variant"] = variant
@@ -389,6 +457,10 @@ def render_revisit(asset_id: str, variant: str, bpm: float, bars: int) -> tuple[
             t0 = bar * bd
             for j, midi in enumerate([72, 76, 79, 76, 74, 72]):
                 add_note(buf, t0 + (0.2 + j * 0.7) * bt, 0.65 * bt, midi, "harmonica" if j < 4 else "whistle", 0.13, 0.1, f"{stem_id}:rev:{bar}:{j}")
+        if bar % 16 in (8, 9):
+            t0 = bar * bd
+            for j, midi in enumerate([67, 72, 76, 74, 72]):
+                add_note(buf, t0 + (0.35 + j * 0.75) * bt, 0.72 * bt, midi, "whistle", 0.09, -0.18, f"{stem_id}:rev_memory:{bar}:{j}")
     meta = loop_meta(length, bpm, bars)
     meta["revisit_variant"] = variant
     return {stem_id: buf}, meta
@@ -404,16 +476,24 @@ def render_simple_loop(asset_id: str, seconds: float, bpm: float, bars: int, kin
             if bar < 4 or bar % 2 == 0:
                 for j, midi in enumerate([72, 76, 79, 76] if bar % 4 != 3 else [74, 79, 81, 79]):
                     add_note(stems[f"{asset_id}__st1_piano"], t0 + j * 0.9 * bt, 1.4 * bt, midi, "felt_piano", 0.24, -0.1 + 0.08 * j, f"{asset_id}:pno:{bar}:{j}")
+            if bar in (4, 12, 18):
+                add_phrase(stems[f"{asset_id}__st1_piano"], t0 + 0.2 * bt, bt, MOTIF_TENDER, "felt_piano", 0.13, 0.12, f"{asset_id}:brand:{bar}", stretch=1.25)
             if bar == 0:
                 add_air(stems[f"{asset_id}__st2_texture"], 0.0028, f"{asset_id}:air")
             if bar % 3 == 0:
                 add_chord_pad(stems[f"{asset_id}__st2_texture"], t0, bd * 2, chord, "clarinet", 0.055, f"{asset_id}:tex:{bar}")
+            if bar % 7 == 6:
+                add_phrase_swell(stems[f"{asset_id}__st2_texture"], t0 + 2.0 * bt, bt, chord[2] + 12, 0.045, f"{asset_id}:open_swell:{bar}")
         elif kind == "adoption":
             for j, midi in enumerate([chord[2], chord[3], chord[4], chord[5], chord[4], chord[3]]):
                 add_note(stems[f"{asset_id}__st1_guitar"], t0 + [0, 0.45, 0.9, 1.5, 2.25, 3.0][j] * bt, bd * 0.55, midi + 12, "nylon_guitar", 0.21, -0.25 if j % 2 else 0.22, f"{asset_id}:g:{bar}:{j}")
+            if bar % 4 == 3:
+                add_note(stems[f"{asset_id}__st1_guitar"], t0 + 3.25 * bt, 0.55 * bt, chord[5] + 12, "nylon_guitar", 0.16, 0.2, f"{asset_id}:pickup:{bar}")
             if bar % 2 == 0:
                 for j, midi in enumerate([72, 76, 79, 81, 79]):
                     add_note(stems[f"{asset_id}__st2_kalimba"], t0 + (0.4 + j * 0.55) * bt, 0.42 * bt, midi, "kalimba", 0.21, -0.1 + 0.07 * j, f"{asset_id}:k:{bar}:{j}")
+            if bar % 8 in (5, 6):
+                add_phrase(stems[f"{asset_id}__st2_kalimba"], t0 + 0.1 * bt, bt, [76, 79, 81, 84, 81, 79], "kalimba", 0.16, 0.18, f"{asset_id}:hello:{bar}", stretch=0.78)
         elif kind == "postcard":
             add_chord_pad(stems[f"{asset_id}__st1_bed"], t0, bd * 1.2, chord, "felt_piano", 0.12, f"{asset_id}:bed:{bar}")
             for j, midi in enumerate([chord[2] + 12, chord[4] + 12, chord[5] + 12, chord[4] + 12]):
@@ -421,18 +501,28 @@ def render_simple_loop(asset_id: str, seconds: float, bpm: float, bars: int, kin
             if bar % 4 in (0, 1):
                 for j, midi in enumerate([69, 72, 74, 76, 74, 72]):
                     add_note(stems[f"{asset_id}__st2_melody"], t0 + (0.2 + j * 0.55) * bt, 0.5 * bt, midi, "whistle", 0.17, 0.15, f"{asset_id}:mel:{bar}:{j}")
+            if bar % 8 in (4, 5):
+                add_phrase(stems[f"{asset_id}__st2_melody"], t0 + 0.45 * bt, bt, [76, 74, 72, 69, 67, 69], "ocarina", 0.13, -0.18, f"{asset_id}:far_reply:{bar}", stretch=0.9)
             if bar % 2 == 0:
                 add_chord_pad(stems[f"{asset_id}__st3_accordion"], t0, bd * 2, chord, "accordion", 0.12, f"{asset_id}:acc:{bar}")
+            if bar % 8 == 7:
+                add_note(stems[f"{asset_id}__st3_accordion"], t0 + 2.6 * bt, 1.1 * bt, chord[5] + 12, "accordion", 0.12, 0.26, f"{asset_id}:postmark:{bar}")
         elif kind == "album":
             if bar % 2 == 0:
                 for j, midi in enumerate([chord[2] + 12, chord[3] + 12, chord[4] + 12]):
                     add_note(stems[f"{asset_id}__st1_piano"], t0 + j * 1.1 * bt, bd, midi, "felt_piano", 0.13, -0.1 + 0.1 * j, f"{asset_id}:pn:{bar}:{j}")
+            if bar % 8 == 4:
+                add_phrase(stems[f"{asset_id}__st1_piano"], t0 + 0.2 * bt, bt, MOTIF_TENDER, "felt_piano", 0.10, -0.05, f"{asset_id}:memory:{bar}", stretch=1.1)
             add_chord_pad(stems[f"{asset_id}__st2_texture"], t0, bd * 1.4, chord, "vibraphone", 0.08, f"{asset_id}:tex:{bar}")
+            if bar % 8 == 7:
+                add_noise_burst(stems[f"{asset_id}__st2_texture"], t0 + 3.1 * bt, 0.22, 0.010, 0.22, "paper", f"{asset_id}:page:{bar}")
         elif kind == "shop":
             for j, midi in enumerate([chord[2] + 12, chord[3] + 12, chord[4] + 12, chord[5] + 12]):
                 add_note(stems[f"{asset_id}__st1_marimba_whistle"], t0 + (0.2 + j * 0.55) * bt, 0.42 * bt, midi, "marimba", 0.18, -0.2 + 0.13 * j, f"{asset_id}:mar:{bar}:{j}")
             if bar % 4 in (2, 3):
                 add_note(stems[f"{asset_id}__st1_marimba_whistle"], t0 + 1.2 * bt, bt, 76, "whistle", 0.12, 0.22, f"{asset_id}:wh:{bar}")
+            if bar % 8 in (6, 7):
+                add_phrase(stems[f"{asset_id}__st1_marimba_whistle"], t0 + 0.1 * bt, bt, [79, 76, 79, 81, 76], "marimba", 0.14, -0.1, f"{asset_id}:shop_tag:{bar}", stretch=0.62)
             for beat in (0, 2):
                 add_noise_burst(stems[f"{asset_id}__st2_light_perc"], t0 + beat * bt, 0.10, 0.018, 0.1, "brush", f"{asset_id}:br:{bar}:{beat}")
                 add_noise_burst(stems[f"{asset_id}__st2_light_perc"], t0 + (beat + 0.5) * bt, 0.08, 0.014, -0.2, "shaker", f"{asset_id}:sh:{bar}:{beat}")
@@ -440,6 +530,8 @@ def render_simple_loop(asset_id: str, seconds: float, bpm: float, bars: int, kin
             add_chord_pad(stems[f"{asset_id}__st1_bed"], t0, bd * 1.5, [m + 12 for m in chord], "vibraphone", 0.075, f"{asset_id}:evt:{bar}")
             if bar % 3 == 0:
                 add_note(stems[f"{asset_id}__st1_bed"], t0 + 1.5 * bt, 2 * bt, chord[4] + 24, "glass_vibes", 0.08, 0.25, f"{asset_id}:bell:{bar}")
+            if bar % 8 in (2, 6):
+                add_phrase(stems[f"{asset_id}__st1_bed"], t0 + 0.3 * bt, bt, [84, 83, 79, 76], "glass_vibes", 0.075, -0.18, f"{asset_id}:question:{bar}", stretch=1.15)
     for sid, buf in stems.items():
         if kind in {"album", "event"}:
             add_air(buf, 0.0032, f"{sid}:air")
@@ -466,6 +558,8 @@ def render_graduation() -> tuple[dict, dict]:
             add_note(stems[f"{asset_id}__st1_memory"], t0 + j * 1.15 * bt, 1.8 * bt, midi, "felt_piano", 0.16, -0.1 + 0.1 * j, f"grad:mem:{bar}:{j}")
         if bar % 4 == 0:
             add_note(stems[f"{asset_id}__st1_memory"], t0 + 2.3 * bt, 2.2 * bt, 72, "hum", 0.08, 0.15, f"grad:hum:{bar}")
+        if bar in (6, 7, 14, 15):
+            add_phrase(stems[f"{asset_id}__st1_memory"], t0 + 0.35 * bt, bt, MOTIF_TENDER, "felt_piano", 0.10, -0.18, f"grad:old_theme:{bar}", stretch=1.25)
     for bar in range(20):
         t0 = 52.0 + bar * bd
         chord = PROG[(bar + 2) % len(PROG)]
@@ -476,6 +570,8 @@ def render_graduation() -> tuple[dict, dict]:
         if bar % 4 in (0, 1):
             for j, midi in enumerate([72, 76, 79, 81, 83, 81, 79, 76]):
                 add_note(stems[f"{asset_id}__st2_departure"], t0 + (0.2 + j * 0.45) * bt, 0.42 * bt, midi, "kalimba" if bar < 10 else "whistle", 0.14 + 0.004 * bar, 0.08, f"grad:mel:{bar}:{j}")
+        if bar % 8 == 7:
+            add_phrase_swell(stems[f"{asset_id}__st2_departure"], t0 + 2.2 * bt, bt, chord[2] + 12, 0.08 + 0.003 * bar, f"grad:lift:{bar}")
     for bar in range(15):
         t0 = 120.0 + bar * bd
         chord = PROG[(bar + 4) % len(PROG)]
@@ -485,6 +581,9 @@ def render_graduation() -> tuple[dict, dict]:
                 add_note(stems[f"{asset_id}__st3_farewell"], t0 + (0.25 + j * 0.55) * bt, 0.55 * bt, midi, "whistle", 0.15, 0.22, f"grad:wh:{bar}:{j}")
         if bar in (12, 13, 14):
             add_bell_swell(stems[f"{asset_id}__st3_farewell"], t0 + 1.2 * bt, 2.4 * bt, 72, 0.15, f"grad:end:{bar}")
+        if bar == 14:
+            for j, midi in enumerate([84, 83, 79, 76, 72]):
+                add_note(stems[f"{asset_id}__st3_farewell"], t0 + (0.35 + j * 0.5) * bt, 0.65 * bt, midi, "music_box", 0.11, 0.28, f"grad:promise:{j}")
     add_air(stems[f"{asset_id}__st1_memory"], 0.0026, "grad:air1")
     add_air(stems[f"{asset_id}__st3_farewell"], 0.0028, "grad:air3")
     return stems, {
@@ -509,12 +608,20 @@ def render_sting(asset_id: str, seconds: float) -> np.ndarray:
     if asset_id == "sting_levelup":
         for i, midi in enumerate([72, 76, 79]):
             add_note(buf, 0.12 + i * 0.22, 0.8, midi, "kalimba", 0.45, -0.15 + i * 0.15, asset_id)
+        add_note(buf, 0.92, 0.55, 84, "music_box", 0.18, 0.22, f"{asset_id}:smile")
         add_noise_burst(buf, 0.52, 0.35, 0.02, 0, "paper", asset_id)
     elif asset_id.startswith("sting_evolve"):
         root = {"sting_evolve_b": 72, "sting_evolve_c": 74, "sting_evolve_d": 76}[asset_id]
         add_bell_swell(buf, 0.1, seconds * 0.8, root, 0.45, asset_id)
         for i in range(5):
             add_noise_burst(buf, 0.35 + i * 0.38, 0.22, 0.018, -0.3 + 0.15 * i, "paper", f"{asset_id}:wash:{i}")
+        contour = {
+            "sting_evolve_b": [72, 76, 79, 76],
+            "sting_evolve_c": [74, 79, 83, 81],
+            "sting_evolve_d": [76, 79, 81, 84, 88],
+        }[asset_id]
+        for i, midi in enumerate(contour):
+            add_note(buf, 0.62 + i * 0.34, 0.72, midi, "kalimba" if asset_id != "sting_evolve_d" else "whistle", 0.16, -0.15 + 0.1 * i, f"{asset_id}:contour:{i}")
         if asset_id == "sting_evolve_d":
             for i, midi in enumerate([76, 79, 81, 84]):
                 add_note(buf, 1.0 + i * 0.42, 0.9, midi, "whistle", 0.22, 0.2, f"{asset_id}:far:{i}")
@@ -526,12 +633,15 @@ def render_sting(asset_id: str, seconds: float) -> np.ndarray:
         for i, midi in enumerate([72, 76, 79, 84]):
             add_note(buf, 0.12 + i * 0.25, 1.0, midi, "music_box", 0.35, -0.15 + i * 0.1, asset_id)
         add_chord_pad(buf, 1.05, 1.1, PROG[0], "felt_piano", 0.32, f"{asset_id}:chord")
+        add_note(buf, 1.82, 0.55, 91, "kalimba", 0.11, 0.32, f"{asset_id}:tail")
     elif asset_id == "sting_achievement":
         add_noise_burst(buf, 0.05, 0.25, 0.045, 0, "paper", f"{asset_id}:stamp")
         for i, midi in enumerate([76, 79]):
             add_note(buf, 0.28 + i * 0.25, 0.8, midi, "ocarina", 0.26, 0.1, asset_id)
+        add_note(buf, 0.88, 0.45, 84, "kalimba", 0.12, 0.26, f"{asset_id}:badge")
     elif asset_id == "sting_achievement_hidden":
         add_note(buf, 0.05, 0.8, 91, "glass_vibes", 0.18, -0.2, asset_id)
+        add_note(buf, 0.38, 0.6, 86, "celesta", 0.12, 0.18, f"{asset_id}:question")
         add_bell_swell(buf, 0.65, 1.1, 72, 0.28, f"{asset_id}:resolve")
     elif asset_id == "sting_egg_unlock":
         for i, midi in enumerate([84, 88, 91, 96, 91, 88, 84]):
@@ -539,6 +649,7 @@ def render_sting(asset_id: str, seconds: float) -> np.ndarray:
         add_chord_pad(buf, 1.5, 1.2, [60, 64, 67, 72, 76], "hum", 0.16, f"{asset_id}:magic")
     elif asset_id == "sting_first_snow":
         add_note(buf, 0.55, 1.5, 91, "glass_vibes", 0.20, 0.0, asset_id)
+        add_note(buf, 0.95, 1.2, 88, "celesta", 0.11, -0.22, f"{asset_id}:flake")
         add_chord_pad(buf, 0.95, 1.8, [60, 64, 67, 72], "clarinet", 0.10, f"{asset_id}:white")
     elif asset_id == "sting_meteor":
         for i, midi in enumerate([96, 95, 93, 91, 88]):
@@ -561,6 +672,7 @@ def render_sting(asset_id: str, seconds: float) -> np.ndarray:
             add_noise_burst(buf, 0.05 + i * 0.28, 0.12, 0.018, -0.2 + 0.08 * (i % 5), "shaker", f"{asset_id}:fire:{i}")
         for i, midi in enumerate([69, 72, 74, 76, 74]):
             add_note(buf, 0.42 + i * 0.38, 0.65, midi, "ocarina", 0.19, 0.18, asset_id)
+        add_note(buf, 2.32, 0.55, 81, "music_box", 0.11, -0.28, f"{asset_id}:spark")
     else:
         add_bell_swell(buf, 0.1, seconds * 0.75, 72, 0.28, asset_id)
     add_air(buf, 0.0018, f"{asset_id}:air")

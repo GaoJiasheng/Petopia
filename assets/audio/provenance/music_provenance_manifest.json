@@ -1,6 +1,6 @@
 {
   "project": "Petopia",
-  "generated_at_local": "2026-07-02 13:51:07 +08",
+  "generated_at_local": "2026-07-02 21:48:51 +08",
   "scope": "music only: bgm_* and sting_* assets from docs/spec-audio.md",
   "source_policy": "Programmatic original synthesis. No third-party samples, loops, reference audio, artist-name prompts, or commercial melodies used.",
   "technical_defaults": {
@@ -24,11 +24,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_day__st1_bed.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_day__st1_bed.ogg",
       "metrics": {
-        "approx_lufs": -23.94,
-        "peak_dbfs": -6.95
+        "approx_lufs": -24.11,
+        "peak_dbfs": -7.11
       },
-      "sha256_wav": "9f1e3f992e14a9e5247eff56198371a78e5f6bebda1dd3dec72cf8d2624556f7",
-      "sha256_ogg": "8a3fe19e401898c66ca911ffe91bd8eb88b179005fb88c8dab1acd53294dcc23",
+      "sha256_wav": "b0072a52f34e8e1926ef4da6a8a31aebd5ec5351217eaf1f010bc97f17f3f5dd",
+      "sha256_ogg": "cb5cc0e2f33c8c6969ae2ba030072dc001a9a4eec2ab86321eb428d7224e62c2",
       "bars": 48
     },
     {
@@ -45,11 +45,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_day__st2_melody.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_day__st2_melody.ogg",
       "metrics": {
-        "approx_lufs": -28.15,
-        "peak_dbfs": -9.19
+        "approx_lufs": -27.79,
+        "peak_dbfs": -9.36
       },
-      "sha256_wav": "343dc68dff5da0dbcc19886ec8ad92909c714d8d0bf1c0d0b21fa7a037fe77ad",
-      "sha256_ogg": "7256407d4616033585488371ce439ff3e61b58b9f67fb87b2108afd50c7e951c",
+      "sha256_wav": "86e078fa02b22299a53f86dd87fe5db58230cc9dd38344bed8c72ae959ba2900",
+      "sha256_ogg": "28ac09e5c477adaa6b6cffa020cc2f4373ac3b2cb3bea5f310154447a91394c6",
       "bars": 48
     },
     {
@@ -66,11 +66,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_day__st3_texture.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_day__st3_texture.ogg",
       "metrics": {
-        "approx_lufs": -30.85,
-        "peak_dbfs": -17.98
+        "approx_lufs": -30.99,
+        "peak_dbfs": -18.15
       },
-      "sha256_wav": "c39ee19bbe9ec3bb098a0c54adc20252b34781e54e61f4d256653f9dbb01fecd",
-      "sha256_ogg": "3c35431ae76aae54d67da2a9516585678f328ea86da0f249f428a8e4ba2c4e5b",
+      "sha256_wav": "4c4fac3074557ba214d6f680f46bd44bec95293b897dff22ca67f8d3569fe085",
+      "sha256_ogg": "cce4c117307c5354778e3801f9e26cb9f5a92d4e8618aca3377544eeb27470a0",
       "bars": 48
     },
     {
@@ -87,11 +87,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_day__st4_perc.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_day__st4_perc.ogg",
       "metrics": {
-        "approx_lufs": -49.17,
-        "peak_dbfs": -13.87
+        "approx_lufs": -49.34,
+        "peak_dbfs": -14.03
       },
-      "sha256_wav": "b82bcde4237fb4ab27f44a916a5b28b63721e9f62b7dca61aafc76cac9ae9ac2",
-      "sha256_ogg": "9f7e4f952abcbd1adc936432bc0b0c39d2bea4d4ce4e8c3f492f91b1b9bad16c",
+      "sha256_wav": "889a4dad28474da033d73f9de15c1956968f5933156005cd7fd67f194c89f41d",
+      "sha256_ogg": "f2a0b20b60a26cb323a47b2428c4c7597add2c64f014cfd1402ed28b52c54fc4",
       "bars": 48
     },
     {
@@ -108,11 +108,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_day__st5_lux_a.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_day__st5_lux_a.ogg",
       "metrics": {
-        "approx_lufs": -35.41,
-        "peak_dbfs": -18.4
+        "approx_lufs": -35.1,
+        "peak_dbfs": -18.57
       },
-      "sha256_wav": "7647c73d5713663f764dbc76a252da86a58fcae438e49fa25dafe2b3540a8a2a",
-      "sha256_ogg": "e190f3e8b007668ce5f9bd6028a82db050f5239bef1c7be7fad57178e828fdfe",
+      "sha256_wav": "838231f4c70e852d8e0a6dbdd33a22e91ba83ea37ad98dfc4c175100a52dcdbc",
+      "sha256_ogg": "0c456ccaefc521d95ebc1b1d2a2a1a1b40779983e80685d7c25668c03868d56e",
       "bars": 48
     },
     {
@@ -129,11 +129,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_day__st6_lux_b.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_day__st6_lux_b.ogg",
       "metrics": {
-        "approx_lufs": -31.39,
-        "peak_dbfs": -19.41
+        "approx_lufs": -31.55,
+        "peak_dbfs": -19.58
       },
-      "sha256_wav": "5993d18ce848acb860791ff957ca1aa27dcad3b1f9b78546c737c685820089b4",
-      "sha256_ogg": "b5e1174429e2b95b59259813aa40c3e796f3e998a551bc2f27001b741d769db8",
+      "sha256_wav": "bbb3b7748a1cca92c5ef1e9def8ae24b72dcd52ac2fa7f78e78a614e7cfe4474",
+      "sha256_ogg": "070eb193e74577972164a1ad8e49c42db8e2438830a72b7373c90c37e3314470",
       "bars": 48
     },
     {
@@ -150,11 +150,11 @@
       "wav": "assets/audio/bgm/mix/wav/bgm_yard_day.wav",
       "ogg": "assets/audio/bgm/mix/ogg/bgm_yard_day.ogg",
       "metrics": {
-        "approx_lufs": -18.17,
-        "peak_dbfs": -2.62
+        "approx_lufs": -18.21,
+        "peak_dbfs": -2.18
       },
-      "sha256_wav": "2141bb2cc45b672a9abed85dd9760e69b0717597d863f9578487e258d6b10053",
-      "sha256_ogg": "e8ee8b7bd44dfc8e66ef8a2856d6f325bed9fa818722cc4e322d8154a8d87093",
+      "sha256_wav": "cd5c63c9154e2d1a74789f00110ef4d657bf0166431e2983113997949a8a899b",
+      "sha256_ogg": "5f24213a590aec5d8ca4ca12b91e82704bbfd81465148775fedfa053f83e6861",
       "bars": 48
     },
     {
@@ -171,11 +171,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_dusk__st1_bed.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_dusk__st1_bed.ogg",
       "metrics": {
-        "approx_lufs": -24.84,
-        "peak_dbfs": -7.58
+        "approx_lufs": -25.24,
+        "peak_dbfs": -7.97
       },
-      "sha256_wav": "153c9d5901dfa56b0c880b1c7ba639987d92320ca6d22b5e57d9810c23c1dfda",
-      "sha256_ogg": "ca908922e605fbdfa20b1dc5a7ec9d0690047b441cc2cf7535526917adefda43",
+      "sha256_wav": "db133959d09270864445550a22a164a04f6332b64a6a18c803bfdc3d65c86934",
+      "sha256_ogg": "7f12f53702331f8c2e210920e4cc39a408f02f64313dfca86d24396b7411cc8f",
       "bars": 40
     },
     {
@@ -192,11 +192,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_dusk__st2_melody.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_dusk__st2_melody.ogg",
       "metrics": {
-        "approx_lufs": -25.83,
-        "peak_dbfs": -13.0
+        "approx_lufs": -25.2,
+        "peak_dbfs": -13.39
       },
-      "sha256_wav": "19974ce15f1ea2d6d82eb7bbe2e65d149b9545f643cb8ec8d1237f93f4561ff3",
-      "sha256_ogg": "9e2289558afb94335fc4c458a474719450d341de960e7ce1976b729322c7a894",
+      "sha256_wav": "55dbd0dcac07733d159f662f24f074523dbb8dcd6adcb11fabddb11ec1547841",
+      "sha256_ogg": "7dfafc3601612a36146f71b8eaa954f33e7d2b64e4772a494f4ef14404763f05",
       "bars": 40
     },
     {
@@ -213,11 +213,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_dusk__st3_texture.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_dusk__st3_texture.ogg",
       "metrics": {
-        "approx_lufs": -31.54,
-        "peak_dbfs": -18.59
+        "approx_lufs": -31.91,
+        "peak_dbfs": -18.99
       },
-      "sha256_wav": "0e300526a0bb7d66c1529990f247ce23c39c4ddd49693cba0ff21ec6483a4827",
-      "sha256_ogg": "127030969981043260f66a77ba06aebadeff085c1f9029cd0457cc9bac890d4e",
+      "sha256_wav": "f1081175b432756a95c5c5299c4bb49a5bfcdd4cfcc6b7eb31ab0c7534beda34",
+      "sha256_ogg": "c36c4deb0275a03362a3ab4e7e6965d6da3a6e8eac98985ebf8ca1896b162356",
       "bars": 40
     },
     {
@@ -234,11 +234,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_dusk__st4_perc.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_dusk__st4_perc.ogg",
       "metrics": {
-        "approx_lufs": -50.14,
-        "peak_dbfs": -14.69
+        "approx_lufs": -50.53,
+        "peak_dbfs": -15.08
       },
-      "sha256_wav": "398d8d59ff4d6eb9172de5c8310c05859aa8f027da68541122ee0bcb2bbb0554",
-      "sha256_ogg": "f6207de9272b4fc3d4b5e20309d48bfc1697d8676107c09e5e962c7774013d8d",
+      "sha256_wav": "347b6a77d628f5e6e6af0754782171e85ce4897963d43555e5d2ec7e6d5c398f",
+      "sha256_ogg": "d0fce61e0a126ea95aba6f539a8d83ce99fca437f6170135f43d09f0bf697d8c",
       "bars": 40
     },
     {
@@ -255,11 +255,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_dusk__st5_lux_a.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_dusk__st5_lux_a.ogg",
       "metrics": {
-        "approx_lufs": -36.19,
-        "peak_dbfs": -19.0
+        "approx_lufs": -36.12,
+        "peak_dbfs": -19.23
       },
-      "sha256_wav": "1e1174e734bd80073b16b47383784a69102369dc64b3070224489fc30a76f2d7",
-      "sha256_ogg": "e9026fd1a5e57b953160d72a7d59c8256e8ef02d5eb974347bcf96a90f2eeadc",
+      "sha256_wav": "de05054bf36dcf83219f0c79546e309afdc7e8ee0234e3d8a9520731d64bed49",
+      "sha256_ogg": "6004087700d88a231efe7530bc4ac6dbbb05a7c174acd99114465ec0b16b9f22",
       "bars": 40
     },
     {
@@ -276,11 +276,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_dusk__st6_lux_b.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_dusk__st6_lux_b.ogg",
       "metrics": {
-        "approx_lufs": -32.05,
-        "peak_dbfs": -20.37
+        "approx_lufs": -32.45,
+        "peak_dbfs": -20.77
       },
-      "sha256_wav": "71fcd757af27ee858b1c6f9a3f9eb87e17f77112cc8cbd304ffbc91725673fa0",
-      "sha256_ogg": "80a3068eeb8cac77327b45a464b6fe69691260aa93052808c29a43d081e02613",
+      "sha256_wav": "a6ab9d49a4d0139f261006df6e6adb53aa265c088274c5031536f7a4a5caa8bd",
+      "sha256_ogg": "2f8e4520f7fb72e6020d5485978b76b7fe649087001efa4cf4c1921ffddf964d",
       "bars": 40
     },
     {
@@ -297,11 +297,11 @@
       "wav": "assets/audio/bgm/mix/wav/bgm_yard_dusk.wav",
       "ogg": "assets/audio/bgm/mix/ogg/bgm_yard_dusk.ogg",
       "metrics": {
-        "approx_lufs": -18.12,
-        "peak_dbfs": -3.53
+        "approx_lufs": -18.15,
+        "peak_dbfs": -3.65
       },
-      "sha256_wav": "07d32a99401595c85e2eec73f2b4e44df514b90e12e0b423d394582cfd273060",
-      "sha256_ogg": "8ebd97d4e99402ef3f45814fc0ef397292a8a9248331c88dfea068577e6f5ab4",
+      "sha256_wav": "8bab1c37c6079c772818533360ce2828516d1c9ed14126a8c2c1d814c3333bf9",
+      "sha256_ogg": "57814ee464012a1c7f3fa52667c1574f17976379709b66d26212302ace9665e3",
       "bars": 40
     },
     {
@@ -318,11 +318,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_night__st1_bed.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_night__st1_bed.ogg",
       "metrics": {
-        "approx_lufs": -22.86,
-        "peak_dbfs": -5.27
+        "approx_lufs": -22.92,
+        "peak_dbfs": -5.33
       },
-      "sha256_wav": "c30848428af2222b818bbb58108f6e5c4f00cfe8319736804d29a5d92ed2b67d",
-      "sha256_ogg": "5009f8870a1a7cd9244d6b0c863585d855c5c44df4f69a1760880bae7b13072b",
+      "sha256_wav": "fb1f13139063b2f733563678cc07736069099f172cbc69ccc0f77eaf508822dc",
+      "sha256_ogg": "e97e89b05333821676cf2ffaf679059c4191311ecbd411502384e7314ee8f903",
       "bars": 45
     },
     {
@@ -339,11 +339,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_night__st2_melody.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_night__st2_melody.ogg",
       "metrics": {
-        "approx_lufs": -29.65,
-        "peak_dbfs": -11.83
+        "approx_lufs": -29.43,
+        "peak_dbfs": -12.14
       },
-      "sha256_wav": "da491c79d21d4ad52db20b031c51d4ccde0bfeb7bda2b7edd4a6173b44f1ffba",
-      "sha256_ogg": "ff77b581d192ef4a8ff1fdf724467a5c59e26fd661c7beb4314743e2022586fc",
+      "sha256_wav": "cc436851dee8ff0271eae2d6e7129c7423d50394ccc04a2432a71589c01b195d",
+      "sha256_ogg": "8896959722fa3854d372d19412a854df120c239058ddf1dd8bbff36286a71b66",
       "bars": 45
     },
     {
@@ -360,11 +360,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_night__st3_texture.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_night__st3_texture.ogg",
       "metrics": {
-        "approx_lufs": -33.61,
-        "peak_dbfs": -17.89
+        "approx_lufs": -33.64,
+        "peak_dbfs": -17.95
       },
-      "sha256_wav": "30f7304bc5592688b8e78f66c03b5f796b9259293dc4659e7fc8a8146aee87eb",
-      "sha256_ogg": "9aa5e3445a1fab699da4f7f04bc06dc2348efdb81caa4cf7cfea76398d199d69",
+      "sha256_wav": "eb2824edd83b33a39bce32baf2db805faf27e71999e369a81032ff0bf77a1a60",
+      "sha256_ogg": "e9127e7f792619021b8b1663890f20aa088458262196dadf114cc87c5780585e",
       "bars": 45
     },
     {
@@ -381,11 +381,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_night__st4_perc.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_night__st4_perc.ogg",
       "metrics": {
-        "approx_lufs": -66.21,
-        "peak_dbfs": -30.21
+        "approx_lufs": -66.27,
+        "peak_dbfs": -30.27
       },
-      "sha256_wav": "46941b22f8851e9298e65f4a756e99e7bf8ab6b5fb6c8a66527fc7b7e7ed0cb0",
-      "sha256_ogg": "124846fd1c18ec3aa845eed5750286787617350456f287b7be8d46745d3888e1",
+      "sha256_wav": "8ea97e43375a6a81a26a3fa57120efc155fb2df3e455befb3c5a5a929f50305c",
+      "sha256_ogg": "3010b213d65cc0ed7f86dbd13251e0757c34c0a25381ddf15c2c4207d5824453",
       "bars": 45
     },
     {
@@ -402,11 +402,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_night__st5_lux_a.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_night__st5_lux_a.ogg",
       "metrics": {
-        "approx_lufs": -34.36,
-        "peak_dbfs": -17.22
+        "approx_lufs": -34.05,
+        "peak_dbfs": -17.28
       },
-      "sha256_wav": "0b74c709236455ec13a626a7506cdb08939597a792c2e96a78829b4fb439a506",
-      "sha256_ogg": "3b7ac89b271c0ccbff6b2c6ef2b8a84a1994e0acdb91ce91d6ca874f952127e2",
+      "sha256_wav": "05f7fed66bba4df372f77b86ecb08a3bd674115255a188fd72da95992731074b",
+      "sha256_ogg": "e57513ae46261d52e5bb98cc2fca8695d0d9b0eb5f0c548c2990a9d6c68987a2",
       "bars": 45
     },
     {
@@ -423,11 +423,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_night__st6_lux_b.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_night__st6_lux_b.ogg",
       "metrics": {
-        "approx_lufs": -30.23,
-        "peak_dbfs": -18.23
+        "approx_lufs": -30.29,
+        "peak_dbfs": -18.29
       },
-      "sha256_wav": "5c850c4fbda08a120ca9ecc4692a0447bdfb12194fe8c21701ad330a81150893",
-      "sha256_ogg": "7ca1d1ddb6e375c39588b969a30dde91d58810c50a4cd0d7d6da40313126d953",
+      "sha256_wav": "d47c2c41d29bb867ecf36ed779501983de921136ef670c579fa85dcffd03b89e",
+      "sha256_ogg": "32a98326d33d0d88108e04c5a6d5b5ba9f6054a632925403b5b89542ebf8f23d",
       "bars": 45
     },
     {
@@ -444,11 +444,11 @@
       "wav": "assets/audio/bgm/mix/wav/bgm_yard_night.wav",
       "ogg": "assets/audio/bgm/mix/ogg/bgm_yard_night.ogg",
       "metrics": {
-        "approx_lufs": -18.04,
-        "peak_dbfs": -2.01
+        "approx_lufs": -18.05,
+        "peak_dbfs": -2.07
       },
-      "sha256_wav": "d887fff5d43ca498633b11604aa4aaf1d8d02f7059100140e134139571fca47b",
-      "sha256_ogg": "3b8a766443434c7d7d8838baae1c99361b59cb0bbc13d1abf0d14081035bf4fb",
+      "sha256_wav": "af2fc0c085845b792baa04d1c8197cbc9941063e1fd62cfd2afcce9cc5f1620b",
+      "sha256_ogg": "08088cb160b49c12fca4396e18c04defde2873779dd45c2e27b85de604f2243f",
       "bars": 45
     },
     {
@@ -466,10 +466,10 @@
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_stem_spring__day.ogg",
       "metrics": {
         "approx_lufs": -22.68,
-        "peak_dbfs": -7.43
+        "peak_dbfs": -4.52
       },
-      "sha256_wav": "ecf13cde6c96e2ed46b25f27c24026e1c0aff39e33738da4cbf59a9c25529914",
-      "sha256_ogg": "3745281995194678539b0b071b1b743fa97ce1203196c948d1946415f12a2053",
+      "sha256_wav": "68cc82c676507dbfe56d1f5f39b6c96d64c8e15abee89b63742931de565cb52b",
+      "sha256_ogg": "26077e2da459e463ffaaac6545faf63770c6694e7613082fce4b68c8fb85cbde",
       "bars": 48,
       "season_variant": "day"
     },
@@ -488,10 +488,10 @@
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_stem_spring__dusk.ogg",
       "metrics": {
         "approx_lufs": -22.68,
-        "peak_dbfs": -7.91
+        "peak_dbfs": -5.04
       },
-      "sha256_wav": "3a2f5db2f86a8a3f6d19a3fcfaabb0e51f7adb5b09d49e7f7f3a35725a4d5f2d",
-      "sha256_ogg": "3ebc72dffbbb5b1a6f30931a079404770e69e428a32f096d96dab18447e50b49",
+      "sha256_wav": "bf281b5edef849cee641e05d4584138d41a08ae40eedf86c17d64bd39851e364",
+      "sha256_ogg": "f0cdae1ab69f8e2fdcec52c3597be85d483c071dc7fe4fd7cf321d7692c258e3",
       "bars": 40,
       "season_variant": "dusk"
     },
@@ -510,10 +510,10 @@
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_stem_spring__night.ogg",
       "metrics": {
         "approx_lufs": -22.68,
-        "peak_dbfs": -8.14
+        "peak_dbfs": -5.43
       },
-      "sha256_wav": "4633a628f3776065844ca2c790b24ec5fce516c8bc7dd952e03a078f266c26d6",
-      "sha256_ogg": "6d77824e0705d25ad3679c84dad959059c40e2491eef38cc909fa489b3ca9163",
+      "sha256_wav": "d457c64e24fc6c75d237056015ccfd8c4ccbf9a8a8c20486cf6a5d6deefb0ee0",
+      "sha256_ogg": "034d801c74295a7ddbfc31efa2c830982171b3563d6894bd6e059bcaaa3f9f6c",
       "bars": 45,
       "season_variant": "night"
     },
@@ -531,11 +531,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_summer__day.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_stem_summer__day.ogg",
       "metrics": {
-        "approx_lufs": -22.68,
-        "peak_dbfs": -4.29
+        "approx_lufs": -23.03,
+        "peak_dbfs": -3.63
       },
-      "sha256_wav": "9314452890045afe5fb9ab4ec00de4213621eefef82cf1b5e3b9c1f7368fb1b9",
-      "sha256_ogg": "9b5a170fd6ca60c4e4ea241f5408b8f534823924fdd91b569d42237ec8594d7e",
+      "sha256_wav": "7bbea5b4b3e6464bf892a3132f90810682dd6c62f0da410107d4c8731bff2a62",
+      "sha256_ogg": "6ecb0cd93f6cc4b3df9b1326b260b0d28dc32514f02cc722100d257ed9409e83",
       "bars": 48,
       "season_variant": "day"
     },
@@ -553,11 +553,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_summer__dusk.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_stem_summer__dusk.ogg",
       "metrics": {
-        "approx_lufs": -22.68,
-        "peak_dbfs": -4.29
+        "approx_lufs": -23.19,
+        "peak_dbfs": -3.64
       },
-      "sha256_wav": "7d2f20652f40dda403e3360c0a6f8045bf58dc11942605645c8663b799948056",
-      "sha256_ogg": "a70f05801f8ab7b8ebd98c83917c7e9aa1ceee67bd3970a59c7b4c0351f68dcf",
+      "sha256_wav": "e6331e5b77c7027aee35380010a67cec48e5ab6e6272c6bb0518dfc66d461504",
+      "sha256_ogg": "1e21d4d2c27db1ea3a027114cce869c71519483feef4c7e40218793814ecef46",
       "bars": 40,
       "season_variant": "dusk"
     },
@@ -575,11 +575,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_summer__night.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_stem_summer__night.ogg",
       "metrics": {
-        "approx_lufs": -22.68,
-        "peak_dbfs": -4.33
+        "approx_lufs": -23.16,
+        "peak_dbfs": -3.63
       },
-      "sha256_wav": "c183249abfcf6302db28a77f6714324a6329d30593eb5de6c32643026b613854",
-      "sha256_ogg": "7fea290834950af8776224e45b3aecad5f748e69e17a7b65073a72c74f7687ec",
+      "sha256_wav": "a5d763fe1710e83da86455a18336c87767ed51256e93240e31cbca6ebd59eea3",
+      "sha256_ogg": "fa680f0b6ef525a9a86e41966d0617b96e484c071d4454f791b1980bcca14349",
       "bars": 45,
       "season_variant": "night"
     },
@@ -597,11 +597,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_autumn__day.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_stem_autumn__day.ogg",
       "metrics": {
-        "approx_lufs": -22.68,
-        "peak_dbfs": -3.71
+        "approx_lufs": -22.89,
+        "peak_dbfs": -3.63
       },
-      "sha256_wav": "8d374216f0ed38087768a6abbcbe08d9d8ffca470f92d78c70314ab749099fc9",
-      "sha256_ogg": "145a192b5ebcb4603759130ac5e868cc7b374e65225490ccec75d4f6a6d1ea23",
+      "sha256_wav": "e0f994923f4b6da2eb6bb73669ca8c8ad4f0a3b0b90423faa00499553e322b06",
+      "sha256_ogg": "9d90e0e119db1799fd587b73706555e7dfb83a3b73be1aae566e8e90fb88d52f",
       "bars": 48,
       "season_variant": "day"
     },
@@ -620,10 +620,10 @@
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_stem_autumn__dusk.ogg",
       "metrics": {
         "approx_lufs": -22.68,
-        "peak_dbfs": -4.0
+        "peak_dbfs": -3.9
       },
-      "sha256_wav": "768bc9cb25a466718a421341456ded83f7e63e794e26e78caffbd1149cadebe8",
-      "sha256_ogg": "77978b4d354603d25003599ecd49ec2b8e0a7a231cbeddcbbdd1fbd17db5ad60",
+      "sha256_wav": "3d93702b970b5e3c5770d429e3c1d52a3d51935ce625dd1f14a6d85fb9e53178",
+      "sha256_ogg": "551da79bc04aa4174a30cb97fe7dc7186bb212b1371f4f500899972cdc60530c",
       "bars": 40,
       "season_variant": "dusk"
     },
@@ -641,11 +641,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_autumn__night.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_stem_autumn__night.ogg",
       "metrics": {
-        "approx_lufs": -23.01,
+        "approx_lufs": -22.82,
         "peak_dbfs": -3.62
       },
-      "sha256_wav": "8ddb8ccd9ecf7b61c36dafbed75b11fc3d149c9d20b95c84e538967c419c00af",
-      "sha256_ogg": "a3e58fdb8f644bc847d3c01840e9779de3b0d8db9d3790ed02b0b2d663f230b1",
+      "sha256_wav": "a186150bc575b698d48b051f19a97a93702fa5bbc8a0a540ac571d2f517c7f55",
+      "sha256_ogg": "cff04e6ec268a8d17320e65abcc07970f03eafbec3fe17dbdb457b11c5634a2a",
       "bars": 45,
       "season_variant": "night"
     },
@@ -663,11 +663,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_winter__day.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_stem_winter__day.ogg",
       "metrics": {
-        "approx_lufs": -22.84,
-        "peak_dbfs": -3.69
+        "approx_lufs": -22.68,
+        "peak_dbfs": -3.78
       },
-      "sha256_wav": "50152df255b753b46b2aa09379ad8f1171f112a7b05d2edd01a2524348cdfdbe",
-      "sha256_ogg": "daffa7008ace402de599c9340c0c9f69829215bf9bc4efae120cdf028e2beea6",
+      "sha256_wav": "bb0b5aefc6f5dab84fcd01c292bf68b2f4a7825e5ac9f755f17ef1b720061698",
+      "sha256_ogg": "0d547e6f9ca25408cbea1d25feaff8a67bc649f7b4d9dc0024b7aa5723d4d94f",
       "bars": 48,
       "season_variant": "day"
     },
@@ -686,10 +686,10 @@
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_stem_winter__dusk.ogg",
       "metrics": {
         "approx_lufs": -22.68,
-        "peak_dbfs": -3.86
+        "peak_dbfs": -4.1
       },
-      "sha256_wav": "79305f83aefe30fcf1800141377058449a1f1cfa9add0b2db02f0419056f7031",
-      "sha256_ogg": "06653d55fb15274588beb7fec5c92222a4eddc26f3fc65b7ad381bbce823bd3b",
+      "sha256_wav": "2ea47bf39ae94813779b8e52207864d4557ae6b40a045403c84d69981e90443c",
+      "sha256_ogg": "b6103cfc45cf55ebe416a2bb5cd6b2c22fe29a5eeabeb1a3267a569312e56425",
       "bars": 40,
       "season_variant": "dusk"
     },
@@ -708,10 +708,10 @@
       "ogg": "assets/audio/bgm/stems/ogg/bgm_yard_stem_winter__night.ogg",
       "metrics": {
         "approx_lufs": -22.68,
-        "peak_dbfs": -4.04
+        "peak_dbfs": -4.29
       },
-      "sha256_wav": "2684041f791c742a6158d853b4524773c6c6c8d8c00ea07f322c91b981a9fc25",
-      "sha256_ogg": "64b9501fbff05ebbafbbcecfbe72e555faaef0798dff48ff66d39d6d1ca375e2",
+      "sha256_wav": "f616904c14be31865eabd749f6981d4212f8233da5f8c8100f635509466085ea",
+      "sha256_ogg": "488c9cad07b38d6d59e4597694c6e52a82e3bc7d84abd5634f2d8c7f704ca147",
       "bars": 45,
       "season_variant": "night"
     },
@@ -729,11 +729,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_opening__st1_piano.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_opening__st1_piano.ogg",
       "metrics": {
-        "approx_lufs": -23.65,
-        "peak_dbfs": -9.46
+        "approx_lufs": -23.39,
+        "peak_dbfs": -7.91
       },
-      "sha256_wav": "995a4cd80376b07f58f7d31b97e9d8d1e6d01e4d33bab995016ae15aafafa030",
-      "sha256_ogg": "2ae8366b21289639e0505909f6677586ae59cf650a5202f51fa9962a273b18a1",
+      "sha256_wav": "2cac91a4bd068d6ee3fb801764695803c405675ef512a847c61b0145771633d4",
+      "sha256_ogg": "30dae43229e2772533d13575b98ee1750f8d1738af44ee8e39876d3b5aef7ca6",
       "bars": 21
     },
     {
@@ -750,11 +750,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_opening__st2_texture.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_opening__st2_texture.ogg",
       "metrics": {
-        "approx_lufs": -38.76,
-        "peak_dbfs": -25.84
+        "approx_lufs": -38.51,
+        "peak_dbfs": -21.15
       },
-      "sha256_wav": "12149222e0661023abb2367b4ba9dcc6d6f287f2c2505b7d6441ec43c44773da",
-      "sha256_ogg": "da063147f354c771935b77c7091a6f80600fee5a89b5ed0978d961b45c498404",
+      "sha256_wav": "da74503866b721702e429bd0095491028193f167ba1a5431061028fe565ca4bb",
+      "sha256_ogg": "4a4a161d6bd386b91dd02ed4208e58e3d4554877ee5c0b652093b838d839dfd5",
       "bars": 21
     },
     {
@@ -771,11 +771,11 @@
       "wav": "assets/audio/bgm/mix/wav/bgm_opening.wav",
       "ogg": "assets/audio/bgm/mix/ogg/bgm_opening.ogg",
       "metrics": {
-        "approx_lufs": -20.85,
-        "peak_dbfs": -6.31
+        "approx_lufs": -20.6,
+        "peak_dbfs": -5.11
       },
-      "sha256_wav": "404e09066735d28bd2dbf14ae7464e3ceebfd8e1dce1ce1ce9ced22a35d68605",
-      "sha256_ogg": "1a9b33cda605a68bd02e6fef4784ddafac3c2ee54ea3a804059ce823b8173b1c",
+      "sha256_wav": "cc911fb0c4c842cbaa4c4bd03556e2116aa70bcda8c6ab04d8a27a2ed1f7128b",
+      "sha256_ogg": "77fa8029097843eb4fee0bd2e5b2b4b9e336308d939f37e94d1b22026f1ad70b",
       "bars": 21
     },
     {
@@ -792,11 +792,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_adoption__st1_guitar.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_adoption__st1_guitar.ogg",
       "metrics": {
-        "approx_lufs": -22.45,
-        "peak_dbfs": -7.59
+        "approx_lufs": -22.7,
+        "peak_dbfs": -7.95
       },
-      "sha256_wav": "2a09f62761c82f886440ed9adb5261ed4e5e6a3ec01d4d4cf62be7f6b16471a4",
-      "sha256_ogg": "00c099413ccd809144995cf1ed68c487704cac09d758526e4cade8d19d7198d9",
+      "sha256_wav": "83ba7b06e6855f48c94912b8be6a4ae2557ff7f87acd990842139a15e3f82162",
+      "sha256_ogg": "32393b5014a7c095a6b373ba082d64050d63b35af8b39da6ad875662f7511ddd",
       "bars": 30
     },
     {
@@ -813,11 +813,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_adoption__st2_kalimba.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_adoption__st2_kalimba.ogg",
       "metrics": {
-        "approx_lufs": -28.67,
-        "peak_dbfs": -9.65
+        "approx_lufs": -27.85,
+        "peak_dbfs": -7.58
       },
-      "sha256_wav": "ef49e69ab62a68a4a705a30c6123a1e214d3a23a8d67c0d6a46c6b59cac5e8e5",
-      "sha256_ogg": "b440c07e85f999447e0ebc81b6bff8e61ea651673d1bd8f9e7377e5bee3fd7bc",
+      "sha256_wav": "48b3dad34c8127502030c0a76a498519cc87358ad870ae21bb3169c602f62cf6",
+      "sha256_ogg": "683ab84b5325c6452a41ba04367609863b922af49477807054470c7b10be6912",
       "bars": 30
     },
     {
@@ -834,11 +834,11 @@
       "wav": "assets/audio/bgm/mix/wav/bgm_adoption.wav",
       "ogg": "assets/audio/bgm/mix/ogg/bgm_adoption.ogg",
       "metrics": {
-        "approx_lufs": -18.84,
-        "peak_dbfs": -1.92
+        "approx_lufs": -18.87,
+        "peak_dbfs": -1.68
       },
-      "sha256_wav": "212497c69358db666ace1a82c69c1fa91f8347cff2960eadcfe56c4c6cfe4349",
-      "sha256_ogg": "b3a101922902096fe69b0547d6c8deca378e5b78b070bc57d75b5ab66b9a1578",
+      "sha256_wav": "95a874add15db3d72032d6964e1177284c41b61db47f96af0ae4ff98c74e9e01",
+      "sha256_ogg": "2fb3ce9a297aaaaa993e3f91353f380c9a1873d23405c8ffdf09dde1f1459344",
       "bars": 30
     },
     {
@@ -855,11 +855,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_postcard_read__st1_bed.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_postcard_read__st1_bed.ogg",
       "metrics": {
-        "approx_lufs": -24.05,
-        "peak_dbfs": -4.92
+        "approx_lufs": -24.46,
+        "peak_dbfs": -5.33
       },
-      "sha256_wav": "276e37eee30a20747903b47f1c5c580c31abe4b0e6dc708d9789303edcd127c5",
-      "sha256_ogg": "082976e03ab079e5769b3514c6c6e8879f3a4e7fc3d24874d876359b939189eb",
+      "sha256_wav": "e1123874cc789a4a6441e7c0b69bd255c8883f19737bf08d6f6d4dc9d4382bf2",
+      "sha256_ogg": "dd3af655bd2c7a18aa73c30b63a6b69eda6eff26859bf76d9641da18ee5acd53",
       "bars": 33
     },
     {
@@ -876,11 +876,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_postcard_read__st2_melody.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_postcard_read__st2_melody.ogg",
       "metrics": {
-        "approx_lufs": -28.51,
-        "peak_dbfs": -17.84
+        "approx_lufs": -27.07,
+        "peak_dbfs": -12.91
       },
-      "sha256_wav": "d942d060ffc7b0dcd11bd8742d38db359172095e0be108c344766d9868c32ce5",
-      "sha256_ogg": "71885233a88df02baf16e4418713590cd394b90ffdf2a73d6b0ca8f3b5271401",
+      "sha256_wav": "5321c04452da69e6b68de9180ad2fdc444d66483833b80d05372c6b358b62aca",
+      "sha256_ogg": "93aeeae6c630328c2f620da874504e3873a8283f8aa6f441ab88f697e04eb747",
       "bars": 33
     },
     {
@@ -897,11 +897,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_postcard_read__st3_accordion.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_postcard_read__st3_accordion.ogg",
       "metrics": {
-        "approx_lufs": -27.26,
-        "peak_dbfs": -15.66
+        "approx_lufs": -27.49,
+        "peak_dbfs": -12.44
       },
-      "sha256_wav": "27f70cbb2375844b7eb68e36e79c1d7af546c21b08202c5f38856397f19f5458",
-      "sha256_ogg": "418d5fe2fd959686ef2b323059a7cf03be3b187451d8f8b829419e3de331d9b4",
+      "sha256_wav": "a93c8962eece027027b445d2f50fd03fa7e3e3979d60d332b81dcebcd19d11eb",
+      "sha256_ogg": "7dfef2ed139a28c283fbe2eda2b707f1d1a3b1678144943497934c3b04ad5e3b",
       "bars": 33
     },
     {
@@ -918,11 +918,11 @@
       "wav": "assets/audio/bgm/mix/wav/bgm_postcard_read.wav",
       "ogg": "assets/audio/bgm/mix/ogg/bgm_postcard_read.ogg",
       "metrics": {
-        "approx_lufs": -18.47,
-        "peak_dbfs": -1.54
+        "approx_lufs": -18.46,
+        "peak_dbfs": -1.95
       },
-      "sha256_wav": "6d1d6366b5b34f630e9919ffaf0f89516563468351570f7ea34e4e47b32b1d76",
-      "sha256_ogg": "e84986a4cf24e269f3517e0c29f40aa8b648e9d32aaab759cf210fb273f7e8f0",
+      "sha256_wav": "8d4429d5e2b567c6a616f929af15cc073d7f249c70d940a2faa331c44a2b301a",
+      "sha256_ogg": "e38bb8f4a8dd8d9d06dd23a49a650dd4b716cb40033e51ec6073335480ee0589",
       "bars": 33
     },
     {
@@ -939,11 +939,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_album_browse__st1_piano.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_album_browse__st1_piano.ogg",
       "metrics": {
-        "approx_lufs": -23.94,
-        "peak_dbfs": -7.64
+        "approx_lufs": -23.77,
+        "peak_dbfs": -5.73
       },
-      "sha256_wav": "991e30f094deb489d4fccc9fc83fd238fbfbd118c63d059ccbb6cabf526ca83b",
-      "sha256_ogg": "15f0dfd5efae3cb0acce2d260e40b3c7d407d20ef4136a7bd995ed067cbe0b31",
+      "sha256_wav": "7d75123ee5ac2f881d816e607e52ce8514e6f8ea292bad7eb4014fa5a394b6e3",
+      "sha256_ogg": "cc4e5373c837e108d44389ef7f1ebbd1e3ad9b7c61d76c5bc70eebfe03bb4e77",
       "bars": 39
     },
     {
@@ -960,11 +960,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_album_browse__st2_texture.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_album_browse__st2_texture.ogg",
       "metrics": {
-        "approx_lufs": -31.73,
-        "peak_dbfs": -10.94
+        "approx_lufs": -32.47,
+        "peak_dbfs": -11.68
       },
-      "sha256_wav": "eb251665ee6621e44ab11c8ff24503f894b456d8a6488511208fa364c3f030c9",
-      "sha256_ogg": "6984c0a8a34610b8787419e228b4cca543c8ed4683b48b3eedf69f645ec11682",
+      "sha256_wav": "03658c4e367675b8a4920cebfb46f06e83f12073b28ea96c00efb9520bc1507f",
+      "sha256_ogg": "a7a71344bce62dee3c4c2fcd3fde209d65b1a1e49a4f66bbe8efcae01b54dcba",
       "bars": 39
     },
     {
@@ -981,11 +981,11 @@
       "wav": "assets/audio/bgm/mix/wav/bgm_album_browse.wav",
       "ogg": "assets/audio/bgm/mix/ogg/bgm_album_browse.ogg",
       "metrics": {
-        "approx_lufs": -20.69,
-        "peak_dbfs": -1.72
+        "approx_lufs": -20.63,
+        "peak_dbfs": -2.46
       },
-      "sha256_wav": "3c00b59001f1a350a464f23b9b5d312abdee11e6103c788d799fbe7dd1cbf758",
-      "sha256_ogg": "1f124cc71737ec3e212763b7b4de9a18d857793a9274d7796e456a0bd7ea3d2d",
+      "sha256_wav": "15d648530615ce2d7e550dea8c6f121f27775d346d6d47ef4e2e56f136a1eb6c",
+      "sha256_ogg": "38ce234763ae329fc779c48196021d51129193904d0b57c6004947f265eab504",
       "bars": 39
     },
     {
@@ -1003,10 +1003,10 @@
       "ogg": "assets/audio/bgm/stems/ogg/bgm_shop__st1_marimba_whistle.ogg",
       "metrics": {
         "approx_lufs": -23.3,
-        "peak_dbfs": -7.85
+        "peak_dbfs": -6.17
       },
-      "sha256_wav": "fd5a77a1d262a2cec53901bb0ba80003452b885a36e763eb6378da58df0f3cde",
-      "sha256_ogg": "79691ffcb33618bf530f0a71ef2e26b680c73176d9d717ab5135d5435ea1c993",
+      "sha256_wav": "a20c48503abf4b5472235c28261e658c7ebd489b5e60c5c2b264588951b8e6d8",
+      "sha256_ogg": "c55f7ccfe574f0995b79bb79f8744a8e72608c34e7bd7fdde280655c90b74b4b",
       "bars": 35
     },
     {
@@ -1023,11 +1023,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_shop__st2_light_perc.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_shop__st2_light_perc.ogg",
       "metrics": {
-        "approx_lufs": -46.82,
-        "peak_dbfs": -10.77
+        "approx_lufs": -47.47,
+        "peak_dbfs": -11.42
       },
-      "sha256_wav": "61a1631ae5a8c1e1a6f596ec1a248cf053c8e89fa55b7b777d03aa0979600088",
-      "sha256_ogg": "3d5321cfdd3444904fb0934ad9599ee0e5c50b47ca88ae71093951aede66100e",
+      "sha256_wav": "7af9d60fc3252af5b62dd897e0209a87c50206b3f7009756cac5e83fc8d63154",
+      "sha256_ogg": "f77bbc7f1f0dc282e0d4290f34ba0b1ea290826b87829692ce3f85ed9a058165",
       "bars": 35
     },
     {
@@ -1045,10 +1045,10 @@
       "ogg": "assets/audio/bgm/mix/ogg/bgm_shop.ogg",
       "metrics": {
         "approx_lufs": -20.61,
-        "peak_dbfs": -5.21
+        "peak_dbfs": -3.56
       },
-      "sha256_wav": "06d3f2ee1cd04ea0599fb1e1907841e8d309b759149799915abf79e0add0b230",
-      "sha256_ogg": "7a5b9a04c23caa801a0f84632d70687ae41167499fdc6eeebc264076eed6ea31",
+      "sha256_wav": "9902cccf895fb6251502bcfd40cd8a6800f41c9663158d8d7d6f96180d3c5209",
+      "sha256_ogg": "96c3f8102ba495f2706b06cfb17c0d51ebba77353b457a4d4515556019944c6f",
       "bars": 35
     },
     {
@@ -1065,11 +1065,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_event_special_bed__st1_bed.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_event_special_bed__st1_bed.ogg",
       "metrics": {
-        "approx_lufs": -23.71,
-        "peak_dbfs": -4.51
+        "approx_lufs": -23.65,
+        "peak_dbfs": -5.18
       },
-      "sha256_wav": "c5c98f6ca9e408ebf010b1cc9e8b9fed10f85e3581372442c0679052416d1165",
-      "sha256_ogg": "63df00bf4f93f32bf22cf32bf15cacd4ffea85c46a2263eb7ca5d5acbb14d89b",
+      "sha256_wav": "b2855752c843a5d48e003ca67d63819444ba533fc3f3cd1d7d75d778475318f6",
+      "sha256_ogg": "6d77d0cf719ce1f2910f6b7d55f68af706a49bc027fb7ac919a32ca726d9890a",
       "bars": 24
     },
     {
@@ -1086,11 +1086,11 @@
       "wav": "assets/audio/bgm/mix/wav/bgm_event_special_bed.wav",
       "ogg": "assets/audio/bgm/mix/ogg/bgm_event_special_bed.ogg",
       "metrics": {
-        "approx_lufs": -21.03,
-        "peak_dbfs": -1.87
+        "approx_lufs": -20.98,
+        "peak_dbfs": -2.52
       },
-      "sha256_wav": "fd43ba16d6e74ab2199929333c62db547039e8a5a009f212698e09d495e44567",
-      "sha256_ogg": "878f2558001dbc10af4b133c0d51f70a10dbca4f110f15e1506377d0f543b649",
+      "sha256_wav": "5911ecfdbee54deeecc512dafd55756a5ac64d02595cfe28d8f42667da129f7f",
+      "sha256_ogg": "95f95f2e02e81599e9d0cadd14e56e35fdc65bf935ba0016b4fcd4fc70046bf2",
       "bars": 24
     },
     {
@@ -1107,11 +1107,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_graduation__st1_memory.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_graduation__st1_memory.ogg",
       "metrics": {
-        "approx_lufs": -28.85,
-        "peak_dbfs": -10.59
+        "approx_lufs": -28.27,
+        "peak_dbfs": -9.04
       },
-      "sha256_wav": "b75a9a77683fb143c8c767b9296207e58ca91090f6f333fb50eff6f25340ffba",
-      "sha256_ogg": "68199e049cc0c788896337e331a110259532ef4af6abe2b8530119ab713670a0",
+      "sha256_wav": "f751948bd62b9fc1c49f3c6c664376a198607aa3ef8d9346030a58b7224715c7",
+      "sha256_ogg": "61d9b31a23a973f99c3d783796cb92dc353645d76db8e282ab1d703b31e5e812",
       "bars": null
     },
     {
@@ -1128,11 +1128,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_graduation__st2_departure.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_graduation__st2_departure.ogg",
       "metrics": {
-        "approx_lufs": -24.34,
-        "peak_dbfs": -3.73
+        "approx_lufs": -24.5,
+        "peak_dbfs": -3.88
       },
-      "sha256_wav": "6e2b96437d15fcaa7b94ed062e0a389f2e1473fa3fff9f31e09382a911f60db4",
-      "sha256_ogg": "1dd86dc7d4f0a6fc9a7dd95b50d0fa57260640e07c69abec264e55416e9bb060",
+      "sha256_wav": "53e6a2a00cb2a0fb7b5e332912d5a33274ab974e68498eeef001711503119b10",
+      "sha256_ogg": "7bd56d7d47abaeb2de56302005e3b3143e29d2f508b0f6ea5f03052871749904",
       "bars": null
     },
     {
@@ -1149,11 +1149,11 @@
       "wav": "assets/audio/bgm/stems/wav/bgm_graduation__st3_farewell.wav",
       "ogg": "assets/audio/bgm/stems/ogg/bgm_graduation__st3_farewell.ogg",
       "metrics": {
-        "approx_lufs": -30.72,
-        "peak_dbfs": -6.88
+        "approx_lufs": -30.79,
+        "peak_dbfs": -6.24
       },
-      "sha256_wav": "916e21b9666add1ad0a22530a63405113750da1a92455608b40e722936206e21",
-      "sha256_ogg": "d8d856bdfe97813d7e63b07541b30588aff9c5d0a65dc649142d67f380932eaa",
+      "sha256_wav": "7e36424308081e397975c6ffbc71128005bf4fff089c837dce7e4a9a49b5871b",
+      "sha256_ogg": "7fb47017ae3ea8ae51c1eeef230a709ff07eeddb79c96c503aabab5fd3e3bc12",
       "bars": null
     },
     {
@@ -1170,11 +1170,11 @@
       "wav": "assets/audio/bgm/mix/wav/bgm_graduation.wav",
       "ogg": "assets/audio/bgm/mix/ogg/bgm_graduation.ogg",
       "metrics": {
-        "approx_lufs": -19.67,
+        "approx_lufs": -19.64,
         "peak_dbfs": -1.0
       },
-      "sha256_wav": "11ab374138be9c3caaa8fc7ee14dc061d8262bb0c827f565d674835dcc5340b2",
-      "sha256_ogg": "779875c83f42b691df2395585f91f4f98d9ebbc74aac603b8f89614f4af47d9c",
+      "sha256_wav": "0cae43bc60fe894781420d928b148efa17c7945e2b15bf703325d18d43d535fc",
+      "sha256_ogg": "2ee8d439f1ad803bad309b9794a41f3f7f1b79380feeaa35940ecd99739dc83c",
       "bars": null
     },
     {
@@ -1192,10 +1192,10 @@
       "ogg": "assets/audio/bgm/stems/ogg/bgm_revisit_overlay__day.ogg",
       "metrics": {
         "approx_lufs": -22.68,
-        "peak_dbfs": -7.65
+        "peak_dbfs": -8.56
       },
-      "sha256_wav": "4cdee3cbd41a3a924647041d28af7246394186c98c0ad52b0b03d215dd050bda",
-      "sha256_ogg": "f8c8db2c9054e14950ae543db313c7fcdc11901a2198d9c8e3ab5c56137027fd",
+      "sha256_wav": "c651463d9de3c8e1bcf13ed0f0c14ef0ebb6d648b913d2023672389e85fd64a6",
+      "sha256_ogg": "3a5b02734923f00df0c546bc1e44040b6bf75dcc49320f6a4addaa427588a601",
       "bars": 48,
       "revisit_variant": "day"
     },
@@ -1214,10 +1214,10 @@
       "ogg": "assets/audio/bgm/stems/ogg/bgm_revisit_overlay__dusk.ogg",
       "metrics": {
         "approx_lufs": -22.68,
-        "peak_dbfs": -8.13
+        "peak_dbfs": -8.77
       },
-      "sha256_wav": "6c49f7442c6f6cdc5c0f519d6f0cc3a4413593f3cd545bc7d9d64826c5725a63",
-      "sha256_ogg": "0cec55c0dd642208cba0f6d7460d8cb922c1b74ee30639065cd45e392a6dcde1",
+      "sha256_wav": "0d0f665f8c432b6be4b433a1d9d9f3ec267010a04f960583f684a4947cf83878",
+      "sha256_ogg": "e568f954d44e1a5290ec6fb8b8cac2495740dd460c33060c8133f7604b732082",
       "bars": 40,
       "revisit_variant": "dusk"
     },
@@ -1236,10 +1236,10 @@
       "ogg": "assets/audio/bgm/stems/ogg/bgm_revisit_overlay__night.ogg",
       "metrics": {
         "approx_lufs": -22.68,
-        "peak_dbfs": -7.92
+        "peak_dbfs": -8.84
       },
-      "sha256_wav": "4a327b008f8edafdb3781b195f5cf1009171bc7842f3b92eff09ba185e174674",
-      "sha256_ogg": "c82dffc5c51abfc6fde7df3beb085043c43638887f592ab45ed966099f39eb31",
+      "sha256_wav": "cb77b07dcf6f106c04007c390459937f8e47bf2a454bc7b9b857ee02f7fd8b50",
+      "sha256_ogg": "b7649145bc7ed9f35e200daedb5971ce61a0d8a8c72a3a686a65242164ac1f3a",
       "bars": 45,
       "revisit_variant": "night"
     },
@@ -1257,11 +1257,11 @@
       "wav": "assets/audio/sting/wav/sting_levelup.wav",
       "ogg": "assets/audio/sting/ogg/sting_levelup.ogg",
       "metrics": {
-        "approx_lufs": -19.0,
-        "peak_dbfs": -3.64
+        "approx_lufs": -18.09,
+        "peak_dbfs": -2.92
       },
-      "sha256_wav": "854bd0d8647f3caa5ec8ee597725ca3891ae7043070a97f6c40e4ec91468bd93",
-      "sha256_ogg": "cad145bc09e46adc8b5f7b8c1f31513b7883ff3ebc2e0fa019d39f9685ac5be5"
+      "sha256_wav": "b1aa10245c4852aba03cd22721feac5aa0a0039075c8c5b0102f37969e5a6bcf",
+      "sha256_ogg": "39433de077bd0f9d54a178334f2a35f0b87bed605658708e65b9966bbf04300f"
     },
     {
       "asset_id": "sting_evolve_b",
@@ -1277,11 +1277,11 @@
       "wav": "assets/audio/sting/wav/sting_evolve_b.wav",
       "ogg": "assets/audio/sting/ogg/sting_evolve_b.ogg",
       "metrics": {
-        "approx_lufs": -20.76,
-        "peak_dbfs": -4.48
+        "approx_lufs": -18.59,
+        "peak_dbfs": -2.48
       },
-      "sha256_wav": "ac25839614d4752e79fbf69e6fd51b8598f53a49f3a014a0a471092b2cbc90a3",
-      "sha256_ogg": "291b8aa498190f63db1167984ad673e34dc4a958c7cccc7c6d8a4fdb67972aef"
+      "sha256_wav": "8c6990f69e0373362165e7c9501b5a0530aac7bddaa393fcd16257ec354a92f7",
+      "sha256_ogg": "4558a9fa8bc86de2c05c7aa1f7c7e59ea07a5f5b1fce4e321cd348fc8431b0c8"
     },
     {
       "asset_id": "sting_evolve_c",
@@ -1297,11 +1297,11 @@
       "wav": "assets/audio/sting/wav/sting_evolve_c.wav",
       "ogg": "assets/audio/sting/ogg/sting_evolve_c.ogg",
       "metrics": {
-        "approx_lufs": -20.81,
-        "peak_dbfs": -4.47
+        "approx_lufs": -18.67,
+        "peak_dbfs": -2.4
       },
-      "sha256_wav": "2f133514f362d0de92db862148700fb9ecdf6c97e2ea60108ca6c1c634eb72a0",
-      "sha256_ogg": "e5a7fcb2101e0ca7062a38f414cd787a661134b4a36616968ab7e455a76b1d47"
+      "sha256_wav": "5c080efaa002093423ba8f1ef7e8975cc649f0e1cc0a64eb639eb8cea94ae594",
+      "sha256_ogg": "41cc2afbe53980750303addc307c7019a7e2f071ed9e02fc241e436246680a3c"
     },
     {
       "asset_id": "sting_evolve_d",
@@ -1317,11 +1317,11 @@
       "wav": "assets/audio/sting/wav/sting_evolve_d.wav",
       "ogg": "assets/audio/sting/ogg/sting_evolve_d.ogg",
       "metrics": {
-        "approx_lufs": -16.79,
-        "peak_dbfs": -2.06
+        "approx_lufs": -15.89,
+        "peak_dbfs": -3.1
       },
-      "sha256_wav": "05198784767a7b4f308bb2a2f8ed48dc9c9b16fe687442bd7c4dcdc25c5aedfc",
-      "sha256_ogg": "598f38e20c330f327f85014a634a64d448cdd064d0988594af4313beaab69931"
+      "sha256_wav": "c13ee37b12b2f6d379d962113c10100664b85774fe88306e1258a6c75494dd92",
+      "sha256_ogg": "0359305c7d087d0bd6bb6c42ae20ba09e55c7cd2927a94367ddad8d4a545cb79"
     },
     {
       "asset_id": "sting_graduation_depart",
@@ -1341,7 +1341,7 @@
         "peak_dbfs": -3.86
       },
       "sha256_wav": "b4af48107629caf5c13d9ba1cf05a46db2c65f61a7476acfa23d9b16c1389104",
-      "sha256_ogg": "044a9270de7c6d8370ae871ca4cb001bfba88b292c123d5add103beb364416e1"
+      "sha256_ogg": "60f20b3029d4bcccab28f39381ce4e60f9ebe4bec83a226ef3742c8f68fc0515"
     },
     {
       "asset_id": "sting_adoption_welcome",
@@ -1357,11 +1357,11 @@
       "wav": "assets/audio/sting/wav/sting_adoption_welcome.wav",
       "ogg": "assets/audio/sting/ogg/sting_adoption_welcome.ogg",
       "metrics": {
-        "approx_lufs": -18.88,
-        "peak_dbfs": -2.56
+        "approx_lufs": -17.91,
+        "peak_dbfs": -1.67
       },
-      "sha256_wav": "660868bdd1de5146bf74bc7a7627e45d1d6a786e59108b7cc99611bf74b1dca0",
-      "sha256_ogg": "812c6ab4bdc88154f53a788ac24aae9b265d5e2ab852f0c62e557c8472cf56df"
+      "sha256_wav": "4817dc3cd80f62a09601d79ffab1d8ad9a551d14a48db93ae77f80a6eb64c93d",
+      "sha256_ogg": "f327512d2bf8c928978375db6935523bd288fed9beb8b9c58ba04271a029882f"
     },
     {
       "asset_id": "sting_achievement",
@@ -1377,11 +1377,11 @@
       "wav": "assets/audio/sting/wav/sting_achievement.wav",
       "ogg": "assets/audio/sting/ogg/sting_achievement.ogg",
       "metrics": {
-        "approx_lufs": -17.47,
-        "peak_dbfs": -6.75
+        "approx_lufs": -17.51,
+        "peak_dbfs": -4.09
       },
-      "sha256_wav": "95a450aa3e166f25d2e540bea9f7b18c3bdf2a0782f3244fd76196f8b4ac132f",
-      "sha256_ogg": "779c2eca0cd9e91fee588a9a9202488e9a41151328ae027fe19929b3eba845ad"
+      "sha256_wav": "8bb1bd2d553f156347986a5e814eba58b9e00255e8330e980041f46176723bbd",
+      "sha256_ogg": "19294b504aa4d864107534291dd4b07fa8a4a51804626c6c27616d2945278106"
     },
     {
       "asset_id": "sting_achievement_hidden",
@@ -1397,11 +1397,11 @@
       "wav": "assets/audio/sting/wav/sting_achievement_hidden.wav",
       "ogg": "assets/audio/sting/ogg/sting_achievement_hidden.ogg",
       "metrics": {
-        "approx_lufs": -18.66,
-        "peak_dbfs": -3.52
+        "approx_lufs": -18.68,
+        "peak_dbfs": -3.45
       },
-      "sha256_wav": "0ba1a285e03d3ca9cc9c1a6dd7288a9f5caa970f1433ab298bc3e68734d7d3dd",
-      "sha256_ogg": "e3e10cfec8629915a2e091951e158d0b77390aa89e410f153476144c8e800295"
+      "sha256_wav": "0edf416847584978f3e6f358447e5328683d2c18eefd1cd9f1aa177194dc1bd1",
+      "sha256_ogg": "807f68b3f122fb14cabccbf82383af498179917f83fed554e029e3240c6668c3"
     },
     {
       "asset_id": "sting_egg_unlock",
@@ -1421,7 +1421,7 @@
         "peak_dbfs": -4.49
       },
       "sha256_wav": "196ab4d248008343c510c83c9ce9131e6f174b33a9c5d11613103caaffbd2985",
-      "sha256_ogg": "5ad19151adbd8caede3e4bff5f69b9bc9fd92f9fa040ad07ef6dec4a170fda18"
+      "sha256_ogg": "90487a861869227abe1f77786d719c2580c5b0b97f835c68b165b38cda0f3ef8"
     },
     {
       "asset_id": "sting_first_snow",
@@ -1437,11 +1437,11 @@
       "wav": "assets/audio/sting/wav/sting_first_snow.wav",
       "ogg": "assets/audio/sting/ogg/sting_first_snow.ogg",
       "metrics": {
-        "approx_lufs": -18.31,
-        "peak_dbfs": -4.15
+        "approx_lufs": -18.3,
+        "peak_dbfs": -3.77
       },
-      "sha256_wav": "5fbd8c02c06045c181741f11fc90046ad857a828f5dcfc7c67b59e5fcc3de29b",
-      "sha256_ogg": "d70fca7f9afe3422fc16a60ca68b209bf0f1ea0bc1ea9cfd7beafa58176517b9"
+      "sha256_wav": "50d1c6f723ce9ff2571d11fc1ca6225657045355919dc66da90eb905216c4e2f",
+      "sha256_ogg": "fb4748d89ab35015344e59a49ab73ad6d683366c0d70c3e725742d75b3573fb6"
     },
     {
       "asset_id": "sting_meteor",
@@ -1461,7 +1461,7 @@
         "peak_dbfs": -4.86
       },
       "sha256_wav": "c4e0f0fa049d2effc6bfe9e569b178f5a770416308d9ac7994686aace8be1254",
-      "sha256_ogg": "e14f7417436dced9399db7480bd1ea769751ba9d6aeb3bfd581c9eb1099750a8"
+      "sha256_ogg": "432aabc1e7dd01c10d5a7f63cb7c0f2d18f0536920d9119c7c23b8aa0b5568a8"
     },
     {
       "asset_id": "sting_fullmoon",
@@ -1481,7 +1481,7 @@
         "peak_dbfs": -5.53
       },
       "sha256_wav": "769477419e7da5f9547fb3be405fd484631cc827aa0d0d97dd75f9b6e8dd2465",
-      "sha256_ogg": "646914eb576ab096ee2f0e73ee2290bf2a778e1b5512975b2066e6a97ed66a1f"
+      "sha256_ogg": "b9988a5dda44b5f770260aa345231d7ee4eae5b48aa88c4a2fafb6d310380d6c"
     },
     {
       "asset_id": "sting_birthday",
@@ -1501,7 +1501,7 @@
         "peak_dbfs": -4.04
       },
       "sha256_wav": "289df1d8737bac21f926d83d74110748c03bf39203010425bab2efaac3ea58db",
-      "sha256_ogg": "47b00c378ac312e71962cad2607253bcb1a9f9f3235e2c089ac7e305c6f02f10"
+      "sha256_ogg": "09d844a9521c3da6b41c36056882e46705e2e635a08c642268e6aa3141d4d27a"
     },
     {
       "asset_id": "sting_rainbow",
@@ -1521,7 +1521,7 @@
         "peak_dbfs": -3.28
       },
       "sha256_wav": "aae4f82bdcba6f50acecf05cf764d86ddcb4a79b2db085267f549a1ce01fe0ec",
-      "sha256_ogg": "aec7f23e472a5199490e581bff9097598c50a393f8cdd6ddac8d4eb30dfdae6d"
+      "sha256_ogg": "4f709528f71d7fd9f45ba85af93de0a2fd009b19ad2056cc84bb6d55b51cc306"
     },
     {
       "asset_id": "sting_bonfire",
@@ -1537,11 +1537,11 @@
       "wav": "assets/audio/sting/wav/sting_bonfire.wav",
       "ogg": "assets/audio/sting/ogg/sting_bonfire.ogg",
       "metrics": {
-        "approx_lufs": -16.37,
-        "peak_dbfs": -5.02
+        "approx_lufs": -16.41,
+        "peak_dbfs": -5.18
       },
-      "sha256_wav": "2da10d367958bb590204a707534b352964ae3010ce465725650eb0f6138c7f16",
-      "sha256_ogg": "b412c789fb92acb2d0df3e1a4d23246b0e654e506d3c30ea7a2415982e8533fa"
+      "sha256_wav": "df5a0dc03b2754fd5818e5ad4f99dc3e5a937c0e991200510ea47e91547afdc1",
+      "sha256_ogg": "b73e26fed2ded7aa4ca5d67489cc080ccf70cf4e2c83364916e598bce43c1c67"
     }
   ],
   "counts": {
@@ -1551,29 +1551,34 @@
   },
   "postprocess": [
     {
-      "time_local": "2026-07-02 13:52:52 +08",
+      "time_local": "2026-07-02 21:53:42 +08",
       "source_report": "assets/audio/provenance/music_qa_loudnorm_report.json",
       "bgm_group_gains_db": {
-        "bgm_adoption": -0.92,
-        "bgm_album_browse": -0.72,
-        "bgm_event_special_bed": -0.87,
-        "bgm_opening": -4.85,
-        "bgm_postcard_read": -0.54,
-        "bgm_shop": -4.21,
-        "bgm_yard_day": -1.62,
-        "bgm_yard_dusk": -2.12,
-        "bgm_yard_night": -1.01
+        "bgm_adoption": -0.68,
+        "bgm_album_browse": -1.46,
+        "bgm_event_special_bed": -1.52,
+        "bgm_opening": -4.11,
+        "bgm_postcard_read": -0.95,
+        "bgm_shop": -2.56,
+        "bgm_yard_day": -1.18,
+        "bgm_yard_dusk": -2.15,
+        "bgm_yard_night": -1.07
       },
-      "stinger_loudnorm": "ffmpeg loudnorm=I=-14:TP=-1:LRA=7"
-    },
-    {
-      "time_local": "2026-07-02 13:57:13 +08",
-      "source_report": "assets/audio/provenance/music_qa_loudnorm_report.json",
-      "bgm_group_gains_db": {},
       "stinger_loudnorm": "ffmpeg loudnorm=I=-14:TP=-1:LRA=7",
       "manual_sting_filters": {
         "sting_evolve_b": "volume=-3.48dB",
         "sting_evolve_c": "volume=-3.47dB",
+        "sting_evolve_d": "acompressor=threshold=-16dB:ratio=2:attack=5:release=120:makeup=1,volume=1dB,alimiter=limit=0.70"
+      }
+    },
+    {
+      "time_local": "2026-07-02 21:57:22 +08",
+      "source_report": "assets/audio/provenance/music_qa_loudnorm_report.json",
+      "bgm_group_gains_db": {},
+      "stinger_loudnorm": "ffmpeg loudnorm=I=-14:TP=-1:LRA=7",
+      "manual_sting_filters": {
+        "sting_evolve_b": "volume=-1.48dB",
+        "sting_evolve_c": "volume=-1.40dB",
         "sting_evolve_d": "acompressor=threshold=-16dB:ratio=2:attack=5:release=120:makeup=1,volume=1dB,alimiter=limit=0.70"
       }
     }

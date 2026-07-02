@@ -1,5 +1,5 @@
 {
-  "generated_at_local": "2026-07-02 14:00:02 +08",
+  "generated_at_local": "2026-07-02 22:00:23 +08",
   "scanner": "ffmpeg loudnorm print_format=json",
   "items": [
     {
@@ -10,10 +10,10 @@
       "duration_seconds": 160.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-22.03",
-        "input_tp": "-6.95",
-        "input_lra": "1.80",
-        "input_thresh": "-32.06",
+        "input_i": "-22.19",
+        "input_tp": "-7.11",
+        "input_lra": "1.90",
+        "input_thresh": "-32.22",
         "output_i": "-15.98",
         "output_tp": "-1.00",
         "output_lra": "1.80",
@@ -30,16 +30,16 @@
       "duration_seconds": 160.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-21.68",
-        "input_tp": "-9.19",
-        "input_lra": "6.20",
-        "input_thresh": "-31.89",
-        "output_i": "-15.96",
-        "output_tp": "-3.71",
-        "output_lra": "6.20",
-        "output_thresh": "-26.17",
+        "input_i": "-22.80",
+        "input_tp": "-9.36",
+        "input_lra": "9.00",
+        "input_thresh": "-33.06",
+        "output_i": "-16.07",
+        "output_tp": "-2.58",
+        "output_lra": "7.10",
+        "output_thresh": "-26.31",
         "normalization_type": "dynamic",
-        "target_offset": "-0.04"
+        "target_offset": "0.07"
       }
     },
     {
@@ -50,16 +50,16 @@
       "duration_seconds": 160.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-28.77",
-        "input_tp": "-17.98",
-        "input_lra": "1.60",
-        "input_thresh": "-38.77",
-        "output_i": "-16.03",
-        "output_tp": "-5.23",
+        "input_i": "-28.90",
+        "input_tp": "-18.15",
+        "input_lra": "1.50",
+        "input_thresh": "-38.90",
+        "output_i": "-16.01",
+        "output_tp": "-5.25",
         "output_lra": "1.50",
-        "output_thresh": "-26.03",
+        "output_thresh": "-26.01",
         "normalization_type": "dynamic",
-        "target_offset": "0.03"
+        "target_offset": "0.01"
       }
     },
     {
@@ -70,10 +70,10 @@
       "duration_seconds": 160.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-45.52",
-        "input_tp": "-13.87",
+        "input_i": "-45.69",
+        "input_tp": "-14.03",
         "input_lra": "2.00",
-        "input_thresh": "-55.76",
+        "input_thresh": "-55.94",
         "output_i": "-22.30",
         "output_tp": "-1.00",
         "output_lra": "2.10",
@@ -90,16 +90,16 @@
       "duration_seconds": 160.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-31.71",
-        "input_tp": "-18.40",
-        "input_lra": "4.00",
-        "input_thresh": "-42.68",
-        "output_i": "-15.81",
-        "output_tp": "-2.17",
-        "output_lra": "4.00",
-        "output_thresh": "-26.76",
+        "input_i": "-31.47",
+        "input_tp": "-18.57",
+        "input_lra": "4.10",
+        "input_thresh": "-42.41",
+        "output_i": "-15.77",
+        "output_tp": "-2.30",
+        "output_lra": "4.10",
+        "output_thresh": "-26.72",
         "normalization_type": "dynamic",
-        "target_offset": "-0.19"
+        "target_offset": "-0.23"
       }
     },
     {
@@ -110,12 +110,12 @@
       "duration_seconds": 160.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-29.17",
-        "input_tp": "-19.41",
+        "input_i": "-29.33",
+        "input_tp": "-19.58",
         "input_lra": "2.90",
-        "input_thresh": "-39.17",
+        "input_thresh": "-39.33",
         "output_i": "-15.93",
-        "output_tp": "-6.12",
+        "output_tp": "-6.11",
         "output_lra": "2.80",
         "output_thresh": "-25.93",
         "normalization_type": "dynamic",
@@ -131,15 +131,15 @@
       "loop": true,
       "ffmpeg_loudnorm": {
         "input_i": "-16.00",
-        "input_tp": "-2.62",
-        "input_lra": "2.90",
+        "input_tp": "-2.18",
+        "input_lra": "2.70",
         "input_thresh": "-26.00",
-        "output_i": "-16.19",
-        "output_tp": "-2.63",
-        "output_lra": "2.90",
-        "output_thresh": "-26.19",
+        "output_i": "-16.16",
+        "output_tp": "-2.21",
+        "output_lra": "2.60",
+        "output_thresh": "-26.16",
         "normalization_type": "dynamic",
-        "target_offset": "0.19"
+        "target_offset": "0.16"
       }
     },
     {
@@ -150,10 +150,10 @@
       "duration_seconds": 141.176,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-22.91",
-        "input_tp": "-7.58",
+        "input_i": "-23.30",
+        "input_tp": "-7.97",
         "input_lra": "1.80",
-        "input_thresh": "-32.96",
+        "input_thresh": "-33.36",
         "output_i": "-16.06",
         "output_tp": "-1.00",
         "output_lra": "1.70",
@@ -170,16 +170,16 @@
       "duration_seconds": 141.176,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-20.94",
-        "input_tp": "-13.00",
-        "input_lra": "6.40",
-        "input_thresh": "-31.01",
-        "output_i": "-15.87",
-        "output_tp": "-7.52",
-        "output_lra": "5.70",
-        "output_thresh": "-25.96",
+        "input_i": "-21.73",
+        "input_tp": "-13.39",
+        "input_lra": "11.80",
+        "input_thresh": "-31.80",
+        "output_i": "-15.91",
+        "output_tp": "-7.47",
+        "output_lra": "7.20",
+        "output_thresh": "-25.97",
         "normalization_type": "dynamic",
-        "target_offset": "-0.13"
+        "target_offset": "-0.09"
       }
     },
     {
@@ -190,16 +190,16 @@
       "duration_seconds": 141.176,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-29.46",
-        "input_tp": "-18.59",
+        "input_i": "-29.82",
+        "input_tp": "-18.99",
         "input_lra": "1.80",
-        "input_thresh": "-39.46",
-        "output_i": "-16.01",
+        "input_thresh": "-39.82",
+        "output_i": "-16.00",
         "output_tp": "-5.14",
         "output_lra": "1.70",
-        "output_thresh": "-26.01",
+        "output_thresh": "-26.00",
         "normalization_type": "dynamic",
-        "target_offset": "0.01"
+        "target_offset": "0.00"
       }
     },
     {
@@ -210,10 +210,10 @@
       "duration_seconds": 141.176,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-46.41",
-        "input_tp": "-14.54",
+        "input_i": "-46.81",
+        "input_tp": "-14.94",
         "input_lra": "1.90",
-        "input_thresh": "-56.62",
+        "input_thresh": "-57.01",
         "output_i": "-22.52",
         "output_tp": "-1.00",
         "output_lra": "1.90",
@@ -230,16 +230,16 @@
       "duration_seconds": 141.176,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-32.31",
-        "input_tp": "-19.00",
-        "input_lra": "4.30",
-        "input_thresh": "-43.41",
-        "output_i": "-15.80",
-        "output_tp": "-2.57",
-        "output_lra": "4.20",
-        "output_thresh": "-26.91",
+        "input_i": "-32.29",
+        "input_tp": "-19.23",
+        "input_lra": "4.20",
+        "input_thresh": "-43.38",
+        "output_i": "-15.75",
+        "output_tp": "-2.05",
+        "output_lra": "4.10",
+        "output_thresh": "-26.85",
         "normalization_type": "dynamic",
-        "target_offset": "-0.20"
+        "target_offset": "-0.25"
       }
     },
     {
@@ -250,12 +250,12 @@
       "duration_seconds": 141.176,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-29.83",
-        "input_tp": "-20.37",
+        "input_i": "-30.22",
+        "input_tp": "-20.77",
         "input_lra": "3.30",
-        "input_thresh": "-39.83",
+        "input_thresh": "-40.22",
         "output_i": "-15.98",
-        "output_tp": "-5.64",
+        "output_tp": "-5.65",
         "output_lra": "3.30",
         "output_thresh": "-25.98",
         "normalization_type": "dynamic",
@@ -271,15 +271,15 @@
       "loop": true,
       "ffmpeg_loudnorm": {
         "input_i": "-16.00",
-        "input_tp": "-3.53",
+        "input_tp": "-3.64",
         "input_lra": "3.70",
         "input_thresh": "-26.00",
-        "output_i": "-16.24",
-        "output_tp": "-3.82",
-        "output_lra": "3.50",
-        "output_thresh": "-26.24",
+        "output_i": "-16.15",
+        "output_tp": "-3.92",
+        "output_lra": "3.40",
+        "output_thresh": "-26.15",
         "normalization_type": "dynamic",
-        "target_offset": "0.24"
+        "target_offset": "0.15"
       }
     },
     {
@@ -290,16 +290,16 @@
       "duration_seconds": 150.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-20.93",
-        "input_tp": "-5.27",
+        "input_i": "-20.99",
+        "input_tp": "-5.33",
         "input_lra": "1.80",
-        "input_thresh": "-30.96",
-        "output_i": "-16.11",
+        "input_thresh": "-31.02",
+        "output_i": "-16.12",
         "output_tp": "-1.00",
-        "output_lra": "1.80",
-        "output_thresh": "-26.14",
+        "output_lra": "1.90",
+        "output_thresh": "-26.15",
         "normalization_type": "dynamic",
-        "target_offset": "0.11"
+        "target_offset": "0.12"
       }
     },
     {
@@ -310,16 +310,16 @@
       "duration_seconds": 150.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-24.07",
-        "input_tp": "-11.83",
-        "input_lra": "6.00",
-        "input_thresh": "-34.67",
-        "output_i": "-15.78",
-        "output_tp": "-3.74",
-        "output_lra": "5.60",
-        "output_thresh": "-26.51",
+        "input_i": "-24.53",
+        "input_tp": "-12.13",
+        "input_lra": "10.10",
+        "input_thresh": "-35.32",
+        "output_i": "-15.71",
+        "output_tp": "-3.48",
+        "output_lra": "5.90",
+        "output_thresh": "-26.59",
         "normalization_type": "dynamic",
-        "target_offset": "-0.22"
+        "target_offset": "-0.29"
       }
     },
     {
@@ -330,16 +330,16 @@
       "duration_seconds": 150.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-31.53",
-        "input_tp": "-17.88",
-        "input_lra": "1.20",
-        "input_thresh": "-41.53",
-        "output_i": "-16.03",
-        "output_tp": "-2.42",
-        "output_lra": "1.20",
-        "output_thresh": "-26.03",
+        "input_i": "-31.57",
+        "input_tp": "-17.94",
+        "input_lra": "1.30",
+        "input_thresh": "-41.57",
+        "output_i": "-16.02",
+        "output_tp": "-2.44",
+        "output_lra": "1.30",
+        "output_thresh": "-26.02",
         "normalization_type": "dynamic",
-        "target_offset": "0.03"
+        "target_offset": "0.02"
       }
     },
     {
@@ -350,10 +350,10 @@
       "duration_seconds": 150.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-53.21",
-        "input_tp": "-30.13",
+        "input_i": "-53.26",
+        "input_tp": "-30.19",
         "input_lra": "2.80",
-        "input_thresh": "-63.41",
+        "input_thresh": "-63.46",
         "output_i": "-19.93",
         "output_tp": "-1.00",
         "output_lra": "2.60",
@@ -370,16 +370,16 @@
       "duration_seconds": 150.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-30.82",
-        "input_tp": "-17.21",
+        "input_i": "-30.51",
+        "input_tp": "-17.27",
         "input_lra": "3.80",
-        "input_thresh": "-41.73",
-        "output_i": "-15.88",
-        "output_tp": "-2.12",
+        "input_thresh": "-41.46",
+        "output_i": "-15.90",
+        "output_tp": "-2.64",
         "output_lra": "3.80",
         "output_thresh": "-26.83",
         "normalization_type": "dynamic",
-        "target_offset": "-0.12"
+        "target_offset": "-0.10"
       }
     },
     {
@@ -390,12 +390,12 @@
       "duration_seconds": 150.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-28.00",
-        "input_tp": "-18.23",
-        "input_lra": "2.90",
-        "input_thresh": "-38.00",
+        "input_i": "-28.06",
+        "input_tp": "-18.29",
+        "input_lra": "2.80",
+        "input_thresh": "-38.06",
         "output_i": "-15.96",
-        "output_tp": "-6.14",
+        "output_tp": "-6.15",
         "output_lra": "2.80",
         "output_thresh": "-25.96",
         "normalization_type": "dynamic",
@@ -411,15 +411,15 @@
       "loop": true,
       "ffmpeg_loudnorm": {
         "input_i": "-16.00",
-        "input_tp": "-2.01",
-        "input_lra": "2.00",
+        "input_tp": "-2.07",
+        "input_lra": "1.80",
         "input_thresh": "-26.00",
-        "output_i": "-16.21",
-        "output_tp": "-2.70",
-        "output_lra": "2.00",
-        "output_thresh": "-26.21",
+        "output_i": "-16.19",
+        "output_tp": "-2.74",
+        "output_lra": "1.80",
+        "output_thresh": "-26.19",
         "normalization_type": "dynamic",
-        "target_offset": "0.21"
+        "target_offset": "0.19"
       }
     },
     {
@@ -430,16 +430,16 @@
       "duration_seconds": 160.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-14.44",
-        "input_tp": "-7.43",
-        "input_lra": "6.20",
-        "input_thresh": "-27.46",
-        "output_i": "-15.69",
-        "output_tp": "-7.74",
-        "output_lra": "6.50",
-        "output_thresh": "-29.50",
+        "input_i": "-15.31",
+        "input_tp": "-4.52",
+        "input_lra": "5.90",
+        "input_thresh": "-27.85",
+        "output_i": "-15.78",
+        "output_tp": "-4.86",
+        "output_lra": "5.40",
+        "output_thresh": "-28.99",
         "normalization_type": "dynamic",
-        "target_offset": "-0.31"
+        "target_offset": "-0.22"
       }
     },
     {
@@ -450,16 +450,16 @@
       "duration_seconds": 141.176,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-14.46",
-        "input_tp": "-7.91",
-        "input_lra": "6.20",
-        "input_thresh": "-27.23",
-        "output_i": "-15.60",
-        "output_tp": "-7.44",
-        "output_lra": "6.50",
-        "output_thresh": "-29.60",
+        "input_i": "-15.32",
+        "input_tp": "-5.04",
+        "input_lra": "5.50",
+        "input_thresh": "-27.66",
+        "output_i": "-15.73",
+        "output_tp": "-5.53",
+        "output_lra": "5.30",
+        "output_thresh": "-28.94",
         "normalization_type": "dynamic",
-        "target_offset": "-0.40"
+        "target_offset": "-0.27"
       }
     },
     {
@@ -470,16 +470,16 @@
       "duration_seconds": 150.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-14.56",
-        "input_tp": "-8.13",
-        "input_lra": "6.10",
-        "input_thresh": "-27.42",
-        "output_i": "-15.67",
-        "output_tp": "-7.85",
+        "input_i": "-15.31",
+        "input_tp": "-5.42",
+        "input_lra": "6.20",
+        "input_thresh": "-27.77",
+        "output_i": "-15.74",
+        "output_tp": "-5.76",
         "output_lra": "6.50",
-        "output_thresh": "-29.52",
+        "output_thresh": "-29.02",
         "normalization_type": "dynamic",
-        "target_offset": "-0.33"
+        "target_offset": "-0.26"
       }
     },
     {
@@ -490,16 +490,16 @@
       "duration_seconds": 160.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-16.64",
-        "input_tp": "-4.28",
-        "input_lra": "1.70",
-        "input_thresh": "-27.96",
-        "output_i": "-15.57",
+        "input_i": "-17.07",
+        "input_tp": "-3.61",
+        "input_lra": "5.00",
+        "input_thresh": "-28.33",
+        "output_i": "-15.28",
         "output_tp": "-1.46",
-        "output_lra": "1.60",
-        "output_thresh": "-27.04",
+        "output_lra": "3.80",
+        "output_thresh": "-26.60",
         "normalization_type": "dynamic",
-        "target_offset": "-0.43"
+        "target_offset": "-0.72"
       }
     },
     {
@@ -510,16 +510,16 @@
       "duration_seconds": 141.176,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-16.45",
-        "input_tp": "-4.28",
-        "input_lra": "3.20",
-        "input_thresh": "-27.96",
-        "output_i": "-15.35",
+        "input_i": "-17.12",
+        "input_tp": "-3.64",
+        "input_lra": "6.00",
+        "input_thresh": "-28.45",
+        "output_i": "-15.19",
         "output_tp": "-1.80",
-        "output_lra": "2.80",
-        "output_thresh": "-26.97",
+        "output_lra": "4.80",
+        "output_thresh": "-26.57",
         "normalization_type": "dynamic",
-        "target_offset": "-0.65"
+        "target_offset": "-0.81"
       }
     },
     {
@@ -530,16 +530,16 @@
       "duration_seconds": 150.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-16.62",
-        "input_tp": "-4.32",
-        "input_lra": "1.70",
-        "input_thresh": "-27.97",
-        "output_i": "-15.55",
+        "input_i": "-17.23",
+        "input_tp": "-3.63",
+        "input_lra": "5.20",
+        "input_thresh": "-28.52",
+        "output_i": "-15.28",
         "output_tp": "-1.55",
-        "output_lra": "1.60",
-        "output_thresh": "-26.98",
+        "output_lra": "3.80",
+        "output_thresh": "-26.61",
         "normalization_type": "dynamic",
-        "target_offset": "-0.45"
+        "target_offset": "-0.72"
       }
     },
     {
@@ -550,16 +550,16 @@
       "duration_seconds": 160.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-18.89",
-        "input_tp": "-3.68",
+        "input_i": "-19.09",
+        "input_tp": "-3.62",
         "input_lra": "6.80",
-        "input_thresh": "-29.17",
-        "output_i": "-15.90",
+        "input_thresh": "-29.38",
+        "output_i": "-15.87",
         "output_tp": "-1.00",
-        "output_lra": "5.90",
-        "output_thresh": "-26.29",
+        "output_lra": "6.10",
+        "output_thresh": "-26.27",
         "normalization_type": "dynamic",
-        "target_offset": "-0.10"
+        "target_offset": "-0.13"
       }
     },
     {
@@ -570,16 +570,16 @@
       "duration_seconds": 141.176,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-18.90",
-        "input_tp": "-4.00",
-        "input_lra": "7.30",
-        "input_thresh": "-29.19",
-        "output_i": "-15.91",
-        "output_tp": "-1.17",
-        "output_lra": "6.30",
-        "output_thresh": "-26.34",
+        "input_i": "-18.87",
+        "input_tp": "-3.89",
+        "input_lra": "7.50",
+        "input_thresh": "-29.17",
+        "output_i": "-15.88",
+        "output_tp": "-1.06",
+        "output_lra": "6.60",
+        "output_thresh": "-26.30",
         "normalization_type": "dynamic",
-        "target_offset": "-0.09"
+        "target_offset": "-0.12"
       }
     },
     {
@@ -590,16 +590,16 @@
       "duration_seconds": 150.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-19.20",
+        "input_i": "-19.00",
         "input_tp": "-3.60",
         "input_lra": "6.80",
-        "input_thresh": "-29.47",
-        "output_i": "-15.85",
+        "input_thresh": "-29.28",
+        "output_i": "-15.84",
         "output_tp": "-1.00",
-        "output_lra": "6.00",
-        "output_thresh": "-26.24",
+        "output_lra": "6.10",
+        "output_thresh": "-26.22",
         "normalization_type": "dynamic",
-        "target_offset": "-0.15"
+        "target_offset": "-0.16"
       }
     },
     {
@@ -610,16 +610,16 @@
       "duration_seconds": 160.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-19.81",
-        "input_tp": "-3.67",
-        "input_lra": "6.30",
-        "input_thresh": "-29.81",
-        "output_i": "-16.24",
+        "input_i": "-19.59",
+        "input_tp": "-3.76",
+        "input_lra": "6.40",
+        "input_thresh": "-29.59",
+        "output_i": "-16.22",
         "output_tp": "-1.00",
         "output_lra": "6.10",
-        "output_thresh": "-26.24",
+        "output_thresh": "-26.22",
         "normalization_type": "dynamic",
-        "target_offset": "0.24"
+        "target_offset": "0.22"
       }
     },
     {
@@ -630,16 +630,16 @@
       "duration_seconds": 141.176,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-19.65",
-        "input_tp": "-3.85",
+        "input_i": "-19.60",
+        "input_tp": "-4.10",
         "input_lra": "6.30",
-        "input_thresh": "-29.65",
-        "output_i": "-16.33",
+        "input_thresh": "-29.60",
+        "output_i": "-16.31",
         "output_tp": "-1.00",
         "output_lra": "6.10",
-        "output_thresh": "-26.33",
+        "output_thresh": "-26.31",
         "normalization_type": "dynamic",
-        "target_offset": "0.33"
+        "target_offset": "0.31"
       }
     },
     {
@@ -650,16 +650,16 @@
       "duration_seconds": 150.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-19.54",
-        "input_tp": "-3.97",
-        "input_lra": "6.30",
-        "input_thresh": "-29.54",
-        "output_i": "-16.19",
+        "input_i": "-19.52",
+        "input_tp": "-4.22",
+        "input_lra": "6.70",
+        "input_thresh": "-29.52",
+        "output_i": "-16.17",
         "output_tp": "-1.00",
-        "output_lra": "6.20",
-        "output_thresh": "-26.19",
+        "output_lra": "6.30",
+        "output_thresh": "-26.17",
         "normalization_type": "dynamic",
-        "target_offset": "0.19"
+        "target_offset": "0.17"
       }
     },
     {
@@ -670,16 +670,16 @@
       "duration_seconds": 70.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-18.60",
-        "input_tp": "-9.44",
-        "input_lra": "7.10",
-        "input_thresh": "-29.23",
-        "output_i": "-15.83",
-        "output_tp": "-6.01",
-        "output_lra": "6.20",
-        "output_thresh": "-26.48",
+        "input_i": "-18.62",
+        "input_tp": "-7.89",
+        "input_lra": "8.30",
+        "input_thresh": "-29.13",
+        "output_i": "-15.81",
+        "output_tp": "-5.37",
+        "output_lra": "8.20",
+        "output_thresh": "-26.36",
         "normalization_type": "dynamic",
-        "target_offset": "-0.17"
+        "target_offset": "-0.19"
       }
     },
     {
@@ -690,16 +690,16 @@
       "duration_seconds": 70.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-35.54",
-        "input_tp": "-25.84",
-        "input_lra": "7.20",
-        "input_thresh": "-45.66",
-        "output_i": "-15.93",
-        "output_tp": "-6.51",
-        "output_lra": "7.30",
-        "output_thresh": "-27.21",
+        "input_i": "-35.29",
+        "input_tp": "-21.15",
+        "input_lra": "6.60",
+        "input_thresh": "-45.48",
+        "output_i": "-15.83",
+        "output_tp": "-1.92",
+        "output_lra": "5.50",
+        "output_thresh": "-26.99",
         "normalization_type": "dynamic",
-        "target_offset": "-0.07"
+        "target_offset": "-0.17"
       }
     },
     {
@@ -711,15 +711,15 @@
       "loop": true,
       "ffmpeg_loudnorm": {
         "input_i": "-16.00",
-        "input_tp": "-6.31",
-        "input_lra": "16.40",
-        "input_thresh": "-27.56",
-        "output_i": "-16.41",
-        "output_tp": "-5.48",
-        "output_lra": "12.10",
-        "output_thresh": "-27.51",
+        "input_tp": "-5.10",
+        "input_lra": "8.90",
+        "input_thresh": "-27.38",
+        "output_i": "-16.21",
+        "output_tp": "-5.30",
+        "output_lra": "8.90",
+        "output_thresh": "-27.29",
         "normalization_type": "dynamic",
-        "target_offset": "0.41"
+        "target_offset": "0.21"
       }
     },
     {
@@ -730,16 +730,16 @@
       "duration_seconds": 90.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-19.64",
-        "input_tp": "-7.59",
-        "input_lra": "0.40",
-        "input_thresh": "-29.77",
-        "output_i": "-16.07",
-        "output_tp": "-3.97",
-        "output_lra": "0.50",
-        "output_thresh": "-26.20",
+        "input_i": "-19.93",
+        "input_tp": "-7.94",
+        "input_lra": "0.60",
+        "input_thresh": "-30.02",
+        "output_i": "-16.05",
+        "output_tp": "-4.03",
+        "output_lra": "0.60",
+        "output_thresh": "-26.15",
         "normalization_type": "dynamic",
-        "target_offset": "0.07"
+        "target_offset": "0.05"
       }
     },
     {
@@ -750,16 +750,16 @@
       "duration_seconds": 90.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-21.34",
-        "input_tp": "-9.65",
-        "input_lra": "9.50",
-        "input_thresh": "-31.71",
-        "output_i": "-15.61",
-        "output_tp": "-3.17",
-        "output_lra": "9.80",
-        "output_thresh": "-26.16",
+        "input_i": "-21.70",
+        "input_tp": "-7.54",
+        "input_lra": "11.10",
+        "input_thresh": "-32.06",
+        "output_i": "-15.79",
+        "output_tp": "-2.08",
+        "output_lra": "10.90",
+        "output_thresh": "-26.33",
         "normalization_type": "dynamic",
-        "target_offset": "-0.39"
+        "target_offset": "-0.21"
       }
     },
     {
@@ -771,15 +771,15 @@
       "loop": true,
       "ffmpeg_loudnorm": {
         "input_i": "-16.00",
-        "input_tp": "-1.88",
-        "input_lra": "2.10",
-        "input_thresh": "-26.13",
-        "output_i": "-16.16",
-        "output_tp": "-2.26",
-        "output_lra": "2.20",
-        "output_thresh": "-26.30",
+        "input_tp": "-1.68",
+        "input_lra": "2.20",
+        "input_thresh": "-26.10",
+        "output_i": "-16.11",
+        "output_tp": "-1.79",
+        "output_lra": "2.30",
+        "output_thresh": "-26.21",
         "normalization_type": "dynamic",
-        "target_offset": "0.16"
+        "target_offset": "0.11"
       }
     },
     {
@@ -790,14 +790,14 @@
       "duration_seconds": 110.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-20.60",
-        "input_tp": "-4.92",
+        "input_i": "-21.01",
+        "input_tp": "-5.33",
         "input_lra": "2.10",
-        "input_thresh": "-31.25",
+        "input_thresh": "-31.66",
         "output_i": "-15.94",
         "output_tp": "-1.00",
         "output_lra": "2.00",
-        "output_thresh": "-26.60",
+        "output_thresh": "-26.61",
         "normalization_type": "dynamic",
         "target_offset": "-0.06"
       }
@@ -810,16 +810,16 @@
       "duration_seconds": 110.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-22.67",
-        "input_tp": "-17.84",
+        "input_i": "-21.37",
+        "input_tp": "-12.91",
         "input_lra": "8.10",
-        "input_thresh": "-33.12",
-        "output_i": "-15.87",
-        "output_tp": "-9.77",
-        "output_lra": "8.10",
-        "output_thresh": "-26.39",
+        "input_thresh": "-31.78",
+        "output_i": "-15.54",
+        "output_tp": "-6.93",
+        "output_lra": "8.00",
+        "output_thresh": "-26.02",
         "normalization_type": "dynamic",
-        "target_offset": "-0.13"
+        "target_offset": "-0.46"
       }
     },
     {
@@ -830,16 +830,16 @@
       "duration_seconds": 110.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-25.07",
-        "input_tp": "-15.65",
-        "input_lra": "0.70",
-        "input_thresh": "-35.07",
-        "output_i": "-15.97",
-        "output_tp": "-6.49",
-        "output_lra": "0.70",
-        "output_thresh": "-25.97",
+        "input_i": "-25.28",
+        "input_tp": "-12.43",
+        "input_lra": "1.90",
+        "input_thresh": "-35.28",
+        "output_i": "-15.90",
+        "output_tp": "-3.17",
+        "output_lra": "1.90",
+        "output_thresh": "-25.90",
         "normalization_type": "dynamic",
-        "target_offset": "-0.03"
+        "target_offset": "-0.10"
       }
     },
     {
@@ -851,15 +851,15 @@
       "loop": true,
       "ffmpeg_loudnorm": {
         "input_i": "-16.00",
-        "input_tp": "-1.54",
-        "input_lra": "2.50",
+        "input_tp": "-1.95",
+        "input_lra": "3.30",
         "input_thresh": "-26.00",
-        "output_i": "-16.08",
-        "output_tp": "-1.72",
-        "output_lra": "2.60",
-        "output_thresh": "-26.08",
+        "output_i": "-16.02",
+        "output_tp": "-2.21",
+        "output_lra": "3.30",
+        "output_thresh": "-26.02",
         "normalization_type": "dynamic",
-        "target_offset": "0.08"
+        "target_offset": "0.02"
       }
     },
     {
@@ -870,16 +870,16 @@
       "duration_seconds": 130.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-17.89",
-        "input_tp": "-7.63",
-        "input_lra": "9.30",
-        "input_thresh": "-29.62",
-        "output_i": "-15.73",
-        "output_tp": "-4.95",
-        "output_lra": "9.60",
-        "output_thresh": "-28.15",
+        "input_i": "-17.93",
+        "input_tp": "-5.72",
+        "input_lra": "10.70",
+        "input_thresh": "-29.44",
+        "output_i": "-15.70",
+        "output_tp": "-3.96",
+        "output_lra": "10.10",
+        "output_thresh": "-27.76",
         "normalization_type": "dynamic",
-        "target_offset": "-0.27"
+        "target_offset": "-0.30"
       }
     },
     {
@@ -890,16 +890,16 @@
       "duration_seconds": 130.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-26.83",
-        "input_tp": "-10.94",
+        "input_i": "-27.56",
+        "input_tp": "-11.68",
         "input_lra": "5.80",
-        "input_thresh": "-40.29",
-        "output_i": "-15.93",
+        "input_thresh": "-40.96",
+        "output_i": "-15.96",
         "output_tp": "-1.00",
-        "output_lra": "1.40",
-        "output_thresh": "-29.54",
+        "output_lra": "1.30",
+        "output_thresh": "-29.55",
         "normalization_type": "dynamic",
-        "target_offset": "-0.07"
+        "target_offset": "-0.04"
       }
     },
     {
@@ -910,16 +910,16 @@
       "duration_seconds": 130.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-16.00",
-        "input_tp": "-1.72",
-        "input_lra": "11.90",
-        "input_thresh": "-28.43",
-        "output_i": "-16.21",
-        "output_tp": "-1.71",
-        "output_lra": "10.80",
-        "output_thresh": "-28.35",
+        "input_i": "-16.01",
+        "input_tp": "-2.46",
+        "input_lra": "13.40",
+        "input_thresh": "-28.36",
+        "output_i": "-16.07",
+        "output_tp": "-2.20",
+        "output_lra": "11.70",
+        "output_thresh": "-28.19",
         "normalization_type": "dynamic",
-        "target_offset": "0.21"
+        "target_offset": "0.07"
       }
     },
     {
@@ -930,16 +930,16 @@
       "duration_seconds": 100.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-18.66",
-        "input_tp": "-7.85",
-        "input_lra": "1.30",
-        "input_thresh": "-29.20",
-        "output_i": "-15.92",
-        "output_tp": "-4.30",
-        "output_lra": "1.30",
-        "output_thresh": "-26.58",
+        "input_i": "-18.64",
+        "input_tp": "-6.16",
+        "input_lra": "3.20",
+        "input_thresh": "-29.21",
+        "output_i": "-15.76",
+        "output_tp": "-3.43",
+        "output_lra": "3.00",
+        "output_thresh": "-26.42",
         "normalization_type": "dynamic",
-        "target_offset": "-0.08"
+        "target_offset": "-0.24"
       }
     },
     {
@@ -950,10 +950,10 @@
       "duration_seconds": 100.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-40.99",
-        "input_tp": "-10.77",
+        "input_i": "-41.63",
+        "input_tp": "-11.42",
         "input_lra": "2.00",
-        "input_thresh": "-51.16",
+        "input_thresh": "-51.78",
         "output_i": "-22.87",
         "output_tp": "-1.00",
         "output_lra": "2.10",
@@ -971,15 +971,15 @@
       "loop": true,
       "ffmpeg_loudnorm": {
         "input_i": "-15.99",
-        "input_tp": "-5.21",
-        "input_lra": "1.30",
-        "input_thresh": "-26.99",
-        "output_i": "-15.90",
-        "output_tp": "-4.34",
-        "output_lra": "1.30",
-        "output_thresh": "-26.90",
+        "input_tp": "-3.54",
+        "input_lra": "3.20",
+        "input_thresh": "-26.97",
+        "output_i": "-15.77",
+        "output_tp": "-3.50",
+        "output_lra": "3.10",
+        "output_thresh": "-26.75",
         "normalization_type": "dynamic",
-        "target_offset": "-0.10"
+        "target_offset": "-0.23"
       }
     },
     {
@@ -990,16 +990,16 @@
       "duration_seconds": 80.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-18.67",
-        "input_tp": "-4.50",
-        "input_lra": "10.70",
-        "input_thresh": "-31.22",
-        "output_i": "-15.91",
+        "input_i": "-18.68",
+        "input_tp": "-5.17",
+        "input_lra": "8.90",
+        "input_thresh": "-30.90",
+        "output_i": "-15.74",
         "output_tp": "-1.69",
-        "output_lra": "6.00",
-        "output_thresh": "-28.33",
+        "output_lra": "7.80",
+        "output_thresh": "-27.78",
         "normalization_type": "dynamic",
-        "target_offset": "-0.09"
+        "target_offset": "-0.26"
       }
     },
     {
@@ -1011,15 +1011,15 @@
       "loop": true,
       "ffmpeg_loudnorm": {
         "input_i": "-16.00",
-        "input_tp": "-1.86",
-        "input_lra": "10.70",
-        "input_thresh": "-28.55",
-        "output_i": "-15.91",
+        "input_tp": "-2.51",
+        "input_lra": "8.90",
+        "input_thresh": "-28.23",
+        "output_i": "-15.74",
         "output_tp": "-1.66",
-        "output_lra": "6.00",
-        "output_thresh": "-28.32",
+        "output_lra": "7.70",
+        "output_thresh": "-27.78",
         "normalization_type": "dynamic",
-        "target_offset": "-0.09"
+        "target_offset": "-0.26"
       }
     },
     {
@@ -1030,16 +1030,16 @@
       "duration_seconds": 170.0,
       "loop": false,
       "ffmpeg_loudnorm": {
-        "input_i": "-20.53",
-        "input_tp": "-10.58",
-        "input_lra": "1.60",
-        "input_thresh": "-31.50",
-        "output_i": "-16.19",
-        "output_tp": "-6.07",
-        "output_lra": "1.60",
-        "output_thresh": "-27.59",
+        "input_i": "-20.21",
+        "input_tp": "-9.03",
+        "input_lra": "3.50",
+        "input_thresh": "-30.97",
+        "output_i": "-15.85",
+        "output_tp": "-4.88",
+        "output_lra": "3.20",
+        "output_thresh": "-26.80",
         "normalization_type": "dynamic",
-        "target_offset": "0.19"
+        "target_offset": "-0.15"
       }
     },
     {
@@ -1050,16 +1050,16 @@
       "duration_seconds": 170.0,
       "loop": false,
       "ffmpeg_loudnorm": {
-        "input_i": "-17.64",
-        "input_tp": "-3.73",
+        "input_i": "-17.82",
+        "input_tp": "-3.88",
         "input_lra": "3.40",
-        "input_thresh": "-27.81",
-        "output_i": "-15.99",
-        "output_tp": "-1.90",
-        "output_lra": "3.10",
-        "output_thresh": "-26.14",
+        "input_thresh": "-27.97",
+        "output_i": "-15.96",
+        "output_tp": "-1.91",
+        "output_lra": "3.00",
+        "output_thresh": "-26.10",
         "normalization_type": "dynamic",
-        "target_offset": "-0.01"
+        "target_offset": "-0.04"
       }
     },
     {
@@ -1070,16 +1070,16 @@
       "duration_seconds": 170.0,
       "loop": false,
       "ffmpeg_loudnorm": {
-        "input_i": "-22.78",
-        "input_tp": "-6.88",
-        "input_lra": "6.30",
-        "input_thresh": "-32.79",
-        "output_i": "-16.04",
+        "input_i": "-22.73",
+        "input_tp": "-6.24",
+        "input_lra": "7.40",
+        "input_thresh": "-32.74",
+        "output_i": "-15.99",
         "output_tp": "-1.00",
-        "output_lra": "8.80",
-        "output_thresh": "-26.06",
+        "output_lra": "9.10",
+        "output_thresh": "-26.01",
         "normalization_type": "dynamic",
-        "target_offset": "0.04"
+        "target_offset": "-0.01"
       }
     },
     {
@@ -1092,14 +1092,14 @@
       "ffmpeg_loudnorm": {
         "input_i": "-16.87",
         "input_tp": "-1.00",
-        "input_lra": "7.60",
-        "input_thresh": "-27.19",
-        "output_i": "-16.02",
+        "input_lra": "7.90",
+        "input_thresh": "-27.14",
+        "output_i": "-16.05",
         "output_tp": "-1.00",
-        "output_lra": "6.40",
-        "output_thresh": "-26.30",
+        "output_lra": "6.20",
+        "output_thresh": "-26.29",
         "normalization_type": "dynamic",
-        "target_offset": "0.02"
+        "target_offset": "0.05"
       }
     },
     {
@@ -1110,16 +1110,16 @@
       "duration_seconds": 160.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-12.95",
-        "input_tp": "-7.65",
-        "input_lra": "6.70",
-        "input_thresh": "-23.11",
-        "output_i": "-16.02",
-        "output_tp": "-10.41",
-        "output_lra": "6.60",
-        "output_thresh": "-26.16",
+        "input_i": "-15.11",
+        "input_tp": "-8.56",
+        "input_lra": "9.30",
+        "input_thresh": "-25.35",
+        "output_i": "-16.32",
+        "output_tp": "-9.63",
+        "output_lra": "8.30",
+        "output_thresh": "-26.52",
         "normalization_type": "dynamic",
-        "target_offset": "0.02"
+        "target_offset": "0.32"
       }
     },
     {
@@ -1130,16 +1130,16 @@
       "duration_seconds": 141.176,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-13.74",
-        "input_tp": "-8.13",
-        "input_lra": "5.40",
-        "input_thresh": "-23.89",
-        "output_i": "-16.02",
-        "output_tp": "-10.40",
-        "output_lra": "5.40",
-        "output_thresh": "-26.16",
+        "input_i": "-15.29",
+        "input_tp": "-8.77",
+        "input_lra": "8.30",
+        "input_thresh": "-25.48",
+        "output_i": "-16.10",
+        "output_tp": "-9.33",
+        "output_lra": "7.80",
+        "output_thresh": "-26.28",
         "normalization_type": "dynamic",
-        "target_offset": "0.02"
+        "target_offset": "0.10"
       }
     },
     {
@@ -1150,16 +1150,16 @@
       "duration_seconds": 150.0,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-13.23",
-        "input_tp": "-7.92",
-        "input_lra": "6.70",
-        "input_thresh": "-23.39",
-        "output_i": "-16.02",
-        "output_tp": "-10.41",
-        "output_lra": "6.60",
-        "output_thresh": "-26.16",
+        "input_i": "-15.39",
+        "input_tp": "-8.84",
+        "input_lra": "9.30",
+        "input_thresh": "-25.63",
+        "output_i": "-16.32",
+        "output_tp": "-9.63",
+        "output_lra": "8.30",
+        "output_thresh": "-26.52",
         "normalization_type": "dynamic",
-        "target_offset": "0.02"
+        "target_offset": "0.32"
       }
     },
     {
@@ -1170,16 +1170,16 @@
       "duration_seconds": 1.5,
       "loop": false,
       "ffmpeg_loudnorm": {
-        "input_i": "-14.00",
-        "input_tp": "-3.63",
+        "input_i": "-14.01",
+        "input_tp": "-2.92",
         "input_lra": "0.00",
-        "input_thresh": "-25.72",
-        "output_i": "-16.00",
-        "output_tp": "-5.64",
+        "input_thresh": "-24.76",
+        "output_i": "-16.01",
+        "output_tp": "-4.91",
         "output_lra": "0.00",
-        "output_thresh": "-27.72",
+        "output_thresh": "-26.76",
         "normalization_type": "linear",
-        "target_offset": "-0.00"
+        "target_offset": "0.01"
       }
     },
     {
@@ -1190,16 +1190,16 @@
       "duration_seconds": 3.0,
       "loop": false,
       "ffmpeg_loudnorm": {
-        "input_i": "-14.14",
-        "input_tp": "-4.48",
-        "input_lra": "0.00",
-        "input_thresh": "-27.46",
-        "output_i": "-12.57",
-        "output_tp": "-2.79",
+        "input_i": "-13.93",
+        "input_tp": "-2.48",
+        "input_lra": "0.10",
+        "input_thresh": "-25.28",
+        "output_i": "-14.57",
+        "output_tp": "-2.93",
         "output_lra": "0.00",
-        "output_thresh": "-26.10",
+        "output_thresh": "-25.99",
         "normalization_type": "dynamic",
-        "target_offset": "-3.43"
+        "target_offset": "-1.43"
       }
     },
     {
@@ -1210,16 +1210,16 @@
       "duration_seconds": 3.0,
       "loop": false,
       "ffmpeg_loudnorm": {
-        "input_i": "-13.73",
-        "input_tp": "-4.47",
-        "input_lra": "0.00",
-        "input_thresh": "-27.42",
-        "output_i": "-12.62",
-        "output_tp": "-2.87",
+        "input_i": "-13.87",
+        "input_tp": "-2.40",
+        "input_lra": "0.10",
+        "input_thresh": "-25.22",
+        "output_i": "-14.62",
+        "output_tp": "-2.94",
         "output_lra": "0.00",
-        "output_thresh": "-26.15",
+        "output_thresh": "-26.03",
         "normalization_type": "dynamic",
-        "target_offset": "-3.38"
+        "target_offset": "-1.38"
       }
     },
     {
@@ -1230,16 +1230,16 @@
       "duration_seconds": 3.5,
       "loop": false,
       "ffmpeg_loudnorm": {
-        "input_i": "-14.21",
-        "input_tp": "-2.01",
-        "input_lra": "2.90",
-        "input_thresh": "-24.49",
-        "output_i": "-16.37",
-        "output_tp": "-5.08",
+        "input_i": "-12.91",
+        "input_tp": "-3.07",
+        "input_lra": "1.70",
+        "input_thresh": "-23.06",
+        "output_i": "-16.34",
+        "output_tp": "-6.98",
         "output_lra": "0.00",
-        "output_thresh": "-26.64",
+        "output_thresh": "-26.47",
         "normalization_type": "dynamic",
-        "target_offset": "0.37"
+        "target_offset": "0.34"
       }
     },
     {
@@ -1271,15 +1271,15 @@
       "loop": false,
       "ffmpeg_loudnorm": {
         "input_i": "-14.00",
-        "input_tp": "-2.52",
+        "input_tp": "-1.64",
         "input_lra": "0.00",
-        "input_thresh": "-25.63",
-        "output_i": "-16.02",
-        "output_tp": "-4.52",
+        "input_thresh": "-24.62",
+        "output_i": "-16.00",
+        "output_tp": "-3.64",
         "output_lra": "0.00",
-        "output_thresh": "-27.65",
+        "output_thresh": "-26.62",
         "normalization_type": "linear",
-        "target_offset": "0.02"
+        "target_offset": "0.00"
       }
     },
     {
@@ -1290,16 +1290,16 @@
       "duration_seconds": 1.5,
       "loop": false,
       "ffmpeg_loudnorm": {
-        "input_i": "-13.99",
-        "input_tp": "-6.75",
+        "input_i": "-14.00",
+        "input_tp": "-4.08",
         "input_lra": "0.00",
-        "input_thresh": "-23.99",
-        "output_i": "-16.01",
-        "output_tp": "-8.75",
+        "input_thresh": "-24.00",
+        "output_i": "-16.00",
+        "output_tp": "-6.08",
         "output_lra": "0.00",
-        "output_thresh": "-26.01",
+        "output_thresh": "-26.00",
         "normalization_type": "linear",
-        "target_offset": "0.01"
+        "target_offset": "-0.00"
       }
     },
     {
@@ -1310,16 +1310,16 @@
       "duration_seconds": 2.0,
       "loop": false,
       "ffmpeg_loudnorm": {
-        "input_i": "-13.99",
-        "input_tp": "-3.52",
+        "input_i": "-14.01",
+        "input_tp": "-3.45",
         "input_lra": "0.00",
-        "input_thresh": "-24.80",
+        "input_thresh": "-24.81",
         "output_i": "-16.00",
-        "output_tp": "-5.53",
+        "output_tp": "-5.45",
         "output_lra": "0.00",
-        "output_thresh": "-26.81",
+        "output_thresh": "-26.80",
         "normalization_type": "linear",
-        "target_offset": "0.00"
+        "target_offset": "-0.00"
       }
     },
     {
@@ -1351,15 +1351,15 @@
       "loop": false,
       "ffmpeg_loudnorm": {
         "input_i": "-13.04",
-        "input_tp": "-4.10",
-        "input_lra": "0.20",
+        "input_tp": "-3.74",
+        "input_lra": "0.30",
         "input_thresh": "-23.55",
-        "output_i": "-15.04",
-        "output_tp": "-6.10",
+        "output_i": "-14.87",
+        "output_tp": "-5.74",
         "output_lra": "0.00",
         "output_thresh": "-25.21",
         "normalization_type": "dynamic",
-        "target_offset": "-0.96"
+        "target_offset": "-1.13"
       }
     },
     {
@@ -1451,13 +1451,13 @@
       "loop": false,
       "ffmpeg_loudnorm": {
         "input_i": "-12.87",
-        "input_tp": "-5.02",
+        "input_tp": "-5.18",
         "input_lra": "0.30",
-        "input_thresh": "-23.71",
+        "input_thresh": "-23.70",
         "output_i": "-14.87",
-        "output_tp": "-7.02",
+        "output_tp": "-7.18",
         "output_lra": "0.00",
-        "output_thresh": "-25.55",
+        "output_thresh": "-25.54",
         "normalization_type": "dynamic",
         "target_offset": "-1.13"
       }

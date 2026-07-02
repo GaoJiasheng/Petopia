@@ -208,8 +208,8 @@ def main() -> None:
 
     # Stingers are one-shot, so loudnorm can safely remaster each file.
     manual_sting_filters = {
-        "sting_evolve_b": "volume=-3.48dB",
-        "sting_evolve_c": "volume=-3.47dB",
+        "sting_evolve_b": "volume=-1.48dB",
+        "sting_evolve_c": "volume=-1.40dB",
         "sting_evolve_d": "acompressor=threshold=-16dB:ratio=2:attack=5:release=120:makeup=1,volume=1dB,alimiter=limit=0.70",
     }
     for entry in manifest["assets"]:

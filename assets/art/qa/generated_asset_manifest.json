@@ -1,5 +1,5 @@
 {
-  "count": 1267,
+  "count": 1273,
   "assets": [
     {
       "path": "assets/art/pets/boo/actions/pet_boo_stageC_bath.png",
@@ -6233,6 +6233,48 @@
     },
     {
       "path": "assets/art/samples/petopia-golden-v4-yard-main.png",
+      "width": 941,
+      "height": 1672,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/samples/petopia-golden-v5-cat-growth-travel.png",
+      "width": 1774,
+      "height": 887,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/samples/petopia-golden-v5-contact-sheet.png",
+      "width": 1672,
+      "height": 1124,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/samples/petopia-golden-v5-postcard-lighthouse-bay-v2.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/samples/petopia-golden-v5-ui-board.png",
+      "width": 1536,
+      "height": 1024,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/samples/petopia-golden-v5-visitor-sparrow-natural.png",
+      "width": 1662,
+      "height": 946,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/samples/petopia-golden-v5-yard-main.png",
       "width": 941,
       "height": 1672,
       "mode": "RGB",
