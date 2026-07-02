@@ -1,0 +1,42 @@
+# ── 机密 / 环境（务必忽略，切勿提交）───────────────
+.env
+.env.*
+!.env.example
+*.key
+secrets/
+
+# ── Flutter / Dart ─────────────────────────────
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+*.iml
+.flutter-plugins
+.flutter-plugins-dependencies
+pubspec.lock
+
+# ── iOS / macOS ────────────────────────────────
+**/ios/Pods/
+**/ios/.symlinks/
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/macos/Pods/
+.DS_Store
+
+# ── Android ────────────────────────────────────
+**/android/.gradle/
+**/android/captures/
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+*.keystore
+*.jks
+
+# ── IDE ────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+
+# ── 其他 ───────────────────────────────────────
+*.log
+coverage/
