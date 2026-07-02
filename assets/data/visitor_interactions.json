@@ -1,0 +1,2445 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "vi_sparrow_cat",
+      "visitorId": "visitor_sparrow",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "阿橘尾巴拍了三下，最终决定……继续睡。啾啾在它肚皮上开了演唱会",
+      "animRef": "anim_vi_sparrow_cat",
+      "expReward": 3,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_sparrow_shiba",
+      "visitorId": "visitor_sparrow",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "啾啾落在柴犬头顶当瞭望塔，柴犬以为自己升职了，一下午走路都端端正正",
+      "animRef": "anim_vi_sparrow_shiba",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_sparrow_rabbit",
+      "visitorId": "visitor_sparrow",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "雪团躲在草丛里偷看啾啾洗沙浴，看完自己也学着抖了抖耳朵，扬起一小团金色的灰",
+      "animRef": "anim_vi_sparrow_rabbit",
+      "expReward": 3,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_sparrow_hamster",
+      "visitorId": "visitor_sparrow",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "啾啾啄走了仓鼠晒在门口的一粒谷子，仓鼠追出两步，想想腮帮里还有存货，算了",
+      "animRef": "anim_vi_sparrow_hamster",
+      "expReward": 3,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_sparrow_turtle",
+      "visitorId": "visitor_sparrow",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "啾啾把乌龟的背当成了会移动的观景台，一龟一雀慢悠悠环院一周，比散步还慢",
+      "animRef": "anim_vi_sparrow_turtle",
+      "expReward": 3,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_sparrow_parrot",
+      "visitorId": "visitor_sparrow",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "两只鸟用你听不懂的话聊了一下午，皮皮学会了一句新的（内容存疑的）方言",
+      "animRef": "anim_vi_sparrow_parrot",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_sparrow_snake",
+      "visitorId": "visitor_sparrow",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "啾啾在安全距离外歪头研究这条「会动的树枝」，玉米蛇高冷地蜕了半寸皮以示回应",
+      "animRef": "anim_vi_sparrow_snake",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_sparrow_chameleon",
+      "visitorId": "visitor_sparrow",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩把自己变成麻雀色想混进对话，啾啾绕着它跳了一圈，礼貌地没有拆穿",
+      "animRef": "anim_vi_sparrow_chameleon",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_sparrow_ember",
+      "visitorId": "visitor_sparrow",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "啾啾在小火龙尾巴的暖光旁烘蓬松了羽毛，走时留下一根亮闪闪的小灰羽当谢礼",
+      "animRef": "anim_vi_sparrow_ember",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_sparrow_uni",
+      "visitorId": "visitor_sparrow",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "啾啾站上尼可的小角尖梳羽毛，尼可僵着脖子一动不敢动，像顶着全世界最轻的王冠",
+      "animRef": "anim_vi_sparrow_uni",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_sparrow_boo",
+      "visitorId": "visitor_sparrow",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "啾啾径盶从噗噗身体里穿了过去，愣了两秒，决定当作今天风有点凉",
+      "animRef": "anim_vi_sparrow_boo",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_sparrow_starbug",
+      "visitorId": "visitor_sparrow",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "啾啾把星星虫认成了掉在地上的星星，围着它蹦了一圈，最后郑重地鞠了一躬",
+      "animRef": "anim_vi_sparrow_starbug",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_calico_cat",
+      "visitorId": "visitor_calico",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "两只猫背对背各晒各的太阳，中间隔着一掌宽的「江湖规矩」，谁也没先开口",
+      "animRef": "anim_vi_calico_cat",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_calico_shiba",
+      "visitorId": "visitor_calico",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬热情冲上去交朋友，三花猫一记眼神让它急刹车，改成原地摇尾巴问好",
+      "animRef": "anim_vi_calico_shiba",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_calico_rabbit",
+      "visitorId": "visitor_calico",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "三花猫蹲在篱笆上守了雪团一下午，像个不肯承认自己在当保镖的保镖",
+      "animRef": "anim_vi_calico_rabbit",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_calico_hamster",
+      "visitorId": "visitor_calico",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "仓鼠鼓着腮帮从三花猫面前大摇大摆走过，猫爪抬了抬，最终选择了尊重勇者",
+      "animRef": "anim_vi_calico_hamster",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_calico_turtle",
+      "visitorId": "visitor_calico",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "三花猫伸爪轻拍龟壳，咚咚两声，像敲了一扇没人应门的老房子，它便在门口卧下了",
+      "animRef": "anim_vi_calico_turtle",
+      "expReward": 3,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_calico_parrot",
+      "visitorId": "visitor_calico",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮学了一声完美的猫叫，三花猫环顾四周找了半天「同类」，尾巴尖写满困惑",
+      "animRef": "anim_vi_calico_parrot",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_calico_snake",
+      "visitorId": "visitor_calico",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "流浪惯了的猫见过世面，与玉米蛇隔着石板互相点头，两位独行侠达成沉默的停战协议",
+      "animRef": "anim_vi_calico_snake",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_calico_chameleon",
+      "visitorId": "visitor_calico",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩慢慢变成三花配色以表友好，三花猫盯着这面「猫镜子」，破天荒喵了一声",
+      "animRef": "anim_vi_calico_chameleon",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_calico_ember",
+      "visitorId": "visitor_calico",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "雨夜的三花猫凑在小火龙身边取暖，火苗特意压低了一点，怕燎着客人的胡子",
+      "animRef": "anim_vi_calico_ember",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_calico_uni",
+      "visitorId": "visitor_calico",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "三花猫追着尼可角尖洒落的小彩光扑了一路，久违地玩成了一只小猫",
+      "animRef": "anim_vi_calico_uni",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_calico_boo",
+      "visitorId": "visitor_calico",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "三花猫是院子里唯一能一眼看见噗噗的客人，它冲着「空气」慢慢眨了眨眼",
+      "animRef": "anim_vi_calico_boo",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_calico_starbug",
+      "visitorId": "visitor_calico",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "三花猫把星星虫小心地衔到高处的花盆沿，好让这颗「星星」离天空更近一点",
+      "animRef": "anim_vi_calico_starbug",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_snail_cat",
+      "visitorId": "visitor_snail",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "蜗牛递送一片叶子信用了两小时，阿橘睡了两觉醒来，签收时假装自己等了很久",
+      "animRef": "anim_vi_snail_cat",
+      "expReward": 3,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_snail_shiba",
+      "visitorId": "visitor_snail",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬绕着蜗牛跑了三十圈想帮它「加速」，蜗牛在风里坚定地前进了三厘米",
+      "animRef": "anim_vi_snail_shiba",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_snail_rabbit",
+      "visitorId": "visitor_snail",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "雪团收到蜗牛慢递的三叶草，快递签收方式是：当场吃掉，五星好评",
+      "animRef": "anim_vi_snail_rabbit",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_snail_hamster",
+      "visitorId": "visitor_snail",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "仓鼠想把蜗牛的壳也收进囤货清单，反复确认后遗憾地发现里面「已有住户」",
+      "animRef": "anim_vi_snail_hamster",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_snail_turtle",
+      "visitorId": "visitor_snail",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "两位慢家伙并排走完一段石板路，用了一下午，聊了很多，谁也没催谁",
+      "animRef": "anim_vi_snail_turtle",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_snail_parrot",
+      "visitorId": "visitor_snail",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮全程实况转播蜗牛的行进：「向左！向左！停！」蜗牛的路线毫无变化",
+      "animRef": "anim_vi_snail_parrot",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_snail_snake",
+      "visitorId": "visitor_snail",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "玉米蛇给蜗牛让出一条最平坦的晒石小道，全程冷脸，但尾巴尖悄悄指了路",
+      "animRef": "anim_vi_snail_snake",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_snail_chameleon",
+      "visitorId": "visitor_snail",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩陪蜗牛以相同的速度走了一路，这是它这辈子第一次觉得自己「太快了」",
+      "animRef": "anim_vi_snail_chameleon",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_snail_ember",
+      "visitorId": "visitor_snail",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "蜗牛托小火龙帮忙烘干被露水打湿的信纸，火候拿捏得像一台温柔的小烤箱",
+      "animRef": "anim_vi_snail_ember",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_snail_uni",
+      "visitorId": "visitor_snail",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "蜗牛爬过的地方留下一道银线，尼可用角尖的微光把它照成了一条小小的彩虹路",
+      "animRef": "anim_vi_snail_uni",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_snail_boo",
+      "visitorId": "visitor_snail",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "噗噗飘在蜗牛头顶帮它挡了一路太阳，蜗牛以为今天是个自带阴凉的好天气",
+      "animRef": "anim_vi_snail_boo",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_snail_starbug",
+      "visitorId": "visitor_snail",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "星星虫趴在蜗牛壳顶当车灯，夜里的院子多了一辆最慢的、发着光的小车",
+      "animRef": "anim_vi_snail_starbug",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_butterfly_cat",
+      "visitorId": "visitor_butterfly",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "白粉蝶停在阿橘鼻尖，猫眼慢慢对成了斗鸡眼，为了不打扰客人硬是没打喷嚏",
+      "animRef": "anim_vi_butterfly_cat",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_butterfly_shiba",
+      "visitorId": "visitor_butterfly",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬追着白粉蝶满院扑蝶，一次没够着，却快乐得像赢了全世界",
+      "animRef": "anim_vi_butterfly_shiba",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_butterfly_rabbit",
+      "visitorId": "visitor_butterfly",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "白粉蝶落在雪团的垂耳上歇脚，雪团把耳朵举得又低又稳，像端着一杯不敢洒的水",
+      "animRef": "anim_vi_butterfly_rabbit",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_butterfly_hamster",
+      "visitorId": "visitor_butterfly",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "白粉蝶围着仓鼠塞满的腮帮绕了两圈，误认成两朵会跑的花苞",
+      "animRef": "anim_vi_butterfly_hamster",
+      "expReward": 3,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_butterfly_turtle",
+      "visitorId": "visitor_butterfly",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "白粉蝶在龟壳上停了整整一刻钟，乌龟一动不动——这是它能给的最盛大的欢迎",
+      "animRef": "anim_vi_butterfly_turtle",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_butterfly_parrot",
+      "visitorId": "visitor_butterfly",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮想跟白粉蝶学「无声地说话」，练了一下午，失败，但翅膀晃得挺像样",
+      "animRef": "anim_vi_butterfly_parrot",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_butterfly_snake",
+      "visitorId": "visitor_butterfly",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "白粉蝶轻轻落在玉米蛇新蜕的皮上，像给一封告别信盖了一枚白色的邮戳",
+      "animRef": "anim_vi_butterfly_snake",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_butterfly_chameleon",
+      "visitorId": "visitor_butterfly",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩变成花朵色安静等待，白粉蝶真的落了下来——伪装大师今天是一朵得意的花",
+      "animRef": "anim_vi_butterfly_chameleon",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_butterfly_ember",
+      "visitorId": "visitor_butterfly",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "白粉蝶绕着小火龙的暖光跳了一支缓慢的圆舞曲，火苗晃啊晃，成了追光灯",
+      "animRef": "anim_vi_butterfly_ember",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_butterfly_uni",
+      "visitorId": "visitor_butterfly",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "白粉蝶与尼可在花丛里捉迷藏，白色找白色，最后靠角尖那点彩光分出了彼此",
+      "animRef": "anim_vi_butterfly_uni",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_butterfly_boo",
+      "visitorId": "visitor_butterfly",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "白粉蝶穿过噗噗的身体又折回来穿了一次，噗噗痒得在半空打了个透明的滚",
+      "animRef": "anim_vi_butterfly_boo",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_butterfly_starbug",
+      "visitorId": "visitor_butterfly",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "白天的星星虫不发光，白粉蝶陪它坐在草叶上，像两枚安静的白色标点",
+      "animRef": "anim_vi_butterfly_starbug",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_hedgehog_cat",
+      "visitorId": "visitor_hedgehog",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "阿橘伸爪碰了碰球球，扎了一下，从此对这颗「会走的松果」保持礼貌的敬意",
+      "animRef": "anim_vi_hedgehog_cat",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_hedgehog_shiba",
+      "visitorId": "visitor_hedgehog",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬叼来自己最爱的球想跟球球一起玩，摆在一起认真比对：确实，很像",
+      "animRef": "anim_vi_hedgehog_shiba",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_hedgehog_rabbit",
+      "visitorId": "visitor_hedgehog",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "雪团小心地把苹果片推过去，球球回赠了一片不扎人的落叶",
+      "animRef": "anim_vi_hedgehog_rabbit",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_hedgehog_hamster",
+      "visitorId": "visitor_hedgehog",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "球球背上扎着果子路过，仓鼠肃然起敬：原来还能把仓库背在身上",
+      "animRef": "anim_vi_hedgehog_hamster",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_hedgehog_turtle",
+      "visitorId": "visitor_hedgehog",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "一个缩壳一个缩球，两团「打不开的小包裹」并排晒太阳，安全感翻倍",
+      "animRef": "anim_vi_hedgehog_turtle",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_hedgehog_parrot",
+      "visitorId": "visitor_hedgehog",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮数球球背上的刺数到一百就乱了，宣布：「反正很多！非常多！」",
+      "animRef": "anim_vi_hedgehog_parrot",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_hedgehog_snake",
+      "visitorId": "visitor_hedgehog",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "玉米蛇绕着球球巡视一圈，确认这团刺球毫无破绽，冷冷地给出了认可的点头",
+      "animRef": "anim_vi_hedgehog_snake",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_hedgehog_chameleon",
+      "visitorId": "visitor_hedgehog",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩尝试变出刺的纹理失败，只变出了圆点花纹，球球看起来还挺喜欢",
+      "animRef": "anim_vi_hedgehog_chameleon",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_hedgehog_ember",
+      "visitorId": "visitor_hedgehog",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "球球在小火龙旁边烤暖了肚皮，睡着后轻轻打鼾，刺都放松得塌下去一点",
+      "animRef": "anim_vi_hedgehog_ember",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_hedgehog_uni",
+      "visitorId": "visitor_hedgehog",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "尼可用角尖帮球球取下背上挂了一路的苹果片，全院最尖的两个尖尖达成合作",
+      "animRef": "anim_vi_hedgehog_uni",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_hedgehog_boo",
+      "visitorId": "visitor_hedgehog",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "噗噗好奇地抱了一下球球——幸好幽灵不怕扎，这是球球第一个敢抱它的朋友",
+      "animRef": "anim_vi_hedgehog_boo",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_hedgehog_starbug",
+      "visitorId": "visitor_hedgehog",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "夜里球球背上落了颗发光的星星虫，它一路小心地走，像运送一盏易碎的灯",
+      "animRef": "anim_vi_hedgehog_starbug",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_pigeon_cat",
+      "visitorId": "visitor_pigeon",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "咕咕在阿橘面前踱步找食，步伐胖而坦荡，阿橘看着看着竟跟着点起了头",
+      "animRef": "anim_vi_pigeon_cat",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_pigeon_shiba",
+      "visitorId": "visitor_pigeon",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬和咕咕面对面歪头，谁也没搞懂对方，但都觉得今天交到了朋友",
+      "animRef": "anim_vi_pigeon_shiba",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_pigeon_rabbit",
+      "visitorId": "visitor_pigeon",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "咕咕落地的扑腾声吓得雪团缩进纸箱，十分钟后两只从箱子两侧同时探出头",
+      "animRef": "anim_vi_pigeon_rabbit",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_pigeon_hamster",
+      "visitorId": "visitor_pigeon",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "咕咕啄食掉在地上的谷粒，仓鼠在一旁记账似的盯着，最后大方地又推出去三粒",
+      "animRef": "anim_vi_pigeon_hamster",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_pigeon_turtle",
+      "visitorId": "visitor_pigeon",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "咕咕在乌龟旁边咕咕哝哝讲了一下午城里见闻，乌龟每隔十分钟点一次头",
+      "animRef": "anim_vi_pigeon_turtle",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_pigeon_parrot",
+      "visitorId": "visitor_pigeon",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮完美复刻了「咕咕」，咕咕震惊回头，两只鸟就此展开一场真假咕咕辩论",
+      "animRef": "anim_vi_pigeon_parrot",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_pigeon_snake",
+      "visitorId": "visitor_pigeon",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "咕咕胖胖的影子从玉米蛇的晒石上掠过，蛇抬头看了一眼，为那份从容让了半块石头",
+      "animRef": "anim_vi_pigeon_snake",
+      "expReward": 3,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_pigeon_chameleon",
+      "visitorId": "visitor_pigeon",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩变成鸽灰色混进咕咕的觅食路线，被识破后咕咕多分了它一粒谷子当封口费",
+      "animRef": "anim_vi_pigeon_chameleon",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_pigeon_ember",
+      "visitorId": "visitor_pigeon",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "咕咕站在小火龙旁烘干淋湿的翅膀，蒸汽袅袅，像一只刚出锅的包子",
+      "animRef": "anim_vi_pigeon_ember",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_pigeon_uni",
+      "visitorId": "visitor_pigeon",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "咕咕绕着尼可走了三圈，最终认定这是一只「头上长了树枝的白鸽子」，倍感亲切",
+      "animRef": "anim_vi_pigeon_uni",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_pigeon_boo",
+      "visitorId": "visitor_pigeon",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "咕咕在噗噗常待的角落留下一根羽毛，不知是掉的还是送的，噗噗决定当作是送的",
+      "animRef": "anim_vi_pigeon_boo",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vi_pigeon_starbug",
+      "visitorId": "visitor_pigeon",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "咕咕以为星星虫是面包屑，凑近一看在发光，吓得倒退三步，又忍不住凑回来",
+      "animRef": "anim_vi_pigeon_starbug",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_squirrel_cat",
+      "visitorId": "visitor_squirrel",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "栗栗在树上抱着松果观望，阿橘在树下抱着饭碗观望，双方就「谁的抱姿更标准」对峙一下午",
+      "animRef": "anim_vpi_squirrel_cat",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_squirrel_shiba",
+      "visitorId": "visitor_squirrel",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "栗栗把松果埋进花坛，柴犬热心地当场刨出来还给它，如此往复五次，双方都很充实",
+      "animRef": "anim_vpi_squirrel_shiba",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_squirrel_rabbit",
+      "visitorId": "visitor_squirrel",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "栗栗分给雪团半颗榛子，雪团回赠一根胡萝卜缨，这场以物易物在紧张的鼻子抽动中圆满成交",
+      "animRef": "anim_vpi_squirrel_rabbit",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_squirrel_hamster",
+      "visitorId": "visitor_squirrel",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "一场庄严的「囤货交流会」：双方互相检阅腮帮与树洞，结为塞满联盟【§8.4 原示例】",
+      "animRef": "anim_vpi_squirrel_hamster",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_squirrel_turtle",
+      "visitorId": "visitor_squirrel",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "栗栗把一颗松果寄存在龟壳旁，「这里最安全」，乌龟就此多了一份看守的工作与骄傲",
+      "animRef": "anim_vpi_squirrel_turtle",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_squirrel_parrot",
+      "visitorId": "visitor_squirrel",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮把栗栗埋松果的位置一一大声播报，栗栗抱头：院子里从此没有秘密",
+      "animRef": "anim_vpi_squirrel_parrot",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_squirrel_snake",
+      "visitorId": "visitor_squirrel",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "栗栗在树枝上、玉米蛇在石头上，两条蓬松与不蓬松的尾巴隔空摆出了同一个弧度",
+      "animRef": "anim_vpi_squirrel_snake",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_squirrel_chameleon",
+      "visitorId": "visitor_squirrel",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩变成树皮色贴在树干上，栗栗差点把松果塞进它嘴里当树洞",
+      "animRef": "anim_vpi_squirrel_chameleon",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_squirrel_ember",
+      "visitorId": "visitor_squirrel",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "栗栗把一颗松果放在小火龙面前烤，烤出满院清香，两只分食了这颗冬日限定爆米花",
+      "animRef": "anim_vpi_squirrel_ember",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_squirrel_uni",
+      "visitorId": "visitor_squirrel",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "栗栗蹲在枝头看尼可，看了很久，然后把今年最饱满的一颗榛子丢在了它脚边",
+      "animRef": "anim_vpi_squirrel_uni",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_squirrel_boo",
+      "visitorId": "visitor_squirrel",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "栗栗的松果凭空飘了起来——噗噗只是想帮忙搬运，栗栗尖叫着追了半个院子",
+      "animRef": "anim_vpi_squirrel_boo",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_squirrel_starbug",
+      "visitorId": "visitor_squirrel",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "栗栗把星星虫小心地捧进树洞躲雨，那晚整棵树的心里都是亮的",
+      "animRef": "anim_vpi_squirrel_starbug",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_crow_cat",
+      "visitorId": "visitor_crow",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "亮亮盯上了阿橘饭碗的金属反光，一鸟一猫围着碗展开了一场谁也不动手的心理战",
+      "animRef": "anim_vpi_crow_cat",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_crow_shiba",
+      "visitorId": "visitor_crow",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "亮亮叼走了柴犬的铃铛玩具，柴犬追讨半天，最后换回一枚瓶盖，双方都觉得自己赚了",
+      "animRef": "anim_vpi_crow_shiba",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_crow_rabbit",
+      "visitorId": "visitor_crow",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "亮亮送给雪团一颗亮晶晶的玻璃扣子，雪团吓得躲开又忍不住回来，最后收进了草窝",
+      "animRef": "anim_vpi_crow_rabbit",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_crow_hamster",
+      "visitorId": "visitor_crow",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "收集家会面：亮亮展示瓶盖珍藏，仓鼠鼓出腮帮展示存粮，互相看不懂但大受震撼",
+      "animRef": "anim_vpi_crow_hamster",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_crow_turtle",
+      "visitorId": "visitor_crow",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "亮亮把一枚亮片摆在龟壳正中央，退后打量：嗯，全院最稳的展示台",
+      "animRef": "anim_vpi_crow_turtle",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_crow_parrot",
+      "visitorId": "visitor_crow",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "亮亮和皮皮互相炫耀藏品与词汇量，一个越摆越多，一个越说越快，不欢而散又相约明天",
+      "animRef": "anim_vpi_crow_parrot",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_crow_snake",
+      "visitorId": "visitor_crow",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "亮亮被玉米蛇蜕下的旧皮迷住了——那可是一整条闪光的绸带，蛇难得大方：拿去",
+      "animRef": "anim_vpi_crow_snake",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_crow_chameleon",
+      "visitorId": "visitor_crow",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "亮亮叼来一颗玻璃珠，阿彩为表感谢把自己变成了玻璃珠色，亮亮困惑离场【§8.4 原示例】",
+      "animRef": "anim_vpi_crow_chameleon",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_crow_ember",
+      "visitorId": "visitor_crow",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "亮亮着迷于小火龙尾巴上「叼不走的光」，试探三次未遂，遗憾地记进了愿望清单",
+      "animRef": "anim_vpi_crow_ember",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_crow_uni",
+      "visitorId": "visitor_crow",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "亮亮围着尼可的角绕飞三圈，确认这是全院最大的「亮东西」，郑重献上了自己最好的瓶盖",
+      "animRef": "anim_vpi_crow_uni",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_crow_boo",
+      "visitorId": "visitor_crow",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "亮亮的藏品夜里被摆成了一个爱心形状，它警惕地环顾四周，又悄悄把爱心摆得更圆了",
+      "animRef": "anim_vpi_crow_boo",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_crow_starbug",
+      "visitorId": "visitor_crow",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "亮亮盯着星星虫纠结了一夜：会发光的收藏品，和会发光的朋友，最后它选了朋友",
+      "animRef": "anim_vpi_crow_starbug",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_frog_cat",
+      "visitorId": "visitor_frog",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "呱太一声「呱」把打盹的阿橘弹起三寸高，随后两位在屋檐下达成了雨天互不吵醒条约",
+      "animRef": "anim_vpi_frog_cat",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_frog_shiba",
+      "visitorId": "visitor_frog",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬学呱太跳水坑，溅了自己一身泥，呱太给这记入水姿势打出了满分",
+      "animRef": "anim_vpi_frog_shiba",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_frog_rabbit",
+      "visitorId": "visitor_frog",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "雪团在窗边看呱太淋雨，担心地把自己的干草往外推了推，呱太表示青蛙淋雨是福利",
+      "animRef": "anim_vpi_frog_rabbit",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_frog_hamster",
+      "visitorId": "visitor_frog",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "呱太邀请仓鼠欣赏雨景，仓鼠忙着把淋湿的存粮搬进屋，来回跑了十七趟",
+      "animRef": "anim_vpi_frog_hamster",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_frog_turtle",
+      "visitorId": "visitor_frog",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "池塘边的静坐大赛，三小时无人动。裁判（你）宣布并列冠军【§8.4 原示例】",
+      "animRef": "anim_vpi_frog_turtle",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_frog_parrot",
+      "visitorId": "visitor_frog",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮跟着呱太练合唱，一句「呱」学得字正腔圆，从此雨天院子里有两台青蛙广播",
+      "animRef": "anim_vpi_frog_parrot",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_frog_snake",
+      "visitorId": "visitor_frog",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "呱太与玉米蛇在雨里对视良久——自然界的老规矩在此暂停，今天大家只是躲雨的邻居",
+      "animRef": "anim_vpi_frog_snake",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_frog_chameleon",
+      "visitorId": "visitor_frog",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩变成荷叶色蹲在池塘边，呱太毫不客气地跳上来歇脚，把它当成了公共设施",
+      "animRef": "anim_vpi_frog_chameleon",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_frog_ember",
+      "visitorId": "visitor_frog",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "呱太隔着雨帘远远欣赏小火龙檐下的暖光，一个爱雨一个怕雨，却共享了同一个屋檐",
+      "animRef": "anim_vpi_frog_ember",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_frog_uni",
+      "visitorId": "visitor_frog",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "雨停时呱太带尼可去看池塘里倒映的彩虹，「水里那条不会消失得那么快。」",
+      "animRef": "anim_vpi_frog_uni",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_frog_boo",
+      "visitorId": "visitor_frog",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "呱太在雨里唱，噗噗在檐下轻轻晃，一场只有他们俩听得懂的雨夜音乐会",
+      "animRef": "anim_vpi_frog_boo",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_frog_starbug",
+      "visitorId": "visitor_frog",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "呱太守在叶子下替怕雨的星星虫撑了一夜「蛙形伞」，天晴时肩膀都蹲麻了",
+      "animRef": "anim_vpi_frog_starbug",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fireflies_cat",
+      "visitorId": "visitor_firefly",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "萤火虫群绕着阿橘的尾巴打转，它拍了两下没拍着，索性躺平当了夜灯底座",
+      "animRef": "anim_vpi_fireflies_cat",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fireflies_shiba",
+      "visitorId": "visitor_firefly",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬追着光点满院子跑，萤火虫们轮班逗它，最后它对着夜空汪了一声表示尽兴",
+      "animRef": "anim_vpi_fireflies_shiba",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fireflies_rabbit",
+      "visitorId": "visitor_firefly",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "萤火虫在雪团的耳朵边排成一圈小灯，胆小的兔子第一次觉得黑夜也可以很亮",
+      "animRef": "anim_vpi_fireflies_rabbit",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fireflies_hamster",
+      "visitorId": "visitor_firefly",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "仓鼠试图把一只萤火虫塞进腮帮当手电筒，被你温柔制止，改为提着草叶灯笼巡逻",
+      "animRef": "anim_vpi_fireflies_hamster",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fireflies_turtle",
+      "visitorId": "visitor_firefly",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "萤火虫们停满龟壳，乌龟驮着一整片星空，走完了今晚最慢也最亮的一段路",
+      "animRef": "anim_vpi_fireflies_turtle",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fireflies_parrot",
+      "visitorId": "visitor_firefly",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮想跟萤火虫学「闪光语」，学不会，急得直跳脚：「你们倒是出个声啊！」",
+      "animRef": "anim_vpi_fireflies_parrot",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fireflies_snake",
+      "visitorId": "visitor_firefly",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "玉米蛇盘成一圈，萤火虫恰好落成一环光带，那晚它成了院子里一枚发光的戒指",
+      "animRef": "anim_vpi_fireflies_snake",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fireflies_chameleon",
+      "visitorId": "visitor_firefly",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩努力想「变亮」失败，萤火虫们体贴地停在它背上，帮它圆了一次梦",
+      "animRef": "anim_vpi_fireflies_chameleon",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fireflies_ember",
+      "visitorId": "visitor_firefly",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "萤火虫群围着小火龙的尾巴光转圈，像小灯来朝见大灯，火苗害羞地压低了两分",
+      "animRef": "anim_vpi_fireflies_ember",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fireflies_uni",
+      "visitorId": "visitor_firefly",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "萤火虫的光落在尼可的角上折出细碎的虹色，整个院子安静得像屏住了呼吸",
+      "animRef": "anim_vpi_fireflies_uni",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fireflies_boo",
+      "visitorId": "visitor_firefly",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "噗噗混进萤火虫群一起飘，唯一破绽是它不会发光，萤火虫们默契地把它围在中间",
+      "animRef": "anim_vpi_fireflies_boo",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fireflies_starbug",
+      "visitorId": "visitor_firefly",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "萤火虫群围着星星虫盘旋致意——绿色的小灯们，见到了传说中金色的那一盏",
+      "animRef": "anim_vpi_fireflies_starbug",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_tanuki_cat",
+      "visitorId": "visitor_tanuki",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "橘色狸猫和橘猫在院里撞了个满怀，毛色一致，圆度相当，你差点认错了自家孩子",
+      "animRef": "anim_vpi_tanuki_cat",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_tanuki_shiba",
+      "visitorId": "visitor_tanuki",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬对狸猫肚子的圆润程度表达了真诚的羡慕，狸猫回赠了拍肚皮教学一节",
+      "animRef": "anim_vpi_tanuki_shiba",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_tanuki_rabbit",
+      "visitorId": "visitor_tanuki",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "狸猫变戏法似的从背后摸出一片叶子送给雪团，雪团犹豫三秒，咔嚓吃了",
+      "animRef": "anim_vpi_tanuki_rabbit",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_tanuki_hamster",
+      "visitorId": "visitor_tanuki",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "狸猫和仓鼠比赛「谁能显得更圆」，两团毛球在草地上滚作一处，不分胜负",
+      "animRef": "anim_vpi_tanuki_hamster",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_tanuki_turtle",
+      "visitorId": "visitor_tanuki",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "狸猫用叶子给乌龟变了顶小帽子，乌龟戴着它慢慢走了一下午，谁也没舍得摘",
+      "animRef": "anim_vpi_tanuki_turtle",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_tanuki_parrot",
+      "visitorId": "visitor_tanuki",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮揭穿了狸猫「叶子变金币」的戏法，狸猫恼羞成怒，又变了一片更大的叶子",
+      "animRef": "anim_vpi_tanuki_parrot",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_tanuki_snake",
+      "visitorId": "visitor_tanuki",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "狸猫想跟玉米蛇比谁更会「装成别的东西」，蛇盘成一坨绳子，狸猫心服口服",
+      "animRef": "anim_vpi_tanuki_snake",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_tanuki_chameleon",
+      "visitorId": "visitor_tanuki",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "变装大师会晤：阿彩变了色，狸猫变了形，互相鞠躬致敬，切磋择日再约",
+      "animRef": "anim_vpi_tanuki_chameleon",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_tanuki_ember",
+      "visitorId": "visitor_tanuki",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "狸猫围着小火龙转了三圈，试图用叶子扇旺那簇火，被你及时拦下这位热心过头的客人",
+      "animRef": "anim_vpi_tanuki_ember",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_tanuki_uni",
+      "visitorId": "visitor_tanuki",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "狸猫盯着尼可看了很久，小声嘀咕「这个变身……我学不来」，留下一片叶子当学费",
+      "animRef": "anim_vpi_tanuki_uni",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_tanuki_boo",
+      "visitorId": "visitor_tanuki",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "狸猫察觉院里有个「看不见的家伙」，不慌不忙变出第二条影子陪噗噗玩了一晚",
+      "animRef": "anim_vpi_tanuki_boo",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_tanuki_starbug",
+      "visitorId": "visitor_tanuki",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "狸猫想用叶子变一颗一样亮的星星，失败了，星星虫爬上叶子替它把戏法圆上了",
+      "animRef": "anim_vpi_tanuki_starbug",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_egret_cat",
+      "visitorId": "visitor_egret",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "白鹭先生单腿立在池塘边一动不动，阿橘学着单爪支起下巴，坚持了四秒，睡着了",
+      "animRef": "anim_vpi_egret_cat",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_egret_shiba",
+      "visitorId": "visitor_egret",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬围着白鹭先生转圈表达仰慕，白鹭先生颔首致意，气质差距肉眼可见但友谊成立",
+      "animRef": "anim_vpi_egret_shiba",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_egret_rabbit",
+      "visitorId": "visitor_egret",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "白鹭先生俯身与雪团平视，长脖子弯成一道温柔的桥，胆小的兔子破例没有后退",
+      "animRef": "anim_vpi_egret_rabbit",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_egret_hamster",
+      "visitorId": "visitor_egret",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "仓鼠向白鹭先生展示存粮，白鹭先生认真参观完毕，赠言：「囤积有度，方为长久。」",
+      "animRef": "anim_vpi_egret_hamster",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_egret_turtle",
+      "visitorId": "visitor_egret",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "白鹭先生与乌龟在池塘边共处一下午，一个立着不动，一个趴着不动，水面记下了这幅画",
+      "animRef": "anim_vpi_egret_turtle",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_egret_parrot",
+      "visitorId": "visitor_egret",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮向白鹭先生请教「优雅」，得到的建议是先安静五分钟，皮皮撑到第九十秒",
+      "animRef": "anim_vpi_egret_parrot",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_egret_snake",
+      "visitorId": "visitor_egret",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "白鹭先生与玉米蛇互相欣赏对方脖颈的曲线，两条最优美的弧线在池塘边达成美学共识",
+      "animRef": "anim_vpi_egret_snake",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_egret_chameleon",
+      "visitorId": "visitor_egret",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩变成芦苇色站在白鹭先生腿边合影留念，那张水彩照片里藏着两个伪装者",
+      "animRef": "anim_vpi_egret_chameleon",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_egret_ember",
+      "visitorId": "visitor_egret",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "白鹭先生绕着小火龙踱了半圈，评价道：「离水太近的火，是勇敢的火。」",
+      "animRef": "anim_vpi_egret_ember",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_egret_uni",
+      "visitorId": "visitor_egret",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "白鹭先生与尼可在池塘边并肩而立，白色与白色之间，只隔着一道小小的彩虹",
+      "animRef": "anim_vpi_egret_uni",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_egret_boo",
+      "visitorId": "visitor_egret",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "白鹭先生盯着水面上那个「没有倒影的涟漪」看了很久，最终优雅地假装什么也没发生",
+      "animRef": "anim_vpi_egret_boo",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_egret_starbug",
+      "visitorId": "visitor_egret",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "白鹭先生低头凝视水中星星虫的倒影，轻声说这是它见过离水面最近的一颗星",
+      "animRef": "anim_vpi_egret_starbug",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fox_cat",
+      "visitorId": "visitor_fox",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "小茜偷偷学阿橘晒太阳的姿势，被发现后立刻装作只是路过，尾巴却诚实地摊开了",
+      "animRef": "anim_vpi_fox_cat",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fox_shiba",
+      "visitorId": "visitor_fox",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "追逐战绕院三圈，最后一起瘫在树荫下，尾巴打成了结（并没有）【§8.4 原示例】",
+      "animRef": "anim_vpi_fox_shiba",
+      "expReward": 6,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fox_rabbit",
+      "visitorId": "visitor_fox",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "小茜把尾巴借给发抖的雪团当围巾，压低声音说：「传出去我可不认。」",
+      "animRef": "anim_vpi_fox_rabbit",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fox_hamster",
+      "visitorId": "visitor_fox",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "小茜三招骗到了仓鼠一粒瓜子，第四招时良心发作，偷偷还回去三粒",
+      "animRef": "anim_vpi_fox_hamster",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fox_turtle",
+      "visitorId": "visitor_fox",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "小茜绕着乌龟出了七个谜语，乌龟用一下午答对了一个，小茜宣布这是年度最佳对手",
+      "animRef": "anim_vpi_fox_turtle",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fox_parrot",
+      "visitorId": "visitor_fox",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "小茜的花言巧语第一次失效——皮皮把她的开场白原句复述了三遍，狐狸红着脸告辞",
+      "animRef": "anim_vpi_fox_parrot",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fox_snake",
+      "visitorId": "visitor_fox",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "两位「院内最有心机」候选人隔石对望一炷香，最终互相承认对方是聪明人，握尾言和",
+      "animRef": "anim_vpi_fox_snake",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fox_chameleon",
+      "visitorId": "visitor_fox",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "小茜自信能找出伪装的阿彩，找了半小时未果，阿彩其实一直趴在她的尾巴上",
+      "animRef": "anim_vpi_fox_chameleon",
+      "expReward": 6,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fox_ember",
+      "visitorId": "visitor_fox",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "小茜在小火龙的火光边烤暖了尾巴尖，讲了一个火焰山的故事，真假各半，都很好听",
+      "animRef": "anim_vpi_fox_ember",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fox_uni",
+      "visitorId": "visitor_fox",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "小茜见到尼可愣了半晌，破天荒没打任何主意，只是安静地陪它走了一段月光路",
+      "animRef": "anim_vpi_fox_uni",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fox_boo",
+      "visitorId": "visitor_fox",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "小茜自称见多识广不怕幽灵，噗噗从背后轻轻碰了下她的尾巴，狐狸窜上了树",
+      "animRef": "anim_vpi_fox_boo",
+      "expReward": 6,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_fox_starbug",
+      "visitorId": "visitor_fox",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "小茜郑重提出用三个故事换星星虫发一次光，成交后她听着听着，忘了自己才是讲故事的",
+      "animRef": "anim_vpi_fox_starbug",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_owl_cat",
+      "visitorId": "visitor_owl",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "教授开设深夜天文讲座，阿橘是唯一听众，全程闭眼——它坚称这是在「用耳朵看星星」",
+      "animRef": "anim_vpi_owl_cat",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_owl_shiba",
+      "visitorId": "visitor_owl",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬向教授提问「为什么月亮跟着我跑」，教授推了推并不存在的眼镜，认真讲了半小时",
+      "animRef": "anim_vpi_owl_shiba",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_owl_rabbit",
+      "visitorId": "visitor_owl",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "教授轻声给睡不着的雪团讲月亮上的故事，讲到第三段，兔子的耳朵安心地垂了下去",
+      "animRef": "anim_vpi_owl_rabbit",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_owl_hamster",
+      "visitorId": "visitor_owl",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "教授对着仓鼠的粮仓做了一次学术考察，结论：储备充足，分类混乱，建议返工",
+      "animRef": "anim_vpi_owl_hamster",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_owl_turtle",
+      "visitorId": "visitor_owl",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "教授与乌龟聊「时间」聊到后半夜，一个懂得夜的漫长，一个懂得年的漫长",
+      "animRef": "anim_vpi_owl_turtle",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_owl_parrot",
+      "visitorId": "visitor_owl",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮向教授炫耀词汇量，教授回赠一个十四个字母的单词，皮皮卡壳了，当场拜师",
+      "animRef": "anim_vpi_owl_parrot",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_owl_snake",
+      "visitorId": "visitor_owl",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "教授与玉米蛇在月下各自沉默——夜行者之间最高规格的交谈，就是一起不说话",
+      "animRef": "anim_vpi_owl_snake",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_owl_chameleon",
+      "visitorId": "visitor_owl",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "教授一眼指出树叶间伪装的阿彩并点评了三处破绽，阿彩虚心记下，尾巴害羞地卷紧了",
+      "animRef": "anim_vpi_owl_chameleon",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_owl_ember",
+      "visitorId": "visitor_owl",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "教授借小火龙的暖光批改「学生作业」（一堆落叶标本），评价这是全森林最好的台灯",
+      "animRef": "anim_vpi_owl_ember",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_owl_uni",
+      "visitorId": "visitor_owl",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "教授翻遍脑中的百科也没查到尼可的条目，郑重宣布：「知识的边界外，站着一只兔子。」",
+      "animRef": "anim_vpi_owl_uni",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_owl_boo",
+      "visitorId": "visitor_owl",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "教授是唯一不惊讶噗噗存在的客人，「夜里的事，我见的多了」，还邀它旁听下周讲座",
+      "animRef": "anim_vpi_owl_boo",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_owl_starbug",
+      "visitorId": "visitor_owl",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "教授为星星虫做了一夜「星等测定」，最终在笔记里写：亮度无法归类，暂定为「暖」",
+      "animRef": "anim_vpi_owl_starbug",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_deer_cat",
+      "visitorId": "visitor_deer",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "阿橘盯着小鹿角上的小鸟看了半天，最终认定那是「长在树上的麻雀」，安心继续睡",
+      "animRef": "anim_vpi_deer_cat",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_deer_shiba",
+      "visitorId": "visitor_deer",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬仰头跟小鹿角上的小鸟打招呼，脖子仰酸了也不肯低头，小鹿贴心地低下了头",
+      "animRef": "anim_vpi_deer_shiba",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_deer_rabbit",
+      "visitorId": "visitor_deer",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "小鹿低头与雪团碰了碰鼻尖，角上的小鸟顺势给兔子理了理耳朵毛，一次三方会晤",
+      "animRef": "anim_vpi_deer_rabbit",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_deer_hamster",
+      "visitorId": "visitor_deer",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "仓鼠壮着胆子沿着小鹿的角爬到最高点，看到了它这辈子见过最远的风景",
+      "animRef": "anim_vpi_deer_hamster",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_deer_turtle",
+      "visitorId": "visitor_deer",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "小鹿在乌龟身边卧下休息，角上的鸟落到龟壳上，院子安静得像一幅没干透的水彩",
+      "animRef": "anim_vpi_deer_turtle",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_deer_parrot",
+      "visitorId": "visitor_deer",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮飞上鹿角想跟常驻小鸟抢「观景位」，被小鹿轻轻一晃调解，两鸟一角一边一个",
+      "animRef": "anim_vpi_deer_parrot",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_deer_snake",
+      "visitorId": "visitor_deer",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "玉米蛇望着小鹿角上的纹路看了很久——像极了它蜕皮时留下的痕迹，难得地起身相送",
+      "animRef": "anim_vpi_deer_snake",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_deer_chameleon",
+      "visitorId": "visitor_deer",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩爬上鹿角变成树枝色，小鹿从此以为自己长了三根角，走路更稳重了",
+      "animRef": "anim_vpi_deer_chameleon",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_deer_ember",
+      "visitorId": "visitor_deer",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "小鹿警惕地绕开火光，却在小火龙打喷嚏喷出小火星时忍不住笑出了声，戒心融化",
+      "animRef": "anim_vpi_deer_ember",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_deer_uni",
+      "visitorId": "visitor_deer",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "小鹿与尼可轻轻碰了碰角——一大一小，一枝一尖，像森林与童话交换了信物",
+      "animRef": "anim_vpi_deer_uni",
+      "expReward": 6,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_deer_boo",
+      "visitorId": "visitor_deer",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "小鹿角上的小鸟对着「空中某处」叫了两声，小鹿便向那里微微颔首：它相信小鸟的眼睛",
+      "animRef": "anim_vpi_deer_boo",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_deer_starbug",
+      "visitorId": "visitor_deer",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "星星虫落在鹿角最高的分叉上发光，那晚小鹿走过的地方，都像被顺手点了灯",
+      "animRef": "anim_vpi_deer_starbug",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_snowhare_cat",
+      "visitorId": "visitor_snowhare",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "阿橘把雪兔认成了一团会动的雪，伸爪一碰是暖的，惊得它当场清醒了三分钟",
+      "animRef": "anim_vpi_snowhare_cat",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_snowhare_shiba",
+      "visitorId": "visitor_snowhare",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬和雪兔在雪地里互相追出两串脚印，一串圆一串长，像院子写下的两行冬日日记",
+      "animRef": "anim_vpi_snowhare_shiba",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_snowhare_rabbit",
+      "visitorId": "visitor_snowhare",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "雪团与雪兔耳朵贴着耳朵取暖，一只垂一只立，你分不清哪团是雪哪团是兔",
+      "animRef": "anim_vpi_snowhare_rabbit",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_snowhare_hamster",
+      "visitorId": "visitor_snowhare",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "雪兔帮仓鼠在雪里刨出被埋的粮仓入口，仓鼠以三粒珍藏的葵花籽致以最高谢意",
+      "animRef": "anim_vpi_snowhare_hamster",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_snowhare_turtle",
+      "visitorId": "visitor_snowhare",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "雪兔围着冬眠前的乌龟轻轻踩了一圈雪印当被子边，「盖好了，春天见。」",
+      "animRef": "anim_vpi_snowhare_turtle",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_snowhare_parrot",
+      "visitorId": "visitor_snowhare",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮学雪兔跳雪堆，一头扎进去只剩尾巴，雪兔憋笑憋出了这个冬天最大的一团白气",
+      "animRef": "anim_vpi_snowhare_parrot",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_snowhare_snake",
+      "visitorId": "visitor_snowhare",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "怕冷的玉米蛇在窗内、雪兔在窗外，隔着玻璃碰了碰头，约好开春在晒石上见",
+      "animRef": "anim_vpi_snowhare_snake",
+      "expReward": 4,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_snowhare_chameleon",
+      "visitorId": "visitor_snowhare",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩努力变成雪白色想陪雪兔玩，只变到了米白，雪兔说这是「刚落地的雪」，很好看",
+      "animRef": "anim_vpi_snowhare_chameleon",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_snowhare_ember",
+      "visitorId": "visitor_snowhare",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "雪兔围着小火龙保持着又想靠近又怕融化的距离，最后蹲在「刚刚好」的一步之外",
+      "animRef": "anim_vpi_snowhare_ember",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_snowhare_uni",
+      "visitorId": "visitor_snowhare",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "雪地里两团白影追逐，只有一道细细的彩光标记着尼可跑过的弧线",
+      "animRef": "anim_vpi_snowhare_uni",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_snowhare_boo",
+      "visitorId": "visitor_snowhare",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "噗噗混进雪地里玩「谁最白」，雪兔赢了，因为噗噗激动起来会变透明，犯规",
+      "animRef": "anim_vpi_snowhare_boo",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_snowhare_starbug",
+      "visitorId": "visitor_snowhare",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "雪兔驮着星星虫在雪原上跑了一圈，雪反着光，像驮着一颗星星巡视了整个冬天",
+      "animRef": "anim_vpi_snowhare_starbug",
+      "expReward": 5,
+      "unlockClue": null
+    },
+    {
+      "id": "vpi_l_starbug_any",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "*",
+      "personalityBias": null,
+      "script": "宠物屏息看着草叶上明灭的小光点，你的图鉴里多了一页会发光的纸",
+      "animRef": "anim_vpi_l_starbug_any",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_starbug_cat",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "阿橘为了这颗落地的星星整晚没睡，用尾巴圈出一块「星星保护区」",
+      "animRef": "anim_vpi_l_starbug_cat",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_starbug_shiba",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬压低身子守着光点，忍住了所有想扑的冲动，那是它最漫长也最骄傲的一夜",
+      "animRef": "anim_vpi_l_starbug_shiba",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_starbug_rabbit",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "雪团第一次主动凑近陌生的东西——那点光太温柔了，连胆小都忘了",
+      "animRef": "anim_vpi_l_starbug_rabbit",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_starbug_hamster",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "仓鼠没有把发光的小家伙搬回仓库，而是搬了三粒瓜子出来摆在它面前",
+      "animRef": "anim_vpi_l_starbug_hamster",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_starbug_turtle",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "乌龟守着光点从入夜坐到天亮，星星虫走时，在它壳上留下了一枚淡淡的光印",
+      "animRef": "anim_vpi_l_starbug_turtle",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_starbug_parrot",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮一整晚没说话，第二天也没跟任何人炫耀——有些事它想自己留着",
+      "animRef": "anim_vpi_l_starbug_parrot",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_starbug_snake",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "玉米蛇盘在光点周围守了一夜，冷冷的鳞片上映着一点暖光，谁也没提这件事",
+      "animRef": "anim_vpi_l_starbug_snake",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_starbug_chameleon",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩变成夜空色趴在旁边，让那点光成为它身上唯一的星",
+      "animRef": "anim_vpi_l_starbug_chameleon",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_starbug_ember",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "小火龙把尾巴上的光调到最柔，与草叶上的光一明一灭，像两句轮流说的悄悄话",
+      "animRef": "anim_vpi_l_starbug_ember",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_starbug_uni",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "尼可角尖的彩光与星光轻轻一碰，草地上晕开一小圈谁也没见过的颜色",
+      "animRef": "anim_vpi_l_starbug_uni",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_starbug_boo",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "噗噗和星星虫在草丛里玩了一夜「一闪一躲」，两个夜的孩子，一个发光一个透明",
+      "animRef": "anim_vpi_l_starbug_boo",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_starbug_starbug",
+      "visitorId": "visitor_starbug",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "在养的星星虫与来访的星星虫同时亮起，两颗星以只属于星星的频率眨了整夜的眼",
+      "animRef": "anim_vpi_l_starbug_starbug",
+      "expReward": 6,
+      "unlockClue": "starbug+1"
+    },
+    {
+      "id": "vpi_l_flame_any",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "*",
+      "personalityBias": null,
+      "script": "暖炉边多出一簇不该存在的小火苗，宠物看见了，你也看见了，谁都没有声张",
+      "animRef": "anim_vpi_l_flame_any",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_flame_cat",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "阿橘挪到暖炉边取暖，发现今晚的火多了一小簇，还会跟着它的呼噜声轻轻跳",
+      "animRef": "anim_vpi_l_flame_cat",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_flame_shiba",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬对着那簇多出来的火苗歪头，火苗也歪了歪，柴犬从此坚信火是活的",
+      "animRef": "anim_vpi_l_flame_shiba",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_flame_rabbit",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "雪团怕火，却在那簇小火光前停住了——它烧得那么小心，像也怕吓到谁",
+      "animRef": "anim_vpi_l_flame_rabbit",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_flame_hamster",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "仓鼠把最好的一粒坚果放在暖炉边「烤」，火光替它烤得恰到好处，还多留了一分钟",
+      "animRef": "anim_vpi_l_flame_hamster",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_flame_turtle",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "乌龟在暖炉边坐了整晚，那簇小火光始终为它保持着一个不烫不凉的距离",
+      "animRef": "anim_vpi_l_flame_turtle",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_flame_parrot",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮对火光说了一晚上话，火光用明明灭灭回应，皮皮宣布自己学会了「火语」",
+      "animRef": "anim_vpi_l_flame_parrot",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_flame_snake",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "最怕冷的玉米蛇缠着暖炉不走，那簇小火光悄悄往它那边偏了一整夜",
+      "animRef": "anim_vpi_l_flame_snake",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_flame_chameleon",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩变成火焰的颜色，那簇火光高兴地跳了三跳，像在人群里认出了亲戚",
+      "animRef": "anim_vpi_l_flame_chameleon",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_flame_ember",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "在养的小火龙与那簇火光额头相抵，两簇火安静地合了一下拍——像久别的重逢",
+      "animRef": "anim_vpi_l_flame_ember",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_flame_uni",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "火光在尼可的白毛上投下暖橙的光晕，一冷一暖两种童话，在暖炉边握了握手",
+      "animRef": "anim_vpi_l_flame_uni",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_flame_boo",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "噗噗飘到火边也不怕烫，火光穿过它的身体，把它照成了一盏毛茸茸的橘色灯笼",
+      "animRef": "anim_vpi_l_flame_boo",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_flame_starbug",
+      "visitorId": "visitor_campfire_light",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "星星虫落在暖炉沿，一颗冷光一簇暖光互相打量，最后同步了闪烁的节拍",
+      "animRef": "anim_vpi_l_flame_starbug",
+      "expReward": 6,
+      "unlockClue": "clue_ember+1"
+    },
+    {
+      "id": "vpi_l_white_any",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "*",
+      "personalityBias": null,
+      "script": "雨停了，彩虹落地的地方有个白色的影子一闪，宠物朝那里望了很久",
+      "animRef": "anim_vpi_l_white_any",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_white_cat",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "阿橘顺着彩虹望过去，白影一闪而过，它破例起身追到篱笆边——为一个影子，值得",
+      "animRef": "anim_vpi_l_white_cat",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_white_shiba",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬冲着彩虹尽头汪了一声，白影停了停，像回了一句它听得懂的话",
+      "animRef": "anim_vpi_l_white_shiba",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_white_rabbit",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "雪团看见白影的瞬间耳朵竖了起来——那身影像它，又比它多了一点亮晶晶的什么",
+      "animRef": "anim_vpi_l_white_rabbit",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_white_hamster",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "仓鼠在彩虹落脚的草地上捡到一根泛着虹光的白毛，郑重收进了仓库最里层",
+      "animRef": "anim_vpi_l_white_hamster",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_white_turtle",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "乌龟朝彩虹的方向走了整整一下午，白影早已不在，但它说重要的是出发过",
+      "animRef": "anim_vpi_l_white_turtle",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_white_parrot",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮信誓旦旦描述白影「头上有个亮亮的尖尖」，你第一次没怀疑它在编",
+      "animRef": "anim_vpi_l_white_parrot",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_white_snake",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "玉米蛇在湿石头上望着彩虹尽头，蛇的眼睛不会说谎：那里确实有过一个白影",
+      "animRef": "anim_vpi_l_white_snake",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_white_chameleon",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩试着把自己变成彩虹的七色，白影在远处停了一瞬，像被逗笑了",
+      "animRef": "anim_vpi_l_white_chameleon",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_white_ember",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "小火龙的火光与雨后的彩虹同框，白影在光与虹之间多停留了几秒才离开",
+      "animRef": "anim_vpi_l_white_ember",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_white_uni",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "在养的尼可与彩虹边的白影遥遥对望，角尖的光同时亮了一下——像一声跨越彩虹的应答",
+      "animRef": "anim_vpi_l_white_uni",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_white_boo",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "一个白影在彩虹边，一个白团子在院子里，两团白色隔空轻轻晃了晃，算打过招呼",
+      "animRef": "anim_vpi_l_white_boo",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_white_starbug",
+      "visitorId": "visitor_rainbow_shade",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "星星虫白天不发光，却在白影出现的那几秒微微亮了——传说认得传说",
+      "animRef": "anim_vpi_l_white_starbug",
+      "expReward": 6,
+      "unlockClue": "clue_uni+1"
+    },
+    {
+      "id": "vpi_l_boo_any",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "*",
+      "personalityBias": null,
+      "script": "深夜的院子里飘过一个白团子，宠物的视线跟着它移动，而你只看见风",
+      "animRef": "anim_vpi_l_boo_any",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    },
+    {
+      "id": "vpi_l_boo_cat",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "pet_cat",
+      "personalityBias": null,
+      "script": "深夜阿橘对着「空无一物」的墙角打呼噜，尾巴给谁留了一块暖和的位置",
+      "animRef": "anim_vpi_l_boo_cat",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    },
+    {
+      "id": "vpi_l_boo_shiba",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "pet_shiba",
+      "personalityBias": null,
+      "script": "柴犬冲着夜空摇尾巴，摇得真诚又持久——它向来对朋友一视同仁，看不看得见都算",
+      "animRef": "anim_vpi_l_boo_shiba",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    },
+    {
+      "id": "vpi_l_boo_rabbit",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "pet_rabbit",
+      "personalityBias": null,
+      "script": "雪团夜里从纸箱探出头，跟白团子对视了一会儿，居然没躲——比它还胆小的，不可怕",
+      "animRef": "anim_vpi_l_boo_rabbit",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    },
+    {
+      "id": "vpi_l_boo_hamster",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "pet_hamster",
+      "personalityBias": null,
+      "script": "仓鼠夜里摆出两粒瓜子，早上瓜子还在，但被摆成了一个歪歪的「谢」字形",
+      "animRef": "anim_vpi_l_boo_hamster",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    },
+    {
+      "id": "vpi_l_boo_turtle",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "pet_turtle",
+      "personalityBias": null,
+      "script": "乌龟半夜醒来，看见白团子怯生生地飘在池塘上方照「倒影」——水里什么也没有",
+      "animRef": "anim_vpi_l_boo_turtle",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    },
+    {
+      "id": "vpi_l_boo_parrot",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "pet_parrot",
+      "personalityBias": null,
+      "script": "皮皮半夜突然轻声说了句谁也没教过的「晚安」，对着房间里最暗的那个角落",
+      "animRef": "anim_vpi_l_boo_parrot",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    },
+    {
+      "id": "vpi_l_boo_snake",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "pet_snake",
+      "personalityBias": null,
+      "script": "玉米蛇深夜盘在老地方，给身边留了一个团子形状的空位，谁问都说是巧合",
+      "animRef": "anim_vpi_l_boo_snake",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    },
+    {
+      "id": "vpi_l_boo_chameleon",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "pet_chameleon",
+      "personalityBias": null,
+      "script": "阿彩深夜把自己变成半透明的白色飘忽晃动，白团子凑过来看了很久：同类？",
+      "animRef": "anim_vpi_l_boo_chameleon",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    },
+    {
+      "id": "vpi_l_boo_ember",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "pet_ember",
+      "personalityBias": null,
+      "script": "白团子怕生地躲在小火龙暖光照不到的边缘，火苗便悄悄把光晕又扩大了一圈",
+      "animRef": "anim_vpi_l_boo_ember",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    },
+    {
+      "id": "vpi_l_boo_uni",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "pet_uni",
+      "personalityBias": null,
+      "script": "尼可深夜对着月光下的白团子轻轻点了点角，白团子开心地翻了一个透明的跟头",
+      "animRef": "anim_vpi_l_boo_uni",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    },
+    {
+      "id": "vpi_l_boo_boo",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "pet_boo",
+      "personalityBias": null,
+      "script": "在养的噗噗与来访的白团子在夜空里追着飘了一圈——原来它一直不是唯一的一个",
+      "animRef": "anim_vpi_l_boo_boo",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    },
+    {
+      "id": "vpi_l_boo_starbug",
+      "visitorId": "visitor_night_blob",
+      "petSpeciesId": "pet_starbug",
+      "personalityBias": null,
+      "script": "星星虫为怕黑（是的）的白团子亮了一整夜，白团子第一次在光里待到了天亮前",
+      "animRef": "anim_vpi_l_boo_starbug",
+      "expReward": 6,
+      "unlockClue": "clue_boo+1"
+    }
+  ]
+}
