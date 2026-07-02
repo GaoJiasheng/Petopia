@@ -1,0 +1,1466 @@
+{
+  "generated_at_local": "2026-07-02 14:00:02 +08",
+  "scanner": "ffmpeg loudnorm print_format=json",
+  "items": [
+    {
+      "asset_id": "bgm_yard_day__st1_bed",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_day__st1_bed.wav",
+      "duration_seconds": 160.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-22.03",
+        "input_tp": "-6.95",
+        "input_lra": "1.80",
+        "input_thresh": "-32.06",
+        "output_i": "-15.98",
+        "output_tp": "-1.00",
+        "output_lra": "1.80",
+        "output_thresh": "-26.01",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.02"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_day__st2_melody",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_day__st2_melody.wav",
+      "duration_seconds": 160.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-21.68",
+        "input_tp": "-9.19",
+        "input_lra": "6.20",
+        "input_thresh": "-31.89",
+        "output_i": "-15.96",
+        "output_tp": "-3.71",
+        "output_lra": "6.20",
+        "output_thresh": "-26.17",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.04"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_day__st3_texture",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_day__st3_texture.wav",
+      "duration_seconds": 160.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-28.77",
+        "input_tp": "-17.98",
+        "input_lra": "1.60",
+        "input_thresh": "-38.77",
+        "output_i": "-16.03",
+        "output_tp": "-5.23",
+        "output_lra": "1.50",
+        "output_thresh": "-26.03",
+        "normalization_type": "dynamic",
+        "target_offset": "0.03"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_day__st4_perc",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_day__st4_perc.wav",
+      "duration_seconds": 160.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-45.52",
+        "input_tp": "-13.87",
+        "input_lra": "2.00",
+        "input_thresh": "-55.76",
+        "output_i": "-22.30",
+        "output_tp": "-1.00",
+        "output_lra": "2.10",
+        "output_thresh": "-33.34",
+        "normalization_type": "dynamic",
+        "target_offset": "6.30"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_day__st5_lux_a",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_day__st5_lux_a.wav",
+      "duration_seconds": 160.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-31.71",
+        "input_tp": "-18.40",
+        "input_lra": "4.00",
+        "input_thresh": "-42.68",
+        "output_i": "-15.81",
+        "output_tp": "-2.17",
+        "output_lra": "4.00",
+        "output_thresh": "-26.76",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.19"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_day__st6_lux_b",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_day__st6_lux_b.wav",
+      "duration_seconds": 160.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-29.17",
+        "input_tp": "-19.41",
+        "input_lra": "2.90",
+        "input_thresh": "-39.17",
+        "output_i": "-15.93",
+        "output_tp": "-6.12",
+        "output_lra": "2.80",
+        "output_thresh": "-25.93",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.07"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_day",
+      "role": "mix",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/mix/wav/bgm_yard_day.wav",
+      "duration_seconds": 160.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-16.00",
+        "input_tp": "-2.62",
+        "input_lra": "2.90",
+        "input_thresh": "-26.00",
+        "output_i": "-16.19",
+        "output_tp": "-2.63",
+        "output_lra": "2.90",
+        "output_thresh": "-26.19",
+        "normalization_type": "dynamic",
+        "target_offset": "0.19"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_dusk__st1_bed",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_dusk__st1_bed.wav",
+      "duration_seconds": 141.176,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-22.91",
+        "input_tp": "-7.58",
+        "input_lra": "1.80",
+        "input_thresh": "-32.96",
+        "output_i": "-16.06",
+        "output_tp": "-1.00",
+        "output_lra": "1.70",
+        "output_thresh": "-26.11",
+        "normalization_type": "dynamic",
+        "target_offset": "0.06"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_dusk__st2_melody",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_dusk__st2_melody.wav",
+      "duration_seconds": 141.176,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-20.94",
+        "input_tp": "-13.00",
+        "input_lra": "6.40",
+        "input_thresh": "-31.01",
+        "output_i": "-15.87",
+        "output_tp": "-7.52",
+        "output_lra": "5.70",
+        "output_thresh": "-25.96",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.13"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_dusk__st3_texture",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_dusk__st3_texture.wav",
+      "duration_seconds": 141.176,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-29.46",
+        "input_tp": "-18.59",
+        "input_lra": "1.80",
+        "input_thresh": "-39.46",
+        "output_i": "-16.01",
+        "output_tp": "-5.14",
+        "output_lra": "1.70",
+        "output_thresh": "-26.01",
+        "normalization_type": "dynamic",
+        "target_offset": "0.01"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_dusk__st4_perc",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_dusk__st4_perc.wav",
+      "duration_seconds": 141.176,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-46.41",
+        "input_tp": "-14.54",
+        "input_lra": "1.90",
+        "input_thresh": "-56.62",
+        "output_i": "-22.52",
+        "output_tp": "-1.00",
+        "output_lra": "1.90",
+        "output_thresh": "-33.52",
+        "normalization_type": "dynamic",
+        "target_offset": "6.52"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_dusk__st5_lux_a",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_dusk__st5_lux_a.wav",
+      "duration_seconds": 141.176,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-32.31",
+        "input_tp": "-19.00",
+        "input_lra": "4.30",
+        "input_thresh": "-43.41",
+        "output_i": "-15.80",
+        "output_tp": "-2.57",
+        "output_lra": "4.20",
+        "output_thresh": "-26.91",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.20"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_dusk__st6_lux_b",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_dusk__st6_lux_b.wav",
+      "duration_seconds": 141.176,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-29.83",
+        "input_tp": "-20.37",
+        "input_lra": "3.30",
+        "input_thresh": "-39.83",
+        "output_i": "-15.98",
+        "output_tp": "-5.64",
+        "output_lra": "3.30",
+        "output_thresh": "-25.98",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.02"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_dusk",
+      "role": "mix",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/mix/wav/bgm_yard_dusk.wav",
+      "duration_seconds": 141.176,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-16.00",
+        "input_tp": "-3.53",
+        "input_lra": "3.70",
+        "input_thresh": "-26.00",
+        "output_i": "-16.24",
+        "output_tp": "-3.82",
+        "output_lra": "3.50",
+        "output_thresh": "-26.24",
+        "normalization_type": "dynamic",
+        "target_offset": "0.24"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_night__st1_bed",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_night__st1_bed.wav",
+      "duration_seconds": 150.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-20.93",
+        "input_tp": "-5.27",
+        "input_lra": "1.80",
+        "input_thresh": "-30.96",
+        "output_i": "-16.11",
+        "output_tp": "-1.00",
+        "output_lra": "1.80",
+        "output_thresh": "-26.14",
+        "normalization_type": "dynamic",
+        "target_offset": "0.11"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_night__st2_melody",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_night__st2_melody.wav",
+      "duration_seconds": 150.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-24.07",
+        "input_tp": "-11.83",
+        "input_lra": "6.00",
+        "input_thresh": "-34.67",
+        "output_i": "-15.78",
+        "output_tp": "-3.74",
+        "output_lra": "5.60",
+        "output_thresh": "-26.51",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.22"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_night__st3_texture",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_night__st3_texture.wav",
+      "duration_seconds": 150.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-31.53",
+        "input_tp": "-17.88",
+        "input_lra": "1.20",
+        "input_thresh": "-41.53",
+        "output_i": "-16.03",
+        "output_tp": "-2.42",
+        "output_lra": "1.20",
+        "output_thresh": "-26.03",
+        "normalization_type": "dynamic",
+        "target_offset": "0.03"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_night__st4_perc",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_night__st4_perc.wav",
+      "duration_seconds": 150.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-53.21",
+        "input_tp": "-30.13",
+        "input_lra": "2.80",
+        "input_thresh": "-63.41",
+        "output_i": "-19.93",
+        "output_tp": "-1.00",
+        "output_lra": "2.60",
+        "output_thresh": "-32.37",
+        "normalization_type": "dynamic",
+        "target_offset": "3.93"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_night__st5_lux_a",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_night__st5_lux_a.wav",
+      "duration_seconds": 150.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-30.82",
+        "input_tp": "-17.21",
+        "input_lra": "3.80",
+        "input_thresh": "-41.73",
+        "output_i": "-15.88",
+        "output_tp": "-2.12",
+        "output_lra": "3.80",
+        "output_thresh": "-26.83",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.12"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_night__st6_lux_b",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_night__st6_lux_b.wav",
+      "duration_seconds": 150.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-28.00",
+        "input_tp": "-18.23",
+        "input_lra": "2.90",
+        "input_thresh": "-38.00",
+        "output_i": "-15.96",
+        "output_tp": "-6.14",
+        "output_lra": "2.80",
+        "output_thresh": "-25.96",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.04"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_night",
+      "role": "mix",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/mix/wav/bgm_yard_night.wav",
+      "duration_seconds": 150.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-16.00",
+        "input_tp": "-2.01",
+        "input_lra": "2.00",
+        "input_thresh": "-26.00",
+        "output_i": "-16.21",
+        "output_tp": "-2.70",
+        "output_lra": "2.00",
+        "output_thresh": "-26.21",
+        "normalization_type": "dynamic",
+        "target_offset": "0.21"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_stem_spring__day",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_spring__day.wav",
+      "duration_seconds": 160.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-14.44",
+        "input_tp": "-7.43",
+        "input_lra": "6.20",
+        "input_thresh": "-27.46",
+        "output_i": "-15.69",
+        "output_tp": "-7.74",
+        "output_lra": "6.50",
+        "output_thresh": "-29.50",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.31"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_stem_spring__dusk",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_spring__dusk.wav",
+      "duration_seconds": 141.176,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-14.46",
+        "input_tp": "-7.91",
+        "input_lra": "6.20",
+        "input_thresh": "-27.23",
+        "output_i": "-15.60",
+        "output_tp": "-7.44",
+        "output_lra": "6.50",
+        "output_thresh": "-29.60",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.40"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_stem_spring__night",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_spring__night.wav",
+      "duration_seconds": 150.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-14.56",
+        "input_tp": "-8.13",
+        "input_lra": "6.10",
+        "input_thresh": "-27.42",
+        "output_i": "-15.67",
+        "output_tp": "-7.85",
+        "output_lra": "6.50",
+        "output_thresh": "-29.52",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.33"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_stem_summer__day",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_summer__day.wav",
+      "duration_seconds": 160.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-16.64",
+        "input_tp": "-4.28",
+        "input_lra": "1.70",
+        "input_thresh": "-27.96",
+        "output_i": "-15.57",
+        "output_tp": "-1.46",
+        "output_lra": "1.60",
+        "output_thresh": "-27.04",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.43"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_stem_summer__dusk",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_summer__dusk.wav",
+      "duration_seconds": 141.176,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-16.45",
+        "input_tp": "-4.28",
+        "input_lra": "3.20",
+        "input_thresh": "-27.96",
+        "output_i": "-15.35",
+        "output_tp": "-1.80",
+        "output_lra": "2.80",
+        "output_thresh": "-26.97",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.65"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_stem_summer__night",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_summer__night.wav",
+      "duration_seconds": 150.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-16.62",
+        "input_tp": "-4.32",
+        "input_lra": "1.70",
+        "input_thresh": "-27.97",
+        "output_i": "-15.55",
+        "output_tp": "-1.55",
+        "output_lra": "1.60",
+        "output_thresh": "-26.98",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.45"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_stem_autumn__day",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_autumn__day.wav",
+      "duration_seconds": 160.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-18.89",
+        "input_tp": "-3.68",
+        "input_lra": "6.80",
+        "input_thresh": "-29.17",
+        "output_i": "-15.90",
+        "output_tp": "-1.00",
+        "output_lra": "5.90",
+        "output_thresh": "-26.29",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.10"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_stem_autumn__dusk",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_autumn__dusk.wav",
+      "duration_seconds": 141.176,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-18.90",
+        "input_tp": "-4.00",
+        "input_lra": "7.30",
+        "input_thresh": "-29.19",
+        "output_i": "-15.91",
+        "output_tp": "-1.17",
+        "output_lra": "6.30",
+        "output_thresh": "-26.34",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.09"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_stem_autumn__night",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_autumn__night.wav",
+      "duration_seconds": 150.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-19.20",
+        "input_tp": "-3.60",
+        "input_lra": "6.80",
+        "input_thresh": "-29.47",
+        "output_i": "-15.85",
+        "output_tp": "-1.00",
+        "output_lra": "6.00",
+        "output_thresh": "-26.24",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.15"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_stem_winter__day",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_winter__day.wav",
+      "duration_seconds": 160.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-19.81",
+        "input_tp": "-3.67",
+        "input_lra": "6.30",
+        "input_thresh": "-29.81",
+        "output_i": "-16.24",
+        "output_tp": "-1.00",
+        "output_lra": "6.10",
+        "output_thresh": "-26.24",
+        "normalization_type": "dynamic",
+        "target_offset": "0.24"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_stem_winter__dusk",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_winter__dusk.wav",
+      "duration_seconds": 141.176,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-19.65",
+        "input_tp": "-3.85",
+        "input_lra": "6.30",
+        "input_thresh": "-29.65",
+        "output_i": "-16.33",
+        "output_tp": "-1.00",
+        "output_lra": "6.10",
+        "output_thresh": "-26.33",
+        "normalization_type": "dynamic",
+        "target_offset": "0.33"
+      }
+    },
+    {
+      "asset_id": "bgm_yard_stem_winter__night",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_yard_stem_winter__night.wav",
+      "duration_seconds": 150.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-19.54",
+        "input_tp": "-3.97",
+        "input_lra": "6.30",
+        "input_thresh": "-29.54",
+        "output_i": "-16.19",
+        "output_tp": "-1.00",
+        "output_lra": "6.20",
+        "output_thresh": "-26.19",
+        "normalization_type": "dynamic",
+        "target_offset": "0.19"
+      }
+    },
+    {
+      "asset_id": "bgm_opening__st1_piano",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_opening__st1_piano.wav",
+      "duration_seconds": 70.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-18.60",
+        "input_tp": "-9.44",
+        "input_lra": "7.10",
+        "input_thresh": "-29.23",
+        "output_i": "-15.83",
+        "output_tp": "-6.01",
+        "output_lra": "6.20",
+        "output_thresh": "-26.48",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.17"
+      }
+    },
+    {
+      "asset_id": "bgm_opening__st2_texture",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_opening__st2_texture.wav",
+      "duration_seconds": 70.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-35.54",
+        "input_tp": "-25.84",
+        "input_lra": "7.20",
+        "input_thresh": "-45.66",
+        "output_i": "-15.93",
+        "output_tp": "-6.51",
+        "output_lra": "7.30",
+        "output_thresh": "-27.21",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.07"
+      }
+    },
+    {
+      "asset_id": "bgm_opening",
+      "role": "mix",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/mix/wav/bgm_opening.wav",
+      "duration_seconds": 70.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-16.00",
+        "input_tp": "-6.31",
+        "input_lra": "16.40",
+        "input_thresh": "-27.56",
+        "output_i": "-16.41",
+        "output_tp": "-5.48",
+        "output_lra": "12.10",
+        "output_thresh": "-27.51",
+        "normalization_type": "dynamic",
+        "target_offset": "0.41"
+      }
+    },
+    {
+      "asset_id": "bgm_adoption__st1_guitar",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_adoption__st1_guitar.wav",
+      "duration_seconds": 90.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-19.64",
+        "input_tp": "-7.59",
+        "input_lra": "0.40",
+        "input_thresh": "-29.77",
+        "output_i": "-16.07",
+        "output_tp": "-3.97",
+        "output_lra": "0.50",
+        "output_thresh": "-26.20",
+        "normalization_type": "dynamic",
+        "target_offset": "0.07"
+      }
+    },
+    {
+      "asset_id": "bgm_adoption__st2_kalimba",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_adoption__st2_kalimba.wav",
+      "duration_seconds": 90.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-21.34",
+        "input_tp": "-9.65",
+        "input_lra": "9.50",
+        "input_thresh": "-31.71",
+        "output_i": "-15.61",
+        "output_tp": "-3.17",
+        "output_lra": "9.80",
+        "output_thresh": "-26.16",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.39"
+      }
+    },
+    {
+      "asset_id": "bgm_adoption",
+      "role": "mix",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/mix/wav/bgm_adoption.wav",
+      "duration_seconds": 90.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-16.00",
+        "input_tp": "-1.88",
+        "input_lra": "2.10",
+        "input_thresh": "-26.13",
+        "output_i": "-16.16",
+        "output_tp": "-2.26",
+        "output_lra": "2.20",
+        "output_thresh": "-26.30",
+        "normalization_type": "dynamic",
+        "target_offset": "0.16"
+      }
+    },
+    {
+      "asset_id": "bgm_postcard_read__st1_bed",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_postcard_read__st1_bed.wav",
+      "duration_seconds": 110.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-20.60",
+        "input_tp": "-4.92",
+        "input_lra": "2.10",
+        "input_thresh": "-31.25",
+        "output_i": "-15.94",
+        "output_tp": "-1.00",
+        "output_lra": "2.00",
+        "output_thresh": "-26.60",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.06"
+      }
+    },
+    {
+      "asset_id": "bgm_postcard_read__st2_melody",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_postcard_read__st2_melody.wav",
+      "duration_seconds": 110.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-22.67",
+        "input_tp": "-17.84",
+        "input_lra": "8.10",
+        "input_thresh": "-33.12",
+        "output_i": "-15.87",
+        "output_tp": "-9.77",
+        "output_lra": "8.10",
+        "output_thresh": "-26.39",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.13"
+      }
+    },
+    {
+      "asset_id": "bgm_postcard_read__st3_accordion",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_postcard_read__st3_accordion.wav",
+      "duration_seconds": 110.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-25.07",
+        "input_tp": "-15.65",
+        "input_lra": "0.70",
+        "input_thresh": "-35.07",
+        "output_i": "-15.97",
+        "output_tp": "-6.49",
+        "output_lra": "0.70",
+        "output_thresh": "-25.97",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.03"
+      }
+    },
+    {
+      "asset_id": "bgm_postcard_read",
+      "role": "mix",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/mix/wav/bgm_postcard_read.wav",
+      "duration_seconds": 110.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-16.00",
+        "input_tp": "-1.54",
+        "input_lra": "2.50",
+        "input_thresh": "-26.00",
+        "output_i": "-16.08",
+        "output_tp": "-1.72",
+        "output_lra": "2.60",
+        "output_thresh": "-26.08",
+        "normalization_type": "dynamic",
+        "target_offset": "0.08"
+      }
+    },
+    {
+      "asset_id": "bgm_album_browse__st1_piano",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_album_browse__st1_piano.wav",
+      "duration_seconds": 130.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-17.89",
+        "input_tp": "-7.63",
+        "input_lra": "9.30",
+        "input_thresh": "-29.62",
+        "output_i": "-15.73",
+        "output_tp": "-4.95",
+        "output_lra": "9.60",
+        "output_thresh": "-28.15",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.27"
+      }
+    },
+    {
+      "asset_id": "bgm_album_browse__st2_texture",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_album_browse__st2_texture.wav",
+      "duration_seconds": 130.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-26.83",
+        "input_tp": "-10.94",
+        "input_lra": "5.80",
+        "input_thresh": "-40.29",
+        "output_i": "-15.93",
+        "output_tp": "-1.00",
+        "output_lra": "1.40",
+        "output_thresh": "-29.54",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.07"
+      }
+    },
+    {
+      "asset_id": "bgm_album_browse",
+      "role": "mix",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/mix/wav/bgm_album_browse.wav",
+      "duration_seconds": 130.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-16.00",
+        "input_tp": "-1.72",
+        "input_lra": "11.90",
+        "input_thresh": "-28.43",
+        "output_i": "-16.21",
+        "output_tp": "-1.71",
+        "output_lra": "10.80",
+        "output_thresh": "-28.35",
+        "normalization_type": "dynamic",
+        "target_offset": "0.21"
+      }
+    },
+    {
+      "asset_id": "bgm_shop__st1_marimba_whistle",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_shop__st1_marimba_whistle.wav",
+      "duration_seconds": 100.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-18.66",
+        "input_tp": "-7.85",
+        "input_lra": "1.30",
+        "input_thresh": "-29.20",
+        "output_i": "-15.92",
+        "output_tp": "-4.30",
+        "output_lra": "1.30",
+        "output_thresh": "-26.58",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.08"
+      }
+    },
+    {
+      "asset_id": "bgm_shop__st2_light_perc",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_shop__st2_light_perc.wav",
+      "duration_seconds": 100.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-40.99",
+        "input_tp": "-10.77",
+        "input_lra": "2.00",
+        "input_thresh": "-51.16",
+        "output_i": "-22.87",
+        "output_tp": "-1.00",
+        "output_lra": "2.10",
+        "output_thresh": "-34.59",
+        "normalization_type": "dynamic",
+        "target_offset": "6.87"
+      }
+    },
+    {
+      "asset_id": "bgm_shop",
+      "role": "mix",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/mix/wav/bgm_shop.wav",
+      "duration_seconds": 100.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-15.99",
+        "input_tp": "-5.21",
+        "input_lra": "1.30",
+        "input_thresh": "-26.99",
+        "output_i": "-15.90",
+        "output_tp": "-4.34",
+        "output_lra": "1.30",
+        "output_thresh": "-26.90",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.10"
+      }
+    },
+    {
+      "asset_id": "bgm_event_special_bed__st1_bed",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_event_special_bed__st1_bed.wav",
+      "duration_seconds": 80.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-18.67",
+        "input_tp": "-4.50",
+        "input_lra": "10.70",
+        "input_thresh": "-31.22",
+        "output_i": "-15.91",
+        "output_tp": "-1.69",
+        "output_lra": "6.00",
+        "output_thresh": "-28.33",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.09"
+      }
+    },
+    {
+      "asset_id": "bgm_event_special_bed",
+      "role": "mix",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/mix/wav/bgm_event_special_bed.wav",
+      "duration_seconds": 80.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-16.00",
+        "input_tp": "-1.86",
+        "input_lra": "10.70",
+        "input_thresh": "-28.55",
+        "output_i": "-15.91",
+        "output_tp": "-1.66",
+        "output_lra": "6.00",
+        "output_thresh": "-28.32",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.09"
+      }
+    },
+    {
+      "asset_id": "bgm_graduation__st1_memory",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_graduation__st1_memory.wav",
+      "duration_seconds": 170.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-20.53",
+        "input_tp": "-10.58",
+        "input_lra": "1.60",
+        "input_thresh": "-31.50",
+        "output_i": "-16.19",
+        "output_tp": "-6.07",
+        "output_lra": "1.60",
+        "output_thresh": "-27.59",
+        "normalization_type": "dynamic",
+        "target_offset": "0.19"
+      }
+    },
+    {
+      "asset_id": "bgm_graduation__st2_departure",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_graduation__st2_departure.wav",
+      "duration_seconds": 170.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-17.64",
+        "input_tp": "-3.73",
+        "input_lra": "3.40",
+        "input_thresh": "-27.81",
+        "output_i": "-15.99",
+        "output_tp": "-1.90",
+        "output_lra": "3.10",
+        "output_thresh": "-26.14",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.01"
+      }
+    },
+    {
+      "asset_id": "bgm_graduation__st3_farewell",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_graduation__st3_farewell.wav",
+      "duration_seconds": 170.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-22.78",
+        "input_tp": "-6.88",
+        "input_lra": "6.30",
+        "input_thresh": "-32.79",
+        "output_i": "-16.04",
+        "output_tp": "-1.00",
+        "output_lra": "8.80",
+        "output_thresh": "-26.06",
+        "normalization_type": "dynamic",
+        "target_offset": "0.04"
+      }
+    },
+    {
+      "asset_id": "bgm_graduation",
+      "role": "mix",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/mix/wav/bgm_graduation.wav",
+      "duration_seconds": 170.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-16.87",
+        "input_tp": "-1.00",
+        "input_lra": "7.60",
+        "input_thresh": "-27.19",
+        "output_i": "-16.02",
+        "output_tp": "-1.00",
+        "output_lra": "6.40",
+        "output_thresh": "-26.30",
+        "normalization_type": "dynamic",
+        "target_offset": "0.02"
+      }
+    },
+    {
+      "asset_id": "bgm_revisit_overlay__day",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_revisit_overlay__day.wav",
+      "duration_seconds": 160.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-12.95",
+        "input_tp": "-7.65",
+        "input_lra": "6.70",
+        "input_thresh": "-23.11",
+        "output_i": "-16.02",
+        "output_tp": "-10.41",
+        "output_lra": "6.60",
+        "output_thresh": "-26.16",
+        "normalization_type": "dynamic",
+        "target_offset": "0.02"
+      }
+    },
+    {
+      "asset_id": "bgm_revisit_overlay__dusk",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_revisit_overlay__dusk.wav",
+      "duration_seconds": 141.176,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-13.74",
+        "input_tp": "-8.13",
+        "input_lra": "5.40",
+        "input_thresh": "-23.89",
+        "output_i": "-16.02",
+        "output_tp": "-10.40",
+        "output_lra": "5.40",
+        "output_thresh": "-26.16",
+        "normalization_type": "dynamic",
+        "target_offset": "0.02"
+      }
+    },
+    {
+      "asset_id": "bgm_revisit_overlay__night",
+      "role": "stem",
+      "category": "bgm",
+      "wav": "assets/audio/bgm/stems/wav/bgm_revisit_overlay__night.wav",
+      "duration_seconds": 150.0,
+      "loop": true,
+      "ffmpeg_loudnorm": {
+        "input_i": "-13.23",
+        "input_tp": "-7.92",
+        "input_lra": "6.70",
+        "input_thresh": "-23.39",
+        "output_i": "-16.02",
+        "output_tp": "-10.41",
+        "output_lra": "6.60",
+        "output_thresh": "-26.16",
+        "normalization_type": "dynamic",
+        "target_offset": "0.02"
+      }
+    },
+    {
+      "asset_id": "sting_levelup",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_levelup.wav",
+      "duration_seconds": 1.5,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-14.00",
+        "input_tp": "-3.63",
+        "input_lra": "0.00",
+        "input_thresh": "-25.72",
+        "output_i": "-16.00",
+        "output_tp": "-5.64",
+        "output_lra": "0.00",
+        "output_thresh": "-27.72",
+        "normalization_type": "linear",
+        "target_offset": "-0.00"
+      }
+    },
+    {
+      "asset_id": "sting_evolve_b",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_evolve_b.wav",
+      "duration_seconds": 3.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-14.14",
+        "input_tp": "-4.48",
+        "input_lra": "0.00",
+        "input_thresh": "-27.46",
+        "output_i": "-12.57",
+        "output_tp": "-2.79",
+        "output_lra": "0.00",
+        "output_thresh": "-26.10",
+        "normalization_type": "dynamic",
+        "target_offset": "-3.43"
+      }
+    },
+    {
+      "asset_id": "sting_evolve_c",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_evolve_c.wav",
+      "duration_seconds": 3.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-13.73",
+        "input_tp": "-4.47",
+        "input_lra": "0.00",
+        "input_thresh": "-27.42",
+        "output_i": "-12.62",
+        "output_tp": "-2.87",
+        "output_lra": "0.00",
+        "output_thresh": "-26.15",
+        "normalization_type": "dynamic",
+        "target_offset": "-3.38"
+      }
+    },
+    {
+      "asset_id": "sting_evolve_d",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_evolve_d.wav",
+      "duration_seconds": 3.5,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-14.21",
+        "input_tp": "-2.01",
+        "input_lra": "2.90",
+        "input_thresh": "-24.49",
+        "output_i": "-16.37",
+        "output_tp": "-5.08",
+        "output_lra": "0.00",
+        "output_thresh": "-26.64",
+        "normalization_type": "dynamic",
+        "target_offset": "0.37"
+      }
+    },
+    {
+      "asset_id": "sting_graduation_depart",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_graduation_depart.wav",
+      "duration_seconds": 4.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-14.54",
+        "input_tp": "-3.83",
+        "input_lra": "1.90",
+        "input_thresh": "-25.24",
+        "output_i": "-16.19",
+        "output_tp": "-5.83",
+        "output_lra": "1.60",
+        "output_thresh": "-26.81",
+        "normalization_type": "dynamic",
+        "target_offset": "0.19"
+      }
+    },
+    {
+      "asset_id": "sting_adoption_welcome",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_adoption_welcome.wav",
+      "duration_seconds": 2.5,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-14.00",
+        "input_tp": "-2.52",
+        "input_lra": "0.00",
+        "input_thresh": "-25.63",
+        "output_i": "-16.02",
+        "output_tp": "-4.52",
+        "output_lra": "0.00",
+        "output_thresh": "-27.65",
+        "normalization_type": "linear",
+        "target_offset": "0.02"
+      }
+    },
+    {
+      "asset_id": "sting_achievement",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_achievement.wav",
+      "duration_seconds": 1.5,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-13.99",
+        "input_tp": "-6.75",
+        "input_lra": "0.00",
+        "input_thresh": "-23.99",
+        "output_i": "-16.01",
+        "output_tp": "-8.75",
+        "output_lra": "0.00",
+        "output_thresh": "-26.01",
+        "normalization_type": "linear",
+        "target_offset": "0.01"
+      }
+    },
+    {
+      "asset_id": "sting_achievement_hidden",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_achievement_hidden.wav",
+      "duration_seconds": 2.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-13.99",
+        "input_tp": "-3.52",
+        "input_lra": "0.00",
+        "input_thresh": "-24.80",
+        "output_i": "-16.00",
+        "output_tp": "-5.53",
+        "output_lra": "0.00",
+        "output_thresh": "-26.81",
+        "normalization_type": "linear",
+        "target_offset": "0.00"
+      }
+    },
+    {
+      "asset_id": "sting_egg_unlock",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_egg_unlock.wav",
+      "duration_seconds": 3.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-12.96",
+        "input_tp": "-4.43",
+        "input_lra": "0.30",
+        "input_thresh": "-23.78",
+        "output_i": "-14.85",
+        "output_tp": "-6.43",
+        "output_lra": "0.00",
+        "output_thresh": "-25.71",
+        "normalization_type": "dynamic",
+        "target_offset": "-1.15"
+      }
+    },
+    {
+      "asset_id": "sting_first_snow",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_first_snow.wav",
+      "duration_seconds": 3.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-13.04",
+        "input_tp": "-4.10",
+        "input_lra": "0.20",
+        "input_thresh": "-23.55",
+        "output_i": "-15.04",
+        "output_tp": "-6.10",
+        "output_lra": "0.00",
+        "output_thresh": "-25.21",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.96"
+      }
+    },
+    {
+      "asset_id": "sting_meteor",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_meteor.wav",
+      "duration_seconds": 2.5,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-14.00",
+        "input_tp": "-4.85",
+        "input_lra": "0.00",
+        "input_thresh": "-24.62",
+        "output_i": "-16.00",
+        "output_tp": "-6.85",
+        "output_lra": "0.00",
+        "output_thresh": "-26.62",
+        "normalization_type": "linear",
+        "target_offset": "-0.00"
+      }
+    },
+    {
+      "asset_id": "sting_fullmoon",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_fullmoon.wav",
+      "duration_seconds": 3.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-13.74",
+        "input_tp": "-5.50",
+        "input_lra": "0.20",
+        "input_thresh": "-23.74",
+        "output_i": "-15.61",
+        "output_tp": "-7.50",
+        "output_lra": "0.00",
+        "output_thresh": "-25.61",
+        "normalization_type": "dynamic",
+        "target_offset": "-0.39"
+      }
+    },
+    {
+      "asset_id": "sting_birthday",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_birthday.wav",
+      "duration_seconds": 2.5,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-14.00",
+        "input_tp": "-4.03",
+        "input_lra": "0.00",
+        "input_thresh": "-24.69",
+        "output_i": "-16.00",
+        "output_tp": "-6.03",
+        "output_lra": "0.00",
+        "output_thresh": "-26.69",
+        "normalization_type": "linear",
+        "target_offset": "-0.00"
+      }
+    },
+    {
+      "asset_id": "sting_rainbow",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_rainbow.wav",
+      "duration_seconds": 2.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-14.01",
+        "input_tp": "-3.28",
+        "input_lra": "0.00",
+        "input_thresh": "-24.01",
+        "output_i": "-16.01",
+        "output_tp": "-5.27",
+        "output_lra": "0.00",
+        "output_thresh": "-26.01",
+        "normalization_type": "linear",
+        "target_offset": "0.01"
+      }
+    },
+    {
+      "asset_id": "sting_bonfire",
+      "role": "one-shot",
+      "category": "sting",
+      "wav": "assets/audio/sting/wav/sting_bonfire.wav",
+      "duration_seconds": 3.0,
+      "loop": false,
+      "ffmpeg_loudnorm": {
+        "input_i": "-12.87",
+        "input_tp": "-5.02",
+        "input_lra": "0.30",
+        "input_thresh": "-23.71",
+        "output_i": "-14.87",
+        "output_tp": "-7.02",
+        "output_lra": "0.00",
+        "output_thresh": "-25.55",
+        "normalization_type": "dynamic",
+        "target_offset": "-1.13"
+      }
+    }
+  ]
+}

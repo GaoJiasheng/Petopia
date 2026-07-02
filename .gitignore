@@ -14,7 +14,7 @@ build/
 *.iml
 .flutter-plugins
 .flutter-plugins-dependencies
-pubspec.lock
+# 注：本项目为 app，pubspec.lock 应提交（可复现构建），故不忽略
 
 # ── iOS / macOS ────────────────────────────────
 **/ios/Pods/
