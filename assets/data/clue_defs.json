@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "clueId": "clue_ember",
+      "threshold": 3,
+      "visitorPrereqId": "visitor_campfire_light",
+      "unlocksSpeciesId": "pet_ember",
+      "steps": []
+    },
+    {
+      "clueId": "clue_uni",
+      "threshold": 2,
+      "visitorPrereqId": "visitor_rainbow_shade",
+      "unlocksSpeciesId": "pet_uni",
+      "steps": []
+    },
+    {
+      "clueId": "clue_boo",
+      "threshold": 5,
+      "visitorPrereqId": "visitor_night_blob",
+      "unlocksSpeciesId": "pet_boo",
+      "steps": []
+    },
+    {
+      "clueId": "clue_starbug",
+      "threshold": 3,
+      "visitorPrereqId": "visitor_starbug",
+      "unlocksSpeciesId": "pet_starbug",
+      "steps": []
+    }
+  ]
+}

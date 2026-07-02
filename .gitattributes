@@ -1,0 +1,9 @@
+assets/art/**/*.png filter=lfs diff=lfs merge=lfs -text
+assets/art/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+assets/art/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+assets/art/**/*.psd filter=lfs diff=lfs merge=lfs -text
+assets/art/**/*.tiff filter=lfs diff=lfs merge=lfs -text
+assets/audio/**/*.wav filter=lfs diff=lfs merge=lfs -text
+assets/audio/**/*.ogg filter=lfs diff=lfs merge=lfs -text
+assets/audio/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
+assets/audio/**/*.aac filter=lfs diff=lfs merge=lfs -text

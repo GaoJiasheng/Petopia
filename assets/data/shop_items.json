@@ -1,0 +1,605 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "shop_theme_sakura",
+      "category": "院子主题",
+      "name": "樱花小径",
+      "price": 400,
+      "effect": {
+        "type": "themeSkin",
+        "params": {
+          "themeId": "sakura"
+        }
+      },
+      "artRef": "ui_shop_sakura",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_theme_starry_camp",
+      "category": "院子主题",
+      "name": "星夜帐篷",
+      "price": 600,
+      "effect": {
+        "type": "themeSkin",
+        "params": {
+          "themeId": "starry_camp",
+          "visitorProbBonus": {
+            "scope": "night",
+            "delta": 0.05
+          }
+        }
+      },
+      "artRef": "ui_shop_starry_camp",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_theme_sea_breeze",
+      "category": "院子主题",
+      "name": "海风假日",
+      "price": 500,
+      "effect": {
+        "type": "themeSkin",
+        "params": {
+          "themeId": "sea_breeze"
+        }
+      },
+      "artRef": "ui_shop_sea_breeze",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_theme_autumn_jam",
+      "category": "院子主题",
+      "name": "秋日果酱",
+      "price": 500,
+      "effect": {
+        "type": "themeSkin",
+        "params": {
+          "themeId": "autumn_jam",
+          "visitorProbBonus": {
+            "scope": "autumn",
+            "delta": 0.05
+          }
+        }
+      },
+      "artRef": "ui_shop_autumn_jam",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_theme_snow_house",
+      "category": "院子主题",
+      "name": "雪屋暖灯",
+      "price": 600,
+      "effect": {
+        "type": "themeSkin",
+        "params": {
+          "themeId": "snow_house",
+          "visitorProbBonus": {
+            "scope": "snow_rabbit",
+            "delta": 0.1
+          }
+        }
+      },
+      "artRef": "ui_shop_snow_house",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_theme_rain_moss",
+      "category": "院子主题",
+      "name": "雨季青苔",
+      "price": 450,
+      "effect": {
+        "type": "themeSkin",
+        "params": {
+          "themeId": "rain_moss",
+          "visitorProbBonus": {
+            "scope": "rainy",
+            "delta": 0.05
+          }
+        }
+      },
+      "artRef": "ui_shop_rain_moss",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_theme_candy_bakery",
+      "category": "院子主题",
+      "name": "糖果焙房",
+      "price": 550,
+      "effect": {
+        "type": "themeSkin",
+        "params": {
+          "themeId": "candy_bakery"
+        }
+      },
+      "artRef": "ui_shop_candy_bakery",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_theme_four_seasons",
+      "category": "院子主题",
+      "name": "四季花园",
+      "price": 800,
+      "effect": {
+        "type": "themeSkin",
+        "params": {
+          "themeId": "four_seasons",
+          "visitorProbBonus": {
+            "scope": "seasonal",
+            "delta": 0.1
+          }
+        }
+      },
+      "artRef": "ui_shop_four_seasons",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_theme_bamboo_tea",
+      "category": "院子主题",
+      "name": "青竹茶亭",
+      "price": 550,
+      "effect": {
+        "type": "themeSkin",
+        "params": {
+          "themeId": "bamboo_tea",
+          "visitorProbBonus": {
+            "scope": "bird",
+            "delta": 0.05
+          }
+        }
+      },
+      "artRef": "ui_shop_bamboo_tea",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_theme_moonlight",
+      "category": "院子主题",
+      "name": "月光温室",
+      "price": 650,
+      "effect": {
+        "type": "themeSkin",
+        "params": {
+          "themeId": "moonlight",
+          "visitorProbBonus": {
+            "scope": "nocturnal",
+            "delta": 0.05
+          }
+        }
+      },
+      "artRef": "ui_shop_moonlight",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_theme_wheat_kite",
+      "category": "院子主题",
+      "name": "麦浪风筝",
+      "price": 450,
+      "effect": {
+        "type": "themeSkin",
+        "params": {
+          "themeId": "wheat_kite",
+          "visitorProbBonus": {
+            "scope": "morning",
+            "delta": 0.05
+          }
+        }
+      },
+      "artRef": "ui_shop_wheat_kite",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_decor_water_bowl",
+      "category": "装饰小物",
+      "name": "陶瓷小水碗",
+      "price": 60,
+      "effect": {
+        "type": "decor",
+        "params": {
+          "decorId": "water_bowl",
+          "visitorProbBonus": {
+            "scope": "bird",
+            "delta": 0.08
+          }
+        }
+      },
+      "artRef": "ui_shop_water_bowl",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_decor_night_light",
+      "category": "装饰小物",
+      "name": "夜灯",
+      "price": 120,
+      "effect": {
+        "type": "decor",
+        "params": {
+          "decorId": "night_light",
+          "visitorProbBonus": {
+            "scope": "nocturnal",
+            "delta": 0.08
+          }
+        }
+      },
+      "artRef": "ui_shop_night_light",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_decor_fireplace",
+      "category": "装饰小物",
+      "name": "暖炉",
+      "price": 150,
+      "effect": {
+        "type": "decor",
+        "params": {
+          "decorId": "fireplace"
+        }
+      },
+      "artRef": "ui_shop_fireplace",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_decor_wind_chime",
+      "category": "装饰小物",
+      "name": "亮闪闪风铃",
+      "price": 100,
+      "effect": {
+        "type": "decor",
+        "params": {
+          "decorId": "wind_chime",
+          "visitorProbBonus": {
+            "scope": "crow_liang",
+            "delta": 0.5
+          }
+        }
+      },
+      "artRef": "ui_shop_wind_chime",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_decor_flower_box",
+      "category": "装饰小物",
+      "name": "野花花坛箱",
+      "price": 80,
+      "effect": {
+        "type": "decor",
+        "params": {
+          "decorId": "flower_box",
+          "visitorProbBonus": {
+            "scope": "butterfly",
+            "delta": 0.2
+          }
+        }
+      },
+      "artRef": "ui_shop_flower_box",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_decor_mushroom_bench",
+      "category": "装饰小物",
+      "name": "蘑菇石凳",
+      "price": 90,
+      "effect": {
+        "type": "decor",
+        "params": {
+          "decorId": "mushroom_bench"
+        }
+      },
+      "artRef": "ui_shop_mushroom_bench",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_decor_scarecrow",
+      "category": "装饰小物",
+      "name": "稻草人邮差",
+      "price": 130,
+      "effect": {
+        "type": "decor",
+        "params": {
+          "decorId": "scarecrow"
+        }
+      },
+      "artRef": "ui_shop_scarecrow",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_decor_wind_vane",
+      "category": "装饰小物",
+      "name": "星星风向标",
+      "price": 140,
+      "effect": {
+        "type": "decor",
+        "params": {
+          "decorId": "wind_vane"
+        }
+      },
+      "artRef": "ui_shop_wind_vane",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_decor_wood_sign",
+      "category": "装饰小物",
+      "name": "木牌门号「1号院」",
+      "price": 70,
+      "effect": {
+        "type": "decor",
+        "params": {
+          "decorId": "wood_sign"
+        }
+      },
+      "artRef": "ui_shop_wood_sign",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_food_grain_bag",
+      "category": "特殊食粮",
+      "name": "谷粒袋 ×3 盘",
+      "price": 20,
+      "effect": {
+        "type": "visitorProb",
+        "params": {
+          "scope": "bird",
+          "delta": 0.8
+        }
+      },
+      "artRef": "ui_shop_grain_bag",
+      "consumable": true,
+      "stackCount": 3
+    },
+    {
+      "id": "shop_food_dried_fish",
+      "category": "特殊食粮",
+      "name": "小鱼干 ×3 盘",
+      "price": 30,
+      "effect": {
+        "type": "visitorProb",
+        "params": {
+          "scope": "cat_egret",
+          "delta": 0.65
+        }
+      },
+      "artRef": "ui_shop_dried_fish",
+      "consumable": true,
+      "stackCount": 3
+    },
+    {
+      "id": "shop_food_nut_jar",
+      "category": "特殊食粮",
+      "name": "坚果罐 ×3 盘",
+      "price": 30,
+      "effect": {
+        "type": "visitorProb",
+        "params": {
+          "scope": "squirrel",
+          "delta": 1.0
+        }
+      },
+      "artRef": "ui_shop_nut_jar",
+      "consumable": true,
+      "stackCount": 3
+    },
+    {
+      "id": "shop_food_apple_slices",
+      "category": "特殊食粮",
+      "name": "苹果片 ×3 盘",
+      "price": 20,
+      "effect": {
+        "type": "visitorProb",
+        "params": {
+          "scope": "rabbit_deer",
+          "delta": 0.5
+        }
+      },
+      "artRef": "ui_shop_apple_slices",
+      "consumable": true,
+      "stackCount": 3
+    },
+    {
+      "id": "shop_feed_salmon_cookie",
+      "category": "特殊食粮",
+      "name": "三文鱼小饼干 ×5",
+      "price": 80,
+      "effect": {
+        "type": "feedBonus",
+        "params": {
+          "expFrom": 3,
+          "expTo": 6
+        }
+      },
+      "artRef": "ui_shop_salmon_cookie",
+      "consumable": true,
+      "stackCount": 5
+    },
+    {
+      "id": "shop_feed_rainbow_jelly",
+      "category": "特殊食粮",
+      "name": "彩虹果冻 ×3",
+      "price": 100,
+      "effect": {
+        "type": "feedBonus",
+        "params": {
+          "expFrom": 3,
+          "expTo": 6
+        }
+      },
+      "artRef": "ui_shop_rainbow_jelly",
+      "consumable": true,
+      "stackCount": 3
+    },
+    {
+      "id": "shop_feed_honey_oat",
+      "category": "特殊食粮",
+      "name": "蜂蜜燕麦圈 ×5",
+      "price": 70,
+      "effect": {
+        "type": "feedBonus",
+        "params": {
+          "expFrom": 3,
+          "expTo": 5
+        }
+      },
+      "artRef": "ui_shop_honey_oat",
+      "consumable": true,
+      "stackCount": 5
+    },
+    {
+      "id": "shop_feed_bubble_soap",
+      "category": "特殊食粮",
+      "name": "泡泡浴皂 ×2",
+      "price": 90,
+      "effect": {
+        "type": "feedBonus",
+        "params": {
+          "expFrom": 6,
+          "expTo": 9
+        }
+      },
+      "artRef": "ui_shop_bubble_soap",
+      "consumable": true,
+      "stackCount": 2
+    },
+    {
+      "id": "shop_toy_yarn_ball",
+      "category": "特殊玩具",
+      "name": "会咕咕叫的毛线球",
+      "price": 200,
+      "effect": {
+        "type": "toyPermanentBonus",
+        "params": {
+          "expFrom": 4,
+          "expTo": 6
+        }
+      },
+      "artRef": "ui_shop_yarn_ball",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_toy_wind_up_duck",
+      "category": "特殊玩具",
+      "name": "发条小鸭",
+      "price": 260,
+      "effect": {
+        "type": "toyPermanentBonus",
+        "params": {
+          "expFrom": 4,
+          "expTo": 6
+        }
+      },
+      "artRef": "ui_shop_wind_up_duck",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_toy_cat_wand",
+      "category": "特殊玩具",
+      "name": "藤编逗猫棒",
+      "price": 220,
+      "effect": {
+        "type": "toyPermanentBonus",
+        "params": {
+          "expFrom": 4,
+          "expTo": 6
+        }
+      },
+      "artRef": "ui_shop_cat_wand",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_toy_wooden_disc",
+      "category": "特殊玩具",
+      "name": "软木飞盘",
+      "price": 240,
+      "effect": {
+        "type": "toyPermanentBonus",
+        "params": {
+          "expFrom": 4,
+          "expTo": 6
+        }
+      },
+      "artRef": "ui_shop_wooden_disc",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_album_paper",
+      "category": "明信片",
+      "name": "相册皮肤·牛皮纸",
+      "price": 150,
+      "effect": {
+        "type": "albumSkin",
+        "params": {
+          "skinId": "paper"
+        }
+      },
+      "artRef": "ui_shop_paper",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_album_picnic",
+      "category": "明信片",
+      "name": "相册皮肤·蓝格纹野餐布",
+      "price": 150,
+      "effect": {
+        "type": "albumSkin",
+        "params": {
+          "skinId": "picnic"
+        }
+      },
+      "artRef": "ui_shop_picnic",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_album_dried_flower",
+      "category": "明信片",
+      "name": "相册皮肤·干花押纸",
+      "price": 200,
+      "effect": {
+        "type": "albumSkin",
+        "params": {
+          "skinId": "dried_flower"
+        }
+      },
+      "artRef": "ui_shop_dried_flower",
+      "consumable": false,
+      "stackCount": null
+    },
+    {
+      "id": "shop_album_star_chart",
+      "category": "明信片",
+      "name": "图鉴皮肤·星图夜航",
+      "price": 250,
+      "effect": {
+        "type": "albumSkin",
+        "params": {
+          "skinId": "star_chart"
+        }
+      },
+      "artRef": "ui_shop_star_chart",
+      "consumable": false,
+      "stackCount": null
+    }
+  ]
+}

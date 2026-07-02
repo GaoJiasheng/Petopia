@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "p_glutton",
+      "name": "贪吃",
+      "persona": "世界尽头是饭碗",
+      "eventWeightMap": {
+        "food": 2.0,
+        "help": 1.2
+      },
+      "actionExpBonus": {
+        "feed": 0.1
+      },
+      "actionSetId": "act_glutton",
+      "postcardStyleId": "style_glutton",
+      "specialFlags": []
+    },
+    {
+      "id": "p_lazy",
+      "name": "慵懒",
+      "persona": "能躺着绝不坐着",
+      "eventWeightMap": {
+        "sleep": 2.0,
+        "play": 0.7
+      },
+      "actionExpBonus": {},
+      "actionSetId": "act_lazy",
+      "postcardStyleId": "style_lazy",
+      "specialFlags": [
+        "lazy_offline_cap"
+      ]
+    },
+    {
+      "id": "p_curious",
+      "name": "好奇",
+      "persona": "什么都要闻一闻戳一戳",
+      "eventWeightMap": {
+        "explore": 2.0,
+        "sky": 1.3
+      },
+      "actionExpBonus": {},
+      "actionSetId": "act_curious",
+      "postcardStyleId": "style_curious",
+      "specialFlags": []
+    },
+    {
+      "id": "p_timid",
+      "name": "胆小",
+      "persona": "风吹草动先躲为敬，熟了以后黏死你",
+      "eventWeightMap": {
+        "scare": 2.0
+      },
+      "actionExpBonus": {},
+      "actionSetId": "act_timid",
+      "postcardStyleId": "style_timid",
+      "specialFlags": []
+    },
+    {
+      "id": "p_energetic",
+      "name": "活力",
+      "persona": "永动机，跑起来像一阵毛茸茸的风",
+      "eventWeightMap": {
+        "play": 2.0,
+        "sleep": 0.7
+      },
+      "actionExpBonus": {
+        "toy": 0.1
+      },
+      "actionSetId": "act_energetic",
+      "postcardStyleId": "style_energetic",
+      "specialFlags": []
+    },
+    {
+      "id": "p_clingy",
+      "name": "黏人",
+      "persona": "你在哪它在哪",
+      "eventWeightMap": {
+        "miss": 2.0,
+        "solo": 0.5
+      },
+      "actionExpBonus": {},
+      "actionSetId": "act_clingy",
+      "postcardStyleId": "style_clingy",
+      "specialFlags": []
+    },
+    {
+      "id": "p_aloof",
+      "name": "高冷",
+      "persona": "爱你但不说，蹭你三秒算告白",
+      "eventWeightMap": {
+        "solo": 2.0,
+        "miss": 1.2
+      },
+      "actionExpBonus": {},
+      "actionSetId": "act_aloof",
+      "postcardStyleId": "style_aloof",
+      "specialFlags": [
+        "aloof_pat_reject"
+      ]
+    },
+    {
+      "id": "p_naughty",
+      "name": "淘气",
+      "persona": "院子里的小混乱制造机",
+      "eventWeightMap": {
+        "mischief": 2.0,
+        "help": 0.8
+      },
+      "actionExpBonus": {},
+      "actionSetId": "act_naughty",
+      "postcardStyleId": "style_naughty",
+      "specialFlags": []
+    },
+    {
+      "id": "p_gentle",
+      "name": "温柔",
+      "persona": "会把落叶让给瓢虫先过",
+      "eventWeightMap": {
+        "help": 2.0
+      },
+      "actionExpBonus": {},
+      "actionSetId": "act_gentle",
+      "postcardStyleId": "style_gentle",
+      "specialFlags": []
+    },
+    {
+      "id": "p_dreamy",
+      "name": "爱幻想",
+      "persona": "常常盯着云发呆，仿佛在写诗",
+      "eventWeightMap": {
+        "sky": 2.0
+      },
+      "actionExpBonus": {},
+      "actionSetId": "act_dreamy",
+      "postcardStyleId": "style_dreamy",
+      "specialFlags": []
+    }
+  ]
+}

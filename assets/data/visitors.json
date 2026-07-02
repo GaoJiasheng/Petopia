@@ -1,0 +1,577 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "visitor_sparrow",
+      "name": "麻雀啾啾",
+      "rarity": "common",
+      "activeTime": [
+        "dawn",
+        "morning",
+        "noon",
+        "afternoon"
+      ],
+      "weatherPref": {
+        "clear": 1,
+        "cloudy": 1,
+        "rain": 0.5,
+        "snow": 0.5,
+        "thunder": 0.2
+      },
+      "foodPref": {
+        "grain": 1
+      },
+      "seasonPref": {
+        "spring": 1,
+        "summer": 1,
+        "autumn": 1,
+        "winter": 1
+      },
+      "decorReq": [],
+      "clueRole": null,
+      "artRef": "visitor_sparrow_portrait"
+    },
+    {
+      "id": "visitor_calico",
+      "name": "流浪三花猫",
+      "rarity": "common",
+      "activeTime": [
+        "morning",
+        "noon",
+        "afternoon",
+        "evening"
+      ],
+      "weatherPref": {
+        "clear": 1.2,
+        "cloudy": 1,
+        "rain": 0.4,
+        "snow": 0.6,
+        "thunder": 0.2
+      },
+      "foodPref": {
+        "fishdry": 1
+      },
+      "seasonPref": {
+        "spring": 1,
+        "summer": 1,
+        "autumn": 1,
+        "winter": 1
+      },
+      "decorReq": [],
+      "clueRole": null,
+      "artRef": "visitor_calico_portrait"
+    },
+    {
+      "id": "visitor_snail",
+      "name": "蜗牛慢递员",
+      "rarity": "common",
+      "activeTime": [
+        "dawn",
+        "evening"
+      ],
+      "weatherPref": {
+        "clear": 0.5,
+        "cloudy": 1.5,
+        "rain": 3,
+        "snow": 0,
+        "thunder": 1
+      },
+      "foodPref": {
+        "apple": 1
+      },
+      "seasonPref": {
+        "spring": 1.2,
+        "summer": 1.2,
+        "autumn": 1,
+        "winter": 0
+      },
+      "decorReq": [],
+      "clueRole": null,
+      "artRef": "visitor_snail_portrait"
+    },
+    {
+      "id": "visitor_butterfly",
+      "name": "白粉蝶",
+      "rarity": "common",
+      "activeTime": [
+        "morning",
+        "noon",
+        "afternoon"
+      ],
+      "weatherPref": {
+        "clear": 2,
+        "cloudy": 0.8,
+        "rain": 0.2,
+        "snow": 0,
+        "thunder": 0
+      },
+      "foodPref": {},
+      "seasonPref": {
+        "spring": 1.5,
+        "summer": 1.5,
+        "autumn": 0.8,
+        "winter": 0
+      },
+      "decorReq": [],
+      "clueRole": null,
+      "artRef": "visitor_butterfly_portrait"
+    },
+    {
+      "id": "visitor_hedgehog",
+      "name": "小刺猬球球",
+      "rarity": "common",
+      "activeTime": [
+        "evening",
+        "night"
+      ],
+      "weatherPref": {
+        "clear": 1,
+        "cloudy": 1,
+        "rain": 0.8,
+        "snow": 0.3,
+        "thunder": 0.5
+      },
+      "foodPref": {
+        "apple": 1
+      },
+      "seasonPref": {
+        "spring": 1,
+        "summer": 1.2,
+        "autumn": 1.2,
+        "winter": 0.3
+      },
+      "decorReq": [],
+      "clueRole": null,
+      "artRef": "visitor_hedgehog_portrait"
+    },
+    {
+      "id": "visitor_pigeon",
+      "name": "鸽子咕咕",
+      "rarity": "common",
+      "activeTime": [
+        "dawn",
+        "morning",
+        "noon",
+        "afternoon"
+      ],
+      "weatherPref": {
+        "clear": 1,
+        "cloudy": 1,
+        "rain": 0.6,
+        "snow": 0.6,
+        "thunder": 0.2
+      },
+      "foodPref": {
+        "grain": 1
+      },
+      "seasonPref": {
+        "spring": 1,
+        "summer": 1,
+        "autumn": 1,
+        "winter": 1
+      },
+      "decorReq": [],
+      "clueRole": null,
+      "artRef": "visitor_pigeon_portrait"
+    },
+    {
+      "id": "visitor_squirrel",
+      "name": "松鼠栗栗",
+      "rarity": "uncommon",
+      "activeTime": [
+        "dawn",
+        "morning",
+        "noon",
+        "afternoon"
+      ],
+      "weatherPref": {
+        "clear": 1.5,
+        "cloudy": 1,
+        "rain": 0.5,
+        "snow": 0.5,
+        "thunder": 0.2
+      },
+      "foodPref": {
+        "nuts": 1
+      },
+      "seasonPref": {
+        "spring": 1.2,
+        "summer": 1,
+        "autumn": 1.5,
+        "winter": 0.5
+      },
+      "decorReq": [],
+      "clueRole": null,
+      "artRef": "visitor_squirrel_portrait"
+    },
+    {
+      "id": "visitor_crow",
+      "name": "乌鸦亮亮",
+      "rarity": "uncommon",
+      "activeTime": [
+        "morning",
+        "noon",
+        "afternoon",
+        "evening"
+      ],
+      "weatherPref": {
+        "clear": 1,
+        "cloudy": 1.2,
+        "rain": 0.8,
+        "snow": 0.8,
+        "thunder": 0.5
+      },
+      "foodPref": {
+        "nuts": 1
+      },
+      "seasonPref": {
+        "spring": 1,
+        "summer": 1,
+        "autumn": 1,
+        "winter": 1
+      },
+      "decorReq": [
+        "deco_shiny_bells"
+      ],
+      "clueRole": null,
+      "artRef": "visitor_crow_portrait"
+    },
+    {
+      "id": "visitor_frog",
+      "name": "青蛙呱太",
+      "rarity": "uncommon",
+      "activeTime": [],
+      "weatherPref": {
+        "clear": 0.3,
+        "cloudy": 1,
+        "rain": 3,
+        "snow": 0,
+        "thunder": 1.5
+      },
+      "foodPref": {},
+      "seasonPref": {
+        "spring": 1.5,
+        "summer": 1.5,
+        "autumn": 0.5,
+        "winter": 0
+      },
+      "decorReq": [
+        "deco_pond"
+      ],
+      "clueRole": null,
+      "artRef": "visitor_frog_portrait"
+    },
+    {
+      "id": "visitor_firefly",
+      "name": "萤火虫群",
+      "rarity": "uncommon",
+      "activeTime": [
+        "night"
+      ],
+      "weatherPref": {
+        "clear": 2,
+        "cloudy": 0.5,
+        "rain": 0,
+        "snow": 0,
+        "thunder": 0
+      },
+      "foodPref": {},
+      "seasonPref": {
+        "spring": 0,
+        "summer": 1,
+        "autumn": 0,
+        "winter": 0
+      },
+      "decorReq": [
+        "deco_night_lamp"
+      ],
+      "clueRole": null,
+      "artRef": "visitor_firefly_portrait"
+    },
+    {
+      "id": "visitor_tanuki",
+      "name": "橘色狸猫",
+      "rarity": "uncommon",
+      "activeTime": [
+        "evening",
+        "night"
+      ],
+      "weatherPref": {
+        "clear": 1,
+        "cloudy": 1.2,
+        "rain": 0.8,
+        "snow": 0.8,
+        "thunder": 0.5
+      },
+      "foodPref": {
+        "fishdry": 1,
+        "apple": 1
+      },
+      "seasonPref": {
+        "spring": 1,
+        "summer": 1,
+        "autumn": 1.2,
+        "winter": 1
+      },
+      "decorReq": [],
+      "clueRole": null,
+      "artRef": "visitor_tanuki_portrait"
+    },
+    {
+      "id": "visitor_egret",
+      "name": "白鹭先生",
+      "rarity": "rare",
+      "activeTime": [
+        "dawn"
+      ],
+      "weatherPref": {
+        "clear": 1.2,
+        "cloudy": 1,
+        "rain": 0.8,
+        "snow": 0.2,
+        "thunder": 0
+      },
+      "foodPref": {
+        "fishdry": 1
+      },
+      "seasonPref": {
+        "spring": 1.2,
+        "summer": 1,
+        "autumn": 1,
+        "winter": 0.3
+      },
+      "decorReq": [
+        "deco_pond"
+      ],
+      "clueRole": null,
+      "artRef": "visitor_egret_portrait"
+    },
+    {
+      "id": "visitor_fox",
+      "name": "狐狸小茜",
+      "rarity": "rare",
+      "activeTime": [
+        "evening",
+        "night"
+      ],
+      "weatherPref": {
+        "clear": 1.2,
+        "cloudy": 1,
+        "rain": 0.5,
+        "snow": 1.5,
+        "thunder": 0.3
+      },
+      "foodPref": {
+        "fishdry": 1
+      },
+      "seasonPref": {
+        "spring": 0.8,
+        "summer": 0.8,
+        "autumn": 1.5,
+        "winter": 1.5
+      },
+      "decorReq": [],
+      "clueRole": null,
+      "artRef": "visitor_fox_portrait"
+    },
+    {
+      "id": "visitor_owl",
+      "name": "猫头鹰教授",
+      "rarity": "rare",
+      "activeTime": [
+        "night"
+      ],
+      "weatherPref": {
+        "clear": 1.2,
+        "cloudy": 1,
+        "rain": 0.3,
+        "snow": 0.8,
+        "thunder": 0
+      },
+      "foodPref": {
+        "nuts": 1
+      },
+      "seasonPref": {
+        "spring": 1,
+        "summer": 1,
+        "autumn": 1,
+        "winter": 1
+      },
+      "decorReq": [
+        "deco_night_lamp"
+      ],
+      "clueRole": null,
+      "artRef": "visitor_owl_portrait"
+    },
+    {
+      "id": "visitor_deer",
+      "name": "小鹿",
+      "rarity": "rare",
+      "activeTime": [
+        "dawn",
+        "evening"
+      ],
+      "weatherPref": {
+        "clear": 1.2,
+        "cloudy": 1.2,
+        "rain": 0.5,
+        "snow": 0.5,
+        "thunder": 0
+      },
+      "foodPref": {
+        "apple": 1
+      },
+      "seasonPref": {
+        "spring": 1.5,
+        "summer": 0.8,
+        "autumn": 1.5,
+        "winter": 0.5
+      },
+      "decorReq": [
+        "deco_tree"
+      ],
+      "clueRole": null,
+      "artRef": "visitor_deer_portrait"
+    },
+    {
+      "id": "visitor_snowhare",
+      "name": "雪兔",
+      "rarity": "rare",
+      "activeTime": [
+        "dawn",
+        "morning",
+        "noon",
+        "afternoon"
+      ],
+      "weatherPref": {
+        "clear": 0.8,
+        "cloudy": 1,
+        "rain": 0,
+        "snow": 4,
+        "thunder": 0
+      },
+      "foodPref": {
+        "apple": 1
+      },
+      "seasonPref": {
+        "spring": 0,
+        "summer": 0,
+        "autumn": 0,
+        "winter": 1
+      },
+      "decorReq": [],
+      "clueRole": null,
+      "artRef": "visitor_snowhare_portrait"
+    },
+    {
+      "id": "visitor_starbug",
+      "name": "星星虫",
+      "rarity": "legendary",
+      "activeTime": [
+        "night"
+      ],
+      "weatherPref": {
+        "clear": 2,
+        "cloudy": 0,
+        "rain": 0,
+        "snow": 0,
+        "thunder": 0
+      },
+      "foodPref": {},
+      "seasonPref": {
+        "spring": 1,
+        "summer": 1.2,
+        "autumn": 1,
+        "winter": 0.5
+      },
+      "decorReq": [
+        "deco_night_lamp"
+      ],
+      "clueRole": "clue_starbug",
+      "artRef": "visitor_starbug_portrait"
+    },
+    {
+      "id": "visitor_campfire_light",
+      "name": "篝火夜的火光",
+      "rarity": "legendary",
+      "activeTime": [
+        "night"
+      ],
+      "weatherPref": {
+        "clear": 1.5,
+        "cloudy": 1,
+        "rain": 0,
+        "snow": 1.5,
+        "thunder": 0
+      },
+      "foodPref": {},
+      "seasonPref": {
+        "spring": 0.5,
+        "summer": 0.3,
+        "autumn": 1,
+        "winter": 2
+      },
+      "decorReq": [
+        "deco_stove"
+      ],
+      "clueRole": "clue_ember",
+      "artRef": "visitor_campfire_light_portrait"
+    },
+    {
+      "id": "visitor_rainbow_shade",
+      "name": "彩虹边的白影",
+      "rarity": "legendary",
+      "activeTime": [
+        "morning",
+        "noon",
+        "afternoon"
+      ],
+      "weatherPref": {
+        "clear": 0,
+        "cloudy": 0,
+        "rain": 0,
+        "snow": 0,
+        "thunder": 0,
+        "fog": 0,
+        "rainbow": 1
+      },
+      "foodPref": {},
+      "seasonPref": {
+        "spring": 1.5,
+        "summer": 1.5,
+        "autumn": 1,
+        "winter": 0.5
+      },
+      "decorReq": [],
+      "clueRole": "clue_uni",
+      "artRef": "visitor_rainbow_shade_portrait"
+    },
+    {
+      "id": "visitor_night_blob",
+      "name": "深夜白团子",
+      "rarity": "legendary",
+      "activeTime": [
+        "night"
+      ],
+      "weatherPref": {
+        "clear": 1,
+        "cloudy": 1,
+        "rain": 1,
+        "snow": 1,
+        "thunder": 1,
+        "fog": 1,
+        "rainbow": 1
+      },
+      "foodPref": {},
+      "seasonPref": {
+        "spring": 1,
+        "summer": 1,
+        "autumn": 1,
+        "winter": 1
+      },
+      "decorReq": [],
+      "clueRole": "clue_boo",
+      "artRef": "visitor_night_blob_portrait"
+    }
+  ]
+}

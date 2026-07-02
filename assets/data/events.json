@@ -1,0 +1,3320 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "ev_d01",
+      "type": "daily",
+      "title": "追落叶",
+      "script": "追住了一片打转的落叶，得意地叼来给你看。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_energetic": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {
+          "autumn": 1.5
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d02",
+      "type": "daily",
+      "title": "摊饼",
+      "script": "在太阳晒热的石板上摊成一张饼。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 3,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_lazy": 2.0
+        },
+        "weather": {
+          "clear": 1.5
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d03",
+      "type": "daily",
+      "title": "歪头",
+      "script": "对着水碗里的自己歪了三次头。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_curious": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d04",
+      "type": "daily",
+      "title": "叼手套",
+      "script": "把你落在院里的手套叼进了窝，宣布占有。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_clingy": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d05",
+      "type": "daily",
+      "title": "偷吃",
+      "script": "偷吃访客食盘被抓包，装作在检查食物质量。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_glutton": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d06",
+      "type": "daily",
+      "title": "喷嚏",
+      "script": "被自己的喷嚏吓得原地弹起。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_timid": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d07",
+      "type": "daily",
+      "title": "诗朗诵",
+      "script": "深夜对着月亮发出了一声可疑的诗朗诵。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_dreamy": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "night": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d08",
+      "type": "daily",
+      "title": "推花盆",
+      "script": "把花盆推倒后一脸「它自己想不开」。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_naughty": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d09",
+      "type": "daily",
+      "title": "让屋檐",
+      "script": "给淋雨的白粉蝶让出了半个屋檐。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_gentle": 2.0
+        },
+        "weather": {
+          "rain": 2.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d10",
+      "type": "daily",
+      "title": "守外套",
+      "script": "远远地守着你放下的外套，谁靠近凶谁（气势上）。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_aloof": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d11",
+      "type": "daily",
+      "title": "埋橡果",
+      "script": "挖坑埋下了一颗橡果，并立刻忘了位置。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {
+          "autumn": 1.5
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d12",
+      "type": "daily",
+      "title": "新睡姿",
+      "script": "学会了新睡姿：四脚朝天式。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "拍照留念",
+          "resultScript": "你掏出手机，它很配合地露出了肚皮。快门按下，这一刻被永远收藏。",
+          "expDelta": 1
+        },
+        {
+          "text": "轻轻帮它翻回来",
+          "resultScript": "你轻轻帮它翻成侧卧，它咂咂嘴，好像在梦里点了点头。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d13",
+      "type": "daily",
+      "title": "等日出",
+      "script": "清晨蹲在邮箱顶上等日出，被第一缕阳光晃得打了个大哈欠。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_lazy": 1.5,
+          "p_dreamy": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {
+          "dawn": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d14",
+      "type": "daily",
+      "title": "站岗",
+      "script": "对着饭碗提前一小时开始站岗，眼神里全是「快到点了吧」。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_glutton": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "noon": 1.5
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d15",
+      "type": "daily",
+      "title": "初雪",
+      "script": "第一次踩到雪，抬起爪子研究了很久这个「凉凉的白色」。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_curious": 2.0
+        },
+        "weather": {
+          "snow": 3.0
+        },
+        "timeOfDay": {},
+        "season": {
+          "winter": 1.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d16",
+      "type": "daily",
+      "title": "躲雷",
+      "script": "打雷了，它躲进纸箱只露出半只耳朵监听世界。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_timid": 2.0
+        },
+        "weather": {
+          "thunder": 3.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "坐到纸箱旁边陪它",
+          "resultScript": "你轻轻坐在纸箱旁，它偷偷把耳朵露出来一点，你们一起听完了整场雷雨。",
+          "expDelta": 1
+        },
+        {
+          "text": "把纸箱盖轻轻掩上一半",
+          "resultScript": "你把纸箱盖掩上三分之一，它立刻安心地把自己缩成一团，很快就睡着了。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d17",
+      "type": "daily",
+      "title": "领路",
+      "script": "绕着院子跑圈给蜗牛慢递员「领路」，蜗牛前进了三厘米，它跑了三十圈。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_energetic": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d18",
+      "type": "daily",
+      "title": "挪窝",
+      "script": "夜里悄悄把窝挪到了能看见你房间灯的位置。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_clingy": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "night": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d19",
+      "type": "daily",
+      "title": "顺袜子",
+      "script": "假装路过晾衣绳七次，第八次终于「顺路」把你的袜子叼跑了。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_naughty": 1.5,
+          "p_aloof": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d20",
+      "type": "daily",
+      "title": "闻花",
+      "script": "春天第一朵花开了，它把脸凑上去闻，顶了一鼻子花粉回来。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_gentle": 1.5,
+          "p_curious": 1.5
+        },
+        "weather": {
+          "clear": 1.5
+        },
+        "timeOfDay": {},
+        "season": {
+          "spring": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d21",
+      "type": "daily",
+      "title": "看水洼",
+      "script": "雨天守在屋檐下看水洼里碎掉又拼好的天空，看了一下午。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_dreamy": 2.0
+        },
+        "weather": {
+          "rain": 2.0
+        },
+        "timeOfDay": {
+          "noon": 1.5
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d22",
+      "type": "daily",
+      "title": "追萤火虫",
+      "script": "夏夜追着萤火虫小跑，追到一半停下来，好像突然舍不得抓住它。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_gentle": 1.5,
+          "p_energetic": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {
+          "night": 2.0
+        },
+        "season": {
+          "summer": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d23",
+      "type": "daily",
+      "title": "流口水",
+      "script": "收到回访小屋方向飘来的味道，端坐在篱笆边礼貌性地流口水。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 3,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_glutton": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": 4
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d24",
+      "type": "daily",
+      "title": "送石头",
+      "script": "清晨叼来一颗带露水的小石头放在你常坐的位置。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_aloof": 1.5,
+          "p_clingy": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {
+          "dawn": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "郑重收下摆在窗台",
+          "resultScript": "你把石头放在窗台最显眼的位置，它假装不在意，眼角却偷偷瞄向那里。",
+          "expDelta": 1
+        },
+        {
+          "text": "夸夸它并还给它保管",
+          "resultScript": "你大力表扬了它，它立刻把石头要回去，庄重地放进了自己的宝贝箱。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d25",
+      "type": "daily",
+      "title": "藏饼干",
+      "script": "把最后一颗小饼干藏在腮帮里过了一夜，早上醒来把自己香了一大跳。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_glutton": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "dawn": 1.5
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d26",
+      "type": "daily",
+      "title": "守炊烟",
+      "script": "黄昏守在篱笆边，鼻子跟着谁家的炊烟一抽一抽，尾巴打着饭点的拍子。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_glutton": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "evening": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d27",
+      "type": "daily",
+      "title": "吧唧嘴",
+      "script": "午睡时吧唧嘴，把飘到嘴边的落叶认真咀嚼了两口才醒。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 3,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_glutton": 1.5,
+          "p_lazy": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {
+          "noon": 1.5
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d28",
+      "type": "daily",
+      "title": "冻胡萝卜",
+      "script": "雪天叼回一根冻得硬邦邦的胡萝卜，坚持认为这是大自然的馈赠。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_glutton": 2.0
+        },
+        "weather": {
+          "snow": 2.0
+        },
+        "timeOfDay": {},
+        "season": {
+          "winter": 1.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "让它抱着慢慢焐化",
+          "resultScript": "你帮它把胡萝卜放在怀里，它一脸满足地抱着，好像抱住了整个冬天。",
+          "expDelta": 1
+        },
+        {
+          "text": "悄悄换一根新鲜的给它",
+          "resultScript": "你偷偷换成新鲜胡萝卜，它咬了一口，愣住了，然后开心地吃光了。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d29",
+      "type": "daily",
+      "title": "看图鉴",
+      "script": "趴在图鉴上盯着别的宠物的饭碗插画流口水，纸页洇出一个小圆点。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 3,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_glutton": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d30",
+      "type": "daily",
+      "title": "橡果宴席",
+      "script": "在落叶堆里翻出一颗去年秋天的橡果，郑重其事地办了一场一人份宴席。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_glutton": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {
+          "autumn": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d31",
+      "type": "daily",
+      "title": "滚太阳地",
+      "script": "从窝挪到太阳晒到的地方，全程用滚的，一步没走。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 3,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_lazy": 2.0
+        },
+        "weather": {
+          "clear": 1.5
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d32",
+      "type": "daily",
+      "title": "长哈欠",
+      "script": "打了一个横跨整个下午的哈欠——你数了，前后共续了七次。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 3,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_lazy": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "noon": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d33",
+      "type": "daily",
+      "title": "雾天不起床",
+      "script": "雾天看了一眼院子，宣布今日能见度不足、不宜起床，转身回窝。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_lazy": 2.0
+        },
+        "weather": {
+          "fog": 2.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d34",
+      "type": "daily",
+      "title": "摊年糕",
+      "script": "夏日午后把肚皮贴在最阴凉的石板上，摊成一滩缓缓呼吸的年糕。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_lazy": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "noon": 1.5
+        },
+        "season": {
+          "summer": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d35",
+      "type": "daily",
+      "title": "乌龟续觉",
+      "script": "睡到一半从壳里探出头看了一眼世界，觉得还行，又缩回去续了一觉。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_lazy": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d36",
+      "type": "daily",
+      "title": "赖脚边",
+      "script": "黄昏赖在你脚边不肯回窝，用尾巴一下一下拍地表示抗议。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_lazy": 1.5,
+          "p_clingy": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {
+          "evening": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "把它抱回窝里掖好",
+          "resultScript": "你把它抱回窝，仔细掖好小被子，它立刻打着小呼噜睡着了。",
+          "expDelta": 1
+        },
+        {
+          "text": "陪它坐到天全黑",
+          "resultScript": "你陪它一直坐到星星都出来，它靠在你脚边，满足地回窝了。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d37",
+      "type": "daily",
+      "title": "护送蚂蚁",
+      "script": "发现了蚂蚁搬家的队伍，全程跟随护送三米，比蚂蚁还紧张。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_curious": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {
+          "summer": 1.5
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d38",
+      "type": "daily",
+      "title": "雾中巡逻",
+      "script": "雾天在院子里小心翼翼地巡逻，试图找出把世界藏起来的那个家伙。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_curious": 2.0
+        },
+        "weather": {
+          "fog": 2.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d39",
+      "type": "daily",
+      "title": "玩风铃",
+      "script": "围着新挂的风铃研究了半天，最后学会了用鼻尖把它点响。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_curious": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d40",
+      "type": "daily",
+      "title": "恐龙蛋",
+      "script": "挖洞挖出一颗滚圆的石头，激动地叼来请你鉴定是不是恐龙蛋。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_curious": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "郑重收进「宝物架」",
+          "resultScript": "你把它放在专门的「宝物架」上，它满意地点点头，以后每天都去参观。",
+          "expDelta": 1
+        },
+        {
+          "text": "陪它回去继续考古",
+          "resultScript": "你陪它回到挖洞的地方，它又埋头苦挖起来，你在一旁当助手。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d41",
+      "type": "daily",
+      "title": "等花开",
+      "script": "蹲在一枚花苞前守了一整个上午，就为了看它「啵」地开的那一下。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_curious": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "dawn": 1.5
+        },
+        "season": {
+          "spring": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d42",
+      "type": "daily",
+      "title": "与影子和解",
+      "script": "被自己的影子跟了一路，黄昏时终于鼓起勇气猛回头——影子也停下了，双方就此和解。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_timid": 2.0
+        },
+        "weather": {
+          "clear": 1.5
+        },
+        "timeOfDay": {
+          "evening": 1.5
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d43",
+      "type": "daily",
+      "title": "回头确认",
+      "script": "雾天寸步不离你的视线，每走三步回头确认一次你还在。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_timid": 2.0
+        },
+        "weather": {
+          "fog": 2.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d44",
+      "type": "daily",
+      "title": "扮演石头",
+      "script": "访客来了，它当场缩进壳里扮演石头；半小时后偷偷探头，发现对方还在耐心等它。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_timid": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d45",
+      "type": "daily",
+      "title": "质问晾衣绳",
+      "script": "夜里被风吹动的晾衣绳吓了一跳，第二天白天专门跑去「质问」了它。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_timid": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "night": 1.5
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d46",
+      "type": "daily",
+      "title": "绕路走",
+      "script": "第一次踩碎落叶被那声「咔嚓」吓到，原地静止十秒后决定绕路走。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_timid": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {
+          "autumn": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d47",
+      "type": "daily",
+      "title": "钻外套",
+      "script": "打雷前它先一步钻进了你昨天穿过的外套——那里面有让它安心的味道。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_timid": 2.0,
+          "p_clingy": 1.5
+        },
+        "weather": {
+          "thunder": 3.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d48",
+      "type": "daily",
+      "title": "冲刺",
+      "script": "清晨绕院子冲刺十圈，露水在它身后甩出一条闪闪发亮的小路。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_energetic": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "dawn": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d49",
+      "type": "daily",
+      "title": "雪地艺术",
+      "script": "在雪地里犁出一道歪歪扭扭的深沟，回头欣赏自己的大地艺术。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_energetic": 2.0
+        },
+        "weather": {
+          "snow": 2.0
+        },
+        "timeOfDay": {},
+        "season": {
+          "winter": 1.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d50",
+      "type": "daily",
+      "title": "跑轮飞行",
+      "script": "跑轮跑到几乎起飞，下来以后走路还在原地画圈。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_energetic": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d51",
+      "type": "daily",
+      "title": "追尾巴",
+      "script": "和自己的尾巴进行了一场势均力敌的追逐战，最终握手言和。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_energetic": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d52",
+      "type": "daily",
+      "title": "追彩虹雾",
+      "script": "夏日黄昏追着洒水时的小彩虹雾跑，浑身湿透也不肯停。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_energetic": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "evening": 1.5
+        },
+        "season": {
+          "summer": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "拿毛巾在终点等它",
+          "resultScript": "你拿着毛巾在终点等它，它一头撞进你怀里，摇得全身的水都飞到你身上。",
+          "expDelta": 1
+        },
+        {
+          "text": "挽起袖子加入战斗",
+          "resultScript": "你加入追逐，它更来劲了，你们一起在彩虹雾里跑成了两只落汤鸡。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d53",
+      "type": "daily",
+      "title": "搁下巴",
+      "script": "你在院里坐了多久，它就把下巴在你膝盖上搁了多久。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_clingy": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d54",
+      "type": "daily",
+      "title": "认脚步声",
+      "script": "学会了辨认你的脚步声，隔着篱笆就开始原地转圈。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_clingy": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d55",
+      "type": "daily",
+      "title": "收纽扣",
+      "script": "把你掉的一颗纽扣当宝贝，收进了窝的最深处。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_clingy": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d56",
+      "type": "daily",
+      "title": "哈雾气",
+      "script": "雨天隔着窗户看你，在玻璃上哈出一小团雾气，又用鼻尖把它蹭开。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_clingy": 2.0
+        },
+        "weather": {
+          "rain": 2.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d57",
+      "type": "daily",
+      "title": "爪子取暖",
+      "script": "冬天的早晨把爪子伸进你手心取暖，全程目视前方，装作只是路过。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_clingy": 1.5,
+          "p_aloof": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {
+          "dawn": 1.5
+        },
+        "season": {
+          "winter": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d58",
+      "type": "daily",
+      "title": "背对晒太阳",
+      "script": "全程背对着你晒太阳，但两只耳朵始终朝着你的方向。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_aloof": 2.0
+        },
+        "weather": {
+          "clear": 1.5
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d59",
+      "type": "daily",
+      "title": "蹭画像",
+      "script": "你夸了图鉴里别的宠物一句，它当晚把自己那页的画像蹭得锃亮。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_aloof": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d60",
+      "type": "daily",
+      "title": "蜕皮",
+      "script": "把蜕下的皮摆得笔直平整，仿佛在宣布：本次蜕皮，无可挑剔。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_aloof": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d61",
+      "type": "daily",
+      "title": "看月亮",
+      "script": "夜里独自蹲在高处看月亮，你出来时它假装只是在数瓦片。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_aloof": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "night": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "搬个小凳陪它一起看",
+          "resultScript": "你搬来小凳坐在它旁边，它偷偷往你这边靠了靠，耳朵竖得直直的。",
+          "expDelta": 1
+        },
+        {
+          "text": "给它留一盏灯先回屋",
+          "resultScript": "你给它留了一盏小灯回屋，它在你身后轻轻喵了一声，像在道晚安。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d62",
+      "type": "daily",
+      "title": "闻座位",
+      "script": "访客走后，它把对方坐过的地方仔仔细细闻了一遍，最终评价是轻哼一声。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_aloof": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d63",
+      "type": "daily",
+      "title": "藏拖鞋",
+      "script": "把你的两只拖鞋分别藏在院子两端，蹲在中间欣赏你找鞋。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_naughty": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d64",
+      "type": "daily",
+      "title": "开食盆",
+      "script": "学会了开食盆的盖子——案发现场只留下三颗没来得及吃完的粮。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_naughty": 2.0,
+          "p_glutton": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d65",
+      "type": "daily",
+      "title": "顶帽子",
+      "script": "把访客的小帽子顶在自己头上跑了半个院子才被追回。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_naughty": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d66",
+      "type": "daily",
+      "title": "踩水洼",
+      "script": "雨后专挑水洼踩，溅了自己一身泥点还非常得意。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_naughty": 2.0
+        },
+        "weather": {
+          "rain": 2.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "立刻押去洗澡",
+          "resultScript": "你把它押进浴室，它一边洗澡一边踩水，玩得比在外面还开心。",
+          "expDelta": 1
+        },
+        {
+          "text": "让它先得意一会儿再说",
+          "resultScript": "你由着它得意，它踩得更起劲了，泥点子飞得满院子都是。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d67",
+      "type": "daily",
+      "title": "学咳嗽",
+      "script": "学你咳嗽学得惟妙惟肖，成功骗你回头三次，第四次它自己先笑场。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_naughty": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d68",
+      "type": "daily",
+      "title": "扑落叶",
+      "script": "把你堆好的落叶小山一头扑散，然后开始「帮忙」重堆——越帮越大片。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_naughty": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {
+          "autumn": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d69",
+      "type": "daily",
+      "title": "让食物",
+      "script": "把食盆里最大的一块推到访客面前，自己默默吃小的。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_gentle": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d70",
+      "type": "daily",
+      "title": "焐地面",
+      "script": "雪天用自己的体温焐化了一小块地面，留给路过的麻雀落脚。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_gentle": 2.0
+        },
+        "weather": {
+          "snow": 2.0
+        },
+        "timeOfDay": {},
+        "season": {
+          "winter": 1.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d71",
+      "type": "daily",
+      "title": "看蜘蛛",
+      "script": "发现蜘蛛网被雨打坏了，蹲在旁边看蜘蛛修补了一下午，全程没有打扰。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_gentle": 2.0
+        },
+        "weather": {
+          "rain": 1.5
+        },
+        "timeOfDay": {
+          "noon": 1.5
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d72",
+      "type": "daily",
+      "title": "盖叶子",
+      "script": "你打了个喷嚏，它立刻跑来，把自己最喜欢的那片叶子盖在你手背上。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_gentle": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d73",
+      "type": "daily",
+      "title": "护送甲虫",
+      "script": "黄昏把误闯进院子的小甲虫一路护送到篱笆外，全程放轻脚步。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_gentle": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "evening": 1.5
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d74",
+      "type": "daily",
+      "title": "雾里神秘",
+      "script": "雾天坐进雾最浓的地方待了很久，回来后神秘兮兮的，好像去过很远的地方。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_dreamy": 2.0
+        },
+        "weather": {
+          "fog": 3.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d75",
+      "type": "daily",
+      "title": "变衣服",
+      "script": "对着晚霞一遍遍变换颜色，试图和天空穿上同一件衣服。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_dreamy": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "evening": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d76",
+      "type": "daily",
+      "title": "吹蒲公英",
+      "script": "攒了一小撮蒲公英绒毛，夜里对着它们轻轻吹气，像在放飞什么看不见的船队。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_dreamy": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "night": 1.5
+        },
+        "season": {
+          "spring": 1.5
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d77",
+      "type": "daily",
+      "title": "接雪花",
+      "script": "雪夜仰着头，目送一片雪花从很高的地方一直落到自己鼻尖，全程眼神放空。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_dreamy": 2.0
+        },
+        "weather": {
+          "snow": 2.0
+        },
+        "timeOfDay": {
+          "night": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d78",
+      "type": "daily",
+      "title": "守月亮",
+      "script": "郑重宣布水碗里住着另一个月亮，并自愿承担每晚的看守任务。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_dreamy": 2.0
+        },
+        "weather": {},
+        "timeOfDay": {
+          "night": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "陪它值一次夜班",
+          "resultScript": "你陪它一起守夜，它认真地看着水碗里的月亮倒影，时不时点头确认安全。",
+          "expDelta": 1
+        },
+        {
+          "text": "在水碗旁给它放一盏小灯",
+          "resultScript": "你在水碗旁放了一盏小灯，它满意地趴下，假装那是一盏月亮守护灯。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d79",
+      "type": "daily",
+      "title": "打喷嚏",
+      "script": "晨光里打了个大喷嚏，把停在鼻尖的露珠震上了天。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 3,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {
+          "dawn": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d80",
+      "type": "daily",
+      "title": "午醒核对",
+      "script": "午睡醒来发现光线变了，绕着院子认真核对了一遍：草在、盆在、你也在，满意。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 3,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {
+          "noon": 1.5
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d81",
+      "type": "daily",
+      "title": "推东西",
+      "script": "把窗台上的小物件一件一件推下去，每推一件就回头确认一次你的表情。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_naughty": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "没收所有小物件",
+          "resultScript": "你把东西都收走了，它眼巴巴看着，但很快找到了新的乐趣。",
+          "expDelta": 1
+        },
+        {
+          "text": "面无表情陪它推完最后一件",
+          "resultScript": "你全程面瘫看着它推完，它心满意足，蹦蹦跳跳地去别处探险了。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d82",
+      "type": "daily",
+      "title": "摆鞋",
+      "script": "把你的鞋一只只叼到门口，摆成「快带我出去玩」的整齐阵型。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_energetic": 1.5,
+          "p_clingy": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d83",
+      "type": "daily",
+      "title": "秘密通道",
+      "script": "在花坛边挖了一条「秘密通道」，出口离入口只有二十厘米，本人对此非常满意。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_curious": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d84",
+      "type": "daily",
+      "title": "忘目的",
+      "script": "把腮帮塞得满满当当之后，忘了自己原本要去哪，原地思考了很久。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_glutton": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d85",
+      "type": "daily",
+      "title": "运动量",
+      "script": "一下午挪动了一米，官方认证：今日运动量已达标。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 3,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_lazy": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {
+          "noon": 1.5
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d86",
+      "type": "daily",
+      "title": "叫醒自己",
+      "script": "学会了你喊它名字的语气，现在每天早上负责把自己叫醒。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_curious": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {
+          "dawn": 1.5
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d87",
+      "type": "daily",
+      "title": "照水碗",
+      "script": "蜕皮结束后的第一件事是去照水碗，确认新衣服合身。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 6,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "夸它焕然一新",
+          "resultScript": "你大力夸奖了它的蜕皮成果，它得意地扭来扭去，新皮肤闪闪发亮。",
+          "expDelta": 1
+        },
+        {
+          "text": "把旧皮小心收好做成书签",
+          "resultScript": "你把旧皮收好做成书签，它经常凑过去闻闻，像在和老朋友打招呼。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d88",
+      "type": "daily",
+      "title": "变毛衣色",
+      "script": "试图变成你毛衣的颜色，失败了，变成了一种「努力过」的颜色。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_clingy": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d89",
+      "type": "daily",
+      "title": "深呼吸",
+      "script": "雷雨过后满院子都是青草味，它做了一个深呼吸，肚子鼓成了一颗小气球。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {
+          "rain": 2.0
+        },
+        "timeOfDay": {},
+        "season": {
+          "summer": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d90",
+      "type": "daily",
+      "title": "追白气",
+      "script": "冬天的清晨呼出一小团白气，愣了一下，追着自己的白气跑了两步。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {
+          "dawn": 2.0
+        },
+        "season": {
+          "winter": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d91",
+      "type": "daily",
+      "title": "纸伞点头",
+      "script": "春雨天蹲在纸伞下，跟着雨点在伞面上敲出的节拍轻轻点头。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {
+          "rain": 2.0
+        },
+        "timeOfDay": {},
+        "season": {
+          "spring": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d92",
+      "type": "daily",
+      "title": "变金色",
+      "script": "秋天的黄昏卧在落叶堆顶上，随着夕阳一起慢慢变成金色。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {
+          "evening": 2.0
+        },
+        "season": {
+          "autumn": 2.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d93",
+      "type": "daily",
+      "title": "等眨眼",
+      "script": "夜里守着草丛里那个「上次会眨眼」的位置，好像在等谁再眨一次。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {
+          "clear": 1.5
+        },
+        "timeOfDay": {
+          "night": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d94",
+      "type": "daily",
+      "title": "树枝展会",
+      "script": "捡回一根格外满意的树枝，叼着在院子里巡回展出了一整天。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "给树枝设一个正式「展位」",
+          "resultScript": "你给它做了一个小展台，它每天都会去「检查」树枝有没有少一根。",
+          "expDelta": 1
+        },
+        {
+          "text": "假装第一次看见并大声惊叹",
+          "resultScript": "你大声惊叹它的宝贝，它更来劲了，骄傲地拖着树枝走来走去。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d95",
+      "type": "daily",
+      "title": "水彩",
+      "script": "从雾里慢慢走出来的样子，像一幅还没画完的水彩。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {
+          "fog": 2.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d96",
+      "type": "daily",
+      "title": "看云",
+      "script": "午后和访客排排坐看云。一朵云飘过，气氛突然认真起来。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {
+          "noon": 1.5
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "同意那朵云像饭团",
+          "resultScript": "你表示赞同，它开心地比划起来，好像真的一样。",
+          "expDelta": 1
+        },
+        {
+          "text": "坚持那朵云像枕头",
+          "resultScript": "你坚持说像枕头，它白了你一眼，但很快就接受了新设定。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d97",
+      "type": "daily",
+      "title": "检查你",
+      "script": "雷声刚过，它跑来把你从头到尾检查了一遍，确认无事后假装只是散步路过。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_aloof": 1.5,
+          "p_timid": 1.5
+        },
+        "weather": {
+          "thunder": 2.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d98",
+      "type": "daily",
+      "title": "掉毛",
+      "script": "换季掉毛了，你攒起一小团绒绒，它盯着看了很久，好像在说「那也是我」。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 4,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {
+          "spring": 1.5,
+          "autumn": 1.5
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_d99",
+      "type": "daily",
+      "title": "等熄灯",
+      "script": "晚上不肯睡，非要等你房间的灯灭了才肯回窝。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 5,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_clingy": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {
+          "night": 2.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": [
+        {
+          "text": "早点熄灯「骗」它去睡",
+          "resultScript": "你提前熄了灯，它轻手轻脚回窝，走到门口还回头看了你一眼。",
+          "expDelta": 1
+        },
+        {
+          "text": "开着灯陪它多待一会儿",
+          "resultScript": "你开着灯陪它，它开心地在你脚边蹭来蹭去，然后满足地回窝了。",
+          "expDelta": 1
+        }
+      ]
+    },
+    {
+      "id": "ev_d100",
+      "type": "daily",
+      "title": "最好的一天",
+      "script": "今天什么也没发生。它把下巴搁在爪子上看了很久的天——但你知道，这就是最好的一天。",
+      "animRef": null,
+      "illustrationRef": null,
+      "expReward": 3,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s01",
+      "type": "special",
+      "title": "初雪",
+      "script": "宠物第一次见雪，踩出一串梅花脚印。系统自动存1张「初雪照片」入旅行相册。",
+      "animRef": null,
+      "illustrationRef": "ill_s01",
+      "expReward": 12,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": true,
+      "choices": null
+    },
+    {
+      "id": "ev_s02",
+      "type": "special",
+      "title": "生日会",
+      "script": "领养纪念日，访客们各带一份小礼物。",
+      "animRef": null,
+      "illustrationRef": "ill_s02",
+      "expReward": 15,
+      "currencyReward": 30,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": 7
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s03",
+      "type": "special",
+      "title": "流星雨之夜",
+      "script": "宠物许了一个愿。毕业后某张明信片会呼应这个愿望。",
+      "animRef": null,
+      "illustrationRef": "ill_s03",
+      "expReward": 10,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {
+          "clear": 1.0
+        },
+        "timeOfDay": {
+          "night": 1.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s04",
+      "type": "special",
+      "title": "走丢半日",
+      "script": "宠物钻篱笆消失半天，傍晚叼着一朵没见过的花回来。花可种进花坛。",
+      "animRef": null,
+      "illustrationRef": "ill_s04",
+      "expReward": 14,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_curious": 1.5,
+          "p_naughty": 1.5
+        },
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": 6,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s05",
+      "type": "special",
+      "title": "雷雨夜守护",
+      "script": "打雷了，它钻进你怀里。胆小宠物此后打雷不再发抖。",
+      "animRef": null,
+      "illustrationRef": "ill_s05",
+      "expReward": 12,
+      "currencyReward": null,
+      "weights": {
+        "personality": {
+          "p_timid": 3.0
+        },
+        "weather": {
+          "thunder": 1.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s06",
+      "type": "special",
+      "title": "毕业预演",
+      "script": "Lv9时试背小背包，走了两步又回头看你。",
+      "animRef": null,
+      "illustrationRef": "ill_s06",
+      "expReward": 8,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": 9,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s07",
+      "type": "special",
+      "title": "老朋友的信物",
+      "script": "回访宠离开时留下围巾，在养宠物整天带着它。",
+      "animRef": null,
+      "illustrationRef": "ill_s07",
+      "expReward": 10,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s08",
+      "type": "special",
+      "title": "篝火晚会",
+      "script": "冬夜暖炉旁，火光里似乎有个小小的影子在跳舞。小火龙线索+1。",
+      "animRef": null,
+      "illustrationRef": "ill_s08",
+      "expReward": 10,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {
+          "evening": 1.0,
+          "night": 1.0
+        },
+        "season": {
+          "winter": 1.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": "暖炉",
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s09",
+      "type": "special",
+      "title": "彩虹尽头",
+      "script": "雨后彩虹落在院角，宠物盯着那里很久。独角兔线索+1。",
+      "animRef": null,
+      "illustrationRef": "ill_s09",
+      "expReward": 10,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {
+          "rain": 1.0,
+          "rainbow": 1.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s10",
+      "type": "special",
+      "title": "满月茶会",
+      "script": "满月夜访客异常地多，院子办了一场无声的小聚会。全体访客图鉴到访+1。",
+      "animRef": null,
+      "illustrationRef": "ill_s10",
+      "expReward": 16,
+      "currencyReward": 20,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {
+          "night": 1.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s11",
+      "type": "special",
+      "title": "第一场花信",
+      "script": "春天第一阵暖风把花瓣吹满院子，宠物在花瓣雨里打了一个幸福的滚。系统自动存1张「花瓣照片」入旅行相册。",
+      "animRef": null,
+      "illustrationRef": "ill_s11",
+      "expReward": 12,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {
+          "spring": 1.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": true,
+      "choices": null
+    },
+    {
+      "id": "ev_s12",
+      "type": "special",
+      "title": "萤火大巡游",
+      "script": "夏夜萤火虫群途经院子，成百上千的小灯把篱笆点亮，宠物安静地当了一晚上「路灯下的观众」。",
+      "animRef": null,
+      "illustrationRef": "ill_s12",
+      "expReward": 14,
+      "currencyReward": 15,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {
+          "night": 1.0
+        },
+        "season": {
+          "summer": 1.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s13",
+      "type": "special",
+      "title": "晒秋日",
+      "script": "秋高气爽，宠物学着你的样子把窝里的「收藏」全部搬出来摊在太阳下——纽扣、树枝、半颗橡果，一件件晒得很认真。",
+      "animRef": null,
+      "illustrationRef": "ill_s13",
+      "expReward": 12,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {
+          "clear": 1.0
+        },
+        "timeOfDay": {},
+        "season": {
+          "autumn": 1.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": true,
+      "choices": null
+    },
+    {
+      "id": "ev_s14",
+      "type": "special",
+      "title": "冬至长夜",
+      "script": "一年最长的夜，你和它挤在暖光下守了一小段岁。它睡着前把爪子搭在了你手边。",
+      "animRef": null,
+      "illustrationRef": "ill_s14",
+      "expReward": 12,
+      "currencyReward": 20,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {
+          "winter": 1.0
+        },
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s15",
+      "type": "special",
+      "title": "长大了一点点",
+      "script": "Lv5第一次换模后，它跑到水碗前照了又照，然后回头看你——想确认你还认得它。你当然认得。",
+      "animRef": null,
+      "illustrationRef": "ill_s15",
+      "expReward": 8,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": 5,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": true,
+      "choices": null
+    },
+    {
+      "id": "ev_s16",
+      "type": "special",
+      "title": "成年礼",
+      "script": "Lv8换模当晚，它把幼年时最爱的旧玩具轻轻叼到你面前，像在交还一段时光。旧玩具存入旅行相册扉页。",
+      "animRef": null,
+      "illustrationRef": "ill_s16",
+      "expReward": 10,
+      "currencyReward": 10,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": 8,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": true,
+      "choices": null
+    },
+    {
+      "id": "ev_s17",
+      "type": "special",
+      "title": "草丛眨眼之夜",
+      "script": "晴朗无月的夜里，夜灯边的草丛真的眨了一下眼。宠物屏住呼吸，你们谁都没敢说话。星星虫线索+1。",
+      "animRef": null,
+      "illustrationRef": "ill_s17",
+      "expReward": 10,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {
+          "clear": 1.0
+        },
+        "timeOfDay": {
+          "night": 1.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": "夜灯",
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s18",
+      "type": "special",
+      "title": "午夜的白团子",
+      "script": "深夜上线，一团圆滚滚的白影从院墙上轻轻飘过，在宠物头顶停了一秒，像是打了个害羞的招呼。白团子线索+1。",
+      "animRef": null,
+      "illustrationRef": "ill_s18",
+      "expReward": 10,
+      "currencyReward": null,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {
+          "night": 1.0
+        },
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": false,
+      "choices": null
+    },
+    {
+      "id": "ev_s19",
+      "type": "special",
+      "title": "雾中邮差",
+      "script": "大雾天，邮箱里多了一张没有署名的旧明信片，画的是一座谁也没见过的院子。宠物对着它闻了很久。",
+      "animRef": null,
+      "illustrationRef": "ill_s19",
+      "expReward": 12,
+      "currencyReward": 20,
+      "weights": {
+        "personality": {},
+        "weather": {
+          "fog": 1.0
+        },
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": null
+      },
+      "cooldownDays": 0,
+      "oncePerPet": true,
+      "choices": null
+    },
+    {
+      "id": "ev_s20",
+      "type": "special",
+      "title": "同行半月",
+      "script": "领养满14天的小仪式——成长手账自动翻回第一页，放出它Lv1时最笨拙的一段影像，旁边是今天的它。",
+      "animRef": null,
+      "illustrationRef": "ill_s20",
+      "expReward": 15,
+      "currencyReward": 25,
+      "weights": {
+        "personality": {},
+        "weather": {},
+        "timeOfDay": {},
+        "season": {},
+        "requiresVisitor": null,
+        "requiresDecor": null,
+        "minLevel": null,
+        "minLuxuryStage": 14
+      },
+      "cooldownDays": 0,
+      "oncePerPet": true,
+      "choices": null
+    }
+  ]
+}

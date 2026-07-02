@@ -1,0 +1,1537 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "ach_first_grad",
+      "name": "第一次目送",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "gradCount",
+        "target": 1,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 50,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_grad_3",
+      "name": "小院常客",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "gradCount",
+        "target": 3,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 100,
+        "decorItemId": "frame_decor",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_grad_5",
+      "name": "五次拥抱五次目送",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "gradCount",
+        "target": 5,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 120,
+        "decorItemId": "grad_hat_hanging",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_grad_8",
+      "name": "满园桃李",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "speciesCollected",
+        "target": 8,
+        "params": {
+          "regularOnly": true
+        }
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": null,
+        "couponId": "theme_four_seasons_garden_50",
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_grad_12",
+      "name": "十二次拥抱",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "speciesCollected",
+        "target": 12,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 300,
+        "decorItemId": "golden_memorial_frame",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_evolve_first",
+      "name": "第一次长大",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "actionCount",
+        "target": 1,
+        "params": {
+          "action": "evolve_lv5"
+        }
+      },
+      "reward": {
+        "fluff": 30,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_lv8_first",
+      "name": "亭亭玉立",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "actionCount",
+        "target": 1,
+        "params": {
+          "action": "reach_lv8"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "flower_badge_sticker"
+      }
+    },
+    {
+      "id": "ach_daily_care_60",
+      "name": "六十个早安",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "actionCount",
+        "target": 60,
+        "params": {
+          "action": "daily_care"
+        }
+      },
+      "reward": {
+        "fluff": 100,
+        "decorItemId": "alarm_clock_decor",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_unlock_all_regular",
+      "name": "图鉴点灯人",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "unlockPet",
+        "target": 8,
+        "params": {
+          "regularOnly": true
+        }
+      },
+      "reward": {
+        "fluff": 120,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_species_repeat_3",
+      "name": "三代同名册",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "speciesCollected",
+        "target": 3,
+        "params": {
+          "sameSpecies": true
+        }
+      },
+      "reward": {
+        "fluff": 60,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "family_tree_sticker"
+      }
+    },
+    {
+      "id": "ach_variant_5",
+      "name": "五色斑斓",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "custom",
+        "target": 5,
+        "params": {
+          "action": "collect_all_variants"
+        }
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": "gold_illustrated_page",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_fantasy_1",
+      "name": "童话住进了院子",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "speciesCollected",
+        "target": 1,
+        "params": {
+          "fantasyOnly": true
+        }
+      },
+      "reward": {
+        "fluff": 150,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_visitor_first",
+      "name": "第一位客人",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "visitorDexCount",
+        "target": 1,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 30,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_visitor_10",
+      "name": "好客之家",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "visitorDexCount",
+        "target": 10,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 80,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_visitor_uncommon_6",
+      "name": "缘分收藏夹",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "visitorDexCount",
+        "target": 6,
+        "params": {
+          "rarity": "uncommon"
+        }
+      },
+      "reward": {
+        "fluff": 80,
+        "decorItemId": "welcome_mat_decor",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_visitor_rare_5",
+      "name": "稀客常来",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "visitorDexCount",
+        "target": 5,
+        "params": {
+          "rarity": "rare"
+        }
+      },
+      "reward": {
+        "fluff": 120,
+        "decorItemId": "egret_feather_bookmark",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_visitor_all",
+      "name": "门庭若市",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "visitorDexCount",
+        "target": 20,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 150,
+        "decorItemId": "visitor_dex_gold_cover",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_postcard_1",
+      "name": "远方的第一声问候",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "postcardCount",
+        "target": 1,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 30,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_postcard_30",
+      "name": "集邮爱好者",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "postcardCount",
+        "target": 30,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": "postcard_rope_decor",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_postcard_100",
+      "name": "一抽屉的远方",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "postcardCount",
+        "target": 100,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 120,
+        "decorItemId": null,
+        "couponId": "album_skin_old_ticket",
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_stamp_20",
+      "name": "邮戳收藏家",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "stampCount",
+        "target": 20,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": "stamp_seal_decor",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_stamp_40",
+      "name": "盖满整个世界",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "stampCount",
+        "target": 40,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 150,
+        "decorItemId": null,
+        "couponId": "album_skin_global_courier",
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_postcard_8cat",
+      "name": "八方来信",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "postcardCount",
+        "target": 8,
+        "params": {
+          "categories": 8
+        }
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": "world_map_wall_hanging",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_journey_5",
+      "name": "五段旅程",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "actionCount",
+        "target": 5,
+        "params": {
+          "action": "journey_complete"
+        }
+      },
+      "reward": {
+        "fluff": 100,
+        "decorItemId": "luggage_sticker_decor",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_revisit_10",
+      "name": "常回家看看",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "revisitCount",
+        "target": 10,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 80,
+        "decorItemId": "door_bell_decor",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_revisit_30",
+      "name": "院子永远留着位置",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "revisitCount",
+        "target": 30,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 120,
+        "decorItemId": "rest_hut_cushion",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_companion_3",
+      "name": "朋友带朋友",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "custom",
+        "target": 3,
+        "params": {
+          "action": "companion_joined"
+        }
+      },
+      "reward": {
+        "fluff": 80,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_revisit_gift_20",
+      "name": "礼物拆不完",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "custom",
+        "target": 20,
+        "params": {
+          "action": "revisit_gift_received"
+        }
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": "gift_box_shelf",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_pat_100",
+      "name": "摸头狂魔",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "actionCount",
+        "target": 100,
+        "params": {
+          "action": "pat"
+        }
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": "glove_hanging",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_pat_500",
+      "name": "手感认证大师",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "actionCount",
+        "target": 500,
+        "params": {
+          "action": "pat"
+        }
+      },
+      "reward": {
+        "fluff": 100,
+        "decorItemId": "golden_hand_mold",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_feed_300",
+      "name": "干饭监督员",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "actionCount",
+        "target": 300,
+        "params": {
+          "action": "feed"
+        }
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": "flower_pattern_bowl",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_feed_1000",
+      "name": "千顿饭的交情",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "actionCount",
+        "target": 1000,
+        "params": {
+          "action": "feed"
+        }
+      },
+      "reward": {
+        "fluff": 150,
+        "decorItemId": "chef_apron_hanging",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_bath_30",
+      "name": "泡泡专家",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "actionCount",
+        "target": 30,
+        "params": {
+          "action": "bath"
+        }
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": "rubber_duck_bathtub",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_bath_100",
+      "name": "泡泡浴大师",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "actionCount",
+        "target": 100,
+        "params": {
+          "action": "bath"
+        }
+      },
+      "reward": {
+        "fluff": 100,
+        "decorItemId": "cloud_towel_decor",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_toy_200",
+      "name": "玩不腻",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "actionCount",
+        "target": 200,
+        "params": {
+          "action": "play_toy"
+        }
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": "toy_storage_basket",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_toy_500",
+      "name": "院子游乐场场长",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "actionCount",
+        "target": 500,
+        "params": {
+          "action": "play_toy"
+        }
+      },
+      "reward": {
+        "fluff": 120,
+        "decorItemId": "playground_flag_doorplate",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_yard_3",
+      "name": "树荫初成",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "yardStage",
+        "target": 3,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 60,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_yard_5",
+      "name": "满庭花光",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "yardStage",
+        "target": 5,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 150,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_yard_6",
+      "name": "传说中的院子",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "yardStage",
+        "target": 6,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 150,
+        "decorItemId": "golden_memorial_plaque",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_theme_first",
+      "name": "换新装",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "themeCount",
+        "target": 1,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_theme_4",
+      "name": "百变小院",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "themeCount",
+        "target": 4,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": null,
+        "couponId": "theme_candy_bakery_80",
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_theme_8",
+      "name": "十二时装衣橱",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "themeCount",
+        "target": 8,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": null,
+        "couponId": "any_theme_50",
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_season_4",
+      "name": "四季来信",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "seasonPostcard",
+        "target": 4,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": "four_seasons_bookmark_set",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_weather_6",
+      "name": "晴雨雪都寄了",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "custom",
+        "target": 6,
+        "params": {
+          "action": "weather_postcard"
+        }
+      },
+      "reward": {
+        "fluff": 60,
+        "decorItemId": "weather_bottle_decor",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_rain_care_10",
+      "name": "雨天也要好好吃饭",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "custom",
+        "target": 10,
+        "params": {
+          "action": "rainy_day_care"
+        }
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": "paper_umbrella_decor",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_login_7",
+      "name": "七日之约",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "loginStreak",
+        "target": 7,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 50,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_login_30",
+      "name": "三十次日安",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "loginStreak",
+        "target": 30,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 100,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "calendar_sticker"
+      }
+    },
+    {
+      "id": "ach_login_100",
+      "name": "一百个日安",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "loginStreak",
+        "target": 100,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 150,
+        "decorItemId": null,
+        "couponId": "album_skin_years_journal",
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_special_10",
+      "name": "故事收集者",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "specialEventCount",
+        "target": 10,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 0,
+        "decorItemId": "event_illustration_golden_cover",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_special_20",
+      "name": "一本写满的故事书",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "specialEventCount",
+        "target": 20,
+        "params": {}
+      },
+      "reward": {
+        "fluff": 150,
+        "decorItemId": "event_illustration_golden_belt",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_choice_10",
+      "name": "温柔的决定",
+      "hidden": false,
+      "clueText": null,
+      "condition": {
+        "type": "custom",
+        "target": 10,
+        "params": {
+          "action": "branch_choice"
+        }
+      },
+      "reward": {
+        "fluff": 60,
+        "decorItemId": "feather_pen_decor",
+        "couponId": null,
+        "stickerId": null
+      }
+    },
+    {
+      "id": "ach_h_midnight",
+      "name": "守夜人",
+      "hidden": true,
+      "clueText": "有人在星星最亮时来过。",
+      "condition": {
+        "type": "custom",
+        "target": 1,
+        "params": {
+          "action": "night_care",
+          "timeRange": "0-2",
+          "days": 7
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_midnight"
+      }
+    },
+    {
+      "id": "ach_h_rain",
+      "name": "听雨的人",
+      "hidden": true,
+      "clueText": "雨声也是一种陪伴。",
+      "condition": {
+        "type": "specialEventCount",
+        "target": 3,
+        "params": {
+          "eventType": "rainy",
+          "totalHours": 3
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_rain"
+      }
+    },
+    {
+      "id": "ach_h_ember",
+      "name": "火焰的朋友",
+      "hidden": true,
+      "clueText": "它记得那盏灯。",
+      "condition": {
+        "type": "unlockPet",
+        "target": 1,
+        "params": {
+          "petId": "小火龙"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_ember"
+      }
+    },
+    {
+      "id": "ach_h_reunion",
+      "name": "老朋友",
+      "hidden": true,
+      "clueText": "有些告别只是换个方式见面。",
+      "condition": {
+        "type": "revisitCount",
+        "target": 5,
+        "params": {
+          "samePet": true,
+          "interaction": true
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_reunion"
+      }
+    },
+    {
+      "id": "ach_h_fullhouse",
+      "name": "热闹的一天",
+      "hidden": true,
+      "clueText": "那天院子里挤满了故事。",
+      "condition": {
+        "type": "specialEventCount",
+        "target": 1,
+        "params": {
+          "eventTypes": [
+            "visitor",
+            "revisit",
+            "special"
+          ]
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_fullhouse"
+      }
+    },
+    {
+      "id": "ach_h_uni",
+      "name": "彩虹留下的脚印",
+      "hidden": true,
+      "clueText": "雨停之后，有人没急着收伞。",
+      "condition": {
+        "type": "unlockPet",
+        "target": 1,
+        "params": {
+          "petId": "尼可"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_uni"
+      }
+    },
+    {
+      "id": "ach_h_boo",
+      "name": "午夜的朋友",
+      "hidden": true,
+      "clueText": "院子最安静的时候，也有人陪你。",
+      "condition": {
+        "type": "unlockPet",
+        "target": 1,
+        "params": {
+          "petId": "噗噗"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_boo"
+      }
+    },
+    {
+      "id": "ach_h_starbug",
+      "name": "草丛里的星星",
+      "hidden": true,
+      "clueText": "有一盏灯，是为会眨眼的草丛点的。",
+      "condition": {
+        "type": "unlockPet",
+        "target": 1,
+        "params": {
+          "petId": "星星虫"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_starbug"
+      }
+    },
+    {
+      "id": "ach_h_snowprint",
+      "name": "初雪的脚注",
+      "hidden": true,
+      "clueText": "雪地记得每一串脚印。",
+      "condition": {
+        "type": "specialEventCount",
+        "target": 3,
+        "params": {
+          "eventId": "ev_s01",
+          "differentPets": 3
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_snowprint"
+      }
+    },
+    {
+      "id": "ach_h_wish",
+      "name": "愿望回音",
+      "hidden": true,
+      "clueText": "有些话说给流星听，流星会替你带到。",
+      "condition": {
+        "type": "seasonPostcard",
+        "target": 1,
+        "params": {
+          "eventId": "ev_s03",
+          "wishResponse": true
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_wish"
+      }
+    },
+    {
+      "id": "ach_h_quietday",
+      "name": "什么也没发生的一天",
+      "hidden": true,
+      "clueText": "其实什么都发生了，只是很轻。",
+      "condition": {
+        "type": "custom",
+        "target": 1,
+        "params": {
+          "action": "care_only",
+          "noEvent": true,
+          "loginCount": 3
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_quietday"
+      }
+    },
+    {
+      "id": "ach_h_allnames",
+      "name": "名字的重量",
+      "hidden": true,
+      "clueText": "每个名字都被认真念过。",
+      "condition": {
+        "type": "custom",
+        "target": 5,
+        "params": {
+          "action": "name_pet",
+          "noDuplicate": true
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_allnames"
+      }
+    },
+    {
+      "id": "ach_h_dawn",
+      "name": "等日出的人",
+      "hidden": true,
+      "clueText": "天亮之前的院子，只有一盏灯醒着。",
+      "condition": {
+        "type": "custom",
+        "target": 7,
+        "params": {
+          "action": "dawn_care",
+          "timeRange": "5:00-6:30",
+          "days": 7
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_dawn"
+      }
+    },
+    {
+      "id": "ach_h_thunder",
+      "name": "雷雨里的怀抱",
+      "hidden": true,
+      "clueText": "雷声很大，但有人的心跳更近。",
+      "condition": {
+        "type": "specialEventCount",
+        "target": 3,
+        "params": {
+          "eventIds": [
+            "ev_d16",
+            "ev_s05"
+          ],
+          "branch": "companion"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_thunder"
+      }
+    },
+    {
+      "id": "ach_h_snowhours",
+      "name": "听雪的人",
+      "hidden": true,
+      "clueText": "雪落下来的声音，其实听得见。",
+      "condition": {
+        "type": "specialEventCount",
+        "target": 2,
+        "params": {
+          "eventType": "snowy",
+          "totalHours": 2
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_snowhours"
+      }
+    },
+    {
+      "id": "ach_h_fullmoon",
+      "name": "月亮的常客",
+      "hidden": true,
+      "clueText": "圆月夜的院子，会多摆一副茶杯。",
+      "condition": {
+        "type": "specialEventCount",
+        "target": 2,
+        "params": {
+          "eventId": "ev_s10"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_fullmoon"
+      }
+    },
+    {
+      "id": "ach_h_legend_all",
+      "name": "传说的收信人",
+      "hidden": true,
+      "clueText": "四个传说，都路过了同一个院子。",
+      "condition": {
+        "type": "visitorDexCount",
+        "target": 4,
+        "params": {
+          "types": [
+            "星星虫",
+            "火光",
+            "白影",
+            "白团子"
+          ]
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_legend_all"
+      }
+    },
+    {
+      "id": "ach_h_owlnight",
+      "name": "深夜公开课",
+      "hidden": true,
+      "clueText": "教授的课，只在会眨眼的草丛边开讲。",
+      "condition": {
+        "type": "custom",
+        "target": 1,
+        "params": {
+          "action": "owl_and_starbug_same_night"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_owlnight"
+      }
+    },
+    {
+      "id": "ach_h_perfectjourney",
+      "name": "完美旅程",
+      "hidden": true,
+      "clueText": "每一封信，都被第一时间拆开过。",
+      "condition": {
+        "type": "postcardCount",
+        "target": 1,
+        "params": {
+          "allReadSameDay": true
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_perfectjourney"
+      }
+    },
+    {
+      "id": "ach_h_classmates",
+      "name": "同学会",
+      "hidden": true,
+      "clueText": "老同学们像是约好了似的。",
+      "condition": {
+        "type": "revisitCount",
+        "target": 2,
+        "params": {
+          "differentPets": true,
+          "withinWeek": true
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_classmates"
+      }
+    },
+    {
+      "id": "ach_h_plusone",
+      "name": "朋友的朋友",
+      "hidden": true,
+      "clueText": "它的朋友，也想来看看你的院子。",
+      "condition": {
+        "type": "specialEventCount",
+        "target": 5,
+        "params": {
+          "eventType": "companion_visit"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_plusone"
+      }
+    },
+    {
+      "id": "ach_h_fourfarewell",
+      "name": "四季的目送",
+      "hidden": true,
+      "clueText": "院子送走过四个季节的背影。",
+      "condition": {
+        "type": "gradCount",
+        "target": 4,
+        "params": {
+          "seasons": [
+            "spring",
+            "summer",
+            "autumn",
+            "winter"
+          ]
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_fourfarewell"
+      }
+    },
+    {
+      "id": "ach_h_dawngrad",
+      "name": "向着朝阳出发",
+      "hidden": true,
+      "clueText": "有一场告别，选在了日出时分。",
+      "condition": {
+        "type": "custom",
+        "target": 1,
+        "params": {
+          "action": "graduation",
+          "timeRange": "5:00-8:00"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_dawngrad"
+      }
+    },
+    {
+      "id": "ach_h_fullcare",
+      "name": "宠爱满格",
+      "hidden": true,
+      "clueText": "那一天，它被爱得满满当当。",
+      "condition": {
+        "type": "actionCount",
+        "target": 4,
+        "params": {
+          "actions": [
+            "pat",
+            "feed",
+            "play",
+            "bath"
+          ],
+          "dailyMax": true
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_fullcare"
+      }
+    },
+    {
+      "id": "ach_h_newyear",
+      "name": "一岁又一岁",
+      "hidden": true,
+      "clueText": "新年的第一声问候，先给了它。",
+      "condition": {
+        "type": "custom",
+        "target": 1,
+        "params": {
+          "action": "care",
+          "date": "01-01"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_newyear"
+      }
+    },
+    {
+      "id": "ach_h_butterfly",
+      "name": "会飞的花",
+      "hidden": true,
+      "clueText": "有一朵会飞的花，找到了最安稳的枝头。",
+      "condition": {
+        "type": "custom",
+        "target": 1,
+        "params": {
+          "event": "white_butterfly",
+          "petState": "sleeping"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_butterfly"
+      }
+    },
+    {
+      "id": "ach_h_rainbowwait",
+      "name": "等虹的人",
+      "hidden": true,
+      "clueText": "不是每场雨都有下文——除非你肯等。",
+      "condition": {
+        "type": "custom",
+        "target": 3,
+        "params": {
+          "action": "wait_rainbow",
+          "afterRain": true
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_rainbowwait"
+      }
+    },
+    {
+      "id": "ach_h_memory",
+      "name": "旧手账的读者",
+      "hidden": true,
+      "clueText": "有人常常翻起旧照片。",
+      "condition": {
+        "type": "custom",
+        "target": 10,
+        "params": {
+          "action": "view_album",
+          "graduatedPet": true
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_memory"
+      }
+    },
+    {
+      "id": "ach_h_nightmail",
+      "name": "夜航信",
+      "hidden": true,
+      "clueText": "有些信，是写给失眠的人的。",
+      "condition": {
+        "type": "custom",
+        "target": 1,
+        "params": {
+          "action": "read_postcard",
+          "timeRange": "0-2"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_nightmail"
+      }
+    },
+    {
+      "id": "ach_h_tsundere",
+      "name": "口是心非观察员",
+      "hidden": true,
+      "clueText": "它说不要的时候，尾巴是诚实的。",
+      "condition": {
+        "type": "custom",
+        "target": 30,
+        "params": {
+          "action": "pat",
+          "petPersonality": "tsundere",
+          "animation": "fake_reluctance"
+        }
+      },
+      "reward": {
+        "fluff": 40,
+        "decorItemId": null,
+        "couponId": null,
+        "stickerId": "sticker_h_tsundere"
+      }
+    }
+  ]
+}

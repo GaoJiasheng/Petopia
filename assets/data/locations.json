@@ -1,0 +1,611 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "loc_lighthouse_bay",
+      "name": "灯塔湾",
+      "category": "海滨",
+      "climate": "温带海洋",
+      "vibeTags": [
+        "lighthouse",
+        "waves",
+        "watch"
+      ],
+      "photoStyle": "pc_bg_seaside_lighthouse",
+      "encounterPoolId": "enc_seaside",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_lighthouse_bay"
+    },
+    {
+      "id": "loc_catback_reef",
+      "name": "猫背礁",
+      "category": "海滨",
+      "climate": "温带海洋",
+      "vibeTags": [
+        "reefcats",
+        "afternoon"
+      ],
+      "photoStyle": "pc_bg_reef_catnap",
+      "encounterPoolId": "enc_seaside",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_catback_reef"
+    },
+    {
+      "id": "loc_shell_town",
+      "name": "贝壳镇",
+      "category": "海滨",
+      "climate": "亚热带海滨",
+      "vibeTags": [
+        "shells",
+        "market"
+      ],
+      "photoStyle": "pc_bg_shell_town",
+      "encounterPoolId": "enc_seaside",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_shell_town"
+    },
+    {
+      "id": "loc_tide_flat",
+      "name": "退潮沙洲",
+      "category": "海滨",
+      "climate": "温带海洋",
+      "vibeTags": [
+        "tide",
+        "reflection"
+      ],
+      "photoStyle": "pc_bg_tide_reflection",
+      "encounterPoolId": "enc_seaside",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_tide_flat"
+    },
+    {
+      "id": "loc_seafog_pier",
+      "name": "海雾码头",
+      "category": "海滨",
+      "climate": "冷凉多雾",
+      "vibeTags": [
+        "fog",
+        "whistle",
+        "fishing"
+      ],
+      "photoStyle": "pc_bg_fog_pier",
+      "encounterPoolId": "enc_seaside",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_seafog_pier"
+    },
+    {
+      "id": "loc_cloud_pass",
+      "name": "云顶垭口",
+      "category": "山地",
+      "climate": "高山凉爽",
+      "vibeTags": [
+        "clouds",
+        "mountains",
+        "view"
+      ],
+      "photoStyle": "pc_bg_cloud_pass",
+      "encounterPoolId": "enc_mountain",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_cloud_pass"
+    },
+    {
+      "id": "loc_monkey_spring",
+      "name": "温泉猴谷",
+      "category": "山地",
+      "climate": "山地温泉",
+      "vibeTags": [
+        "hotspring",
+        "monkeys",
+        "warmstone"
+      ],
+      "photoStyle": "pc_bg_monkey_spring",
+      "encounterPoolId": "enc_mountain",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_monkey_spring"
+    },
+    {
+      "id": "loc_maple_ridge",
+      "name": "枫火岭",
+      "category": "山地",
+      "climate": "温带山地",
+      "vibeTags": [
+        "maples",
+        "trails",
+        "sunset"
+      ],
+      "photoStyle": "pc_bg_maple_ridge",
+      "encounterPoolId": "enc_mountain",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_maple_ridge"
+    },
+    {
+      "id": "loc_snowline_cabin",
+      "name": "雪线木屋",
+      "category": "山地",
+      "climate": "高寒",
+      "vibeTags": [
+        "cabin",
+        "snow",
+        "fireplace"
+      ],
+      "photoStyle": "pc_bg_snow_cabin",
+      "encounterPoolId": "enc_mountain",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_snowline_cabin"
+    },
+    {
+      "id": "loc_echo_canyon",
+      "name": "回声峡谷",
+      "category": "山地",
+      "climate": "干燥峡谷",
+      "vibeTags": [
+        "echo",
+        "cliffs",
+        "eagle"
+      ],
+      "photoStyle": "pc_bg_echo_canyon",
+      "encounterPoolId": "enc_mountain",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_echo_canyon"
+    },
+    {
+      "id": "loc_tram_street",
+      "name": "电车老街",
+      "category": "城市",
+      "climate": "温带城市",
+      "vibeTags": [
+        "tram",
+        "cobblestone"
+      ],
+      "photoStyle": "pc_bg_tram_street",
+      "encounterPoolId": "enc_city",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_tram_street"
+    },
+    {
+      "id": "loc_rooftop_city",
+      "name": "屋顶水塔城",
+      "category": "城市",
+      "climate": "温带城市",
+      "vibeTags": [
+        "rooftop",
+        "water tower",
+        "pigeons"
+      ],
+      "photoStyle": "pc_bg_rooftop_city",
+      "encounterPoolId": "enc_city",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_rooftop_city"
+    },
+    {
+      "id": "loc_midnight_noodles",
+      "name": "深夜面馆街",
+      "category": "城市",
+      "climate": "温带城市",
+      "vibeTags": [
+        "lanterns",
+        "noodles",
+        "night market"
+      ],
+      "photoStyle": "pc_bg_midnight_noodles",
+      "encounterPoolId": "enc_city",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_midnight_noodles"
+    },
+    {
+      "id": "loc_oldbook_alley",
+      "name": "旧书坊巷",
+      "category": "城市",
+      "climate": "温带城市",
+      "vibeTags": [
+        "books",
+        "ink",
+        "window cat"
+      ],
+      "photoStyle": "pc_bg_oldbook_alley",
+      "encounterPoolId": "enc_city",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_oldbook_alley"
+    },
+    {
+      "id": "loc_ferris_wharf",
+      "name": "摩天轮码头",
+      "category": "城市",
+      "climate": "海滨城市",
+      "vibeTags": [
+        "ferris wheel",
+        "night lights",
+        "cotton candy"
+      ],
+      "photoStyle": "pc_bg_ferris_wharf",
+      "encounterPoolId": "enc_city",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_ferris_wharf"
+    },
+    {
+      "id": "loc_wheat_post",
+      "name": "麦浪邮局",
+      "category": "乡野",
+      "climate": "温带田园",
+      "vibeTags": [
+        "wheat",
+        "post office",
+        "mail"
+      ],
+      "photoStyle": "pc_bg_wheat_post",
+      "encounterPoolId": "enc_countryside",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_wheat_post"
+    },
+    {
+      "id": "loc_sunflower_station",
+      "name": "向日葵车站",
+      "category": "乡野",
+      "climate": "温带田园",
+      "vibeTags": [
+        "sunflower",
+        "train",
+        "platform"
+      ],
+      "photoStyle": "pc_bg_sunflower_station",
+      "encounterPoolId": "enc_countryside",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_sunflower_station"
+    },
+    {
+      "id": "loc_firefly_paddy",
+      "name": "萤火稻田",
+      "category": "乡野",
+      "climate": "湿润田园",
+      "vibeTags": [
+        "fireflies",
+        "summer night",
+        "frogs"
+      ],
+      "photoStyle": "pc_bg_firefly_paddy",
+      "encounterPoolId": "enc_countryside",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_firefly_paddy"
+    },
+    {
+      "id": "loc_apple_farm",
+      "name": "苹果坡农场",
+      "category": "乡野",
+      "climate": "温带丘陵",
+      "vibeTags": [
+        "apple orchard",
+        "ladder",
+        "fruit"
+      ],
+      "photoStyle": "pc_bg_apple_farm",
+      "encounterPoolId": "enc_countryside",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_apple_farm"
+    },
+    {
+      "id": "loc_windmill_pond",
+      "name": "风车塘",
+      "category": "乡野",
+      "climate": "温带水乡",
+      "vibeTags": [
+        "windmill",
+        "ducks",
+        "reeds"
+      ],
+      "photoStyle": "pc_bg_windmill_pond",
+      "encounterPoolId": "enc_countryside",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_windmill_pond"
+    },
+    {
+      "id": "loc_mushroom_ring",
+      "name": "蘑菇环林地",
+      "category": "森林",
+      "climate": "湿润林地",
+      "vibeTags": [
+        "mushrooms",
+        "moss",
+        "twilight"
+      ],
+      "photoStyle": "pc_bg_mushroom_ring",
+      "encounterPoolId": "enc_forest",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_mushroom_ring"
+    },
+    {
+      "id": "loc_oak_postbox",
+      "name": "千年橡树邮筒",
+      "category": "森林",
+      "climate": "温带阔叶林",
+      "vibeTags": [
+        "oak tree",
+        "tree hollow",
+        "mailbox"
+      ],
+      "photoStyle": "pc_bg_oak_postbox",
+      "encounterPoolId": "enc_forest",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_oak_postbox"
+    },
+    {
+      "id": "loc_pinecone_market",
+      "name": "松果集市",
+      "category": "森林",
+      "climate": "针叶林",
+      "vibeTags": [
+        "pinecone currency",
+        "barter",
+        "market"
+      ],
+      "photoStyle": "pc_bg_pinecone_market",
+      "encounterPoolId": "enc_forest",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_pinecone_market"
+    },
+    {
+      "id": "loc_fog_bridge",
+      "name": "雾中吊桥",
+      "category": "森林",
+      "climate": "山林多雾",
+      "vibeTags": [
+        "suspension bridge",
+        "fog",
+        "creaking"
+      ],
+      "photoStyle": "pc_bg_fog_bridge",
+      "encounterPoolId": "enc_forest",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_fog_bridge"
+    },
+    {
+      "id": "loc_logger_lodge",
+      "name": "伐木温居",
+      "category": "森林",
+      "climate": "寒温带林",
+      "vibeTags": [
+        "woodshavings",
+        "fireplace",
+        "stew"
+      ],
+      "photoStyle": "pc_bg_logger_lodge",
+      "encounterPoolId": "enc_forest",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_logger_lodge"
+    },
+    {
+      "id": "loc_salt_lake",
+      "name": "星空盐湖",
+      "category": "沙漠异域",
+      "climate": "高原干燥",
+      "vibeTags": [
+        "salt flat",
+        "star sky",
+        "silence"
+      ],
+      "photoStyle": "pc_bg_salt_lake",
+      "encounterPoolId": "enc_desert",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_salt_lake"
+    },
+    {
+      "id": "loc_camel_oasis",
+      "name": "驼铃绿洲",
+      "category": "沙漠异域",
+      "climate": "沙漠",
+      "vibeTags": [
+        "camel bells",
+        "palm trees",
+        "spring"
+      ],
+      "photoStyle": "pc_bg_camel_oasis",
+      "encounterPoolId": "enc_desert",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_camel_oasis"
+    },
+    {
+      "id": "loc_painted_bazaar",
+      "name": "彩绘集市",
+      "category": "沙漠异域",
+      "climate": "干热",
+      "vibeTags": [
+        "murals",
+        "spices",
+        "carpets"
+      ],
+      "photoStyle": "pc_bg_painted_bazaar",
+      "encounterPoolId": "enc_desert",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_painted_bazaar"
+    },
+    {
+      "id": "loc_wind_rocks",
+      "name": "风蚀石林",
+      "category": "沙漠异域",
+      "climate": "干旱",
+      "vibeTags": [
+        "rock formations",
+        "wind",
+        "long shadows"
+      ],
+      "photoStyle": "pc_bg_wind_rocks",
+      "encounterPoolId": "enc_desert",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_wind_rocks"
+    },
+    {
+      "id": "loc_balloon_camp",
+      "name": "热气球营地",
+      "category": "沙漠异域",
+      "climate": "干燥高原",
+      "vibeTags": [
+        "hot air balloons",
+        "morning light",
+        "campfire"
+      ],
+      "photoStyle": "pc_bg_balloon_camp",
+      "encounterPoolId": "enc_desert",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_balloon_camp"
+    },
+    {
+      "id": "loc_aurora_village",
+      "name": "极光渔村",
+      "category": "极地水域",
+      "climate": "极寒",
+      "vibeTags": [
+        "aurora",
+        "fishing lights",
+        "igloo"
+      ],
+      "photoStyle": "pc_bg_aurora_village",
+      "encounterPoolId": "enc_polar",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_aurora_village"
+    },
+    {
+      "id": "loc_icefloe_lighthouse",
+      "name": "浮冰灯塔",
+      "category": "极地水域",
+      "climate": "极寒海域",
+      "vibeTags": [
+        "ice floes",
+        "lighthouse",
+        "stillness"
+      ],
+      "photoStyle": "pc_bg_icefloe_lighthouse",
+      "encounterPoolId": "enc_polar",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_icefloe_lighthouse"
+    },
+    {
+      "id": "loc_blue_spring",
+      "name": "蓝洞泉",
+      "category": "极地水域",
+      "climate": "喀斯特水域",
+      "vibeTags": [
+        "blue spring",
+        "echo",
+        "water ripples"
+      ],
+      "photoStyle": "pc_bg_blue_spring",
+      "encounterPoolId": "enc_polar",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_blue_spring"
+    },
+    {
+      "id": "loc_canal_town",
+      "name": "运河小城",
+      "category": "极地水域",
+      "climate": "温带水城",
+      "vibeTags": [
+        "canal",
+        "bridge",
+        "bread aroma"
+      ],
+      "photoStyle": "pc_bg_canal_town",
+      "encounterPoolId": "enc_polar",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_canal_town"
+    },
+    {
+      "id": "loc_steamboat_pier",
+      "name": "汽船栈桥",
+      "category": "极地水域",
+      "climate": "温带河港",
+      "vibeTags": [
+        "steamboat",
+        "white steam",
+        "wooden pier"
+      ],
+      "photoStyle": "pc_bg_steamboat_pier",
+      "encounterPoolId": "enc_polar",
+      "personalityWeight": {},
+      "stampId": "pc_stamp_steamboat_pier"
+    },
+    {
+      "id": "loc_cloud_ranch",
+      "name": "云端牧场",
+      "category": "奇幻",
+      "climate": "天空",
+      "vibeTags": [
+        "cloud sheep",
+        "blue sky",
+        "meadow"
+      ],
+      "photoStyle": "pc_bg_cloud_ranch",
+      "encounterPoolId": "enc_fantasy",
+      "personalityWeight": {
+        "p_dreamy": 1.3
+      },
+      "stampId": "pc_stamp_cloud_ranch"
+    },
+    {
+      "id": "loc_moon_post",
+      "name": "月亮背面的邮局",
+      "category": "奇幻",
+      "climate": "月面",
+      "vibeTags": [
+        "moondust",
+        "stampless mail",
+        "earth view"
+      ],
+      "photoStyle": "pc_bg_moon_post",
+      "encounterPoolId": "enc_fantasy",
+      "personalityWeight": {
+        "p_dreamy": 1.3
+      },
+      "stampId": "pc_stamp_moon_post"
+    },
+    {
+      "id": "loc_frosting_volcano",
+      "name": "糖霜火山",
+      "category": "奇幻",
+      "climate": "甜品气候",
+      "vibeTags": [
+        "frosting summit",
+        "sweet steam",
+        "pastel"
+      ],
+      "photoStyle": "pc_bg_frosting_volcano",
+      "encounterPoolId": "enc_fantasy",
+      "personalityWeight": {
+        "p_dreamy": 1.3
+      },
+      "stampId": "pc_stamp_frosting_volcano"
+    },
+    {
+      "id": "loc_walking_island",
+      "name": "会走路的岛",
+      "category": "奇幻",
+      "climate": "移动海岛",
+      "vibeTags": [
+        "moving horizon",
+        "island palms",
+        "wobble"
+      ],
+      "photoStyle": "pc_bg_walking_island",
+      "encounterPoolId": "enc_fantasy",
+      "personalityWeight": {
+        "p_dreamy": 1.3
+      },
+      "stampId": "pc_stamp_walking_island"
+    },
+    {
+      "id": "loc_star_repair",
+      "name": "星星修理铺",
+      "category": "奇幻",
+      "climate": "夜空",
+      "vibeTags": [
+        "broken stars",
+        "screwdriver",
+        "wish receipt"
+      ],
+      "photoStyle": "pc_bg_star_repair",
+      "encounterPoolId": "enc_fantasy",
+      "personalityWeight": {
+        "p_dreamy": 1.3
+      },
+      "stampId": "pc_stamp_star_repair"
+    }
+  ]
+}

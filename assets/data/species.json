@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "pet_cat",
+      "name": "橘猫",
+      "category": "real",
+      "baseTone": "慵懒、贪吃、晒太阳",
+      "unlockRule": {
+        "type": "initial"
+      },
+      "variantIds": [
+        "pet_cat_v1",
+        "pet_cat_v2",
+        "pet_cat_v3",
+        "pet_cat_v4",
+        "pet_cat_v5"
+      ],
+      "dexArtRef": "pet_cat_var01_stageC",
+      "dexSilhouetteRef": "pet_cat_silhouette",
+      "dexMysteryRef": null
+    },
+    {
+      "id": "pet_shiba",
+      "name": "柴犬",
+      "category": "real",
+      "baseTone": "忠诚、傻乐、拆家未遂",
+      "unlockRule": {
+        "type": "initial"
+      },
+      "variantIds": [
+        "pet_shiba_v1",
+        "pet_shiba_v2",
+        "pet_shiba_v3",
+        "pet_shiba_v4",
+        "pet_shiba_v5"
+      ],
+      "dexArtRef": "pet_shiba_var01_stageC",
+      "dexSilhouetteRef": "pet_shiba_silhouette",
+      "dexMysteryRef": null
+    },
+    {
+      "id": "pet_rabbit",
+      "name": "垂耳兔",
+      "category": "real",
+      "baseTone": "软糯、胆小、爱啃",
+      "unlockRule": {
+        "type": "initial"
+      },
+      "variantIds": [
+        "pet_rabbit_v1",
+        "pet_rabbit_v2",
+        "pet_rabbit_v3",
+        "pet_rabbit_v4",
+        "pet_rabbit_v5"
+      ],
+      "dexArtRef": "pet_rabbit_var01_stageC",
+      "dexSilhouetteRef": "pet_rabbit_silhouette",
+      "dexMysteryRef": null
+    },
+    {
+      "id": "pet_hamster",
+      "name": "仓鼠",
+      "category": "real",
+      "baseTone": "囤货、腮帮、跑轮",
+      "unlockRule": {
+        "type": "gradCount",
+        "threshold": 1
+      },
+      "variantIds": [
+        "pet_hamster_v1",
+        "pet_hamster_v2",
+        "pet_hamster_v3",
+        "pet_hamster_v4",
+        "pet_hamster_v5"
+      ],
+      "dexArtRef": "pet_hamster_var01_stageC",
+      "dexSilhouetteRef": "pet_hamster_silhouette",
+      "dexMysteryRef": null
+    },
+    {
+      "id": "pet_turtle",
+      "name": "乌龟",
+      "category": "real",
+      "baseTone": "慢悠悠、长情、缩壳",
+      "unlockRule": {
+        "type": "gradCount",
+        "threshold": 2
+      },
+      "variantIds": [
+        "pet_turtle_v1",
+        "pet_turtle_v2",
+        "pet_turtle_v3",
+        "pet_turtle_v4",
+        "pet_turtle_v5"
+      ],
+      "dexArtRef": "pet_turtle_var01_stageC",
+      "dexSilhouetteRef": "pet_turtle_silhouette",
+      "dexMysteryRef": null
+    },
+    {
+      "id": "pet_parrot",
+      "name": "鹦鹉",
+      "category": "real",
+      "baseTone": "话痨、学舌、显摆",
+      "unlockRule": {
+        "type": "gradCount",
+        "threshold": 3
+      },
+      "variantIds": [
+        "pet_parrot_v1",
+        "pet_parrot_v2",
+        "pet_parrot_v3",
+        "pet_parrot_v4",
+        "pet_parrot_v5"
+      ],
+      "dexArtRef": "pet_parrot_var01_stageC",
+      "dexSilhouetteRef": "pet_parrot_silhouette",
+      "dexMysteryRef": null
+    },
+    {
+      "id": "pet_snake",
+      "name": "玉米蛇",
+      "category": "real",
+      "baseTone": "高冷、蜷缩、蜕皮",
+      "unlockRule": {
+        "type": "gradCount",
+        "threshold": 4
+      },
+      "variantIds": [
+        "pet_snake_v1",
+        "pet_snake_v2",
+        "pet_snake_v3",
+        "pet_snake_v4",
+        "pet_snake_v5"
+      ],
+      "dexArtRef": "pet_snake_var01_stageC",
+      "dexSilhouetteRef": "pet_snake_silhouette",
+      "dexMysteryRef": null
+    },
+    {
+      "id": "pet_chameleon",
+      "name": "变色龙",
+      "category": "real",
+      "baseTone": "慢动作、变色、伪装",
+      "unlockRule": {
+        "type": "gradCount",
+        "threshold": 5
+      },
+      "variantIds": [
+        "pet_chameleon_v1",
+        "pet_chameleon_v2",
+        "pet_chameleon_v3",
+        "pet_chameleon_v4",
+        "pet_chameleon_v5"
+      ],
+      "dexArtRef": "pet_chameleon_var01_stageC",
+      "dexSilhouetteRef": "pet_chameleon_silhouette",
+      "dexMysteryRef": null
+    },
+    {
+      "id": "pet_ember",
+      "name": "小火龙",
+      "category": "fantasy",
+      "baseTone": "怕生的小暖炉",
+      "unlockRule": {
+        "type": "hiddenClue",
+        "clueId": "clue_ember",
+        "threshold": 3,
+        "clueText": "有人说，寒夜里给院子留一盏灯…",
+        "visitorPrereqId": "visitor_campfire_light",
+        "hiddenSteps": []
+      },
+      "variantIds": [
+        "pet_ember_v1",
+        "pet_ember_v2",
+        "pet_ember_v3",
+        "pet_ember_v4",
+        "pet_ember_v5"
+      ],
+      "dexArtRef": "pet_ember_var01_stageC",
+      "dexSilhouetteRef": "pet_ember_silhouette",
+      "dexMysteryRef": "pet_ember_mystery"
+    },
+    {
+      "id": "pet_uni",
+      "name": "独角兔尼可",
+      "category": "fantasy",
+      "baseTone": "独角兽幼体",
+      "unlockRule": {
+        "type": "hiddenClue",
+        "clueId": "clue_uni",
+        "threshold": 2,
+        "clueText": "雨后彩虹的尽头，有什么在等着你",
+        "visitorPrereqId": "visitor_rainbow_shade",
+        "hiddenSteps": []
+      },
+      "variantIds": [
+        "pet_uni_v1",
+        "pet_uni_v2",
+        "pet_uni_v3",
+        "pet_uni_v4",
+        "pet_uni_v5"
+      ],
+      "dexArtRef": "pet_uni_var01_stageC",
+      "dexSilhouetteRef": "pet_uni_silhouette",
+      "dexMysteryRef": "pet_uni_mystery"
+    },
+    {
+      "id": "pet_boo",
+      "name": "小幽灵噗噗",
+      "category": "fantasy",
+      "baseTone": "害羞的白团子幽灵",
+      "unlockRule": {
+        "type": "hiddenClue",
+        "clueId": "clue_boo",
+        "threshold": 5,
+        "clueText": "午夜的食盘空了，会有什么来临呢？",
+        "visitorPrereqId": "visitor_night_blob",
+        "hiddenSteps": []
+      },
+      "variantIds": [
+        "pet_boo_v1",
+        "pet_boo_v2",
+        "pet_boo_v3",
+        "pet_boo_v4",
+        "pet_boo_v5"
+      ],
+      "dexArtRef": "pet_boo_var01_stageC",
+      "dexSilhouetteRef": "pet_boo_silhouette",
+      "dexMysteryRef": "pet_boo_mystery"
+    },
+    {
+      "id": "pet_starbug",
+      "name": "星星虫",
+      "category": "fantasy",
+      "baseTone": "会眨眼的草丛",
+      "unlockRule": {
+        "type": "hiddenClue",
+        "clueId": "clue_starbug",
+        "threshold": 3,
+        "clueText": "草丛里闪烁的，是星星吗？",
+        "visitorPrereqId": "visitor_starbug",
+        "hiddenSteps": []
+      },
+      "variantIds": [
+        "pet_starbug_v1",
+        "pet_starbug_v2",
+        "pet_starbug_v3",
+        "pet_starbug_v4",
+        "pet_starbug_v5"
+      ],
+      "dexArtRef": "pet_starbug_var01_stageC",
+      "dexSilhouetteRef": "pet_starbug_silhouette",
+      "dexMysteryRef": "pet_starbug_mystery"
+    }
+  ]
+}
