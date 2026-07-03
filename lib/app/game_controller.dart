@@ -229,7 +229,11 @@ class GameController extends AsyncNotifier<GameView> {
           ? null
           : PetView(
               name: p.name, speciesId: p.speciesId, level: p.level, exp: p.exp,
-              stage: p.stage, personality: p.personality),
+              stage: p.stage,
+              // 解析性格 id→展示名（爱幻想/温柔…），回退 id。
+              personality: p.personality
+                  .map((id) => _svc.content.personalityById(id)?.name ?? id)
+                  .toList()),
       wallet: _svc.session.wallet.balance,
       luxuryStage: _svc.session.yard.luxuryStage,
       cooldownSec: {
