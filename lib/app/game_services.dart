@@ -193,8 +193,34 @@ class GameServices {
     final journeyId = await graduation.graduate(pet);
     _session.roaming.add(pet);
     _session.current = null;
+    revisit.scheduleNextRevisit(pet); // 漫游开始即排下次回访
     final match = _session.journeys.where((e) => e.id == journeyId);
     return match.isEmpty ? null : match.first.stops.length;
+  }
+
+  /// 处理漫游宠（每次日切/恢复调用）：按期寄明信片 + 到点回访串门。
+  /// 明信片/回访不走 scheduler job（那是院子在养宠的事），按 roaming 逐只驱动。
+  Future<void> processRoaming(DateTime now) async {
+    // 明信片：每只漫游宠的活跃旅程按 nextPostcardAt 寄片（内部判定到点）。
+    for (final pet in _session.roaming) {
+      final jid = pet.journeyId;
+      if (jid == null) continue;
+      final matches = _session.journeys.where((j) => j.id == jid);
+      if (matches.isEmpty) continue;
+      await postcard.dailyTick(pet: pet, journey: matches.first);
+    }
+    // 回访：上一位串门结束（1 个 tick 窗口）→ 再从到期漫游宠里挑新的（INV-2）。
+    final prev = _session.revisitor;
+    if (prev != null) {
+      revisit.onRevisitEnd(prev);
+      _session.revisitor = null;
+    }
+    final next = revisit.pickRevisitor(_session.roaming, now,
+        hasCurrentRevisitor: false);
+    if (next != null) {
+      _session.revisitor = next;
+      revisit.onRevisitInteract(next, _session.current);
+    }
   }
 
   List<String> _pickTwoPersonalities() {
@@ -245,11 +271,42 @@ class GameServices {
           _session.eventCounts[pet.id] = (_session.eventCounts[pet.id] ?? 0) + 1;
         }
       case JobType.specialEventEval:
+        if (pet == null) break;
+        // 眷顾资格的彩蛋事件：满足等级/豪华度门槛，oncePerPet 未触发过。
+        final eligible = _content.events.where((e) {
+          if (e.type != EventType.special) return false;
+          final w = e.weights;
+          if (w.minLevel != null && pet.level < w.minLevel!) return false;
+          if (w.minLuxuryStage != null &&
+              _session.yard.luxuryStage < w.minLuxuryStage!) {
+            return false;
+          }
+          if (e.oncePerPet &&
+              _session.firedSpecials.contains('${pet.id}:${e.id}')) {
+            return false;
+          }
+          return true;
+        }).toList();
+        if (eligible.isEmpty) break;
+        if (_rng() >= _specialEventChance) break; // 低频彩蛋（日 cap=1）
+        final ev = eligible[(_rng() * eligible.length).floor()];
+        exp.addExp(
+            pet: pet, baseDelta: ev.expReward, source: ExpSource.eventSpecial,
+            sourceRef: ev.id);
+        if (ev.currencyReward != null) {
+          economy.earn(ev.currencyReward!, CurrencyReason.eventReward,
+              ref: 'evt:${pet.id}:${ev.id}');
+        }
+        if (ev.oncePerPet) _session.firedSpecials.add('${pet.id}:${ev.id}');
+        _session.eventCounts[pet.id] = (_session.eventCounts[pet.id] ?? 0) + 1;
       case JobType.revisitDue:
       case JobType.postcardDue:
-        break; // [待细化] 特殊事件 / 回访 / 明信片 调度接线
+        break; // 漫游宠的明信片/回访不走 scheduler，由 processRoaming 驱动
     }
   }
+
+  /// 彩蛋事件单次评估触发概率（日 cap=1，见 GameConfig.specialEventDailyCap）。
+  static const double _specialEventChance = 0.25;
 
   Season _seasonOf(DateTime t) {
     final m = t.month;

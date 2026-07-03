@@ -23,6 +23,7 @@ class GameSession {
   final List<Postcard> postcards = []; // 收到的明信片（旅行相册数据源）
   final List<ScheduledJob> jobs = [];
   final Set<String> generatedDays = {};
+  final Set<String> firedSpecials = {}; // 'petId:eventId'，oncePerPet 特殊事件去重
   final List<VisitorLogEntry> visitorLog = [];
   final Set<String> ownedSpecies = {}; // 曾养过的物种（图鉴 OWNED_BEFORE）
   Pet? revisitor; // 当前在访的毕业宠（≤1）

@@ -60,6 +60,7 @@ Future<GameServices> bootstrapGame() async {
   clock.markHeartbeat();
   await svc.scheduler.onDailyTick(clock.now());
   await svc.scheduler.onResume(clock.now());
+  await svc.processRoaming(clock.now()); // 漫游宠寄明信片 + 回访
   return svc;
 }
 
