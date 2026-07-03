@@ -121,6 +121,18 @@ Batch I / v5 Golden Set polish samples:
 - [x] `petopia-golden-v5-contact-sheet`: `assets/art/samples/petopia-golden-v5-contact-sheet.png`
 - [x] v5 polish standard doc: `docs/art-polish-v5-golden-set.md`
 
+Batch J / v5 production asset correction pass:
+
+- [x] 全域奶油卡通调色与透明边缘清理：覆盖 `assets/art/pets/`、`assets/art/world/`、`assets/art/postcards/`、`assets/art/ui/` 下生产 PNG，排除 `samples/` 与 `qa/`。
+- [x] 宠物 A/B/C 单体透明碎片清理，避免非旅装阶段出现误抠残片；抽检图：`assets/art/qa/v5_audit_pet_cat_after_strict.png`。
+- [x] D 档旅装 attachment 独立交付：12 物种 × hat / scarf / bag / attachment_sheet，共 `48` 个 PNG，路径为 `assets/art/pets/<species>/attachments/`；抽检图：`assets/art/qa/v5_audit_travel_attachments.png`。
+- [x] UI 徽章语义重修：成长等级 4 档（蛋壳 / 嫩芽 / 花朵 / 翅膀）与稀有度 4 档（常见 / 不常见 / 稀有 / 传说）拆分为两套资产。
+- [x] UI 动作图标去重重修：喂食 / 摸头 / 玩具 / 洗澡 / 拍照以不同主体符号呈现，避免爪印泛用；抽检图：`assets/art/qa/v5_audit_ui_key_after.png`。
+- [x] 院子 / 主题背景按 v5 full-bleed 标准复检，无烤入手账纸框；抽检图：`assets/art/qa/v5_audit_world_themes_after.png`。
+- [x] 访客肖像按自然访客规则复检；抽检图：`assets/art/qa/v5_audit_visitors_portraits_after.png`。
+- [x] 明信片地点背景 `40/40` 按 Golden Set 重绘到 1080×720，保持无文字、无内嵌边框、V2 在场构图方向；总抽检图：`assets/art/qa/v5_audit_postcard_backgrounds_v5_final.png`。
+- [x] QA manifest 已刷新：`assets/art/qa/generated_asset_manifest.json`。
+
 ## 待确认/待修规格
 
 - [ ] 全屏源文件尺寸口径：`1290x2796` vs `1080x1920 @1x`。
@@ -136,17 +148,18 @@ Batch I / v5 Golden Set polish samples:
 - W2 decor 主资产 40/40 已覆盖，另含满/空、亮/灭、四季树、动效首帧等变体，共 `78` 个 `deco_*.png`。
 - W3 FX 已生成 `16` 个透明 PNG：白天/黄昏/夜晚/雨/雪覆盖层，雨雪粒子、极光 12 帧、萤火、柔雷 6 帧、花瓣/落叶/柳絮粒子。
 - W4 visitors 已生成 20 张 `400x400` 肖像和 20 张 `_yard` 横向 8 帧 sprite sheet；`_yard` 当前是首版微动/动作帧，后续精修批次可逐个强化特征动作。
-- Pet domain 已生成形态 `240/240`、图鉴 `28`、通用动作模板 `96`、性格模板 `100`、彩蛋特效 `4`。动作资产当前为 stageC 主模板 + var01 别名。
-- Postcard domain 已生成背景 `40/40`、姿态 `96/96`、滤镜 `6/6`、贴纸 `61`、邮戳 `40/40`、特例 `20/20`、chrome `10/10`。
-- UI domain 已生成 `178` 个 `ui_*.png` 主资产。
-- 当前 `assets/art` PNG 总数：`1273`（含 QA chroma 源、样张、sheet、单件、sprite sheet）。
+- Pet domain 已生成形态 `240/240`、图鉴 `28`、通用动作模板 `96`、性格模板 `100`、彩蛋特效 `4`，并补齐 D 旅装独立 attachment `48`。动作资产当前为 stageC 主模板 + var01 别名。
+- Postcard domain 已生成背景 `40/40`（v5 重绘版）、姿态 `96/96`、滤镜 `6/6`、贴纸 `61`、邮戳 `40/40`、特例 `20/20`、chrome `10/10`。
+- UI domain 已生成 `178` 个 `ui_*.png` 主资产，其中等级徽章、稀有度徽章与核心动作图标已按 v5 规则重修。
+- 当前 `assets/art` PNG 总数：`1338`（含 QA chroma 源、样张、sheet、单件、sprite sheet、travel attachment）。
 
 ## QA 备注
 
 - `deco_pinwheel_paper` 当前第一版更像风车花环，后续精修批次建议补严格单个纸风车 v2。
 - 访客 `_yard` 当前批次使用同一立绘生成 idle/action 微动帧；最终商店级动画建议后续逐个重绘关键帧。
 - 宠物通用动作和性格动作当前为程序化微动首版模板；最终 Spine/DragonBones 骨骼拆层与逐物种关键帧仍需精修批次。
-- 明信片背景/特例当前为程序化水彩首版，用于全量闭合 asset_id；最终商店级背景建议后续对 40 张逐张用 imagegen 或人工重绘升级。
+- 明信片背景 `40/40` 已完成 v5 逐张重绘，不再按占位/首版处理；后续仅需按具体剧情或地点设定做个别人工微调。
 - 院子豪华度 delta 层当前由相邻完整层差分生成，适合作为首版递进素材；最终升级演出建议人工整理每阶新增结构。
 - UI 当前为 @1x 主 PNG；@2x/@3x 批量导出可在终稿尺寸冻结后统一生成。
 - v5 Golden Set 已生成并取代 v4 作为后续批量 polish 的统一质量标尺：院子主屏 full-bleed 无外框、成长 D 档带旅装、访客自然无统一配饰、明信片采用 V2 在场构图、UI 底图无可读文字。
+- 本次 v5 生产修正未触碰代码、逻辑、Flutter/Flame、运行数据转换；仅改动 `assets/art/` 与美术规格/状态文档。

@@ -44,6 +44,10 @@ class GameServices {
   final ContentRepository _content;
   final double Function() _rng;
 
+  /// 当前游戏状态（UI 读取）。
+  GameSession get session => _session;
+  ContentRepository get content => _content;
+
   GameServices._({
     required this.clock,
     required this.audit,

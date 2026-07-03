@@ -31,8 +31,17 @@
 - [ ] 访客是否自然、明快，不因棕灰色掉出奶油色系。
 - [ ] 图像是否无可读文字、无水印、无错误额外动物。
 
+## v5 生产修正落点
+
+- 全域生产 PNG 已做奶油卡通调色、亮度/饱和度统一、透明边缘清理，范围覆盖 `assets/art/pets/`、`assets/art/world/`、`assets/art/postcards/`、`assets/art/ui/`。
+- 院子/主题背景按 full-bleed 规则复检，背景层不烤入撕纸、胶带、贴纸框、相角或固定装饰边；抽检图：`assets/art/qa/v5_audit_world_themes_after.png`。
+- 宠物 A/B/C 单体形态做严格碎片清理；D 档旅装保留并新增独立 attachment，抽检图：`assets/art/qa/v5_audit_pet_cat_after_strict.png`、`assets/art/qa/v5_audit_travel_attachments.png`。
+- UI 徽章拆成成长等级 4 档与稀有度 4 档；喂食、摸头、玩具、洗澡、拍照图标去重，抽检图：`assets/art/qa/v5_audit_ui_key_after.png`。
+- 访客保持自然外观，不统一加拟人配饰；肖像抽检图：`assets/art/qa/v5_audit_visitors_portraits_after.png`。
+- 明信片地点背景 `40/40` 已重绘为 v5 质量线，统一 1080×720、无文字、无背景内嵌边框；总抽检图：`assets/art/qa/v5_audit_postcard_backgrounds_v5_final.png`。
+
 ## 生成方式记录
 
 - 生成方式：built-in `image_gen`。
 - 生成日期：2026-07-02。
-- 本批只新增样张与美术文档，不替换现有运行资产。
+- 本批先锁定 Golden Set 样张，再按该标准修正现有生产 PNG、补齐旅装 attachment、重绘明信片背景，并刷新 QA manifest：`assets/art/qa/generated_asset_manifest.json`。

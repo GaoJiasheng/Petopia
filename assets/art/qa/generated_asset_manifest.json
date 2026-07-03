@@ -1,5 +1,5 @@
 {
-  "count": 1273,
+  "count": 1338,
   "assets": [
     {
       "path": "assets/art/pets/boo/actions/pet_boo_stageC_bath.png",
@@ -109,6 +109,34 @@
     {
       "path": "assets/art/pets/boo/actions/pet_boo_var01_stageC_walk.png",
       "width": 3584,
+      "height": 448,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/boo/attachments/pet_boo_travel_attachment_sheet.png",
+      "width": 1344,
+      "height": 448,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/boo/attachments/pet_boo_travel_bag.png",
+      "width": 448,
+      "height": 448,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/boo/attachments/pet_boo_travel_hat.png",
+      "width": 448,
+      "height": 448,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/boo/attachments/pet_boo_travel_scarf.png",
+      "width": 448,
       "height": 448,
       "mode": "RGBA",
       "has_alpha": true
@@ -373,6 +401,34 @@
       "has_alpha": true
     },
     {
+      "path": "assets/art/pets/cat/attachments/pet_cat_travel_attachment_sheet.png",
+      "width": 1536,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/cat/attachments/pet_cat_travel_bag.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/cat/attachments/pet_cat_travel_hat.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/cat/attachments/pet_cat_travel_scarf.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
       "path": "assets/art/pets/cat/pet_cat_morph_sheet.png",
       "width": 1402,
       "height": 1122,
@@ -627,6 +683,34 @@
     {
       "path": "assets/art/pets/cham/actions/pet_cham_var01_stageC_walk.png",
       "width": 4096,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/cham/attachments/pet_cham_travel_attachment_sheet.png",
+      "width": 1536,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/cham/attachments/pet_cham_travel_bag.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/cham/attachments/pet_cham_travel_hat.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/cham/attachments/pet_cham_travel_scarf.png",
+      "width": 512,
       "height": 512,
       "mode": "RGBA",
       "has_alpha": true
@@ -1087,6 +1171,34 @@
       "has_alpha": true
     },
     {
+      "path": "assets/art/pets/ember/attachments/pet_ember_travel_attachment_sheet.png",
+      "width": 1536,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/ember/attachments/pet_ember_travel_bag.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/ember/attachments/pet_ember_travel_hat.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/ember/attachments/pet_ember_travel_scarf.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
       "path": "assets/art/pets/ember/pet_ember_morph_sheet.png",
       "width": 1402,
       "height": 1122,
@@ -1374,6 +1486,34 @@
       "has_alpha": true
     },
     {
+      "path": "assets/art/pets/hamster/attachments/pet_hamster_travel_attachment_sheet.png",
+      "width": 1152,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/hamster/attachments/pet_hamster_travel_bag.png",
+      "width": 384,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/hamster/attachments/pet_hamster_travel_hat.png",
+      "width": 384,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/hamster/attachments/pet_hamster_travel_scarf.png",
+      "width": 384,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
       "path": "assets/art/pets/hamster/pet_hamster_morph_sheet.png",
       "width": 1402,
       "height": 1122,
@@ -1628,6 +1768,34 @@
     {
       "path": "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_walk.png",
       "width": 3584,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/parrot/attachments/pet_parrot_travel_attachment_sheet.png",
+      "width": 1344,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/parrot/attachments/pet_parrot_travel_bag.png",
+      "width": 448,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/parrot/attachments/pet_parrot_travel_hat.png",
+      "width": 448,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/parrot/attachments/pet_parrot_travel_scarf.png",
+      "width": 448,
       "height": 512,
       "mode": "RGBA",
       "has_alpha": true
@@ -2592,6 +2760,34 @@
       "has_alpha": true
     },
     {
+      "path": "assets/art/pets/rabbit/attachments/pet_rabbit_travel_attachment_sheet.png",
+      "width": 1536,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/rabbit/attachments/pet_rabbit_travel_bag.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/rabbit/attachments/pet_rabbit_travel_hat.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/rabbit/attachments/pet_rabbit_travel_scarf.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
       "path": "assets/art/pets/rabbit/pet_rabbit_morph_sheet.png",
       "width": 1402,
       "height": 1122,
@@ -2846,6 +3042,34 @@
     {
       "path": "assets/art/pets/shiba/actions/pet_shiba_var01_stageC_walk.png",
       "width": 4096,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/shiba/attachments/pet_shiba_travel_attachment_sheet.png",
+      "width": 1536,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/shiba/attachments/pet_shiba_travel_bag.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/shiba/attachments/pet_shiba_travel_hat.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/shiba/attachments/pet_shiba_travel_scarf.png",
+      "width": 512,
       "height": 512,
       "mode": "RGBA",
       "has_alpha": true
@@ -3110,6 +3334,34 @@
       "has_alpha": true
     },
     {
+      "path": "assets/art/pets/snake/attachments/pet_snake_travel_attachment_sheet.png",
+      "width": 1920,
+      "height": 448,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/snake/attachments/pet_snake_travel_bag.png",
+      "width": 640,
+      "height": 448,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/snake/attachments/pet_snake_travel_hat.png",
+      "width": 640,
+      "height": 448,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/snake/attachments/pet_snake_travel_scarf.png",
+      "width": 640,
+      "height": 448,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
       "path": "assets/art/pets/snake/pet_snake_morph_sheet.png",
       "width": 1402,
       "height": 1122,
@@ -3364,6 +3616,34 @@
     {
       "path": "assets/art/pets/starbug/actions/pet_starbug_var01_stageC_walk.png",
       "width": 3072,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/starbug/attachments/pet_starbug_travel_attachment_sheet.png",
+      "width": 1152,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/starbug/attachments/pet_starbug_travel_bag.png",
+      "width": 384,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/starbug/attachments/pet_starbug_travel_hat.png",
+      "width": 384,
+      "height": 384,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/starbug/attachments/pet_starbug_travel_scarf.png",
+      "width": 384,
       "height": 384,
       "mode": "RGBA",
       "has_alpha": true
@@ -3628,6 +3908,34 @@
       "has_alpha": true
     },
     {
+      "path": "assets/art/pets/turtle/attachments/pet_turtle_travel_attachment_sheet.png",
+      "width": 1536,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/turtle/attachments/pet_turtle_travel_bag.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/turtle/attachments/pet_turtle_travel_hat.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/turtle/attachments/pet_turtle_travel_scarf.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
       "path": "assets/art/pets/turtle/pet_turtle_morph_sheet.png",
       "width": 1402,
       "height": 1122,
@@ -3882,6 +4190,34 @@
     {
       "path": "assets/art/pets/uni/actions/pet_uni_var01_stageC_walk.png",
       "width": 4096,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/uni/attachments/pet_uni_travel_attachment_sheet.png",
+      "width": 1536,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/uni/attachments/pet_uni_travel_bag.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/uni/attachments/pet_uni_travel_hat.png",
+      "width": 512,
+      "height": 512,
+      "mode": "RGBA",
+      "has_alpha": true
+    },
+    {
+      "path": "assets/art/pets/uni/attachments/pet_uni_travel_scarf.png",
+      "width": 512,
       "height": 512,
       "mode": "RGBA",
       "has_alpha": true
@@ -6193,6 +6529,125 @@
       "path": "assets/art/qa/chroma_sources/yard_theme_wheatkite_props_chroma.png",
       "width": 1254,
       "height": 1254,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_pet_cat.png",
+      "width": 880,
+      "height": 248,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_pet_cat_after.png",
+      "width": 720,
+      "height": 208,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_pet_cat_after_strict.png",
+      "width": 720,
+      "height": 208,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_pet_stageD_all.png",
+      "width": 720,
+      "height": 624,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_pet_stageD_all_after.png",
+      "width": 720,
+      "height": 624,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_postcard_backgrounds_after.png",
+      "width": 900,
+      "height": 1184,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_postcard_backgrounds_v5_final.png",
+      "width": 1836,
+      "height": 922,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_postcard_bg_batch1.png",
+      "width": 520,
+      "height": 1010,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_postcard_bg_batch2.png",
+      "width": 520,
+      "height": 1010,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_postcard_bg_batch3.png",
+      "width": 520,
+      "height": 1010,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_postcard_bg_batch4.png",
+      "width": 1728,
+      "height": 546,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_travel_attachments.png",
+      "width": 880,
+      "height": 558,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_ui_key.png",
+      "width": 880,
+      "height": 992,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_ui_key_after.png",
+      "width": 960,
+      "height": 558,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_visitors_portraits_after.png",
+      "width": 800,
+      "height": 752,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_world_themes.png",
+      "width": 880,
+      "height": 992,
+      "mode": "RGB",
+      "has_alpha": false
+    },
+    {
+      "path": "assets/art/qa/v5_audit_world_themes_after.png",
+      "width": 880,
+      "height": 992,
       "mode": "RGB",
       "has_alpha": false
     },
