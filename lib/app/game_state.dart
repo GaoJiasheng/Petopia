@@ -18,6 +18,11 @@ class GameSession {
   final Map<String, int> eventCounts = {};
   final Map<String, int> visitorCounts = {};
 
+  /// 成就累计计数器（跨宠累计，持久化；供 UnlockService 推进）。
+  int careActionCount = 0; // 照料动作总次数（喂/摸/玩/洗）
+  int revisitCount = 0; // 回访发生总次数
+  int specialEventCount = 0; // 彩蛋事件触发总次数
+
   final List<Pet> roaming = []; // 毕业宠（世界漫游）
   final List<Journey> journeys = [];
   final List<Postcard> postcards = []; // 收到的明信片（旅行相册数据源）

@@ -6,6 +6,7 @@ import '../audio/audio_service.dart';
 import '../config/game_config.dart';
 import 'app_icons.dart';
 import 'pet_art.dart';
+import 'yard_art.dart';
 import 'widgets/pet_sprite.dart';
 import 'achievements_screen.dart';
 import 'adopt_screen.dart';
@@ -52,8 +53,12 @@ class YardHomeScreen extends ConsumerWidget {
             fit: StackFit.expand,
             children: [
               Image.asset(
-                'assets/art/world/themes/yard_theme_meadow_bg.png',
+                YardArt.themeBg(view.activeThemeId),
                 fit: BoxFit.cover,
+                errorBuilder: (_, _, _) => Image.asset(
+                  'assets/art/world/themes/yard_theme_meadow_bg.png',
+                  fit: BoxFit.cover,
+                ),
               ),
               // 摆件中景层（渲染在宠物之下）：邮箱呼应明信片主题 + 食盆 + 花坛。
               const _YardDecor(

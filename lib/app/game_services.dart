@@ -207,6 +207,35 @@ class GameServices {
     return match.isEmpty ? null : match.first.stops.length;
   }
 
+  /// 成就同步：从 session 现状重算所有可派生的累计计数，逐类型推进成就。
+  /// 幂等（UnlockService 只取更大值），每次游戏动作后调用。返回本次新解锁的成就。
+  List<Achievement> syncAchievements() {
+    final s = _session;
+    final distinctVisitors =
+        s.visitorLog.map((e) => e.visitorId).toSet().length;
+    final distinctStamps = s.postcards.map((p) => p.stampId).toSet().length;
+    final counts = <String, int>{
+      'actionCount': s.careActionCount,
+      'gradCount': s.yard.gradCount,
+      'postcardCount': s.postcards.length,
+      'visitorDexCount': distinctVisitors,
+      'speciesCollected': s.ownedSpecies.length,
+      'revisitCount': s.revisitCount,
+      'yardStage': s.yard.luxuryStage,
+      'themeCount': s.yard.ownedThemeIds.length,
+      'specialEventCount': s.specialEventCount,
+      'loginStreak': s.settings.loginStreakCurrent,
+      'stampCount': distinctStamps,
+    };
+    final newly = <Achievement>[];
+    counts.forEach((type, value) {
+      newly.addAll(
+        unlock.checkAchievements(GameSignal(type, params: {'progress': value})),
+      );
+    });
+    return newly;
+  }
+
   /// 处理漫游宠（每次日切/恢复调用）：按期寄明信片 + 到点回访串门。
   /// 明信片/回访不走 scheduler job（那是院子在养宠的事），按 roaming 逐只驱动。
   Future<void> processRoaming(DateTime now) async {
@@ -229,6 +258,7 @@ class GameServices {
     if (next != null) {
       _session.revisitor = next;
       revisit.onRevisitInteract(next, _session.current);
+      _session.revisitCount++; // 成就：回访累计
     }
   }
 
@@ -308,6 +338,7 @@ class GameServices {
         }
         if (ev.oncePerPet) _session.firedSpecials.add('${pet.id}:${ev.id}');
         _session.eventCounts[pet.id] = (_session.eventCounts[pet.id] ?? 0) + 1;
+        _session.specialEventCount++; // 成就：彩蛋事件累计
       case JobType.revisitDue:
       case JobType.postcardDue:
         break; // 漫游宠的明信片/回访不走 scheduler，由 processRoaming 驱动

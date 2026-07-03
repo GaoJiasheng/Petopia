@@ -118,6 +118,9 @@ Map<String, Object?> _sessionToJson(GameSession session) {
     ),
     'eventCounts': Map<String, int>.from(session.eventCounts),
     'visitorCounts': Map<String, int>.from(session.visitorCounts),
+    'careActionCount': session.careActionCount,
+    'revisitCount': session.revisitCount,
+    'specialEventCount': session.specialEventCount,
     'roaming': session.roaming.map(_petToJson).toList(),
     'journeys': session.journeys.map(_journeyToJson).toList(),
     'jobs': session.jobs.map(_jobToJson).toList(),
@@ -142,6 +145,9 @@ GameSession _sessionFromJson(Map<String, Object?> json, DateTime now) {
   session.achievements.addAll(_achievementsFromJson(json['achievements']));
   session.eventCounts.addAll(_intMapFromJson(json['eventCounts']));
   session.visitorCounts.addAll(_intMapFromJson(json['visitorCounts']));
+  session.careActionCount = _readInt(json['careActionCount'], 0);
+  session.revisitCount = _readInt(json['revisitCount'], 0);
+  session.specialEventCount = _readInt(json['specialEventCount'], 0);
   session.roaming.addAll(_petListFromJson(json['roaming'], now));
   session.journeys.addAll(_journeyListFromJson(json['journeys'], now));
   session.jobs.addAll(_jobListFromJson(json['jobs'], now));

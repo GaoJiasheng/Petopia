@@ -68,6 +68,7 @@ Future<GameServices> bootstrapGame() async {
   await svc.scheduler.onDailyTick(clock.now());
   await svc.scheduler.onResume(clock.now());
   await svc.processRoaming(clock.now()); // 漫游宠寄明信片 + 回访
+  svc.syncAchievements(); // 后台日切进度并入成就
   await store.save(session);
   return svc;
 }

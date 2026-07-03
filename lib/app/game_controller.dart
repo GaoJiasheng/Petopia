@@ -38,9 +38,12 @@ class GameView {
   final Map<CareAction, int> cooldownSec;
   /// 当前宠是否已达毕业线（可举行毕业典礼）。
   final bool canGraduate;
+  /// 当前装备的院子主题 id（驱动院子背景）。
+  final String activeThemeId;
   const GameView({
     required this.pet, required this.wallet, required this.luxuryStage,
     required this.cooldownSec, required this.canGraduate,
+    required this.activeThemeId,
   });
 }
 
@@ -78,6 +81,7 @@ class GameController extends AsyncNotifier<GameView> {
     final beforeStage = pet.stage;
     HapticFeedback.lightImpact();
     _svc.exp.addExp(pet: pet, baseDelta: baseExp, source: source);
+    _svc.session.careActionCount++; // 成就：照料动作累计
     _lastAt[action] = _svc.clock.now();
     // 升级 / 换模 的手感 + 音效反馈。
     if (pet.stage != beforeStage) {
@@ -93,7 +97,7 @@ class GameController extends AsyncNotifier<GameView> {
       _audio.sting(Sting.levelup);
     }
     state = AsyncData(_snapshot());
-    _persist();
+    _afterGameAction();
   }
 
   int _remainingSec(CareAction action, int cooldownMin) {
@@ -171,9 +175,14 @@ class GameController extends AsyncNotifier<GameView> {
         EffectType.toyPermanentBonus => yard.ownedPerks.contains(it.id),
         _ => false, // 消耗品/皮肤/概率：不标已拥有
       };
+      final themeId = it.effect.type == EffectType.themeSkin
+          ? it.effect.params['themeId'] as String?
+          : null;
       return ShopItemView(
         id: it.id, name: it.name, category: it.category, price: it.price,
-        owned: owned, affordable: bal >= it.price, consumable: it.consumable);
+        owned: owned, affordable: bal >= it.price, consumable: it.consumable,
+        themeId: themeId,
+        active: themeId != null && themeId == yard.activeThemeId);
     }).toList();
   }
 
@@ -183,7 +192,7 @@ class GameController extends AsyncNotifier<GameView> {
     if (item == null) return;
     _svc.economy.purchase(item);
     state = AsyncData(_snapshot());
-    _persist();
+    _afterGameAction();
   }
 
   /// 来客图鉴（含是否已收录 / 首次到访 / 次数）。
@@ -222,6 +231,13 @@ class GameController extends AsyncNotifier<GameView> {
     unawaited(_svc.store.save(_svc.session));
   }
 
+  /// 游戏推进类动作统一收尾：同步成就（新解锁播 sting）+ 存档。
+  void _afterGameAction() {
+    final newly = _svc.syncAchievements();
+    if (newly.isNotEmpty) _audio.sting(Sting.achievement);
+    _persist();
+  }
+
   GameView _snapshot() {
     final p = _svc.session.current;
     return GameView(
@@ -240,7 +256,20 @@ class GameController extends AsyncNotifier<GameView> {
         for (final a in CareAction.values) a: _remainingSec(a, _cooldownMinOf[a]!),
       },
       canGraduate: p != null && p.exp >= GameConfig.graduationExp,
+      activeThemeId: _svc.session.yard.activeThemeId,
     );
+  }
+
+  /// 已拥有的主题（供商店/布置显示「使用中/应用」）。含当前是否装备。
+  String get activeThemeId => _svc.session.yard.activeThemeId;
+  Set<String> get ownedThemeIds => _svc.session.yard.ownedThemeIds.toSet();
+
+  /// 装备主题（themeId 需在 ownedThemeIds 内）。刷新快照 + 存档。
+  void applyTheme(String themeId) {
+    if (!_svc.session.yard.ownedThemeIds.contains(themeId)) return;
+    _svc.session.yard.activeThemeId = themeId;
+    state = AsyncData(_snapshot());
+    _persist();
   }
 
   // ── 领养 / 毕业（核心情感闭环）──────────────────────
@@ -258,7 +287,7 @@ class GameController extends AsyncNotifier<GameView> {
     HapticFeedback.mediumImpact();
     _audio.sting(Sting.adoptionWelcome);
     state = AsyncData(_snapshot());
-    _persist();
+    _afterGameAction();
   }
 
   /// 举行毕业典礼：结算 + 送宠去旅行。返回旅程站点数（未达标返回 null）。
@@ -267,7 +296,7 @@ class GameController extends AsyncNotifier<GameView> {
     if (stops != null) {
       HapticFeedback.mediumImpact();
       _audio.sting(Sting.graduationDepart);
-      _persist();
+      _afterGameAction();
     }
     state = AsyncData(_snapshot());
     return stops;
@@ -394,10 +423,12 @@ class ShopItemView {
   final bool owned;
   final bool affordable;
   final bool consumable;
+  final String? themeId; // themeSkin 类的主题 id（可装备）；否则 null
+  final bool active; // 是否当前装备中的主题
   const ShopItemView({
     required this.id, required this.name, required this.category,
     required this.price, required this.owned, required this.affordable,
-    required this.consumable,
+    required this.consumable, this.themeId, this.active = false,
   });
 }
 

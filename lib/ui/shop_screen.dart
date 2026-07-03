@@ -41,6 +41,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
             items: ctrl.shopItems(),
             buyingId: _buyingId,
             onBuy: _buy,
+            onApply: _apply,
           ),
         );
       },
@@ -62,6 +63,13 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
         setState(() => _buyingId = null);
       }
     }
+  }
+
+  void _apply(ShopItemView item) {
+    final themeId = item.themeId;
+    if (themeId == null || !item.owned || item.active) return;
+    ref.read(gameControllerProvider.notifier).applyTheme(themeId);
+    _showMessage('已换上「${item.name}」院子主题。');
   }
 
   void _showMessage(String message) {
@@ -105,12 +113,14 @@ class _ShopContent extends StatelessWidget {
   final List<ShopItemView> items;
   final String? buyingId;
   final ValueChanged<ShopItemView> onBuy;
+  final ValueChanged<ShopItemView> onApply;
 
   const _ShopContent({
     required this.wallet,
     required this.items,
     required this.buyingId,
     required this.onBuy,
+    required this.onApply,
   });
 
   @override
@@ -143,6 +153,7 @@ class _ShopContent extends StatelessWidget {
               busy: buyingId == item.id,
               disabledByAnotherBuy: buyingId != null && buyingId != item.id,
               onBuy: onBuy,
+              onApply: onApply,
             ),
             const SizedBox(height: 12),
           ],
@@ -277,18 +288,27 @@ class _ShopItemCard extends StatelessWidget {
   final bool busy;
   final bool disabledByAnotherBuy;
   final ValueChanged<ShopItemView> onBuy;
+  final ValueChanged<ShopItemView> onApply;
 
   const _ShopItemCard({
     required this.item,
     required this.busy,
     required this.disabledByAnotherBuy,
     required this.onBuy,
+    required this.onApply,
   });
+
+  /// 已拥有但未装备的主题 → 可「应用」。
+  bool get _canApply =>
+      item.themeId != null && item.owned && !item.active && !busy;
 
   @override
   Widget build(BuildContext context) {
     final canBuy =
         !busy && !disabledByAnotherBuy && !item.owned && item.affordable;
+    final onPressed = _canApply
+        ? () => onApply(item)
+        : (canBuy ? () => onBuy(item) : null);
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: _cardDecoration(),
@@ -351,7 +371,7 @@ class _ShopItemCard extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: FilledButton.icon(
-              onPressed: canBuy ? () => onBuy(item) : null,
+              onPressed: onPressed,
               icon: busy
                   ? const SizedBox(
                       width: 17,
@@ -381,6 +401,8 @@ class _ShopItemCard extends StatelessWidget {
   }
 
   IconData get _buttonIcon {
+    if (item.active) return Icons.check_circle_rounded; // 使用中
+    if (_canApply) return Icons.brush_rounded; // 应用
     if (item.owned) return Icons.check_rounded;
     if (!item.affordable) return Icons.lock_outline_rounded;
     return Icons.shopping_bag_rounded;
@@ -388,6 +410,8 @@ class _ShopItemCard extends StatelessWidget {
 
   String get _buttonLabel {
     if (busy) return '兑换中';
+    if (item.active) return '使用中';
+    if (_canApply) return '应用';
     if (item.owned) return '已拥有';
     if (!item.affordable) return '暖绒不够';
     return '兑换';
