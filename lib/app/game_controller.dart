@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -91,6 +93,7 @@ class GameController extends AsyncNotifier<GameView> {
       _audio.sting(Sting.levelup);
     }
     state = AsyncData(_snapshot());
+    _persist();
   }
 
   int _remainingSec(CareAction action, int cooldownMin) {
@@ -180,6 +183,7 @@ class GameController extends AsyncNotifier<GameView> {
     if (item == null) return;
     _svc.economy.purchase(item);
     state = AsyncData(_snapshot());
+    _persist();
   }
 
   /// 来客图鉴（含是否已收录 / 首次到访 / 次数）。
@@ -205,11 +209,17 @@ class GameController extends AsyncNotifier<GameView> {
         .read(notificationServiceProvider)
         .setDailyReminder(_svc.session.settings.notifications);
     state = AsyncData(_snapshot());
+    _persist();
   }
   void toggleSound() {
     _svc.session.settings.sound = !_svc.session.settings.sound;
     _audio.setEnabled(_svc.session.settings.sound);
     state = AsyncData(_snapshot());
+    _persist();
+  }
+
+  void _persist() {
+    unawaited(_svc.store.save(_svc.session));
   }
 
   GameView _snapshot() {
@@ -244,6 +254,7 @@ class GameController extends AsyncNotifier<GameView> {
     HapticFeedback.mediumImpact();
     _audio.sting(Sting.adoptionWelcome);
     state = AsyncData(_snapshot());
+    _persist();
   }
 
   /// 举行毕业典礼：结算 + 送宠去旅行。返回旅程站点数（未达标返回 null）。
@@ -252,6 +263,7 @@ class GameController extends AsyncNotifier<GameView> {
     if (stops != null) {
       HapticFeedback.mediumImpact();
       _audio.sting(Sting.graduationDepart);
+      _persist();
     }
     state = AsyncData(_snapshot());
     return stops;

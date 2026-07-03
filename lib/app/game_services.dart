@@ -1,5 +1,7 @@
 // 私有构造用私有字段，无法用 this._x 初始化形参，故豁免该 lint。
 // ignore_for_file: prefer_initializing_formals
+import 'dart:io';
+
 import '../config/game_config.dart';
 import '../domain/enums.dart';
 import '../domain/models/content_entities.dart';
@@ -8,6 +10,7 @@ import '../domain/models/logs.dart';
 import '../domain/models/pet.dart';
 import '../domain/models/postcard_content.dart';
 import '../data/content/content_repository.dart';
+import '../data/save/session_store.dart';
 import '../services/audit_service.dart';
 import '../services/audit_service_impl.dart';
 import '../services/clock_service.dart';
@@ -45,6 +48,7 @@ class GameServices {
   final EventScheduler scheduler;
 
   final GameSession _session;
+  final SessionStore _store;
   final ContentRepository _content;
   final double Function() _rng;
   final String Function() _idGen;
@@ -52,6 +56,7 @@ class GameServices {
 
   /// 当前游戏状态（UI 读取）。
   GameSession get session => _session;
+  SessionStore get store => _store;
   ContentRepository get content => _content;
 
   /// 读某只宠物的经验流水（成长手账）；未接持久化时返回空。
@@ -70,11 +75,13 @@ class GameServices {
     required this.postcard,
     required this.scheduler,
     required GameSession session,
+    required SessionStore store,
     required ContentRepository content,
     required double Function() rng,
     required String Function() idGen,
     Future<List<ExpLogEntry>> Function(String petId)? expLogReader,
   })  : _session = session,
+        _store = store,
         _content = content,
         _rng = rng,
         _idGen = idGen,
@@ -92,6 +99,7 @@ class GameServices {
     List<Encounter> encounters = const [],
     List<Incident> incidents = const [],
     Future<List<ExpLogEntry>> Function(String petId)? expLogReader,
+    SessionStore? store,
   }) {
     final audit = AuditServiceImpl(port, () => session.allPets, () => session.wallet);
 
@@ -148,6 +156,7 @@ class GameServices {
       visitor: visitor, graduation: graduation, revisit: revisit, postcard: postcard,
       scheduler: scheduler, session: session, content: content, rng: rng,
       idGen: idGen, expLogReader: expLogReader,
+      store: store ?? _NoopSessionStore.instance,
     );
     return svc;
   }
@@ -315,4 +324,16 @@ class GameServices {
     if (m >= 9 && m <= 11) return Season.autumn;
     return Season.winter;
   }
+}
+
+class _NoopSessionStore extends SessionStore {
+  _NoopSessionStore._() : super(Directory.systemTemp);
+
+  static final instance = _NoopSessionStore._();
+
+  @override
+  Future<GameSession?> load() async => null;
+
+  @override
+  Future<void> save(GameSession session) async {}
 }

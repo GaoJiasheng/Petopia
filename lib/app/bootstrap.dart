@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 
 import '../data/audit_log_port_adapter.dart';
 import '../data/content/content_repository_impl.dart';
+import '../data/save/session_store.dart';
 import '../data/sqlite/petopia_sqlite_dao.dart';
 import '../domain/models/pet.dart';
 import '../services/clock_service_impl.dart';
@@ -16,31 +17,36 @@ const _personalityIds = [
   'p_clingy', 'p_aloof', 'p_naughty', 'p_gentle', 'p_dreamy',
 ];
 
-/// 启动编排：开库 → 加载内容 → 装配服务 → 首日调度。
-/// 首启暂领养一只默认橘猫（正式领养流程 UI 后续做）；存档 load/save 为 `[待细化]`。
+/// 启动编排：加载存档 → 开库 → 加载内容 → 装配服务 → 首日调度。
+/// 首启暂领养一只默认橘猫（正式领养流程 UI 后续做）。
 Future<GameServices> bootstrapGame() async {
+  final store = await SessionStore.create();
+  final restored = await store.load();
+
   final content = AssetContentRepository();
   await content.loadAll();
 
   final dao = await PetopiaSqliteDao.open();
 
-  final session = GameSession();
+  final session = restored ?? GameSession();
   final now = DateTime.now().toUtc();
   final rng = Random();
   final uuid = const Uuid();
 
-  final tags = List<String>.from(_personalityIds)..shuffle(rng);
-  session.current = Pet(
-    id: uuid.v4(),
-    speciesId: 'pet_cat',
-    variantId: 'pet_cat_v1',
-    name: '阿橘',
-    personality: tags.take(2).toList(),
-    bornAt: now,
-    lastOnlineAt: now,
-    offlineDayKey: _dayKey(now),
-  );
-  session.ownedSpecies.add('pet_cat');
+  if (restored == null) {
+    final tags = List<String>.from(_personalityIds)..shuffle(rng);
+    session.current = Pet(
+      id: uuid.v4(),
+      speciesId: 'pet_cat',
+      variantId: 'pet_cat_v1',
+      name: '阿橘',
+      personality: tags.take(2).toList(),
+      bornAt: now,
+      lastOnlineAt: now,
+      offlineDayKey: _dayKey(now),
+    );
+    session.ownedSpecies.add('pet_cat');
+  }
 
   final clock = ClockServiceImpl(SystemClock(), session.settings);
   final svc = GameServices.wire(
@@ -55,12 +61,14 @@ Future<GameServices> bootstrapGame() async {
     encounters: content.encounters,
     incidents: content.incidents,
     expLogReader: dao.expLogsForPet,
+    store: store,
   );
 
   clock.markHeartbeat();
   await svc.scheduler.onDailyTick(clock.now());
   await svc.scheduler.onResume(clock.now());
   await svc.processRoaming(clock.now()); // 漫游宠寄明信片 + 回访
+  await store.save(session);
   return svc;
 }
 
