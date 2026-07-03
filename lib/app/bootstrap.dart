@@ -51,6 +51,7 @@ Future<GameServices> bootstrapGame() async {
     rng: rng.nextDouble,
     idGen: uuid.v4,
     ownerName: '主人',
+    expLogReader: dao.expLogsForPet,
   );
 
   clock.markHeartbeat();

@@ -2,6 +2,7 @@
 // ignore_for_file: prefer_initializing_formals
 import '../domain/enums.dart';
 import '../domain/models/game_state.dart';
+import '../domain/models/logs.dart';
 import '../domain/models/postcard_content.dart';
 import '../data/content/content_repository.dart';
 import '../services/audit_service.dart';
@@ -43,10 +44,15 @@ class GameServices {
   final GameSession _session;
   final ContentRepository _content;
   final double Function() _rng;
+  final Future<List<ExpLogEntry>> Function(String petId)? _expLogReader;
 
   /// 当前游戏状态（UI 读取）。
   GameSession get session => _session;
   ContentRepository get content => _content;
+
+  /// 读某只宠物的经验流水（成长手账）；未接持久化时返回空。
+  Future<List<ExpLogEntry>> readExpLog(String petId) async =>
+      (await _expLogReader?.call(petId)) ?? const [];
 
   GameServices._({
     required this.clock,
@@ -62,9 +68,11 @@ class GameServices {
     required GameSession session,
     required ContentRepository content,
     required double Function() rng,
+    Future<List<ExpLogEntry>> Function(String petId)? expLogReader,
   })  : _session = session,
         _content = content,
-        _rng = rng;
+        _rng = rng,
+        _expLogReader = expLogReader;
 
   factory GameServices.wire({
     required GameSession session,
@@ -77,6 +85,7 @@ class GameServices {
     List<PostcardTemplate> postcardTemplates = const [],
     List<Encounter> encounters = const [],
     List<Incident> incidents = const [],
+    Future<List<ExpLogEntry>> Function(String petId)? expLogReader,
   }) {
     final audit = AuditServiceImpl(port, () => session.allPets, () => session.wallet);
 
@@ -132,6 +141,7 @@ class GameServices {
       clock: clock, audit: audit, exp: exp, economy: economy, unlock: unlock,
       visitor: visitor, graduation: graduation, revisit: revisit, postcard: postcard,
       scheduler: scheduler, session: session, content: content, rng: rng,
+      expLogReader: expLogReader,
     );
     return svc;
   }

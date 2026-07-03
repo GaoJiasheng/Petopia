@@ -2,6 +2,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../config/game_config.dart';
 import '../domain/enums.dart';
+import '../domain/unlock_rule.dart';
+import '../domain/models/logs.dart';
 import 'bootstrap.dart';
 import 'game_services.dart';
 
@@ -80,6 +82,53 @@ class GameController extends AsyncNotifier<GameView> {
     CareAction.bath: 0,
   };
 
+  // ── 各屏数据（供 UI）──────────────────────────
+
+  /// 宠物图鉴四态列表。
+  List<DexEntryView> petDex() {
+    final yard = _svc.session.yard;
+    return _svc.content.species.map((sp) {
+      final state = _svc.unlock.dexStateOf(sp);
+      String? hint;
+      final rule = sp.unlockRule;
+      if (state == DexState.lockedKnown && rule is GradCountUnlock) {
+        final left = rule.threshold - yard.gradCount;
+        hint = '再送 ${left < 0 ? 0 : left} 只毕业就能遇见它';
+      } else if (state == DexState.lockedHidden && rule is HiddenClueUnlock) {
+        final seen = _svc.session.clues[rule.clueId]?.visitorSeen ?? false;
+        hint = seen ? rule.clueText : '？？？';
+      }
+      return DexEntryView(
+          speciesId: sp.id, name: sp.name, category: sp.category,
+          baseTone: sp.baseTone, state: state, hint: hint);
+    }).toList();
+  }
+
+  /// 成就列表（含进度 / 解锁 / 隐藏线索）。
+  List<AchievementView> achievementsView() {
+    return _svc.content.achievements.map((a) {
+      final p = _svc.session.achievements[a.id];
+      final unlocked = p?.unlockedAt != null;
+      return AchievementView(
+        id: a.id,
+        name: (a.hidden && !unlocked) ? '？？？' : a.name,
+        hidden: a.hidden,
+        unlocked: unlocked,
+        progress: p?.progress ?? 0,
+        target: a.condition.target,
+        clueText: (a.hidden && !unlocked) ? a.clueText : null,
+        rewardFluff: a.reward.fluff,
+      );
+    }).toList();
+  }
+
+  /// 成长手账：当前宠的经验流水（按时间升序）。
+  Future<List<ExpLogEntry>> growthJournal() async {
+    final pet = _svc.session.current;
+    if (pet == null) return const [];
+    return _svc.readExpLog(pet.id);
+  }
+
   GameView _snapshot() {
     final p = _svc.session.current;
     return GameView(
@@ -95,6 +144,37 @@ class GameController extends AsyncNotifier<GameView> {
       },
     );
   }
+}
+
+/// 图鉴条目视图。
+class DexEntryView {
+  final String speciesId;
+  final String name;
+  final PetCategory category;
+  final String baseTone;
+  final DexState state;
+  final String? hint; // 未解锁的条件/线索
+  const DexEntryView({
+    required this.speciesId, required this.name, required this.category,
+    required this.baseTone, required this.state, this.hint,
+  });
+}
+
+/// 成就视图。
+class AchievementView {
+  final String id;
+  final String name;
+  final bool hidden;
+  final bool unlocked;
+  final int progress;
+  final int target;
+  final String? clueText;
+  final int rewardFluff;
+  const AchievementView({
+    required this.id, required this.name, required this.hidden,
+    required this.unlocked, required this.progress, required this.target,
+    this.clueText, required this.rewardFluff,
+  });
 }
 
 final gameControllerProvider =
