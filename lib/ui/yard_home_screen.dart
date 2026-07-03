@@ -3,9 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../config/game_config.dart';
+import 'widgets/pet_sprite.dart';
 import 'achievements_screen.dart';
 import 'growth_journal_screen.dart';
 import 'pet_dex_screen.dart';
+import 'settings_screen.dart';
+import 'shop_screen.dart';
+import 'visitor_dex_screen.dart';
 
 /// 院子主屏（P2 响应式版）：满幅背景 + 宠物立绘 + 状态卡 + 4 照料动作（带冷却）。
 /// 动作走真实服务链路（ExpEngine→审计→sqflite）。Flame 动画场景为后续。
@@ -30,6 +34,7 @@ class YardHomeScreen extends ConsumerWidget {
       ),
       data: (view) {
         final pet = view.pet;
+        final ctrl = ref.read(gameControllerProvider.notifier);
         final petAsset = pet == null
             ? null
             : 'assets/art/pets/cat/pet_cat_var01_stage${_stageLetter[pet.stage.index]}.png';
@@ -44,10 +49,10 @@ class YardHomeScreen extends ConsumerWidget {
               if (petAsset != null)
                 Align(
                   alignment: const Alignment(0, 0.4),
-                  child: Image.asset(
-                    petAsset,
+                  child: PetSprite(
+                    assetPath: petAsset,
                     width: 220,
-                    errorBuilder: (_, _, _) => const SizedBox(),
+                    onTap: ctrl.pat, // 点宠物 = 摸头（带冷却）
                   ),
                 ),
               SafeArea(
@@ -151,7 +156,7 @@ class _TopMenuOnly extends StatelessWidget {
   }
 }
 
-enum _HomeMenuTarget { journal, dex, achievements }
+enum _HomeMenuTarget { journal, dex, achievements, shop, settings, visitorDex }
 
 class _HomeMenuButton extends StatelessWidget {
   const _HomeMenuButton();
@@ -177,6 +182,9 @@ class _HomeMenuButton extends StatelessWidget {
             _HomeMenuTarget.journal => const GrowthJournalScreen(),
             _HomeMenuTarget.dex => const PetDexScreen(),
             _HomeMenuTarget.achievements => const AchievementsScreen(),
+            _HomeMenuTarget.shop => const ShopScreen(),
+            _HomeMenuTarget.settings => const SettingsScreen(),
+            _HomeMenuTarget.visitorDex => const VisitorDexScreen(),
           };
           Navigator.of(
             context,
@@ -194,6 +202,18 @@ class _HomeMenuButton extends StatelessWidget {
           PopupMenuItem(
             value: _HomeMenuTarget.achievements,
             child: _MenuRow(icon: Icons.emoji_events_rounded, label: '成就'),
+          ),
+          PopupMenuItem(
+            value: _HomeMenuTarget.shop,
+            child: _MenuRow(icon: Icons.storefront_rounded, label: '商店'),
+          ),
+          PopupMenuItem(
+            value: _HomeMenuTarget.settings,
+            child: _MenuRow(icon: Icons.settings_rounded, label: '设置'),
+          ),
+          PopupMenuItem(
+            value: _HomeMenuTarget.visitorDex,
+            child: _MenuRow(icon: Icons.people_alt_rounded, label: '来客图鉴'),
           ),
         ],
       ),

@@ -129,6 +129,57 @@ class GameController extends AsyncNotifier<GameView> {
     return _svc.readExpLog(pet.id);
   }
 
+  /// 商店商品列表（含是否已拥有 / 是否买得起）。
+  List<ShopItemView> shopItems() {
+    final yard = _svc.session.yard;
+    final bal = _svc.session.wallet.balance;
+    return _svc.content.shopItems.map((it) {
+      final owned = switch (it.effect.type) {
+        EffectType.themeSkin => yard.ownedThemeIds.contains(it.effect.params['themeId']),
+        EffectType.decor => yard.ownedDecorIds.contains(it.effect.params['decorId']),
+        EffectType.toyPermanentBonus => yard.ownedPerks.contains(it.id),
+        _ => false, // 消耗品/皮肤/概率：不标已拥有
+      };
+      return ShopItemView(
+        id: it.id, name: it.name, category: it.category, price: it.price,
+        owned: owned, affordable: bal >= it.price, consumable: it.consumable);
+    }).toList();
+  }
+
+  /// 购买。成功后刷新快照。
+  Future<void> buy(String itemId) async {
+    final item = _svc.content.shopItemById(itemId);
+    if (item == null) return;
+    _svc.economy.purchase(item);
+    state = AsyncData(_snapshot());
+  }
+
+  /// 来客图鉴（含是否已收录 / 首次到访 / 次数）。
+  List<VisitorDexView> visitorDex() {
+    final log = _svc.session.visitorLog;
+    return _svc.content.visitors.map((v) {
+      final visits = log.where((e) => e.visitorId == v.id).toList();
+      final first = visits.isEmpty
+          ? null
+          : visits.map((e) => e.date).reduce((a, b) => a.isBefore(b) ? a : b);
+      return VisitorDexView(
+        id: v.id, name: v.name, rarity: v.rarity,
+        collected: visits.isNotEmpty, count: visits.length, firstSeen: first);
+    }).toList();
+  }
+
+  // ── 设置 ──────────────────────────────────────
+  bool get notificationsOn => _svc.session.settings.notifications;
+  bool get soundOn => _svc.session.settings.sound;
+  void toggleNotifications() {
+    _svc.session.settings.notifications = !_svc.session.settings.notifications;
+    state = AsyncData(_snapshot());
+  }
+  void toggleSound() {
+    _svc.session.settings.sound = !_svc.session.settings.sound;
+    state = AsyncData(_snapshot());
+  }
+
   GameView _snapshot() {
     final p = _svc.session.current;
     return GameView(
@@ -174,6 +225,36 @@ class AchievementView {
     required this.id, required this.name, required this.hidden,
     required this.unlocked, required this.progress, required this.target,
     this.clueText, required this.rewardFluff,
+  });
+}
+
+/// 商店商品视图。
+class ShopItemView {
+  final String id;
+  final String name;
+  final String category;
+  final int price;
+  final bool owned;
+  final bool affordable;
+  final bool consumable;
+  const ShopItemView({
+    required this.id, required this.name, required this.category,
+    required this.price, required this.owned, required this.affordable,
+    required this.consumable,
+  });
+}
+
+/// 来客图鉴视图。
+class VisitorDexView {
+  final String id;
+  final String name;
+  final VisitorRarity rarity;
+  final bool collected;
+  final int count;
+  final DateTime? firstSeen;
+  const VisitorDexView({
+    required this.id, required this.name, required this.rarity,
+    required this.collected, required this.count, this.firstSeen,
   });
 }
 
