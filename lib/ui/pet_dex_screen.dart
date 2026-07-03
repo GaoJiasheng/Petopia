@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../domain/enums.dart';
 import 'app_icons.dart';
+import 'pet_art.dart';
 
 /// 宠物图鉴：以四态贴纸卡展示可养与未解锁宠物。
 class PetDexScreen extends ConsumerWidget {
@@ -343,11 +344,14 @@ class _DexMark extends StatelessWidget {
   }
 
   static String _assetFor(DexEntryView entry) {
-    final suffix = switch (entry.state) {
-      DexState.ownedBefore || DexState.available => 'color',
-      DexState.lockedKnown => 'silhouette',
-      DexState.lockedHidden => 'mystery',
-    };
+    // 已解锁：用干净单只头像（避免图鉴合成卡的探头第二只/徽章裁切）。
+    if (entry.state == DexState.ownedBefore ||
+        entry.state == DexState.available) {
+      return PetArt.portrait(entry.speciesId);
+    }
+    // 未解锁：剪影 / 问号渍（单色，无第二只之虞）。
+    final suffix =
+        entry.state == DexState.lockedKnown ? 'silhouette' : 'mystery';
     // speciesId 已含 pet_ 前缀（pet_cat）；文件名即 <id>_dex_<suffix>.png。
     return 'assets/art/pets/dex/${entry.speciesId}_dex_$suffix.png';
   }
