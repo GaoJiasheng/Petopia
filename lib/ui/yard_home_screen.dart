@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import '../audio/audio_service.dart';
 import '../config/game_config.dart';
 import 'app_icons.dart';
 import 'pet_art.dart';
@@ -38,6 +39,12 @@ class YardHomeScreen extends ConsumerWidget {
       data: (view) {
         final pet = view.pet;
         final ctrl = ref.read(gameControllerProvider.notifier);
+        // 院子 BGM 按时段切换（幂等，已在播则忽略）。
+        final hour = DateTime.now().hour;
+        final yardBgm = (hour >= 19 || hour < 6)
+            ? Bgm.yardNight
+            : (hour >= 16 ? Bgm.yardDusk : Bgm.yardDay);
+        ref.read(audioServiceProvider).playBgm(yardBgm);
         final petAsset =
             pet == null ? null : PetArt.stage(pet.speciesId, pet.stage);
         return Scaffold(

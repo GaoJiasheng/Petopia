@@ -43,6 +43,7 @@ dependencies:
   isar_flutter_libs: ^3.1.0
   flutter_riverpod: ^2.6.1
   uuid: ^4.5.3
+  audioplayers: ^6.1.0
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,8 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/data/
+    - assets/audio/bgm/mix/ogg/
+    - assets/audio/sting/ogg/
     - assets/art/ui/
     - assets/art/postcards/backgrounds/
     - assets/art/postcards/stamps/

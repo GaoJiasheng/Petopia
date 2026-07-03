@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import '../audio/audio_service.dart';
 import 'pet_art.dart';
 
 /// 领养流程：院子空出后迎接下一只。选物种 → 取名 → 领养。
@@ -22,6 +23,12 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen> {
   String? _selectedId;
   final _nameCtrl = TextEditingController();
   bool _adopting = false;
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(audioServiceProvider).playBgm(Bgm.adoption);
+  }
 
   @override
   void dispose() {

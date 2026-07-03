@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import '../audio/audio_service.dart';
 import 'pet_art.dart';
 import 'postcard_viewer_screen.dart';
 
@@ -16,6 +17,7 @@ class AlbumScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final ctrl = ref.watch(gameControllerProvider.notifier);
+    ref.read(audioServiceProvider).playBgm(Bgm.albumBrowse);
     final cards = ctrl.postcards();
     final travel = ctrl.travelAlbum();
     return DefaultTabController(

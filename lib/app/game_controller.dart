@@ -1,11 +1,14 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../audio/audio_service.dart';
 import '../config/game_config.dart';
 import '../domain/enums.dart';
 import '../domain/unlock_rule.dart';
 import '../domain/models/logs.dart';
 import 'bootstrap.dart';
 import 'game_services.dart';
+import 'notification_service.dart';
 
 /// 照料动作。
 enum CareAction { feed, pat, toy, bath }
@@ -48,10 +51,17 @@ class GameController extends AsyncNotifier<GameView> {
   @override
   Future<GameView> build() async {
     _svc = await bootstrapGame();
+    // 同步声音开关到音频引擎；若开启通知则注册每日提醒。
+    ref.read(audioServiceProvider).setEnabled(_svc.session.settings.sound);
+    if (_svc.session.settings.notifications) {
+      ref.read(notificationServiceProvider).setDailyReminder(true);
+    }
     return _snapshot();
   }
 
   GameServices get services => _svc;
+
+  AudioService get _audio => ref.read(audioServiceProvider);
 
   Future<void> feed() => _care(CareAction.feed, ExpSource.feed, GameConfig.feedExp, GameConfig.feedCooldownMin);
   Future<void> pat() => _care(CareAction.pat, ExpSource.pat, GameConfig.patExp, GameConfig.patCooldownMin);
@@ -62,8 +72,24 @@ class GameController extends AsyncNotifier<GameView> {
     final pet = _svc.session.current;
     if (pet == null) return;
     if (_remainingSec(action, cooldownMin) > 0) return; // 冷却中，忽略
+    final beforeLevel = pet.level;
+    final beforeStage = pet.stage;
+    HapticFeedback.lightImpact();
     _svc.exp.addExp(pet: pet, baseDelta: baseExp, source: source);
     _lastAt[action] = _svc.clock.now();
+    // 升级 / 换模 的手感 + 音效反馈。
+    if (pet.stage != beforeStage) {
+      HapticFeedback.mediumImpact();
+      _audio.sting(switch (pet.stage) {
+        PetStage.b => Sting.evolveB,
+        PetStage.c => Sting.evolveC,
+        PetStage.d => Sting.evolveD,
+        PetStage.a => Sting.levelup,
+      });
+    } else if (pet.level > beforeLevel) {
+      HapticFeedback.selectionClick();
+      _audio.sting(Sting.levelup);
+    }
     state = AsyncData(_snapshot());
   }
 
@@ -175,10 +201,14 @@ class GameController extends AsyncNotifier<GameView> {
   bool get soundOn => _svc.session.settings.sound;
   void toggleNotifications() {
     _svc.session.settings.notifications = !_svc.session.settings.notifications;
+    ref
+        .read(notificationServiceProvider)
+        .setDailyReminder(_svc.session.settings.notifications);
     state = AsyncData(_snapshot());
   }
   void toggleSound() {
     _svc.session.settings.sound = !_svc.session.settings.sound;
+    _audio.setEnabled(_svc.session.settings.sound);
     state = AsyncData(_snapshot());
   }
 
@@ -211,12 +241,18 @@ class GameController extends AsyncNotifier<GameView> {
   /// 领养新宠为当前在养宠，刷新快照。
   Future<void> adopt(String speciesId, String name) async {
     _svc.adopt(speciesId: speciesId, name: name);
+    HapticFeedback.mediumImpact();
+    _audio.sting(Sting.adoptionWelcome);
     state = AsyncData(_snapshot());
   }
 
   /// 举行毕业典礼：结算 + 送宠去旅行。返回旅程站点数（未达标返回 null）。
   Future<int?> graduate() async {
     final stops = await _svc.graduateCurrent();
+    if (stops != null) {
+      HapticFeedback.mediumImpact();
+      _audio.sting(Sting.graduationDepart);
+    }
     state = AsyncData(_snapshot());
     return stops;
   }

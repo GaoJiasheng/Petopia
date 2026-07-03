@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import '../audio/audio_service.dart';
 import '../domain/enums.dart';
 import 'pet_art.dart';
 import 'widgets/pet_sprite.dart';
@@ -31,6 +32,12 @@ class _GraduationCeremonyScreenState
   bool _sending = false;
   bool _sent = false;
   int? _stops;
+
+  @override
+  void initState() {
+    super.initState();
+    ref.read(audioServiceProvider).playBgm(Bgm.graduation);
+  }
 
   Future<void> _sendOff() async {
     setState(() => _sending = true);
