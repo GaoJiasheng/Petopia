@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../domain/enums.dart';
+import 'app_icons.dart';
 
 /// 宠物图鉴：以四态贴纸卡展示可养与未解锁宠物。
 class PetDexScreen extends ConsumerWidget {
@@ -131,10 +132,10 @@ class _DexSummary extends StatelessWidget {
       decoration: _cardDecoration(),
       child: Row(
         children: [
-          const Icon(
-            Icons.menu_book_rounded,
-            color: PetDexScreen._accent,
+          const AppIcon(
+            'nav_codex',
             size: 30,
+            fallback: Icons.menu_book_rounded,
           ),
           const SizedBox(width: 14),
           Expanded(
@@ -303,10 +304,9 @@ class _DexMark extends StatelessWidget {
                 child: Image.asset(
                   _assetFor(entry),
                   fit: BoxFit.cover,
-                  errorBuilder: (_, _, _) => Icon(
-                    _iconFor(entry.category),
-                    color: lockedKnown ? const Color(0xFF9C948A) : accent,
-                    size: 54,
+                  errorBuilder: (_, _, _) => _fallbackFor(
+                    entry.category,
+                    lockedKnown ? const Color(0xFF9C948A) : accent,
                   ),
                 ),
               ),
@@ -327,10 +327,18 @@ class _DexMark extends StatelessWidget {
     );
   }
 
-  static IconData _iconFor(PetCategory category) {
+  static Widget _fallbackFor(PetCategory category, Color color) {
     return switch (category) {
-      PetCategory.real => Icons.pets_rounded,
-      PetCategory.fantasy => Icons.auto_awesome_rounded,
+      PetCategory.real => Center(
+        child: Icon(Icons.pets_rounded, color: color, size: 54),
+      ),
+      PetCategory.fantasy => const Center(
+        child: AppIcon(
+          'ach_hidden_q',
+          size: 54,
+          fallback: Icons.auto_awesome_rounded,
+        ),
+      ),
     };
   }
 
@@ -398,10 +406,10 @@ class _EmptyState extends StatelessWidget {
           child: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.menu_book_outlined,
-                color: PetDexScreen._accent,
+              AppIcon(
+                'nav_codex',
                 size: 44,
+                fallback: Icons.menu_book_outlined,
               ),
               SizedBox(height: 14),
               Text(

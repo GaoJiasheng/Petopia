@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../domain/enums.dart';
 import '../domain/models/logs.dart';
+import 'app_icons.dart';
 
 /// 成长手账：按天回看当前宠物的经验流水。
 class GrowthJournalScreen extends ConsumerWidget {
@@ -140,6 +141,7 @@ class _SummaryCard extends StatelessWidget {
           Expanded(
             child: _StatPill(
               icon: Icons.auto_stories_outlined,
+              iconName: 'nav_menu',
               label: '累计',
               value: '+$totalGain',
             ),
@@ -152,11 +154,13 @@ class _SummaryCard extends StatelessWidget {
 
 class _StatPill extends StatelessWidget {
   final IconData icon;
+  final String? iconName;
   final String label;
   final String value;
 
   const _StatPill({
     required this.icon,
+    this.iconName,
     required this.label,
     required this.value,
   });
@@ -171,7 +175,10 @@ class _StatPill extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Icon(icon, color: GrowthJournalScreen._accent, size: 22),
+          if (iconName == null)
+            Icon(icon, color: GrowthJournalScreen._accent, size: 22)
+          else
+            AppIcon(iconName!, size: 22, fallback: icon),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
@@ -280,10 +287,12 @@ class _LogTile extends StatelessWidget {
                   color: Color(0xFFFFF1DF),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(
-                  _sourceIcon(entry.sourceType),
-                  color: GrowthJournalScreen._accent,
-                  size: 21,
+                child: Center(
+                  child: AppIcon(
+                    _sourceIconName(entry.sourceType),
+                    size: 21,
+                    fallback: _sourceFallbackIcon(entry.sourceType),
+                  ),
                 ),
               ),
               Container(width: 2, height: 38, color: GrowthJournalScreen._line),
@@ -404,11 +413,7 @@ class _EmptyState extends StatelessWidget {
       decoration: _cardDecoration(),
       child: const Column(
         children: [
-          Icon(
-            Icons.auto_stories_outlined,
-            color: GrowthJournalScreen._accent,
-            size: 44,
-          ),
+          AppIcon('nav_menu', size: 44, fallback: Icons.auto_stories_outlined),
           SizedBox(height: 14),
           Text(
             '还没有写下成长脚印',
@@ -450,7 +455,22 @@ class _ErrorState extends StatelessWidget {
   }
 }
 
-IconData _sourceIcon(ExpSource source) {
+String _sourceIconName(ExpSource source) {
+  return switch (source) {
+    ExpSource.feed => 'src_feed',
+    ExpSource.pat => 'src_pat',
+    ExpSource.toy => 'src_toy',
+    ExpSource.bath => 'src_bath',
+    ExpSource.offline => 'src_offline',
+    ExpSource.eventDaily => 'src_event',
+    ExpSource.eventSpecial => 'src_event',
+    ExpSource.visitor => 'src_visitor',
+    ExpSource.revisit => 'src_revisit',
+    ExpSource.itemBonus => 'gift',
+  };
+}
+
+IconData _sourceFallbackIcon(ExpSource source) {
   return switch (source) {
     ExpSource.feed => Icons.restaurant_rounded,
     ExpSource.pat => Icons.pets_rounded,

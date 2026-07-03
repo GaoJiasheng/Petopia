@@ -74,6 +74,10 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/data/
+    - assets/art/ui/
+    - assets/art/postcards/backgrounds/
+    - assets/art/postcards/stamps/
+    - assets/art/postcards/stickers/
     - assets/art/world/themes/
     - assets/art/world/layouts/
     - assets/art/world/decor/

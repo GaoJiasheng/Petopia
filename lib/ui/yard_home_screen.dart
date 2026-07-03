@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../config/game_config.dart';
+import 'app_icons.dart';
 import 'pet_art.dart';
 import 'widgets/pet_sprite.dart';
 import 'achievements_screen.dart';
 import 'adopt_screen.dart';
+import 'album_screen.dart';
 import 'graduation_ceremony_screen.dart';
 import 'growth_journal_screen.dart';
 import 'pet_dex_screen.dart';
@@ -252,8 +254,10 @@ class _InfoCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
+              const WarmfluffIcon(size: 18),
+              const SizedBox(width: 3),
               Text(
-                '☁️ $wallet',
+                '$wallet',
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
@@ -300,7 +304,7 @@ class _TopMenuOnly extends StatelessWidget {
   }
 }
 
-enum _HomeMenuTarget { journal, dex, achievements, shop, settings, visitorDex }
+enum _HomeMenuTarget { journal, album, dex, achievements, shop, settings, visitorDex }
 
 class _HomeMenuButton extends StatelessWidget {
   const _HomeMenuButton();
@@ -324,6 +328,7 @@ class _HomeMenuButton extends StatelessWidget {
         onSelected: (target) {
           final screen = switch (target) {
             _HomeMenuTarget.journal => const GrowthJournalScreen(),
+            _HomeMenuTarget.album => const AlbumScreen(),
             _HomeMenuTarget.dex => const PetDexScreen(),
             _HomeMenuTarget.achievements => const AchievementsScreen(),
             _HomeMenuTarget.shop => const ShopScreen(),
@@ -338,6 +343,10 @@ class _HomeMenuButton extends StatelessWidget {
           PopupMenuItem(
             value: _HomeMenuTarget.journal,
             child: _MenuRow(icon: Icons.auto_stories_rounded, label: '成长手账'),
+          ),
+          PopupMenuItem(
+            value: _HomeMenuTarget.album,
+            child: _MenuRow(icon: Icons.photo_album_rounded, label: '相册'),
           ),
           PopupMenuItem(
             value: _HomeMenuTarget.dex,
@@ -398,16 +407,10 @@ class _ActionBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final ctrl = ref.read(gameControllerProvider.notifier);
     final actions = [
-      (CareAction.feed, Icons.restaurant, '喂食', GameConfig.feedExp, ctrl.feed),
-      (CareAction.pat, Icons.pets, '摸头', GameConfig.patExp, ctrl.pat),
-      (
-        CareAction.toy,
-        Icons.sports_baseball,
-        '玩具',
-        GameConfig.toyExp,
-        ctrl.toy,
-      ),
-      (CareAction.bath, Icons.bathtub, '洗澡', GameConfig.bathExp, ctrl.bath),
+      (CareAction.feed, 'act_feed', '喂食', GameConfig.feedExp, ctrl.feed),
+      (CareAction.pat, 'act_pat', '摸头', GameConfig.patExp, ctrl.pat),
+      (CareAction.toy, 'act_toy', '玩具', GameConfig.toyExp, ctrl.toy),
+      (CareAction.bath, 'act_bath', '洗澡', GameConfig.bathExp, ctrl.bath),
     ];
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
@@ -420,9 +423,9 @@ class _ActionBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          for (final (action, icon, label, exp, onTap) in actions)
+          for (final (action, iconName, label, exp, onTap) in actions)
             _ActionButton(
-              icon: icon,
+              iconName: iconName,
               label: label,
               exp: exp,
               cooldownSec: cooldown[action] ?? 0,
@@ -435,13 +438,13 @@ class _ActionBar extends StatelessWidget {
 }
 
 class _ActionButton extends StatelessWidget {
-  final IconData icon;
+  final String iconName;
   final String label;
   final int exp;
   final int cooldownSec;
   final VoidCallback onTap;
   const _ActionButton({
-    required this.icon,
+    required this.iconName,
     required this.label,
     required this.exp,
     required this.cooldownSec,
@@ -456,17 +459,21 @@ class _ActionButton extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: 52,
-            height: 52,
-            decoration: BoxDecoration(
-              color: onCd ? const Color(0xFFE6DFD0) : const Color(0xFFE8A15C),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              onCd ? Icons.hourglass_bottom : icon,
-              color: Colors.white,
-              size: 26,
+          Opacity(
+            opacity: onCd ? 0.45 : 1,
+            child: Container(
+              width: 54,
+              height: 54,
+              padding: const EdgeInsets.all(8),
+              decoration: const BoxDecoration(
+                color: Color(0xFFFFF6E6),
+                shape: BoxShape.circle,
+              ),
+              child: AppIcon(
+                onCd ? 'hourglass_wc' : iconName,
+                size: 38,
+                fallback: Icons.pets,
+              ),
             ),
           ),
           const SizedBox(height: 4),

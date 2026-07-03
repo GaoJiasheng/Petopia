@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../domain/enums.dart';
+import 'app_icons.dart';
 
 /// 来客图鉴：按稀有度整理院子里出现过的访客记录。
 class VisitorDexScreen extends ConsumerWidget {
@@ -151,9 +152,12 @@ class _SummaryCard extends StatelessWidget {
                   color: VisitorDexScreen._accent.withValues(alpha: 0.16),
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: const Icon(
-                  Icons.people_alt_rounded,
-                  color: VisitorDexScreen._accent,
+                child: const Center(
+                  child: AppIcon(
+                    'nav_codex',
+                    size: 24,
+                    fallback: Icons.people_alt_rounded,
+                  ),
                 ),
               ),
               const SizedBox(width: 14),
@@ -326,11 +330,15 @@ class _VisitorMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final icon = Icon(
-      collected ? Icons.emoji_nature_rounded : Icons.question_mark_rounded,
-      color: color,
-      size: collected ? 44 : 40,
-    );
+    final icon = collected
+        ? const Center(
+            child: AppIcon(
+              'ach_visitor',
+              size: 44,
+              fallback: Icons.emoji_nature_rounded,
+            ),
+          )
+        : Icon(Icons.question_mark_rounded, color: color, size: 40);
 
     return Container(
       width: 76,
@@ -475,10 +483,10 @@ class _EmptyState extends StatelessWidget {
           child: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.people_outline_rounded,
-                color: VisitorDexScreen._accent,
+              AppIcon(
+                'nav_codex',
                 size: 44,
+                fallback: Icons.people_outline_rounded,
               ),
               SizedBox(height: 14),
               Text(

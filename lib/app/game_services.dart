@@ -135,7 +135,7 @@ class GameServices {
       locations: {for (final l in content.locations) l.id: l},
       templates: postcardTemplates, encounters: encounters, incidents: incidents,
       rng: rng, now: () => clock.now(), idGen: idGen, ownerName: ownerName,
-      onPostcard: (_) {}, // [待细化] 持久化到 DAO postcard 表
+      onPostcard: (pc) => session.postcards.add(pc), // 旅行相册数据源；DAO 持久化 [待细化]
     );
 
     late GameServices svc;

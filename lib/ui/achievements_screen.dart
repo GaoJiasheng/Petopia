@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import 'app_icons.dart';
 
 /// 成就页：明写目标与隐藏线索分组展示。
 class AchievementsScreen extends ConsumerWidget {
@@ -226,14 +227,18 @@ class _AchievementIcon extends StatelessWidget {
         color: color.withValues(alpha: 0.18),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Icon(
-        veiled
-            ? Icons.help_outline_rounded
-            : (entry.unlocked
-                  ? Icons.emoji_events_rounded
-                  : Icons.flag_rounded),
-        color: color,
-      ),
+      child: veiled
+          ? const Center(
+              child: AppIcon(
+                'ach_hidden_q',
+                size: 24,
+                fallback: Icons.help_outline_rounded,
+              ),
+            )
+          : Icon(
+              entry.unlocked ? Icons.emoji_events_rounded : Icons.flag_rounded,
+              color: color,
+            ),
     );
   }
 }
@@ -330,10 +335,10 @@ class _RewardLine extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.card_giftcard_rounded,
-            color: AchievementsScreen._accent,
+          const AppIcon(
+            'gift',
             size: 17,
+            fallback: Icons.card_giftcard_rounded,
           ),
           const SizedBox(width: 6),
           Text(
@@ -382,10 +387,10 @@ class _EmptyState extends StatelessWidget {
           child: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.emoji_events_outlined,
-                color: AchievementsScreen._accent,
+              AppIcon(
+                'ach_care',
                 size: 44,
+                fallback: Icons.emoji_events_outlined,
               ),
               SizedBox(height: 14),
               Text(

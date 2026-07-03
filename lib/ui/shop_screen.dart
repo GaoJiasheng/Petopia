@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import 'app_icons.dart';
 
 /// 暖绒商店：按分类展示商品，并通过 GameController 完成兑换。
 class ShopScreen extends ConsumerStatefulWidget {
@@ -132,7 +133,8 @@ class _ShopContent extends StatelessWidget {
           _SectionHeader(
             title: group.key,
             subtitle: '${group.value.length} 件小物',
-            icon: _categoryIcon(group.key),
+            iconName: _categoryIconName(group.key),
+            fallbackIcon: _categoryFallbackIcon(group.key),
           ),
           const SizedBox(height: 10),
           for (final item in group.value) ...[
@@ -201,13 +203,20 @@ class _WalletCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          Text(
-            '☁️ $wallet',
-            style: const TextStyle(
-              color: ShopScreen._accent,
-              fontSize: 18,
-              fontWeight: FontWeight.w900,
-            ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const WarmfluffIcon(size: 18),
+              const SizedBox(width: 4),
+              Text(
+                '$wallet',
+                style: const TextStyle(
+                  color: ShopScreen._accent,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -218,19 +227,21 @@ class _WalletCard extends StatelessWidget {
 class _SectionHeader extends StatelessWidget {
   final String title;
   final String subtitle;
-  final IconData icon;
+  final String iconName;
+  final IconData fallbackIcon;
 
   const _SectionHeader({
     required this.title,
     required this.subtitle,
-    required this.icon,
+    required this.iconName,
+    required this.fallbackIcon,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: ShopScreen._accent, size: 20),
+        AppIcon(iconName, size: 20, fallback: fallbackIcon),
         const SizedBox(width: 8),
         Text(
           title,
@@ -321,6 +332,7 @@ class _ShopItemCard extends StatelessWidget {
                           icon: Icons.cloud_rounded,
                           label: '${item.price} 暖绒',
                           color: ShopScreen._accent,
+                          warmfluff: true,
                         ),
                         if (item.consumable)
                           const _TinyTag(
@@ -397,7 +409,13 @@ class _ItemIcon extends StatelessWidget {
         color: color.withValues(alpha: 0.18),
         borderRadius: BorderRadius.circular(18),
       ),
-      child: Icon(_categoryIcon(category), color: color, size: 27),
+      child: Center(
+        child: AppIcon(
+          _categoryIconName(category),
+          size: 27,
+          fallback: _categoryFallbackIcon(category),
+        ),
+      ),
     );
   }
 }
@@ -440,11 +458,13 @@ class _TinyTag extends StatelessWidget {
   final IconData icon;
   final String label;
   final Color color;
+  final bool warmfluff;
 
   const _TinyTag({
     required this.icon,
     required this.label,
     required this.color,
+    this.warmfluff = false,
   });
 
   @override
@@ -458,7 +478,10 @@ class _TinyTag extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: color),
+          if (warmfluff)
+            const WarmfluffIcon(size: 14)
+          else
+            Icon(icon, size: 14, color: color),
           const SizedBox(width: 4),
           Text(
             label,
@@ -488,10 +511,10 @@ class _EmptyState extends StatelessWidget {
           child: const Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(
-                Icons.storefront_outlined,
-                color: ShopScreen._accent,
+              AppIcon(
+                'nav_shop',
                 size: 44,
+                fallback: Icons.storefront_outlined,
               ),
               SizedBox(height: 14),
               Text(
@@ -536,13 +559,24 @@ class _ErrorState extends StatelessWidget {
   }
 }
 
-IconData _categoryIcon(String category) {
-  return switch (category) {
-    '院子主题' => Icons.landscape_rounded,
-    '装饰小物' => Icons.yard_rounded,
-    '特殊食粮' => Icons.restaurant_menu_rounded,
-    '特殊玩具' => Icons.sports_baseball_rounded,
-    '明信片' => Icons.local_post_office_rounded,
+String _categoryIconName(String category) {
+  return switch (category.trim().toLowerCase()) {
+    'theme' || '院子主题' => 'shop_theme',
+    'decor' || 'deco' || '装饰小物' => 'shop_deco',
+    'food' || '特殊食粮' => 'shop_food',
+    'toy' || '特殊玩具' => 'shop_toy',
+    'albumskin' || '明信片' => 'shop_albumskin',
+    _ => 'shop_deco',
+  };
+}
+
+IconData _categoryFallbackIcon(String category) {
+  return switch (category.trim().toLowerCase()) {
+    'theme' || '院子主题' => Icons.landscape_rounded,
+    'decor' || 'deco' || '装饰小物' => Icons.yard_rounded,
+    'food' || '特殊食粮' => Icons.restaurant_menu_rounded,
+    'toy' || '特殊玩具' => Icons.sports_baseball_rounded,
+    'albumskin' || '明信片' => Icons.local_post_office_rounded,
     _ => Icons.sell_rounded,
   };
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import 'app_icons.dart';
 
 /// 设置页：轻量控制通知与音效开关。
 class SettingsScreen extends ConsumerWidget {
@@ -30,13 +31,15 @@ class SettingsScreen extends ConsumerWidget {
             padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
             children: [
               _SectionTitle(
-                icon: Icons.tune_rounded,
+                iconName: 'set_music',
+                fallbackIcon: Icons.tune_rounded,
                 title: '偏好',
                 subtitle: '拨动后会立刻写进当前存档。',
               ),
               const SizedBox(height: 10),
               _SwitchCard(
-                icon: Icons.notifications_active_rounded,
+                iconName: 'set_notif',
+                fallbackIcon: Icons.notifications_active_rounded,
                 title: '通知',
                 subtitle: '明信片、回访和院子里的小事件会轻轻提醒你。',
                 value: ctrl.notificationsOn,
@@ -44,7 +47,8 @@ class SettingsScreen extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               _SwitchCard(
-                icon: Icons.volume_up_rounded,
+                iconName: 'set_sound',
+                fallbackIcon: Icons.volume_up_rounded,
                 title: '音效',
                 subtitle: '保留翻纸、铃声和点击的柔和声音。',
                 value: ctrl.soundOn,
@@ -81,12 +85,14 @@ class _WarmFrame extends StatelessWidget {
 }
 
 class _SectionTitle extends StatelessWidget {
-  final IconData icon;
+  final String iconName;
+  final IconData fallbackIcon;
   final String title;
   final String subtitle;
 
   const _SectionTitle({
-    required this.icon,
+    required this.iconName,
+    required this.fallbackIcon,
     required this.title,
     required this.subtitle,
   });
@@ -96,7 +102,7 @@ class _SectionTitle extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon, color: SettingsScreen._accent, size: 22),
+        AppIcon(iconName, size: 22, fallback: fallbackIcon),
         const SizedBox(width: 8),
         Expanded(
           child: Column(
@@ -128,14 +134,16 @@ class _SectionTitle extends StatelessWidget {
 }
 
 class _SwitchCard extends StatelessWidget {
-  final IconData icon;
+  final String iconName;
+  final IconData fallbackIcon;
   final String title;
   final String subtitle;
   final bool value;
   final ValueChanged<bool> onChanged;
 
   const _SwitchCard({
-    required this.icon,
+    required this.iconName,
+    required this.fallbackIcon,
     required this.title,
     required this.subtitle,
     required this.value,
@@ -157,9 +165,8 @@ class _SwitchCard extends StatelessWidget {
                   .withValues(alpha: 0.16),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Icon(
-              icon,
-              color: value ? SettingsScreen._accent : SettingsScreen._muted,
+            child: Center(
+              child: AppIcon(iconName, size: 24, fallback: fallbackIcon),
             ),
           ),
           const SizedBox(width: 14),
@@ -216,10 +223,10 @@ class _AboutCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(
-                Icons.info_outline_rounded,
-                color: SettingsScreen._accent,
+              AppIcon(
+                'set_about',
                 size: 24,
+                fallback: Icons.info_outline_rounded,
               ),
               SizedBox(width: 10),
               Text(

@@ -1,6 +1,7 @@
 import '../domain/models/pet.dart';
 import '../domain/models/yard.dart';
 import '../domain/models/game_state.dart';
+import '../domain/models/logs.dart';
 
 /// 运行期游戏状态容器（单宠位）。装配层持有，服务读写它。
 /// 生产由 SaveService 与各 Repository 持久化；单测用内存实例。
@@ -19,6 +20,7 @@ class GameSession {
 
   final List<Pet> roaming = []; // 毕业宠（世界漫游）
   final List<Journey> journeys = [];
+  final List<Postcard> postcards = []; // 收到的明信片（旅行相册数据源）
   final List<ScheduledJob> jobs = [];
   final Set<String> generatedDays = {};
   final List<VisitorLogEntry> visitorLog = [];

@@ -220,6 +220,74 @@ class GameController extends AsyncNotifier<GameView> {
     state = AsyncData(_snapshot());
     return stops;
   }
+
+  // ── 明信片 / 相册（#24）────────────────────────────
+
+  /// 收到的明信片（最新在前），已解析地点名与宠物名。
+  List<PostcardView> postcards() {
+    final names = {for (final p in _svc.session.allPets) p.id: p.name};
+    return _svc.session.postcards.reversed.map((pc) {
+      final loc = _svc.content.locationById(pc.locationId);
+      return PostcardView(
+        id: pc.id,
+        petName: names[pc.petId] ?? '旅行者',
+        locationName: loc?.name ?? pc.locationId,
+        bodyText: pc.bodyText,
+        photoBg: loc?.photoStyle ?? '',
+        stampId: pc.stampId,
+        sentAt: pc.sentAt,
+        seq: pc.seq,
+      );
+    }).toList();
+  }
+
+  /// 旅行相册：已毕业漫游的宠物（含旅程站数 / 收到的明信片数）。
+  List<TravelPetView> travelAlbum() {
+    final counts = <String, int>{};
+    for (final pc in _svc.session.postcards) {
+      counts[pc.petId] = (counts[pc.petId] ?? 0) + 1;
+    }
+    return _svc.session.roaming.map((p) {
+      final journey = _svc.session.journeys.where((j) => j.id == p.journeyId);
+      return TravelPetView(
+        speciesId: p.speciesId,
+        name: p.name,
+        graduatedAt: p.graduatedAt,
+        stops: journey.isEmpty ? 0 : journey.first.stops.length,
+        postcardCount: counts[p.id] ?? 0,
+      );
+    }).toList();
+  }
+}
+
+/// 明信片视图（旅行相册 / 查看器）。
+class PostcardView {
+  final String id;
+  final String petName;
+  final String locationName;
+  final String bodyText;
+  final String photoBg; // 地点背景美术引用（pc_bg_*）
+  final String stampId;
+  final DateTime sentAt;
+  final int seq;
+  const PostcardView({
+    required this.id, required this.petName, required this.locationName,
+    required this.bodyText, required this.photoBg, required this.stampId,
+    required this.sentAt, required this.seq,
+  });
+}
+
+/// 旅行相册条目（已毕业漫游的宠物）。
+class TravelPetView {
+  final String speciesId;
+  final String name;
+  final DateTime? graduatedAt;
+  final int stops;
+  final int postcardCount;
+  const TravelPetView({
+    required this.speciesId, required this.name, required this.graduatedAt,
+    required this.stops, required this.postcardCount,
+  });
 }
 
 /// 领养候选视图。
