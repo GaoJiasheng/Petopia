@@ -31,9 +31,11 @@ class GameView {
   final int luxuryStage;
   /// 各动作剩余冷却秒数（>0 表示冷却中，UI 显示水彩沙漏、置灰）。
   final Map<CareAction, int> cooldownSec;
+  /// 当前宠是否已达毕业线（可举行毕业典礼）。
+  final bool canGraduate;
   const GameView({
     required this.pet, required this.wallet, required this.luxuryStage,
-    required this.cooldownSec,
+    required this.cooldownSec, required this.canGraduate,
   });
 }
 
@@ -193,8 +195,43 @@ class GameController extends AsyncNotifier<GameView> {
       cooldownSec: {
         for (final a in CareAction.values) a: _remainingSec(a, _cooldownMinOf[a]!),
       },
+      canGraduate: p != null && p.exp >= GameConfig.graduationExp,
     );
   }
+
+  // ── 领养 / 毕业（核心情感闭环）──────────────────────
+
+  /// 可领养物种（已解锁）。
+  List<AdoptChoiceView> adoptChoices() => _svc.adoptableSpecies().map((sp) {
+        return AdoptChoiceView(
+          speciesId: sp.id, name: sp.name,
+          category: sp.category, baseTone: sp.baseTone);
+      }).toList();
+
+  /// 领养新宠为当前在养宠，刷新快照。
+  Future<void> adopt(String speciesId, String name) async {
+    _svc.adopt(speciesId: speciesId, name: name);
+    state = AsyncData(_snapshot());
+  }
+
+  /// 举行毕业典礼：结算 + 送宠去旅行。返回旅程站点数（未达标返回 null）。
+  Future<int?> graduate() async {
+    final stops = await _svc.graduateCurrent();
+    state = AsyncData(_snapshot());
+    return stops;
+  }
+}
+
+/// 领养候选视图。
+class AdoptChoiceView {
+  final String speciesId;
+  final String name;
+  final PetCategory category;
+  final String baseTone;
+  const AdoptChoiceView({
+    required this.speciesId, required this.name,
+    required this.category, required this.baseTone,
+  });
 }
 
 /// 图鉴条目视图。

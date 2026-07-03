@@ -1,8 +1,11 @@
 // 私有构造用私有字段，无法用 this._x 初始化形参，故豁免该 lint。
 // ignore_for_file: prefer_initializing_formals
+import '../config/game_config.dart';
 import '../domain/enums.dart';
+import '../domain/models/content_entities.dart';
 import '../domain/models/game_state.dart';
 import '../domain/models/logs.dart';
+import '../domain/models/pet.dart';
 import '../domain/models/postcard_content.dart';
 import '../data/content/content_repository.dart';
 import '../services/audit_service.dart';
@@ -44,6 +47,7 @@ class GameServices {
   final GameSession _session;
   final ContentRepository _content;
   final double Function() _rng;
+  final String Function() _idGen;
   final Future<List<ExpLogEntry>> Function(String petId)? _expLogReader;
 
   /// 当前游戏状态（UI 读取）。
@@ -68,10 +72,12 @@ class GameServices {
     required GameSession session,
     required ContentRepository content,
     required double Function() rng,
+    required String Function() idGen,
     Future<List<ExpLogEntry>> Function(String petId)? expLogReader,
   })  : _session = session,
         _content = content,
         _rng = rng,
+        _idGen = idGen,
         _expLogReader = expLogReader;
 
   factory GameServices.wire({
@@ -141,10 +147,67 @@ class GameServices {
       clock: clock, audit: audit, exp: exp, economy: economy, unlock: unlock,
       visitor: visitor, graduation: graduation, revisit: revisit, postcard: postcard,
       scheduler: scheduler, session: session, content: content, rng: rng,
-      expLogReader: expLogReader,
+      idGen: idGen, expLogReader: expLogReader,
     );
     return svc;
   }
+
+  // ── 领养 / 毕业编排（UI 动作入口）─────────────────────
+
+  /// 可领养物种：图鉴已解锁（当前可得 / 曾拥有）的真实或彩蛋宠。
+  List<PetSpecies> adoptableSpecies() => _content.species.where((sp) {
+        final st = unlock.dexStateOf(sp);
+        return st == DexState.available || st == DexState.ownedBefore;
+      }).toList();
+
+  /// 领养一只新宠为当前在养宠（INV-2：调用前需确保无在养宠）。
+  /// 随机 2 个不重复性格、变体随机；写入 ownedSpecies。
+  Pet adopt({required String speciesId, required String name}) {
+    final sp = _content.speciesById(speciesId);
+    final now = clock.now();
+    final variants = sp?.variantIds ?? const <String>[];
+    final variantId = variants.isEmpty
+        ? '${speciesId}_v1'
+        : variants[(_rng() * variants.length).floor().clamp(0, variants.length - 1)];
+    final trimmed = name.trim();
+    final pet = Pet(
+      id: _idGen(),
+      speciesId: speciesId,
+      variantId: variantId,
+      name: trimmed.isEmpty ? (sp?.name ?? '宝贝') : trimmed,
+      personality: _pickTwoPersonalities(),
+      bornAt: now,
+      lastOnlineAt: now,
+      offlineDayKey: _dayKey(now),
+    );
+    _session.current = pet;
+    _session.ownedSpecies.add(speciesId);
+    return pet;
+  }
+
+  /// 毕业当前在养宠：暖绒结算 + 生成旅程 → 转漫游、清空在养位。
+  /// 返回旅程站点数（供典礼展示）；无在养宠或经验未达标返回 null。
+  Future<int?> graduateCurrent() async {
+    final pet = _session.current;
+    if (pet == null || pet.exp < GameConfig.graduationExp) return null;
+    final journeyId = await graduation.graduate(pet);
+    _session.roaming.add(pet);
+    _session.current = null;
+    final match = _session.journeys.where((e) => e.id == journeyId);
+    return match.isEmpty ? null : match.first.stops.length;
+  }
+
+  List<String> _pickTwoPersonalities() {
+    final ids = _content.personalities.map((p) => p.id).toList();
+    if (ids.length < 2) return ids;
+    final i = (_rng() * ids.length).floor().clamp(0, ids.length - 1);
+    var j = (_rng() * ids.length).floor().clamp(0, ids.length - 1);
+    if (j == i) j = (i + 1) % ids.length;
+    return [ids[i], ids[j]];
+  }
+
+  static String _dayKey(DateTime t) =>
+      '${t.year.toString().padLeft(4, '0')}-${t.month.toString().padLeft(2, '0')}-${t.day.toString().padLeft(2, '0')}';
 
   /// EventScheduler 单个 job 的执行路由（§3.4）。
   Future<void> _dispatch(ScheduledJob job) async {

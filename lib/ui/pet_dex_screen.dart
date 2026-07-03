@@ -262,10 +262,19 @@ class _DexMark extends StatelessWidget {
           shape: BoxShape.circle,
           border: Border.all(color: PetDexScreen._line, width: 2),
         ),
-        child: const Icon(
-          Icons.question_mark_rounded,
-          color: PetDexScreen._muted,
-          size: 46,
+        child: Padding(
+          padding: const EdgeInsets.all(2),
+          child: ClipOval(
+            child: Image.asset(
+              _assetFor(entry),
+              fit: BoxFit.cover,
+              errorBuilder: (_, _, _) => const Icon(
+                Icons.question_mark_rounded,
+                color: PetDexScreen._muted,
+                size: 46,
+              ),
+            ),
+          ),
         ),
       );
     }
@@ -286,10 +295,22 @@ class _DexMark extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          Icon(
-            _iconFor(entry.category),
-            color: lockedKnown ? const Color(0xFF9C948A) : accent,
-            size: 54,
+          Positioned.fill(
+            child: Padding(
+              padding: const EdgeInsets.all(2),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: Image.asset(
+                  _assetFor(entry),
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, _, _) => Icon(
+                    _iconFor(entry.category),
+                    color: lockedKnown ? const Color(0xFF9C948A) : accent,
+                    size: 54,
+                  ),
+                ),
+              ),
+            ),
           ),
           if (lockedKnown)
             const Positioned(
@@ -311,6 +332,15 @@ class _DexMark extends StatelessWidget {
       PetCategory.real => Icons.pets_rounded,
       PetCategory.fantasy => Icons.auto_awesome_rounded,
     };
+  }
+
+  static String _assetFor(DexEntryView entry) {
+    final suffix = switch (entry.state) {
+      DexState.ownedBefore || DexState.available => 'color',
+      DexState.lockedKnown => 'silhouette',
+      DexState.lockedHidden => 'mystery',
+    };
+    return 'assets/art/pets/dex/pet_${entry.speciesId}_dex_$suffix.png';
   }
 }
 

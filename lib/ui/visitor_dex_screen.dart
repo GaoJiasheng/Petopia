@@ -275,7 +275,11 @@ class _VisitorCard extends StatelessWidget {
           ),
           const Spacer(),
           Center(
-            child: _VisitorMark(collected: entry.collected, color: color),
+            child: _VisitorMark(
+              id: entry.id,
+              collected: entry.collected,
+              color: color,
+            ),
           ),
           const Spacer(),
           Text(
@@ -310,13 +314,24 @@ class _VisitorCard extends StatelessWidget {
 }
 
 class _VisitorMark extends StatelessWidget {
+  final String id;
   final bool collected;
   final Color color;
 
-  const _VisitorMark({required this.collected, required this.color});
+  const _VisitorMark({
+    required this.id,
+    required this.collected,
+    required this.color,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final icon = Icon(
+      collected ? Icons.emoji_nature_rounded : Icons.question_mark_rounded,
+      color: color,
+      size: collected ? 44 : 40,
+    );
+
     return Container(
       width: 76,
       height: 76,
@@ -330,11 +345,19 @@ class _VisitorMark extends StatelessWidget {
           width: 2,
         ),
       ),
-      child: Icon(
-        collected ? Icons.emoji_nature_rounded : Icons.question_mark_rounded,
-        color: color,
-        size: collected ? 44 : 40,
-      ),
+      child: collected
+          ? Padding(
+              padding: const EdgeInsets.all(2),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: Image.asset(
+                  'assets/art/world/visitors/visitor_${id}_portrait.png',
+                  fit: BoxFit.cover,
+                  errorBuilder: (_, _, _) => icon,
+                ),
+              ),
+            )
+          : icon,
     );
   }
 }

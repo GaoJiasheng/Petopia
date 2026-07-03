@@ -3,8 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../config/game_config.dart';
+import 'pet_art.dart';
 import 'widgets/pet_sprite.dart';
 import 'achievements_screen.dart';
+import 'adopt_screen.dart';
+import 'graduation_ceremony_screen.dart';
 import 'growth_journal_screen.dart';
 import 'pet_dex_screen.dart';
 import 'settings_screen.dart';
@@ -15,8 +18,6 @@ import 'visitor_dex_screen.dart';
 /// 动作走真实服务链路（ExpEngine→审计→sqflite）。Flame 动画场景为后续。
 class YardHomeScreen extends ConsumerWidget {
   const YardHomeScreen({super.key});
-
-  static const _stageLetter = ['A', 'B', 'C', 'D'];
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -35,9 +36,8 @@ class YardHomeScreen extends ConsumerWidget {
       data: (view) {
         final pet = view.pet;
         final ctrl = ref.read(gameControllerProvider.notifier);
-        final petAsset = pet == null
-            ? null
-            : 'assets/art/pets/cat/pet_cat_var01_stage${_stageLetter[pet.stage.index]}.png';
+        final petAsset =
+            pet == null ? null : PetArt.stage(pet.speciesId, pet.stage);
         return Scaffold(
           body: Stack(
             fit: StackFit.expand,
@@ -45,6 +45,22 @@ class YardHomeScreen extends ConsumerWidget {
               Image.asset(
                 'assets/art/world/themes/yard_theme_meadow_bg.png',
                 fit: BoxFit.cover,
+              ),
+              // 摆件中景层（渲染在宠物之下）：邮箱呼应明信片主题 + 食盆 + 花坛。
+              const _YardDecor(
+                align: Alignment(-0.78, 0.02),
+                asset: 'deco_mailbox_wood.png',
+                width: 96,
+              ),
+              const _YardDecor(
+                align: Alignment(0.42, 0.66),
+                asset: 'deco_food_bowl_full.png',
+                width: 84,
+              ),
+              const _YardDecor(
+                align: Alignment(0.74, 0.34),
+                asset: 'deco_flowerbed_small.png',
+                width: 110,
               ),
               if (petAsset != null)
                 Align(
@@ -63,7 +79,22 @@ class YardHomeScreen extends ConsumerWidget {
                     else
                       const _TopMenuOnly(),
                     const Spacer(),
-                    _ActionBar(ref: ref, cooldown: view.cooldownSec),
+                    if (pet == null)
+                      const _AdoptCta()
+                    else ...[
+                      if (view.canGraduate)
+                        _GraduateBanner(
+                          onTap: () => Navigator.of(context).push(
+                            MaterialPageRoute<void>(
+                              builder: (_) => GraduationCeremonyScreen(
+                                petName: pet.name,
+                                speciesId: pet.speciesId,
+                              ),
+                            ),
+                          ),
+                        ),
+                      _ActionBar(ref: ref, cooldown: view.cooldownSec),
+                    ],
                     const SizedBox(height: 16),
                   ],
                 ),
@@ -72,6 +103,119 @@ class YardHomeScreen extends ConsumerWidget {
           ),
         );
       },
+    );
+  }
+}
+
+/// 院子摆件（中景静态层）。轻微投影让它「落」在草地上。
+class _YardDecor extends StatelessWidget {
+  final Alignment align;
+  final String asset;
+  final double width;
+  const _YardDecor({
+    required this.align,
+    required this.asset,
+    required this.width,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: align,
+      child: Image.asset(
+        'assets/art/world/decor/$asset',
+        width: width,
+        errorBuilder: (_, _, _) => const SizedBox(),
+      ),
+    );
+  }
+}
+
+/// 毕业提示横幅（达到毕业线时出现在动作栏上方）。
+class _GraduateBanner extends StatelessWidget {
+  final VoidCallback onTap;
+  const _GraduateBanner({required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              colors: [Color(0xFFF6C177), Color(0xFFE8A15C)],
+            ),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 8)],
+          ),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('🎓', style: TextStyle(fontSize: 20)),
+              SizedBox(width: 10),
+              Text('它准备好去看世界了 · 举行毕业典礼',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 15)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// 空院子的领养召唤卡。
+class _AdoptCta extends StatelessWidget {
+  const _AdoptCta();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 28),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 22),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFDF7).withValues(alpha: 0.94),
+        borderRadius: BorderRadius.circular(22),
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10)],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text('院子空着呢',
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF6B5445))),
+          const SizedBox(height: 6),
+          const Text('迎接下一只小伙伴，开启新的陪伴',
+              style: TextStyle(fontSize: 13, color: Color(0xFF8A7A6A))),
+          const SizedBox(height: 16),
+          GestureDetector(
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(builder: (_) => const AdoptScreen()),
+            ),
+            child: Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 40, vertical: 13),
+              decoration: BoxDecoration(
+                color: const Color(0xFFE8A15C),
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: const Text('领养新伙伴  🐾',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700)),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

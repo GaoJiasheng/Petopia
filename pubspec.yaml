@@ -75,7 +75,22 @@ flutter:
   assets:
     - assets/data/
     - assets/art/world/themes/
+    - assets/art/world/layouts/
+    - assets/art/world/decor/
+    - assets/art/world/visitors/
     - assets/art/pets/cat/
+    - assets/art/pets/boo/
+    - assets/art/pets/cham/
+    - assets/art/pets/ember/
+    - assets/art/pets/hamster/
+    - assets/art/pets/parrot/
+    - assets/art/pets/rabbit/
+    - assets/art/pets/shiba/
+    - assets/art/pets/snake/
+    - assets/art/pets/starbug/
+    - assets/art/pets/turtle/
+    - assets/art/pets/uni/
+    - assets/art/pets/dex/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

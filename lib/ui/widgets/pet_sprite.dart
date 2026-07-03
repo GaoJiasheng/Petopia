@@ -66,8 +66,23 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
                   child: Transform.scale(scaleX: pop, scaleY: scaleY * pop, child: child),
                 );
               },
-              child: Image.asset(widget.assetPath, width: widget.width,
-                  errorBuilder: (_, _, _) => const SizedBox()),
+              // 换模演出：档位立绘切换时，旧→新水彩晕染交叉淡入（放大微溶）。
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 720),
+                switchInCurve: Curves.easeOut,
+                switchOutCurve: Curves.easeIn,
+                transitionBuilder: (child, anim) => FadeTransition(
+                  opacity: anim,
+                  child: ScaleTransition(
+                    scale: Tween(begin: 1.06, end: 1.0).animate(anim),
+                    child: child,
+                  ),
+                ),
+                child: Image.asset(widget.assetPath,
+                    key: ValueKey(widget.assetPath),
+                    width: widget.width,
+                    errorBuilder: (_, _, _) => const SizedBox()),
+              ),
             ),
             for (final id in _hearts) _FloatingHeart(key: ValueKey(id)),
           ],
