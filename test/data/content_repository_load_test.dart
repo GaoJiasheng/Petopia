@@ -17,6 +17,19 @@ void main() {
     expect(repo.events.length, 120, reason: 'events(100+20)');
     expect(repo.achievements.length, 81, reason: 'achievements(51+30)');
     expect(repo.shopItems.length, 36, reason: 'shop_items');
+    expect(repo.postcardTemplates.length, 240, reason: 'postcard templates(80×3)');
+    expect(repo.encounters.length, 60, reason: 'encounters');
+    expect(repo.incidents.length, 60, reason: 'incidents');
+
+    // 明信片内容交叉引用：encounter.poolId 命中 Location.encounterPoolId；
+    // incident.vibe 命中某地点 vibeTags（迁移后每类地点带规范 vibe）。
+    final pools = repo.locations.map((l) => l.encounterPoolId).toSet();
+    expect(repo.encounters.every((e) => pools.contains(e.poolId)), true,
+        reason: 'every encounter pool matches a location');
+    final vibes = repo.locations.expand((l) => l.vibeTags).toSet();
+    expect(repo.incidents.every((i) => vibes.contains(i.vibe)), true,
+        reason: 'every incident vibe matches a location vibeTag');
+    expect(repo.postcardTemplates.first.slots, contains('petName'));
 
     // 抽查解析正确性（枚举、unlockRule、交叉引用）
     expect(repo.speciesById('pet_cat'), isNotNull);

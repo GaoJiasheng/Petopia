@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import '../../domain/enums.dart';
 import '../../domain/item_effect.dart';
 import '../../domain/models/content_entities.dart';
+import '../../domain/models/postcard_content.dart';
 import '../../domain/unlock_rule.dart';
 import 'content_repository.dart';
 
@@ -24,6 +25,9 @@ class AssetContentRepository implements ContentRepository {
   List<Event> _events = const <Event>[];
   List<Achievement> _achievements = const <Achievement>[];
   List<ShopItem> _shopItems = const <ShopItem>[];
+  List<PostcardTemplate> _postcardTemplates = const <PostcardTemplate>[];
+  List<Encounter> _encounters = const <Encounter>[];
+  List<Incident> _incidents = const <Incident>[];
 
   Map<String, PetSpecies> _speciesById = const <String, PetSpecies>{};
   Map<String, PersonalityTag> _personalitiesById =
@@ -51,6 +55,7 @@ class AssetContentRepository implements ContentRepository {
     _events = await _loadItems('events.json', _parseEvent);
     _achievements = await _loadItems('achievements.json', _parseAchievement);
     _shopItems = await _loadItems('shop_items.json', _parseShopItem);
+    await _loadPostcards();
 
     _speciesById = _indexById(_species, (item) => item.id);
     _personalitiesById = _indexById(_personalities, (item) => item.id);
@@ -88,6 +93,15 @@ class AssetContentRepository implements ContentRepository {
   List<ShopItem> get shopItems => _shopItems;
 
   @override
+  List<PostcardTemplate> get postcardTemplates => _postcardTemplates;
+
+  @override
+  List<Encounter> get encounters => _encounters;
+
+  @override
+  List<Incident> get incidents => _incidents;
+
+  @override
   PetSpecies? speciesById(String id) => _speciesById[id];
 
   @override
@@ -107,6 +121,64 @@ class AssetContentRepository implements ContentRepository {
 
   @override
   ShopItem? shopItemById(String id) => _shopItemsById[id];
+}
+
+extension _PostcardLoading on AssetContentRepository {
+  /// 明信片内容库：顶层为 templates / encounters / incidents 三数组（非通用 items）。
+  Future<void> _loadPostcards() async {
+    const path = '$_contentRoot/postcard_templates.json';
+    final raw = await _loadStringOrNull(path);
+    if (raw == null) return;
+    final root = _asObject(jsonDecode(raw), path);
+    final sv = root['schemaVersion'];
+    if (sv != _contentSchemaVersion) {
+      throw StateError('$path schemaVersion=$sv, expected $_contentSchemaVersion');
+    }
+    _postcardTemplates = List<PostcardTemplate>.unmodifiable(
+      _asList(root['templates'], '$path.templates')
+          .map((e) => _parseTemplate(_asObject(e, '$path.templates[]'))),
+    );
+    _encounters = List<Encounter>.unmodifiable(
+      _asList(root['encounters'], '$path.encounters')
+          .map((e) => _parseEncounter(_asObject(e, '$path.encounters[]'))),
+    );
+    _incidents = List<Incident>.unmodifiable(
+      _asList(root['incidents'], '$path.incidents')
+          .map((e) => _parseIncident(_asObject(e, '$path.incidents[]'))),
+    );
+  }
+}
+
+PostcardTemplate _parseTemplate(Map<String, dynamic> json) => PostcardTemplate(
+      id: _string(json['id'], 'tpl.id'),
+      personalityId: _string(json['personalityId'], 'tpl.personalityId'),
+      category: _string(json['category'], 'tpl.category'),
+      skeleton: _string(json['skeleton'], 'tpl.skeleton'),
+      slots: _stringList(json['slots']),
+      tone: _nullableString(json['tone']) ?? '',
+    );
+
+Encounter _parseEncounter(Map<String, dynamic> json) => Encounter(
+      id: _string(json['id'], 'enc.id'),
+      poolId: _string(json['poolId'], 'enc.poolId'),
+      phrase: _string(json['phrase'], 'enc.phrase'),
+      personalityBias: _biasMap(json['personalityBias']),
+    );
+
+Incident _parseIncident(Map<String, dynamic> json) => Incident(
+      id: _string(json['id'], 'inc.id'),
+      vibe: _string(json['vibe'], 'inc.vibe'),
+      phrase: _string(json['phrase'], 'inc.phrase'),
+      poseHint: _nullableString(json['poseHint']) ?? 'idle',
+      personalityBias: _biasMap(json['personalityBias']),
+    );
+
+Map<String, double> _biasMap(dynamic value) {
+  if (value is! Map) return const <String, double>{};
+  return {
+    for (final entry in value.entries)
+      entry.key.toString(): (entry.value as num).toDouble(),
+  };
 }
 
 Future<List<T>> _loadItems<T>(

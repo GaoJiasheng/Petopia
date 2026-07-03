@@ -51,6 +51,9 @@ Future<GameServices> bootstrapGame() async {
     rng: rng.nextDouble,
     idGen: uuid.v4,
     ownerName: '主人',
+    postcardTemplates: content.postcardTemplates,
+    encounters: content.encounters,
+    incidents: content.incidents,
     expLogReader: dao.expLogsForPet,
   );
 

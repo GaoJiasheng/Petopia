@@ -1,4 +1,5 @@
 import '../../domain/models/content_entities.dart';
+import '../../domain/models/postcard_content.dart';
 
 /// ContentRepository（spec-technical §3 / §5.2）。
 ///
@@ -16,6 +17,9 @@ abstract interface class ContentRepository {
   List<Event> get events;
   List<Achievement> get achievements;
   List<ShopItem> get shopItems;
+  List<PostcardTemplate> get postcardTemplates;
+  List<Encounter> get encounters;
+  List<Incident> get incidents;
 
   PetSpecies? speciesById(String id);
   PersonalityTag? personalityById(String id);
