@@ -144,7 +144,7 @@ class _ChoiceCard extends StatelessWidget {
           children: [
             Expanded(
               child: Image.asset(
-                PetArt.dexColor(choice.speciesId),
+                PetArt.portrait(choice.speciesId),
                 fit: BoxFit.contain,
                 errorBuilder: (_, _, _) => const Icon(Icons.pets_rounded,
                     size: 56, color: _AdoptScreenState._muted),

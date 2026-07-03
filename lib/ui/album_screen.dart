@@ -166,7 +166,7 @@ class _TravelList extends StatelessWidget {
                 width: 64,
                 height: 64,
                 child: Image.asset(
-                  PetArt.dexColor(p.speciesId),
+                  PetArt.portrait(p.speciesId),
                   fit: BoxFit.contain,
                   errorBuilder: (_, _, _) => const Icon(Icons.pets_rounded,
                       size: 40, color: AlbumScreen._muted),
