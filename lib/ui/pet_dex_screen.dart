@@ -348,7 +348,8 @@ class _DexMark extends StatelessWidget {
       DexState.lockedKnown => 'silhouette',
       DexState.lockedHidden => 'mystery',
     };
-    return 'assets/art/pets/dex/pet_${entry.speciesId}_dex_$suffix.png';
+    // speciesId 已含 pet_ 前缀（pet_cat）；文件名即 <id>_dex_<suffix>.png。
+    return 'assets/art/pets/dex/${entry.speciesId}_dex_$suffix.png';
   }
 }
 

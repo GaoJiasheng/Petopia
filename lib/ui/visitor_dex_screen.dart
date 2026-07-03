@@ -359,7 +359,8 @@ class _VisitorMark extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(24),
                 child: Image.asset(
-                  'assets/art/world/visitors/visitor_${id}_portrait.png',
+                  // id 已含 visitor_ 前缀；文件名即 <id>_portrait.png。
+                  'assets/art/world/visitors/${id}_portrait.png',
                   fit: BoxFit.cover,
                   errorBuilder: (_, _, _) => icon,
                 ),
