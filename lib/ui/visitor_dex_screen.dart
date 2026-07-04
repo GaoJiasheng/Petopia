@@ -361,7 +361,7 @@ class _VisitorMark extends StatelessWidget {
                 child: Image.asset(
                   // id 已含 visitor_ 前缀；文件名即 <id>_portrait.png。
                   'assets/art/world/visitors/${id}_portrait.png',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                   errorBuilder: (_, _, _) => icon,
                 ),
               ),

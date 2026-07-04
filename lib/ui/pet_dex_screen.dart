@@ -269,7 +269,7 @@ class _DexMark extends StatelessWidget {
           child: ClipOval(
             child: Image.asset(
               _assetFor(entry),
-              fit: BoxFit.cover,
+              fit: BoxFit.contain,
               errorBuilder: (_, _, _) => const Icon(
                 Icons.question_mark_rounded,
                 color: PetDexScreen._muted,
@@ -304,7 +304,7 @@ class _DexMark extends StatelessWidget {
                 borderRadius: BorderRadius.circular(24),
                 child: Image.asset(
                   _assetFor(entry),
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                   errorBuilder: (_, _, _) => _fallbackFor(
                     entry.category,
                     lockedKnown ? const Color(0xFF9C948A) : accent,
