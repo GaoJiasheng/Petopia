@@ -80,12 +80,12 @@ class GameServices {
     required double Function() rng,
     required String Function() idGen,
     Future<List<ExpLogEntry>> Function(String petId)? expLogReader,
-  })  : _session = session,
-        _store = store,
-        _content = content,
-        _rng = rng,
-        _idGen = idGen,
-        _expLogReader = expLogReader;
+  }) : _session = session,
+       _store = store,
+       _content = content,
+       _rng = rng,
+       _idGen = idGen,
+       _expLogReader = expLogReader;
 
   factory GameServices.wire({
     required GameSession session,
@@ -101,7 +101,11 @@ class GameServices {
     Future<List<ExpLogEntry>> Function(String petId)? expLogReader,
     SessionStore? store,
   }) {
-    final audit = AuditServiceImpl(port, () => session.allPets, () => session.wallet);
+    final audit = AuditServiceImpl(
+      port,
+      () => session.allPets,
+      () => session.wallet,
+    );
 
     final exp = ExpEngineImpl(
       audit,
@@ -111,29 +115,49 @@ class GameServices {
     );
 
     final economy = EconomyServiceImpl(
-      port, session.wallet, session.yard, clock, idGen,
+      port,
+      session.wallet,
+      session.yard,
+      clock,
+      idGen,
       (petId) => session.eventCounts[petId] ?? 0,
       (petId) => session.visitorCounts[petId] ?? 0,
       (sp) => content.speciesById(sp)?.category == PetCategory.fantasy,
     );
 
     final unlock = UnlockServiceImpl(
-      content.achievements, session.yard, session.clues, session.achievements,
-      session.ownedSpecies.contains, economy, () => clock.now(),
+      content.achievements,
+      session.yard,
+      session.clues,
+      session.achievements,
+      session.ownedSpecies.contains,
+      economy,
+      () => clock.now(),
     );
 
     final visitor = VisitorServiceImpl(
-      content.visitors, content.visitorInteractions, rng, idGen, () => clock.now(),
+      content.visitors,
+      content.visitorInteractions,
+      rng,
+      idGen,
+      () => clock.now(),
       (log) {
         session.visitorLog.add(log);
         final id = log.withPetId;
-        if (id != null) session.visitorCounts[id] = (session.visitorCounts[id] ?? 0) + 1;
+        if (id != null) {
+          session.visitorCounts[id] = (session.visitorCounts[id] ?? 0) + 1;
+        }
       },
       (clueId) => unlock.bumpClue(clueId),
     );
 
     final graduation = GraduationServiceImpl(
-      economy, content.locations, session.yard, idGen, () => clock.now(), rng,
+      economy,
+      content.locations,
+      session.yard,
+      idGen,
+      () => clock.now(),
+      rng,
       (j) => session.journeys.add(j),
     );
 
@@ -141,21 +165,41 @@ class GameServices {
 
     final postcard = PostcardGeneratorImpl(
       locations: {for (final l in content.locations) l.id: l},
-      templates: postcardTemplates, encounters: encounters, incidents: incidents,
-      rng: rng, now: () => clock.now(), idGen: idGen, ownerName: ownerName,
+      templates: postcardTemplates,
+      encounters: encounters,
+      incidents: incidents,
+      rng: rng,
+      now: () => clock.now(),
+      idGen: idGen,
+      ownerName: ownerName,
       onPostcard: (pc) => session.postcards.add(pc), // 旅行相册数据源；DAO 持久化 [待细化]
     );
 
     late GameServices svc;
     final scheduler = EventSchedulerImpl(
-      session.jobs, session.generatedDays, idGen, rng, (job) => svc._dispatch(job),
+      session.jobs,
+      session.generatedDays,
+      idGen,
+      rng,
+      (job) => svc._dispatch(job),
     );
 
     svc = GameServices._(
-      clock: clock, audit: audit, exp: exp, economy: economy, unlock: unlock,
-      visitor: visitor, graduation: graduation, revisit: revisit, postcard: postcard,
-      scheduler: scheduler, session: session, content: content, rng: rng,
-      idGen: idGen, expLogReader: expLogReader,
+      clock: clock,
+      audit: audit,
+      exp: exp,
+      economy: economy,
+      unlock: unlock,
+      visitor: visitor,
+      graduation: graduation,
+      revisit: revisit,
+      postcard: postcard,
+      scheduler: scheduler,
+      session: session,
+      content: content,
+      rng: rng,
+      idGen: idGen,
+      expLogReader: expLogReader,
       store: store ?? _NoopSessionStore.instance,
     );
     return svc;
@@ -165,9 +209,9 @@ class GameServices {
 
   /// 可领养物种：图鉴已解锁（当前可得 / 曾拥有）的真实或彩蛋宠。
   List<PetSpecies> adoptableSpecies() => _content.species.where((sp) {
-        final st = unlock.dexStateOf(sp);
-        return st == DexState.available || st == DexState.ownedBefore;
-      }).toList();
+    final st = unlock.dexStateOf(sp);
+    return st == DexState.available || st == DexState.ownedBefore;
+  }).toList();
 
   /// 领养一只新宠为当前在养宠（INV-2：调用前需确保无在养宠）。
   /// 随机 2 个不重复性格、变体随机；写入 ownedSpecies。
@@ -177,7 +221,10 @@ class GameServices {
     final variants = sp?.variantIds ?? const <String>[];
     final variantId = variants.isEmpty
         ? '${speciesId}_v1'
-        : variants[(_rng() * variants.length).floor().clamp(0, variants.length - 1)];
+        : variants[(_rng() * variants.length).floor().clamp(
+            0,
+            variants.length - 1,
+          )];
     final trimmed = name.trim();
     final pet = Pet(
       id: _idGen(),
@@ -211,21 +258,29 @@ class GameServices {
   /// 幂等（UnlockService 只取更大值），每次游戏动作后调用。返回本次新解锁的成就。
   List<Achievement> syncAchievements() {
     final s = _session;
-    final distinctVisitors =
-        s.visitorLog.map((e) => e.visitorId).toSet().length;
+    final distinctVisitors = s.visitorLog
+        .map((e) => e.visitorId)
+        .toSet()
+        .length;
     final distinctStamps = s.postcards.map((p) => p.stampId).toSet().length;
+    final distinctPostcardSeasons = s.postcards
+        .map((p) => p.season)
+        .toSet()
+        .length;
     final counts = <String, int>{
       'actionCount': s.careActionCount,
       'gradCount': s.yard.gradCount,
       'postcardCount': s.postcards.length,
       'visitorDexCount': distinctVisitors,
       'speciesCollected': s.ownedSpecies.length,
+      'unlockPet': s.ownedSpecies.length,
       'revisitCount': s.revisitCount,
       'yardStage': s.yard.luxuryStage,
       'themeCount': s.yard.ownedThemeIds.length,
       'specialEventCount': s.specialEventCount,
       'loginStreak': s.settings.loginStreakCurrent,
       'stampCount': distinctStamps,
+      'seasonPostcard': distinctPostcardSeasons,
     };
     final newly = <Achievement>[];
     counts.forEach((type, value) {
@@ -253,8 +308,11 @@ class GameServices {
       revisit.onRevisitEnd(prev);
       _session.revisitor = null;
     }
-    final next = revisit.pickRevisitor(_session.roaming, now,
-        hasCurrentRevisitor: false);
+    final next = revisit.pickRevisitor(
+      _session.roaming,
+      now,
+      hasCurrentRevisitor: false,
+    );
     if (next != null) {
       _session.revisitor = next;
       revisit.onRevisitInteract(next, _session.current);
@@ -280,34 +338,54 @@ class GameServices {
     final now = clock.now();
     switch (job.type) {
       case JobType.visitorCheck:
-        final window = job.payloadRef == 'night' ? TimeWindow.night : TimeWindow.day;
+        final window = job.payloadRef == 'night'
+            ? TimeWindow.night
+            : TimeWindow.day;
         const weather = Weather.clear; // [待细化] 天气系统
         final season = _seasonOf(now);
         var v = visitor.rollWindow(
-            window: window, yard: _session.yard, weather: weather, season: season, now: now);
+          window: window,
+          yard: _session.yard,
+          weather: weather,
+          season: season,
+          now: now,
+        );
         v ??= (window == TimeWindow.night)
             ? visitor.rollLegendary(
-                yard: _session.yard, weather: weather, season: season, now: now)
+                yard: _session.yard,
+                weather: weather,
+                season: season,
+                now: now,
+              )
             : null;
         if (v != null) {
           final it = visitor.pickInteraction(v, pet);
           if (pet != null) {
             exp.addExp(
-                pet: pet, baseDelta: it.expReward, source: ExpSource.visitor,
-                sourceRef: v.id, note: it.script);
+              pet: pet,
+              baseDelta: it.expReward,
+              source: ExpSource.visitor,
+              sourceRef: v.id,
+              note: it.script,
+            );
           }
           visitor.recordVisit(v, pet, it);
         }
       case JobType.dailyEventGen:
         if (pet == null) break;
-        final dailies =
-            _content.events.where((e) => e.type == EventType.daily).toList();
+        final dailies = _content.events
+            .where((e) => e.type == EventType.daily)
+            .toList();
         if (dailies.isNotEmpty) {
           final ev = dailies[(_rng() * dailies.length).floor()];
           exp.addExp(
-              pet: pet, baseDelta: ev.expReward, source: ExpSource.eventDaily,
-              sourceRef: ev.id);
-          _session.eventCounts[pet.id] = (_session.eventCounts[pet.id] ?? 0) + 1;
+            pet: pet,
+            baseDelta: ev.expReward,
+            source: ExpSource.eventDaily,
+            sourceRef: ev.id,
+          );
+          _session.eventCounts[pet.id] =
+              (_session.eventCounts[pet.id] ?? 0) + 1;
         }
       case JobType.specialEventEval:
         if (pet == null) break;
@@ -330,11 +408,17 @@ class GameServices {
         if (_rng() >= _specialEventChance) break; // 低频彩蛋（日 cap=1）
         final ev = eligible[(_rng() * eligible.length).floor()];
         exp.addExp(
-            pet: pet, baseDelta: ev.expReward, source: ExpSource.eventSpecial,
-            sourceRef: ev.id);
+          pet: pet,
+          baseDelta: ev.expReward,
+          source: ExpSource.eventSpecial,
+          sourceRef: ev.id,
+        );
         if (ev.currencyReward != null) {
-          economy.earn(ev.currencyReward!, CurrencyReason.eventReward,
-              ref: 'evt:${pet.id}:${ev.id}');
+          economy.earn(
+            ev.currencyReward!,
+            CurrencyReason.eventReward,
+            ref: 'evt:${pet.id}:${ev.id}',
+          );
         }
         if (ev.oncePerPet) _session.firedSpecials.add('${pet.id}:${ev.id}');
         _session.eventCounts[pet.id] = (_session.eventCounts[pet.id] ?? 0) + 1;

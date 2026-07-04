@@ -13,8 +13,16 @@ import 'game_services.dart';
 import 'game_state.dart';
 
 const _personalityIds = [
-  'p_glutton', 'p_lazy', 'p_curious', 'p_timid', 'p_energetic',
-  'p_clingy', 'p_aloof', 'p_naughty', 'p_gentle', 'p_dreamy',
+  'p_glutton',
+  'p_lazy',
+  'p_curious',
+  'p_timid',
+  'p_energetic',
+  'p_clingy',
+  'p_aloof',
+  'p_naughty',
+  'p_gentle',
+  'p_dreamy',
 ];
 
 /// 启动编排：加载存档 → 开库 → 加载内容 → 装配服务 → 首日调度。
@@ -47,6 +55,7 @@ Future<GameServices> bootstrapGame() async {
     );
     session.ownedSpecies.add('pet_cat');
   }
+  _advanceLoginStreak(session, now);
 
   final clock = ClockServiceImpl(SystemClock(), session.settings);
   final svc = GameServices.wire(
@@ -75,6 +84,26 @@ Future<GameServices> bootstrapGame() async {
 
 String _dayKey(DateTime t) =>
     '${t.year.toString().padLeft(4, '0')}-${t.month.toString().padLeft(2, '0')}-${t.day.toString().padLeft(2, '0')}';
+
+void _advanceLoginStreak(GameSession session, DateTime now) {
+  final today = _dayKey(now);
+  final settings = session.settings;
+  if (settings.lastLoginDay == today) return;
+
+  var nextStreak = 1;
+  final lastDay = DateTime.tryParse('${settings.lastLoginDay}T00:00:00Z');
+  if (lastDay != null) {
+    final currentDay = DateTime.utc(now.year, now.month, now.day);
+    if (currentDay.difference(lastDay).inDays == 1) {
+      nextStreak = settings.loginStreakCurrent + 1;
+    }
+  }
+  settings.loginStreakCurrent = nextStreak;
+  if (nextStreak > settings.loginStreakMax) {
+    settings.loginStreakMax = nextStreak;
+  }
+  settings.lastLoginDay = today;
+}
 
 /// 全局：启动后的 GameServices（异步）。
 final gameProvider = FutureProvider<GameServices>((ref) => bootstrapGame());

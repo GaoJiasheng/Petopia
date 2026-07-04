@@ -61,6 +61,13 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AchievementUnlockCue?>(achievementUnlockCueProvider, (
+      previous,
+      next,
+    ) {
+      if (next == null || next.seq == previous?.seq) return;
+      _showAchievementToast(context, next.names);
+    });
     final async = ref.watch(gameControllerProvider);
     return async.when(
       loading: () =>
@@ -150,6 +157,38 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
           ),
         );
       },
+    );
+  }
+
+  void _showAchievementToast(BuildContext context, List<String> names) {
+    if (!mounted || names.isEmpty) return;
+    final title = names.length == 1
+        ? names.first
+        : '${names.first} 等 ${names.length} 项';
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: const Color(0xFF6B5445),
+        margin: const EdgeInsets.fromLTRB(18, 0, 18, 92),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        content: Row(
+          children: [
+            const AppIcon(
+              'ach_firstgrad',
+              size: 28,
+              fallback: Icons.emoji_events_rounded,
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Text(
+                '达成成就：$title',
+                style: const TextStyle(fontWeight: FontWeight.w700),
+              ),
+            ),
+          ],
+        ),
+        duration: const Duration(seconds: 3),
+      ),
     );
   }
 }

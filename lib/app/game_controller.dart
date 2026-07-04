@@ -16,6 +16,12 @@ import 'notification_service.dart';
 /// 照料动作。
 enum CareAction { feed, pat, toy, bath }
 
+class AchievementUnlockCue {
+  final List<String> names;
+  final int seq;
+  const AchievementUnlockCue(this.names, this.seq);
+}
+
 /// 宠物视图（不可变快照，供 UI）。
 class PetView {
   final String name;
@@ -67,6 +73,7 @@ class GameView {
 class GameController extends AsyncNotifier<GameView> {
   late GameServices _svc;
   final Map<CareAction, DateTime> _lastAt = {};
+  int _achievementCueSeq = 0;
 
   @override
   Future<GameView> build() async {
@@ -295,7 +302,15 @@ class GameController extends AsyncNotifier<GameView> {
   /// 游戏推进类动作统一收尾：同步成就（新解锁播 sting）+ 存档。
   void _afterGameAction() {
     final newly = _svc.syncAchievements();
-    if (newly.isNotEmpty) _audio.sting(Sting.achievement);
+    if (newly.isNotEmpty) {
+      _audio.sting(Sting.achievement);
+      ref
+          .read(achievementUnlockCueProvider.notifier)
+          .state = AchievementUnlockCue(
+        newly.map((achievement) => achievement.name).toList(growable: false),
+        ++_achievementCueSeq,
+      );
+    }
     _persist();
   }
 
@@ -600,4 +615,8 @@ class VisitorDexView {
 
 final gameControllerProvider = AsyncNotifierProvider<GameController, GameView>(
   GameController.new,
+);
+
+final achievementUnlockCueProvider = StateProvider<AchievementUnlockCue?>(
+  (ref) => null,
 );
