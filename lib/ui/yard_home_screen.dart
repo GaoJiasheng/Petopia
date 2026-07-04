@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -30,11 +32,35 @@ void _fireCue(WidgetRef ref, String pose) {
 
 /// 院子主屏（P2 响应式版）：满幅背景 + 宠物立绘 + 状态卡 + 4 照料动作（带冷却）。
 /// 动作走真实服务链路（ExpEngine→审计→sqflite）。Flame 动画场景为后续。
-class YardHomeScreen extends ConsumerWidget {
+class YardHomeScreen extends ConsumerStatefulWidget {
   const YardHomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<YardHomeScreen> createState() => _YardHomeScreenState();
+}
+
+class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
+  Timer? _cooldownTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _cooldownTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      final async = ref.read(gameControllerProvider);
+      if (async.hasValue) {
+        ref.read(gameControllerProvider.notifier).refreshView();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _cooldownTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final async = ref.watch(gameControllerProvider);
     return async.when(
       loading: () =>

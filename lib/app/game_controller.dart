@@ -372,6 +372,12 @@ class GameController extends AsyncNotifier<GameView> {
 
   static const int decorSlotCount = 6;
 
+  /// 仅刷新派生视图数据（例如动作冷却剩余秒数），不改存档。
+  void refreshView() {
+    if (!state.hasValue) return;
+    state = AsyncData(_snapshot());
+  }
+
   // ── 领养 / 毕业（核心情感闭环）──────────────────────
 
   /// 可领养物种（已解锁）。
