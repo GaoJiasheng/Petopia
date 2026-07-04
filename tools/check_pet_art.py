@@ -105,7 +105,46 @@ def check_dex():
                     if flat > 0.55 * (bb[2]-bb[0]):
                         fail(f'dex/{sp}_silhouette: 顶部疑似被削平（头部一刀切）')
 
-check_base(); check_actions(); check_dex()
+def _fill_base(img):
+    bb = alpha_bbox(img)
+    if not bb:
+        return None, None
+    w, h = img.size
+    return max(bb[2]-bb[0], bb[3]-bb[1]) / w, bb[3] / h  # (占比, 贴地基线)
+
+MATCH_TOL = 0.10  # 静态↔动作 屏上尺寸允许差异
+
+def check_static_action_match():
+    """静态立绘(各阶段)与动作条主体的屏上尺寸/基线必须一致，否则播动作忽大忽小。"""
+    for sp in SPECIES:
+        # 参考：各阶段 var01 立绘的占比/基线
+        base = {}
+        for st in STAGES:
+            p = f'{ROOT}/{sp}/pet_{sp}_var01_stage{st}.png'
+            if os.path.exists(p):
+                base[st] = _fill_base(Image.open(p).convert('RGBA'))
+        if 'C' not in base or base['C'][0] is None:
+            continue
+        ref_fill, ref_base = base['C']
+        # 各阶段之间也要一致（动画在任意阶段触发）
+        for st, (fl, bs) in base.items():
+            if fl and abs(fl - ref_fill) > MATCH_TOL:
+                fail(f'{sp}: stage{st} 占比({fl*100:.0f}%) 与 stageC({ref_fill*100:.0f}%) 差异>{int(MATCH_TOL*100)}% → 换档忽大忽小')
+        # 动作条 vs 立绘
+        for act in ACTIONS:
+            p = f'{ROOT}/{sp}/actions/pet_{sp}_var01_stageC_{act}.png'
+            if not os.path.exists(p):
+                continue
+            im = Image.open(p).convert('RGBA')
+            if im.size != (4096, 512):
+                continue
+            fl, bs = _fill_base(im.crop((0, 0, 512, 512)))
+            if fl and abs(fl - ref_fill) > MATCH_TOL:
+                fail(f'{sp}/{act}: 动作占比({fl*100:.0f}%) 与静态({ref_fill*100:.0f}%) 差异>{int(MATCH_TOL*100)}% → 播动作突兀')
+            if bs and abs(bs - ref_base) > FRAME_BASE_TOL:
+                fail(f'{sp}/{act}: 动作基线与静态不一致 → 播动作位置跳')
+
+check_base(); check_actions(); check_dex(); check_static_action_match()
 print('=' * 50)
 if FAILS:
     print(f'❌ {len(FAILS)} 项 FAIL：')
