@@ -41,6 +41,7 @@ class YardHomeScreen extends ConsumerStatefulWidget {
 
 class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
   Timer? _cooldownTimer;
+  String? _precacheKey;
 
   @override
   void initState() {
@@ -92,6 +93,9 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
         final petAsset = pet == null
             ? null
             : PetArt.stage(pet.speciesId, pet.stage);
+        if (pet != null && petAsset != null) {
+          _precacheCurrentPetAssets(context, pet.speciesId, petAsset);
+        }
         return Scaffold(
           body: Stack(
             fit: StackFit.expand,
@@ -190,6 +194,36 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
         duration: const Duration(seconds: 3),
       ),
     );
+  }
+
+  void _precacheCurrentPetAssets(
+    BuildContext context,
+    String speciesId,
+    String staticAsset,
+  ) {
+    final key = '$speciesId:$staticAsset';
+    if (_precacheKey == key) return;
+    _precacheKey = key;
+
+    const actions = [
+      'idle',
+      'eat',
+      'pat',
+      'play',
+      'bath',
+      'sit',
+      'sleep',
+      'walk',
+    ];
+    final assets = [
+      staticAsset,
+      for (final action in actions) PetArt.actionSheet(speciesId, action),
+    ];
+    for (final asset in assets) {
+      unawaited(
+        precacheImage(AssetImage(asset), context).catchError((Object _) {}),
+      );
+    }
   }
 }
 
