@@ -460,7 +460,11 @@ class _HomeMenuButton extends StatelessWidget {
       child: PopupMenuButton<_HomeMenuTarget>(
         tooltip: '手账菜单',
         color: const Color(0xFFFFFDF7),
-        icon: const Icon(Icons.menu_book_rounded, color: Color(0xFF6B5445)),
+        icon: const AppIcon(
+          'nav_menu',
+          size: 22,
+          fallback: Icons.menu_book_rounded,
+        ),
         iconSize: 21,
         padding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -482,35 +486,67 @@ class _HomeMenuButton extends StatelessWidget {
         itemBuilder: (context) => const [
           PopupMenuItem(
             value: _HomeMenuTarget.journal,
-            child: _MenuRow(icon: Icons.auto_stories_rounded, label: '成长手账'),
+            child: _MenuRow(
+              iconName: 'nav_menu',
+              fallback: Icons.auto_stories_rounded,
+              label: '成长手账',
+            ),
           ),
           PopupMenuItem(
             value: _HomeMenuTarget.album,
-            child: _MenuRow(icon: Icons.photo_album_rounded, label: '相册'),
+            child: _MenuRow(
+              iconName: 'nav_album',
+              fallback: Icons.photo_album_rounded,
+              label: '相册',
+            ),
           ),
           PopupMenuItem(
             value: _HomeMenuTarget.dex,
-            child: _MenuRow(icon: Icons.pets_rounded, label: '宠物图鉴'),
+            child: _MenuRow(
+              iconName: 'nav_codex',
+              fallback: Icons.pets_rounded,
+              label: '宠物图鉴',
+            ),
           ),
           PopupMenuItem(
             value: _HomeMenuTarget.achievements,
-            child: _MenuRow(icon: Icons.emoji_events_rounded, label: '成就'),
+            child: _MenuRow(
+              iconName: 'ach_firstgrad',
+              fallback: Icons.emoji_events_rounded,
+              label: '成就',
+            ),
           ),
           PopupMenuItem(
             value: _HomeMenuTarget.shop,
-            child: _MenuRow(icon: Icons.storefront_rounded, label: '商店'),
+            child: _MenuRow(
+              iconName: 'nav_shop',
+              fallback: Icons.storefront_rounded,
+              label: '商店',
+            ),
           ),
           PopupMenuItem(
             value: _HomeMenuTarget.decorate,
-            child: _MenuRow(icon: Icons.yard_rounded, label: '院子布置'),
+            child: _MenuRow(
+              iconName: 'shop_deco',
+              fallback: Icons.yard_rounded,
+              label: '院子布置',
+            ),
           ),
           PopupMenuItem(
             value: _HomeMenuTarget.settings,
-            child: _MenuRow(icon: Icons.settings_rounded, label: '设置'),
+            child: _MenuRow(
+              iconName: 'set_save',
+              fallback: Icons.settings_rounded,
+              label: '设置',
+            ),
           ),
           PopupMenuItem(
             value: _HomeMenuTarget.visitorDex,
-            child: _MenuRow(icon: Icons.people_alt_rounded, label: '来客图鉴'),
+            child: _MenuRow(
+              iconName: 'ach_visitor',
+              fallback: Icons.people_alt_rounded,
+              label: '来客图鉴',
+            ),
           ),
         ],
       ),
@@ -519,16 +555,21 @@ class _HomeMenuButton extends StatelessWidget {
 }
 
 class _MenuRow extends StatelessWidget {
-  final IconData icon;
+  final String iconName;
+  final IconData fallback;
   final String label;
 
-  const _MenuRow({required this.icon, required this.label});
+  const _MenuRow({
+    required this.iconName,
+    required this.fallback,
+    required this.label,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(icon, color: const Color(0xFFE8A15C), size: 20),
+        AppIcon(iconName, size: 22, fallback: fallback),
         const SizedBox(width: 10),
         Text(
           label,
