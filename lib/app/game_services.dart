@@ -273,7 +273,6 @@ class GameServices {
       'postcardCount': s.postcards.length,
       'visitorDexCount': distinctVisitors,
       'speciesCollected': s.ownedSpecies.length,
-      'unlockPet': s.ownedSpecies.length,
       'revisitCount': s.revisitCount,
       'yardStage': s.yard.luxuryStage,
       'themeCount': s.yard.ownedThemeIds.length,
