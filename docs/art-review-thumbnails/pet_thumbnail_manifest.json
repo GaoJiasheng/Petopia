@@ -1,0 +1,53 @@
+{
+  "source_root": "/Users/gavin/work/petopia/assets/art/pets",
+  "output_dir": "/Users/gavin/work/petopia/docs/art-review-thumbnails",
+  "species": [
+    "boo",
+    "cat",
+    "cham",
+    "ember",
+    "hamster",
+    "parrot",
+    "rabbit",
+    "shiba",
+    "snake",
+    "starbug",
+    "turtle",
+    "uni"
+  ],
+  "stages": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
+  "variants": [
+    "var01",
+    "var02",
+    "var03",
+    "var04",
+    "var05"
+  ],
+  "actions": [
+    "idle",
+    "eat",
+    "pat",
+    "play",
+    "bath",
+    "sit",
+    "sleep",
+    "walk"
+  ],
+  "notes": [
+    "Prototype thumbnails preserve original asset canvas; transparent margins are not trimmed.",
+    "Action sheets split 4096x512 strips into 8 frames and preserve each 512x512 frame canvas.",
+    "Generic stageC and var01 stageC action files were hash-identical for all species/actions at generation time."
+  ],
+  "outputs": [
+    "/Users/gavin/work/petopia/docs/art-review-thumbnails/pet_prototypes_all_species.png",
+    "/Users/gavin/work/petopia/docs/art-review-thumbnails/pet_action_strips_all_species.png",
+    "/Users/gavin/work/petopia/docs/art-review-thumbnails/pet_action_frames_sheet_01_boo-cat-cham-ember.png",
+    "/Users/gavin/work/petopia/docs/art-review-thumbnails/pet_action_frames_sheet_02_hamster-parrot-rabbit-shiba.png",
+    "/Users/gavin/work/petopia/docs/art-review-thumbnails/pet_action_frames_sheet_03_snake-starbug-turtle-uni.png"
+  ]
+}
