@@ -430,20 +430,50 @@ class GameController extends AsyncNotifier<GameView> {
 
   /// 收到的明信片（最新在前），已解析地点名与宠物名。
   List<PostcardView> postcards() {
-    final names = {for (final p in _svc.session.allPets) p.id: p.name};
+    final pets = {for (final p in _svc.session.allPets) p.id: p};
+    final incidents = {for (final i in _svc.content.incidents) i.id: i};
     return _svc.session.postcards.reversed.map((pc) {
       final loc = _svc.content.locationById(pc.locationId);
+      final pet = pets[pc.petId];
+      final incident = pc.incidentId == null ? null : incidents[pc.incidentId];
       return PostcardView(
         id: pc.id,
-        petName: names[pc.petId] ?? '旅行者',
+        petName: pet?.name ?? '旅行者',
+        speciesId: pet?.speciesId ?? 'pet_cat',
+        poseHint: incident?.poseHint ?? 'gaze',
         locationName: loc?.name ?? pc.locationId,
         bodyText: pc.bodyText,
         photoBg: loc?.photoStyle ?? '',
         stampId: pc.stampId,
+        stickerIds: _postcardStickerIds(pc),
         sentAt: pc.sentAt,
         seq: pc.seq,
       );
     }).toList();
+  }
+
+  static const _postcardStickerPool = [
+    'pc_sticker_heart_postmark',
+    'pc_sticker_straw_hat',
+    'pc_sticker_creased_map',
+    'pc_sticker_drift_bottle',
+    'pc_sticker_leaf_spring',
+    'pc_sticker_wish_star',
+    'pc_sticker_cloud_gap',
+    'pc_sticker_gold_beam',
+    'pc_sticker_warm_kettle',
+    'pc_sticker_signed_leaf',
+  ];
+
+  static List<String> _postcardStickerIds(Postcard pc) {
+    final seed = '${pc.locationId}:${pc.incidentId ?? ''}:${pc.seq}';
+    final value = seed.codeUnits.fold<int>(0, (sum, unit) => sum + unit);
+    final first = value % _postcardStickerPool.length;
+    final second =
+        (value ~/ _postcardStickerPool.length + 3) %
+        _postcardStickerPool.length;
+    if (first == second) return [_postcardStickerPool[first]];
+    return [_postcardStickerPool[first], _postcardStickerPool[second]];
   }
 
   /// 旅行相册：已毕业漫游的宠物（含旅程站数 / 收到的明信片数）。
@@ -469,19 +499,25 @@ class GameController extends AsyncNotifier<GameView> {
 class PostcardView {
   final String id;
   final String petName;
+  final String speciesId;
+  final String poseHint;
   final String locationName;
   final String bodyText;
   final String photoBg; // 地点背景美术引用（pc_bg_*）
   final String stampId;
+  final List<String> stickerIds;
   final DateTime sentAt;
   final int seq;
   const PostcardView({
     required this.id,
     required this.petName,
+    required this.speciesId,
+    required this.poseHint,
     required this.locationName,
     required this.bodyText,
     required this.photoBg,
     required this.stampId,
+    required this.stickerIds,
     required this.sentAt,
     required this.seq,
   });

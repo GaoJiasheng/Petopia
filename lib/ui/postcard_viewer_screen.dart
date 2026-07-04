@@ -16,8 +16,10 @@ class PostcardViewerScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFF3E9D6),
       appBar: AppBar(
-        title: Text(card.locationName,
-            style: const TextStyle(color: _ink, fontWeight: FontWeight.bold)),
+        title: Text(
+          card.locationName,
+          style: const TextStyle(color: _ink, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: const Color(0xFFF3E9D6),
         elevation: 0,
         centerTitle: true,
@@ -31,14 +33,18 @@ class PostcardViewerScreen extends StatelessWidget {
               color: const Color(0xFFFFFDF7),
               borderRadius: BorderRadius.circular(18),
               boxShadow: const [
-                BoxShadow(color: Colors.black26, blurRadius: 16, offset: Offset(0, 6)),
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 16,
+                  offset: Offset(0, 6),
+                ),
               ],
             ),
             clipBehavior: Clip.antiAlias,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // 照片 + 邮戳
+                // 照片 + 宠物姿态 + 贴纸 + 邮戳
                 Stack(
                   children: [
                     AspectRatio(
@@ -49,11 +55,40 @@ class PostcardViewerScreen extends StatelessWidget {
                         errorBuilder: (_, _, _) => Container(
                           color: const Color(0xFFDCEAD8),
                           alignment: Alignment.center,
-                          child: const Icon(Icons.photo_rounded,
-                              size: 48, color: _muted),
+                          child: const Icon(
+                            Icons.photo_rounded,
+                            size: 48,
+                            color: _muted,
+                          ),
                         ),
                       ),
                     ),
+                    Positioned.fill(
+                      child: Align(
+                        alignment: const Alignment(0, 0.72),
+                        child: Image.asset(
+                          _poseAsset(card.speciesId, card.poseHint),
+                          width: 190,
+                          fit: BoxFit.contain,
+                          errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                        ),
+                      ),
+                    ),
+                    if (card.stickerIds.isNotEmpty)
+                      Positioned(
+                        left: 14,
+                        bottom: 12,
+                        child: _StickerAsset(card.stickerIds.first, size: 50),
+                      ),
+                    if (card.stickerIds.length > 1)
+                      Positioned(
+                        right: 68,
+                        bottom: 16,
+                        child: Transform.rotate(
+                          angle: -0.08,
+                          child: _StickerAsset(card.stickerIds[1], size: 44),
+                        ),
+                      ),
                     Positioned(
                       top: 10,
                       right: 10,
@@ -62,13 +97,16 @@ class PostcardViewerScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white.withValues(alpha: 0.85),
                           borderRadius: BorderRadius.circular(6),
-                          boxShadow: const [BoxShadow(color: Colors.black26, blurRadius: 4)],
+                          boxShadow: const [
+                            BoxShadow(color: Colors.black26, blurRadius: 4),
+                          ],
                         ),
                         child: Image.asset(
                           'assets/art/postcards/stamps/${card.stampId}.png',
                           width: 46,
                           height: 46,
-                          errorBuilder: (_, _, _) => const SizedBox(width: 46, height: 46),
+                          errorBuilder: (_, _, _) =>
+                              const SizedBox(width: 46, height: 46),
                         ),
                       ),
                     ),
@@ -80,12 +118,19 @@ class PostcardViewerScreen extends StatelessWidget {
                   child: Text(
                     card.bodyText,
                     style: const TextStyle(
-                        fontSize: 15.5, height: 1.7, color: _ink),
+                      fontSize: 15.5,
+                      height: 1.7,
+                      color: _ink,
+                    ),
                   ),
                 ),
                 const Divider(
-                    height: 20, thickness: 1, indent: 20, endIndent: 20,
-                    color: Color(0xFFEDE4D3)),
+                  height: 20,
+                  thickness: 1,
+                  indent: 20,
+                  endIndent: 20,
+                  color: Color(0xFFEDE4D3),
+                ),
                 // 页脚
                 Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
@@ -93,12 +138,19 @@ class PostcardViewerScreen extends StatelessWidget {
                     children: [
                       const Icon(Icons.pets_rounded, size: 15, color: _muted),
                       const SizedBox(width: 5),
-                      Text(card.petName,
-                          style: const TextStyle(
-                              fontSize: 13, fontWeight: FontWeight.w600, color: _muted)),
+                      Text(
+                        card.petName,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                          color: _muted,
+                        ),
+                      ),
                       const Spacer(),
-                      Text('第 ${card.seq + 1} 站 · ${_date(card.sentAt)}',
-                          style: const TextStyle(fontSize: 12, color: _muted)),
+                      Text(
+                        '第 ${card.seq + 1} 站 · ${_date(card.sentAt)}',
+                        style: const TextStyle(fontSize: 12, color: _muted),
+                      ),
                     ],
                   ),
                 ),
@@ -112,4 +164,32 @@ class PostcardViewerScreen extends StatelessWidget {
 
   static String _date(DateTime t) =>
       '${t.year}.${t.month.toString().padLeft(2, '0')}.${t.day.toString().padLeft(2, '0')}';
+
+  static String _poseAsset(String speciesId, String poseHint) {
+    final species = switch (speciesId.startsWith('pet_')
+        ? speciesId.substring(4)
+        : speciesId) {
+      'cham' => 'chameleon',
+      final value => value,
+    };
+    final pose = poseHint == 'idle' ? 'gaze' : poseHint;
+    return 'assets/art/postcards/poses/pc_pose_${species}_$pose.png';
+  }
+}
+
+class _StickerAsset extends StatelessWidget {
+  final String id;
+  final double size;
+  const _StickerAsset(this.id, {required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      'assets/art/postcards/stickers/$id.png',
+      width: size,
+      height: size,
+      fit: BoxFit.contain,
+      errorBuilder: (_, _, _) => const SizedBox.shrink(),
+    );
+  }
 }
