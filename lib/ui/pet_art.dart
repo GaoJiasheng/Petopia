@@ -28,4 +28,10 @@ class PetArt {
     final d = dir(speciesId);
     return 'assets/art/pets/portraits/pet_$d.png';
   }
+
+  /// 动作序列帧条（4096×512 = 8 帧，仅 stageC）。action ∈ eat/pat/play/bath/idle。
+  static String actionSheet(String speciesId, String action) {
+    final d = dir(speciesId);
+    return 'assets/art/pets/$d/actions/pet_${d}_var01_stageC_$action.png';
+  }
 }

@@ -5,6 +5,7 @@ import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
 import '../config/game_config.dart';
 import 'app_icons.dart';
+import 'pet_action_cue.dart';
 import 'pet_art.dart';
 import 'yard_art.dart';
 import 'widgets/pet_sprite.dart';
@@ -17,6 +18,13 @@ import 'pet_dex_screen.dart';
 import 'settings_screen.dart';
 import 'shop_screen.dart';
 import 'visitor_dex_screen.dart';
+
+/// 触发一次宠物动作动画（自增 seq 以便重复播同一动作）。
+void _fireCue(WidgetRef ref, String pose) {
+  final prev = ref.read(petActionCueProvider);
+  ref.read(petActionCueProvider.notifier).state =
+      PetActionCue(pose, (prev?.seq ?? 0) + 1);
+}
 
 /// 院子主屏（P2 响应式版）：满幅背景 + 宠物立绘 + 状态卡 + 4 照料动作（带冷却）。
 /// 动作走真实服务链路（ExpEngine→审计→sqflite）。Flame 动画场景为后续。
@@ -82,7 +90,12 @@ class YardHomeScreen extends ConsumerWidget {
                   child: PetSprite(
                     assetPath: petAsset,
                     width: 220,
-                    onTap: ctrl.pat, // 点宠物 = 摸头（带冷却）
+                    speciesId: pet!.speciesId,
+                    cue: ref.watch(petActionCueProvider),
+                    onTap: () {
+                      ctrl.pat(); // 点宠物 = 摸头（带冷却）
+                      _fireCue(ref, 'pat');
+                    },
                   ),
                 ),
               SafeArea(
@@ -418,11 +431,16 @@ class _ActionBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ctrl = ref.read(gameControllerProvider.notifier);
+    // 动作按钮：调用照料 + 触发对应序列帧动画（feed→eat/toy→play）。
+    void run(VoidCallback care, String pose) {
+      care();
+      _fireCue(ref, pose);
+    }
     final actions = [
-      (CareAction.feed, 'act_feed', '喂食', GameConfig.feedExp, ctrl.feed),
-      (CareAction.pat, 'act_pat', '摸头', GameConfig.patExp, ctrl.pat),
-      (CareAction.toy, 'act_toy', '玩具', GameConfig.toyExp, ctrl.toy),
-      (CareAction.bath, 'act_bath', '洗澡', GameConfig.bathExp, ctrl.bath),
+      (CareAction.feed, 'act_feed', '喂食', GameConfig.feedExp, () => run(ctrl.feed, 'eat')),
+      (CareAction.pat, 'act_pat', '摸头', GameConfig.patExp, () => run(ctrl.pat, 'pat')),
+      (CareAction.toy, 'act_toy', '玩具', GameConfig.toyExp, () => run(ctrl.toy, 'play')),
+      (CareAction.bath, 'act_bath', '洗澡', GameConfig.bathExp, () => run(ctrl.bath, 'bath')),
     ];
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
