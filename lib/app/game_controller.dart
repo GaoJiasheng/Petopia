@@ -8,6 +8,7 @@ import '../config/game_config.dart';
 import '../domain/enums.dart';
 import '../domain/unlock_rule.dart';
 import '../domain/models/logs.dart';
+import '../domain/models/yard.dart';
 import 'bootstrap.dart';
 import 'game_services.dart';
 import 'notification_service.dart';
@@ -24,8 +25,12 @@ class PetView {
   final PetStage stage;
   final List<String> personality;
   const PetView({
-    required this.name, required this.speciesId, required this.level,
-    required this.exp, required this.stage, required this.personality,
+    required this.name,
+    required this.speciesId,
+    required this.level,
+    required this.exp,
+    required this.stage,
+    required this.personality,
   });
 }
 
@@ -34,16 +39,26 @@ class GameView {
   final PetView? pet;
   final int wallet;
   final int luxuryStage;
+
   /// 各动作剩余冷却秒数（>0 表示冷却中，UI 显示水彩沙漏、置灰）。
   final Map<CareAction, int> cooldownSec;
+
   /// 当前宠是否已达毕业线（可举行毕业典礼）。
   final bool canGraduate;
+
   /// 当前装备的院子主题 id（驱动院子背景）。
   final String activeThemeId;
+
+  /// 自定义院子摆件槽位；为空时 UI 使用默认布置。
+  final List<YardSlotView> decorSlots;
   const GameView({
-    required this.pet, required this.wallet, required this.luxuryStage,
-    required this.cooldownSec, required this.canGraduate,
+    required this.pet,
+    required this.wallet,
+    required this.luxuryStage,
+    required this.cooldownSec,
+    required this.canGraduate,
     required this.activeThemeId,
+    required this.decorSlots,
   });
 }
 
@@ -68,12 +83,37 @@ class GameController extends AsyncNotifier<GameView> {
 
   AudioService get _audio => ref.read(audioServiceProvider);
 
-  Future<void> feed() => _care(CareAction.feed, ExpSource.feed, GameConfig.feedExp, GameConfig.feedCooldownMin);
-  Future<void> pat() => _care(CareAction.pat, ExpSource.pat, GameConfig.patExp, GameConfig.patCooldownMin);
-  Future<void> toy() => _care(CareAction.toy, ExpSource.toy, GameConfig.toyExp, GameConfig.toyCooldownMin);
-  Future<void> bath() => _care(CareAction.bath, ExpSource.bath, GameConfig.bathExp, 0); // 洗澡按自然日，无分钟冷却
+  Future<void> feed() => _care(
+    CareAction.feed,
+    ExpSource.feed,
+    GameConfig.feedExp,
+    GameConfig.feedCooldownMin,
+  );
+  Future<void> pat() => _care(
+    CareAction.pat,
+    ExpSource.pat,
+    GameConfig.patExp,
+    GameConfig.patCooldownMin,
+  );
+  Future<void> toy() => _care(
+    CareAction.toy,
+    ExpSource.toy,
+    GameConfig.toyExp,
+    GameConfig.toyCooldownMin,
+  );
+  Future<void> bath() => _care(
+    CareAction.bath,
+    ExpSource.bath,
+    GameConfig.bathExp,
+    0,
+  ); // 洗澡按自然日，无分钟冷却
 
-  Future<void> _care(CareAction action, ExpSource source, int baseExp, int cooldownMin) async {
+  Future<void> _care(
+    CareAction action,
+    ExpSource source,
+    int baseExp,
+    int cooldownMin,
+  ) async {
     final pet = _svc.session.current;
     if (pet == null) return;
     if (_remainingSec(action, cooldownMin) > 0) return; // 冷却中，忽略
@@ -134,8 +174,13 @@ class GameController extends AsyncNotifier<GameView> {
         hint = seen ? rule.clueText : '？？？';
       }
       return DexEntryView(
-          speciesId: sp.id, name: sp.name, category: sp.category,
-          baseTone: sp.baseTone, state: state, hint: hint);
+        speciesId: sp.id,
+        name: sp.name,
+        category: sp.category,
+        baseTone: sp.baseTone,
+        state: state,
+        hint: hint,
+      );
     }).toList();
   }
 
@@ -170,8 +215,12 @@ class GameController extends AsyncNotifier<GameView> {
     final bal = _svc.session.wallet.balance;
     return _svc.content.shopItems.map((it) {
       final owned = switch (it.effect.type) {
-        EffectType.themeSkin => yard.ownedThemeIds.contains(it.effect.params['themeId']),
-        EffectType.decor => yard.ownedDecorIds.contains(it.effect.params['decorId']),
+        EffectType.themeSkin => yard.ownedThemeIds.contains(
+          it.effect.params['themeId'],
+        ),
+        EffectType.decor => yard.ownedDecorIds.contains(
+          it.effect.params['decorId'],
+        ),
         EffectType.toyPermanentBonus => yard.ownedPerks.contains(it.id),
         _ => false, // 消耗品/皮肤/概率：不标已拥有
       };
@@ -179,10 +228,16 @@ class GameController extends AsyncNotifier<GameView> {
           ? it.effect.params['themeId'] as String?
           : null;
       return ShopItemView(
-        id: it.id, name: it.name, category: it.category, price: it.price,
-        owned: owned, affordable: bal >= it.price, consumable: it.consumable,
+        id: it.id,
+        name: it.name,
+        category: it.category,
+        price: it.price,
+        owned: owned,
+        affordable: bal >= it.price,
+        consumable: it.consumable,
         themeId: themeId,
-        active: themeId != null && themeId == yard.activeThemeId);
+        active: themeId != null && themeId == yard.activeThemeId,
+      );
     }).toList();
   }
 
@@ -204,8 +259,13 @@ class GameController extends AsyncNotifier<GameView> {
           ? null
           : visits.map((e) => e.date).reduce((a, b) => a.isBefore(b) ? a : b);
       return VisitorDexView(
-        id: v.id, name: v.name, rarity: v.rarity,
-        collected: visits.isNotEmpty, count: visits.length, firstSeen: first);
+        id: v.id,
+        name: v.name,
+        rarity: v.rarity,
+        collected: visits.isNotEmpty,
+        count: visits.length,
+        firstSeen: first,
+      );
     }).toList();
   }
 
@@ -220,6 +280,7 @@ class GameController extends AsyncNotifier<GameView> {
     state = AsyncData(_snapshot());
     _persist();
   }
+
   void toggleSound() {
     _svc.session.settings.sound = !_svc.session.settings.sound;
     _audio.setEnabled(_svc.session.settings.sound);
@@ -244,19 +305,27 @@ class GameController extends AsyncNotifier<GameView> {
       pet: p == null
           ? null
           : PetView(
-              name: p.name, speciesId: p.speciesId, level: p.level, exp: p.exp,
+              name: p.name,
+              speciesId: p.speciesId,
+              level: p.level,
+              exp: p.exp,
               stage: p.stage,
               // 解析性格 id→展示名（爱幻想/温柔…），回退 id。
               personality: p.personality
                   .map((id) => _svc.content.personalityById(id)?.name ?? id)
-                  .toList()),
+                  .toList(),
+            ),
       wallet: _svc.session.wallet.balance,
       luxuryStage: _svc.session.yard.luxuryStage,
       cooldownSec: {
-        for (final a in CareAction.values) a: _remainingSec(a, _cooldownMinOf[a]!),
+        for (final a in CareAction.values)
+          a: _remainingSec(a, _cooldownMinOf[a]!),
       },
       canGraduate: p != null && p.exp >= GameConfig.graduationExp,
       activeThemeId: _svc.session.yard.activeThemeId,
+      decorSlots: _svc.session.yard.slots
+          .map((slot) => YardSlotView(pos: slot.pos, itemId: slot.itemId))
+          .toList(growable: false),
     );
   }
 
@@ -272,14 +341,48 @@ class GameController extends AsyncNotifier<GameView> {
     _persist();
   }
 
+  /// 已拥有摆件（来自商店 decor 商品）。仅返回已购买的 decorId。
+  List<DecorItemView> decorInventory() {
+    final owned = _svc.session.yard.ownedDecorIds.toSet();
+    return _svc.content.shopItems
+        .where((item) => item.effect.type == EffectType.decor)
+        .map((item) {
+          final decorId = item.effect.params['decorId'] as String?;
+          if (decorId == null || !owned.contains(decorId)) return null;
+          return DecorItemView(decorId: decorId, name: item.name);
+        })
+        .whereType<DecorItemView>()
+        .toList(growable: false);
+  }
+
+  /// 指派院子摆件到固定槽位。decorId=null 表示清空。
+  void placeDecor(int pos, String? decorId) {
+    if (pos < 0 || pos >= decorSlotCount) return;
+    final yard = _svc.session.yard;
+    if (decorId != null && !yard.ownedDecorIds.contains(decorId)) return;
+
+    yard.slots.removeWhere(
+      (slot) => slot.pos == pos || (decorId != null && slot.itemId == decorId),
+    );
+    yard.slots.add(YardSlot(pos: pos, itemId: decorId));
+    yard.slots.sort((a, b) => a.pos.compareTo(b.pos));
+    state = AsyncData(_snapshot());
+    _persist();
+  }
+
+  static const int decorSlotCount = 6;
+
   // ── 领养 / 毕业（核心情感闭环）──────────────────────
 
   /// 可领养物种（已解锁）。
   List<AdoptChoiceView> adoptChoices() => _svc.adoptableSpecies().map((sp) {
-        return AdoptChoiceView(
-          speciesId: sp.id, name: sp.name,
-          category: sp.category, baseTone: sp.baseTone);
-      }).toList();
+    return AdoptChoiceView(
+      speciesId: sp.id,
+      name: sp.name,
+      category: sp.category,
+      baseTone: sp.baseTone,
+    );
+  }).toList();
 
   /// 领养新宠为当前在养宠，刷新快照。
   Future<void> adopt(String speciesId, String name) async {
@@ -352,9 +455,14 @@ class PostcardView {
   final DateTime sentAt;
   final int seq;
   const PostcardView({
-    required this.id, required this.petName, required this.locationName,
-    required this.bodyText, required this.photoBg, required this.stampId,
-    required this.sentAt, required this.seq,
+    required this.id,
+    required this.petName,
+    required this.locationName,
+    required this.bodyText,
+    required this.photoBg,
+    required this.stampId,
+    required this.sentAt,
+    required this.seq,
   });
 }
 
@@ -366,8 +474,11 @@ class TravelPetView {
   final int stops;
   final int postcardCount;
   const TravelPetView({
-    required this.speciesId, required this.name, required this.graduatedAt,
-    required this.stops, required this.postcardCount,
+    required this.speciesId,
+    required this.name,
+    required this.graduatedAt,
+    required this.stops,
+    required this.postcardCount,
   });
 }
 
@@ -378,8 +489,10 @@ class AdoptChoiceView {
   final PetCategory category;
   final String baseTone;
   const AdoptChoiceView({
-    required this.speciesId, required this.name,
-    required this.category, required this.baseTone,
+    required this.speciesId,
+    required this.name,
+    required this.category,
+    required this.baseTone,
   });
 }
 
@@ -392,8 +505,12 @@ class DexEntryView {
   final DexState state;
   final String? hint; // 未解锁的条件/线索
   const DexEntryView({
-    required this.speciesId, required this.name, required this.category,
-    required this.baseTone, required this.state, this.hint,
+    required this.speciesId,
+    required this.name,
+    required this.category,
+    required this.baseTone,
+    required this.state,
+    this.hint,
   });
 }
 
@@ -408,9 +525,14 @@ class AchievementView {
   final String? clueText;
   final int rewardFluff;
   const AchievementView({
-    required this.id, required this.name, required this.hidden,
-    required this.unlocked, required this.progress, required this.target,
-    this.clueText, required this.rewardFluff,
+    required this.id,
+    required this.name,
+    required this.hidden,
+    required this.unlocked,
+    required this.progress,
+    required this.target,
+    this.clueText,
+    required this.rewardFluff,
   });
 }
 
@@ -426,10 +548,30 @@ class ShopItemView {
   final String? themeId; // themeSkin 类的主题 id（可装备）；否则 null
   final bool active; // 是否当前装备中的主题
   const ShopItemView({
-    required this.id, required this.name, required this.category,
-    required this.price, required this.owned, required this.affordable,
-    required this.consumable, this.themeId, this.active = false,
+    required this.id,
+    required this.name,
+    required this.category,
+    required this.price,
+    required this.owned,
+    required this.affordable,
+    required this.consumable,
+    this.themeId,
+    this.active = false,
   });
+}
+
+/// 院子摆件槽位视图。
+class YardSlotView {
+  final int pos;
+  final String? itemId;
+  const YardSlotView({required this.pos, this.itemId});
+}
+
+/// 已拥有摆件视图。
+class DecorItemView {
+  final String decorId;
+  final String name;
+  const DecorItemView({required this.decorId, required this.name});
 }
 
 /// 来客图鉴视图。
@@ -441,10 +583,15 @@ class VisitorDexView {
   final int count;
   final DateTime? firstSeen;
   const VisitorDexView({
-    required this.id, required this.name, required this.rarity,
-    required this.collected, required this.count, this.firstSeen,
+    required this.id,
+    required this.name,
+    required this.rarity,
+    required this.collected,
+    required this.count,
+    this.firstSeen,
   });
 }
 
-final gameControllerProvider =
-    AsyncNotifierProvider<GameController, GameView>(GameController.new);
+final gameControllerProvider = AsyncNotifierProvider<GameController, GameView>(
+  GameController.new,
+);
