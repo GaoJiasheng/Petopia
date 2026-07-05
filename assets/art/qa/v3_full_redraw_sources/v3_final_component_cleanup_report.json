@@ -1,0 +1,320 @@
+[
+  {
+    "components": 3,
+    "kept": 1,
+    "removed": 2,
+    "file": "boo/pet_boo_var01_stageA.png"
+  },
+  {
+    "components": 5,
+    "kept": 2,
+    "removed": 3,
+    "file": "boo/pet_boo_var05_stageA.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "boo/pet_boo_var01_stageB.png"
+  },
+  {
+    "components": 11,
+    "kept": 2,
+    "removed": 9,
+    "file": "boo/pet_boo_var05_stageB.png"
+  },
+  {
+    "components": 4,
+    "kept": 1,
+    "removed": 3,
+    "file": "boo/pet_boo_var05_stageC.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "ember/pet_ember_var01_stageA.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "ember/pet_ember_var02_stageA.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "ember/pet_ember_var03_stageA.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "ember/pet_ember_var04_stageA.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "ember/pet_ember_var01_stageB.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "ember/pet_ember_var02_stageB.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "ember/pet_ember_var03_stageB.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "ember/pet_ember_var05_stageB.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "ember/pet_ember_var02_stageC.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "ember/pet_ember_var04_stageC.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "ember/pet_ember_var02_stageD.png"
+  },
+  {
+    "components": 3,
+    "kept": 2,
+    "removed": 1,
+    "file": "parrot/pet_parrot_var04_stageB.png"
+  },
+  {
+    "components": 3,
+    "kept": 2,
+    "removed": 1,
+    "file": "parrot/pet_parrot_var02_stageC.png"
+  },
+  {
+    "components": 9,
+    "kept": 7,
+    "removed": 2,
+    "file": "parrot/pet_parrot_var04_stageC.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "parrot/pet_parrot_var02_stageD.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "parrot/pet_parrot_var03_stageD.png"
+  },
+  {
+    "components": 8,
+    "kept": 5,
+    "removed": 3,
+    "file": "parrot/pet_parrot_var04_stageD.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "rabbit/pet_rabbit_var02_stageC.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "rabbit/pet_rabbit_var03_stageC.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "rabbit/pet_rabbit_var04_stageC.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "rabbit/pet_rabbit_var05_stageC.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "rabbit/pet_rabbit_var04_stageD.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "rabbit/pet_rabbit_var05_stageD.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "snake/pet_snake_var04_stageC.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "snake/pet_snake_var05_stageC.png"
+  },
+  {
+    "components": 5,
+    "kept": 1,
+    "removed": 4,
+    "file": "snake/pet_snake_var01_stageD.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "starbug/pet_starbug_var02_stageA.png"
+  },
+  {
+    "components": 4,
+    "kept": 1,
+    "removed": 3,
+    "file": "starbug/pet_starbug_var03_stageA.png"
+  },
+  {
+    "components": 4,
+    "kept": 2,
+    "removed": 2,
+    "file": "starbug/pet_starbug_var04_stageA.png"
+  },
+  {
+    "components": 4,
+    "kept": 1,
+    "removed": 3,
+    "file": "starbug/pet_starbug_var05_stageA.png"
+  },
+  {
+    "components": 3,
+    "kept": 1,
+    "removed": 2,
+    "file": "starbug/pet_starbug_var01_stageB.png"
+  },
+  {
+    "components": 4,
+    "kept": 1,
+    "removed": 3,
+    "file": "starbug/pet_starbug_var02_stageB.png"
+  },
+  {
+    "components": 6,
+    "kept": 1,
+    "removed": 5,
+    "file": "starbug/pet_starbug_var03_stageB.png"
+  },
+  {
+    "components": 5,
+    "kept": 1,
+    "removed": 4,
+    "file": "starbug/pet_starbug_var04_stageB.png"
+  },
+  {
+    "components": 4,
+    "kept": 2,
+    "removed": 2,
+    "file": "starbug/pet_starbug_var05_stageB.png"
+  },
+  {
+    "components": 5,
+    "kept": 1,
+    "removed": 4,
+    "file": "starbug/pet_starbug_var01_stageC.png"
+  },
+  {
+    "components": 5,
+    "kept": 1,
+    "removed": 4,
+    "file": "starbug/pet_starbug_var02_stageC.png"
+  },
+  {
+    "components": 5,
+    "kept": 1,
+    "removed": 4,
+    "file": "starbug/pet_starbug_var03_stageC.png"
+  },
+  {
+    "components": 5,
+    "kept": 1,
+    "removed": 4,
+    "file": "starbug/pet_starbug_var04_stageC.png"
+  },
+  {
+    "components": 4,
+    "kept": 1,
+    "removed": 3,
+    "file": "starbug/pet_starbug_var05_stageC.png"
+  },
+  {
+    "components": 3,
+    "kept": 1,
+    "removed": 2,
+    "file": "starbug/pet_starbug_var01_stageD.png"
+  },
+  {
+    "components": 3,
+    "kept": 1,
+    "removed": 2,
+    "file": "starbug/pet_starbug_var02_stageD.png"
+  },
+  {
+    "components": 4,
+    "kept": 1,
+    "removed": 3,
+    "file": "starbug/pet_starbug_var03_stageD.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "starbug/pet_starbug_var04_stageD.png"
+  },
+  {
+    "components": 3,
+    "kept": 1,
+    "removed": 2,
+    "file": "starbug/pet_starbug_var05_stageD.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "turtle/pet_turtle_var03_stageD.png"
+  },
+  {
+    "components": 3,
+    "kept": 1,
+    "removed": 2,
+    "file": "turtle/pet_turtle_var04_stageD.png"
+  },
+  {
+    "components": 2,
+    "kept": 1,
+    "removed": 1,
+    "file": "turtle/pet_turtle_var05_stageD.png"
+  }
+]

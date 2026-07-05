@@ -1,0 +1,5526 @@
+{
+  "target_long": 405,
+  "target_baseline": 456,
+  "assets": [
+    {
+      "file": "assets/art/pets/boo/pet_boo_var01_stageA.png",
+      "old_bbox": [
+        102,
+        248,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        155,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 155,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var01_stageB.png",
+      "old_bbox": [
+        122,
+        107,
+        390,
+        476
+      ],
+      "new_bbox": [
+        109,
+        51,
+        403,
+        456
+      ],
+      "margins": {
+        "left": 109,
+        "top": 51,
+        "right": 109,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var01_stageC.png",
+      "old_bbox": [
+        93,
+        66,
+        419,
+        476
+      ],
+      "new_bbox": [
+        95,
+        51,
+        417,
+        456
+      ],
+      "margins": {
+        "left": 95,
+        "top": 51,
+        "right": 95,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var01_stageD.png",
+      "old_bbox": [
+        61,
+        140,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        106,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 106,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var02_stageA.png",
+      "old_bbox": [
+        102,
+        239,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        143,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 143,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var02_stageB.png",
+      "old_bbox": [
+        125,
+        107,
+        386,
+        476
+      ],
+      "new_bbox": [
+        113,
+        51,
+        399,
+        456
+      ],
+      "margins": {
+        "left": 113,
+        "top": 51,
+        "right": 113,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var02_stageC.png",
+      "old_bbox": [
+        86,
+        66,
+        425,
+        476
+      ],
+      "new_bbox": [
+        88,
+        51,
+        423,
+        456
+      ],
+      "margins": {
+        "left": 88,
+        "top": 51,
+        "right": 89,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var02_stageD.png",
+      "old_bbox": [
+        61,
+        103,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        68,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 68,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var03_stageA.png",
+      "old_bbox": [
+        102,
+        231,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        133,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 133,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var03_stageB.png",
+      "old_bbox": [
+        126,
+        107,
+        385,
+        476
+      ],
+      "new_bbox": [
+        114,
+        51,
+        398,
+        456
+      ],
+      "margins": {
+        "left": 114,
+        "top": 51,
+        "right": 114,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var03_stageC.png",
+      "old_bbox": [
+        91,
+        66,
+        420,
+        476
+      ],
+      "new_bbox": [
+        93,
+        51,
+        418,
+        456
+      ],
+      "margins": {
+        "left": 93,
+        "top": 51,
+        "right": 94,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var03_stageD.png",
+      "old_bbox": [
+        61,
+        107,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        72,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 72,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var04_stageA.png",
+      "old_bbox": [
+        102,
+        254,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        163,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 163,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var04_stageB.png",
+      "old_bbox": [
+        116,
+        107,
+        396,
+        476
+      ],
+      "new_bbox": [
+        102,
+        51,
+        409,
+        456
+      ],
+      "margins": {
+        "left": 102,
+        "top": 51,
+        "right": 103,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var04_stageC.png",
+      "old_bbox": [
+        58,
+        66,
+        454,
+        476
+      ],
+      "new_bbox": [
+        60,
+        51,
+        451,
+        456
+      ],
+      "margins": {
+        "left": 60,
+        "top": 51,
+        "right": 61,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var04_stageD.png",
+      "old_bbox": [
+        61,
+        98,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        62,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 62,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var05_stageA.png",
+      "old_bbox": [
+        102,
+        242,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        147,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 147,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var05_stageB.png",
+      "old_bbox": [
+        123,
+        107,
+        389,
+        476
+      ],
+      "new_bbox": [
+        110,
+        51,
+        402,
+        456
+      ],
+      "margins": {
+        "left": 110,
+        "top": 51,
+        "right": 110,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var05_stageC.png",
+      "old_bbox": [
+        98,
+        66,
+        413,
+        476
+      ],
+      "new_bbox": [
+        100,
+        51,
+        411,
+        456
+      ],
+      "margins": {
+        "left": 100,
+        "top": 51,
+        "right": 101,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/boo/pet_boo_var05_stageD.png",
+      "old_bbox": [
+        61,
+        122,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        87,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 87,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var01_stageA.png",
+      "old_bbox": [
+        102,
+        255,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        164,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 164,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var01_stageB.png",
+      "old_bbox": [
+        97,
+        107,
+        414,
+        476
+      ],
+      "new_bbox": [
+        82,
+        51,
+        430,
+        456
+      ],
+      "margins": {
+        "left": 82,
+        "top": 51,
+        "right": 82,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var01_stageC.png",
+      "old_bbox": [
+        84,
+        66,
+        427,
+        476
+      ],
+      "new_bbox": [
+        86,
+        51,
+        425,
+        456
+      ],
+      "margins": {
+        "left": 86,
+        "top": 51,
+        "right": 87,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var01_stageD.png",
+      "old_bbox": [
+        61,
+        155,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        122,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 122,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var02_stageA.png",
+      "old_bbox": [
+        102,
+        259,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        170,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 170,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var02_stageB.png",
+      "old_bbox": [
+        100,
+        107,
+        411,
+        476
+      ],
+      "new_bbox": [
+        85,
+        51,
+        426,
+        456
+      ],
+      "margins": {
+        "left": 85,
+        "top": 51,
+        "right": 86,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var02_stageC.png",
+      "old_bbox": [
+        58,
+        66,
+        454,
+        476
+      ],
+      "new_bbox": [
+        60,
+        51,
+        451,
+        456
+      ],
+      "margins": {
+        "left": 60,
+        "top": 51,
+        "right": 61,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var02_stageD.png",
+      "old_bbox": [
+        61,
+        161,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        128,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 128,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var03_stageA.png",
+      "old_bbox": [
+        102,
+        260,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        171,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 171,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var03_stageB.png",
+      "old_bbox": [
+        87,
+        107,
+        424,
+        476
+      ],
+      "new_bbox": [
+        71,
+        51,
+        441,
+        456
+      ],
+      "margins": {
+        "left": 71,
+        "top": 51,
+        "right": 71,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var03_stageC.png",
+      "old_bbox": [
+        82,
+        66,
+        429,
+        476
+      ],
+      "new_bbox": [
+        84,
+        51,
+        427,
+        456
+      ],
+      "margins": {
+        "left": 84,
+        "top": 51,
+        "right": 85,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var03_stageD.png",
+      "old_bbox": [
+        61,
+        161,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        128,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 128,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var04_stageA.png",
+      "old_bbox": [
+        102,
+        251,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        159,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 159,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var04_stageB.png",
+      "old_bbox": [
+        71,
+        132,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        78,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 78,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var04_stageC.png",
+      "old_bbox": [
+        57,
+        66,
+        455,
+        476
+      ],
+      "new_bbox": [
+        59,
+        51,
+        452,
+        456
+      ],
+      "margins": {
+        "left": 59,
+        "top": 51,
+        "right": 60,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var04_stageD.png",
+      "old_bbox": [
+        61,
+        202,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        171,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 171,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var05_stageA.png",
+      "old_bbox": [
+        102,
+        252,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        160,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 160,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var05_stageB.png",
+      "old_bbox": [
+        106,
+        107,
+        406,
+        476
+      ],
+      "new_bbox": [
+        91,
+        51,
+        420,
+        456
+      ],
+      "margins": {
+        "left": 91,
+        "top": 51,
+        "right": 92,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var05_stageC.png",
+      "old_bbox": [
+        82,
+        66,
+        430,
+        476
+      ],
+      "new_bbox": [
+        84,
+        51,
+        428,
+        456
+      ],
+      "margins": {
+        "left": 84,
+        "top": 51,
+        "right": 84,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cat/pet_cat_var05_stageD.png",
+      "old_bbox": [
+        61,
+        150,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        117,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 117,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var01_stageA.png",
+      "old_bbox": [
+        102,
+        276,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        192,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 192,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var01_stageB.png",
+      "old_bbox": [
+        115,
+        107,
+        396,
+        476
+      ],
+      "new_bbox": [
+        102,
+        51,
+        410,
+        456
+      ],
+      "margins": {
+        "left": 102,
+        "top": 51,
+        "right": 102,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var01_stageC.png",
+      "old_bbox": [
+        89,
+        66,
+        423,
+        476
+      ],
+      "new_bbox": [
+        91,
+        51,
+        421,
+        456
+      ],
+      "margins": {
+        "left": 91,
+        "top": 51,
+        "right": 91,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var01_stageD.png",
+      "old_bbox": [
+        61,
+        185,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        153,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 153,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var02_stageA.png",
+      "old_bbox": [
+        102,
+        337,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        273,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 273,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var02_stageB.png",
+      "old_bbox": [
+        103,
+        107,
+        409,
+        476
+      ],
+      "new_bbox": [
+        88,
+        51,
+        424,
+        456
+      ],
+      "margins": {
+        "left": 88,
+        "top": 51,
+        "right": 88,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var02_stageC.png",
+      "old_bbox": [
+        56,
+        66,
+        455,
+        476
+      ],
+      "new_bbox": [
+        59,
+        51,
+        453,
+        456
+      ],
+      "margins": {
+        "left": 59,
+        "top": 51,
+        "right": 59,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var02_stageD.png",
+      "old_bbox": [
+        61,
+        207,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        176,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 176,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var03_stageA.png",
+      "old_bbox": [
+        102,
+        269,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        183,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 183,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var03_stageB.png",
+      "old_bbox": [
+        104,
+        107,
+        407,
+        476
+      ],
+      "new_bbox": [
+        89,
+        51,
+        422,
+        456
+      ],
+      "margins": {
+        "left": 89,
+        "top": 51,
+        "right": 90,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var03_stageC.png",
+      "old_bbox": [
+        82,
+        66,
+        430,
+        476
+      ],
+      "new_bbox": [
+        84,
+        51,
+        428,
+        456
+      ],
+      "margins": {
+        "left": 84,
+        "top": 51,
+        "right": 84,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var03_stageD.png",
+      "old_bbox": [
+        61,
+        200,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        169,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 169,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var04_stageA.png",
+      "old_bbox": [
+        102,
+        262,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        174,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 174,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var04_stageB.png",
+      "old_bbox": [
+        108,
+        107,
+        404,
+        476
+      ],
+      "new_bbox": [
+        93,
+        51,
+        418,
+        456
+      ],
+      "margins": {
+        "left": 93,
+        "top": 51,
+        "right": 94,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var04_stageC.png",
+      "old_bbox": [
+        60,
+        66,
+        452,
+        476
+      ],
+      "new_bbox": [
+        62,
+        51,
+        449,
+        456
+      ],
+      "margins": {
+        "left": 62,
+        "top": 51,
+        "right": 63,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var04_stageD.png",
+      "old_bbox": [
+        61,
+        205,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        174,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 174,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var05_stageA.png",
+      "old_bbox": [
+        102,
+        276,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        192,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 192,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var05_stageB.png",
+      "old_bbox": [
+        111,
+        107,
+        401,
+        476
+      ],
+      "new_bbox": [
+        97,
+        51,
+        415,
+        456
+      ],
+      "margins": {
+        "left": 97,
+        "top": 51,
+        "right": 97,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var05_stageC.png",
+      "old_bbox": [
+        86,
+        66,
+        425,
+        476
+      ],
+      "new_bbox": [
+        88,
+        51,
+        423,
+        456
+      ],
+      "margins": {
+        "left": 88,
+        "top": 51,
+        "right": 89,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/cham/pet_cham_var05_stageD.png",
+      "old_bbox": [
+        61,
+        145,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        111,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 111,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var01_stageA.png",
+      "old_bbox": [
+        102,
+        234,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        137,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 137,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var01_stageB.png",
+      "old_bbox": [
+        107,
+        107,
+        404,
+        476
+      ],
+      "new_bbox": [
+        93,
+        51,
+        419,
+        456
+      ],
+      "margins": {
+        "left": 93,
+        "top": 51,
+        "right": 93,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var01_stageC.png",
+      "old_bbox": [
+        98,
+        66,
+        413,
+        476
+      ],
+      "new_bbox": [
+        100,
+        51,
+        411,
+        456
+      ],
+      "margins": {
+        "left": 100,
+        "top": 51,
+        "right": 101,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var01_stageD.png",
+      "old_bbox": [
+        61,
+        164,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        131,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 131,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var02_stageA.png",
+      "old_bbox": [
+        102,
+        217,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        114,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 114,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var02_stageB.png",
+      "old_bbox": [
+        102,
+        107,
+        409,
+        476
+      ],
+      "new_bbox": [
+        87,
+        51,
+        424,
+        456
+      ],
+      "margins": {
+        "left": 87,
+        "top": 51,
+        "right": 88,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var02_stageC.png",
+      "old_bbox": [
+        52,
+        66,
+        460,
+        476
+      ],
+      "new_bbox": [
+        54,
+        51,
+        457,
+        456
+      ],
+      "margins": {
+        "left": 54,
+        "top": 51,
+        "right": 55,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var02_stageD.png",
+      "old_bbox": [
+        61,
+        213,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        182,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 182,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var03_stageA.png",
+      "old_bbox": [
+        102,
+        212,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        108,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 108,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var03_stageB.png",
+      "old_bbox": [
+        106,
+        107,
+        405,
+        476
+      ],
+      "new_bbox": [
+        92,
+        51,
+        420,
+        456
+      ],
+      "margins": {
+        "left": 92,
+        "top": 51,
+        "right": 92,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var03_stageC.png",
+      "old_bbox": [
+        98,
+        66,
+        414,
+        476
+      ],
+      "new_bbox": [
+        100,
+        51,
+        412,
+        456
+      ],
+      "margins": {
+        "left": 100,
+        "top": 51,
+        "right": 100,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var03_stageD.png",
+      "old_bbox": [
+        61,
+        169,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        136,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 136,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var04_stageA.png",
+      "old_bbox": [
+        102,
+        238,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        142,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 142,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var04_stageB.png",
+      "old_bbox": [
+        103,
+        107,
+        409,
+        476
+      ],
+      "new_bbox": [
+        88,
+        51,
+        424,
+        456
+      ],
+      "margins": {
+        "left": 88,
+        "top": 51,
+        "right": 88,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var04_stageC.png",
+      "old_bbox": [
+        87,
+        66,
+        425,
+        476
+      ],
+      "new_bbox": [
+        89,
+        51,
+        423,
+        456
+      ],
+      "margins": {
+        "left": 89,
+        "top": 51,
+        "right": 89,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var04_stageD.png",
+      "old_bbox": [
+        61,
+        215,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        184,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 184,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var05_stageA.png",
+      "old_bbox": [
+        102,
+        241,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        146,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 146,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var05_stageB.png",
+      "old_bbox": [
+        99,
+        107,
+        412,
+        476
+      ],
+      "new_bbox": [
+        84,
+        51,
+        428,
+        456
+      ],
+      "margins": {
+        "left": 84,
+        "top": 51,
+        "right": 84,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var05_stageC.png",
+      "old_bbox": [
+        72,
+        66,
+        440,
+        476
+      ],
+      "new_bbox": [
+        74,
+        51,
+        438,
+        456
+      ],
+      "margins": {
+        "left": 74,
+        "top": 51,
+        "right": 74,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/ember/pet_ember_var05_stageD.png",
+      "old_bbox": [
+        61,
+        179,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        147,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 147,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var01_stageA.png",
+      "old_bbox": [
+        102,
+        188,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        76,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 76,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var01_stageB.png",
+      "old_bbox": [
+        105,
+        107,
+        406,
+        476
+      ],
+      "new_bbox": [
+        91,
+        51,
+        421,
+        456
+      ],
+      "margins": {
+        "left": 91,
+        "top": 51,
+        "right": 91,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var01_stageC.png",
+      "old_bbox": [
+        84,
+        66,
+        427,
+        476
+      ],
+      "new_bbox": [
+        86,
+        51,
+        425,
+        456
+      ],
+      "margins": {
+        "left": 86,
+        "top": 51,
+        "right": 87,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var01_stageD.png",
+      "old_bbox": [
+        61,
+        124,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        90,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 90,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var02_stageA.png",
+      "old_bbox": [
+        102,
+        194,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        84,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 84,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var02_stageB.png",
+      "old_bbox": [
+        105,
+        107,
+        406,
+        476
+      ],
+      "new_bbox": [
+        91,
+        51,
+        421,
+        456
+      ],
+      "margins": {
+        "left": 91,
+        "top": 51,
+        "right": 91,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var02_stageC.png",
+      "old_bbox": [
+        80,
+        66,
+        432,
+        476
+      ],
+      "new_bbox": [
+        82,
+        51,
+        430,
+        456
+      ],
+      "margins": {
+        "left": 82,
+        "top": 51,
+        "right": 82,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var02_stageD.png",
+      "old_bbox": [
+        61,
+        212,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        181,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 181,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var03_stageA.png",
+      "old_bbox": [
+        102,
+        200,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        92,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 92,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var03_stageB.png",
+      "old_bbox": [
+        108,
+        107,
+        404,
+        476
+      ],
+      "new_bbox": [
+        93,
+        51,
+        418,
+        456
+      ],
+      "margins": {
+        "left": 93,
+        "top": 51,
+        "right": 94,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var03_stageC.png",
+      "old_bbox": [
+        76,
+        66,
+        435,
+        476
+      ],
+      "new_bbox": [
+        78,
+        51,
+        433,
+        456
+      ],
+      "margins": {
+        "left": 78,
+        "top": 51,
+        "right": 79,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var03_stageD.png",
+      "old_bbox": [
+        61,
+        198,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        167,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 167,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var04_stageA.png",
+      "old_bbox": [
+        102,
+        180,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        66,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 66,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var04_stageB.png",
+      "old_bbox": [
+        111,
+        107,
+        401,
+        476
+      ],
+      "new_bbox": [
+        97,
+        51,
+        415,
+        456
+      ],
+      "margins": {
+        "left": 97,
+        "top": 51,
+        "right": 97,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var04_stageC.png",
+      "old_bbox": [
+        77,
+        66,
+        434,
+        476
+      ],
+      "new_bbox": [
+        79,
+        51,
+        432,
+        456
+      ],
+      "margins": {
+        "left": 79,
+        "top": 51,
+        "right": 80,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var04_stageD.png",
+      "old_bbox": [
+        61,
+        146,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        112,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 112,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var05_stageA.png",
+      "old_bbox": [
+        102,
+        196,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        87,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 87,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var05_stageB.png",
+      "old_bbox": [
+        112,
+        107,
+        400,
+        476
+      ],
+      "new_bbox": [
+        98,
+        51,
+        414,
+        456
+      ],
+      "margins": {
+        "left": 98,
+        "top": 51,
+        "right": 98,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var05_stageC.png",
+      "old_bbox": [
+        77,
+        66,
+        434,
+        476
+      ],
+      "new_bbox": [
+        79,
+        51,
+        432,
+        456
+      ],
+      "margins": {
+        "left": 79,
+        "top": 51,
+        "right": 80,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/hamster/pet_hamster_var05_stageD.png",
+      "old_bbox": [
+        61,
+        142,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        108,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 108,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var01_stageA.png",
+      "old_bbox": [
+        109,
+        169,
+        402,
+        476
+      ],
+      "new_bbox": [
+        62,
+        51,
+        449,
+        456
+      ],
+      "margins": {
+        "left": 62,
+        "top": 51,
+        "right": 63,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var01_stageB.png",
+      "old_bbox": [
+        110,
+        107,
+        401,
+        476
+      ],
+      "new_bbox": [
+        96,
+        51,
+        415,
+        456
+      ],
+      "margins": {
+        "left": 96,
+        "top": 51,
+        "right": 97,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var01_stageC.png",
+      "old_bbox": [
+        72,
+        63,
+        440,
+        468
+      ],
+      "new_bbox": [
+        72,
+        51,
+        440,
+        456
+      ],
+      "margins": {
+        "left": 72,
+        "top": 51,
+        "right": 72,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var01_stageD.png",
+      "old_bbox": [
+        79,
+        78,
+        433,
+        468
+      ],
+      "new_bbox": [
+        72,
+        51,
+        440,
+        456
+      ],
+      "margins": {
+        "left": 72,
+        "top": 51,
+        "right": 72,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var02_stageA.png",
+      "old_bbox": [
+        105,
+        169,
+        406,
+        476
+      ],
+      "new_bbox": [
+        57,
+        51,
+        454,
+        456
+      ],
+      "margins": {
+        "left": 57,
+        "top": 51,
+        "right": 58,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var02_stageB.png",
+      "old_bbox": [
+        71,
+        156,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        105,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 105,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var02_stageC.png",
+      "old_bbox": [
+        85,
+        63,
+        426,
+        468
+      ],
+      "new_bbox": [
+        85,
+        51,
+        426,
+        456
+      ],
+      "margins": {
+        "left": 85,
+        "top": 51,
+        "right": 86,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var02_stageD.png",
+      "old_bbox": [
+        92,
+        78,
+        420,
+        468
+      ],
+      "new_bbox": [
+        85,
+        51,
+        426,
+        456
+      ],
+      "margins": {
+        "left": 85,
+        "top": 51,
+        "right": 86,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var03_stageA.png",
+      "old_bbox": [
+        105,
+        169,
+        407,
+        476
+      ],
+      "new_bbox": [
+        57,
+        51,
+        455,
+        456
+      ],
+      "margins": {
+        "left": 57,
+        "top": 51,
+        "right": 57,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var03_stageB.png",
+      "old_bbox": [
+        100,
+        107,
+        412,
+        476
+      ],
+      "new_bbox": [
+        85,
+        51,
+        427,
+        456
+      ],
+      "margins": {
+        "left": 85,
+        "top": 51,
+        "right": 85,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var03_stageC.png",
+      "old_bbox": [
+        92,
+        63,
+        419,
+        468
+      ],
+      "new_bbox": [
+        92,
+        51,
+        419,
+        456
+      ],
+      "margins": {
+        "left": 92,
+        "top": 51,
+        "right": 93,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var03_stageD.png",
+      "old_bbox": [
+        99,
+        78,
+        413,
+        468
+      ],
+      "new_bbox": [
+        93,
+        51,
+        419,
+        456
+      ],
+      "margins": {
+        "left": 93,
+        "top": 51,
+        "right": 93,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var04_stageA.png",
+      "old_bbox": [
+        120,
+        169,
+        391,
+        476
+      ],
+      "new_bbox": [
+        77,
+        51,
+        435,
+        456
+      ],
+      "margins": {
+        "left": 77,
+        "top": 51,
+        "right": 77,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var04_stageB.png",
+      "old_bbox": [
+        121,
+        107,
+        391,
+        476
+      ],
+      "new_bbox": [
+        108,
+        51,
+        404,
+        456
+      ],
+      "margins": {
+        "left": 108,
+        "top": 51,
+        "right": 108,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var04_stageC.png",
+      "old_bbox": [
+        118,
+        63,
+        394,
+        468
+      ],
+      "new_bbox": [
+        118,
+        51,
+        394,
+        456
+      ],
+      "margins": {
+        "left": 118,
+        "top": 51,
+        "right": 118,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var04_stageD.png",
+      "old_bbox": [
+        123,
+        78,
+        388,
+        468
+      ],
+      "new_bbox": [
+        118,
+        51,
+        393,
+        456
+      ],
+      "margins": {
+        "left": 118,
+        "top": 51,
+        "right": 119,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var05_stageA.png",
+      "old_bbox": [
+        102,
+        180,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        66,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 66,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var05_stageB.png",
+      "old_bbox": [
+        93,
+        107,
+        418,
+        476
+      ],
+      "new_bbox": [
+        77,
+        51,
+        434,
+        456
+      ],
+      "margins": {
+        "left": 77,
+        "top": 51,
+        "right": 78,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var05_stageC.png",
+      "old_bbox": [
+        79,
+        63,
+        433,
+        468
+      ],
+      "new_bbox": [
+        79,
+        51,
+        433,
+        456
+      ],
+      "margins": {
+        "left": 79,
+        "top": 51,
+        "right": 79,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var05_stageD.png",
+      "old_bbox": [
+        86,
+        78,
+        426,
+        468
+      ],
+      "new_bbox": [
+        79,
+        51,
+        432,
+        456
+      ],
+      "margins": {
+        "left": 79,
+        "top": 51,
+        "right": 80,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var01_stageA.png",
+      "old_bbox": [
+        102,
+        305,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        230,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 230,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var01_stageB.png",
+      "old_bbox": [
+        99,
+        107,
+        412,
+        476
+      ],
+      "new_bbox": [
+        84,
+        51,
+        428,
+        456
+      ],
+      "margins": {
+        "left": 84,
+        "top": 51,
+        "right": 84,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var01_stageC.png",
+      "old_bbox": [
+        51,
+        84,
+        461,
+        476
+      ],
+      "new_bbox": [
+        53,
+        69,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 69,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var01_stageD.png",
+      "old_bbox": [
+        61,
+        165,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        132,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 132,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var02_stageA.png",
+      "old_bbox": [
+        102,
+        309,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        236,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 236,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var02_stageB.png",
+      "old_bbox": [
+        104,
+        107,
+        408,
+        476
+      ],
+      "new_bbox": [
+        89,
+        51,
+        423,
+        456
+      ],
+      "margins": {
+        "left": 89,
+        "top": 51,
+        "right": 89,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var02_stageC.png",
+      "old_bbox": [
+        51,
+        77,
+        461,
+        476
+      ],
+      "new_bbox": [
+        53,
+        62,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 62,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var02_stageD.png",
+      "old_bbox": [
+        61,
+        165,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        132,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 132,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var03_stageA.png",
+      "old_bbox": [
+        102,
+        298,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        221,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 221,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var03_stageB.png",
+      "old_bbox": [
+        108,
+        107,
+        403,
+        476
+      ],
+      "new_bbox": [
+        94,
+        51,
+        418,
+        456
+      ],
+      "margins": {
+        "left": 94,
+        "top": 51,
+        "right": 94,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var03_stageC.png",
+      "old_bbox": [
+        51,
+        78,
+        461,
+        476
+      ],
+      "new_bbox": [
+        53,
+        63,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 63,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var03_stageD.png",
+      "old_bbox": [
+        61,
+        160,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        127,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 127,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var04_stageA.png",
+      "old_bbox": [
+        102,
+        306,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        232,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 232,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var04_stageB.png",
+      "old_bbox": [
+        100,
+        107,
+        412,
+        476
+      ],
+      "new_bbox": [
+        85,
+        51,
+        427,
+        456
+      ],
+      "margins": {
+        "left": 85,
+        "top": 51,
+        "right": 85,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var04_stageC.png",
+      "old_bbox": [
+        51,
+        87,
+        461,
+        476
+      ],
+      "new_bbox": [
+        53,
+        72,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 72,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var04_stageD.png",
+      "old_bbox": [
+        61,
+        160,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        127,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 127,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var05_stageA.png",
+      "old_bbox": [
+        102,
+        304,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        229,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 229,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var05_stageB.png",
+      "old_bbox": [
+        105,
+        107,
+        407,
+        476
+      ],
+      "new_bbox": [
+        90,
+        51,
+        421,
+        456
+      ],
+      "margins": {
+        "left": 90,
+        "top": 51,
+        "right": 91,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var05_stageC.png",
+      "old_bbox": [
+        51,
+        95,
+        461,
+        476
+      ],
+      "new_bbox": [
+        53,
+        80,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 80,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/rabbit/pet_rabbit_var05_stageD.png",
+      "old_bbox": [
+        61,
+        159,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        126,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 126,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var01_stageA.png",
+      "old_bbox": [
+        102,
+        225,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        125,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 125,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var01_stageB.png",
+      "old_bbox": [
+        114,
+        107,
+        398,
+        476
+      ],
+      "new_bbox": [
+        100,
+        51,
+        412,
+        456
+      ],
+      "margins": {
+        "left": 100,
+        "top": 51,
+        "right": 100,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var01_stageC.png",
+      "old_bbox": [
+        91,
+        66,
+        421,
+        476
+      ],
+      "new_bbox": [
+        93,
+        51,
+        419,
+        456
+      ],
+      "margins": {
+        "left": 93,
+        "top": 51,
+        "right": 93,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var01_stageD.png",
+      "old_bbox": [
+        61,
+        145,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        111,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 111,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var02_stageA.png",
+      "old_bbox": [
+        102,
+        223,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        122,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 122,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var02_stageB.png",
+      "old_bbox": [
+        116,
+        107,
+        395,
+        476
+      ],
+      "new_bbox": [
+        103,
+        51,
+        409,
+        456
+      ],
+      "margins": {
+        "left": 103,
+        "top": 51,
+        "right": 103,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var02_stageC.png",
+      "old_bbox": [
+        92,
+        66,
+        419,
+        476
+      ],
+      "new_bbox": [
+        94,
+        51,
+        417,
+        456
+      ],
+      "margins": {
+        "left": 94,
+        "top": 51,
+        "right": 95,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var02_stageD.png",
+      "old_bbox": [
+        61,
+        188,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        156,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 156,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var03_stageA.png",
+      "old_bbox": [
+        102,
+        223,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        122,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 122,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var03_stageB.png",
+      "old_bbox": [
+        112,
+        107,
+        400,
+        476
+      ],
+      "new_bbox": [
+        98,
+        51,
+        414,
+        456
+      ],
+      "margins": {
+        "left": 98,
+        "top": 51,
+        "right": 98,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var03_stageC.png",
+      "old_bbox": [
+        92,
+        66,
+        419,
+        476
+      ],
+      "new_bbox": [
+        94,
+        51,
+        417,
+        456
+      ],
+      "margins": {
+        "left": 94,
+        "top": 51,
+        "right": 95,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var03_stageD.png",
+      "old_bbox": [
+        61,
+        164,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        131,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 131,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var04_stageA.png",
+      "old_bbox": [
+        102,
+        221,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        120,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 120,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var04_stageB.png",
+      "old_bbox": [
+        71,
+        111,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        55,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 55,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var04_stageC.png",
+      "old_bbox": [
+        90,
+        66,
+        422,
+        476
+      ],
+      "new_bbox": [
+        92,
+        51,
+        420,
+        456
+      ],
+      "margins": {
+        "left": 92,
+        "top": 51,
+        "right": 92,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var04_stageD.png",
+      "old_bbox": [
+        61,
+        198,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        167,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 167,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var05_stageA.png",
+      "old_bbox": [
+        102,
+        229,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        130,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 130,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var05_stageB.png",
+      "old_bbox": [
+        112,
+        107,
+        399,
+        476
+      ],
+      "new_bbox": [
+        98,
+        51,
+        413,
+        456
+      ],
+      "margins": {
+        "left": 98,
+        "top": 51,
+        "right": 99,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var05_stageC.png",
+      "old_bbox": [
+        90,
+        66,
+        422,
+        476
+      ],
+      "new_bbox": [
+        92,
+        51,
+        420,
+        456
+      ],
+      "margins": {
+        "left": 92,
+        "top": 51,
+        "right": 92,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/shiba/pet_shiba_var05_stageD.png",
+      "old_bbox": [
+        61,
+        136,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        102,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 102,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var01_stageA.png",
+      "old_bbox": [
+        102,
+        173,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        56,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 56,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var01_stageB.png",
+      "old_bbox": [
+        71,
+        252,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        210,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 210,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var01_stageC.png",
+      "old_bbox": [
+        72,
+        66,
+        439,
+        476
+      ],
+      "new_bbox": [
+        74,
+        51,
+        437,
+        456
+      ],
+      "margins": {
+        "left": 74,
+        "top": 51,
+        "right": 75,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var01_stageD.png",
+      "old_bbox": [
+        61,
+        166,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        133,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 133,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var02_stageA.png",
+      "old_bbox": [
+        102,
+        171,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        54,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 54,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var02_stageB.png",
+      "old_bbox": [
+        71,
+        294,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        256,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 256,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var02_stageC.png",
+      "old_bbox": [
+        51,
+        86,
+        461,
+        476
+      ],
+      "new_bbox": [
+        53,
+        71,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 71,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var02_stageD.png",
+      "old_bbox": [
+        61,
+        204,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        173,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 173,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var03_stageA.png",
+      "old_bbox": [
+        102,
+        169,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        51,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 51,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var03_stageB.png",
+      "old_bbox": [
+        71,
+        283,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        244,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 244,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var03_stageC.png",
+      "old_bbox": [
+        77,
+        66,
+        434,
+        476
+      ],
+      "new_bbox": [
+        79,
+        51,
+        432,
+        456
+      ],
+      "margins": {
+        "left": 79,
+        "top": 51,
+        "right": 80,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var03_stageD.png",
+      "old_bbox": [
+        61,
+        193,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        161,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 161,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var04_stageA.png",
+      "old_bbox": [
+        103,
+        169,
+        408,
+        476
+      ],
+      "new_bbox": [
+        55,
+        51,
+        457,
+        456
+      ],
+      "margins": {
+        "left": 55,
+        "top": 51,
+        "right": 55,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var04_stageB.png",
+      "old_bbox": [
+        71,
+        286,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        247,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 247,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var04_stageC.png",
+      "old_bbox": [
+        51,
+        97,
+        461,
+        476
+      ],
+      "new_bbox": [
+        53,
+        82,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 82,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var04_stageD.png",
+      "old_bbox": [
+        61,
+        207,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        176,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 176,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var05_stageA.png",
+      "old_bbox": [
+        102,
+        169,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        51,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 51,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var05_stageB.png",
+      "old_bbox": [
+        71,
+        247,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        205,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 205,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var05_stageC.png",
+      "old_bbox": [
+        88,
+        66,
+        424,
+        476
+      ],
+      "new_bbox": [
+        90,
+        51,
+        422,
+        456
+      ],
+      "margins": {
+        "left": 90,
+        "top": 51,
+        "right": 90,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/snake/pet_snake_var05_stageD.png",
+      "old_bbox": [
+        61,
+        107,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        72,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 72,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var01_stageA.png",
+      "old_bbox": [
+        118,
+        169,
+        394,
+        476
+      ],
+      "new_bbox": [
+        74,
+        51,
+        438,
+        456
+      ],
+      "margins": {
+        "left": 74,
+        "top": 51,
+        "right": 74,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var01_stageB.png",
+      "old_bbox": [
+        136,
+        107,
+        375,
+        476
+      ],
+      "new_bbox": [
+        125,
+        51,
+        387,
+        456
+      ],
+      "margins": {
+        "left": 125,
+        "top": 51,
+        "right": 125,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var01_stageC.png",
+      "old_bbox": [
+        99,
+        66,
+        412,
+        476
+      ],
+      "new_bbox": [
+        101,
+        51,
+        410,
+        456
+      ],
+      "margins": {
+        "left": 101,
+        "top": 51,
+        "right": 102,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var01_stageD.png",
+      "old_bbox": [
+        61,
+        128,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        94,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 94,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var02_stageA.png",
+      "old_bbox": [
+        125,
+        169,
+        386,
+        476
+      ],
+      "new_bbox": [
+        84,
+        51,
+        428,
+        456
+      ],
+      "margins": {
+        "left": 84,
+        "top": 51,
+        "right": 84,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var02_stageB.png",
+      "old_bbox": [
+        138,
+        107,
+        373,
+        476
+      ],
+      "new_bbox": [
+        127,
+        51,
+        385,
+        456
+      ],
+      "margins": {
+        "left": 127,
+        "top": 51,
+        "right": 127,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var02_stageC.png",
+      "old_bbox": [
+        100,
+        66,
+        412,
+        476
+      ],
+      "new_bbox": [
+        102,
+        51,
+        410,
+        456
+      ],
+      "margins": {
+        "left": 102,
+        "top": 51,
+        "right": 102,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var02_stageD.png",
+      "old_bbox": [
+        61,
+        136,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        102,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 102,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var03_stageA.png",
+      "old_bbox": [
+        128,
+        169,
+        383,
+        476
+      ],
+      "new_bbox": [
+        88,
+        51,
+        424,
+        456
+      ],
+      "margins": {
+        "left": 88,
+        "top": 51,
+        "right": 88,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var03_stageB.png",
+      "old_bbox": [
+        138,
+        107,
+        374,
+        476
+      ],
+      "new_bbox": [
+        126,
+        51,
+        385,
+        456
+      ],
+      "margins": {
+        "left": 126,
+        "top": 51,
+        "right": 127,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var03_stageC.png",
+      "old_bbox": [
+        66,
+        66,
+        445,
+        476
+      ],
+      "new_bbox": [
+        69,
+        51,
+        443,
+        456
+      ],
+      "margins": {
+        "left": 69,
+        "top": 51,
+        "right": 69,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var03_stageD.png",
+      "old_bbox": [
+        61,
+        190,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        158,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 158,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var04_stageA.png",
+      "old_bbox": [
+        124,
+        169,
+        387,
+        476
+      ],
+      "new_bbox": [
+        82,
+        51,
+        429,
+        456
+      ],
+      "margins": {
+        "left": 82,
+        "top": 51,
+        "right": 83,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var04_stageB.png",
+      "old_bbox": [
+        141,
+        107,
+        370,
+        476
+      ],
+      "new_bbox": [
+        130,
+        51,
+        381,
+        456
+      ],
+      "margins": {
+        "left": 130,
+        "top": 51,
+        "right": 131,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var04_stageC.png",
+      "old_bbox": [
+        51,
+        66,
+        461,
+        476
+      ],
+      "new_bbox": [
+        53,
+        51,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 51,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var04_stageD.png",
+      "old_bbox": [
+        61,
+        209,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        178,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 178,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var05_stageA.png",
+      "old_bbox": [
+        118,
+        169,
+        394,
+        476
+      ],
+      "new_bbox": [
+        74,
+        51,
+        438,
+        456
+      ],
+      "margins": {
+        "left": 74,
+        "top": 51,
+        "right": 74,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var05_stageB.png",
+      "old_bbox": [
+        130,
+        107,
+        381,
+        476
+      ],
+      "new_bbox": [
+        118,
+        51,
+        393,
+        456
+      ],
+      "margins": {
+        "left": 118,
+        "top": 51,
+        "right": 119,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var05_stageC.png",
+      "old_bbox": [
+        103,
+        66,
+        409,
+        476
+      ],
+      "new_bbox": [
+        105,
+        51,
+        407,
+        456
+      ],
+      "margins": {
+        "left": 105,
+        "top": 51,
+        "right": 105,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/starbug/pet_starbug_var05_stageD.png",
+      "old_bbox": [
+        61,
+        104,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        69,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 69,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var01_stageA.png",
+      "old_bbox": [
+        102,
+        287,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        207,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 207,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var01_stageB.png",
+      "old_bbox": [
+        71,
+        242,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        199,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 199,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var01_stageC.png",
+      "old_bbox": [
+        76,
+        66,
+        436,
+        476
+      ],
+      "new_bbox": [
+        78,
+        51,
+        434,
+        456
+      ],
+      "margins": {
+        "left": 78,
+        "top": 51,
+        "right": 78,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var01_stageD.png",
+      "old_bbox": [
+        61,
+        168,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        135,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 135,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var02_stageA.png",
+      "old_bbox": [
+        102,
+        292,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        213,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 213,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var02_stageB.png",
+      "old_bbox": [
+        71,
+        187,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        139,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 139,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var02_stageC.png",
+      "old_bbox": [
+        51,
+        82,
+        461,
+        476
+      ],
+      "new_bbox": [
+        53,
+        67,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 67,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var02_stageD.png",
+      "old_bbox": [
+        61,
+        215,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        184,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 184,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var03_stageA.png",
+      "old_bbox": [
+        102,
+        295,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        217,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 217,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var03_stageB.png",
+      "old_bbox": [
+        71,
+        134,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        81,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 81,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var03_stageC.png",
+      "old_bbox": [
+        63,
+        66,
+        449,
+        476
+      ],
+      "new_bbox": [
+        65,
+        51,
+        446,
+        456
+      ],
+      "margins": {
+        "left": 65,
+        "top": 51,
+        "right": 66,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var03_stageD.png",
+      "old_bbox": [
+        61,
+        200,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        169,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 169,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var04_stageA.png",
+      "old_bbox": [
+        102,
+        296,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        219,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 219,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var04_stageB.png",
+      "old_bbox": [
+        71,
+        181,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        132,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 132,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var04_stageC.png",
+      "old_bbox": [
+        55,
+        66,
+        457,
+        476
+      ],
+      "new_bbox": [
+        57,
+        51,
+        454,
+        456
+      ],
+      "margins": {
+        "left": 57,
+        "top": 51,
+        "right": 58,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var04_stageD.png",
+      "old_bbox": [
+        61,
+        216,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        185,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 185,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var05_stageA.png",
+      "old_bbox": [
+        102,
+        296,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        219,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 219,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var05_stageB.png",
+      "old_bbox": [
+        71,
+        127,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        73,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 73,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var05_stageC.png",
+      "old_bbox": [
+        78,
+        66,
+        434,
+        476
+      ],
+      "new_bbox": [
+        80,
+        51,
+        432,
+        456
+      ],
+      "margins": {
+        "left": 80,
+        "top": 51,
+        "right": 80,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/turtle/pet_turtle_var05_stageD.png",
+      "old_bbox": [
+        61,
+        152,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        119,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 119,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var01_stageA.png",
+      "old_bbox": [
+        102,
+        282,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        200,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 200,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var01_stageB.png",
+      "old_bbox": [
+        104,
+        107,
+        407,
+        476
+      ],
+      "new_bbox": [
+        89,
+        51,
+        422,
+        456
+      ],
+      "margins": {
+        "left": 89,
+        "top": 51,
+        "right": 90,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var01_stageC.png",
+      "old_bbox": [
+        74,
+        66,
+        437,
+        476
+      ],
+      "new_bbox": [
+        76,
+        51,
+        435,
+        456
+      ],
+      "margins": {
+        "left": 76,
+        "top": 51,
+        "right": 77,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var01_stageD.png",
+      "old_bbox": [
+        61,
+        140,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        106,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 106,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var02_stageA.png",
+      "old_bbox": [
+        102,
+        315,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        244,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 244,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var02_stageB.png",
+      "old_bbox": [
+        102,
+        107,
+        410,
+        476
+      ],
+      "new_bbox": [
+        87,
+        51,
+        425,
+        456
+      ],
+      "margins": {
+        "left": 87,
+        "top": 51,
+        "right": 87,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var02_stageC.png",
+      "old_bbox": [
+        74,
+        66,
+        438,
+        476
+      ],
+      "new_bbox": [
+        76,
+        51,
+        436,
+        456
+      ],
+      "margins": {
+        "left": 76,
+        "top": 51,
+        "right": 76,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var02_stageD.png",
+      "old_bbox": [
+        61,
+        195,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        163,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 163,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var03_stageA.png",
+      "old_bbox": [
+        102,
+        285,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        204,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 204,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var03_stageB.png",
+      "old_bbox": [
+        106,
+        107,
+        406,
+        476
+      ],
+      "new_bbox": [
+        91,
+        51,
+        420,
+        456
+      ],
+      "margins": {
+        "left": 91,
+        "top": 51,
+        "right": 92,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var03_stageC.png",
+      "old_bbox": [
+        60,
+        66,
+        451,
+        476
+      ],
+      "new_bbox": [
+        63,
+        51,
+        449,
+        456
+      ],
+      "margins": {
+        "left": 63,
+        "top": 51,
+        "right": 63,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var03_stageD.png",
+      "old_bbox": [
+        61,
+        189,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        157,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 157,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var04_stageA.png",
+      "old_bbox": [
+        102,
+        326,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        258,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 258,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var04_stageB.png",
+      "old_bbox": [
+        71,
+        139,
+        440,
+        476
+      ],
+      "new_bbox": [
+        53,
+        86,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 86,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var04_stageC.png",
+      "old_bbox": [
+        64,
+        66,
+        447,
+        476
+      ],
+      "new_bbox": [
+        67,
+        51,
+        445,
+        456
+      ],
+      "margins": {
+        "left": 67,
+        "top": 51,
+        "right": 67,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var04_stageD.png",
+      "old_bbox": [
+        61,
+        191,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        159,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 159,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var05_stageA.png",
+      "old_bbox": [
+        102,
+        256,
+        409,
+        476
+      ],
+      "new_bbox": [
+        53,
+        166,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 166,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var05_stageB.png",
+      "old_bbox": [
+        107,
+        107,
+        405,
+        476
+      ],
+      "new_bbox": [
+        92,
+        51,
+        419,
+        456
+      ],
+      "margins": {
+        "left": 92,
+        "top": 51,
+        "right": 93,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var05_stageC.png",
+      "old_bbox": [
+        68,
+        66,
+        443,
+        476
+      ],
+      "new_bbox": [
+        71,
+        51,
+        441,
+        456
+      ],
+      "margins": {
+        "left": 71,
+        "top": 51,
+        "right": 71,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    },
+    {
+      "file": "assets/art/pets/uni/pet_uni_var05_stageD.png",
+      "old_bbox": [
+        61,
+        145,
+        450,
+        476
+      ],
+      "new_bbox": [
+        53,
+        111,
+        458,
+        456
+      ],
+      "margins": {
+        "left": 53,
+        "top": 111,
+        "right": 54,
+        "bottom": 56
+      },
+      "long_edge": 405,
+      "baseline": 456
+    }
+  ]
+}

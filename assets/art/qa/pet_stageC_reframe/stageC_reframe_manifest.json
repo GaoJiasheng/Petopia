@@ -1,0 +1,222 @@
+[
+  {
+    "species": "rabbit",
+    "variant": "var01",
+    "out": "assets/art/pets/rabbit/pet_rabbit_var01_stageC.png",
+    "margins": [
+      79,
+      122,
+      80,
+      52
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var02",
+    "out": "assets/art/pets/rabbit/pet_rabbit_var02_stageC.png",
+    "margins": [
+      82,
+      122,
+      83,
+      52
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var03",
+    "out": "assets/art/pets/rabbit/pet_rabbit_var03_stageC.png",
+    "margins": [
+      82,
+      122,
+      82,
+      52
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var04",
+    "out": "assets/art/pets/rabbit/pet_rabbit_var04_stageC.png",
+    "margins": [
+      78,
+      122,
+      78,
+      52
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var05",
+    "out": "assets/art/pets/rabbit/pet_rabbit_var05_stageC.png",
+    "margins": [
+      74,
+      122,
+      75,
+      52
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var01",
+    "out": "assets/art/pets/hamster/pet_hamster_var01_stageC.png",
+    "margins": [
+      84,
+      89,
+      84,
+      37
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var02",
+    "out": "assets/art/pets/hamster/pet_hamster_var02_stageC.png",
+    "margins": [
+      81,
+      89,
+      81,
+      37
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var03",
+    "out": "assets/art/pets/hamster/pet_hamster_var03_stageC.png",
+    "margins": [
+      79,
+      89,
+      79,
+      37
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var04",
+    "out": "assets/art/pets/hamster/pet_hamster_var04_stageC.png",
+    "margins": [
+      79,
+      89,
+      80,
+      37
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var05",
+    "out": "assets/art/pets/hamster/pet_hamster_var05_stageC.png",
+    "margins": [
+      79,
+      89,
+      80,
+      37
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var01",
+    "out": "assets/art/pets/shiba/pet_shiba_var01_stageC.png",
+    "margins": [
+      113,
+      114,
+      114,
+      44
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var02",
+    "out": "assets/art/pets/shiba/pet_shiba_var02_stageC.png",
+    "margins": [
+      114,
+      114,
+      115,
+      44
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var03",
+    "out": "assets/art/pets/shiba/pet_shiba_var03_stageC.png",
+    "margins": [
+      114,
+      114,
+      115,
+      44
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var04",
+    "out": "assets/art/pets/shiba/pet_shiba_var04_stageC.png",
+    "margins": [
+      112,
+      114,
+      113,
+      44
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var05",
+    "out": "assets/art/pets/shiba/pet_shiba_var05_stageC.png",
+    "margins": [
+      112,
+      114,
+      113,
+      44
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var01",
+    "out": "assets/art/pets/uni/pet_uni_var01_stageC.png",
+    "margins": [
+      93,
+      107,
+      93,
+      37
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var02",
+    "out": "assets/art/pets/uni/pet_uni_var02_stageC.png",
+    "margins": [
+      92,
+      107,
+      93,
+      37
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var03",
+    "out": "assets/art/pets/uni/pet_uni_var03_stageC.png",
+    "margins": [
+      80,
+      107,
+      81,
+      37
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var04",
+    "out": "assets/art/pets/uni/pet_uni_var04_stageC.png",
+    "margins": [
+      84,
+      107,
+      84,
+      37
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var05",
+    "out": "assets/art/pets/uni/pet_uni_var05_stageC.png",
+    "margins": [
+      87,
+      107,
+      88,
+      37
+    ]
+  }
+]

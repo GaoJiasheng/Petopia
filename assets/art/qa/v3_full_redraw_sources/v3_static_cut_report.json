@@ -1,0 +1,8494 @@
+[
+  {
+    "species": "boo",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "component_count": 22,
+    "cells": [
+      {
+        "file": "boo/pet_boo_var01_stageA.png",
+        "stage": "A",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          69,
+          150,
+          217,
+          276
+        ],
+        "flat_cut_score": 0.172,
+        "metrics": {
+          "bbox": [
+            54,
+            118,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            118,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var02_stageA.png",
+        "stage": "A",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          318,
+          151,
+          464,
+          281
+        ],
+        "flat_cut_score": 0.185,
+        "metrics": {
+          "bbox": [
+            54,
+            95,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            95,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var03_stageA.png",
+        "stage": "A",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          565,
+          152,
+          706,
+          279
+        ],
+        "flat_cut_score": 0.142,
+        "metrics": {
+          "bbox": [
+            54,
+            91,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            91,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var04_stageA.png",
+        "stage": "A",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          810,
+          145,
+          959,
+          281
+        ],
+        "flat_cut_score": 0.197,
+        "metrics": {
+          "bbox": [
+            54,
+            86,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            86,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var05_stageA.png",
+        "stage": "A",
+        "var": 5,
+        "raw_components": 2,
+        "kept_components": 1,
+        "source_bbox": [
+          1049,
+          154,
+          1190,
+          278
+        ],
+        "flat_cut_score": 0.184,
+        "metrics": {
+          "bbox": [
+            54,
+            121,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            121,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var01_stageB.png",
+        "stage": "B",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          53,
+          382,
+          227,
+          536
+        ],
+        "flat_cut_score": 0.192,
+        "metrics": {
+          "bbox": [
+            54,
+            98,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            98,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var02_stageB.png",
+        "stage": "B",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          303,
+          382,
+          475,
+          537
+        ],
+        "flat_cut_score": 0.196,
+        "metrics": {
+          "bbox": [
+            54,
+            91,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            91,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var03_stageB.png",
+        "stage": "B",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          554,
+          384,
+          720,
+          540
+        ],
+        "flat_cut_score": 0.185,
+        "metrics": {
+          "bbox": [
+            54,
+            75,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            75,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var04_stageB.png",
+        "stage": "B",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          793,
+          379,
+          961,
+          536
+        ],
+        "flat_cut_score": 0.137,
+        "metrics": {
+          "bbox": [
+            54,
+            78,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            78,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var05_stageB.png",
+        "stage": "B",
+        "var": 5,
+        "raw_components": 2,
+        "kept_components": 1,
+        "source_bbox": [
+          1037,
+          385,
+          1208,
+          542
+        ],
+        "flat_cut_score": 0.183,
+        "metrics": {
+          "bbox": [
+            54,
+            84,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            84,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var01_stageC.png",
+        "stage": "C",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          52,
+          630,
+          240,
+          837
+        ],
+        "flat_cut_score": 0.142,
+        "metrics": {
+          "bbox": [
+            72,
+            51,
+            440,
+            456
+          ],
+          "margins": [
+            72,
+            51,
+            72,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var02_stageC.png",
+        "stage": "C",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          300,
+          630,
+          487,
+          839
+        ],
+        "flat_cut_score": 0.162,
+        "metrics": {
+          "bbox": [
+            75,
+            51,
+            437,
+            456
+          ],
+          "margins": [
+            75,
+            51,
+            75,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var03_stageC.png",
+        "stage": "C",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          543,
+          630,
+          730,
+          843
+        ],
+        "flat_cut_score": 0.135,
+        "metrics": {
+          "bbox": [
+            78,
+            51,
+            434,
+            456
+          ],
+          "margins": [
+            78,
+            51,
+            78,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var04_stageC.png",
+        "stage": "C",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          792,
+          625,
+          973,
+          842
+        ],
+        "flat_cut_score": 0.142,
+        "metrics": {
+          "bbox": [
+            87,
+            51,
+            425,
+            456
+          ],
+          "margins": [
+            87,
+            51,
+            87,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var05_stageC.png",
+        "stage": "C",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1034,
+          631,
+          1218,
+          848
+        ],
+        "flat_cut_score": 0.138,
+        "metrics": {
+          "bbox": [
+            84,
+            51,
+            427,
+            456
+          ],
+          "margins": [
+            84,
+            51,
+            85,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var01_stageD.png",
+        "stage": "D",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          39,
+          921,
+          246,
+          1131
+        ],
+        "flat_cut_score": 0.119,
+        "metrics": {
+          "bbox": [
+            56,
+            51,
+            455,
+            456
+          ],
+          "margins": [
+            56,
+            51,
+            57,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var02_stageD.png",
+        "stage": "D",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          288,
+          921,
+          491,
+          1136
+        ],
+        "flat_cut_score": 0.102,
+        "metrics": {
+          "bbox": [
+            65,
+            51,
+            447,
+            456
+          ],
+          "margins": [
+            65,
+            51,
+            65,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var03_stageD.png",
+        "stage": "D",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          533,
+          921,
+          734,
+          1133
+        ],
+        "flat_cut_score": 0.106,
+        "metrics": {
+          "bbox": [
+            64,
+            51,
+            448,
+            456
+          ],
+          "margins": [
+            64,
+            51,
+            64,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var04_stageD.png",
+        "stage": "D",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          777,
+          922,
+          983,
+          1136
+        ],
+        "flat_cut_score": 0.126,
+        "metrics": {
+          "bbox": [
+            61,
+            51,
+            451,
+            456
+          ],
+          "margins": [
+            61,
+            51,
+            61,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "boo/pet_boo_var05_stageD.png",
+        "stage": "D",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1017,
+          923,
+          1223,
+          1137
+        ],
+        "flat_cut_score": 0.133,
+        "metrics": {
+          "bbox": [
+            61,
+            51,
+            451,
+            456
+          ],
+          "margins": [
+            61,
+            51,
+            61,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      }
+    ],
+    "issues": []
+  },
+  {
+    "species": "cat",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "component_count": 20,
+    "cells": [
+      {
+        "file": "cat/pet_cat_var01_stageA.png",
+        "stage": "A",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          56,
+          119,
+          240,
+          290
+        ],
+        "flat_cut_score": 0.144,
+        "metrics": {
+          "bbox": [
+            54,
+            80,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            80,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var02_stageA.png",
+        "stage": "A",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          308,
+          119,
+          491,
+          292
+        ],
+        "flat_cut_score": 0.285,
+        "metrics": {
+          "bbox": [
+            54,
+            73,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            73,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var03_stageA.png",
+        "stage": "A",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          549,
+          121,
+          730,
+          294
+        ],
+        "flat_cut_score": 0.156,
+        "metrics": {
+          "bbox": [
+            54,
+            69,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            69,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var04_stageA.png",
+        "stage": "A",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          780,
+          108,
+          968,
+          297
+        ],
+        "flat_cut_score": 0.104,
+        "metrics": {
+          "bbox": [
+            54,
+            51,
+            457,
+            456
+          ],
+          "margins": [
+            54,
+            51,
+            55,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var05_stageA.png",
+        "stage": "A",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1025,
+          124,
+          1202,
+          295
+        ],
+        "flat_cut_score": 0.144,
+        "metrics": {
+          "bbox": [
+            54,
+            65,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            65,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var01_stageB.png",
+        "stage": "B",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          47,
+          364,
+          248,
+          583
+        ],
+        "flat_cut_score": 0.117,
+        "metrics": {
+          "bbox": [
+            70,
+            51,
+            442,
+            456
+          ],
+          "margins": [
+            70,
+            51,
+            70,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var02_stageB.png",
+        "stage": "B",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          301,
+          365,
+          487,
+          584
+        ],
+        "flat_cut_score": 0.091,
+        "metrics": {
+          "bbox": [
+            84,
+            51,
+            428,
+            456
+          ],
+          "margins": [
+            84,
+            51,
+            84,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var03_stageB.png",
+        "stage": "B",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          543,
+          368,
+          733,
+          585
+        ],
+        "flat_cut_score": 0.068,
+        "metrics": {
+          "bbox": [
+            78,
+            51,
+            433,
+            456
+          ],
+          "margins": [
+            78,
+            51,
+            79,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var04_stageB.png",
+        "stage": "B",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          780,
+          357,
+          963,
+          589
+        ],
+        "flat_cut_score": 0.08,
+        "metrics": {
+          "bbox": [
+            96,
+            51,
+            415,
+            456
+          ],
+          "margins": [
+            96,
+            51,
+            97,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var05_stageB.png",
+        "stage": "B",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1013,
+          376,
+          1200,
+          589
+        ],
+        "flat_cut_score": 0.161,
+        "metrics": {
+          "bbox": [
+            78,
+            51,
+            434,
+            456
+          ],
+          "margins": [
+            78,
+            51,
+            78,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var01_stageC.png",
+        "stage": "C",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          47,
+          637,
+          253,
+          886
+        ],
+        "flat_cut_score": 0.082,
+        "metrics": {
+          "bbox": [
+            88,
+            51,
+            423,
+            456
+          ],
+          "margins": [
+            88,
+            51,
+            89,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var02_stageC.png",
+        "stage": "C",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          306,
+          638,
+          510,
+          887
+        ],
+        "flat_cut_score": 0.085,
+        "metrics": {
+          "bbox": [
+            90,
+            51,
+            422,
+            456
+          ],
+          "margins": [
+            90,
+            51,
+            90,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var03_stageC.png",
+        "stage": "C",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          538,
+          638,
+          748,
+          888
+        ],
+        "flat_cut_score": 0.088,
+        "metrics": {
+          "bbox": [
+            86,
+            51,
+            426,
+            456
+          ],
+          "margins": [
+            86,
+            51,
+            86,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var04_stageC.png",
+        "stage": "C",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          775,
+          639,
+          988,
+          893
+        ],
+        "flat_cut_score": 0.075,
+        "metrics": {
+          "bbox": [
+            86,
+            51,
+            426,
+            456
+          ],
+          "margins": [
+            86,
+            51,
+            86,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var05_stageC.png",
+        "stage": "C",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1018,
+          644,
+          1224,
+          891
+        ],
+        "flat_cut_score": 0.082,
+        "metrics": {
+          "bbox": [
+            87,
+            51,
+            425,
+            456
+          ],
+          "margins": [
+            87,
+            51,
+            87,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var01_stageD.png",
+        "stage": "D",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          45,
+          933,
+          256,
+          1192
+        ],
+        "flat_cut_score": 0.076,
+        "metrics": {
+          "bbox": [
+            91,
+            51,
+            421,
+            456
+          ],
+          "margins": [
+            91,
+            51,
+            91,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var02_stageD.png",
+        "stage": "D",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          290,
+          934,
+          497,
+          1192
+        ],
+        "flat_cut_score": 0.084,
+        "metrics": {
+          "bbox": [
+            94,
+            51,
+            419,
+            456
+          ],
+          "margins": [
+            94,
+            51,
+            93,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var03_stageD.png",
+        "stage": "D",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          534,
+          934,
+          741,
+          1193
+        ],
+        "flat_cut_score": 0.068,
+        "metrics": {
+          "bbox": [
+            94,
+            51,
+            418,
+            456
+          ],
+          "margins": [
+            94,
+            51,
+            94,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var04_stageD.png",
+        "stage": "D",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          775,
+          935,
+          991,
+          1197
+        ],
+        "flat_cut_score": 0.073,
+        "metrics": {
+          "bbox": [
+            89,
+            51,
+            423,
+            456
+          ],
+          "margins": [
+            89,
+            51,
+            89,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cat/pet_cat_var05_stageD.png",
+        "stage": "D",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1014,
+          936,
+          1224,
+          1195
+        ],
+        "flat_cut_score": 0.083,
+        "metrics": {
+          "bbox": [
+            92,
+            51,
+            420,
+            456
+          ],
+          "margins": [
+            92,
+            51,
+            92,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      }
+    ],
+    "issues": []
+  },
+  {
+    "species": "cham",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "component_count": 20,
+    "cells": [
+      {
+        "file": "cham/pet_cham_var01_stageA.png",
+        "stage": "A",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          61,
+          127,
+          221,
+          272
+        ],
+        "flat_cut_score": 0.12,
+        "metrics": {
+          "bbox": [
+            54,
+            89,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            89,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var02_stageA.png",
+        "stage": "A",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          303,
+          127,
+          467,
+          272
+        ],
+        "flat_cut_score": 0.097,
+        "metrics": {
+          "bbox": [
+            54,
+            98,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            98,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var03_stageA.png",
+        "stage": "A",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          543,
+          132,
+          708,
+          273
+        ],
+        "flat_cut_score": 0.106,
+        "metrics": {
+          "bbox": [
+            54,
+            110,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            110,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var04_stageA.png",
+        "stage": "A",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          790,
+          132,
+          951,
+          272
+        ],
+        "flat_cut_score": 0.105,
+        "metrics": {
+          "bbox": [
+            54,
+            104,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            104,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var05_stageA.png",
+        "stage": "A",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1036,
+          138,
+          1199,
+          272
+        ],
+        "flat_cut_score": 0.097,
+        "metrics": {
+          "bbox": [
+            54,
+            123,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            123,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var01_stageB.png",
+        "stage": "B",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          42,
+          364,
+          233,
+          570
+        ],
+        "flat_cut_score": 0.08,
+        "metrics": {
+          "bbox": [
+            68,
+            51,
+            444,
+            456
+          ],
+          "margins": [
+            68,
+            51,
+            68,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var02_stageB.png",
+        "stage": "B",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          280,
+          368,
+          478,
+          571
+        ],
+        "flat_cut_score": 0.074,
+        "metrics": {
+          "bbox": [
+            58,
+            51,
+            453,
+            456
+          ],
+          "margins": [
+            58,
+            51,
+            59,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var03_stageB.png",
+        "stage": "B",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          536,
+          370,
+          725,
+          570
+        ],
+        "flat_cut_score": 0.078,
+        "metrics": {
+          "bbox": [
+            64,
+            51,
+            447,
+            456
+          ],
+          "margins": [
+            64,
+            51,
+            65,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var04_stageB.png",
+        "stage": "B",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          771,
+          369,
+          964,
+          571
+        ],
+        "flat_cut_score": 0.086,
+        "metrics": {
+          "bbox": [
+            62,
+            51,
+            449,
+            456
+          ],
+          "margins": [
+            62,
+            51,
+            63,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var05_stageB.png",
+        "stage": "B",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1021,
+          368,
+          1210,
+          573
+        ],
+        "flat_cut_score": 0.078,
+        "metrics": {
+          "bbox": [
+            70,
+            51,
+            443,
+            456
+          ],
+          "margins": [
+            70,
+            51,
+            69,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var01_stageC.png",
+        "stage": "C",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          35,
+          649,
+          243,
+          852
+        ],
+        "flat_cut_score": 0.076,
+        "metrics": {
+          "bbox": [
+            54,
+            61,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            61,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var02_stageC.png",
+        "stage": "C",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          276,
+          651,
+          495,
+          853
+        ],
+        "flat_cut_score": 0.058,
+        "metrics": {
+          "bbox": [
+            54,
+            82,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            82,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var03_stageC.png",
+        "stage": "C",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          520,
+          651,
+          735,
+          853
+        ],
+        "flat_cut_score": 0.057,
+        "metrics": {
+          "bbox": [
+            54,
+            75,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            75,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var04_stageC.png",
+        "stage": "C",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          764,
+          651,
+          978,
+          854
+        ],
+        "flat_cut_score": 0.041,
+        "metrics": {
+          "bbox": [
+            54,
+            72,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            72,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var05_stageC.png",
+        "stage": "C",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1008,
+          654,
+          1221,
+          855
+        ],
+        "flat_cut_score": 0.049,
+        "metrics": {
+          "bbox": [
+            54,
+            74,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            74,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var01_stageD.png",
+        "stage": "D",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          37,
+          925,
+          245,
+          1164
+        ],
+        "flat_cut_score": 0.079,
+        "metrics": {
+          "bbox": [
+            80,
+            51,
+            432,
+            456
+          ],
+          "margins": [
+            80,
+            51,
+            80,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var02_stageD.png",
+        "stage": "D",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          281,
+          931,
+          493,
+          1167
+        ],
+        "flat_cut_score": 0.06,
+        "metrics": {
+          "bbox": [
+            74,
+            51,
+            438,
+            456
+          ],
+          "margins": [
+            74,
+            51,
+            74,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var03_stageD.png",
+        "stage": "D",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          529,
+          934,
+          731,
+          1165
+        ],
+        "flat_cut_score": 0.084,
+        "metrics": {
+          "bbox": [
+            79,
+            51,
+            433,
+            456
+          ],
+          "margins": [
+            79,
+            51,
+            79,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var04_stageD.png",
+        "stage": "D",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          770,
+          934,
+          974,
+          1165
+        ],
+        "flat_cut_score": 0.044,
+        "metrics": {
+          "bbox": [
+            77,
+            51,
+            435,
+            456
+          ],
+          "margins": [
+            77,
+            51,
+            77,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "cham/pet_cham_var05_stageD.png",
+        "stage": "D",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1018,
+          934,
+          1221,
+          1167
+        ],
+        "flat_cut_score": 0.083,
+        "metrics": {
+          "bbox": [
+            80,
+            51,
+            433,
+            456
+          ],
+          "margins": [
+            80,
+            51,
+            79,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      }
+    ],
+    "issues": []
+  },
+  {
+    "species": "ember",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "component_count": 20,
+    "cells": [
+      {
+        "file": "ember/pet_ember_var01_stageA.png",
+        "stage": "A",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          54,
+          143,
+          244,
+          281
+        ],
+        "flat_cut_score": 0.13,
+        "metrics": {
+          "bbox": [
+            54,
+            162,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            162,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var02_stageA.png",
+        "stage": "A",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          291,
+          144,
+          487,
+          282
+        ],
+        "flat_cut_score": 0.087,
+        "metrics": {
+          "bbox": [
+            54,
+            171,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            171,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var03_stageA.png",
+        "stage": "A",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          542,
+          142,
+          737,
+          281
+        ],
+        "flat_cut_score": 0.158,
+        "metrics": {
+          "bbox": [
+            54,
+            167,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            167,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var04_stageA.png",
+        "stage": "A",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          790,
+          144,
+          983,
+          282
+        ],
+        "flat_cut_score": 0.094,
+        "metrics": {
+          "bbox": [
+            54,
+            166,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            166,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var05_stageA.png",
+        "stage": "A",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1028,
+          144,
+          1220,
+          282
+        ],
+        "flat_cut_score": 0.116,
+        "metrics": {
+          "bbox": [
+            54,
+            165,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            165,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var01_stageB.png",
+        "stage": "B",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          58,
+          366,
+          248,
+          560
+        ],
+        "flat_cut_score": 0.081,
+        "metrics": {
+          "bbox": [
+            58,
+            51,
+            455,
+            456
+          ],
+          "margins": [
+            58,
+            51,
+            57,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var02_stageB.png",
+        "stage": "B",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          297,
+          369,
+          491,
+          561
+        ],
+        "flat_cut_score": 0.061,
+        "metrics": {
+          "bbox": [
+            54,
+            55,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            55,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var03_stageB.png",
+        "stage": "B",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          545,
+          362,
+          735,
+          559
+        ],
+        "flat_cut_score": 0.081,
+        "metrics": {
+          "bbox": [
+            60,
+            51,
+            451,
+            456
+          ],
+          "margins": [
+            60,
+            51,
+            61,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var04_stageB.png",
+        "stage": "B",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          783,
+          364,
+          974,
+          560
+        ],
+        "flat_cut_score": 0.06,
+        "metrics": {
+          "bbox": [
+            58,
+            51,
+            453,
+            456
+          ],
+          "margins": [
+            58,
+            51,
+            59,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var05_stageB.png",
+        "stage": "B",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1022,
+          363,
+          1212,
+          560
+        ],
+        "flat_cut_score": 0.066,
+        "metrics": {
+          "bbox": [
+            60,
+            51,
+            451,
+            456
+          ],
+          "margins": [
+            60,
+            51,
+            61,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var01_stageC.png",
+        "stage": "C",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          58,
+          640,
+          256,
+          862
+        ],
+        "flat_cut_score": 0.086,
+        "metrics": {
+          "bbox": [
+            76,
+            51,
+            437,
+            456
+          ],
+          "margins": [
+            76,
+            51,
+            75,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var02_stageC.png",
+        "stage": "C",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          297,
+          641,
+          497,
+          862
+        ],
+        "flat_cut_score": 0.053,
+        "metrics": {
+          "bbox": [
+            72,
+            51,
+            439,
+            456
+          ],
+          "margins": [
+            72,
+            51,
+            73,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var03_stageC.png",
+        "stage": "C",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          547,
+          637,
+          743,
+          860
+        ],
+        "flat_cut_score": 0.057,
+        "metrics": {
+          "bbox": [
+            78,
+            51,
+            434,
+            456
+          ],
+          "margins": [
+            78,
+            51,
+            78,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var04_stageC.png",
+        "stage": "C",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          786,
+          639,
+          980,
+          862
+        ],
+        "flat_cut_score": 0.078,
+        "metrics": {
+          "bbox": [
+            80,
+            51,
+            432,
+            456
+          ],
+          "margins": [
+            80,
+            51,
+            80,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var05_stageC.png",
+        "stage": "C",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1023,
+          641,
+          1218,
+          863
+        ],
+        "flat_cut_score": 0.059,
+        "metrics": {
+          "bbox": [
+            78,
+            51,
+            434,
+            456
+          ],
+          "margins": [
+            78,
+            51,
+            78,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var01_stageD.png",
+        "stage": "D",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          53,
+          931,
+          247,
+          1151
+        ],
+        "flat_cut_score": 0.053,
+        "metrics": {
+          "bbox": [
+            78,
+            51,
+            435,
+            456
+          ],
+          "margins": [
+            78,
+            51,
+            77,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var02_stageD.png",
+        "stage": "D",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          291,
+          932,
+          486,
+          1151
+        ],
+        "flat_cut_score": 0.078,
+        "metrics": {
+          "bbox": [
+            76,
+            51,
+            437,
+            456
+          ],
+          "margins": [
+            76,
+            51,
+            75,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var03_stageD.png",
+        "stage": "D",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          547,
+          931,
+          738,
+          1150
+        ],
+        "flat_cut_score": 0.073,
+        "metrics": {
+          "bbox": [
+            80,
+            51,
+            433,
+            456
+          ],
+          "margins": [
+            80,
+            51,
+            79,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var04_stageD.png",
+        "stage": "D",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          780,
+          933,
+          973,
+          1151
+        ],
+        "flat_cut_score": 0.055,
+        "metrics": {
+          "bbox": [
+            76,
+            51,
+            435,
+            456
+          ],
+          "margins": [
+            76,
+            51,
+            77,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "ember/pet_ember_var05_stageD.png",
+        "stage": "D",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1020,
+          932,
+          1210,
+          1151
+        ],
+        "flat_cut_score": 0.076,
+        "metrics": {
+          "bbox": [
+            80,
+            51,
+            431,
+            456
+          ],
+          "margins": [
+            80,
+            51,
+            81,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      }
+    ],
+    "issues": []
+  },
+  {
+    "species": "hamster",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "component_count": 20,
+    "cells": [
+      {
+        "file": "hamster/pet_hamster_var01_stageA.png",
+        "stage": "A",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          85,
+          134,
+          237,
+          291
+        ],
+        "flat_cut_score": 0.187,
+        "metrics": {
+          "bbox": [
+            60,
+            51,
+            452,
+            456
+          ],
+          "margins": [
+            60,
+            51,
+            60,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var02_stageA.png",
+        "stage": "A",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          321,
+          133,
+          472,
+          292
+        ],
+        "flat_cut_score": 0.166,
+        "metrics": {
+          "bbox": [
+            64,
+            51,
+            449,
+            456
+          ],
+          "margins": [
+            64,
+            51,
+            63,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var03_stageA.png",
+        "stage": "A",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          564,
+          132,
+          714,
+          292
+        ],
+        "flat_cut_score": 0.144,
+        "metrics": {
+          "bbox": [
+            66,
+            51,
+            446,
+            456
+          ],
+          "margins": [
+            66,
+            51,
+            66,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var04_stageA.png",
+        "stage": "A",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          795,
+          128,
+          949,
+          292
+        ],
+        "flat_cut_score": 0.148,
+        "metrics": {
+          "bbox": [
+            66,
+            51,
+            446,
+            456
+          ],
+          "margins": [
+            66,
+            51,
+            66,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var05_stageA.png",
+        "stage": "A",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1035,
+          130,
+          1186,
+          292
+        ],
+        "flat_cut_score": 0.163,
+        "metrics": {
+          "bbox": [
+            67,
+            51,
+            445,
+            456
+          ],
+          "margins": [
+            67,
+            51,
+            67,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var01_stageB.png",
+        "stage": "B",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          74,
+          374,
+          245,
+          574
+        ],
+        "flat_cut_score": 0.148,
+        "metrics": {
+          "bbox": [
+            83,
+            51,
+            429,
+            456
+          ],
+          "margins": [
+            83,
+            51,
+            83,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var02_stageB.png",
+        "stage": "B",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          309,
+          379,
+          478,
+          574
+        ],
+        "flat_cut_score": 0.113,
+        "metrics": {
+          "bbox": [
+            80,
+            51,
+            431,
+            456
+          ],
+          "margins": [
+            80,
+            51,
+            81,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var03_stageB.png",
+        "stage": "B",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          552,
+          379,
+          719,
+          575
+        ],
+        "flat_cut_score": 0.156,
+        "metrics": {
+          "bbox": [
+            84,
+            51,
+            429,
+            456
+          ],
+          "margins": [
+            84,
+            51,
+            83,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var04_stageB.png",
+        "stage": "B",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          788,
+          379,
+          958,
+          576
+        ],
+        "flat_cut_score": 0.169,
+        "metrics": {
+          "bbox": [
+            82,
+            51,
+            431,
+            456
+          ],
+          "margins": [
+            82,
+            51,
+            81,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var05_stageB.png",
+        "stage": "B",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1026,
+          378,
+          1195,
+          576
+        ],
+        "flat_cut_score": 0.109,
+        "metrics": {
+          "bbox": [
+            83,
+            51,
+            429,
+            456
+          ],
+          "margins": [
+            83,
+            51,
+            83,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var01_stageC.png",
+        "stage": "C",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          73,
+          649,
+          252,
+          863
+        ],
+        "flat_cut_score": 0.123,
+        "metrics": {
+          "bbox": [
+            86,
+            51,
+            425,
+            456
+          ],
+          "margins": [
+            86,
+            51,
+            87,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var02_stageC.png",
+        "stage": "C",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          307,
+          648,
+          486,
+          864
+        ],
+        "flat_cut_score": 0.181,
+        "metrics": {
+          "bbox": [
+            88,
+            51,
+            424,
+            456
+          ],
+          "margins": [
+            88,
+            51,
+            88,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var03_stageC.png",
+        "stage": "C",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          547,
+          650,
+          727,
+          865
+        ],
+        "flat_cut_score": 0.135,
+        "metrics": {
+          "bbox": [
+            86,
+            51,
+            425,
+            456
+          ],
+          "margins": [
+            86,
+            51,
+            87,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var04_stageC.png",
+        "stage": "C",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          784,
+          651,
+          966,
+          866
+        ],
+        "flat_cut_score": 0.166,
+        "metrics": {
+          "bbox": [
+            84,
+            51,
+            427,
+            456
+          ],
+          "margins": [
+            84,
+            51,
+            85,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var05_stageC.png",
+        "stage": "C",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1019,
+          651,
+          1201,
+          867
+        ],
+        "flat_cut_score": 0.099,
+        "metrics": {
+          "bbox": [
+            86,
+            51,
+            427,
+            456
+          ],
+          "margins": [
+            86,
+            51,
+            85,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var01_stageD.png",
+        "stage": "D",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          74,
+          934,
+          271,
+          1161
+        ],
+        "flat_cut_score": 0.1,
+        "metrics": {
+          "bbox": [
+            80,
+            51,
+            431,
+            456
+          ],
+          "margins": [
+            80,
+            51,
+            81,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var02_stageD.png",
+        "stage": "D",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          312,
+          936,
+          502,
+          1163
+        ],
+        "flat_cut_score": 0.098,
+        "metrics": {
+          "bbox": [
+            86,
+            51,
+            425,
+            456
+          ],
+          "margins": [
+            86,
+            51,
+            87,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var03_stageD.png",
+        "stage": "D",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          548,
+          936,
+          739,
+          1163
+        ],
+        "flat_cut_score": 0.093,
+        "metrics": {
+          "bbox": [
+            86,
+            51,
+            427,
+            456
+          ],
+          "margins": [
+            86,
+            51,
+            85,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var04_stageD.png",
+        "stage": "D",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          787,
+          936,
+          976,
+          1164
+        ],
+        "flat_cut_score": 0.105,
+        "metrics": {
+          "bbox": [
+            88,
+            51,
+            424,
+            456
+          ],
+          "margins": [
+            88,
+            51,
+            88,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "hamster/pet_hamster_var05_stageD.png",
+        "stage": "D",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1022,
+          936,
+          1212,
+          1165
+        ],
+        "flat_cut_score": 0.089,
+        "metrics": {
+          "bbox": [
+            88,
+            51,
+            424,
+            456
+          ],
+          "margins": [
+            88,
+            51,
+            88,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      }
+    ],
+    "issues": []
+  },
+  {
+    "species": "parrot",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "component_count": 20,
+    "cells": [
+      {
+        "file": "parrot/pet_parrot_var01_stageA.png",
+        "stage": "A",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          77,
+          95,
+          239,
+          270
+        ],
+        "flat_cut_score": 0.136,
+        "metrics": {
+          "bbox": [
+            68,
+            51,
+            443,
+            456
+          ],
+          "margins": [
+            68,
+            51,
+            69,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var02_stageA.png",
+        "stage": "A",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          316,
+          83,
+          484,
+          271
+        ],
+        "flat_cut_score": 0.113,
+        "metrics": {
+          "bbox": [
+            75,
+            51,
+            437,
+            456
+          ],
+          "margins": [
+            75,
+            51,
+            75,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var03_stageA.png",
+        "stage": "A",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          562,
+          84,
+          730,
+          271
+        ],
+        "flat_cut_score": 0.082,
+        "metrics": {
+          "bbox": [
+            74,
+            51,
+            438,
+            456
+          ],
+          "margins": [
+            74,
+            51,
+            74,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var04_stageA.png",
+        "stage": "A",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          810,
+          53,
+          974,
+          277
+        ],
+        "flat_cut_score": 0.051,
+        "metrics": {
+          "bbox": [
+            108,
+            51,
+            405,
+            456
+          ],
+          "margins": [
+            108,
+            51,
+            107,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var05_stageA.png",
+        "stage": "A",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1045,
+          103,
+          1200,
+          271
+        ],
+        "flat_cut_score": 0.089,
+        "metrics": {
+          "bbox": [
+            69,
+            51,
+            443,
+            456
+          ],
+          "margins": [
+            69,
+            51,
+            69,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var01_stageB.png",
+        "stage": "B",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          79,
+          344,
+          267,
+          551
+        ],
+        "flat_cut_score": 0.112,
+        "metrics": {
+          "bbox": [
+            72,
+            51,
+            440,
+            456
+          ],
+          "margins": [
+            72,
+            51,
+            72,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var02_stageB.png",
+        "stage": "B",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          321,
+          340,
+          507,
+          551
+        ],
+        "flat_cut_score": 0.12,
+        "metrics": {
+          "bbox": [
+            78,
+            51,
+            435,
+            456
+          ],
+          "margins": [
+            78,
+            51,
+            77,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var03_stageB.png",
+        "stage": "B",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          554,
+          338,
+          747,
+          556
+        ],
+        "flat_cut_score": 0.105,
+        "metrics": {
+          "bbox": [
+            76,
+            51,
+            435,
+            456
+          ],
+          "margins": [
+            76,
+            51,
+            77,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var04_stageB.png",
+        "stage": "B",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          807,
+          303,
+          984,
+          559
+        ],
+        "flat_cut_score": 1.059,
+        "metrics": {
+          "bbox": [
+            127,
+            51,
+            385,
+            456
+          ],
+          "margins": [
+            127,
+            51,
+            127,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var05_stageB.png",
+        "stage": "B",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1035,
+          350,
+          1220,
+          558
+        ],
+        "flat_cut_score": 0.114,
+        "metrics": {
+          "bbox": [
+            76,
+            51,
+            436,
+            456
+          ],
+          "margins": [
+            76,
+            51,
+            76,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var01_stageC.png",
+        "stage": "C",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          71,
+          601,
+          290,
+          870
+        ],
+        "flat_cut_score": 0.094,
+        "metrics": {
+          "bbox": [
+            91,
+            51,
+            421,
+            456
+          ],
+          "margins": [
+            91,
+            51,
+            91,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var02_stageC.png",
+        "stage": "C",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          318,
+          587,
+          530,
+          876
+        ],
+        "flat_cut_score": 1.108,
+        "metrics": {
+          "bbox": [
+            104,
+            51,
+            409,
+            456
+          ],
+          "margins": [
+            104,
+            51,
+            103,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var03_stageC.png",
+        "stage": "C",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          551,
+          593,
+          776,
+          862
+        ],
+        "flat_cut_score": 1.104,
+        "metrics": {
+          "bbox": [
+            64,
+            51,
+            449,
+            456
+          ],
+          "margins": [
+            64,
+            51,
+            63,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var04_stageC.png",
+        "stage": "C",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          791,
+          558,
+          1005,
+          875
+        ],
+        "flat_cut_score": 1.601,
+        "metrics": {
+          "bbox": [
+            112,
+            51,
+            401,
+            456
+          ],
+          "margins": [
+            112,
+            51,
+            111,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var05_stageC.png",
+        "stage": "C",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1016,
+          599,
+          1231,
+          864
+        ],
+        "flat_cut_score": 1.087,
+        "metrics": {
+          "bbox": [
+            82,
+            51,
+            430,
+            456
+          ],
+          "margins": [
+            82,
+            51,
+            82,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var01_stageD.png",
+        "stage": "D",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          70,
+          902,
+          283,
+          1173
+        ],
+        "flat_cut_score": 0.086,
+        "metrics": {
+          "bbox": [
+            97,
+            51,
+            415,
+            456
+          ],
+          "margins": [
+            97,
+            51,
+            97,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var02_stageD.png",
+        "stage": "D",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          318,
+          895,
+          531,
+          1179
+        ],
+        "flat_cut_score": 1.053,
+        "metrics": {
+          "bbox": [
+            115,
+            51,
+            397,
+            456
+          ],
+          "margins": [
+            115,
+            51,
+            115,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var03_stageD.png",
+        "stage": "D",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          554,
+          896,
+          775,
+          1162
+        ],
+        "flat_cut_score": 1.092,
+        "metrics": {
+          "bbox": [
+            71,
+            51,
+            441,
+            456
+          ],
+          "margins": [
+            71,
+            51,
+            71,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var04_stageD.png",
+        "stage": "D",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          796,
+          867,
+          1005,
+          1174
+        ],
+        "flat_cut_score": 1.717,
+        "metrics": {
+          "bbox": [
+            100,
+            51,
+            411,
+            456
+          ],
+          "margins": [
+            100,
+            51,
+            101,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "parrot/pet_parrot_var05_stageD.png",
+        "stage": "D",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1015,
+          901,
+          1236,
+          1162
+        ],
+        "flat_cut_score": 1.093,
+        "metrics": {
+          "bbox": [
+            76,
+            51,
+            436,
+            456
+          ],
+          "margins": [
+            76,
+            51,
+            76,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      }
+    ],
+    "issues": [
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "parrot/pet_parrot_var04_stageB.png",
+          "stage": "B",
+          "var": 4,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            807,
+            303,
+            984,
+            559
+          ],
+          "flat_cut_score": 1.059,
+          "metrics": {
+            "bbox": [
+              127,
+              51,
+              385,
+              456
+            ],
+            "margins": [
+              127,
+              51,
+              127,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "parrot/pet_parrot_var02_stageC.png",
+          "stage": "C",
+          "var": 2,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            318,
+            587,
+            530,
+            876
+          ],
+          "flat_cut_score": 1.108,
+          "metrics": {
+            "bbox": [
+              104,
+              51,
+              409,
+              456
+            ],
+            "margins": [
+              104,
+              51,
+              103,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "parrot/pet_parrot_var03_stageC.png",
+          "stage": "C",
+          "var": 3,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            551,
+            593,
+            776,
+            862
+          ],
+          "flat_cut_score": 1.104,
+          "metrics": {
+            "bbox": [
+              64,
+              51,
+              449,
+              456
+            ],
+            "margins": [
+              64,
+              51,
+              63,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "parrot/pet_parrot_var04_stageC.png",
+          "stage": "C",
+          "var": 4,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            791,
+            558,
+            1005,
+            875
+          ],
+          "flat_cut_score": 1.601,
+          "metrics": {
+            "bbox": [
+              112,
+              51,
+              401,
+              456
+            ],
+            "margins": [
+              112,
+              51,
+              111,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "parrot/pet_parrot_var05_stageC.png",
+          "stage": "C",
+          "var": 5,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            1016,
+            599,
+            1231,
+            864
+          ],
+          "flat_cut_score": 1.087,
+          "metrics": {
+            "bbox": [
+              82,
+              51,
+              430,
+              456
+            ],
+            "margins": [
+              82,
+              51,
+              82,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "parrot/pet_parrot_var02_stageD.png",
+          "stage": "D",
+          "var": 2,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            318,
+            895,
+            531,
+            1179
+          ],
+          "flat_cut_score": 1.053,
+          "metrics": {
+            "bbox": [
+              115,
+              51,
+              397,
+              456
+            ],
+            "margins": [
+              115,
+              51,
+              115,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "parrot/pet_parrot_var03_stageD.png",
+          "stage": "D",
+          "var": 3,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            554,
+            896,
+            775,
+            1162
+          ],
+          "flat_cut_score": 1.092,
+          "metrics": {
+            "bbox": [
+              71,
+              51,
+              441,
+              456
+            ],
+            "margins": [
+              71,
+              51,
+              71,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "parrot/pet_parrot_var04_stageD.png",
+          "stage": "D",
+          "var": 4,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            796,
+            867,
+            1005,
+            1174
+          ],
+          "flat_cut_score": 1.717,
+          "metrics": {
+            "bbox": [
+              100,
+              51,
+              411,
+              456
+            ],
+            "margins": [
+              100,
+              51,
+              101,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "parrot/pet_parrot_var05_stageD.png",
+          "stage": "D",
+          "var": 5,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            1015,
+            901,
+            1236,
+            1162
+          ],
+          "flat_cut_score": 1.093,
+          "metrics": {
+            "bbox": [
+              76,
+              51,
+              436,
+              456
+            ],
+            "margins": [
+              76,
+              51,
+              76,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      }
+    ]
+  },
+  {
+    "species": "rabbit",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "component_count": 20,
+    "cells": [
+      {
+        "file": "rabbit/pet_rabbit_var01_stageA.png",
+        "stage": "A",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          53,
+          141,
+          252,
+          277
+        ],
+        "flat_cut_score": 0.191,
+        "metrics": {
+          "bbox": [
+            54,
+            179,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            179,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var02_stageA.png",
+        "stage": "A",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          297,
+          143,
+          497,
+          278
+        ],
+        "flat_cut_score": 0.158,
+        "metrics": {
+          "bbox": [
+            54,
+            183,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            183,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var03_stageA.png",
+        "stage": "A",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          545,
+          144,
+          743,
+          279
+        ],
+        "flat_cut_score": 0.158,
+        "metrics": {
+          "bbox": [
+            54,
+            180,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            180,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var04_stageA.png",
+        "stage": "A",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          782,
+          144,
+          981,
+          279
+        ],
+        "flat_cut_score": 0.195,
+        "metrics": {
+          "bbox": [
+            54,
+            181,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            181,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var05_stageA.png",
+        "stage": "A",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1016,
+          144,
+          1216,
+          281
+        ],
+        "flat_cut_score": 0.178,
+        "metrics": {
+          "bbox": [
+            54,
+            179,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            179,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var01_stageB.png",
+        "stage": "B",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          56,
+          357,
+          248,
+          564
+        ],
+        "flat_cut_score": 0.156,
+        "metrics": {
+          "bbox": [
+            68,
+            51,
+            444,
+            456
+          ],
+          "margins": [
+            68,
+            51,
+            68,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var02_stageB.png",
+        "stage": "B",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          298,
+          358,
+          490,
+          565
+        ],
+        "flat_cut_score": 0.142,
+        "metrics": {
+          "bbox": [
+            68,
+            51,
+            444,
+            456
+          ],
+          "margins": [
+            68,
+            51,
+            68,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var03_stageB.png",
+        "stage": "B",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          547,
+          360,
+          735,
+          565
+        ],
+        "flat_cut_score": 0.128,
+        "metrics": {
+          "bbox": [
+            70,
+            51,
+            441,
+            456
+          ],
+          "margins": [
+            70,
+            51,
+            71,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var04_stageB.png",
+        "stage": "B",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          780,
+          361,
+          971,
+          566
+        ],
+        "flat_cut_score": 0.154,
+        "metrics": {
+          "bbox": [
+            68,
+            51,
+            445,
+            456
+          ],
+          "margins": [
+            68,
+            51,
+            67,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var05_stageB.png",
+        "stage": "B",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1015,
+          360,
+          1209,
+          568
+        ],
+        "flat_cut_score": 0.136,
+        "metrics": {
+          "bbox": [
+            67,
+            51,
+            445,
+            456
+          ],
+          "margins": [
+            67,
+            51,
+            67,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var01_stageC.png",
+        "stage": "C",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          52,
+          637,
+          268,
+          867
+        ],
+        "flat_cut_score": 0.099,
+        "metrics": {
+          "bbox": [
+            66,
+            51,
+            446,
+            456
+          ],
+          "margins": [
+            66,
+            51,
+            66,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var02_stageC.png",
+        "stage": "C",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          294,
+          639,
+          509,
+          869
+        ],
+        "flat_cut_score": 1.112,
+        "metrics": {
+          "bbox": [
+            54,
+            63,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            63,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var03_stageC.png",
+        "stage": "C",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          529,
+          638,
+          746,
+          870
+        ],
+        "flat_cut_score": 1.132,
+        "metrics": {
+          "bbox": [
+            54,
+            63,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            63,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var04_stageC.png",
+        "stage": "C",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          768,
+          638,
+          988,
+          871
+        ],
+        "flat_cut_score": 1.157,
+        "metrics": {
+          "bbox": [
+            54,
+            66,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            66,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var05_stageC.png",
+        "stage": "C",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1006,
+          639,
+          1224,
+          870
+        ],
+        "flat_cut_score": 1.086,
+        "metrics": {
+          "bbox": [
+            54,
+            66,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            66,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var01_stageD.png",
+        "stage": "D",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          51,
+          920,
+          266,
+          1161
+        ],
+        "flat_cut_score": 0.109,
+        "metrics": {
+          "bbox": [
+            76,
+            51,
+            437,
+            456
+          ],
+          "margins": [
+            76,
+            51,
+            75,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var02_stageD.png",
+        "stage": "D",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          294,
+          923,
+          507,
+          1164
+        ],
+        "flat_cut_score": 0.127,
+        "metrics": {
+          "bbox": [
+            77,
+            51,
+            435,
+            456
+          ],
+          "margins": [
+            77,
+            51,
+            77,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var03_stageD.png",
+        "stage": "D",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          533,
+          924,
+          745,
+          1164
+        ],
+        "flat_cut_score": 0.127,
+        "metrics": {
+          "bbox": [
+            77,
+            51,
+            435,
+            456
+          ],
+          "margins": [
+            77,
+            51,
+            77,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var04_stageD.png",
+        "stage": "D",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          772,
+          925,
+          984,
+          1165
+        ],
+        "flat_cut_score": 1.128,
+        "metrics": {
+          "bbox": [
+            58,
+            51,
+            453,
+            456
+          ],
+          "margins": [
+            58,
+            51,
+            59,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "rabbit/pet_rabbit_var05_stageD.png",
+        "stage": "D",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1005,
+          925,
+          1220,
+          1165
+        ],
+        "flat_cut_score": 1.117,
+        "metrics": {
+          "bbox": [
+            56,
+            51,
+            456,
+            456
+          ],
+          "margins": [
+            56,
+            51,
+            56,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      }
+    ],
+    "issues": [
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "rabbit/pet_rabbit_var02_stageC.png",
+          "stage": "C",
+          "var": 2,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            294,
+            639,
+            509,
+            869
+          ],
+          "flat_cut_score": 1.112,
+          "metrics": {
+            "bbox": [
+              54,
+              63,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              63,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "rabbit/pet_rabbit_var03_stageC.png",
+          "stage": "C",
+          "var": 3,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            529,
+            638,
+            746,
+            870
+          ],
+          "flat_cut_score": 1.132,
+          "metrics": {
+            "bbox": [
+              54,
+              63,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              63,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "rabbit/pet_rabbit_var04_stageC.png",
+          "stage": "C",
+          "var": 4,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            768,
+            638,
+            988,
+            871
+          ],
+          "flat_cut_score": 1.157,
+          "metrics": {
+            "bbox": [
+              54,
+              66,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              66,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "rabbit/pet_rabbit_var05_stageC.png",
+          "stage": "C",
+          "var": 5,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            1006,
+            639,
+            1224,
+            870
+          ],
+          "flat_cut_score": 1.086,
+          "metrics": {
+            "bbox": [
+              54,
+              66,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              66,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "rabbit/pet_rabbit_var04_stageD.png",
+          "stage": "D",
+          "var": 4,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            772,
+            925,
+            984,
+            1165
+          ],
+          "flat_cut_score": 1.128,
+          "metrics": {
+            "bbox": [
+              58,
+              51,
+              453,
+              456
+            ],
+            "margins": [
+              58,
+              51,
+              59,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "rabbit/pet_rabbit_var05_stageD.png",
+          "stage": "D",
+          "var": 5,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            1005,
+            925,
+            1220,
+            1165
+          ],
+          "flat_cut_score": 1.117,
+          "metrics": {
+            "bbox": [
+              56,
+              51,
+              456,
+              456
+            ],
+            "margins": [
+              56,
+              51,
+              56,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      }
+    ]
+  },
+  {
+    "species": "shiba",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "component_count": 20,
+    "cells": [
+      {
+        "file": "shiba/pet_shiba_var01_stageA.png",
+        "stage": "A",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          51,
+          131,
+          241,
+          282
+        ],
+        "flat_cut_score": 0.106,
+        "metrics": {
+          "bbox": [
+            54,
+            134,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            134,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var02_stageA.png",
+        "stage": "A",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          305,
+          134,
+          493,
+          285
+        ],
+        "flat_cut_score": 0.14,
+        "metrics": {
+          "bbox": [
+            54,
+            131,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            131,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var03_stageA.png",
+        "stage": "A",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          549,
+          135,
+          727,
+          285
+        ],
+        "flat_cut_score": 0.116,
+        "metrics": {
+          "bbox": [
+            54,
+            115,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            115,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var04_stageA.png",
+        "stage": "A",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          783,
+          134,
+          966,
+          285
+        ],
+        "flat_cut_score": 0.139,
+        "metrics": {
+          "bbox": [
+            54,
+            122,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            122,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var05_stageA.png",
+        "stage": "A",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1017,
+          136,
+          1203,
+          288
+        ],
+        "flat_cut_score": 0.112,
+        "metrics": {
+          "bbox": [
+            54,
+            125,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            125,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var01_stageB.png",
+        "stage": "B",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          53,
+          367,
+          248,
+          573
+        ],
+        "flat_cut_score": 0.138,
+        "metrics": {
+          "bbox": [
+            64,
+            51,
+            447,
+            456
+          ],
+          "margins": [
+            64,
+            51,
+            65,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var02_stageB.png",
+        "stage": "B",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          300,
+          367,
+          491,
+          575
+        ],
+        "flat_cut_score": 0.16,
+        "metrics": {
+          "bbox": [
+            70,
+            51,
+            442,
+            456
+          ],
+          "margins": [
+            70,
+            51,
+            70,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var03_stageB.png",
+        "stage": "B",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          549,
+          369,
+          733,
+          576
+        ],
+        "flat_cut_score": 0.127,
+        "metrics": {
+          "bbox": [
+            76,
+            51,
+            436,
+            456
+          ],
+          "margins": [
+            76,
+            51,
+            76,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var04_stageB.png",
+        "stage": "B",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          781,
+          372,
+          968,
+          577
+        ],
+        "flat_cut_score": 0.169,
+        "metrics": {
+          "bbox": [
+            72,
+            51,
+            441,
+            456
+          ],
+          "margins": [
+            72,
+            51,
+            71,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var05_stageB.png",
+        "stage": "B",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1021,
+          373,
+          1207,
+          578
+        ],
+        "flat_cut_score": 0.125,
+        "metrics": {
+          "bbox": [
+            72,
+            51,
+            439,
+            456
+          ],
+          "margins": [
+            72,
+            51,
+            73,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var01_stageC.png",
+        "stage": "C",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          55,
+          637,
+          263,
+          888
+        ],
+        "flat_cut_score": 0.09,
+        "metrics": {
+          "bbox": [
+            88,
+            51,
+            424,
+            456
+          ],
+          "margins": [
+            88,
+            51,
+            88,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var02_stageC.png",
+        "stage": "C",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          305,
+          634,
+          509,
+          887
+        ],
+        "flat_cut_score": 0.075,
+        "metrics": {
+          "bbox": [
+            92,
+            51,
+            419,
+            456
+          ],
+          "margins": [
+            92,
+            51,
+            93,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var03_stageC.png",
+        "stage": "C",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          551,
+          635,
+          754,
+          887
+        ],
+        "flat_cut_score": 0.066,
+        "metrics": {
+          "bbox": [
+            93,
+            51,
+            419,
+            456
+          ],
+          "margins": [
+            93,
+            51,
+            93,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var04_stageC.png",
+        "stage": "C",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          782,
+          637,
+          987,
+          887
+        ],
+        "flat_cut_score": 0.092,
+        "metrics": {
+          "bbox": [
+            90,
+            51,
+            422,
+            456
+          ],
+          "margins": [
+            90,
+            51,
+            90,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var05_stageC.png",
+        "stage": "C",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1026,
+          639,
+          1228,
+          889
+        ],
+        "flat_cut_score": 0.073,
+        "metrics": {
+          "bbox": [
+            92,
+            51,
+            419,
+            456
+          ],
+          "margins": [
+            92,
+            51,
+            93,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var01_stageD.png",
+        "stage": "D",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          52,
+          933,
+          248,
+          1183
+        ],
+        "flat_cut_score": 0.064,
+        "metrics": {
+          "bbox": [
+            97,
+            51,
+            415,
+            456
+          ],
+          "margins": [
+            97,
+            51,
+            97,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var02_stageD.png",
+        "stage": "D",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          301,
+          933,
+          493,
+          1184
+        ],
+        "flat_cut_score": 0.08,
+        "metrics": {
+          "bbox": [
+            101,
+            51,
+            411,
+            456
+          ],
+          "margins": [
+            101,
+            51,
+            101,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var03_stageD.png",
+        "stage": "D",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          544,
+          936,
+          737,
+          1185
+        ],
+        "flat_cut_score": 0.076,
+        "metrics": {
+          "bbox": [
+            99,
+            51,
+            413,
+            456
+          ],
+          "margins": [
+            99,
+            51,
+            99,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var04_stageD.png",
+        "stage": "D",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          782,
+          935,
+          972,
+          1184
+        ],
+        "flat_cut_score": 0.078,
+        "metrics": {
+          "bbox": [
+            102,
+            51,
+            411,
+            456
+          ],
+          "margins": [
+            102,
+            51,
+            101,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "shiba/pet_shiba_var05_stageD.png",
+        "stage": "D",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1026,
+          935,
+          1216,
+          1184
+        ],
+        "flat_cut_score": 0.071,
+        "metrics": {
+          "bbox": [
+            102,
+            51,
+            411,
+            456
+          ],
+          "margins": [
+            102,
+            51,
+            101,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      }
+    ],
+    "issues": []
+  },
+  {
+    "species": "snake",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "component_count": 20,
+    "cells": [
+      {
+        "file": "snake/pet_snake_var01_stageA.png",
+        "stage": "A",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          81,
+          112,
+          236,
+          298
+        ],
+        "flat_cut_score": 0.191,
+        "metrics": {
+          "bbox": [
+            87,
+            51,
+            425,
+            456
+          ],
+          "margins": [
+            87,
+            51,
+            87,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var02_stageA.png",
+        "stage": "A",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          316,
+          109,
+          469,
+          298
+        ],
+        "flat_cut_score": 0.168,
+        "metrics": {
+          "bbox": [
+            92,
+            51,
+            420,
+            456
+          ],
+          "margins": [
+            92,
+            51,
+            92,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var03_stageA.png",
+        "stage": "A",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          555,
+          113,
+          707,
+          301
+        ],
+        "flat_cut_score": 0.121,
+        "metrics": {
+          "bbox": [
+            92,
+            51,
+            419,
+            456
+          ],
+          "margins": [
+            92,
+            51,
+            93,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var04_stageA.png",
+        "stage": "A",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          793,
+          110,
+          947,
+          300
+        ],
+        "flat_cut_score": 0.169,
+        "metrics": {
+          "bbox": [
+            92,
+            51,
+            420,
+            456
+          ],
+          "margins": [
+            92,
+            51,
+            92,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var05_stageA.png",
+        "stage": "A",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1031,
+          114,
+          1184,
+          301
+        ],
+        "flat_cut_score": 0.155,
+        "metrics": {
+          "bbox": [
+            90,
+            51,
+            421,
+            456
+          ],
+          "margins": [
+            90,
+            51,
+            91,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var01_stageB.png",
+        "stage": "B",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          61,
+          377,
+          259,
+          572
+        ],
+        "flat_cut_score": 0.12,
+        "metrics": {
+          "bbox": [
+            54,
+            57,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            57,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var02_stageB.png",
+        "stage": "B",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          300,
+          379,
+          505,
+          577
+        ],
+        "flat_cut_score": 0.102,
+        "metrics": {
+          "bbox": [
+            54,
+            65,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            65,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var03_stageB.png",
+        "stage": "B",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          541,
+          377,
+          746,
+          576
+        ],
+        "flat_cut_score": 0.124,
+        "metrics": {
+          "bbox": [
+            54,
+            63,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            63,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var04_stageB.png",
+        "stage": "B",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          784,
+          380,
+          989,
+          578
+        ],
+        "flat_cut_score": 0.096,
+        "metrics": {
+          "bbox": [
+            54,
+            65,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            65,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var05_stageB.png",
+        "stage": "B",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1021,
+          378,
+          1224,
+          577
+        ],
+        "flat_cut_score": 0.141,
+        "metrics": {
+          "bbox": [
+            54,
+            59,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            59,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var01_stageC.png",
+        "stage": "C",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          40,
+          675,
+          256,
+          841
+        ],
+        "flat_cut_score": 0.171,
+        "metrics": {
+          "bbox": [
+            54,
+            145,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            145,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var02_stageC.png",
+        "stage": "C",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          281,
+          678,
+          498,
+          847
+        ],
+        "flat_cut_score": 0.166,
+        "metrics": {
+          "bbox": [
+            54,
+            141,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            141,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var03_stageC.png",
+        "stage": "C",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          524,
+          679,
+          741,
+          847
+        ],
+        "flat_cut_score": 0.167,
+        "metrics": {
+          "bbox": [
+            54,
+            142,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            142,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var04_stageC.png",
+        "stage": "C",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          769,
+          679,
+          983,
+          850
+        ],
+        "flat_cut_score": 1.166,
+        "metrics": {
+          "bbox": [
+            54,
+            163,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            163,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var05_stageC.png",
+        "stage": "C",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1002,
+          676,
+          1218,
+          850
+        ],
+        "flat_cut_score": 1.169,
+        "metrics": {
+          "bbox": [
+            54,
+            160,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            160,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var01_stageD.png",
+        "stage": "D",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          50,
+          916,
+          254,
+          1144
+        ],
+        "flat_cut_score": 0.108,
+        "metrics": {
+          "bbox": [
+            75,
+            51,
+            437,
+            456
+          ],
+          "margins": [
+            75,
+            51,
+            75,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var02_stageD.png",
+        "stage": "D",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          293,
+          918,
+          496,
+          1147
+        ],
+        "flat_cut_score": 0.133,
+        "metrics": {
+          "bbox": [
+            76,
+            51,
+            435,
+            456
+          ],
+          "margins": [
+            76,
+            51,
+            77,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var03_stageD.png",
+        "stage": "D",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          539,
+          920,
+          740,
+          1151
+        ],
+        "flat_cut_score": 0.121,
+        "metrics": {
+          "bbox": [
+            80,
+            51,
+            432,
+            456
+          ],
+          "margins": [
+            80,
+            51,
+            80,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var04_stageD.png",
+        "stage": "D",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          779,
+          921,
+          980,
+          1153
+        ],
+        "flat_cut_score": 0.169,
+        "metrics": {
+          "bbox": [
+            80,
+            51,
+            431,
+            456
+          ],
+          "margins": [
+            80,
+            51,
+            81,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "snake/pet_snake_var05_stageD.png",
+        "stage": "D",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1020,
+          920,
+          1221,
+          1153
+        ],
+        "flat_cut_score": 0.108,
+        "metrics": {
+          "bbox": [
+            82,
+            51,
+            431,
+            456
+          ],
+          "margins": [
+            82,
+            51,
+            81,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      }
+    ],
+    "issues": [
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "snake/pet_snake_var04_stageC.png",
+          "stage": "C",
+          "var": 4,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            769,
+            679,
+            983,
+            850
+          ],
+          "flat_cut_score": 1.166,
+          "metrics": {
+            "bbox": [
+              54,
+              163,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              163,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "snake/pet_snake_var05_stageC.png",
+          "stage": "C",
+          "var": 5,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            1002,
+            676,
+            1218,
+            850
+          ],
+          "flat_cut_score": 1.169,
+          "metrics": {
+            "bbox": [
+              54,
+              160,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              160,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      }
+    ]
+  },
+  {
+    "species": "starbug",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "component_count": 20,
+    "cells": [
+      {
+        "file": "starbug/pet_starbug_var01_stageA.png",
+        "stage": "A",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          84,
+          140,
+          214,
+          268
+        ],
+        "flat_cut_score": 0.107,
+        "metrics": {
+          "bbox": [
+            54,
+            57,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            57,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var02_stageA.png",
+        "stage": "A",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          330,
+          139,
+          462,
+          269
+        ],
+        "flat_cut_score": 0.108,
+        "metrics": {
+          "bbox": [
+            54,
+            57,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            57,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var03_stageA.png",
+        "stage": "A",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          568,
+          140,
+          699,
+          267
+        ],
+        "flat_cut_score": 0.109,
+        "metrics": {
+          "bbox": [
+            54,
+            63,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            63,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var04_stageA.png",
+        "stage": "A",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          814,
+          140,
+          946,
+          270
+        ],
+        "flat_cut_score": 0.105,
+        "metrics": {
+          "bbox": [
+            54,
+            57,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            57,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var05_stageA.png",
+        "stage": "A",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1046,
+          140,
+          1178,
+          270
+        ],
+        "flat_cut_score": 0.118,
+        "metrics": {
+          "bbox": [
+            54,
+            57,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            57,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var01_stageB.png",
+        "stage": "B",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          61,
+          376,
+          221,
+          541
+        ],
+        "flat_cut_score": 0.083,
+        "metrics": {
+          "bbox": [
+            60,
+            51,
+            453,
+            456
+          ],
+          "margins": [
+            60,
+            51,
+            59,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var02_stageB.png",
+        "stage": "B",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          304,
+          375,
+          466,
+          542
+        ],
+        "flat_cut_score": 0.09,
+        "metrics": {
+          "bbox": [
+            60,
+            51,
+            453,
+            456
+          ],
+          "margins": [
+            60,
+            51,
+            59,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var03_stageB.png",
+        "stage": "B",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          548,
+          376,
+          709,
+          541
+        ],
+        "flat_cut_score": 0.067,
+        "metrics": {
+          "bbox": [
+            58,
+            51,
+            453,
+            456
+          ],
+          "margins": [
+            58,
+            51,
+            59,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var04_stageB.png",
+        "stage": "B",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          790,
+          376,
+          951,
+          542
+        ],
+        "flat_cut_score": 0.09,
+        "metrics": {
+          "bbox": [
+            60,
+            51,
+            453,
+            456
+          ],
+          "margins": [
+            60,
+            51,
+            59,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var05_stageB.png",
+        "stage": "B",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1026,
+          375,
+          1188,
+          541
+        ],
+        "flat_cut_score": 0.088,
+        "metrics": {
+          "bbox": [
+            58,
+            51,
+            453,
+            456
+          ],
+          "margins": [
+            58,
+            51,
+            59,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var01_stageC.png",
+        "stage": "C",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          38,
+          631,
+          242,
+          839
+        ],
+        "flat_cut_score": 0.069,
+        "metrics": {
+          "bbox": [
+            58,
+            51,
+            455,
+            456
+          ],
+          "margins": [
+            58,
+            51,
+            57,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var02_stageC.png",
+        "stage": "C",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          285,
+          635,
+          489,
+          841
+        ],
+        "flat_cut_score": 0.073,
+        "metrics": {
+          "bbox": [
+            56,
+            51,
+            457,
+            456
+          ],
+          "margins": [
+            56,
+            51,
+            55,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var03_stageC.png",
+        "stage": "C",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          529,
+          634,
+          734,
+          841
+        ],
+        "flat_cut_score": 0.052,
+        "metrics": {
+          "bbox": [
+            56,
+            51,
+            457,
+            456
+          ],
+          "margins": [
+            56,
+            51,
+            55,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var04_stageC.png",
+        "stage": "C",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          770,
+          634,
+          975,
+          841
+        ],
+        "flat_cut_score": 0.072,
+        "metrics": {
+          "bbox": [
+            56,
+            51,
+            457,
+            456
+          ],
+          "margins": [
+            56,
+            51,
+            55,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var05_stageC.png",
+        "stage": "C",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1010,
+          631,
+          1215,
+          839
+        ],
+        "flat_cut_score": 0.074,
+        "metrics": {
+          "bbox": [
+            56,
+            51,
+            455,
+            456
+          ],
+          "margins": [
+            56,
+            51,
+            57,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var01_stageD.png",
+        "stage": "D",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          31,
+          907,
+          238,
+          1135
+        ],
+        "flat_cut_score": 0.064,
+        "metrics": {
+          "bbox": [
+            72,
+            51,
+            440,
+            456
+          ],
+          "margins": [
+            72,
+            51,
+            72,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var02_stageD.png",
+        "stage": "D",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          280,
+          908,
+          485,
+          1137
+        ],
+        "flat_cut_score": 0.07,
+        "metrics": {
+          "bbox": [
+            74,
+            51,
+            437,
+            456
+          ],
+          "margins": [
+            74,
+            51,
+            75,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var03_stageD.png",
+        "stage": "D",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          526,
+          911,
+          732,
+          1139
+        ],
+        "flat_cut_score": 0.058,
+        "metrics": {
+          "bbox": [
+            73,
+            51,
+            439,
+            456
+          ],
+          "margins": [
+            73,
+            51,
+            73,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var04_stageD.png",
+        "stage": "D",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          766,
+          909,
+          973,
+          1139
+        ],
+        "flat_cut_score": 0.067,
+        "metrics": {
+          "bbox": [
+            74,
+            51,
+            438,
+            456
+          ],
+          "margins": [
+            74,
+            51,
+            74,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "starbug/pet_starbug_var05_stageD.png",
+        "stage": "D",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1008,
+          911,
+          1214,
+          1140
+        ],
+        "flat_cut_score": 0.068,
+        "metrics": {
+          "bbox": [
+            74,
+            51,
+            438,
+            456
+          ],
+          "margins": [
+            74,
+            51,
+            74,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      }
+    ],
+    "issues": []
+  },
+  {
+    "species": "turtle",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "component_count": 20,
+    "cells": [
+      {
+        "file": "turtle/pet_turtle_var01_stageA.png",
+        "stage": "A",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          54,
+          159,
+          243,
+          280
+        ],
+        "flat_cut_score": 0.107,
+        "metrics": {
+          "bbox": [
+            54,
+            197,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            197,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var02_stageA.png",
+        "stage": "A",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          296,
+          166,
+          479,
+          283
+        ],
+        "flat_cut_score": 0.117,
+        "metrics": {
+          "bbox": [
+            54,
+            197,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            197,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var03_stageA.png",
+        "stage": "A",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          544,
+          176,
+          718,
+          285
+        ],
+        "flat_cut_score": 0.119,
+        "metrics": {
+          "bbox": [
+            54,
+            202,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            202,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var04_stageA.png",
+        "stage": "A",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          788,
+          178,
+          964,
+          286
+        ],
+        "flat_cut_score": 0.133,
+        "metrics": {
+          "bbox": [
+            54,
+            207,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            207,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var05_stageA.png",
+        "stage": "A",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1025,
+          181,
+          1205,
+          287
+        ],
+        "flat_cut_score": 0.16,
+        "metrics": {
+          "bbox": [
+            54,
+            218,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            218,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var01_stageB.png",
+        "stage": "B",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          42,
+          404,
+          245,
+          557
+        ],
+        "flat_cut_score": 0.122,
+        "metrics": {
+          "bbox": [
+            54,
+            151,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            151,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var02_stageB.png",
+        "stage": "B",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          281,
+          404,
+          489,
+          557
+        ],
+        "flat_cut_score": 0.106,
+        "metrics": {
+          "bbox": [
+            54,
+            158,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            158,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var03_stageB.png",
+        "stage": "B",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          526,
+          404,
+          733,
+          557
+        ],
+        "flat_cut_score": 0.105,
+        "metrics": {
+          "bbox": [
+            54,
+            157,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            157,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var04_stageB.png",
+        "stage": "B",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          773,
+          408,
+          976,
+          559
+        ],
+        "flat_cut_score": 0.11,
+        "metrics": {
+          "bbox": [
+            54,
+            155,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            155,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var05_stageB.png",
+        "stage": "B",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1017,
+          413,
+          1215,
+          558
+        ],
+        "flat_cut_score": 0.099,
+        "metrics": {
+          "bbox": [
+            54,
+            159,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            159,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var01_stageC.png",
+        "stage": "C",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          35,
+          685,
+          263,
+          855
+        ],
+        "flat_cut_score": 1.255,
+        "metrics": {
+          "bbox": [
+            54,
+            181,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            181,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var02_stageC.png",
+        "stage": "C",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          276,
+          687,
+          506,
+          856
+        ],
+        "flat_cut_score": 1.306,
+        "metrics": {
+          "bbox": [
+            54,
+            206,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            206,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var03_stageC.png",
+        "stage": "C",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          517,
+          686,
+          750,
+          858
+        ],
+        "flat_cut_score": 1.298,
+        "metrics": {
+          "bbox": [
+            54,
+            205,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            205,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var04_stageC.png",
+        "stage": "C",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          761,
+          697,
+          990,
+          861
+        ],
+        "flat_cut_score": 1.295,
+        "metrics": {
+          "bbox": [
+            54,
+            213,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            213,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var05_stageC.png",
+        "stage": "C",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1001,
+          699,
+          1233,
+          861
+        ],
+        "flat_cut_score": 1.081,
+        "metrics": {
+          "bbox": [
+            54,
+            198,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            198,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var01_stageD.png",
+        "stage": "D",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          37,
+          961,
+          260,
+          1150
+        ],
+        "flat_cut_score": 0.069,
+        "metrics": {
+          "bbox": [
+            54,
+            113,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            113,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var02_stageD.png",
+        "stage": "D",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          285,
+          970,
+          502,
+          1151
+        ],
+        "flat_cut_score": 0.083,
+        "metrics": {
+          "bbox": [
+            54,
+            118,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            118,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var03_stageD.png",
+        "stage": "D",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          524,
+          970,
+          747,
+          1155
+        ],
+        "flat_cut_score": 1.081,
+        "metrics": {
+          "bbox": [
+            54,
+            150,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            150,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var04_stageD.png",
+        "stage": "D",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          767,
+          973,
+          984,
+          1155
+        ],
+        "flat_cut_score": 1.125,
+        "metrics": {
+          "bbox": [
+            54,
+            174,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            174,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "turtle/pet_turtle_var05_stageD.png",
+        "stage": "D",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1001,
+          973,
+          1224,
+          1156
+        ],
+        "flat_cut_score": 1.041,
+        "metrics": {
+          "bbox": [
+            54,
+            153,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            153,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      }
+    ],
+    "issues": [
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "turtle/pet_turtle_var01_stageC.png",
+          "stage": "C",
+          "var": 1,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            35,
+            685,
+            263,
+            855
+          ],
+          "flat_cut_score": 1.255,
+          "metrics": {
+            "bbox": [
+              54,
+              181,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              181,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "turtle/pet_turtle_var02_stageC.png",
+          "stage": "C",
+          "var": 2,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            276,
+            687,
+            506,
+            856
+          ],
+          "flat_cut_score": 1.306,
+          "metrics": {
+            "bbox": [
+              54,
+              206,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              206,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "turtle/pet_turtle_var03_stageC.png",
+          "stage": "C",
+          "var": 3,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            517,
+            686,
+            750,
+            858
+          ],
+          "flat_cut_score": 1.298,
+          "metrics": {
+            "bbox": [
+              54,
+              205,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              205,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "turtle/pet_turtle_var04_stageC.png",
+          "stage": "C",
+          "var": 4,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            761,
+            697,
+            990,
+            861
+          ],
+          "flat_cut_score": 1.295,
+          "metrics": {
+            "bbox": [
+              54,
+              213,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              213,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "turtle/pet_turtle_var05_stageC.png",
+          "stage": "C",
+          "var": 5,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            1001,
+            699,
+            1233,
+            861
+          ],
+          "flat_cut_score": 1.081,
+          "metrics": {
+            "bbox": [
+              54,
+              198,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              198,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "turtle/pet_turtle_var03_stageD.png",
+          "stage": "D",
+          "var": 3,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            524,
+            970,
+            747,
+            1155
+          ],
+          "flat_cut_score": 1.081,
+          "metrics": {
+            "bbox": [
+              54,
+              150,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              150,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "turtle/pet_turtle_var04_stageD.png",
+          "stage": "D",
+          "var": 4,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            767,
+            973,
+            984,
+            1155
+          ],
+          "flat_cut_score": 1.125,
+          "metrics": {
+            "bbox": [
+              54,
+              174,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              174,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "turtle/pet_turtle_var05_stageD.png",
+          "stage": "D",
+          "var": 5,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            1001,
+            973,
+            1224,
+            1156
+          ],
+          "flat_cut_score": 1.041,
+          "metrics": {
+            "bbox": [
+              54,
+              153,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              153,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      }
+    ]
+  },
+  {
+    "species": "uni",
+    "source_size": [
+      1254,
+      1254
+    ],
+    "component_count": 20,
+    "cells": [
+      {
+        "file": "uni/pet_uni_var01_stageA.png",
+        "stage": "A",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          48,
+          119,
+          260,
+          295
+        ],
+        "flat_cut_score": 0.116,
+        "metrics": {
+          "bbox": [
+            54,
+            120,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            120,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var02_stageA.png",
+        "stage": "A",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          292,
+          117,
+          505,
+          296
+        ],
+        "flat_cut_score": 0.095,
+        "metrics": {
+          "bbox": [
+            54,
+            116,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            116,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var03_stageA.png",
+        "stage": "A",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          528,
+          115,
+          738,
+          297
+        ],
+        "flat_cut_score": 0.112,
+        "metrics": {
+          "bbox": [
+            54,
+            105,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            105,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var04_stageA.png",
+        "stage": "A",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          769,
+          111,
+          977,
+          297
+        ],
+        "flat_cut_score": 0.151,
+        "metrics": {
+          "bbox": [
+            54,
+            94,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            94,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var05_stageA.png",
+        "stage": "A",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1007,
+          113,
+          1214,
+          298
+        ],
+        "flat_cut_score": 0.114,
+        "metrics": {
+          "bbox": [
+            54,
+            94,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            94,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var01_stageB.png",
+        "stage": "B",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          54,
+          343,
+          255,
+          569
+        ],
+        "flat_cut_score": 0.117,
+        "metrics": {
+          "bbox": [
+            76,
+            51,
+            436,
+            456
+          ],
+          "margins": [
+            76,
+            51,
+            76,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var02_stageB.png",
+        "stage": "B",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          296,
+          343,
+          498,
+          572
+        ],
+        "flat_cut_score": 0.111,
+        "metrics": {
+          "bbox": [
+            78,
+            51,
+            435,
+            456
+          ],
+          "margins": [
+            78,
+            51,
+            77,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var03_stageB.png",
+        "stage": "B",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          532,
+          344,
+          739,
+          573
+        ],
+        "flat_cut_score": 0.1,
+        "metrics": {
+          "bbox": [
+            73,
+            51,
+            439,
+            456
+          ],
+          "margins": [
+            73,
+            51,
+            73,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var04_stageB.png",
+        "stage": "B",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          773,
+          343,
+          978,
+          572
+        ],
+        "flat_cut_score": 0.109,
+        "metrics": {
+          "bbox": [
+            74,
+            51,
+            437,
+            456
+          ],
+          "margins": [
+            74,
+            51,
+            75,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var05_stageB.png",
+        "stage": "B",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          1011,
+          346,
+          1216,
+          572
+        ],
+        "flat_cut_score": 0.094,
+        "metrics": {
+          "bbox": [
+            72,
+            51,
+            439,
+            456
+          ],
+          "margins": [
+            72,
+            51,
+            73,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var01_stageC.png",
+        "stage": "C",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          39,
+          603,
+          267,
+          862
+        ],
+        "flat_cut_score": 1.237,
+        "metrics": {
+          "bbox": [
+            60,
+            51,
+            451,
+            456
+          ],
+          "margins": [
+            60,
+            51,
+            61,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var02_stageC.png",
+        "stage": "C",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          280,
+          602,
+          512,
+          862
+        ],
+        "flat_cut_score": 1.272,
+        "metrics": {
+          "bbox": [
+            54,
+            74,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            74,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var03_stageC.png",
+        "stage": "C",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          522,
+          603,
+          751,
+          863
+        ],
+        "flat_cut_score": 1.25,
+        "metrics": {
+          "bbox": [
+            54,
+            70,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            70,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var04_stageC.png",
+        "stage": "C",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          763,
+          603,
+          991,
+          863
+        ],
+        "flat_cut_score": 1.285,
+        "metrics": {
+          "bbox": [
+            54,
+            69,
+            459,
+            456
+          ],
+          "margins": [
+            54,
+            69,
+            53,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var05_stageC.png",
+        "stage": "C",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          999,
+          605,
+          1226,
+          863
+        ],
+        "flat_cut_score": 1.183,
+        "metrics": {
+          "bbox": [
+            60,
+            51,
+            451,
+            456
+          ],
+          "margins": [
+            60,
+            51,
+            61,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var01_stageD.png",
+        "stage": "D",
+        "var": 1,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          38,
+          895,
+          269,
+          1174
+        ],
+        "flat_cut_score": 1.237,
+        "metrics": {
+          "bbox": [
+            72,
+            51,
+            439,
+            456
+          ],
+          "margins": [
+            72,
+            51,
+            73,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var02_stageD.png",
+        "stage": "D",
+        "var": 2,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          279,
+          895,
+          510,
+          1174
+        ],
+        "flat_cut_score": 1.238,
+        "metrics": {
+          "bbox": [
+            56,
+            51,
+            455,
+            456
+          ],
+          "margins": [
+            56,
+            51,
+            57,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var03_stageD.png",
+        "stage": "D",
+        "var": 3,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          520,
+          896,
+          751,
+          1174
+        ],
+        "flat_cut_score": 1.242,
+        "metrics": {
+          "bbox": [
+            56,
+            51,
+            457,
+            456
+          ],
+          "margins": [
+            56,
+            51,
+            55,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var04_stageD.png",
+        "stage": "D",
+        "var": 4,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          761,
+          896,
+          992,
+          1175
+        ],
+        "flat_cut_score": 1.258,
+        "metrics": {
+          "bbox": [
+            56,
+            51,
+            455,
+            456
+          ],
+          "margins": [
+            56,
+            51,
+            57,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      },
+      {
+        "file": "uni/pet_uni_var05_stageD.png",
+        "stage": "D",
+        "var": 5,
+        "raw_components": 1,
+        "kept_components": 1,
+        "source_bbox": [
+          999,
+          897,
+          1230,
+          1175
+        ],
+        "flat_cut_score": 1.177,
+        "metrics": {
+          "bbox": [
+            72,
+            51,
+            441,
+            456
+          ],
+          "margins": [
+            72,
+            51,
+            71,
+            56
+          ],
+          "long": 405,
+          "bottom": 456
+        }
+      }
+    ],
+    "issues": [
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "uni/pet_uni_var01_stageC.png",
+          "stage": "C",
+          "var": 1,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            39,
+            603,
+            267,
+            862
+          ],
+          "flat_cut_score": 1.237,
+          "metrics": {
+            "bbox": [
+              60,
+              51,
+              451,
+              456
+            ],
+            "margins": [
+              60,
+              51,
+              61,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "uni/pet_uni_var02_stageC.png",
+          "stage": "C",
+          "var": 2,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            280,
+            602,
+            512,
+            862
+          ],
+          "flat_cut_score": 1.272,
+          "metrics": {
+            "bbox": [
+              54,
+              74,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              74,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "uni/pet_uni_var03_stageC.png",
+          "stage": "C",
+          "var": 3,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            522,
+            603,
+            751,
+            863
+          ],
+          "flat_cut_score": 1.25,
+          "metrics": {
+            "bbox": [
+              54,
+              70,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              70,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "uni/pet_uni_var04_stageC.png",
+          "stage": "C",
+          "var": 4,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            763,
+            603,
+            991,
+            863
+          ],
+          "flat_cut_score": 1.285,
+          "metrics": {
+            "bbox": [
+              54,
+              69,
+              459,
+              456
+            ],
+            "margins": [
+              54,
+              69,
+              53,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "uni/pet_uni_var05_stageC.png",
+          "stage": "C",
+          "var": 5,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            999,
+            605,
+            1226,
+            863
+          ],
+          "flat_cut_score": 1.183,
+          "metrics": {
+            "bbox": [
+              60,
+              51,
+              451,
+              456
+            ],
+            "margins": [
+              60,
+              51,
+              61,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "uni/pet_uni_var01_stageD.png",
+          "stage": "D",
+          "var": 1,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            38,
+            895,
+            269,
+            1174
+          ],
+          "flat_cut_score": 1.237,
+          "metrics": {
+            "bbox": [
+              72,
+              51,
+              439,
+              456
+            ],
+            "margins": [
+              72,
+              51,
+              73,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "uni/pet_uni_var02_stageD.png",
+          "stage": "D",
+          "var": 2,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            279,
+            895,
+            510,
+            1174
+          ],
+          "flat_cut_score": 1.238,
+          "metrics": {
+            "bbox": [
+              56,
+              51,
+              455,
+              456
+            ],
+            "margins": [
+              56,
+              51,
+              57,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "uni/pet_uni_var03_stageD.png",
+          "stage": "D",
+          "var": 3,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            520,
+            896,
+            751,
+            1174
+          ],
+          "flat_cut_score": 1.242,
+          "metrics": {
+            "bbox": [
+              56,
+              51,
+              457,
+              456
+            ],
+            "margins": [
+              56,
+              51,
+              55,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "uni/pet_uni_var04_stageD.png",
+          "stage": "D",
+          "var": 4,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            761,
+            896,
+            992,
+            1175
+          ],
+          "flat_cut_score": 1.258,
+          "metrics": {
+            "bbox": [
+              56,
+              51,
+              455,
+              456
+            ],
+            "margins": [
+              56,
+              51,
+              57,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      },
+      {
+        "type": "possible_flat_cut",
+        "cell": {
+          "file": "uni/pet_uni_var05_stageD.png",
+          "stage": "D",
+          "var": 5,
+          "raw_components": 1,
+          "kept_components": 1,
+          "source_bbox": [
+            999,
+            897,
+            1230,
+            1175
+          ],
+          "flat_cut_score": 1.177,
+          "metrics": {
+            "bbox": [
+              72,
+              51,
+              441,
+              456
+            ],
+            "margins": [
+              72,
+              51,
+              71,
+              56
+            ],
+            "long": 405,
+            "bottom": 456
+          }
+        }
+      }
+    ]
+  }
+]

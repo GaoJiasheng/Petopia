@@ -1,0 +1,2568 @@
+{
+  "version": "v11-parrot-reframe-final",
+  "parrot_all_stages": [
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var01_stageA.png",
+      "stage": "A",
+      "variant": 1,
+      "bbox": [
+        109,
+        169,
+        402,
+        476
+      ],
+      "margins": {
+        "left": 109,
+        "top": 169,
+        "right": 110,
+        "bottom": 36
+      },
+      "sha256": "123faac37ca3274b8f33ae440352c5efc01b5dced40f6cd0ff83c31078e512c9"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var01_stageB.png",
+      "stage": "B",
+      "variant": 1,
+      "bbox": [
+        110,
+        107,
+        401,
+        476
+      ],
+      "margins": {
+        "left": 110,
+        "top": 107,
+        "right": 111,
+        "bottom": 36
+      },
+      "sha256": "3753aef1bdf6af9399729ed65ad78284fdac07fca1fb4325012eea13083f4fe1"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var01_stageC.png",
+      "stage": "C",
+      "variant": 1,
+      "bbox": [
+        72,
+        63,
+        440,
+        468
+      ],
+      "margins": {
+        "left": 72,
+        "top": 63,
+        "right": 72,
+        "bottom": 44
+      },
+      "sha256": "a7876cbd3ede9fecb5dfd3d4b5ae04572cf6f31bea0683071c926c4642231eae"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var01_stageD.png",
+      "stage": "D",
+      "variant": 1,
+      "bbox": [
+        79,
+        78,
+        433,
+        468
+      ],
+      "margins": {
+        "left": 79,
+        "top": 78,
+        "right": 79,
+        "bottom": 44
+      },
+      "sha256": "895327b3fe40c39f04a975f108da79aadbf6f06f1a9d4e8756137c87a443d8d8"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var02_stageA.png",
+      "stage": "A",
+      "variant": 2,
+      "bbox": [
+        105,
+        169,
+        406,
+        476
+      ],
+      "margins": {
+        "left": 105,
+        "top": 169,
+        "right": 106,
+        "bottom": 36
+      },
+      "sha256": "bee63d40111c9ced98b42415419e6677372508fbd175dd7c43fabced998a415d"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var02_stageB.png",
+      "stage": "B",
+      "variant": 2,
+      "bbox": [
+        71,
+        156,
+        440,
+        476
+      ],
+      "margins": {
+        "left": 71,
+        "top": 156,
+        "right": 72,
+        "bottom": 36
+      },
+      "sha256": "45883e2c227ca777415ff98deb0126334cf3cf33dd39de7112cdeff54842a19f"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var02_stageC.png",
+      "stage": "C",
+      "variant": 2,
+      "bbox": [
+        85,
+        63,
+        426,
+        468
+      ],
+      "margins": {
+        "left": 85,
+        "top": 63,
+        "right": 86,
+        "bottom": 44
+      },
+      "sha256": "e9473614ed810b473376a4e47f45014eddfb355b21f2c94badde1b6289657053"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var02_stageD.png",
+      "stage": "D",
+      "variant": 2,
+      "bbox": [
+        92,
+        78,
+        420,
+        468
+      ],
+      "margins": {
+        "left": 92,
+        "top": 78,
+        "right": 92,
+        "bottom": 44
+      },
+      "sha256": "88ed55ab74a46043e55fa142b320e054ef97899a43f2d29d15962cdc51f603dd"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var03_stageA.png",
+      "stage": "A",
+      "variant": 3,
+      "bbox": [
+        105,
+        169,
+        407,
+        476
+      ],
+      "margins": {
+        "left": 105,
+        "top": 169,
+        "right": 105,
+        "bottom": 36
+      },
+      "sha256": "9f24e3a421050a0fe922917fabffa0c07780ede64d7abeb264d50d95b2737b47"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var03_stageB.png",
+      "stage": "B",
+      "variant": 3,
+      "bbox": [
+        100,
+        107,
+        412,
+        476
+      ],
+      "margins": {
+        "left": 100,
+        "top": 107,
+        "right": 100,
+        "bottom": 36
+      },
+      "sha256": "1cd72ae38eef596005a991ab5ad7428b5d67f8a15ac00684d66332cb095adb68"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var03_stageC.png",
+      "stage": "C",
+      "variant": 3,
+      "bbox": [
+        92,
+        63,
+        419,
+        468
+      ],
+      "margins": {
+        "left": 92,
+        "top": 63,
+        "right": 93,
+        "bottom": 44
+      },
+      "sha256": "21b9c66426d683a366b4993cde27c9d609a132e69e2e4f4855d9135df9793c4c"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var03_stageD.png",
+      "stage": "D",
+      "variant": 3,
+      "bbox": [
+        99,
+        78,
+        413,
+        468
+      ],
+      "margins": {
+        "left": 99,
+        "top": 78,
+        "right": 99,
+        "bottom": 44
+      },
+      "sha256": "b539b372d7f793ff790166dbc2f640999a69465c8ff0d4572813e587604543de"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var04_stageA.png",
+      "stage": "A",
+      "variant": 4,
+      "bbox": [
+        120,
+        169,
+        391,
+        476
+      ],
+      "margins": {
+        "left": 120,
+        "top": 169,
+        "right": 121,
+        "bottom": 36
+      },
+      "sha256": "1abeb3c7f7b80a1b661bbf451338494c2ce2007db6e895987d63c83e0ccee339"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var04_stageB.png",
+      "stage": "B",
+      "variant": 4,
+      "bbox": [
+        121,
+        107,
+        391,
+        476
+      ],
+      "margins": {
+        "left": 121,
+        "top": 107,
+        "right": 121,
+        "bottom": 36
+      },
+      "sha256": "2cd55192e35a3e630103ad825d93d56e893177f51d26746678f92db7dfda69e7"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var04_stageC.png",
+      "stage": "C",
+      "variant": 4,
+      "bbox": [
+        118,
+        63,
+        394,
+        468
+      ],
+      "margins": {
+        "left": 118,
+        "top": 63,
+        "right": 118,
+        "bottom": 44
+      },
+      "sha256": "59fbfc006c4f792efaf1819ec74a3f7446ef42f0df41ef17fac78243e71e07df"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var04_stageD.png",
+      "stage": "D",
+      "variant": 4,
+      "bbox": [
+        123,
+        78,
+        388,
+        468
+      ],
+      "margins": {
+        "left": 123,
+        "top": 78,
+        "right": 124,
+        "bottom": 44
+      },
+      "sha256": "b809e9bdfd844ad61d638633e82a63d6e59e42e85331c4df5c1a089000d97af4"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var05_stageA.png",
+      "stage": "A",
+      "variant": 5,
+      "bbox": [
+        102,
+        180,
+        409,
+        476
+      ],
+      "margins": {
+        "left": 102,
+        "top": 180,
+        "right": 103,
+        "bottom": 36
+      },
+      "sha256": "bd5364e1677a811fd8ba6da6208b456f04660496c9b1c1d5b58c9120f99e8d36"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var05_stageB.png",
+      "stage": "B",
+      "variant": 5,
+      "bbox": [
+        93,
+        107,
+        418,
+        476
+      ],
+      "margins": {
+        "left": 93,
+        "top": 107,
+        "right": 94,
+        "bottom": 36
+      },
+      "sha256": "441834843ff280a57c59015469f592eb9e109ddcc9c8ac057608b7b852b0b9f6"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var05_stageC.png",
+      "stage": "C",
+      "variant": 5,
+      "bbox": [
+        79,
+        63,
+        433,
+        468
+      ],
+      "margins": {
+        "left": 79,
+        "top": 63,
+        "right": 79,
+        "bottom": 44
+      },
+      "sha256": "0d33c24ecf5f56b9b6cdd2c346d06fb2f2a3ec0deed4e67139aacb00c529d700"
+    },
+    {
+      "file": "assets/art/pets/parrot/pet_parrot_var05_stageD.png",
+      "stage": "D",
+      "variant": 5,
+      "bbox": [
+        86,
+        78,
+        426,
+        468
+      ],
+      "margins": {
+        "left": 86,
+        "top": 78,
+        "right": 86,
+        "bottom": 44
+      },
+      "sha256": "51658971642a0dde8ed2732630a9f18e8b0b8712c2a454c107177cadafa6eb7c"
+    }
+  ],
+  "parrot_actions": [
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_stageC_idle.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            50,
+            70,
+            397,
+            452
+          ],
+          "margins": {
+            "left": 50,
+            "top": 70,
+            "right": 51,
+            "bottom": 60
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            48,
+            67,
+            402,
+            451
+          ],
+          "margins": {
+            "left": 48,
+            "top": 67,
+            "right": 46,
+            "bottom": 61
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            47,
+            67,
+            403,
+            451
+          ],
+          "margins": {
+            "left": 47,
+            "top": 67,
+            "right": 45,
+            "bottom": 61
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            48,
+            67,
+            402,
+            451
+          ],
+          "margins": {
+            "left": 48,
+            "top": 67,
+            "right": 46,
+            "bottom": 61
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            50,
+            70,
+            397,
+            452
+          ],
+          "margins": {
+            "left": 50,
+            "top": 70,
+            "right": 51,
+            "bottom": 60
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            50,
+            65,
+            392,
+            445
+          ],
+          "margins": {
+            "left": 50,
+            "top": 65,
+            "right": 56,
+            "bottom": 67
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            51,
+            61,
+            391,
+            441
+          ],
+          "margins": {
+            "left": 51,
+            "top": 61,
+            "right": 57,
+            "bottom": 71
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            50,
+            65,
+            392,
+            445
+          ],
+          "margins": {
+            "left": 50,
+            "top": 65,
+            "right": 56,
+            "bottom": 67
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_idle.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            50,
+            70,
+            397,
+            452
+          ],
+          "margins": {
+            "left": 50,
+            "top": 70,
+            "right": 51,
+            "bottom": 60
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            48,
+            67,
+            402,
+            451
+          ],
+          "margins": {
+            "left": 48,
+            "top": 67,
+            "right": 46,
+            "bottom": 61
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            47,
+            67,
+            403,
+            451
+          ],
+          "margins": {
+            "left": 47,
+            "top": 67,
+            "right": 45,
+            "bottom": 61
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            48,
+            67,
+            402,
+            451
+          ],
+          "margins": {
+            "left": 48,
+            "top": 67,
+            "right": 46,
+            "bottom": 61
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            50,
+            70,
+            397,
+            452
+          ],
+          "margins": {
+            "left": 50,
+            "top": 70,
+            "right": 51,
+            "bottom": 60
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            50,
+            65,
+            392,
+            445
+          ],
+          "margins": {
+            "left": 50,
+            "top": 65,
+            "right": 56,
+            "bottom": 67
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            51,
+            61,
+            391,
+            441
+          ],
+          "margins": {
+            "left": 51,
+            "top": 61,
+            "right": 57,
+            "bottom": 71
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            50,
+            65,
+            392,
+            445
+          ],
+          "margins": {
+            "left": 50,
+            "top": 65,
+            "right": 56,
+            "bottom": 67
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_stageC_eat.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            56,
+            85,
+            379,
+            463
+          ],
+          "margins": {
+            "left": 56,
+            "top": 85,
+            "right": 69,
+            "bottom": 49
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            56,
+            95,
+            382,
+            464
+          ],
+          "margins": {
+            "left": 56,
+            "top": 95,
+            "right": 66,
+            "bottom": 48
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            56,
+            100,
+            383,
+            468
+          ],
+          "margins": {
+            "left": 56,
+            "top": 100,
+            "right": 65,
+            "bottom": 44
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            56,
+            95,
+            382,
+            464
+          ],
+          "margins": {
+            "left": 56,
+            "top": 95,
+            "right": 66,
+            "bottom": 48
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            56,
+            85,
+            379,
+            463
+          ],
+          "margins": {
+            "left": 56,
+            "top": 85,
+            "right": 69,
+            "bottom": 49
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            55,
+            82,
+            376,
+            463
+          ],
+          "margins": {
+            "left": 55,
+            "top": 82,
+            "right": 72,
+            "bottom": 49
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            55,
+            80,
+            375,
+            463
+          ],
+          "margins": {
+            "left": 55,
+            "top": 80,
+            "right": 73,
+            "bottom": 49
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            55,
+            82,
+            376,
+            463
+          ],
+          "margins": {
+            "left": 55,
+            "top": 82,
+            "right": 72,
+            "bottom": 49
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_eat.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            56,
+            85,
+            379,
+            463
+          ],
+          "margins": {
+            "left": 56,
+            "top": 85,
+            "right": 69,
+            "bottom": 49
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            56,
+            95,
+            382,
+            464
+          ],
+          "margins": {
+            "left": 56,
+            "top": 95,
+            "right": 66,
+            "bottom": 48
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            56,
+            100,
+            383,
+            468
+          ],
+          "margins": {
+            "left": 56,
+            "top": 100,
+            "right": 65,
+            "bottom": 44
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            56,
+            95,
+            382,
+            464
+          ],
+          "margins": {
+            "left": 56,
+            "top": 95,
+            "right": 66,
+            "bottom": 48
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            56,
+            85,
+            379,
+            463
+          ],
+          "margins": {
+            "left": 56,
+            "top": 85,
+            "right": 69,
+            "bottom": 49
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            55,
+            82,
+            376,
+            463
+          ],
+          "margins": {
+            "left": 55,
+            "top": 82,
+            "right": 72,
+            "bottom": 49
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            55,
+            80,
+            375,
+            463
+          ],
+          "margins": {
+            "left": 55,
+            "top": 80,
+            "right": 73,
+            "bottom": 49
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            55,
+            82,
+            376,
+            463
+          ],
+          "margins": {
+            "left": 55,
+            "top": 82,
+            "right": 72,
+            "bottom": 49
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_stageC_pat.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            50,
+            46,
+            397,
+            452
+          ],
+          "margins": {
+            "left": 50,
+            "top": 46,
+            "right": 51,
+            "bottom": 60
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            48,
+            46,
+            401,
+            451
+          ],
+          "margins": {
+            "left": 48,
+            "top": 46,
+            "right": 47,
+            "bottom": 61
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            47,
+            47,
+            403,
+            452
+          ],
+          "margins": {
+            "left": 47,
+            "top": 47,
+            "right": 45,
+            "bottom": 60
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            48,
+            45,
+            401,
+            451
+          ],
+          "margins": {
+            "left": 48,
+            "top": 45,
+            "right": 47,
+            "bottom": 61
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            50,
+            43,
+            397,
+            452
+          ],
+          "margins": {
+            "left": 50,
+            "top": 43,
+            "right": 51,
+            "bottom": 60
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            49,
+            41,
+            393,
+            443
+          ],
+          "margins": {
+            "left": 49,
+            "top": 41,
+            "right": 55,
+            "bottom": 69
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            49,
+            39,
+            391,
+            438
+          ],
+          "margins": {
+            "left": 49,
+            "top": 39,
+            "right": 57,
+            "bottom": 74
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            49,
+            42,
+            393,
+            443
+          ],
+          "margins": {
+            "left": 49,
+            "top": 42,
+            "right": 55,
+            "bottom": 69
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_pat.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            50,
+            46,
+            397,
+            452
+          ],
+          "margins": {
+            "left": 50,
+            "top": 46,
+            "right": 51,
+            "bottom": 60
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            48,
+            46,
+            401,
+            451
+          ],
+          "margins": {
+            "left": 48,
+            "top": 46,
+            "right": 47,
+            "bottom": 61
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            47,
+            47,
+            403,
+            452
+          ],
+          "margins": {
+            "left": 47,
+            "top": 47,
+            "right": 45,
+            "bottom": 60
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            48,
+            45,
+            401,
+            451
+          ],
+          "margins": {
+            "left": 48,
+            "top": 45,
+            "right": 47,
+            "bottom": 61
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            50,
+            43,
+            397,
+            452
+          ],
+          "margins": {
+            "left": 50,
+            "top": 43,
+            "right": 51,
+            "bottom": 60
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            49,
+            41,
+            393,
+            443
+          ],
+          "margins": {
+            "left": 49,
+            "top": 41,
+            "right": 55,
+            "bottom": 69
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            49,
+            39,
+            391,
+            438
+          ],
+          "margins": {
+            "left": 49,
+            "top": 39,
+            "right": 57,
+            "bottom": 74
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            49,
+            42,
+            393,
+            443
+          ],
+          "margins": {
+            "left": 49,
+            "top": 42,
+            "right": 55,
+            "bottom": 69
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_stageC_play.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            54,
+            78,
+            394,
+            465
+          ],
+          "margins": {
+            "left": 54,
+            "top": 78,
+            "right": 54,
+            "bottom": 47
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            59,
+            59,
+            413,
+            446
+          ],
+          "margins": {
+            "left": 59,
+            "top": 59,
+            "right": 35,
+            "bottom": 66
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            62,
+            51,
+            422,
+            437
+          ],
+          "margins": {
+            "left": 62,
+            "top": 51,
+            "right": 26,
+            "bottom": 75
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            59,
+            59,
+            413,
+            446
+          ],
+          "margins": {
+            "left": 59,
+            "top": 59,
+            "right": 35,
+            "bottom": 66
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            54,
+            78,
+            394,
+            465
+          ],
+          "margins": {
+            "left": 54,
+            "top": 78,
+            "right": 54,
+            "bottom": 47
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            44,
+            62,
+            375,
+            446
+          ],
+          "margins": {
+            "left": 44,
+            "top": 62,
+            "right": 73,
+            "bottom": 66
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            38,
+            56,
+            366,
+            437
+          ],
+          "margins": {
+            "left": 38,
+            "top": 56,
+            "right": 82,
+            "bottom": 75
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            44,
+            62,
+            375,
+            446
+          ],
+          "margins": {
+            "left": 44,
+            "top": 62,
+            "right": 73,
+            "bottom": 66
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_play.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            54,
+            78,
+            394,
+            465
+          ],
+          "margins": {
+            "left": 54,
+            "top": 78,
+            "right": 54,
+            "bottom": 47
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            59,
+            59,
+            413,
+            446
+          ],
+          "margins": {
+            "left": 59,
+            "top": 59,
+            "right": 35,
+            "bottom": 66
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            62,
+            51,
+            422,
+            437
+          ],
+          "margins": {
+            "left": 62,
+            "top": 51,
+            "right": 26,
+            "bottom": 75
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            59,
+            59,
+            413,
+            446
+          ],
+          "margins": {
+            "left": 59,
+            "top": 59,
+            "right": 35,
+            "bottom": 66
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            54,
+            78,
+            394,
+            465
+          ],
+          "margins": {
+            "left": 54,
+            "top": 78,
+            "right": 54,
+            "bottom": 47
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            44,
+            62,
+            375,
+            446
+          ],
+          "margins": {
+            "left": 44,
+            "top": 62,
+            "right": 73,
+            "bottom": 66
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            38,
+            56,
+            366,
+            437
+          ],
+          "margins": {
+            "left": 38,
+            "top": 56,
+            "right": 82,
+            "bottom": 75
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            44,
+            62,
+            375,
+            446
+          ],
+          "margins": {
+            "left": 44,
+            "top": 62,
+            "right": 73,
+            "bottom": 66
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_stageC_bath.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            71,
+            142,
+            376,
+            478
+          ],
+          "margins": {
+            "left": 71,
+            "top": 142,
+            "right": 72,
+            "bottom": 34
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            70,
+            142,
+            378,
+            478
+          ],
+          "margins": {
+            "left": 70,
+            "top": 142,
+            "right": 70,
+            "bottom": 34
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            70,
+            143,
+            379,
+            479
+          ],
+          "margins": {
+            "left": 70,
+            "top": 143,
+            "right": 69,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            70,
+            142,
+            378,
+            478
+          ],
+          "margins": {
+            "left": 70,
+            "top": 142,
+            "right": 70,
+            "bottom": 34
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            71,
+            142,
+            376,
+            478
+          ],
+          "margins": {
+            "left": 71,
+            "top": 142,
+            "right": 72,
+            "bottom": 34
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            71,
+            136,
+            374,
+            475
+          ],
+          "margins": {
+            "left": 71,
+            "top": 136,
+            "right": 74,
+            "bottom": 37
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            70,
+            132,
+            373,
+            475
+          ],
+          "margins": {
+            "left": 70,
+            "top": 132,
+            "right": 75,
+            "bottom": 37
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            71,
+            136,
+            374,
+            475
+          ],
+          "margins": {
+            "left": 71,
+            "top": 136,
+            "right": 74,
+            "bottom": 37
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_bath.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            71,
+            142,
+            376,
+            478
+          ],
+          "margins": {
+            "left": 71,
+            "top": 142,
+            "right": 72,
+            "bottom": 34
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            70,
+            142,
+            378,
+            478
+          ],
+          "margins": {
+            "left": 70,
+            "top": 142,
+            "right": 70,
+            "bottom": 34
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            70,
+            143,
+            379,
+            479
+          ],
+          "margins": {
+            "left": 70,
+            "top": 143,
+            "right": 69,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            70,
+            142,
+            378,
+            478
+          ],
+          "margins": {
+            "left": 70,
+            "top": 142,
+            "right": 70,
+            "bottom": 34
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            71,
+            142,
+            376,
+            478
+          ],
+          "margins": {
+            "left": 71,
+            "top": 142,
+            "right": 72,
+            "bottom": 34
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            71,
+            136,
+            374,
+            475
+          ],
+          "margins": {
+            "left": 71,
+            "top": 136,
+            "right": 74,
+            "bottom": 37
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            70,
+            132,
+            373,
+            475
+          ],
+          "margins": {
+            "left": 70,
+            "top": 132,
+            "right": 75,
+            "bottom": 37
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            71,
+            136,
+            374,
+            475
+          ],
+          "margins": {
+            "left": 71,
+            "top": 136,
+            "right": 74,
+            "bottom": 37
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_stageC_sit.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_sit.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            54,
+            103,
+            394,
+            462
+          ],
+          "margins": {
+            "left": 54,
+            "top": 103,
+            "right": 54,
+            "bottom": 50
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_stageC_sleep.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            69,
+            156,
+            359,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 156,
+            "right": 89,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            69,
+            160,
+            361,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 160,
+            "right": 87,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            69,
+            161,
+            362,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 161,
+            "right": 86,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            69,
+            160,
+            361,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 160,
+            "right": 87,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            69,
+            156,
+            359,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 156,
+            "right": 89,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            69,
+            153,
+            357,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 153,
+            "right": 91,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            69,
+            152,
+            356,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 152,
+            "right": 92,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            69,
+            153,
+            357,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 153,
+            "right": 91,
+            "bottom": 33
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_sleep.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            69,
+            156,
+            359,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 156,
+            "right": 89,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            69,
+            160,
+            361,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 160,
+            "right": 87,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            69,
+            161,
+            362,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 161,
+            "right": 86,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            69,
+            160,
+            361,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 160,
+            "right": 87,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            69,
+            156,
+            359,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 156,
+            "right": 89,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            69,
+            153,
+            357,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 153,
+            "right": 91,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            69,
+            152,
+            356,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 152,
+            "right": 92,
+            "bottom": 33
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            69,
+            153,
+            357,
+            479
+          ],
+          "margins": {
+            "left": 69,
+            "top": 153,
+            "right": 91,
+            "bottom": 33
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_stageC_walk.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            50,
+            70,
+            397,
+            473
+          ],
+          "margins": {
+            "left": 50,
+            "top": 70,
+            "right": 51,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            59,
+            66,
+            417,
+            473
+          ],
+          "margins": {
+            "left": 59,
+            "top": 66,
+            "right": 31,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            63,
+            67,
+            426,
+            473
+          ],
+          "margins": {
+            "left": 63,
+            "top": 67,
+            "right": 22,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            59,
+            66,
+            417,
+            473
+          ],
+          "margins": {
+            "left": 59,
+            "top": 66,
+            "right": 31,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            50,
+            70,
+            397,
+            473
+          ],
+          "margins": {
+            "left": 50,
+            "top": 70,
+            "right": 51,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            37,
+            58,
+            377,
+            473
+          ],
+          "margins": {
+            "left": 37,
+            "top": 58,
+            "right": 71,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            30,
+            55,
+            367,
+            473
+          ],
+          "margins": {
+            "left": 30,
+            "top": 55,
+            "right": 81,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            37,
+            58,
+            377,
+            473
+          ],
+          "margins": {
+            "left": 37,
+            "top": 58,
+            "right": 71,
+            "bottom": 39
+          }
+        }
+      ]
+    },
+    {
+      "file": "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_walk.png",
+      "size": [
+        3584,
+        512
+      ],
+      "frame_size": [
+        448,
+        512
+      ],
+      "frames": [
+        {
+          "frame": 1,
+          "bbox": [
+            50,
+            70,
+            397,
+            473
+          ],
+          "margins": {
+            "left": 50,
+            "top": 70,
+            "right": 51,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 2,
+          "bbox": [
+            59,
+            66,
+            417,
+            473
+          ],
+          "margins": {
+            "left": 59,
+            "top": 66,
+            "right": 31,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 3,
+          "bbox": [
+            63,
+            67,
+            426,
+            473
+          ],
+          "margins": {
+            "left": 63,
+            "top": 67,
+            "right": 22,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 4,
+          "bbox": [
+            59,
+            66,
+            417,
+            473
+          ],
+          "margins": {
+            "left": 59,
+            "top": 66,
+            "right": 31,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 5,
+          "bbox": [
+            50,
+            70,
+            397,
+            473
+          ],
+          "margins": {
+            "left": 50,
+            "top": 70,
+            "right": 51,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 6,
+          "bbox": [
+            37,
+            58,
+            377,
+            473
+          ],
+          "margins": {
+            "left": 37,
+            "top": 58,
+            "right": 71,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 7,
+          "bbox": [
+            30,
+            55,
+            367,
+            473
+          ],
+          "margins": {
+            "left": 30,
+            "top": 55,
+            "right": 81,
+            "bottom": 39
+          }
+        },
+        {
+          "frame": 8,
+          "bbox": [
+            37,
+            58,
+            377,
+            473
+          ],
+          "margins": {
+            "left": 37,
+            "top": 58,
+            "right": 71,
+            "bottom": 39
+          }
+        }
+      ]
+    }
+  ],
+  "parrot_aliases": [
+    {
+      "files": [
+        "assets/art/pets/parrot/actions/pet_parrot_stageC_idle.png",
+        "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_idle.png"
+      ],
+      "identical": true
+    },
+    {
+      "files": [
+        "assets/art/pets/parrot/actions/pet_parrot_stageC_eat.png",
+        "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_eat.png"
+      ],
+      "identical": true
+    },
+    {
+      "files": [
+        "assets/art/pets/parrot/actions/pet_parrot_stageC_pat.png",
+        "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_pat.png"
+      ],
+      "identical": true
+    },
+    {
+      "files": [
+        "assets/art/pets/parrot/actions/pet_parrot_stageC_play.png",
+        "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_play.png"
+      ],
+      "identical": true
+    },
+    {
+      "files": [
+        "assets/art/pets/parrot/actions/pet_parrot_stageC_bath.png",
+        "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_bath.png"
+      ],
+      "identical": true
+    },
+    {
+      "files": [
+        "assets/art/pets/parrot/actions/pet_parrot_stageC_sit.png",
+        "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_sit.png"
+      ],
+      "identical": true
+    },
+    {
+      "files": [
+        "assets/art/pets/parrot/actions/pet_parrot_stageC_sleep.png",
+        "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_sleep.png"
+      ],
+      "identical": true
+    },
+    {
+      "files": [
+        "assets/art/pets/parrot/actions/pet_parrot_stageC_walk.png",
+        "assets/art/pets/parrot/actions/pet_parrot_var01_stageC_walk.png"
+      ],
+      "identical": true
+    }
+  ],
+  "parrot_morph_sheet": {
+    "file": "assets/art/pets/parrot/pet_parrot_morph_sheet.png",
+    "size": [
+      1402,
+      1122
+    ],
+    "bbox": [
+      24,
+      40,
+      1376,
+      1067
+    ],
+    "sha256": "c560e49d3736304663557752ef6d5d04f5704b58694d7e1043f65c14f6106847"
+  },
+  "issues": []
+}

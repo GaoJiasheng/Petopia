@@ -1,0 +1,882 @@
+[
+  {
+    "species": "hamster",
+    "variant": "var01",
+    "stage": "A",
+    "bbox": [
+      69,
+      75,
+      292,
+      284
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var02",
+    "stage": "A",
+    "bbox": [
+      329,
+      75,
+      552,
+      280
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var03",
+    "stage": "A",
+    "bbox": [
+      589,
+      75,
+      812,
+      275
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var04",
+    "stage": "A",
+    "bbox": [
+      849,
+      75,
+      1072,
+      290
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var05",
+    "stage": "A",
+    "bbox": [
+      1109,
+      75,
+      1332,
+      278
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var01",
+    "stage": "B",
+    "bbox": [
+      93,
+      320,
+      269,
+      535
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var02",
+    "stage": "B",
+    "bbox": [
+      353,
+      320,
+      528,
+      535
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var03",
+    "stage": "B",
+    "bbox": [
+      614,
+      320,
+      787,
+      535
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var04",
+    "stage": "B",
+    "bbox": [
+      876,
+      320,
+      1045,
+      535
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var05",
+    "stage": "B",
+    "bbox": [
+      1137,
+      320,
+      1305,
+      535
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var01",
+    "stage": "C",
+    "bbox": [
+      91,
+      565,
+      271,
+      780
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var02",
+    "stage": "C",
+    "bbox": [
+      348,
+      565,
+      533,
+      780
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var03",
+    "stage": "C",
+    "bbox": [
+      607,
+      565,
+      795,
+      780
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var04",
+    "stage": "C",
+    "bbox": [
+      867,
+      565,
+      1055,
+      780
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var05",
+    "stage": "C",
+    "bbox": [
+      1127,
+      565,
+      1315,
+      780
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var01",
+    "stage": "D",
+    "bbox": [
+      69,
+      810,
+      292,
+      1012
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var02",
+    "stage": "D",
+    "bbox": [
+      329,
+      846,
+      552,
+      997
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var03",
+    "stage": "D",
+    "bbox": [
+      589,
+      838,
+      812,
+      997
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var04",
+    "stage": "D",
+    "bbox": [
+      849,
+      810,
+      1072,
+      999
+    ]
+  },
+  {
+    "species": "hamster",
+    "variant": "var05",
+    "stage": "D",
+    "bbox": [
+      1109,
+      810,
+      1332,
+      1001
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var01",
+    "stage": "A",
+    "bbox": [
+      69,
+      118,
+      292,
+      242
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var02",
+    "stage": "A",
+    "bbox": [
+      329,
+      121,
+      552,
+      242
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var03",
+    "stage": "A",
+    "bbox": [
+      589,
+      113,
+      812,
+      242
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var04",
+    "stage": "A",
+    "bbox": [
+      849,
+      119,
+      1072,
+      242
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var05",
+    "stage": "A",
+    "bbox": [
+      1109,
+      117,
+      1332,
+      242
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var01",
+    "stage": "B",
+    "bbox": [
+      89,
+      320,
+      272,
+      535
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var02",
+    "stage": "B",
+    "bbox": [
+      352,
+      320,
+      529,
+      535
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var03",
+    "stage": "B",
+    "bbox": [
+      615,
+      320,
+      787,
+      535
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var04",
+    "stage": "B",
+    "bbox": [
+      870,
+      320,
+      1052,
+      535
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var05",
+    "stage": "B",
+    "bbox": [
+      1133,
+      320,
+      1309,
+      535
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var01",
+    "stage": "C",
+    "bbox": [
+      69,
+      565,
+      292,
+      779
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var02",
+    "stage": "C",
+    "bbox": [
+      330,
+      565,
+      551,
+      780
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var03",
+    "stage": "C",
+    "bbox": [
+      590,
+      565,
+      811,
+      780
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var04",
+    "stage": "C",
+    "bbox": [
+      849,
+      565,
+      1072,
+      777
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var05",
+    "stage": "C",
+    "bbox": [
+      1109,
+      565,
+      1332,
+      773
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var01",
+    "stage": "D",
+    "bbox": [
+      69,
+      819,
+      292,
+      997
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var02",
+    "stage": "D",
+    "bbox": [
+      329,
+      819,
+      552,
+      997
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var03",
+    "stage": "D",
+    "bbox": [
+      589,
+      816,
+      812,
+      997
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var04",
+    "stage": "D",
+    "bbox": [
+      849,
+      816,
+      1072,
+      997
+    ]
+  },
+  {
+    "species": "rabbit",
+    "variant": "var05",
+    "stage": "D",
+    "bbox": [
+      1109,
+      815,
+      1332,
+      997
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var01",
+    "stage": "A",
+    "bbox": [
+      69,
+      75,
+      292,
+      258
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var02",
+    "stage": "A",
+    "bbox": [
+      329,
+      75,
+      552,
+      259
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var03",
+    "stage": "A",
+    "bbox": [
+      589,
+      75,
+      812,
+      259
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var04",
+    "stage": "A",
+    "bbox": [
+      849,
+      75,
+      1072,
+      260
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var05",
+    "stage": "A",
+    "bbox": [
+      1109,
+      75,
+      1332,
+      254
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var01",
+    "stage": "B",
+    "bbox": [
+      98,
+      320,
+      264,
+      535
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var02",
+    "stage": "B",
+    "bbox": [
+      360,
+      320,
+      522,
+      535
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var03",
+    "stage": "B",
+    "bbox": [
+      617,
+      320,
+      785,
+      535
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var04",
+    "stage": "B",
+    "bbox": [
+      852,
+      320,
+      1070,
+      535
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var05",
+    "stage": "B",
+    "bbox": [
+      1137,
+      320,
+      1305,
+      535
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var01",
+    "stage": "C",
+    "bbox": [
+      94,
+      565,
+      267,
+      780
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var02",
+    "stage": "C",
+    "bbox": [
+      355,
+      565,
+      527,
+      780
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var03",
+    "stage": "C",
+    "bbox": [
+      615,
+      565,
+      787,
+      780
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var04",
+    "stage": "C",
+    "bbox": [
+      874,
+      565,
+      1048,
+      780
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var05",
+    "stage": "C",
+    "bbox": [
+      1134,
+      565,
+      1308,
+      780
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var01",
+    "stage": "D",
+    "bbox": [
+      69,
+      810,
+      292,
+      1000
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var02",
+    "stage": "D",
+    "bbox": [
+      329,
+      832,
+      552,
+      997
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var03",
+    "stage": "D",
+    "bbox": [
+      589,
+      818,
+      812,
+      997
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var04",
+    "stage": "D",
+    "bbox": [
+      849,
+      838,
+      1072,
+      997
+    ]
+  },
+  {
+    "species": "shiba",
+    "variant": "var05",
+    "stage": "D",
+    "bbox": [
+      1109,
+      810,
+      1332,
+      1005
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var01",
+    "stage": "A",
+    "bbox": [
+      69,
+      101,
+      292,
+      242
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var02",
+    "stage": "A",
+    "bbox": [
+      329,
+      126,
+      552,
+      242
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var03",
+    "stage": "A",
+    "bbox": [
+      589,
+      103,
+      812,
+      242
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var04",
+    "stage": "A",
+    "bbox": [
+      849,
+      133,
+      1072,
+      242
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var05",
+    "stage": "A",
+    "bbox": [
+      1109,
+      82,
+      1332,
+      242
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var01",
+    "stage": "B",
+    "bbox": [
+      92,
+      320,
+      269,
+      535
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var02",
+    "stage": "B",
+    "bbox": [
+      351,
+      320,
+      530,
+      535
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var03",
+    "stage": "B",
+    "bbox": [
+      613,
+      320,
+      788,
+      535
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var04",
+    "stage": "B",
+    "bbox": [
+      849,
+      320,
+      1072,
+      524
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var05",
+    "stage": "B",
+    "bbox": [
+      1134,
+      320,
+      1308,
+      535
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var01",
+    "stage": "C",
+    "bbox": [
+      86,
+      565,
+      276,
+      780
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var02",
+    "stage": "C",
+    "bbox": [
+      345,
+      565,
+      536,
+      780
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var03",
+    "stage": "C",
+    "bbox": [
+      598,
+      565,
+      803,
+      780
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var04",
+    "stage": "C",
+    "bbox": [
+      860,
+      565,
+      1061,
+      780
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var05",
+    "stage": "C",
+    "bbox": [
+      1122,
+      565,
+      1319,
+      780
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var01",
+    "stage": "D",
+    "bbox": [
+      69,
+      810,
+      292,
+      1003
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var02",
+    "stage": "D",
+    "bbox": [
+      329,
+      836,
+      552,
+      997
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var03",
+    "stage": "D",
+    "bbox": [
+      589,
+      833,
+      812,
+      997
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var04",
+    "stage": "D",
+    "bbox": [
+      849,
+      834,
+      1072,
+      997
+    ]
+  },
+  {
+    "species": "uni",
+    "variant": "var05",
+    "stage": "D",
+    "bbox": [
+      1109,
+      810,
+      1332,
+      1000
+    ]
+  }
+]

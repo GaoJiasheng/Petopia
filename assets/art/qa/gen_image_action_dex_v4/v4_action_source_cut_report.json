@@ -1,0 +1,794 @@
+[
+  {
+    "species": "boo",
+    "group": "a",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/boo_actions_a_source.png",
+    "xb": [
+      0,
+      318,
+      630,
+      937,
+      1254
+    ],
+    "yb": [
+      0,
+      339,
+      639,
+      935,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      185.35967304686682,
+      492.7784288318018,
+      785.9645950013394,
+      1083.6314307214848
+    ],
+    "col_centers": [
+      164.4425988830693,
+      472.25082472239524,
+      788.2676818900968,
+      1084.9448911243217
+    ]
+  },
+  {
+    "species": "boo",
+    "group": "b",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/boo_actions_b_source.png",
+    "xb": [
+      0,
+      335,
+      633,
+      930,
+      1254
+    ],
+    "yb": [
+      0,
+      350,
+      643,
+      932,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      208.1714768764671,
+      491.2171987633901,
+      793.9686353157697,
+      1069.4716203375585
+    ],
+    "col_centers": [
+      187.63546879122612,
+      482.48290000533984,
+      782.6725821550572,
+      1077.4775369622175
+    ]
+  },
+  {
+    "species": "cat",
+    "group": "a",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/cat_actions_a_source.png",
+    "xb": [
+      0,
+      326,
+      632,
+      939,
+      1254
+    ],
+    "yb": [
+      0,
+      377,
+      681,
+      969,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      220.5617773309591,
+      534.2656896939557,
+      828.4580692819413,
+      1108.5558730392327
+    ],
+    "col_centers": [
+      171.76520860119408,
+      479.7872458391693,
+      785.1168625637837,
+      1092.7132261933994
+    ]
+  },
+  {
+    "species": "cat",
+    "group": "b",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/cat_actions_b_source.png",
+    "xb": [
+      0,
+      328,
+      632,
+      935,
+      1254
+    ],
+    "yb": [
+      0,
+      374,
+      673,
+      945,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      216.41387321531386,
+      531.6059130984174,
+      813.9914806310567,
+      1075.5646176655398
+    ],
+    "col_centers": [
+      174.98531362502246,
+      480.5642901565768,
+      782.5520660087473,
+      1087.0986196773767
+    ]
+  },
+  {
+    "species": "cham",
+    "group": "a",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/cham_actions_a_source.png",
+    "xb": [
+      0,
+      321,
+      625,
+      928,
+      1254
+    ],
+    "yb": [
+      0,
+      339,
+      640,
+      937,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      189.02208758346424,
+      488.9528233700235,
+      790.9918088998652,
+      1084.0045797419748
+    ],
+    "col_centers": [
+      168.6166486218027,
+      472.60024789094274,
+      778.2662123319278,
+      1078.0861074912746
+    ]
+  },
+  {
+    "species": "cham",
+    "group": "b",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/cham_actions_b_source.png",
+    "xb": [
+      0,
+      317,
+      621,
+      925,
+      1254
+    ],
+    "yb": [
+      0,
+      380,
+      664,
+      947,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      239.9448591624992,
+      520.7517951024465,
+      807.358101506253,
+      1086.9776877804302
+    ],
+    "col_centers": [
+      166.33563127137916,
+      467.0990211024989,
+      775.2789245716127,
+      1074.652811419445
+    ]
+  },
+  {
+    "species": "ember",
+    "group": "a",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/ember_actions_a_source.png",
+    "xb": [
+      0,
+      327,
+      625,
+      923,
+      1254
+    ],
+    "yb": [
+      0,
+      350,
+      647,
+      946,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      197.35823470228053,
+      502.0669005927391,
+      792.7581182471602,
+      1100.0260427532673
+    ],
+    "col_centers": [
+      176.86620450757263,
+      476.71580856879945,
+      772.7407252404439,
+      1073.9074373905637
+    ]
+  },
+  {
+    "species": "ember",
+    "group": "b",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/ember_actions_b_source.png",
+    "xb": [
+      0,
+      333,
+      627,
+      921,
+      1254
+    ],
+    "yb": [
+      0,
+      362,
+      663,
+      946,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      209.46477203228898,
+      515.4231452859199,
+      809.7975114596766,
+      1083.025614506566
+    ],
+    "col_centers": [
+      186.30245063473618,
+      479.3765688998194,
+      774.8397564734066,
+      1067.244203944274
+    ]
+  },
+  {
+    "species": "hamster",
+    "group": "a",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/hamster_actions_a_source.png",
+    "xb": [
+      0,
+      325,
+      623,
+      921,
+      1254
+    ],
+    "yb": [
+      0,
+      340,
+      647,
+      942,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      183.01705066884986,
+      497.7286303271184,
+      795.4528702747679,
+      1087.5759496246212
+    ],
+    "col_centers": [
+      179.15353379438227,
+      471.0484686664939,
+      774.8267909958138,
+      1067.9776689348637
+    ]
+  },
+  {
+    "species": "hamster",
+    "group": "b",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/hamster_actions_b_source.png",
+    "xb": [
+      0,
+      327,
+      625,
+      923,
+      1254
+    ],
+    "yb": [
+      0,
+      374,
+      669,
+      945,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      218.18714062187274,
+      529.8038125019995,
+      807.9413065079066,
+      1082.2206784200343
+    ],
+    "col_centers": [
+      177.49364067940846,
+      476.0283162550112,
+      773.026186797568,
+      1073.0937848490032
+    ]
+  },
+  {
+    "species": "parrot",
+    "group": "a",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/parrot_actions_a_source.png",
+    "xb": [
+      0,
+      319,
+      614,
+      918,
+      1254
+    ],
+    "yb": [
+      0,
+      359,
+      657,
+      947,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      202.6823000486736,
+      514.3428463435763,
+      800.4953226590761,
+      1092.5608452972845
+    ],
+    "col_centers": [
+      174.24412243107906,
+      464.17429806115166,
+      764.0960818892511,
+      1072.1319492751666
+    ]
+  },
+  {
+    "species": "parrot",
+    "group": "b",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/parrot_actions_b_source.png",
+    "xb": [
+      0,
+      326,
+      626,
+      926,
+      1254
+    ],
+    "yb": [
+      0,
+      349,
+      632,
+      922,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      208.3796531458797,
+      489.91394102452995,
+      773.1022122858707,
+      1069.918715593143
+    ],
+    "col_centers": [
+      176.1194167716096,
+      475.3566419626769,
+      776.868237770645,
+      1075.3783621113375
+    ]
+  },
+  {
+    "species": "rabbit",
+    "group": "a",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/rabbit_actions_a_source.png",
+    "xb": [
+      0,
+      324,
+      629,
+      935,
+      1254
+    ],
+    "yb": [
+      0,
+      358,
+      658,
+      949,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      201.70772202503292,
+      513.715500545179,
+      801.9542004074614,
+      1095.6953614303986
+    ],
+    "col_centers": [
+      172.6415319837345,
+      474.5514875204793,
+      783.5596177373837,
+      1087.062894793221
+    ]
+  },
+  {
+    "species": "rabbit",
+    "group": "b",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/rabbit_actions_b_source.png",
+    "xb": [
+      0,
+      331,
+      631,
+      929,
+      1254
+    ],
+    "yb": [
+      0,
+      353,
+      649,
+      927,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      201.20315263112903,
+      504.50821993059503,
+      793.4522559287406,
+      1061.1216568501488
+    ],
+    "col_centers": [
+      181.94380506976256,
+      480.41746333756225,
+      781.7712894198792,
+      1075.7011916480799
+    ]
+  },
+  {
+    "species": "shiba",
+    "group": "a",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/shiba_actions_a_source.png",
+    "xb": [
+      0,
+      327,
+      632,
+      935,
+      1254
+    ],
+    "yb": [
+      0,
+      343,
+      648,
+      939,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      178.43741068552504,
+      506.6598737879579,
+      790.2391936945961,
+      1086.8454046035822
+    ],
+    "col_centers": [
+      171.4475615743116,
+      481.67303474590204,
+      782.3678722039906,
+      1087.1394388101546
+    ]
+  },
+  {
+    "species": "shiba",
+    "group": "b",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/shiba_actions_b_source.png",
+    "xb": [
+      0,
+      340,
+      638,
+      933,
+      1254
+    ],
+    "yb": [
+      0,
+      354,
+      643,
+      924,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      205.84010395034568,
+      501.8345939271743,
+      784.0015963032843,
+      1063.930045045147
+    ],
+    "col_centers": [
+      188.94868604090937,
+      490.93343358545155,
+      785.9373964877686,
+      1080.078615738138
+    ]
+  },
+  {
+    "species": "snake",
+    "group": "a",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/snake_actions_a_source.png",
+    "xb": [
+      0,
+      331,
+      632,
+      932,
+      1254
+    ],
+    "yb": [
+      0,
+      360,
+      636,
+      920,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      218.3837068400297,
+      501.8750320134093,
+      770.6083031589371,
+      1069.5337344689199
+    ],
+    "col_centers": [
+      181.558615298657,
+      481.13476596848113,
+      783.7960775094502,
+      1080.0479039140168
+    ]
+  },
+  {
+    "species": "snake",
+    "group": "b",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/snake_actions_b_source.png",
+    "xb": [
+      0,
+      335,
+      643,
+      944,
+      1254
+    ],
+    "yb": [
+      0,
+      379,
+      668,
+      942,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      227.74256816829148,
+      530.4109953829877,
+      805.3204599775617,
+      1077.9727791856164
+    ],
+    "col_centers": [
+      181.47218443634006,
+      489.44323799448335,
+      797.5505055566658,
+      1089.7989648349567
+    ]
+  },
+  {
+    "species": "starbug",
+    "group": "a",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/starbug_actions_a_source.png",
+    "xb": [
+      0,
+      318,
+      617,
+      921,
+      1254
+    ],
+    "yb": [
+      0,
+      321,
+      616,
+      912,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      171.45207181809795,
+      470.61926639224635,
+      761.8971526949573,
+      1062.3041251281986
+    ],
+    "col_centers": [
+      171.26223799929954,
+      465.04384517785985,
+      768.1935092333574,
+      1073.5361058200824
+    ]
+  },
+  {
+    "species": "starbug",
+    "group": "b",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/starbug_actions_b_source.png",
+    "xb": [
+      0,
+      326,
+      627,
+      929,
+      1254
+    ],
+    "yb": [
+      0,
+      355,
+      642,
+      925,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      212.8298430412369,
+      497.42736213276413,
+      786.3984660149454,
+      1064.4118321436617
+    ],
+    "col_centers": [
+      175.53806473780946,
+      475.5399992034106,
+      778.9998208464615,
+      1079.6455485418521
+    ]
+  },
+  {
+    "species": "turtle",
+    "group": "a",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/turtle_actions_a_source.png",
+    "xb": [
+      0,
+      318,
+      622,
+      928,
+      1254
+    ],
+    "yb": [
+      0,
+      341,
+      641,
+      940,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      189.6085405802288,
+      493.0752756324291,
+      789.0292162347525,
+      1090.1735603332809
+    ],
+    "col_centers": [
+      169.85245878340743,
+      466.36770357496965,
+      777.8911889332277,
+      1078.2235801552406
+    ]
+  },
+  {
+    "species": "turtle",
+    "group": "b",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/turtle_actions_b_source.png",
+    "xb": [
+      0,
+      329,
+      632,
+      933,
+      1254
+    ],
+    "yb": [
+      0,
+      375,
+      662,
+      938,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      227.16582040259385,
+      521.9736379936055,
+      801.145561710956,
+      1074.360498563285
+    ],
+    "col_centers": [
+      180.58335308451686,
+      477.47485472082855,
+      786.4935774789434,
+      1079.4741134262276
+    ]
+  },
+  {
+    "species": "uni",
+    "group": "a",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/uni_actions_a_source.png",
+    "xb": [
+      0,
+      318,
+      623,
+      926,
+      1254
+    ],
+    "yb": [
+      0,
+      363,
+      654,
+      945,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      211.22339076578538,
+      513.9184973253792,
+      794.3762577424557,
+      1096.6083018741788
+    ],
+    "col_centers": [
+      166.5456923779411,
+      469.60020909162324,
+      777.1178245271877,
+      1075.4380549623434
+    ]
+  },
+  {
+    "species": "uni",
+    "group": "b",
+    "source": "/Users/gavin/work/petopia/assets/art/qa/gen_image_action_dex_v4/uni_actions_b_source.png",
+    "xb": [
+      0,
+      320,
+      618,
+      919,
+      1254
+    ],
+    "yb": [
+      0,
+      371,
+      664,
+      942,
+      1254
+    ],
+    "fallback": false,
+    "component_count": 16,
+    "row_centers": [
+      218.99294134082444,
+      522.6896084610842,
+      804.5738473158212,
+      1080.118146945089
+    ],
+    "col_centers": [
+      168.93204546215844,
+      470.3170066751129,
+      765.8159863825788,
+      1071.3584520358327
+    ]
+  }
+]

@@ -38,7 +38,7 @@ def edge_clipped(img):
     right = run([a[w-1, y] for y in range(h)])
     return top >= EDGE_RUN or left >= EDGE_RUN or right >= EDGE_RUN
 
-def check_complete(img, tag, canvas=512):
+def check_complete(img, tag, canvas=512, check_fill=True):
     if edge_clipped(img):
         fail(f'{tag}: 主体触碰画框边缘（截断）')
     bb = alpha_bbox(img)
@@ -48,9 +48,10 @@ def check_complete(img, tag, canvas=512):
     m = min(bb[0], bb[1], w - bb[2]) / canvas  # 顶/左/右最小边距
     if m < MARGIN_MIN:
         fail(f'{tag}: 安全边距不足（{m*100:.0f}%<{MARGIN_MIN*100:.0f}%）')
-    fill = max(bb[2]-bb[0], bb[3]-bb[1]) / canvas
-    if not (FILL_LO <= fill <= FILL_HI):
-        fail(f'{tag}: 主体占比 {fill*100:.0f}% 不在 {int(FILL_LO*100)}-{int(FILL_HI*100)}%')
+    if check_fill:  # 问号渍(mystery)是氛围渍、非实体主体，不核占比
+        fill = max(bb[2]-bb[0], bb[3]-bb[1]) / canvas
+        if not (FILL_LO <= fill <= FILL_HI):
+            fail(f'{tag}: 主体占比 {fill*100:.0f}% 不在 {int(FILL_LO*100)}-{int(FILL_HI*100)}%')
 
 def check_base():
     for sp in SPECIES:
@@ -96,7 +97,7 @@ def check_dex():
             if not os.path.exists(p):
                 fail(f'缺图鉴 {p}'); continue
             im = Image.open(p).convert('RGBA')
-            check_complete(im, f'dex/{sp}_{k}', canvas=im.size[0])
+            check_complete(im, f"dex/{sp}_{k}", canvas=im.size[0], check_fill=(k!="mystery"))
             if k == 'silhouette':  # 剪影不得被削平顶（头部一刀切）
                 a = im.split()[-1]; bb = a.getbbox()
                 if bb:

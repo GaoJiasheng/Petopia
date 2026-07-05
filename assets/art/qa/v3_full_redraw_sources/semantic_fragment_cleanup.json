@@ -1,0 +1,470 @@
+[
+  {
+    "file": "parrot/pet_parrot_var02_stageC.png",
+    "pixels_removed": 195,
+    "components": [
+      [
+        154,
+        [
+          165,
+          452,
+          211,
+          456
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "parrot/pet_parrot_var03_stageC.png",
+    "pixels_removed": 504,
+    "components": [
+      [
+        385,
+        [
+          430,
+          388,
+          441,
+          434
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "parrot/pet_parrot_var04_stageC.png",
+    "pixels_removed": 4073,
+    "components": [
+      [
+        2440,
+        [
+          143,
+          51,
+          290,
+          77
+        ]
+      ],
+      [
+        393,
+        [
+          376,
+          362,
+          389,
+          403
+        ]
+      ],
+      [
+        287,
+        [
+          206,
+          423,
+          219,
+          456
+        ]
+      ],
+      [
+        240,
+        [
+          301,
+          51,
+          341,
+          62
+        ]
+      ],
+      [
+        149,
+        [
+          383,
+          172,
+          389,
+          207
+        ]
+      ],
+      [
+        83,
+        [
+          224,
+          442,
+          233,
+          456
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "parrot/pet_parrot_var04_stageD.png",
+    "pixels_removed": 4872,
+    "components": [
+      [
+        2563,
+        [
+          114,
+          51,
+          286,
+          76
+        ]
+      ],
+      [
+        1097,
+        [
+          302,
+          51,
+          373,
+          88
+        ]
+      ],
+      [
+        489,
+        [
+          386,
+          372,
+          400,
+          416
+        ]
+      ],
+      [
+        240,
+        [
+          392,
+          168,
+          400,
+          210
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "parrot/pet_parrot_var05_stageC.png",
+    "pixels_removed": 263,
+    "components": [
+      [
+        208,
+        [
+          82,
+          433,
+          99,
+          456
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "parrot/pet_parrot_var05_stageD.png",
+    "pixels_removed": 291,
+    "components": [
+      [
+        230,
+        [
+          76,
+          430,
+          94,
+          456
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "turtle/pet_turtle_var01_stageC.png",
+    "pixels_removed": 835,
+    "components": [
+      [
+        735,
+        [
+          444,
+          213,
+          459,
+          290
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "turtle/pet_turtle_var02_stageC.png",
+    "pixels_removed": 1200,
+    "components": [
+      [
+        881,
+        [
+          442,
+          226,
+          459,
+          307
+        ]
+      ],
+      [
+        173,
+        [
+          54,
+          370,
+          68,
+          389
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "turtle/pet_turtle_var03_stageC.png",
+    "pixels_removed": 1260,
+    "components": [
+      [
+        883,
+        [
+          442,
+          241,
+          459,
+          319
+        ]
+      ],
+      [
+        210,
+        [
+          54,
+          371,
+          71,
+          391
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "turtle/pet_turtle_var04_stageC.png",
+    "pixels_removed": 1146,
+    "components": [
+      [
+        802,
+        [
+          442,
+          238,
+          459,
+          314
+        ]
+      ],
+      [
+        202,
+        [
+          54,
+          371,
+          71,
+          390
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "turtle/pet_turtle_var05_stageC.png",
+    "pixels_removed": 290,
+    "components": [
+      [
+        239,
+        [
+          54,
+          369,
+          72,
+          391
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "uni/pet_uni_var01_stageC.png",
+    "pixels_removed": 1250,
+    "components": [
+      [
+        1110,
+        [
+          436,
+          219,
+          451,
+          321
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "uni/pet_uni_var01_stageD.png",
+    "pixels_removed": 1430,
+    "components": [
+      [
+        1299,
+        [
+          421,
+          188,
+          439,
+          287
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "uni/pet_uni_var02_stageC.png",
+    "pixels_removed": 2238,
+    "components": [
+      [
+        1391,
+        [
+          441,
+          226,
+          459,
+          333
+        ]
+      ],
+      [
+        625,
+        [
+          54,
+          360,
+          68,
+          424
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "uni/pet_uni_var02_stageD.png",
+    "pixels_removed": 2397,
+    "components": [
+      [
+        1313,
+        [
+          437,
+          188,
+          455,
+          289
+        ]
+      ],
+      [
+        867,
+        [
+          56,
+          344,
+          74,
+          412
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "uni/pet_uni_var03_stageC.png",
+    "pixels_removed": 2175,
+    "components": [
+      [
+        1123,
+        [
+          444,
+          227,
+          459,
+          329
+        ]
+      ],
+      [
+        835,
+        [
+          54,
+          360,
+          72,
+          426
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "uni/pet_uni_var03_stageD.png",
+    "pixels_removed": 2504,
+    "components": [
+      [
+        1324,
+        [
+          439,
+          186,
+          457,
+          289
+        ]
+      ],
+      [
+        965,
+        [
+          56,
+          346,
+          74,
+          416
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "uni/pet_uni_var04_stageC.png",
+    "pixels_removed": 2682,
+    "components": [
+      [
+        1716,
+        [
+          438,
+          218,
+          459,
+          332
+        ]
+      ],
+      [
+        704,
+        [
+          54,
+          362,
+          69,
+          428
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "uni/pet_uni_var04_stageD.png",
+    "pixels_removed": 2807,
+    "components": [
+      [
+        1736,
+        [
+          433,
+          180,
+          455,
+          288
+        ]
+      ],
+      [
+        828,
+        [
+          56,
+          349,
+          74,
+          416
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "uni/pet_uni_var05_stageC.png",
+    "pixels_removed": 1401,
+    "components": [
+      [
+        1283,
+        [
+          60,
+          352,
+          83,
+          430
+        ]
+      ]
+    ]
+  },
+  {
+    "file": "uni/pet_uni_var05_stageD.png",
+    "pixels_removed": 1314,
+    "components": [
+      [
+        1180,
+        [
+          72,
+          343,
+          94,
+          418
+        ]
+      ]
+    ]
+  }
+]

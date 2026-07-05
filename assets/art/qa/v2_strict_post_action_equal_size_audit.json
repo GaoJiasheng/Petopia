@@ -1,0 +1,1398 @@
+{
+  "issues_total": 0,
+  "issues": [],
+  "summary": {
+    "boo": {
+      "static": {
+        "bbox": [
+          95,
+          51,
+          417,
+          456
+        ],
+        "margins": [
+          95,
+          51,
+          95,
+          56
+        ],
+        "long": 405,
+        "bottom": 456
+      },
+      "actions": {
+        "idle": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "eat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "pat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "play": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "bath": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sit": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sleep": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "walk": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        }
+      }
+    },
+    "cat": {
+      "static": {
+        "bbox": [
+          86,
+          51,
+          425,
+          456
+        ],
+        "margins": [
+          86,
+          51,
+          87,
+          56
+        ],
+        "long": 405,
+        "bottom": 456
+      },
+      "actions": {
+        "idle": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "eat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "pat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "play": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "bath": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sit": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sleep": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "walk": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        }
+      }
+    },
+    "cham": {
+      "static": {
+        "bbox": [
+          92,
+          51,
+          421,
+          456
+        ],
+        "margins": [
+          92,
+          51,
+          91,
+          56
+        ],
+        "long": 405,
+        "bottom": 456
+      },
+      "actions": {
+        "idle": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "eat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "pat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "play": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "bath": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sit": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sleep": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "walk": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        }
+      }
+    },
+    "ember": {
+      "static": {
+        "bbox": [
+          101,
+          51,
+          411,
+          456
+        ],
+        "margins": [
+          101,
+          51,
+          101,
+          56
+        ],
+        "long": 405,
+        "bottom": 456
+      },
+      "actions": {
+        "idle": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "eat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "pat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "play": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "bath": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sit": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sleep": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "walk": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        }
+      }
+    },
+    "hamster": {
+      "static": {
+        "bbox": [
+          86,
+          51,
+          425,
+          456
+        ],
+        "margins": [
+          86,
+          51,
+          87,
+          56
+        ],
+        "long": 405,
+        "bottom": 456
+      },
+      "actions": {
+        "idle": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "eat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "pat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "play": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "bath": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sit": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sleep": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "walk": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        }
+      }
+    },
+    "parrot": {
+      "static": {
+        "bbox": [
+          72,
+          51,
+          440,
+          456
+        ],
+        "margins": [
+          72,
+          51,
+          72,
+          56
+        ],
+        "long": 405,
+        "bottom": 456
+      },
+      "actions": {
+        "idle": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "eat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "pat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "play": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "bath": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sit": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sleep": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "walk": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        }
+      }
+    },
+    "rabbit": {
+      "static": {
+        "bbox": [
+          53,
+          69,
+          458,
+          456
+        ],
+        "margins": [
+          53,
+          69,
+          54,
+          56
+        ],
+        "long": 405,
+        "bottom": 456
+      },
+      "actions": {
+        "idle": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 53,
+          "first_long": 405
+        },
+        "eat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 53,
+          "first_long": 405
+        },
+        "pat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 53,
+          "first_long": 405
+        },
+        "play": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 53,
+          "first_long": 405
+        },
+        "bath": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 53,
+          "first_long": 405
+        },
+        "sit": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 53,
+          "first_long": 405
+        },
+        "sleep": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "walk": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        }
+      }
+    },
+    "shiba": {
+      "static": {
+        "bbox": [
+          93,
+          51,
+          419,
+          456
+        ],
+        "margins": [
+          93,
+          51,
+          93,
+          56
+        ],
+        "long": 405,
+        "bottom": 456
+      },
+      "actions": {
+        "idle": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "eat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "pat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "play": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "bath": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sit": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sleep": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "walk": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        }
+      }
+    },
+    "snake": {
+      "static": {
+        "bbox": [
+          75,
+          51,
+          437,
+          456
+        ],
+        "margins": [
+          75,
+          51,
+          75,
+          56
+        ],
+        "long": 405,
+        "bottom": 456
+      },
+      "actions": {
+        "idle": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "eat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "pat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "play": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 53,
+          "first_long": 405
+        },
+        "bath": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sit": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sleep": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "walk": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 53,
+          "first_long": 405
+        }
+      }
+    },
+    "starbug": {
+      "static": {
+        "bbox": [
+          101,
+          51,
+          410,
+          456
+        ],
+        "margins": [
+          101,
+          51,
+          102,
+          56
+        ],
+        "long": 405,
+        "bottom": 456
+      },
+      "actions": {
+        "idle": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "eat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "pat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "play": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "bath": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sit": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sleep": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "walk": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        }
+      }
+    },
+    "turtle": {
+      "static": {
+        "bbox": [
+          79,
+          51,
+          434,
+          456
+        ],
+        "margins": [
+          79,
+          51,
+          78,
+          56
+        ],
+        "long": 405,
+        "bottom": 456
+      },
+      "actions": {
+        "idle": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "eat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "pat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "play": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "bath": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sit": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sleep": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "walk": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        }
+      }
+    },
+    "uni": {
+      "static": {
+        "bbox": [
+          76,
+          51,
+          435,
+          456
+        ],
+        "margins": [
+          76,
+          51,
+          77,
+          56
+        ],
+        "long": 405,
+        "bottom": 456
+      },
+      "actions": {
+        "idle": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "eat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "pat": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "play": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "bath": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sit": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "sleep": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        },
+        "walk": {
+          "long_range": [
+            405,
+            405
+          ],
+          "bottom_range": [
+            456,
+            456
+          ],
+          "min_margin": 51,
+          "first_long": 405
+        }
+      }
+    }
+  }
+}

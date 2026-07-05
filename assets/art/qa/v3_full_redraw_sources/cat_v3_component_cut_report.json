@@ -1,0 +1,462 @@
+[
+  {
+    "file": "pet_cat_var01_stageA.png",
+    "component_bbox": [
+      59,
+      127,
+      232,
+      280
+    ],
+    "component_area": 19793,
+    "expanded_crop": [
+      41,
+      109,
+      250,
+      298
+    ],
+    "flat_cut_score": 0.058,
+    "final_bbox": [
+      54,
+      98,
+      459,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var02_stageA.png",
+    "component_bbox": [
+      311,
+      130,
+      486,
+      283
+    ],
+    "component_area": 19418,
+    "expanded_crop": [
+      293,
+      112,
+      504,
+      301
+    ],
+    "flat_cut_score": 0.076,
+    "final_bbox": [
+      54,
+      102,
+      459,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var03_stageA.png",
+    "component_bbox": [
+      556,
+      129,
+      731,
+      285
+    ],
+    "component_area": 19330,
+    "expanded_crop": [
+      538,
+      111,
+      749,
+      303
+    ],
+    "flat_cut_score": 0.076,
+    "final_bbox": [
+      54,
+      95,
+      459,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var04_stageA.png",
+    "component_bbox": [
+      787,
+      111,
+      965,
+      288
+    ],
+    "component_area": 23030,
+    "expanded_crop": [
+      769,
+      93,
+      983,
+      306
+    ],
+    "flat_cut_score": 0.086,
+    "final_bbox": [
+      54,
+      53,
+      459,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var05_stageA.png",
+    "component_bbox": [
+      1031,
+      129,
+      1198,
+      286
+    ],
+    "component_area": 18955,
+    "expanded_crop": [
+      1013,
+      111,
+      1216,
+      304
+    ],
+    "flat_cut_score": 0.066,
+    "final_bbox": [
+      54,
+      75,
+      459,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var01_stageB.png",
+    "component_bbox": [
+      53,
+      376,
+      240,
+      578
+    ],
+    "component_area": 26421,
+    "expanded_crop": [
+      35,
+      358,
+      258,
+      596
+    ],
+    "flat_cut_score": 0.086,
+    "final_bbox": [
+      68,
+      51,
+      443,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var02_stageB.png",
+    "component_bbox": [
+      299,
+      374,
+      478,
+      578
+    ],
+    "component_area": 26396,
+    "expanded_crop": [
+      281,
+      356,
+      496,
+      596
+    ],
+    "flat_cut_score": 0.048,
+    "final_bbox": [
+      78,
+      51,
+      433,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var03_stageB.png",
+    "component_bbox": [
+      546,
+      377,
+      725,
+      580
+    ],
+    "component_area": 26226,
+    "expanded_crop": [
+      528,
+      359,
+      743,
+      598
+    ],
+    "flat_cut_score": 0.06,
+    "final_bbox": [
+      78,
+      51,
+      435,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var04_stageB.png",
+    "component_bbox": [
+      783,
+      356,
+      960,
+      583
+    ],
+    "component_area": 29947,
+    "expanded_crop": [
+      765,
+      338,
+      978,
+      601
+    ],
+    "flat_cut_score": 0.115,
+    "final_bbox": [
+      98,
+      51,
+      414,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var05_stageB.png",
+    "component_bbox": [
+      1020,
+      377,
+      1199,
+      582
+    ],
+    "component_area": 25910,
+    "expanded_crop": [
+      1002,
+      359,
+      1217,
+      600
+    ],
+    "flat_cut_score": 0.082,
+    "final_bbox": [
+      79,
+      51,
+      433,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var01_stageC.png",
+    "component_bbox": [
+      49,
+      653,
+      248,
+      884
+    ],
+    "component_area": 30878,
+    "expanded_crop": [
+      31,
+      635,
+      266,
+      902
+    ],
+    "flat_cut_score": 0.074,
+    "final_bbox": [
+      82,
+      51,
+      431,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var02_stageC.png",
+    "component_bbox": [
+      306,
+      654,
+      500,
+      885
+    ],
+    "component_area": 30180,
+    "expanded_crop": [
+      288,
+      636,
+      518,
+      903
+    ],
+    "flat_cut_score": 0.091,
+    "final_bbox": [
+      86,
+      51,
+      426,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var03_stageC.png",
+    "component_bbox": [
+      544,
+      655,
+      741,
+      883
+    ],
+    "component_area": 30069,
+    "expanded_crop": [
+      526,
+      637,
+      759,
+      901
+    ],
+    "flat_cut_score": 0.059,
+    "final_bbox": [
+      81,
+      51,
+      431,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var04_stageC.png",
+    "component_bbox": [
+      777,
+      656,
+      986,
+      892
+    ],
+    "component_area": 33569,
+    "expanded_crop": [
+      759,
+      638,
+      1004,
+      910
+    ],
+    "flat_cut_score": 0.078,
+    "final_bbox": [
+      76,
+      51,
+      435,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var05_stageC.png",
+    "component_bbox": [
+      1026,
+      662,
+      1223,
+      888
+    ],
+    "component_area": 29838,
+    "expanded_crop": [
+      1008,
+      644,
+      1241,
+      906
+    ],
+    "flat_cut_score": 0.086,
+    "final_bbox": [
+      80,
+      51,
+      433,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var01_stageD.png",
+    "component_bbox": [
+      49,
+      941,
+      248,
+      1185
+    ],
+    "component_area": 32373,
+    "expanded_crop": [
+      31,
+      923,
+      266,
+      1203
+    ],
+    "flat_cut_score": 0.09,
+    "final_bbox": [
+      91,
+      51,
+      421,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var02_stageD.png",
+    "component_bbox": [
+      291,
+      943,
+      485,
+      1182
+    ],
+    "component_area": 31462,
+    "expanded_crop": [
+      273,
+      925,
+      503,
+      1200
+    ],
+    "flat_cut_score": 0.088,
+    "final_bbox": [
+      92,
+      51,
+      421,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var03_stageD.png",
+    "component_bbox": [
+      537,
+      944,
+      734,
+      1183
+    ],
+    "component_area": 31687,
+    "expanded_crop": [
+      519,
+      926,
+      752,
+      1201
+    ],
+    "flat_cut_score": 0.093,
+    "final_bbox": [
+      89,
+      51,
+      423,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var04_stageD.png",
+    "component_bbox": [
+      777,
+      944,
+      983,
+      1189
+    ],
+    "component_area": 34441,
+    "expanded_crop": [
+      759,
+      926,
+      1001,
+      1207
+    ],
+    "flat_cut_score": 0.081,
+    "final_bbox": [
+      86,
+      51,
+      427,
+      456
+    ]
+  },
+  {
+    "file": "pet_cat_var05_stageD.png",
+    "component_bbox": [
+      1020,
+      943,
+      1219,
+      1186
+    ],
+    "component_area": 32395,
+    "expanded_crop": [
+      1002,
+      925,
+      1237,
+      1204
+    ],
+    "flat_cut_score": 0.077,
+    "final_bbox": [
+      90,
+      51,
+      422,
+      456
+    ]
+  }
+]
