@@ -7,7 +7,7 @@ from PIL import Image
 
 ROOT = 'assets/art/pets'
 SPECIES = ['cat', 'shiba', 'rabbit', 'hamster', 'turtle', 'parrot', 'snake',
-           'cham', 'ember', 'uni', 'boo', 'starbug']
+           'chameleon', 'ember', 'uni', 'boo', 'starbug']
 FANTASY = {'ember', 'uni', 'boo', 'starbug'}
 ACTIONS = ['idle', 'eat', 'pat', 'play', 'bath', 'sit', 'sleep', 'walk']
 STAGES = 'ABCD'
