@@ -17,6 +17,7 @@ import 'album_screen.dart';
 import 'graduation_ceremony_screen.dart';
 import 'growth_journal_screen.dart';
 import 'pet_dex_screen.dart';
+import 'postcard_viewer_screen.dart';
 import 'settings_screen.dart';
 import 'shop_screen.dart';
 import 'visitor_dex_screen.dart';
@@ -42,6 +43,9 @@ class YardHomeScreen extends ConsumerStatefulWidget {
 class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
   Timer? _cooldownTimer;
   String? _precacheKey;
+  final DateTime _openedAt = DateTime.now().toUtc();
+  final Set<String> _shownArrivalPostcards = <String>{};
+  bool _postcardDialogOpen = false;
 
   @override
   void initState() {
@@ -90,6 +94,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
             ? Bgm.yardNight
             : (hour >= 16 ? Bgm.yardDusk : Bgm.yardDay);
         ref.read(audioServiceProvider).playBgm(yardBgm);
+        _schedulePostcardArrival(ctrl);
         final petAsset = pet == null
             ? null
             : PetArt.stage(pet.speciesId, pet.stage);
@@ -194,6 +199,26 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
         duration: const Duration(seconds: 3),
       ),
     );
+  }
+
+  void _schedulePostcardArrival(GameController ctrl) {
+    if (_postcardDialogOpen || !mounted) return;
+    final cards = ctrl.postcards();
+    if (cards.isEmpty) return;
+    final latest = cards.first;
+    if (_shownArrivalPostcards.contains(latest.id)) return;
+    final sentAt = latest.sentAt.toUtc();
+    if (sentAt.isBefore(_openedAt.subtract(const Duration(seconds: 10)))) {
+      return;
+    }
+
+    _shownArrivalPostcards.add(latest.id);
+    _postcardDialogOpen = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      await showPostcardArrivalDialog(context, latest);
+      if (mounted) _postcardDialogOpen = false;
+    });
   }
 
   void _precacheCurrentPetAssets(

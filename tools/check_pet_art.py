@@ -161,7 +161,15 @@ def check_id_dir_match():
         if not os.path.exists(f'{ROOT}/dex/{s["id"]}_dex_color.png'):
             fail(f'{s["id"]}: 图鉴 dex/{s["id"]}_dex_color.png 不存在（id↔命名不匹配）')
 
-check_id_dir_match(); check_base(); check_actions(); check_dex(); check_static_action_match()
+def check_postcard_naming():
+    """明信片贴纸/姿态目录也必须用完整物种名，不得沿用旧缩写（防 cham 类命名再现）。"""
+    import re
+    for f in glob.glob('assets/art/postcards/stickers/*.png') + glob.glob('assets/art/postcards/poses/*.png'):
+        base = os.path.basename(f)
+        if re.search(r'(?<![a-z])cham(?![a-z])', base):
+            fail(f'{f}: 使用了变色龙旧缩写 cham（应为 chameleon）')
+
+check_id_dir_match(); check_postcard_naming(); check_base(); check_actions(); check_dex(); check_static_action_match()
 print('=' * 50)
 if FAILS:
     print(f'❌ {len(FAILS)} 项 FAIL：')

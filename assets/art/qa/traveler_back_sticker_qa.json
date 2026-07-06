@@ -1,0 +1,1622 @@
+[
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_boo_var01_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      113,
+      71,
+      399,
+      441
+    ],
+    "margin": {
+      "left": 113,
+      "top": 71,
+      "right": 113,
+      "bottom": 71
+    },
+    "coverage": 0.2748,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_boo_var02_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      112,
+      71,
+      400,
+      441
+    ],
+    "margin": {
+      "left": 112,
+      "top": 71,
+      "right": 112,
+      "bottom": 71
+    },
+    "coverage": 0.2778,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_boo_var03_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      105,
+      70,
+      407,
+      441
+    ],
+    "margin": {
+      "left": 105,
+      "top": 70,
+      "right": 105,
+      "bottom": 71
+    },
+    "coverage": 0.3022,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_boo_var04_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      113,
+      70,
+      399,
+      441
+    ],
+    "margin": {
+      "left": 113,
+      "top": 70,
+      "right": 113,
+      "bottom": 71
+    },
+    "coverage": 0.2635,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_boo_var05_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      104,
+      71,
+      408,
+      441
+    ],
+    "margin": {
+      "left": 104,
+      "top": 71,
+      "right": 104,
+      "bottom": 71
+    },
+    "coverage": 0.2835,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_cat_var01_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      143,
+      60,
+      369,
+      452
+    ],
+    "margin": {
+      "left": 143,
+      "top": 60,
+      "right": 143,
+      "bottom": 60
+    },
+    "coverage": 0.251,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_cat_var02_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      148,
+      71,
+      363,
+      442
+    ],
+    "margin": {
+      "left": 148,
+      "top": 71,
+      "right": 149,
+      "bottom": 70
+    },
+    "coverage": 0.2255,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_cat_var03_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      142,
+      71,
+      370,
+      442
+    ],
+    "margin": {
+      "left": 142,
+      "top": 71,
+      "right": 142,
+      "bottom": 70
+    },
+    "coverage": 0.2341,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_cat_var04_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      147,
+      71,
+      365,
+      441
+    ],
+    "margin": {
+      "left": 147,
+      "top": 71,
+      "right": 147,
+      "bottom": 71
+    },
+    "coverage": 0.2271,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_cat_var05_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      147,
+      71,
+      365,
+      442
+    ],
+    "margin": {
+      "left": 147,
+      "top": 71,
+      "right": 147,
+      "bottom": 70
+    },
+    "coverage": 0.2263,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_chameleon_var01_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      151,
+      71,
+      361,
+      441
+    ],
+    "margin": {
+      "left": 151,
+      "top": 71,
+      "right": 151,
+      "bottom": 71
+    },
+    "coverage": 0.2072,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_chameleon_var02_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      147,
+      71,
+      365,
+      441
+    ],
+    "margin": {
+      "left": 147,
+      "top": 71,
+      "right": 147,
+      "bottom": 71
+    },
+    "coverage": 0.2065,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_chameleon_var03_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      146,
+      71,
+      367,
+      442
+    ],
+    "margin": {
+      "left": 146,
+      "top": 71,
+      "right": 145,
+      "bottom": 70
+    },
+    "coverage": 0.1826,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_chameleon_var04_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      141,
+      71,
+      371,
+      441
+    ],
+    "margin": {
+      "left": 141,
+      "top": 71,
+      "right": 141,
+      "bottom": 71
+    },
+    "coverage": 0.2168,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_chameleon_var05_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      151,
+      70,
+      361,
+      441
+    ],
+    "margin": {
+      "left": 151,
+      "top": 70,
+      "right": 151,
+      "bottom": 71
+    },
+    "coverage": 0.1842,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_ember_var01_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      128,
+      71,
+      384,
+      441
+    ],
+    "margin": {
+      "left": 128,
+      "top": 71,
+      "right": 128,
+      "bottom": 71
+    },
+    "coverage": 0.2227,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_ember_var02_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      140,
+      71,
+      372,
+      441
+    ],
+    "margin": {
+      "left": 140,
+      "top": 71,
+      "right": 140,
+      "bottom": 71
+    },
+    "coverage": 0.226,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_ember_var03_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      114,
+      70,
+      398,
+      441
+    ],
+    "margin": {
+      "left": 114,
+      "top": 70,
+      "right": 114,
+      "bottom": 71
+    },
+    "coverage": 0.2306,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_ember_var04_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      129,
+      71,
+      383,
+      441
+    ],
+    "margin": {
+      "left": 129,
+      "top": 71,
+      "right": 129,
+      "bottom": 71
+    },
+    "coverage": 0.2254,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_ember_var05_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      136,
+      71,
+      376,
+      441
+    ],
+    "margin": {
+      "left": 136,
+      "top": 71,
+      "right": 136,
+      "bottom": 71
+    },
+    "coverage": 0.2072,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_hamster_var01_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      125,
+      71,
+      386,
+      442
+    ],
+    "margin": {
+      "left": 125,
+      "top": 71,
+      "right": 126,
+      "bottom": 70
+    },
+    "coverage": 0.2923,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_hamster_var02_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      130,
+      71,
+      381,
+      441
+    ],
+    "margin": {
+      "left": 130,
+      "top": 71,
+      "right": 131,
+      "bottom": 71
+    },
+    "coverage": 0.2724,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_hamster_var03_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      125,
+      71,
+      387,
+      441
+    ],
+    "margin": {
+      "left": 125,
+      "top": 71,
+      "right": 125,
+      "bottom": 71
+    },
+    "coverage": 0.2801,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_hamster_var04_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      131,
+      71,
+      382,
+      441
+    ],
+    "margin": {
+      "left": 131,
+      "top": 71,
+      "right": 130,
+      "bottom": 71
+    },
+    "coverage": 0.27,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_hamster_var05_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      120,
+      71,
+      391,
+      441
+    ],
+    "margin": {
+      "left": 120,
+      "top": 71,
+      "right": 121,
+      "bottom": 71
+    },
+    "coverage": 0.2925,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_parrot_var01_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      143,
+      70,
+      368,
+      441
+    ],
+    "margin": {
+      "left": 143,
+      "top": 70,
+      "right": 144,
+      "bottom": 71
+    },
+    "coverage": 0.2221,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_parrot_var02_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      170,
+      71,
+      342,
+      441
+    ],
+    "margin": {
+      "left": 170,
+      "top": 71,
+      "right": 170,
+      "bottom": 71
+    },
+    "coverage": 0.15,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_parrot_var03_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      152,
+      71,
+      359,
+      442
+    ],
+    "margin": {
+      "left": 152,
+      "top": 71,
+      "right": 153,
+      "bottom": 70
+    },
+    "coverage": 0.2005,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_parrot_var04_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      169,
+      71,
+      343,
+      441
+    ],
+    "margin": {
+      "left": 169,
+      "top": 71,
+      "right": 169,
+      "bottom": 71
+    },
+    "coverage": 0.1374,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_parrot_var05_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      157,
+      71,
+      355,
+      442
+    ],
+    "margin": {
+      "left": 157,
+      "top": 71,
+      "right": 157,
+      "bottom": 70
+    },
+    "coverage": 0.1773,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_rabbit_var01_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      120,
+      71,
+      393,
+      441
+    ],
+    "margin": {
+      "left": 120,
+      "top": 71,
+      "right": 119,
+      "bottom": 71
+    },
+    "coverage": 0.2846,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_rabbit_var02_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      116,
+      71,
+      396,
+      441
+    ],
+    "margin": {
+      "left": 116,
+      "top": 71,
+      "right": 116,
+      "bottom": 71
+    },
+    "coverage": 0.2977,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_rabbit_var03_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      118,
+      71,
+      393,
+      441
+    ],
+    "margin": {
+      "left": 118,
+      "top": 71,
+      "right": 119,
+      "bottom": 71
+    },
+    "coverage": 0.2733,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_rabbit_var04_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      112,
+      71,
+      399,
+      441
+    ],
+    "margin": {
+      "left": 112,
+      "top": 71,
+      "right": 113,
+      "bottom": 71
+    },
+    "coverage": 0.2906,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_rabbit_var05_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      125,
+      71,
+      386,
+      441
+    ],
+    "margin": {
+      "left": 125,
+      "top": 71,
+      "right": 126,
+      "bottom": 71
+    },
+    "coverage": 0.277,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_shiba_var01_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      123,
+      71,
+      389,
+      441
+    ],
+    "margin": {
+      "left": 123,
+      "top": 71,
+      "right": 123,
+      "bottom": 71
+    },
+    "coverage": 0.2475,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_shiba_var02_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      143,
+      71,
+      368,
+      442
+    ],
+    "margin": {
+      "left": 143,
+      "top": 71,
+      "right": 144,
+      "bottom": 70
+    },
+    "coverage": 0.2304,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_shiba_var03_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      147,
+      71,
+      365,
+      441
+    ],
+    "margin": {
+      "left": 147,
+      "top": 71,
+      "right": 147,
+      "bottom": 71
+    },
+    "coverage": 0.2296,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_shiba_var04_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      143,
+      71,
+      368,
+      441
+    ],
+    "margin": {
+      "left": 143,
+      "top": 71,
+      "right": 144,
+      "bottom": 71
+    },
+    "coverage": 0.2372,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_shiba_var05_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      147,
+      71,
+      365,
+      441
+    ],
+    "margin": {
+      "left": 147,
+      "top": 71,
+      "right": 147,
+      "bottom": 71
+    },
+    "coverage": 0.2216,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_snake_var01_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      93,
+      70,
+      419,
+      441
+    ],
+    "margin": {
+      "left": 93,
+      "top": 70,
+      "right": 93,
+      "bottom": 71
+    },
+    "coverage": 0.248,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_snake_var02_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      89,
+      71,
+      423,
+      441
+    ],
+    "margin": {
+      "left": 89,
+      "top": 71,
+      "right": 89,
+      "bottom": 71
+    },
+    "coverage": 0.2554,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_snake_var03_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      94,
+      71,
+      418,
+      441
+    ],
+    "margin": {
+      "left": 94,
+      "top": 71,
+      "right": 94,
+      "bottom": 71
+    },
+    "coverage": 0.2573,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_snake_var04_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      85,
+      71,
+      427,
+      441
+    ],
+    "margin": {
+      "left": 85,
+      "top": 71,
+      "right": 85,
+      "bottom": 71
+    },
+    "coverage": 0.264,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_snake_var05_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      95,
+      71,
+      417,
+      442
+    ],
+    "margin": {
+      "left": 95,
+      "top": 71,
+      "right": 95,
+      "bottom": 70
+    },
+    "coverage": 0.2656,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_starbug_var01_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      127,
+      71,
+      385,
+      442
+    ],
+    "margin": {
+      "left": 127,
+      "top": 71,
+      "right": 127,
+      "bottom": 70
+    },
+    "coverage": 0.2223,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_starbug_var02_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      120,
+      70,
+      392,
+      441
+    ],
+    "margin": {
+      "left": 120,
+      "top": 70,
+      "right": 120,
+      "bottom": 71
+    },
+    "coverage": 0.2177,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_starbug_var03_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      115,
+      70,
+      396,
+      441
+    ],
+    "margin": {
+      "left": 115,
+      "top": 70,
+      "right": 116,
+      "bottom": 71
+    },
+    "coverage": 0.2467,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_starbug_var04_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      130,
+      71,
+      383,
+      442
+    ],
+    "margin": {
+      "left": 130,
+      "top": 71,
+      "right": 129,
+      "bottom": 70
+    },
+    "coverage": 0.2198,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_starbug_var05_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      111,
+      70,
+      400,
+      441
+    ],
+    "margin": {
+      "left": 111,
+      "top": 70,
+      "right": 112,
+      "bottom": 71
+    },
+    "coverage": 0.2315,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_turtle_var01_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      122,
+      71,
+      390,
+      442
+    ],
+    "margin": {
+      "left": 122,
+      "top": 71,
+      "right": 122,
+      "bottom": 70
+    },
+    "coverage": 0.2581,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_turtle_var02_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      105,
+      70,
+      407,
+      442
+    ],
+    "margin": {
+      "left": 105,
+      "top": 70,
+      "right": 105,
+      "bottom": 70
+    },
+    "coverage": 0.2808,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_turtle_var03_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      93,
+      71,
+      419,
+      441
+    ],
+    "margin": {
+      "left": 93,
+      "top": 71,
+      "right": 93,
+      "bottom": 71
+    },
+    "coverage": 0.2929,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_turtle_var04_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      110,
+      70,
+      402,
+      441
+    ],
+    "margin": {
+      "left": 110,
+      "top": 70,
+      "right": 110,
+      "bottom": 71
+    },
+    "coverage": 0.2886,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_turtle_var05_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      97,
+      71,
+      415,
+      441
+    ],
+    "margin": {
+      "left": 97,
+      "top": 71,
+      "right": 97,
+      "bottom": 71
+    },
+    "coverage": 0.2638,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_uni_var01_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      115,
+      71,
+      397,
+      441
+    ],
+    "margin": {
+      "left": 115,
+      "top": 71,
+      "right": 115,
+      "bottom": 71
+    },
+    "coverage": 0.2493,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_uni_var02_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      129,
+      71,
+      383,
+      441
+    ],
+    "margin": {
+      "left": 129,
+      "top": 71,
+      "right": 129,
+      "bottom": 71
+    },
+    "coverage": 0.2334,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_uni_var03_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      153,
+      71,
+      358,
+      441
+    ],
+    "margin": {
+      "left": 153,
+      "top": 71,
+      "right": 154,
+      "bottom": 71
+    },
+    "coverage": 0.2247,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_uni_var04_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      108,
+      71,
+      404,
+      441
+    ],
+    "margin": {
+      "left": 108,
+      "top": 71,
+      "right": 108,
+      "bottom": 71
+    },
+    "coverage": 0.2593,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  },
+  {
+    "file": "assets/art/postcards/stickers/pc_sticker_traveler_uni_var05_back.png",
+    "size": [
+      512,
+      512
+    ],
+    "bbox": [
+      148,
+      71,
+      364,
+      441
+    ],
+    "margin": {
+      "left": 148,
+      "top": 71,
+      "right": 148,
+      "bottom": 71
+    },
+    "coverage": 0.2135,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "status": "ok"
+  }
+]

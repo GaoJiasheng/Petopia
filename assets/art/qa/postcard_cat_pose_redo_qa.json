@@ -1,0 +1,154 @@
+[
+  {
+    "file": "assets/art/postcards/poses/pc_pose_cat_eat.png",
+    "bbox": [
+      56,
+      87,
+      344,
+      320
+    ],
+    "margins": [
+      56,
+      87,
+      56,
+      80
+    ],
+    "size": [
+      400,
+      400
+    ]
+  },
+  {
+    "file": "assets/art/postcards/poses/pc_pose_cat_gaze.png",
+    "bbox": [
+      56,
+      84,
+      344,
+      320
+    ],
+    "margins": [
+      56,
+      84,
+      56,
+      80
+    ],
+    "size": [
+      400,
+      400
+    ]
+  },
+  {
+    "file": "assets/art/postcards/poses/pc_pose_cat_hat.png",
+    "bbox": [
+      81,
+      40,
+      319,
+      328
+    ],
+    "margins": [
+      81,
+      40,
+      81,
+      72
+    ],
+    "size": [
+      400,
+      400
+    ]
+  },
+  {
+    "file": "assets/art/postcards/poses/pc_pose_cat_photo.png",
+    "bbox": [
+      92,
+      40,
+      307,
+      328
+    ],
+    "margins": [
+      92,
+      40,
+      93,
+      72
+    ],
+    "size": [
+      400,
+      400
+    ]
+  },
+  {
+    "file": "assets/art/postcards/poses/pc_pose_cat_run.png",
+    "bbox": [
+      56,
+      56,
+      344,
+      320
+    ],
+    "margins": [
+      56,
+      56,
+      56,
+      80
+    ],
+    "size": [
+      400,
+      400
+    ]
+  },
+  {
+    "file": "assets/art/postcards/poses/pc_pose_cat_sleep.png",
+    "bbox": [
+      56,
+      110,
+      344,
+      320
+    ],
+    "margins": [
+      56,
+      110,
+      56,
+      80
+    ],
+    "size": [
+      400,
+      400
+    ]
+  },
+  {
+    "file": "assets/art/postcards/poses/pc_pose_cat_soak.png",
+    "bbox": [
+      56,
+      76,
+      344,
+      320
+    ],
+    "margins": [
+      56,
+      76,
+      56,
+      80
+    ],
+    "size": [
+      400,
+      400
+    ]
+  },
+  {
+    "file": "assets/art/postcards/poses/pc_pose_cat_surprise.png",
+    "bbox": [
+      99,
+      40,
+      300,
+      328
+    ],
+    "margins": [
+      99,
+      40,
+      100,
+      72
+    ],
+    "size": [
+      400,
+      400
+    ]
+  }
+]

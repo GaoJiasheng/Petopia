@@ -440,6 +440,7 @@ class GameController extends AsyncNotifier<GameView> {
         id: pc.id,
         petName: pet?.name ?? '旅行者',
         speciesId: pet?.speciesId ?? 'pet_cat',
+        variantId: pet?.variantId ?? '',
         poseHint: incident?.poseHint ?? 'gaze',
         locationName: loc?.name ?? pc.locationId,
         bodyText: pc.bodyText,
@@ -500,6 +501,7 @@ class PostcardView {
   final String id;
   final String petName;
   final String speciesId;
+  final String variantId;
   final String poseHint;
   final String locationName;
   final String bodyText;
@@ -512,6 +514,7 @@ class PostcardView {
     required this.id,
     required this.petName,
     required this.speciesId,
+    required this.variantId,
     required this.poseHint,
     required this.locationName,
     required this.bodyText,

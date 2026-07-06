@@ -4,7 +4,7 @@
 import os
 from PIL import Image
 
-SPECIES = ["cat", "shiba", "rabbit", "hamster", "boo", "cham",
+SPECIES = ["cat", "shiba", "rabbit", "hamster", "boo", "chameleon",
            "ember", "parrot", "snake", "starbug", "turtle", "uni"]
 OUT = "assets/art/pets/portraits"
 os.makedirs(OUT, exist_ok=True)

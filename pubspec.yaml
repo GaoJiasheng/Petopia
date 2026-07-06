@@ -79,6 +79,7 @@ flutter:
     - assets/audio/sting/ogg/
     - assets/art/ui/
     - assets/art/postcards/backgrounds/
+    - assets/art/postcards/poses/
     - assets/art/postcards/stamps/
     - assets/art/postcards/stickers/
     - assets/art/world/themes/
