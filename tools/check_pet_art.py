@@ -145,7 +145,23 @@ def check_static_action_match():
             if bs and abs(bs - ref_base) > FRAME_BASE_TOL:
                 fail(f'{sp}/{act}: 动作基线与静态不一致 → 播动作位置跳')
 
-check_base(); check_actions(); check_dex(); check_static_action_match()
+def check_id_dir_match():
+    """species.json 的 id 必须与美术目录/文件命名一致（防 cham≠pet_chameleon 这类空白）。"""
+    import json
+    try:
+        items = json.load(open('assets/data/species.json'))['items']
+    except Exception:
+        return
+    for s in items:
+        d = s['id'].replace('pet_', '')
+        if not os.path.isdir(f'{ROOT}/{d}'):
+            fail(f'{s["id"]}: 美术目录 {ROOT}/{d}/ 不存在（id↔目录不匹配 → app 空白）')
+        if not os.path.exists(f'{ROOT}/portraits/pet_{d}.png'):
+            fail(f'{s["id"]}: 头像 portraits/pet_{d}.png 不存在（id↔命名不匹配）')
+        if not os.path.exists(f'{ROOT}/dex/{s["id"]}_dex_color.png'):
+            fail(f'{s["id"]}: 图鉴 dex/{s["id"]}_dex_color.png 不存在（id↔命名不匹配）')
+
+check_id_dir_match(); check_base(); check_actions(); check_dex(); check_static_action_match()
 print('=' * 50)
 if FAILS:
     print(f'❌ {len(FAILS)} 项 FAIL：')
