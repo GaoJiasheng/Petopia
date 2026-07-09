@@ -1,3 +1,4 @@
+import '../config/game_config.dart';
 import '../domain/enums.dart';
 import '../domain/models/pet.dart';
 import '../domain/models/yard.dart';
@@ -8,7 +9,7 @@ import 'graduation_service.dart';
 
 /// GraduationService 实现（spec-technical §3.2 / §3）。
 ///
-/// Lv10 毕业编排：暖绒结算 → 生成 Journey(5–8 站，性格加权去重) →
+/// Lv10 毕业编排：暖绒结算 → 生成 Journey(25+15 站，性格加权去重) →
 /// 宠物转 TRAVELING → 院子 gradCount++（驱动豪华度进化）。
 class GraduationServiceImpl implements GraduationService {
   final EconomyService _economy;
@@ -16,7 +17,7 @@ class GraduationServiceImpl implements GraduationService {
   final YardState _yard;
   final String Function() _idGen;
   final DateTime Function() _now;
-  final double Function() _rng; // [0,1)，仅决定站数
+  final double Function() _rng; // [0,1)
   final void Function(Journey) _onJourney;
 
   GraduationServiceImpl(
@@ -33,11 +34,12 @@ class GraduationServiceImpl implements GraduationService {
   Future<String> graduate(Pet pet) async {
     _economy.settleGraduation(pet); // 稳定 ref grad:<petId>
 
-    final stops = _pickStops(pet);
+    final route = _pickRoute(pet);
     final journey = Journey(
       id: _idGen(),
       petId: pet.id,
-      stops: stops,
+      stops: route.stops,
+      wanderStops: route.wanderStops,
       nextPostcardAt: _now().add(const Duration(days: 1)),
       state: JourneyState.active,
     );
@@ -63,15 +65,37 @@ class GraduationServiceImpl implements GraduationService {
     return 1;
   }
 
-  /// 选 5–8 站，按性格加权，去重。站数由 rng 决定，选取按权重降序（确定性、可测）。
-  List<String> _pickStops(Pet pet) {
-    final count = (5 + (_rng() * 4).floor()).clamp(5, 8);
-    final scored = _locations
-        .map((l) => MapEntry(l.id, _weight(l, pet)))
-        .toList()
-      ..sort((a, b) => b.value.compareTo(a.value));
-    final n = count > scored.length ? scored.length : count;
-    return scored.take(n).map((e) => e.key).toList();
+  /// 选 25 张主旅程 + 其余地点补完，按性格加权随机、不放回抽取。
+  ({List<String> stops, List<String> wanderStops}) _pickRoute(Pet pet) {
+    final count = _journeyStopCount();
+    final candidates = <Location>[];
+    final seen = <String>{};
+    for (final location in _locations) {
+      if (!seen.add(location.id)) continue;
+      candidates.add(location);
+    }
+
+    final stops = <String>[];
+    while (stops.length < count && candidates.isNotEmpty) {
+      final index = _drawWeightedIndex(candidates, pet);
+      final selected = candidates.removeAt(index);
+      stops.add(selected.id);
+    }
+
+    final wanderStops = <String>[];
+    while (candidates.isNotEmpty) {
+      final index = _drawWeightedIndex(candidates, pet);
+      final selected = candidates.removeAt(index);
+      wanderStops.add(selected.id);
+    }
+    return (stops: stops, wanderStops: wanderStops);
+  }
+
+  int _journeyStopCount() {
+    const min = GameConfig.journeyStopsMin;
+    const max = GameConfig.journeyStopsMax;
+    if (max <= min) return min;
+    return min + (_rng() * (max - min + 1)).floor();
   }
 
   double _weight(Location l, Pet pet) {
@@ -80,5 +104,32 @@ class GraduationServiceImpl implements GraduationService {
       w *= l.personalityWeight[tag] ?? 1.0;
     }
     return w;
+  }
+
+  int _drawWeightedIndex(List<Location> candidates, Pet pet) {
+    var total = 0.0;
+    for (final location in candidates) {
+      final weight = _weight(location, pet);
+      if (weight.isFinite && weight > 0) {
+        total += weight;
+      }
+    }
+
+    if (total <= 0) {
+      return (_rng() * candidates.length)
+          .floor()
+          .clamp(0, candidates.length - 1)
+          .toInt();
+    }
+
+    final target = _rng() * total;
+    var cursor = 0.0;
+    for (var i = 0; i < candidates.length; i++) {
+      final weight = _weight(candidates[i], pet);
+      if (!weight.isFinite || weight <= 0) continue;
+      cursor += weight;
+      if (target < cursor) return i;
+    }
+    return candidates.length - 1;
   }
 }

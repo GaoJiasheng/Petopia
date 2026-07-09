@@ -5242,25 +5242,40 @@ const JourneyDocSchema = CollectionSchema(
       name: r'id',
       type: IsarType.string,
     ),
-    r'nextPostcardAt': PropertySchema(
+    r'longTermSeq': PropertySchema(
       id: 2,
+      name: r'longTermSeq',
+      type: IsarType.long,
+    ),
+    r'nextPostcardAt': PropertySchema(
+      id: 3,
       name: r'nextPostcardAt',
       type: IsarType.dateTime,
     ),
     r'petId': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'petId',
       type: IsarType.string,
     ),
     r'state': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'state',
       type: IsarType.string,
       enumMap: _JourneyDocstateEnumValueMap,
     ),
     r'stops': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'stops',
+      type: IsarType.stringList,
+    ),
+    r'wanderIdx': PropertySchema(
+      id: 7,
+      name: r'wanderIdx',
+      type: IsarType.long,
+    ),
+    r'wanderStops': PropertySchema(
+      id: 8,
+      name: r'wanderStops',
       type: IsarType.stringList,
     )
   },
@@ -5334,6 +5349,13 @@ int _journeyDocEstimateSize(
       bytesCount += value.length * 3;
     }
   }
+  bytesCount += 3 + object.wanderStops.length * 3;
+  {
+    for (var i = 0; i < object.wanderStops.length; i++) {
+      final value = object.wanderStops[i];
+      bytesCount += value.length * 3;
+    }
+  }
   return bytesCount;
 }
 
@@ -5345,10 +5367,13 @@ void _journeyDocSerialize(
 ) {
   writer.writeLong(offsets[0], object.currentIdx);
   writer.writeString(offsets[1], object.domainId);
-  writer.writeDateTime(offsets[2], object.nextPostcardAt);
-  writer.writeString(offsets[3], object.petId);
-  writer.writeString(offsets[4], object.state.name);
-  writer.writeStringList(offsets[5], object.stops);
+  writer.writeLong(offsets[2], object.longTermSeq);
+  writer.writeDateTime(offsets[3], object.nextPostcardAt);
+  writer.writeString(offsets[4], object.petId);
+  writer.writeString(offsets[5], object.state.name);
+  writer.writeStringList(offsets[6], object.stops);
+  writer.writeLong(offsets[7], object.wanderIdx);
+  writer.writeStringList(offsets[8], object.wanderStops);
 }
 
 JourneyDoc _journeyDocDeserialize(
@@ -5361,12 +5386,15 @@ JourneyDoc _journeyDocDeserialize(
   object.currentIdx = reader.readLong(offsets[0]);
   object.domainId = reader.readString(offsets[1]);
   object.isarId = id;
-  object.nextPostcardAt = reader.readDateTime(offsets[2]);
-  object.petId = reader.readString(offsets[3]);
+  object.longTermSeq = reader.readLong(offsets[2]);
+  object.nextPostcardAt = reader.readDateTime(offsets[3]);
+  object.petId = reader.readString(offsets[4]);
   object.state =
-      _JourneyDocstateValueEnumMap[reader.readStringOrNull(offsets[4])] ??
+      _JourneyDocstateValueEnumMap[reader.readStringOrNull(offsets[5])] ??
           JourneyState.active;
-  object.stops = reader.readStringList(offsets[5]) ?? [];
+  object.stops = reader.readStringList(offsets[6]) ?? [];
+  object.wanderIdx = reader.readLong(offsets[7]);
+  object.wanderStops = reader.readStringList(offsets[8]) ?? [];
   return object;
 }
 
@@ -5382,13 +5410,19 @@ P _journeyDocDeserializeProp<P>(
     case 1:
       return (reader.readString(offset)) as P;
     case 2:
-      return (reader.readDateTime(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 3:
-      return (reader.readString(offset)) as P;
+      return (reader.readDateTime(offset)) as P;
     case 4:
+      return (reader.readString(offset)) as P;
+    case 5:
       return (_JourneyDocstateValueEnumMap[reader.readStringOrNull(offset)] ??
           JourneyState.active) as P;
-    case 5:
+    case 6:
+      return (reader.readStringList(offset) ?? []) as P;
+    case 7:
+      return (reader.readLong(offset)) as P;
+    case 8:
       return (reader.readStringList(offset) ?? []) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -5870,6 +5904,62 @@ extension JourneyDocQueryFilter
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
         property: r'isarId',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      longTermSeqEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'longTermSeq',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      longTermSeqGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'longTermSeq',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      longTermSeqLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'longTermSeq',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      longTermSeqBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'longTermSeq',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -6419,6 +6509,285 @@ extension JourneyDocQueryFilter
       );
     });
   }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition> wanderIdxEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'wanderIdx',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderIdxGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'wanderIdx',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition> wanderIdxLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'wanderIdx',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition> wanderIdxBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'wanderIdx',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsElementEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'wanderStops',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsElementGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'wanderStops',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsElementLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'wanderStops',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsElementBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'wanderStops',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsElementStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'wanderStops',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsElementEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'wanderStops',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsElementContains(String value, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'wanderStops',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsElementMatches(String pattern, {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'wanderStops',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsElementIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'wanderStops',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsElementIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'wanderStops',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'wanderStops',
+        length,
+        true,
+        length,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'wanderStops',
+        0,
+        true,
+        0,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'wanderStops',
+        0,
+        false,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'wanderStops',
+        0,
+        true,
+        length,
+        include,
+      );
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'wanderStops',
+        length,
+        include,
+        999999,
+        true,
+      );
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterFilterCondition>
+      wanderStopsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.listLength(
+        r'wanderStops',
+        lower,
+        includeLower,
+        upper,
+        includeUpper,
+      );
+    });
+  }
 }
 
 extension JourneyDocQueryObject
@@ -6450,6 +6819,18 @@ extension JourneyDocQuerySortBy
   QueryBuilder<JourneyDoc, JourneyDoc, QAfterSortBy> sortByDomainIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterSortBy> sortByLongTermSeq() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'longTermSeq', Sort.asc);
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterSortBy> sortByLongTermSeqDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'longTermSeq', Sort.desc);
     });
   }
 
@@ -6487,6 +6868,18 @@ extension JourneyDocQuerySortBy
   QueryBuilder<JourneyDoc, JourneyDoc, QAfterSortBy> sortByStateDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'state', Sort.desc);
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterSortBy> sortByWanderIdx() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'wanderIdx', Sort.asc);
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterSortBy> sortByWanderIdxDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'wanderIdx', Sort.desc);
     });
   }
 }
@@ -6529,6 +6922,18 @@ extension JourneyDocQuerySortThenBy
     });
   }
 
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterSortBy> thenByLongTermSeq() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'longTermSeq', Sort.asc);
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterSortBy> thenByLongTermSeqDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'longTermSeq', Sort.desc);
+    });
+  }
+
   QueryBuilder<JourneyDoc, JourneyDoc, QAfterSortBy> thenByNextPostcardAt() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'nextPostcardAt', Sort.asc);
@@ -6565,6 +6970,18 @@ extension JourneyDocQuerySortThenBy
       return query.addSortBy(r'state', Sort.desc);
     });
   }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterSortBy> thenByWanderIdx() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'wanderIdx', Sort.asc);
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QAfterSortBy> thenByWanderIdxDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'wanderIdx', Sort.desc);
+    });
+  }
 }
 
 extension JourneyDocQueryWhereDistinct
@@ -6579,6 +6996,12 @@ extension JourneyDocQueryWhereDistinct
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'id', caseSensitive: caseSensitive);
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QDistinct> distinctByLongTermSeq() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'longTermSeq');
     });
   }
 
@@ -6607,6 +7030,18 @@ extension JourneyDocQueryWhereDistinct
       return query.addDistinctBy(r'stops');
     });
   }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QDistinct> distinctByWanderIdx() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'wanderIdx');
+    });
+  }
+
+  QueryBuilder<JourneyDoc, JourneyDoc, QDistinct> distinctByWanderStops() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'wanderStops');
+    });
+  }
 }
 
 extension JourneyDocQueryProperty
@@ -6626,6 +7061,12 @@ extension JourneyDocQueryProperty
   QueryBuilder<JourneyDoc, String, QQueryOperations> domainIdProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
+    });
+  }
+
+  QueryBuilder<JourneyDoc, int, QQueryOperations> longTermSeqProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'longTermSeq');
     });
   }
 
@@ -6651,6 +7092,19 @@ extension JourneyDocQueryProperty
   QueryBuilder<JourneyDoc, List<String>, QQueryOperations> stopsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'stops');
+    });
+  }
+
+  QueryBuilder<JourneyDoc, int, QQueryOperations> wanderIdxProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'wanderIdx');
+    });
+  }
+
+  QueryBuilder<JourneyDoc, List<String>, QQueryOperations>
+      wanderStopsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'wanderStops');
     });
   }
 }

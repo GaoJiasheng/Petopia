@@ -101,7 +101,7 @@
 │    ↓                                                 │
 │  Lv10 毕业 → 结算「暖绒」→ 出发旅行                   │
 │    ↓                                                 │
-│  收明信片（1–3 天一张）＋ 7–14 天随机回访             │
+│  收明信片（主旅程 3–5 天一张，补完期 10–15 天）＋ 7–14 天随机回访 │
 │    ↓                                                 │
 │  领养下一只（院子豪华度 +1 档进度，解锁推进）→ 循环    │
 └─────────────────────────────────────────────────────┘
@@ -473,9 +473,10 @@ ExpLogEntry {
 ## 6.1 旅行流程
 
 ```
-毕业 → 生成旅程 Journey（5–8 站，从目的地库按性格加权抽取，去重）
-     → 每 1–3 天（随机）寄回 1 张明信片（本地通知：「邮箱里有新明信片！」）
-     → 旅程结束 → 进入「世界漫游」状态（回访期，§7；漫游中仍低频寄片：每 10–15 天 1 张 [待验证]）
+毕业 → 生成旅程 Journey（从 40 个目的地中按性格加权抽 25 张主旅程，去重；剩余 15 张入补完队列）
+     → 毕业后 1 天寄首张；主旅程每 3–5 天（随机）寄回 1 张明信片（本地通知：「邮箱里有新明信片！」）
+     → 主旅程结束 → 进入「世界漫游」状态（回访期，§7；补完剩余 15 张：每 10–15 天 1 张）
+     → 40 张完成后 → 约每 20 天从 40 张中随机寄回 1 张
 ```
 
 ## 6.2 目的地库（约 40 个，按类别）
@@ -762,7 +763,7 @@ CurrencyWallet  { balance }               // 暖绒
 CurrencyLog     { id, timestamp, delta, reason, ref? }        // 同样可审计
 YardState       { luxuryStage, activeThemeId, ownedThemeIds[], slots[{pos, itemId?}], foodTray{foodType?, placedAt} }
 ShopItem        { id, category, price, effect{type, params}, artRef }
-Journey         { id, petId, stops[locationId × 5–8], currentIdx, nextPostcardAt, state }
+Journey         { id, petId, stops[locationId × 25], wanderStops[remaining locationId], currentIdx, wanderIdx, longTermSeq, nextPostcardAt, state }
 Location        { id, name, category, climate, vibeTags[], photoStyle, encounterPool[] }
 Postcard        { …见 §6.3 }
 Visitor         { id, name, rarity, activeTime, weatherPref, foodPref, seasonPref, artRef, clueRole? }

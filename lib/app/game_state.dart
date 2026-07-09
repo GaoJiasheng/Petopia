@@ -30,6 +30,7 @@ class GameSession {
   final Set<String> generatedDays = {};
   final Set<String> firedSpecials = {}; // 'petId:eventId'，oncePerPet 特殊事件去重
   final List<VisitorLogEntry> visitorLog = [];
+  ActiveVisitor? activeVisitor; // 当前在院子停留的野生访客（≤1，默认 24h）
   final Set<String> ownedSpecies = {}; // 曾养过的物种（图鉴 OWNED_BEFORE）
   Pet? revisitor; // 当前在访的毕业宠（≤1）
 
@@ -38,12 +39,14 @@ class GameSession {
     CurrencyWallet? wallet,
     YardState? yard,
     Settings? settings,
-  })  : wallet = wallet ?? CurrencyWallet(),
-        yard = yard ?? YardState(),
-        settings = settings ??
-            Settings(
-                createdAt: DateTime.now().toUtc(),
-                lastWallClockAt: DateTime.now().toUtc());
+  }) : wallet = wallet ?? CurrencyWallet(),
+       yard = yard ?? YardState(),
+       settings =
+           settings ??
+           Settings(
+             createdAt: DateTime.now().toUtc(),
+             lastWallClockAt: DateTime.now().toUtc(),
+           );
 
   /// 参与审计的全部宠物（在养 + 漫游）。
   List<Pet> get allPets => [?current, ...roaming];

@@ -12,7 +12,7 @@
     "watch",
     "seaside"
    ],
-   "photoStyle": "pc_bg_seaside_lighthouse",
+   "photoStyle": "pc_bg_lighthouse_bay",
    "encounterPoolId": "enc_seaside",
    "personalityWeight": {},
    "stampId": "pc_stamp_lighthouse_bay"
@@ -27,7 +27,7 @@
     "afternoon",
     "seaside"
    ],
-   "photoStyle": "pc_bg_reef_catnap",
+   "photoStyle": "pc_bg_catback_reef",
    "encounterPoolId": "enc_seaside",
    "personalityWeight": {},
    "stampId": "pc_stamp_catback_reef"
@@ -57,7 +57,7 @@
     "reflection",
     "seaside"
    ],
-   "photoStyle": "pc_bg_tide_reflection",
+   "photoStyle": "pc_bg_tide_flat",
    "encounterPoolId": "enc_seaside",
    "personalityWeight": {},
    "stampId": "pc_stamp_tide_flat"
@@ -73,7 +73,7 @@
     "fishing",
     "seaside"
    ],
-   "photoStyle": "pc_bg_fog_pier",
+   "photoStyle": "pc_bg_seafog_pier",
    "encounterPoolId": "enc_seaside",
    "personalityWeight": {},
    "stampId": "pc_stamp_seafog_pier"
@@ -137,7 +137,7 @@
     "fireplace",
     "mountain"
    ],
-   "photoStyle": "pc_bg_snow_cabin",
+   "photoStyle": "pc_bg_snowline_cabin",
    "encounterPoolId": "enc_mountain",
    "personalityWeight": {},
    "stampId": "pc_stamp_snowline_cabin"

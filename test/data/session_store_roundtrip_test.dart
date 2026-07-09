@@ -137,7 +137,10 @@ GameSession _richSession() {
       id: 'journey-1',
       petId: 'pet-roaming',
       stops: const <String>['loc_lighthouse', 'loc_forest', 'loc_city'],
+      wanderStops: const <String>['loc_cloud', 'loc_library'],
       currentIdx: 1,
+      wanderIdx: 1,
+      longTermSeq: 2,
       nextPostcardAt: DateTime.utc(2026, 7, 4, 9),
       state: JourneyState.active,
     ),
@@ -168,6 +171,14 @@ GameSession _richSession() {
       date: DateTime.utc(2026, 7, 3, 20),
     ),
   ]);
+  session.activeVisitor = ActiveVisitor(
+    visitorId: 'vis_fox',
+    arrivedAt: DateTime.utc(2099, 7, 3, 20),
+    leavesAt: DateTime.utc(2099, 7, 4, 20),
+    interactionId: 'int_fox_cat',
+    withPetId: 'pet-current',
+    arrivalSeen: true,
+  );
   session.ownedSpecies.addAll(<String>{'pet_cat', 'pet_shiba'});
   session.postcards.add(
     Postcard(
@@ -225,6 +236,10 @@ void _expectSessionEquals(GameSession actual, GameSession expected) {
   expect(actual.generatedDays, unorderedEquals(expected.generatedDays));
   expect(actual.firedSpecials, unorderedEquals(expected.firedSpecials));
   _expectVisitorLogListEquals(actual.visitorLog, expected.visitorLog);
+  _expectNullableActiveVisitorEquals(
+    actual.activeVisitor,
+    expected.activeVisitor,
+  );
   expect(actual.ownedSpecies, unorderedEquals(expected.ownedSpecies));
   _expectPostcardListEquals(actual.postcards, expected.postcards);
   _expectNullablePetEquals(actual.revisitor, expected.revisitor);
@@ -331,7 +346,10 @@ void _expectJourneyListEquals(List<Journey> actual, List<Journey> expected) {
     expect(actual[i].id, expected[i].id);
     expect(actual[i].petId, expected[i].petId);
     expect(actual[i].stops, expected[i].stops);
+    expect(actual[i].wanderStops, expected[i].wanderStops);
     expect(actual[i].currentIdx, expected[i].currentIdx);
+    expect(actual[i].wanderIdx, expected[i].wanderIdx);
+    expect(actual[i].longTermSeq, expected[i].longTermSeq);
     expect(actual[i].nextPostcardAt, expected[i].nextPostcardAt);
     expect(actual[i].state, expected[i].state);
   }
@@ -364,6 +382,23 @@ void _expectVisitorLogListEquals(
     expect(actual[i].interactionId, expected[i].interactionId);
     expect(actual[i].withPetId, expected[i].withPetId);
   }
+}
+
+void _expectNullableActiveVisitorEquals(
+  ActiveVisitor? actual,
+  ActiveVisitor? expected,
+) {
+  if (expected == null) {
+    expect(actual, isNull);
+    return;
+  }
+  expect(actual, isNotNull);
+  expect(actual!.visitorId, expected.visitorId);
+  expect(actual.arrivedAt, expected.arrivedAt);
+  expect(actual.leavesAt, expected.leavesAt);
+  expect(actual.interactionId, expected.interactionId);
+  expect(actual.withPetId, expected.withPetId);
+  expect(actual.arrivalSeen, expected.arrivalSeen);
 }
 
 void _expectPostcardListEquals(List<Postcard> actual, List<Postcard> expected) {

@@ -41,7 +41,16 @@ abstract final class GameConfig {
 
   /// 进入该级的累计门槛（冗余，便于二分 deriveLevel）；索引 = level-1（Lv1..Lv10）。
   static const List<int> cumExpAtLevel = [
-    0, 30, 75, 135, 210, 300, 405, 525, 655, 800,
+    0,
+    30,
+    75,
+    135,
+    210,
+    300,
+    405,
+    525,
+    655,
+    800,
   ];
 
   static const int maxLevel = 10;
@@ -83,12 +92,14 @@ abstract final class GameConfig {
   static const int defaultCooldownDays = 0; // 可调
 
   // ── 2.7 明信片 / 旅行 ──────────────────────────
-  static const int journeyStopsMin = 5; // 可调
-  static const int journeyStopsMax = 8; // 可调
-  static const int postcardIntervalMinDays = 1; // 可调：旅程中寄片间隔
-  static const int postcardIntervalMaxDays = 3;
-  static const int wanderPostcardMinDays = 10; // 可调：漫游期低频寄片
+  static const int journeyStopsMin = 25; // 可调：毕业主旅程站数
+  static const int journeyStopsMax = 25;
+  static const int postcardIntervalMinDays = 3; // 可调：旅程中寄片间隔
+  static const int postcardIntervalMaxDays = 5;
+  static const int wanderPostcardMinDays = 10; // 可调：补完剩余地点寄片间隔
   static const int wanderPostcardMaxDays = 15;
+  static const int longTermPostcardMinDays = 18; // 可调：40 张完成后回信间隔
+  static const int longTermPostcardMaxDays = 22;
 
   // ── 2.8 回访 ───────────────────────────────────
   static const int revisitWindowMinDays = 7; // 锁定

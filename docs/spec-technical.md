@@ -289,10 +289,13 @@ class FoodTray { String? foodType; DateTime? placedAt; }   // foodType: grain/fi
 |---|---|---|---|
 | id | String | uuid | |
 | petId | String | | |
-| stops | List\<String\> | | 5..8 个 locationId，去重，性格加权 |
+| stops | List\<String\> | | 25 个主旅程 locationId，去重，性格加权 |
+| wanderStops | List\<String\> | [] | 剩余地点补完队列；40 张地点全集中未进 stops 的地点 |
 | currentIdx | int | 0 | 0..stops.length |
+| wanderIdx | int | 0 | 0..wanderStops.length |
+| longTermSeq | int | 0 | 40 张完成后的长期循环寄片序号 |
 | nextPostcardAt | DateTime | | 下次寄片时间 |
-| state | JourneyState | ACTIVE | ACTIVE→WANDERING(旅程走完)→ 永久 WANDERING |
+| state | JourneyState | ACTIVE | ACTIVE(25 张主旅程)→WANDERING(补完剩余地点)→永久 WANDERING |
 
 #### ClueCounter（Isar）
 | 字段 | 类型 | 默认 | 说明 |
@@ -491,9 +494,10 @@ Lv1:0  Lv2:30  Lv3:75  Lv4:135  Lv5:210  Lv6:300  Lv7:405  Lv8:525  Lv9:655  Lv1
 ### 2.7 明信片 / 旅行（§6）
 | 常量 | 初值 | 属性 |
 |---|---|---|
-| journeyStopsMin / Max | 5 / 8 | 可调 |
-| postcardIntervalMinDays / MaxDays | 1 / 3 | 可调 | 旅程中寄片间隔 |
-| wanderPostcardMinDays / MaxDays | 10 / 15 | 可调 | 漫游期低频寄片 |
+| journeyStopsMin / Max | 25 / 25 | 可调 | 毕业主旅程从 40 张地点中抽 25 张 |
+| postcardIntervalMinDays / MaxDays | 3 / 5 | 可调 | 主旅程寄片间隔 |
+| wanderPostcardMinDays / MaxDays | 10 / 15 | 可调 | 剩余 15 张补完寄片间隔 |
+| longTermPostcardMinDays / MaxDays | 18 / 22 | 可调 | 40 张完成后约 20 天随机回信 |
 
 ### 2.8 回访（§7）
 | 常量 | 初值 | 属性 |
@@ -690,7 +694,7 @@ generate(pet, journey):
     persist Postcard (SQLite), 双入册（明信片相册 + 旅行相册均为视图，仅存一份实体，§6.6）
     return postcard
 ```
-**dailyTick**：`if now >= journey.nextPostcardAt: p = generate(); advance stop (currentIdx++, 到末尾则 journey.state=WANDERING); nextPostcardAt = now + rand(interval)`（旅程中用 1–3 天，漫游期用 10–15 天）；发本地通知（若 Settings.notifications）。
+**dailyTick**：毕业后第 1 天寄首张；`ACTIVE` 阶段按 `stops[currentIdx]` 寄 25 张主旅程明信片，间隔 3–5 天；主旅程完成后进入 `WANDERING`，按 `wanderStops[wanderIdx]` 补完剩余 15 张，间隔 10–15 天；40 张地点全集完成后保持 `WANDERING`，约 20 天（18–22 天）从 40 张中随机抽一张寄回。发本地通知（若 Settings.notifications）。
 
 ### 3.6 VisitorService
 **职责**：§8 到访判定（概率轮盘）+ 互动选取 + 来客图鉴收录。
@@ -908,9 +912,9 @@ petopia/
 - AT-离6：跨本地午夜后首次上线，offlineExpGrantedToday 归零。
 
 ### 6.3 旅行 / 明信片
-- AT-片1：毕业即生成 Journey，stops 长度∈[5,8]、locationId 去重、按性格加权。
+- AT-片1：毕业即生成 Journey，stops 长度=25、wanderStops 长度=15（地点库 40 张时），两者合并去重且按性格加权随机。
 - AT-片2：到 nextPostcardAt 生成 1 张 Postcard（body_text 定稿存库、photo_asset_id 非空、stamp_id=location.stampId）；currentIdx 前进。
-- AT-片3：旅程走完 journey.state=WANDERING，之后按 10–15 天寄片。
+- AT-片3：25 张主旅程走完 journey.state=WANDERING；剩余 15 张按 10–15 天寄片；40 张完成后按 18–22 天随机回信。
 - AT-片4：同一 Postcard 在两相册视图可见但库中仅 1 行（`INV`：无数据复制）。
 - AT-片5：ev_s03 许愿的宠，其某张明信片 clue/body 呼应 wishId。
 
@@ -985,7 +989,7 @@ petopia/
 ### 7.5 调度与彩蛋
 - EventScheduler catch-up：多 job 过期时按 priority/dueAt 顺序处理，单次上线只演出 1 组。
 - Revisit：唯一性（`INV-2`）、排队顺延、重排。
-- Postcard：dailyTick 到点生成、旅程结束转 WANDERING、双相册单实体。
+- Postcard：dailyTick 到点生成、主旅程结束转 WANDERING、补完后长期随机回信、双相册单实体。
 - UnlockService：dexStateOf 四态全分支、hiddenSteps 累计→bumpClue→AVAILABLE、成就发奖幂等。
 
 ### 7.6 集成冒烟（对齐 MVP 验收 §12）

@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
 import '../config/game_config.dart';
+import '../domain/enums.dart';
 import 'app_icons.dart';
 import 'pet_action_cue.dart';
 import 'pet_art.dart';
@@ -46,6 +47,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
   final DateTime _openedAt = DateTime.now().toUtc();
   final Set<String> _shownArrivalPostcards = <String>{};
   bool _postcardDialogOpen = false;
+  bool _visitorDialogOpen = false;
 
   @override
   void initState() {
@@ -95,6 +97,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
             : (hour >= 16 ? Bgm.yardDusk : Bgm.yardDay);
         ref.read(audioServiceProvider).playBgm(yardBgm);
         _schedulePostcardArrival(ctrl);
+        _scheduleVisitorArrival(ctrl, view.visitorArrival);
         final petAsset = pet == null
             ? null
             : PetArt.stage(pet.speciesId, pet.stage);
@@ -120,6 +123,11 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
                   decorId: decor.decorId,
                   width: decor.anchor.width,
                 ),
+              if (view.activeVisitor != null)
+                Align(
+                  alignment: const Alignment(-0.56, 0.48),
+                  child: _YardVisitor(visitor: view.activeVisitor!),
+                ),
               if (petAsset != null)
                 Align(
                   alignment: const Alignment(0, 0.4),
@@ -142,6 +150,9 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
                     else
                       const _TopMenuOnly(),
                     const Spacer(),
+                    if (view.activeVisitor != null)
+                      _VisitorStayPill(visitor: view.activeVisitor!),
+                    if (view.activeVisitor != null) const SizedBox(height: 10),
                     if (pet == null)
                       const _AdoptCta()
                     else ...[
@@ -221,6 +232,58 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
     });
   }
 
+  void _scheduleVisitorArrival(
+    GameController ctrl,
+    VisitorPresenceView? arrival,
+  ) {
+    if (_visitorDialogOpen || _postcardDialogOpen || !mounted) return;
+    if (arrival == null) return;
+
+    _visitorDialogOpen = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      await showVisitorArrivalDialog(context, arrival);
+      ctrl.markVisitorArrivalSeen(arrival.id);
+      if (mounted) _visitorDialogOpen = false;
+    });
+  }
+
+  Future<void> showVisitorArrivalDialog(
+    BuildContext context,
+    VisitorPresenceView visitor,
+  ) {
+    return showGeneralDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: Colors.black.withValues(alpha: 0.22),
+      transitionDuration: const Duration(milliseconds: 320),
+      pageBuilder: (context, _, _) {
+        return SafeArea(
+          child: Center(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(22),
+              child: _VisitorArrivalCard(visitor: visitor),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (context, animation, _, child) {
+        final curved = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutCubic,
+        );
+        return FadeTransition(
+          opacity: curved,
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 0.94, end: 1).animate(curved),
+            child: child,
+          ),
+        );
+      },
+    );
+  }
+
   void _precacheCurrentPetAssets(
     BuildContext context,
     String speciesId,
@@ -252,6 +315,155 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
   }
 }
 
+class _VisitorArrivalCard extends StatelessWidget {
+  final VisitorPresenceView visitor;
+  const _VisitorArrivalCard({required this.visitor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 420),
+      padding: const EdgeInsets.fromLTRB(22, 20, 22, 18),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFDF7),
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black26,
+            blurRadius: 18,
+            offset: Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              const AppIcon(
+                'ach_visitor',
+                size: 24,
+                fallback: Icons.people_alt_rounded,
+              ),
+              const SizedBox(width: 9),
+              const Expanded(
+                child: Text(
+                  '院子里来了新朋友',
+                  style: TextStyle(
+                    color: Color(0xFF6B5445),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+              IconButton(
+                tooltip: '关闭',
+                onPressed: () => Navigator.of(context).pop(),
+                icon: const Icon(Icons.close_rounded, color: Color(0xFF8A7A6A)),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          Container(
+            width: 132,
+            height: 132,
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFF1DF),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Image.asset(
+              visitor.portraitAsset,
+              fit: BoxFit.contain,
+              errorBuilder: (_, _, _) => const AppIcon(
+                'ach_visitor',
+                size: 56,
+                fallback: Icons.emoji_nature_rounded,
+              ),
+            ),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            visitor.name,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Color(0xFF6B5445),
+              fontSize: 22,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            _visitorRarityLabel(visitor.rarity),
+            style: const TextStyle(
+              color: Color(0xFFE8A15C),
+              fontSize: 13,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            visitor.message,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Color(0xFF6B5445),
+              fontSize: 15,
+              height: 1.55,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 9),
+            decoration: BoxDecoration(
+              color: const Color(0xFFA7C4A0).withValues(alpha: 0.16),
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: const Text(
+              '它会在小窝附近待到明天，这次到访也已经收进来客图鉴。',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFF6B5445),
+                fontSize: 13,
+                height: 1.45,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          const SizedBox(height: 18),
+          SizedBox(
+            width: double.infinity,
+            child: FilledButton(
+              style: FilledButton.styleFrom(
+                backgroundColor: const Color(0xFFE8A15C),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(vertical: 13),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(999),
+                ),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text(
+                '欢迎它',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+String _visitorRarityLabel(VisitorRarity rarity) {
+  return switch (rarity) {
+    VisitorRarity.common => '常见来客',
+    VisitorRarity.uncommon => '不常见来客',
+    VisitorRarity.rare => '稀有来客',
+    VisitorRarity.legendary => '传说来客',
+  };
+}
+
 /// 院子摆件（中景静态层）。轻微投影让它「落」在草地上。
 class _YardDecor extends StatelessWidget {
   final Alignment align;
@@ -271,6 +483,69 @@ class _YardDecor extends StatelessWidget {
         YardArt.decor(decorId),
         width: width,
         errorBuilder: (_, _, _) => const SizedBox(),
+      ),
+    );
+  }
+}
+
+class _YardVisitor extends StatelessWidget {
+  final VisitorPresenceView visitor;
+  const _YardVisitor({required this.visitor});
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: Image.asset(
+        visitor.yardAsset,
+        width: 96,
+        fit: BoxFit.contain,
+        errorBuilder: (_, _, _) => const SizedBox(),
+      ),
+    );
+  }
+}
+
+class _VisitorStayPill extends StatelessWidget {
+  final VisitorPresenceView visitor;
+  const _VisitorStayPill({required this.visitor});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => Navigator.of(
+        context,
+      ).push(MaterialPageRoute<void>(builder: (_) => const VisitorDexScreen())),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 22),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+        decoration: BoxDecoration(
+          color: const Color(0xFFFFFDF7).withValues(alpha: 0.94),
+          borderRadius: BorderRadius.circular(999),
+          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 8)],
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const AppIcon(
+              'ach_visitor',
+              size: 20,
+              fallback: Icons.people_alt_rounded,
+            ),
+            const SizedBox(width: 8),
+            Flexible(
+              child: Text(
+                '今日来客：${visitor.name} · 已记入来客图鉴',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Color(0xFF6B5445),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

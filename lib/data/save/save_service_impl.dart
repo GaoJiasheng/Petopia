@@ -752,7 +752,10 @@ Map<String, Object?> _journeyToJson(Journey journey) {
     'id': journey.id,
     'petId': journey.petId,
     'stops': journey.stops,
+    'wanderStops': journey.wanderStops,
     'currentIdx': journey.currentIdx,
+    'wanderIdx': journey.wanderIdx,
+    'longTermSeq': journey.longTermSeq,
     'nextPostcardAt': _dateToJson(journey.nextPostcardAt),
     'state': journey.state.name,
   };
@@ -763,7 +766,16 @@ Journey _journeyFromJson(Map<String, Object?> json) {
     id: _readString(json['id'], 'journey.id'),
     petId: _readString(json['petId'], 'journey.petId'),
     stops: _readStringList(json['stops'], 'journey.stops'),
+    wanderStops: json.containsKey('wanderStops')
+        ? _readStringList(json['wanderStops'], 'journey.wanderStops')
+        : <String>[],
     currentIdx: _readInt(json['currentIdx'], 'journey.currentIdx'),
+    wanderIdx: json.containsKey('wanderIdx')
+        ? _readInt(json['wanderIdx'], 'journey.wanderIdx')
+        : 0,
+    longTermSeq: json.containsKey('longTermSeq')
+        ? _readInt(json['longTermSeq'], 'journey.longTermSeq')
+        : 0,
     nextPostcardAt: _readDate(json['nextPostcardAt'], 'journey.nextPostcardAt'),
     state: _readEnum(JourneyState.values, json['state'], 'journey.state'),
   );

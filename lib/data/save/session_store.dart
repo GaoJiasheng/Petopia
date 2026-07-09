@@ -127,6 +127,7 @@ Map<String, Object?> _sessionToJson(GameSession session) {
     'generatedDays': session.generatedDays.toList(),
     'firedSpecials': session.firedSpecials.toList(),
     'visitorLog': session.visitorLog.map(_visitorLogToJson).toList(),
+    'activeVisitor': _nullableActiveVisitorToJson(session.activeVisitor),
     'ownedSpecies': session.ownedSpecies.toList(),
     'postcards': session.postcards.map(_postcardToJson).toList(),
     'revisitor': _nullablePetToJson(session.revisitor),
@@ -154,6 +155,10 @@ GameSession _sessionFromJson(Map<String, Object?> json, DateTime now) {
   session.generatedDays.addAll(_stringListFromJson(json['generatedDays']));
   session.firedSpecials.addAll(_stringListFromJson(json['firedSpecials']));
   session.visitorLog.addAll(_visitorLogListFromJson(json['visitorLog'], now));
+  session.activeVisitor = _nullableActiveVisitorFromJson(
+    json['activeVisitor'],
+    now,
+  );
   session.ownedSpecies.addAll(_stringListFromJson(json['ownedSpecies']));
   session.postcards.addAll(_postcardListFromJson(json['postcards'], now));
   session.revisitor = _nullablePetFromJson(json['revisitor'], now);
@@ -407,7 +412,10 @@ Map<String, Object?> _journeyToJson(Journey journey) {
     'id': journey.id,
     'petId': journey.petId,
     'stops': journey.stops,
+    'wanderStops': journey.wanderStops,
     'currentIdx': journey.currentIdx,
+    'wanderIdx': journey.wanderIdx,
+    'longTermSeq': journey.longTermSeq,
     'nextPostcardAt': _dateToJson(journey.nextPostcardAt),
     'state': journey.state.name,
   };
@@ -418,8 +426,11 @@ Journey _journeyFromJson(Map<String, Object?> json, DateTime now) {
     id: _readString(json['id'], ''),
     petId: _readString(json['petId'], ''),
     stops: _stringListFromJson(json['stops']),
+    wanderStops: _stringListFromJson(json['wanderStops']),
     nextPostcardAt: _readDate(json['nextPostcardAt'], now),
     currentIdx: _readInt(json['currentIdx'], 0),
+    wanderIdx: _readInt(json['wanderIdx'], 0),
+    longTermSeq: _readInt(json['longTermSeq'], 0),
     state: _readEnum(JourneyState.values, json['state'], JourneyState.active),
   );
 }
@@ -482,6 +493,39 @@ List<VisitorLogEntry> _visitorLogListFromJson(Object? value, DateTime now) {
   return _jsonMapListFromJson(
     value,
   ).map((json) => _visitorLogFromJson(json, now)).toList();
+}
+
+Map<String, Object?>? _nullableActiveVisitorToJson(ActiveVisitor? visitor) {
+  if (visitor == null) {
+    return null;
+  }
+  return <String, Object?>{
+    'visitorId': visitor.visitorId,
+    'arrivedAt': _dateToJson(visitor.arrivedAt),
+    'leavesAt': _dateToJson(visitor.leavesAt),
+    'interactionId': visitor.interactionId,
+    'withPetId': visitor.withPetId,
+    'arrivalSeen': visitor.arrivalSeen,
+  };
+}
+
+ActiveVisitor? _nullableActiveVisitorFromJson(Object? value, DateTime now) {
+  final json = _jsonMapOrNull(value);
+  if (json == null) {
+    return null;
+  }
+  final leavesAt = _readDate(json['leavesAt'], now);
+  if (!leavesAt.isAfter(now)) {
+    return null;
+  }
+  return ActiveVisitor(
+    visitorId: _readString(json['visitorId'], ''),
+    arrivedAt: _readDate(json['arrivedAt'], now),
+    leavesAt: leavesAt,
+    interactionId: _readNullableString(json['interactionId']),
+    withPetId: _readNullableString(json['withPetId']),
+    arrivalSeen: _readBool(json['arrivalSeen'], false),
+  );
 }
 
 Map<String, Object?> _postcardToJson(Postcard postcard) {

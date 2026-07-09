@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 /// 纯 Flutter：异步加载 ui.Image → AnimationController 驱动帧号 → CustomPainter 画对应 srcRect。
 /// 加载中/失败渲染 [fallback]，绝不崩、不留白。
 class SpriteSheetPlayer extends StatefulWidget {
+  static const defaultFps = 5;
+
   final String assetPath;
   final double size;
   final int frameCount;
@@ -19,7 +21,7 @@ class SpriteSheetPlayer extends StatefulWidget {
     required this.size,
     required this.fallback,
     this.frameCount = 8,
-    this.fps = 12,
+    this.fps = defaultFps,
     this.loop = false,
     this.onComplete,
   });
@@ -32,7 +34,9 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
     with SingleTickerProviderStateMixin {
   late final AnimationController _c = AnimationController(
     vsync: this,
-    duration: Duration(milliseconds: (widget.frameCount / widget.fps * 1000).round()),
+    duration: Duration(
+      milliseconds: (widget.frameCount / widget.fps * 1000).round(),
+    ),
   );
   ui.Image? _image;
   bool _failed = false;
@@ -43,7 +47,9 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
   void initState() {
     super.initState();
     _c.addStatusListener((s) {
-      if (s == AnimationStatus.completed && !widget.loop) widget.onComplete?.call();
+      if (s == AnimationStatus.completed && !widget.loop) {
+        widget.onComplete?.call();
+      }
     });
     _resolveImage();
   }
@@ -72,7 +78,9 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
 
   @override
   void dispose() {
-    if (_stream != null && _listener != null) _stream!.removeListener(_listener!);
+    if (_stream != null && _listener != null) {
+      _stream!.removeListener(_listener!);
+    }
     _c.dispose();
     super.dispose();
   }
@@ -87,8 +95,10 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
       child: AnimatedBuilder(
         animation: _c,
         builder: (context, _) {
-          final frame =
-              (_c.value * widget.frameCount).floor().clamp(0, widget.frameCount - 1);
+          final frame = (_c.value * widget.frameCount).floor().clamp(
+            0,
+            widget.frameCount - 1,
+          );
           return CustomPaint(
             painter: _FramePainter(img, frame, widget.frameCount),
           );
@@ -110,9 +120,15 @@ class _FramePainter extends CustomPainter {
     final fh = image.height.toDouble();
     final src = Rect.fromLTWH(frame * fw, 0, fw, fh);
     final dst = Rect.fromLTWH(0, 0, size.width, size.height); // 方帧→方框，等比
-    canvas.drawImageRect(image, src, dst, Paint()..filterQuality = FilterQuality.medium);
+    canvas.drawImageRect(
+      image,
+      src,
+      dst,
+      Paint()..filterQuality = FilterQuality.medium,
+    );
   }
 
   @override
-  bool shouldRepaint(_FramePainter old) => old.frame != frame || old.image != image;
+  bool shouldRepaint(_FramePainter old) =>
+      old.frame != frame || old.image != image;
 }

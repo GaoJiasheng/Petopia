@@ -22,6 +22,7 @@ class FakeEconomy implements EconomyService {
     settleCalls++;
     return 300;
   }
+
   @override
   PurchaseResult purchase(item) => const PurchaseResult(success: true);
 }
@@ -29,23 +30,68 @@ class FakeEconomy implements EconomyService {
 class FakeExp implements ExpEngine {
   final List<(String, int, ExpSource)> calls = [];
   @override
-  ExpResult addExp({required Pet pet, required int baseDelta, required ExpSource source, String? sourceRef, String? note, bool applyPersonalityBonus = true}) {
+  ExpResult addExp({
+    required Pet pet,
+    required int baseDelta,
+    required ExpSource source,
+    String? sourceRef,
+    String? note,
+    bool applyPersonalityBonus = true,
+  }) {
     calls.add((pet.id, baseDelta, source));
     return ExpResult.noop;
   }
+
   @override
-  ExpResult grantOffline({required Pet pet, required Duration elapsed}) => ExpResult.noop;
+  ExpResult grantOffline({required Pet pet, required Duration elapsed}) =>
+      ExpResult.noop;
 }
 
 Pet _pet(String id) => Pet(
-      id: id, speciesId: 'pet_cat', variantId: 'v1', name: id,
-      personality: const ['p_dreamy', 'p_curious'],
-      bornAt: DateTime.utc(2026, 7, 2), lastOnlineAt: DateTime.utc(2026, 7, 2),
-      offlineDayKey: '2026-07-02', level: 10);
+  id: id,
+  speciesId: 'pet_cat',
+  variantId: 'v1',
+  name: id,
+  personality: const ['p_dreamy', 'p_curious'],
+  bornAt: DateTime.utc(2026, 7, 2),
+  lastOnlineAt: DateTime.utc(2026, 7, 2),
+  offlineDayKey: '2026-07-02',
+  level: 10,
+);
 
 Location _loc(String id, {Map<String, double> w = const {}}) => Location(
-      id: id, name: id, category: 'x', climate: 'x', vibeTags: const [],
-      photoStyle: 'x', encounterPoolId: 'x', personalityWeight: w, stampId: 'x');
+  id: id,
+  name: id,
+  category: 'x',
+  climate: 'x',
+  vibeTags: const [],
+  photoStyle: 'x',
+  encounterPoolId: 'x',
+  personalityWeight: w,
+  stampId: 'x',
+);
+
+List<Location> _numberedLocs(
+  int count, {
+  Map<String, double> firstWeight = const {},
+}) {
+  return List<Location>.generate(
+    count,
+    (index) => _loc(
+      'loc_${index.toString().padLeft(2, '0')}',
+      w: index == 0 ? firstWeight : const {},
+    ),
+  );
+}
+
+double Function() _rngSeq(List<double> values) {
+  var index = 0;
+  return () {
+    final value = values[index < values.length ? index : values.length - 1];
+    index++;
+    return value;
+  };
+}
 
 void main() {
   final now = DateTime.utc(2026, 7, 2, 12);
@@ -55,11 +101,19 @@ void main() {
       final eco = FakeEconomy();
       final yard = YardState(); // gradCount 0
       Journey? saved;
-      final locs = [
-        _loc('loc_a', w: {'p_dreamy': 2.0}), // 高权重（爱幻想）
-        _loc('loc_b'), _loc('loc_c'), _loc('loc_d'), _loc('loc_e'), _loc('loc_f'),
-      ];
-      final svc = GraduationServiceImpl(eco, locs, yard, () => 'j1', () => now, () => 0.0, (j) => saved = j);
+      final locs = _numberedLocs(
+        40,
+        firstWeight: {'p_dreamy': 2.0}, // 高权重（爱幻想）
+      );
+      final svc = GraduationServiceImpl(
+        eco,
+        locs,
+        yard,
+        () => 'j1',
+        () => now,
+        () => 0.0,
+        (j) => saved = j,
+      );
       final pet = _pet('pet1');
       final jid = await svc.graduate(pet);
 
@@ -71,8 +125,67 @@ void main() {
       expect(yard.gradCount, 1);
       expect(yard.luxuryStage, 2); // gradCount1 → ②
       expect(saved, isNotNull);
-      expect(saved!.stops.length, 5); // rng=0 → 5 站
-      expect(saved!.stops.first, 'loc_a'); // 爱幻想加权最高
+      expect(saved!.stops.length, 25);
+      expect(saved!.wanderStops.length, 15);
+      expect(saved!.nextPostcardAt, now.add(const Duration(days: 1)));
+      expect(saved!.stops.first, 'loc_00'); // rng=0 时从加权轮盘最左侧命中
+      expect(saved!.stops.toSet(), hasLength(saved!.stops.length));
+      expect(saved!.wanderStops.toSet(), hasLength(saved!.wanderStops.length));
+      expect({...saved!.stops, ...saved!.wanderStops}, hasLength(40));
+    });
+
+    test('旅程站点使用随机顺序，且不放回去重', () async {
+      final eco = FakeEconomy();
+      final yard = YardState();
+      Journey? saved;
+      final locs = _numberedLocs(40);
+      final svc = GraduationServiceImpl(
+        eco,
+        locs,
+        yard,
+        () => 'j-random',
+        () => now,
+        _rngSeq([0.99, 0.0, 0.50, 0.25, 0.75]),
+        (j) => saved = j,
+      );
+
+      await svc.graduate(_pet('pet-random'));
+
+      expect(saved, isNotNull);
+      expect(saved!.stops.length, 25);
+      expect(saved!.wanderStops.length, 15);
+      expect(saved!.stops.first, 'loc_39');
+      expect(saved!.stops.toSet(), hasLength(saved!.stops.length));
+      expect({...saved!.stops, ...saved!.wanderStops}, hasLength(40));
+    });
+
+    test('旅程候选地点 id 重复时只保留一个', () async {
+      final eco = FakeEconomy();
+      final yard = YardState();
+      Journey? saved;
+      final locs = [
+        _loc('loc_a'),
+        _loc('loc_a'),
+        _loc('loc_b'),
+        _loc('loc_b'),
+        _loc('loc_c'),
+      ];
+      final svc = GraduationServiceImpl(
+        eco,
+        locs,
+        yard,
+        () => 'j-dedup',
+        () => now,
+        () => 0.0,
+        (j) => saved = j,
+      );
+
+      await svc.graduate(_pet('pet-dedup'));
+
+      expect(saved, isNotNull);
+      expect(saved!.stops, hasLength(3));
+      expect(saved!.stops.toSet(), {'loc_a', 'loc_b', 'loc_c'});
+      expect(saved!.wanderStops, isEmpty);
     });
 
     test('luxuryStageFor 阈值', () {
@@ -93,17 +206,29 @@ void main() {
       expect(p.nextRevisitAt, now.add(const Duration(days: 7))); // rng0 → 7
       final s2 = RevisitServiceImpl(FakeExp(), () => 0.99, () => now);
       s2.scheduleNextRevisit(p);
-      expect(p.nextRevisitAt, now.add(const Duration(days: 14))); // rng0.99 → 14
+      expect(
+        p.nextRevisitAt,
+        now.add(const Duration(days: 14)),
+      ); // rng0.99 → 14
     });
 
     test('isDue + pickRevisitor（INV-2：已有在访→null；否则取最早）', () {
       final s = RevisitServiceImpl(FakeExp(), () => 0.0, () => now);
-      final a = _pet('a')..state = PetState.roaming..nextRevisitAt = now.subtract(const Duration(days: 1));
-      final b = _pet('b')..state = PetState.roaming..nextRevisitAt = now.subtract(const Duration(days: 3));
-      final c = _pet('c')..state = PetState.roaming..nextRevisitAt = now.add(const Duration(days: 5)); // 未到
+      final a = _pet('a')
+        ..state = PetState.roaming
+        ..nextRevisitAt = now.subtract(const Duration(days: 1));
+      final b = _pet('b')
+        ..state = PetState.roaming
+        ..nextRevisitAt = now.subtract(const Duration(days: 3));
+      final c = _pet('c')
+        ..state = PetState.roaming
+        ..nextRevisitAt = now.add(const Duration(days: 5)); // 未到
       expect(s.isDue(a, now), true);
       expect(s.isDue(c, now), false);
-      expect(s.pickRevisitor([a, b, c], now, hasCurrentRevisitor: true), isNull);
+      expect(
+        s.pickRevisitor([a, b, c], now, hasCurrentRevisitor: true),
+        isNull,
+      );
       expect(s.pickRevisitor([a, b, c], now)?.id, 'b'); // b 最早
     });
 
@@ -116,7 +241,14 @@ void main() {
       expect(exp.calls.single, ('cur', 5, ExpSource.revisit));
       expect(brought, true);
       // rng 0.5 → 不带
-      expect(RevisitServiceImpl(FakeExp(), () => 0.5, () => now).onRevisitInteract(revisitor, current), false);
+      expect(
+        RevisitServiceImpl(
+          FakeExp(),
+          () => 0.5,
+          () => now,
+        ).onRevisitInteract(revisitor, current),
+        false,
+      );
     });
   });
 }

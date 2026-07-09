@@ -11,6 +11,6 @@ abstract interface class PostcardGenerator {
   Postcard generate({required Pet pet, required Journey journey});
 
   /// 判定是否到寄片时刻；到点则 generate + 推进 stop；发本地通知（若开启）。
-  /// 旅程中 1–3 天间隔，漫游期 10–15 天。
+  /// 首张为毕业后 1 天，主旅程 3–5 天，补完期 10–15 天，长期约 20 天。
   Future<void> dailyTick({required Pet pet, required Journey journey});
 }

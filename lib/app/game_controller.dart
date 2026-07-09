@@ -7,6 +7,7 @@ import '../audio/audio_service.dart';
 import '../config/game_config.dart';
 import '../domain/enums.dart';
 import '../domain/unlock_rule.dart';
+import '../domain/models/content_entities.dart';
 import '../domain/models/logs.dart';
 import '../domain/models/yard.dart';
 import 'bootstrap.dart';
@@ -40,6 +41,31 @@ class PetView {
   });
 }
 
+/// 当前驻留访客视图。
+class VisitorPresenceView {
+  final String id;
+  final String name;
+  final VisitorRarity rarity;
+  final String message;
+  final DateTime arrivedAt;
+  final DateTime leavesAt;
+  final bool arrivalSeen;
+  final String yardAsset;
+  final String portraitAsset;
+
+  const VisitorPresenceView({
+    required this.id,
+    required this.name,
+    required this.rarity,
+    required this.message,
+    required this.arrivedAt,
+    required this.leavesAt,
+    required this.arrivalSeen,
+    required this.yardAsset,
+    required this.portraitAsset,
+  });
+}
+
 /// 游戏视图快照。
 class GameView {
   final PetView? pet;
@@ -57,6 +83,13 @@ class GameView {
 
   /// 自定义院子摆件槽位；为空时 UI 使用默认布置。
   final List<YardSlotView> decorSlots;
+
+  /// 今日驻留在院子里的野生访客。
+  final VisitorPresenceView? activeVisitor;
+
+  /// 尚未展示过到访弹框的访客。
+  final VisitorPresenceView? visitorArrival;
+
   const GameView({
     required this.pet,
     required this.wallet,
@@ -65,6 +98,8 @@ class GameView {
     required this.canGraduate,
     required this.activeThemeId,
     required this.decorSlots,
+    this.activeVisitor,
+    this.visitorArrival,
   });
 }
 
@@ -314,8 +349,23 @@ class GameController extends AsyncNotifier<GameView> {
     _persist();
   }
 
+  /// 首页欢迎弹框展示后调用；访客仍会继续驻留到 leavesAt。
+  void markVisitorArrivalSeen(String visitorId) {
+    final active = _svc.session.activeVisitor;
+    if (active == null || active.visitorId != visitorId || active.arrivalSeen) {
+      return;
+    }
+    active.arrivalSeen = true;
+    state = AsyncData(_snapshot());
+    _persist();
+  }
+
   GameView _snapshot() {
+    if (_expireActiveVisitorIfNeeded()) {
+      _persist();
+    }
     final p = _svc.session.current;
+    final activeVisitor = _activeVisitorView();
     return GameView(
       pet: p == null
           ? null
@@ -341,7 +391,46 @@ class GameController extends AsyncNotifier<GameView> {
       decorSlots: _svc.session.yard.slots
           .map((slot) => YardSlotView(pos: slot.pos, itemId: slot.itemId))
           .toList(growable: false),
+      activeVisitor: activeVisitor,
+      visitorArrival: activeVisitor != null && !activeVisitor.arrivalSeen
+          ? activeVisitor
+          : null,
     );
+  }
+
+  bool _expireActiveVisitorIfNeeded() {
+    final active = _svc.session.activeVisitor;
+    if (active == null) return false;
+    if (active.leavesAt.isAfter(_svc.clock.now())) return false;
+    _svc.session.activeVisitor = null;
+    return true;
+  }
+
+  VisitorPresenceView? _activeVisitorView() {
+    final active = _svc.session.activeVisitor;
+    if (active == null || active.visitorId.isEmpty) return null;
+    final visitor = _svc.content.visitorById(active.visitorId);
+    if (visitor == null) return null;
+    final interaction = _visitorInteractionById(active.interactionId);
+    return VisitorPresenceView(
+      id: visitor.id,
+      name: visitor.name,
+      rarity: visitor.rarity,
+      message: interaction?.script ?? '${visitor.name}正在院子里慢慢逛。',
+      arrivedAt: active.arrivedAt,
+      leavesAt: active.leavesAt,
+      arrivalSeen: active.arrivalSeen,
+      yardAsset: 'assets/art/world/visitors/${visitor.id}_yard.png',
+      portraitAsset: 'assets/art/world/visitors/${visitor.id}_portrait.png',
+    );
+  }
+
+  VisitorPetInteraction? _visitorInteractionById(String? id) {
+    if (id == null) return null;
+    for (final interaction in _svc.content.visitorInteractions) {
+      if (interaction.id == id) return interaction;
+    }
+    return null;
   }
 
   /// 已拥有的主题（供商店/布置显示「使用中/应用」）。含当前是否装备。
@@ -489,7 +578,9 @@ class GameController extends AsyncNotifier<GameView> {
         speciesId: p.speciesId,
         name: p.name,
         graduatedAt: p.graduatedAt,
-        stops: journey.isEmpty ? 0 : journey.first.stops.length,
+        stops: journey.isEmpty
+            ? 0
+            : journey.first.stops.length + journey.first.wanderStops.length,
         postcardCount: counts[p.id] ?? 0,
       );
     }).toList();

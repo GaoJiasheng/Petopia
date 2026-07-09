@@ -1,3 +1,5 @@
+import 'dart:ui' show ImageFilter;
+
 import 'package:flutter/material.dart';
 
 import '../app/game_controller.dart';
@@ -42,20 +44,31 @@ Future<void> showPostcardArrivalDialog(
     context: context,
     barrierDismissible: true,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-    barrierColor: Colors.black.withValues(alpha: 0.24),
+    barrierColor: Colors.transparent,
     transitionDuration: const Duration(milliseconds: 360),
     pageBuilder: (context, _, _) {
-      return SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(18),
-            child: PostcardDisplayCard(
-              card: card,
-              arrivalMode: true,
-              onClose: () => Navigator.of(context).pop(),
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+            child: ColoredBox(
+              color: const Color(0xFFF3E9D6).withValues(alpha: 0.82),
             ),
           ),
-        ),
+          SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(18),
+                child: PostcardDisplayCard(
+                  card: card,
+                  arrivalMode: true,
+                  onClose: () => Navigator.of(context).pop(),
+                ),
+              ),
+            ),
+          ),
+        ],
       );
     },
     transitionBuilder: (context, animation, _, child) {

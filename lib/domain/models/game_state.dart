@@ -3,23 +3,29 @@ import '../enums.dart';
 /// 其余运行期实体（spec-technical §1.3）：旅程 / 彩蛋计数 / 成就进度 /
 /// 来客记录 / 日程作业 / 全局设置。
 
-/// 旅程。stops 为 5..8 个 locationId（去重、性格加权）。
+/// 旅程。stops 为 25 个主旅程 locationId；wanderStops 为剩余地点。
 class Journey {
   String id;
   String petId;
   List<String> stops;
+  List<String> wanderStops;
   int currentIdx; // 0..stops.length
+  int wanderIdx; // 0..wanderStops.length
+  int longTermSeq; // 40 张完成后的长期循环寄片序号
   DateTime nextPostcardAt;
-  JourneyState state; // ACTIVE→WANDERING（旅程走完）→ 永久 WANDERING
+  JourneyState state; // ACTIVE→WANDERING（补完剩余地点）→ 永久 WANDERING
 
   Journey({
     required this.id,
     required this.petId,
     required this.stops,
     required this.nextPostcardAt,
+    List<String>? wanderStops,
     this.currentIdx = 0,
+    this.wanderIdx = 0,
+    this.longTermSeq = 0,
     this.state = JourneyState.active,
-  });
+  }) : wanderStops = wanderStops ?? <String>[];
 }
 
 /// 彩蛋线索计数。count 单调递增；visitorSeen 控制线索两段式显示。
@@ -66,6 +72,25 @@ class VisitorLogEntry {
     required this.date,
     this.interactionId,
     this.withPetId,
+  });
+}
+
+/// 当前正在院子里停留的访客。到访会进入图鉴日志；这里负责首页驻留和弹框状态。
+class ActiveVisitor {
+  String visitorId;
+  DateTime arrivedAt;
+  DateTime leavesAt;
+  String? interactionId;
+  String? withPetId;
+  bool arrivalSeen;
+
+  ActiveVisitor({
+    required this.visitorId,
+    required this.arrivedAt,
+    required this.leavesAt,
+    this.interactionId,
+    this.withPetId,
+    this.arrivalSeen = false,
   });
 }
 

@@ -335,8 +335,10 @@ class GameServices {
   Future<void> _dispatch(ScheduledJob job) async {
     final pet = _session.current;
     final now = clock.now();
+    _clearExpiredActiveVisitor(now);
     switch (job.type) {
       case JobType.visitorCheck:
+        if (_session.activeVisitor != null) break;
         final window = job.payloadRef == 'night'
             ? TimeWindow.night
             : TimeWindow.day;
@@ -369,6 +371,13 @@ class GameServices {
             );
           }
           visitor.recordVisit(v, pet, it);
+          _session.activeVisitor = ActiveVisitor(
+            visitorId: v.id,
+            arrivedAt: now,
+            leavesAt: now.add(const Duration(hours: 24)),
+            interactionId: it.id,
+            withPetId: pet?.id,
+          );
         }
       case JobType.dailyEventGen:
         if (pet == null) break;
@@ -437,6 +446,13 @@ class GameServices {
     if (m >= 6 && m <= 8) return Season.summer;
     if (m >= 9 && m <= 11) return Season.autumn;
     return Season.winter;
+  }
+
+  void _clearExpiredActiveVisitor(DateTime now) {
+    final active = _session.activeVisitor;
+    if (active != null && !active.leavesAt.isAfter(now)) {
+      _session.activeVisitor = null;
+    }
   }
 }
 

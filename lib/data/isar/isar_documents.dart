@@ -191,7 +191,10 @@ class JourneyDoc {
   late String petId;
 
   List<String> stops = <String>[];
+  List<String> wanderStops = <String>[];
   int currentIdx = 0;
+  int wanderIdx = 0;
+  int longTermSeq = 0;
   late DateTime nextPostcardAt;
 
   @Enumerated(EnumType.name)
@@ -203,8 +206,11 @@ class JourneyDoc {
       id: domainId,
       petId: petId,
       stops: List<String>.of(stops),
+      wanderStops: List<String>.of(wanderStops),
       nextPostcardAt: _utc(nextPostcardAt),
       currentIdx: currentIdx,
+      wanderIdx: wanderIdx,
+      longTermSeq: longTermSeq,
       state: state,
     );
   }
@@ -214,7 +220,10 @@ class JourneyDoc {
       ..domainId = journey.id
       ..petId = journey.petId
       ..stops = List<String>.of(journey.stops)
+      ..wanderStops = List<String>.of(journey.wanderStops)
       ..currentIdx = journey.currentIdx
+      ..wanderIdx = journey.wanderIdx
+      ..longTermSeq = journey.longTermSeq
       ..nextPostcardAt = _utc(journey.nextPostcardAt)
       ..state = journey.state;
   }

@@ -33,14 +33,23 @@ class FixedClock implements ClockService {
   @override
   DateTime now() => t;
   @override
-  Duration resolveOfflineElapsed({required DateTime lastOnlineAt}) => Duration.zero;
+  Duration resolveOfflineElapsed({required DateTime lastOnlineAt}) =>
+      Duration.zero;
   @override
   void markHeartbeat() {}
 }
 
 Location _loc(String id) => Location(
-    id: id, name: id, category: 'x', climate: 'x', vibeTags: const [],
-    photoStyle: 'x', encounterPoolId: 'x', personalityWeight: const {}, stampId: 'x');
+  id: id,
+  name: id,
+  category: 'x',
+  climate: 'x',
+  vibeTags: const [],
+  photoStyle: 'x',
+  encounterPoolId: 'x',
+  personalityWeight: const {},
+  stampId: 'x',
+);
 
 void main() {
   test('全链路冒烟：领养→照料→离线→升级换档→毕业，INV-1/INV-4 恒成立', () async {
@@ -52,9 +61,14 @@ void main() {
     String id() => 'id${idc++}';
 
     final pet = Pet(
-      id: 'pet1', speciesId: 'pet_cat', variantId: 'pet_cat_v1', name: '阿橘',
+      id: 'pet1',
+      speciesId: 'pet_cat',
+      variantId: 'pet_cat_v1',
+      name: '阿橘',
       personality: const ['p_glutton', 'p_curious'],
-      bornAt: t0, lastOnlineAt: t0, offlineDayKey: '2026-07-03',
+      bornAt: t0,
+      lastOnlineAt: t0,
+      offlineDayKey: '2026-07-03',
     );
     final pets = [pet];
     final wallet = CurrencyWallet();
@@ -62,18 +76,30 @@ void main() {
 
     final audit = AuditServiceImpl(port, () => pets, () => wallet);
     final exp = ExpEngineImpl(
-      audit, clock,
+      audit,
+      clock,
       (tag, src) => tag == 'p_glutton' && src == ExpSource.feed ? 0.10 : 0.0,
       id,
     );
     final economy = EconomyServiceImpl(
-      port, wallet, yard, clock, id,
-      (_) => 10, (_) => 5, (_) => false, // 事件10/访客5/非彩蛋
+      port,
+      wallet,
+      yard,
+      clock,
+      id,
+      (_) => 10,
+      (_) => 5,
+      (_) => false, // 事件10/访客5/非彩蛋
     );
     Journey? journey;
     final grad = GraduationServiceImpl(
-      economy, [_loc('a'), _loc('b'), _loc('c'), _loc('d'), _loc('e')],
-      yard, id, () => clock.now(), () => 0.0, (j) => journey = j,
+      economy,
+      List<Location>.generate(40, (index) => _loc('loc_$index')),
+      yard,
+      id,
+      () => clock.now(),
+      () => 0.0,
+      (j) => journey = j,
     );
 
     Future<void> checkInv() async {
@@ -90,7 +116,11 @@ void main() {
     await checkInv();
 
     // 事件推到 Lv5（换档 B）
-    final r5 = exp.addExp(pet: pet, baseDelta: 204, source: ExpSource.eventDaily);
+    final r5 = exp.addExp(
+      pet: pet,
+      baseDelta: 204,
+      source: ExpSource.eventDaily,
+    );
     expect(pet.level, 5);
     expect(pet.stage, PetStage.b);
     expect(r5.evolved, true);
@@ -102,7 +132,11 @@ void main() {
 
     // 补到 Lv10 毕业
     final need = 800 - pet.exp;
-    final rGrad = exp.addExp(pet: pet, baseDelta: need, source: ExpSource.eventDaily);
+    final rGrad = exp.addExp(
+      pet: pet,
+      baseDelta: need,
+      source: ExpSource.eventDaily,
+    );
     expect(pet.level, 10);
     expect(pet.stage, PetStage.d);
     expect(rGrad.graduated, true);
@@ -111,7 +145,8 @@ void main() {
     final jid = await grad.graduate(pet);
     expect(pet.state, PetState.traveling);
     expect(pet.journeyId, jid);
-    expect(journey!.stops.length, 5);
+    expect(journey!.stops.length, 25);
+    expect(journey!.wanderStops.length, 15);
     expect(yard.gradCount, 1);
     expect(yard.luxuryStage, 2);
     // 毕业结算：base200 + min(10*2,100)=20 + min(5*3,60)=15 = 235
