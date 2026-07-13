@@ -123,6 +123,7 @@ class GameServices {
       (petId) => session.eventCounts[petId] ?? 0,
       (petId) => session.visitorCounts[petId] ?? 0,
       (sp) => content.speciesById(sp)?.category == PetCategory.fantasy,
+      session.shopInventory,
     );
 
     final unlock = UnlockServiceImpl(
@@ -238,6 +239,12 @@ class GameServices {
     );
     _session.current = pet;
     _session.ownedSpecies.add(speciesId);
+    _session.ownedVariants.add(variantId);
+    _bumpSignal('custom:name_pet');
+    final collectedVariants = variants
+        .where(_session.ownedVariants.contains)
+        .length;
+    _setSignalMax('custom:collect_all_variants', collectedVariants);
     return pet;
   }
 
@@ -257,37 +264,128 @@ class GameServices {
   /// 成就同步：从 session 现状重算所有可派生的累计计数，逐类型推进成就。
   /// 幂等（UnlockService 只取更大值），每次游戏动作后调用。返回本次新解锁的成就。
   List<Achievement> syncAchievements() {
-    final s = _session;
-    final distinctVisitors = s.visitorLog
-        .map((e) => e.visitorId)
-        .toSet()
-        .length;
-    final distinctStamps = s.postcards.map((p) => p.stampId).toSet().length;
-    final distinctPostcardSeasons = s.postcards
-        .map((p) => p.season)
-        .toSet()
-        .length;
-    final counts = <String, int>{
-      'actionCount': s.careActionCount,
-      'gradCount': s.yard.gradCount,
-      'postcardCount': s.postcards.length,
-      'visitorDexCount': distinctVisitors,
-      'speciesCollected': s.ownedSpecies.length,
-      'revisitCount': s.revisitCount,
-      'yardStage': s.yard.luxuryStage,
-      'themeCount': s.yard.ownedThemeIds.length,
-      'specialEventCount': s.specialEventCount,
-      'loginStreak': s.settings.loginStreakCurrent,
-      'stampCount': distinctStamps,
-      'seasonPostcard': distinctPostcardSeasons,
-    };
     final newly = <Achievement>[];
-    counts.forEach((type, value) {
+    for (final achievement in _content.achievements) {
+      final value = _achievementValue(achievement);
       newly.addAll(
-        unlock.checkAchievements(GameSignal(type, params: {'progress': value})),
+        unlock.checkAchievements(
+          GameSignal(
+            achievement.condition.type.name,
+            params: {'progress': value, 'achievementId': achievement.id},
+          ),
+        ),
       );
-    });
+    }
     return newly;
+  }
+
+  int _achievementValue(Achievement achievement) {
+    final s = _session;
+    final params = achievement.condition.params;
+    return switch (achievement.condition.type) {
+      AchievementCondType.gradCount => s.yard.gradCount,
+      AchievementCondType.speciesCollected => _speciesAchievementValue(params),
+      AchievementCondType.postcardCount => s.postcards.length,
+      AchievementCondType.visitorDexCount => _visitorAchievementValue(params),
+      AchievementCondType.actionCount => _actionAchievementValue(params),
+      AchievementCondType.revisitCount => s.revisitCount,
+      AchievementCondType.loginStreak => s.settings.loginStreakCurrent,
+      AchievementCondType.specialEventCount => s.specialEventCount,
+      AchievementCondType.yardStage => s.yard.luxuryStage,
+      AchievementCondType.themeCount => s.yard.ownedThemeIds.length,
+      AchievementCondType.stampCount =>
+        s.postcards.map((postcard) => postcard.stampId).toSet().length,
+      AchievementCondType.seasonPostcard =>
+        s.postcards.map((postcard) => postcard.season).toSet().length,
+      AchievementCondType.unlockPet => _unlockPetAchievementValue(params),
+      AchievementCondType.custom => _customAchievementValue(params),
+    };
+  }
+
+  int _speciesAchievementValue(Map<String, dynamic> params) {
+    final species = _session.ownedSpecies
+        .map(_content.speciesById)
+        .whereType<PetSpecies>();
+    if (params['regularOnly'] == true) {
+      return species.where((item) => item.category == PetCategory.real).length;
+    }
+    if (params['fantasyOnly'] == true) {
+      return species
+          .where((item) => item.category == PetCategory.fantasy)
+          .length;
+    }
+    return species.length;
+  }
+
+  int _visitorAchievementValue(Map<String, dynamic> params) {
+    final seen = _session.visitorLog.map((entry) => entry.visitorId).toSet();
+    final rarityName = params['rarity'] as String?;
+    if (rarityName != null) {
+      return _content.visitors
+          .where(
+            (visitor) =>
+                seen.contains(visitor.id) && visitor.rarity.name == rarityName,
+          )
+          .length;
+    }
+    return seen.length;
+  }
+
+  int _actionAchievementValue(Map<String, dynamic> params) {
+    final actions = params['actions'];
+    if (actions is List) {
+      return actions.whereType<String>().where((action) {
+        final key = action == 'play' ? 'play_toy' : action;
+        return (_session.achievementSignals['action:$key'] ?? 0) > 0;
+      }).length;
+    }
+    final action = params['action'] as String?;
+    if (action == null) return _session.careActionCount;
+    if (action == 'daily_care') {
+      return _session.achievementSignals['care:days'] ?? 0;
+    }
+    return _session.achievementSignals['action:$action'] ?? 0;
+  }
+
+  int _customAchievementValue(Map<String, dynamic> params) {
+    final action = params['action'] as String?;
+    if (action == 'weather_postcard') {
+      return _session.postcards
+          .map((postcard) => postcard.weather)
+          .toSet()
+          .length;
+    }
+    return _session.achievementSignals['custom:$action'] ?? 0;
+  }
+
+  int _unlockPetAchievementValue(Map<String, dynamic> params) {
+    if (params['regularOnly'] == true) {
+      return _content.species
+          .where((species) => species.category == PetCategory.real)
+          .where(
+            (species) => unlock.dexStateOf(species) != DexState.lockedKnown,
+          )
+          .length;
+    }
+    final name = params['petId'] as String?;
+    if (name == null) return _session.ownedSpecies.length;
+    final matches = _content.species.where((species) => species.name == name);
+    return matches.any((species) => _session.ownedSpecies.contains(species.id))
+        ? 1
+        : 0;
+  }
+
+  void bumpAchievementSignal(String key, {int by = 1}) =>
+      _bumpSignal(key, by: by);
+
+  void _bumpSignal(String key, {int by = 1}) {
+    _session.achievementSignals[key] =
+        (_session.achievementSignals[key] ?? 0) + by;
+  }
+
+  void _setSignalMax(String key, int value) {
+    final current = _session.achievementSignals[key] ?? 0;
+    if (value > current) _session.achievementSignals[key] = value;
   }
 
   /// 处理漫游宠（每次日切/恢复调用）：按期寄明信片 + 到点回访串门。
@@ -301,20 +399,46 @@ class GameServices {
       if (matches.isEmpty) continue;
       await postcard.dailyTick(pet: pet, journey: matches.first);
     }
-    // 回访：上一位串门结束（1 个 tick 窗口）→ 再从到期漫游宠里挑新的（INV-2）。
+    // 回访：在院子驻留 1–2 天；到期后再安排下一次。
     final prev = _session.revisitor;
-    if (prev != null) {
+    final leavesAt = _session.revisitorLeavesAt;
+    if (prev != null && leavesAt != null && !leavesAt.isAfter(now)) {
       revisit.onRevisitEnd(prev);
       _session.revisitor = null;
+      _session.revisitorArrivedAt = null;
+      _session.revisitorLeavesAt = null;
+      _session.revisitorArrivalSeen = false;
+      _session.revisitorInteracted = false;
     }
+    if (_session.revisitor != null) return;
     final next = revisit.pickRevisitor(
       _session.roaming,
       now,
-      hasCurrentRevisitor: false,
+      hasCurrentRevisitor: _session.revisitor != null,
     );
     if (next != null) {
       _session.revisitor = next;
-      revisit.onRevisitInteract(next, _session.current);
+      _session.revisitorArrivedAt = now;
+      final span =
+          GameConfig.revisitStayMaxDays - GameConfig.revisitStayMinDays + 1;
+      final stayDays = GameConfig.revisitStayMinDays + (_rng() * span).floor();
+      _session.revisitorLeavesAt = now.add(Duration(days: stayDays));
+      _session.revisitorArrivalSeen = false;
+      _session.revisitorInteracted = false;
+      final broughtCompanion = revisit.onRevisitInteract(
+        next,
+        _session.current,
+      );
+      if (broughtCompanion) _bumpSignal('custom:companion_joined');
+      final giftSpan =
+          GameConfig.revisitGiftMax - GameConfig.revisitGiftMin + 1;
+      final gift = GameConfig.revisitGiftMin + (_rng() * giftSpan).floor();
+      economy.earn(
+        gift,
+        CurrencyReason.revisitGift,
+        ref: 'revisit:${next.id}:${_dayKey(now)}',
+      );
+      _bumpSignal('custom:revisit_gift_received');
       _session.revisitCount++; // 成就：回访累计
     }
   }
@@ -328,8 +452,10 @@ class GameServices {
     return [ids[i], ids[j]];
   }
 
-  static String _dayKey(DateTime t) =>
-      '${t.year.toString().padLeft(4, '0')}-${t.month.toString().padLeft(2, '0')}-${t.day.toString().padLeft(2, '0')}';
+  static String _dayKey(DateTime t) {
+    final local = t.toLocal();
+    return '${local.year.toString().padLeft(4, '0')}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')}';
+  }
 
   /// EventScheduler 单个 job 的执行路由（§3.4）。
   Future<void> _dispatch(ScheduledJob job) async {
@@ -378,14 +504,13 @@ class GameServices {
             interactionId: it.id,
             withPetId: pet?.id,
           );
+          _consumeVisitorFood();
         }
       case JobType.dailyEventGen:
         if (pet == null) break;
-        final dailies = _content.events
-            .where((e) => e.type == EventType.daily)
-            .toList();
+        final dailies = _eligibleEvents(EventType.daily, pet, now);
         if (dailies.isNotEmpty) {
-          final ev = dailies[(_rng() * dailies.length).floor()];
+          final ev = _pickWeightedEvent(dailies, pet, now);
           exp.addExp(
             pet: pet,
             baseDelta: ev.expReward,
@@ -394,18 +519,15 @@ class GameServices {
           );
           _session.eventCounts[pet.id] =
               (_session.eventCounts[pet.id] ?? 0) + 1;
+          _session.eventLastFiredAt['${pet.id}:${ev.id}'] = now;
+          _queueEvent(ev, now);
         }
       case JobType.specialEventEval:
         if (pet == null) break;
         // 眷顾资格的彩蛋事件：满足等级/豪华度门槛，oncePerPet 未触发过。
-        final eligible = _content.events.where((e) {
-          if (e.type != EventType.special) return false;
-          final w = e.weights;
-          if (w.minLevel != null && pet.level < w.minLevel!) return false;
-          if (w.minLuxuryStage != null &&
-              _session.yard.luxuryStage < w.minLuxuryStage!) {
-            return false;
-          }
+        final eligible = _eligibleEvents(EventType.special, pet, now).where((
+          e,
+        ) {
           if (e.oncePerPet &&
               _session.firedSpecials.contains('${pet.id}:${e.id}')) {
             return false;
@@ -414,7 +536,7 @@ class GameServices {
         }).toList();
         if (eligible.isEmpty) break;
         if (_rng() >= _specialEventChance) break; // 低频彩蛋（日 cap=1）
-        final ev = eligible[(_rng() * eligible.length).floor()];
+        final ev = _pickWeightedEvent(eligible, pet, now);
         exp.addExp(
           pet: pet,
           baseDelta: ev.expReward,
@@ -431,6 +553,8 @@ class GameServices {
         if (ev.oncePerPet) _session.firedSpecials.add('${pet.id}:${ev.id}');
         _session.eventCounts[pet.id] = (_session.eventCounts[pet.id] ?? 0) + 1;
         _session.specialEventCount++; // 成就：彩蛋事件累计
+        _session.eventLastFiredAt['${pet.id}:${ev.id}'] = now;
+        _queueEvent(ev, now);
       case JobType.revisitDue:
       case JobType.postcardDue:
         break; // 漫游宠的明信片/回访不走 scheduler，由 processRoaming 驱动
@@ -439,6 +563,99 @@ class GameServices {
 
   /// 彩蛋事件单次评估触发概率（日 cap=1，见 GameConfig.specialEventDailyCap）。
   static const double _specialEventChance = 0.25;
+
+  List<Event> _eligibleEvents(EventType type, Pet pet, DateTime now) {
+    return _content.events.where((event) {
+      if (event.type != type) return false;
+      final weights = event.weights;
+      if (weights.minLevel != null && pet.level < weights.minLevel!) {
+        return false;
+      }
+      if (weights.minLuxuryStage != null &&
+          _session.yard.luxuryStage < weights.minLuxuryStage!) {
+        return false;
+      }
+      if (weights.requiresVisitor != null &&
+          _session.activeVisitor?.visitorId != weights.requiresVisitor) {
+        return false;
+      }
+      if (weights.requiresDecor != null &&
+          !_session.yard.ownedDecorIds.contains(weights.requiresDecor)) {
+        return false;
+      }
+      final last = _session.eventLastFiredAt['${pet.id}:${event.id}'];
+      if (last != null) {
+        final localNow = now.toLocal();
+        final localLast = last.toLocal();
+        final today = DateTime(localNow.year, localNow.month, localNow.day);
+        final lastDay = DateTime(
+          localLast.year,
+          localLast.month,
+          localLast.day,
+        );
+        if (today.difference(lastDay).inDays <= event.cooldownDays) {
+          return false;
+        }
+      }
+      return true;
+    }).toList();
+  }
+
+  Event _pickWeightedEvent(List<Event> events, Pet pet, DateTime now) {
+    final season = _seasonOf(now);
+    final time = _timeOfDay(now.hour);
+    const weather = Weather.clear;
+    final weighted = <MapEntry<Event, double>>[];
+    var total = 0.0;
+    for (final event in events) {
+      var weight = 1.0;
+      for (final personality in pet.personality) {
+        weight *= event.weights.personality[personality] ?? 1.0;
+      }
+      weight *= event.weights.weather[weather] ?? 1.0;
+      weight *= event.weights.timeOfDay[time] ?? 1.0;
+      weight *= event.weights.season[season] ?? 1.0;
+      if (weight <= 0) continue;
+      total += weight;
+      weighted.add(MapEntry(event, weight));
+    }
+    if (weighted.isEmpty || total <= 0) return events.first;
+    final roll = _rng() * total;
+    var cursor = 0.0;
+    for (final entry in weighted) {
+      cursor += entry.value;
+      if (roll < cursor) return entry.key;
+    }
+    return weighted.last.key;
+  }
+
+  void _queueEvent(Event event, DateTime now) {
+    _session.pendingEvents.add(
+      PendingGameEvent(
+        id: _idGen(),
+        eventId: event.id,
+        title: event.title,
+        script: event.script,
+        type: event.type,
+        expReward: event.expReward,
+        currencyReward: event.currencyReward ?? 0,
+        createdAt: now,
+      ),
+    );
+    if (_session.pendingEvents.length > 6) {
+      _session.pendingEvents.removeRange(0, _session.pendingEvents.length - 6);
+    }
+  }
+
+  TimeOfDayOfDay _timeOfDay(int hour) {
+    if (hour < 6) return TimeOfDayOfDay.night;
+    if (hour < 9) return TimeOfDayOfDay.dawn;
+    if (hour < 12) return TimeOfDayOfDay.morning;
+    if (hour < 14) return TimeOfDayOfDay.noon;
+    if (hour < 18) return TimeOfDayOfDay.afternoon;
+    if (hour < 21) return TimeOfDayOfDay.evening;
+    return TimeOfDayOfDay.night;
+  }
 
   Season _seasonOf(DateTime t) {
     final m = t.month;
@@ -453,6 +670,26 @@ class GameServices {
     if (active != null && !active.leavesAt.isAfter(now)) {
       _session.activeVisitor = null;
     }
+  }
+
+  void _consumeVisitorFood() {
+    final inventory = _session.shopInventory;
+    final itemId = inventory.activeVisitorFoodItemId;
+    if (itemId == null) return;
+    final remaining = (inventory.consumables[itemId] ?? 0) - 1;
+    if (remaining > 0) {
+      inventory.consumables[itemId] = remaining;
+      _session.yard.foodTray.remaining = remaining;
+      return;
+    }
+    inventory.consumables.remove(itemId);
+    inventory.activeVisitorFoodItemId = null;
+    _session.yard.foodTray
+      ..foodType = null
+      ..placedAt = null
+      ..probabilityScope = null
+      ..probabilityDelta = 0
+      ..remaining = 0;
   }
 }
 

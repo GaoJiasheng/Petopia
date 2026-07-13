@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
+import 'adaptive_layout.dart';
 import 'pet_art.dart';
 
 /// 领养流程：院子空出后迎接下一只。选物种 → 取名 → 领养。
@@ -40,9 +41,7 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen> {
     final id = _selectedId;
     if (id == null || _adopting) return;
     setState(() => _adopting = true);
-    await ref
-        .read(gameControllerProvider.notifier)
-        .adopt(id, _nameCtrl.text);
+    await ref.read(gameControllerProvider.notifier).adopt(id, _nameCtrl.text);
     if (!mounted) return;
     Navigator.of(context).pop();
   }
@@ -53,60 +52,78 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFFFBF5E9),
       appBar: AppBar(
-        title: const Text('领养新伙伴',
-            style: TextStyle(color: _ink, fontWeight: FontWeight.bold)),
+        title: const Text(
+          '领养新伙伴',
+          style: TextStyle(color: _ink, fontWeight: FontWeight.bold),
+        ),
         backgroundColor: const Color(0xFFFBF5E9),
         elevation: 0,
         centerTitle: true,
         iconTheme: const IconThemeData(color: _ink),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            const Padding(
-              padding: EdgeInsets.fromLTRB(20, 4, 20, 12),
-              child: Text('挑一只想要陪伴的小伙伴，给它取个名字吧',
-                  style: TextStyle(color: _muted, fontSize: 14)),
-            ),
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 0.86,
-                  crossAxisSpacing: 12,
-                  mainAxisSpacing: 12,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final columns = constraints.maxWidth >= 840
+                ? 4
+                : (constraints.maxWidth >= 600 ? 3 : 2);
+            return Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1040),
+                child: Column(
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.fromLTRB(20, 4, 20, 12),
+                      child: Text(
+                        '挑一只想要陪伴的小伙伴，给它取个名字吧',
+                        style: TextStyle(color: _muted, fontSize: 14),
+                      ),
+                    ),
+                    Expanded(
+                      child: GridView.builder(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: PetopiaAdaptive.sideMargin(context),
+                        ),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: columns,
+                          childAspectRatio: 0.86,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                        ),
+                        itemCount: choices.length,
+                        itemBuilder: (context, i) {
+                          final c = choices[i];
+                          final selected = c.speciesId == _selectedId;
+                          return _ChoiceCard(
+                            choice: c,
+                            selected: selected,
+                            onTap: () {
+                              setState(() {
+                                _selectedId = c.speciesId;
+                                if (_nameCtrl.text.trim().isEmpty) {
+                                  _nameCtrl.text = c.name;
+                                  _nameCtrl.selection = TextSelection(
+                                    baseOffset: 0,
+                                    extentOffset: _nameCtrl.text.length,
+                                  );
+                                }
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                    _NameAndConfirm(
+                      controller: _nameCtrl,
+                      enabled: _selectedId != null && !_adopting,
+                      adopting: _adopting,
+                      onConfirm: _confirm,
+                    ),
+                  ],
                 ),
-                itemCount: choices.length,
-                itemBuilder: (context, i) {
-                  final c = choices[i];
-                  final selected = c.speciesId == _selectedId;
-                  return _ChoiceCard(
-                    choice: c,
-                    selected: selected,
-                    onTap: () {
-                      setState(() {
-                        _selectedId = c.speciesId;
-                        if (_nameCtrl.text.trim().isEmpty) {
-                          _nameCtrl.text = c.name;
-                          _nameCtrl.selection = TextSelection(
-                              baseOffset: 0,
-                              extentOffset: _nameCtrl.text.length);
-                        }
-                      });
-                    },
-                  );
-                },
               ),
-            ),
-            _NameAndConfirm(
-              controller: _nameCtrl,
-              enabled: _selectedId != null && !_adopting,
-              adopting: _adopting,
-              onConfirm: _confirm,
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
@@ -146,21 +163,31 @@ class _ChoiceCard extends StatelessWidget {
               child: Image.asset(
                 PetArt.portrait(choice.speciesId),
                 fit: BoxFit.contain,
-                errorBuilder: (_, _, _) => const Icon(Icons.pets_rounded,
-                    size: 56, color: _AdoptScreenState._muted),
+                errorBuilder: (_, _, _) => const Icon(
+                  Icons.pets_rounded,
+                  size: 56,
+                  color: _AdoptScreenState._muted,
+                ),
               ),
             ),
             const SizedBox(height: 6),
-            Text(choice.name,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: _AdoptScreenState._ink,
-                    fontSize: 15)),
-            Text(choice.baseTone,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                    color: _AdoptScreenState._muted, fontSize: 12)),
+            Text(
+              choice.name,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: _AdoptScreenState._ink,
+                fontSize: 15,
+              ),
+            ),
+            Text(
+              choice.baseTone,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: _AdoptScreenState._muted,
+                fontSize: 12,
+              ),
+            ),
           ],
         ),
       ),
@@ -184,7 +211,11 @@ class _NameAndConfirm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(
-          16, 12, 16, 12 + MediaQuery.of(context).viewInsets.bottom),
+        16,
+        12,
+        16,
+        12 + MediaQuery.of(context).viewInsets.bottom,
+      ),
       decoration: const BoxDecoration(
         color: Color(0xFFFFFDF7),
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
@@ -202,8 +233,10 @@ class _NameAndConfirm extends StatelessWidget {
                 counterText: '',
                 filled: true,
                 fillColor: const Color(0xFFFBF5E9),
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 14,
+                  vertical: 10,
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(14),
                   borderSide: BorderSide.none,
@@ -215,19 +248,21 @@ class _NameAndConfirm extends StatelessWidget {
           GestureDetector(
             onTap: enabled ? onConfirm : null,
             child: Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
               decoration: BoxDecoration(
                 color: enabled
                     ? _AdoptScreenState._accent
                     : const Color(0xFFE6DFD0),
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Text(adopting ? '…' : '领养',
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15)),
+              child: Text(
+                adopting ? '…' : '领养',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 15,
+                ),
+              ),
             ),
           ),
         ],

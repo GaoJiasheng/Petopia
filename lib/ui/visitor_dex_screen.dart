@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../domain/enums.dart';
+import 'adaptive_layout.dart';
 import 'app_icons.dart';
 
 /// 来客图鉴：按稀有度整理院子里出现过的访客记录。
@@ -73,57 +74,63 @@ class _VisitorDexGrid extends StatelessWidget {
         rarity: entries.where((entry) => entry.rarity == rarity).toList(),
     };
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final width = constraints.maxWidth;
-        final columns = width >= 900 ? 4 : (width >= 600 ? 3 : 2);
-        final ratio = width >= 900 ? 0.88 : (width >= 600 ? 0.74 : 0.62);
-        return CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(18, 8, 18, 14),
-                child: _SummaryCard(
-                  collected: collected,
-                  total: entries.length,
-                ),
-              ),
-            ),
-            for (final group in grouped.entries)
-              if (group.value.isNotEmpty) ...[
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 1180),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final width = constraints.maxWidth;
+            final columns = width >= 900 ? 4 : (width >= 600 ? 3 : 2);
+            final ratio = width >= 900 ? 0.88 : (width >= 600 ? 0.74 : 0.62);
+            final margin = PetopiaAdaptive.sideMargin(context);
+            return CustomScrollView(
+              slivers: [
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.fromLTRB(18, 4, 18, 10),
-                    child: _RarityHeader(
-                      rarity: group.key,
-                      collected: group.value
-                          .where((entry) => entry.collected)
-                          .length,
-                      total: group.value.length,
+                    padding: EdgeInsets.fromLTRB(margin, 8, margin, 14),
+                    child: _SummaryCard(
+                      collected: collected,
+                      total: entries.length,
                     ),
                   ),
                 ),
-                SliverPadding(
-                  padding: const EdgeInsets.fromLTRB(18, 0, 18, 18),
-                  sliver: SliverGrid(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) =>
-                          _VisitorCard(entry: group.value[index]),
-                      childCount: group.value.length,
+                for (final group in grouped.entries)
+                  if (group.value.isNotEmpty) ...[
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(margin, 4, margin, 10),
+                        child: _RarityHeader(
+                          rarity: group.key,
+                          collected: group.value
+                              .where((entry) => entry.collected)
+                              .length,
+                          total: group.value.length,
+                        ),
+                      ),
                     ),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: columns,
-                      mainAxisSpacing: 14,
-                      crossAxisSpacing: 14,
-                      childAspectRatio: ratio,
+                    SliverPadding(
+                      padding: EdgeInsets.fromLTRB(margin, 0, margin, 18),
+                      sliver: SliverGrid(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) =>
+                              _VisitorCard(entry: group.value[index]),
+                          childCount: group.value.length,
+                        ),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: columns,
+                          mainAxisSpacing: 14,
+                          crossAxisSpacing: 14,
+                          childAspectRatio: ratio,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                  ],
+                const SliverToBoxAdapter(child: SizedBox(height: 10)),
               ],
-            const SliverToBoxAdapter(child: SizedBox(height: 10)),
-          ],
-        );
-      },
+            );
+          },
+        ),
+      ),
     );
   }
 }

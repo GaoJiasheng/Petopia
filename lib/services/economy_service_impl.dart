@@ -4,6 +4,7 @@ import '../domain/models/logs.dart';
 import '../domain/models/pet.dart';
 import '../domain/models/yard.dart';
 import '../domain/models/content_entities.dart';
+import '../domain/models/game_state.dart';
 import 'clock_service.dart';
 import 'economy_service.dart';
 import 'log_port.dart';
@@ -23,6 +24,7 @@ class EconomyServiceImpl implements EconomyService {
   final int Function(String petId) _eventCountOf;
   final int Function(String petId) _visitorInteractionCountOf;
   final bool Function(String speciesId) _isFantasySpecies;
+  final ShopInventory _inventory;
 
   EconomyServiceImpl(
     this._port,
@@ -32,8 +34,9 @@ class EconomyServiceImpl implements EconomyService {
     this._idGen,
     this._eventCountOf,
     this._visitorInteractionCountOf,
-    this._isFantasySpecies,
-  );
+    this._isFantasySpecies, [
+    ShopInventory? inventory,
+  ]) : _inventory = inventory ?? ShopInventory();
 
   @override
   int get balance => _wallet.balance;
@@ -61,17 +64,31 @@ class EconomyServiceImpl implements EconomyService {
     final events = _eventCountOf(pet.id);
     final visitors = _visitorInteractionCountOf(pet.id);
     int fluff = GameConfig.gradBaseFluff;
-    fluff += _min(events * GameConfig.gradPerEventFluff, GameConfig.gradEventCapFluff);
-    fluff += _min(visitors * GameConfig.gradPerVisitorFluff, GameConfig.gradVisitorCapFluff);
-    if (_isFantasySpecies(pet.speciesId)) fluff += GameConfig.gradEasterEggBonus;
+    fluff += _min(
+      events * GameConfig.gradPerEventFluff,
+      GameConfig.gradEventCapFluff,
+    );
+    fluff += _min(
+      visitors * GameConfig.gradPerVisitorFluff,
+      GameConfig.gradVisitorCapFluff,
+    );
+    if (_isFantasySpecies(pet.speciesId)) {
+      fluff += GameConfig.gradEasterEggBonus;
+    }
     earn(fluff, CurrencyReason.graduation, ref: 'grad:${pet.id}'); // 稳定 ref
     return fluff;
   }
 
   @override
   PurchaseResult purchase(ShopItem item) {
+    if (!item.consumable && _isOwned(item)) {
+      return const PurchaseResult(success: false, failReason: 'already_owned');
+    }
     if (!spend(item.price, CurrencyReason.shopPurchase, ref: item.id)) {
-      return const PurchaseResult(success: false, failReason: 'insufficient_balance');
+      return const PurchaseResult(
+        success: false,
+        failReason: 'insufficient_balance',
+      );
     }
     _applyEffect(item);
     return const PurchaseResult(success: true);
@@ -82,29 +99,79 @@ class EconomyServiceImpl implements EconomyService {
     switch (e.type) {
       case EffectType.themeSkin:
         final id = e.params['themeId'] as String?;
-        if (id != null && !_yard.ownedThemeIds.contains(id)) _yard.ownedThemeIds.add(id);
+        if (id != null && !_yard.ownedThemeIds.contains(id)) {
+          _yard.ownedThemeIds.add(id);
+        }
       case EffectType.decor:
         final id = e.params['decorId'] as String?;
-        if (id != null && !_yard.ownedDecorIds.contains(id)) _yard.ownedDecorIds.add(id);
+        if (id != null && !_yard.ownedDecorIds.contains(id)) {
+          _yard.ownedDecorIds.add(id);
+        }
       case EffectType.toyPermanentBonus:
         if (!_yard.ownedPerks.contains(item.id)) _yard.ownedPerks.add(item.id);
       case EffectType.feedBonus:
+        _addConsumable(item);
       case EffectType.albumSkin:
+        final id = e.params['skinId'] as String?;
+        if (id != null) {
+          _inventory.ownedAlbumSkinIds.add(id);
+          _inventory.activeAlbumSkinId = id;
+        }
       case EffectType.visitorProb:
-        // 背包(消耗品)/相册皮肤/概率加成的落地在各自系统处理。
-        break; // [待细化]
+        _addConsumable(item);
+        final scope = e.params['scope'] as String?;
+        final delta = (e.params['delta'] as num?)?.toDouble() ?? 0;
+        _inventory.activeVisitorFoodItemId = item.id;
+        _yard.foodTray
+          ..foodType = _foodType(item.id)
+          ..placedAt = _clock.now()
+          ..probabilityScope = scope
+          ..probabilityDelta = delta
+          ..remaining = _inventory.consumables[item.id] ?? 0;
     }
   }
 
+  bool _isOwned(ShopItem item) {
+    return switch (item.effect.type) {
+      EffectType.themeSkin => _yard.ownedThemeIds.contains(
+        item.effect.params['themeId'],
+      ),
+      EffectType.decor => _yard.ownedDecorIds.contains(
+        item.effect.params['decorId'],
+      ),
+      EffectType.toyPermanentBonus => _yard.ownedPerks.contains(item.id),
+      EffectType.albumSkin => _inventory.ownedAlbumSkinIds.contains(
+        item.effect.params['skinId'],
+      ),
+      EffectType.feedBonus || EffectType.visitorProb => false,
+    };
+  }
+
+  void _addConsumable(ShopItem item) {
+    final amount = item.stackCount ?? 1;
+    _inventory.consumables[item.id] =
+        (_inventory.consumables[item.id] ?? 0) + amount;
+  }
+
+  String? _foodType(String itemId) {
+    if (itemId.contains('grain')) return 'grain';
+    if (itemId.contains('fish')) return 'fishdry';
+    if (itemId.contains('nut')) return 'nuts';
+    if (itemId.contains('apple')) return 'apple';
+    return null;
+  }
+
   void _writeLog(int delta, CurrencyReason reason, String? ref) {
-    _port.insertCurrency(CurrencyLog(
-      id: _idGen(),
-      timestamp: _clock.now(),
-      delta: delta,
-      reason: reason,
-      ref: ref,
-      balanceAfter: _wallet.balance,
-    ));
+    _port.insertCurrency(
+      CurrencyLog(
+        id: _idGen(),
+        timestamp: _clock.now(),
+        delta: delta,
+        reason: reason,
+        ref: ref,
+        balanceAfter: _wallet.balance,
+      ),
+    );
   }
 
   int _min(int a, int b) => a < b ? a : b;

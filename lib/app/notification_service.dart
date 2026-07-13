@@ -13,12 +13,13 @@ class NotificationService {
     if (_inited) return;
     const android = AndroidInitializationSettings('@mipmap/ic_launcher');
     const ios = DarwinInitializationSettings(
-      requestAlertPermission: true,
+      requestAlertPermission: false,
       requestBadgePermission: false,
-      requestSoundPermission: true,
+      requestSoundPermission: false,
     );
     await _plugin.initialize(
-        settings: const InitializationSettings(android: android, iOS: ios));
+      settings: const InitializationSettings(android: android, iOS: ios),
+    );
     _inited = true;
   }
 
@@ -27,6 +28,11 @@ class NotificationService {
     try {
       await _ensureInit();
       if (on) {
+        await _plugin
+            .resolvePlatformSpecificImplementation<
+              IOSFlutterLocalNotificationsPlugin
+            >()
+            ?.requestPermissions(alert: true, badge: false, sound: false);
         await _plugin.periodicallyShow(
           id: 0,
           title: '小院子有点想你',
@@ -53,5 +59,6 @@ class NotificationService {
   }
 }
 
-final notificationServiceProvider =
-    Provider<NotificationService>((ref) => NotificationService());
+final notificationServiceProvider = Provider<NotificationService>(
+  (ref) => NotificationService(),
+);

@@ -1,34 +1,54 @@
 import 'dart:ui' show ImageFilter;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import 'adaptive_layout.dart';
 
 /// 明信片查看器：单张明信片的手账式展示——
 /// 上半为地点照片（pc_bg）+ 邮戳贴角，下半为手写体正文，页脚署名/站序/日期。
-class PostcardViewerScreen extends StatelessWidget {
+class PostcardViewerScreen extends ConsumerStatefulWidget {
   final PostcardView card;
   const PostcardViewerScreen({super.key, required this.card});
 
   static const _ink = Color(0xFF6B5445);
 
   @override
+  ConsumerState<PostcardViewerScreen> createState() =>
+      _PostcardViewerScreenState();
+}
+
+class _PostcardViewerScreenState extends ConsumerState<PostcardViewerScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future<void>.microtask(
+      () => ref.read(gameControllerProvider.notifier).trackPostcardRead(),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final card = widget.card;
     return Scaffold(
       backgroundColor: const Color(0xFFF3E9D6),
       appBar: AppBar(
         title: Text(
           card.locationName,
-          style: const TextStyle(color: _ink, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            color: PostcardViewerScreen._ink,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         backgroundColor: const Color(0xFFF3E9D6),
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: _ink),
+        iconTheme: const IconThemeData(color: PostcardViewerScreen._ink),
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20),
+          padding: EdgeInsets.all(PetopiaAdaptive.sideMargin(context)),
           child: PostcardDisplayCard(card: card),
         ),
       ),
@@ -47,28 +67,34 @@ Future<void> showPostcardArrivalDialog(
     barrierColor: Colors.transparent,
     transitionDuration: const Duration(milliseconds: 360),
     pageBuilder: (context, _, _) {
-      return Stack(
-        fit: StackFit.expand,
-        children: [
-          BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
-            child: ColoredBox(
-              color: const Color(0xFFF3E9D6).withValues(alpha: 0.82),
+      return Material(
+        type: MaterialType.transparency,
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+              child: ColoredBox(
+                color: const Color(0xFFF3E9D6).withValues(alpha: 0.82),
+              ),
             ),
-          ),
-          SafeArea(
-            child: Center(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(18),
-                child: PostcardDisplayCard(
-                  card: card,
-                  arrivalMode: true,
-                  onClose: () => Navigator.of(context).pop(),
+            SafeArea(
+              child: Center(
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: PetopiaAdaptive.sideMargin(context) * 0.5,
+                    vertical: 16,
+                  ),
+                  child: PostcardDisplayCard(
+                    card: card,
+                    arrivalMode: true,
+                    onClose: () => Navigator.of(context).pop(),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     },
     transitionBuilder: (context, animation, _, child) {
@@ -99,16 +125,18 @@ class PostcardDisplayCard extends StatelessWidget {
     this.onClose,
   });
 
-  static const _ink = Color(0xFF6B5445);
-  static const _muted = Color(0xFF8A7A6A);
-
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.sizeOf(context);
+    final wideLayout = size.width >= 900 && size.width > size.height;
+    final maxWidth = wideLayout
+        ? (size.width * 0.78).clamp(760.0, 1040.0)
+        : PetopiaAdaptive.postcardMaxWidth(size.width);
     return Container(
-      constraints: const BoxConstraints(maxWidth: 560),
+      constraints: BoxConstraints(maxWidth: maxWidth),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFDF7),
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(17),
         boxShadow: const [
           BoxShadow(
             color: Colors.black26,
@@ -122,65 +150,41 @@ class PostcardDisplayCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (arrivalMode) _ArrivalHeader(card: card, onClose: onClose),
-          _PostcardPhoto(card: card),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 18, 20, 8),
-            child: Text(
-              card.bodyText,
-              style: const TextStyle(fontSize: 15.5, height: 1.7, color: _ink),
-            ),
-          ),
-          const Divider(
-            height: 20,
-            thickness: 1,
-            indent: 20,
-            endIndent: 20,
-            color: Color(0xFFEDE4D3),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(20, 0, 20, arrivalMode ? 10 : 16),
-            child: Row(
-              children: [
-                const Icon(Icons.pets_rounded, size: 15, color: _muted),
-                const SizedBox(width: 5),
-                Text(
-                  card.petName,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.w600,
-                    color: _muted,
-                  ),
-                ),
-                const Spacer(),
-                Text(
-                  '第 ${card.seq + 1} 站 · ${_date(card.sentAt)}',
-                  style: const TextStyle(fontSize: 12, color: _muted),
-                ),
-              ],
-            ),
-          ),
-          if (arrivalMode)
+          if (wideLayout)
             Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 18),
-              child: SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  style: FilledButton.styleFrom(
-                    backgroundColor: const Color(0xFFE8A15C),
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(22),
+              padding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    flex: 7,
+                    child: _PostcardPhoto(
+                      card: card,
+                      immersive: true,
+                      wideLayout: true,
                     ),
-                    padding: const EdgeInsets.symmetric(vertical: 12),
                   ),
-                  onPressed: onClose,
-                  child: const Text(
-                    '收进相册',
-                    style: TextStyle(fontWeight: FontWeight.w800),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    flex: 4,
+                    child: _PostcardTextPanel(
+                      card: card,
+                      arrivalMode: arrivalMode,
+                      onClose: onClose,
+                      wideLayout: true,
+                    ),
                   ),
-                ),
+                ],
               ),
+            )
+          else ...[
+            _PostcardPhoto(card: card, immersive: arrivalMode),
+            _PostcardTextPanel(
+              card: card,
+              arrivalMode: arrivalMode,
+              onClose: onClose,
             ),
+          ],
         ],
       ),
     );
@@ -188,6 +192,112 @@ class PostcardDisplayCard extends StatelessWidget {
 
   static String _date(DateTime t) =>
       '${t.year}.${t.month.toString().padLeft(2, '0')}.${t.day.toString().padLeft(2, '0')}';
+}
+
+class _PostcardTextPanel extends StatelessWidget {
+  final PostcardView card;
+  final bool arrivalMode;
+  final bool wideLayout;
+  final VoidCallback? onClose;
+  const _PostcardTextPanel({
+    required this.card,
+    required this.arrivalMode,
+    this.wideLayout = false,
+    this.onClose,
+  });
+
+  static const _ink = Color(0xFF6B5445);
+  static const _muted = Color(0xFF8A7A6A);
+
+  @override
+  Widget build(BuildContext context) {
+    final bodyFont = wideLayout ? 12.8 : (arrivalMode ? 13.0 : 13.8);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: EdgeInsets.fromLTRB(
+            wideLayout ? 0 : 18,
+            wideLayout ? 2 : (arrivalMode ? 13 : 16),
+            wideLayout ? 0 : 18,
+            5,
+          ),
+          child: Text(
+            card.bodyText,
+            style: TextStyle(
+              fontSize: bodyFont,
+              height: wideLayout ? 1.48 : (arrivalMode ? 1.43 : 1.52),
+              color: _ink.withValues(alpha: 0.94),
+            ),
+          ),
+        ),
+        Divider(
+          height: 16,
+          thickness: 1,
+          indent: wideLayout ? 0 : 18,
+          endIndent: wideLayout ? 0 : 18,
+          color: const Color(0xFFEDE4D3),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(
+            wideLayout ? 0 : 18,
+            0,
+            wideLayout ? 0 : 18,
+            arrivalMode ? 8 : 14,
+          ),
+          child: Row(
+            children: [
+              const Icon(Icons.pets_rounded, size: 14, color: _muted),
+              const SizedBox(width: 5),
+              Flexible(
+                child: Text(
+                  card.petName,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 11.5,
+                    fontWeight: FontWeight.w600,
+                    color: _muted,
+                  ),
+                ),
+              ),
+              const Spacer(),
+              Text(
+                '第 ${card.seq + 1} 站 · ${PostcardDisplayCard._date(card.sentAt)}',
+                style: const TextStyle(fontSize: 11, color: _muted),
+              ),
+            ],
+          ),
+        ),
+        if (arrivalMode)
+          Padding(
+            padding: EdgeInsets.fromLTRB(
+              wideLayout ? 0 : 18,
+              0,
+              wideLayout ? 0 : 18,
+              wideLayout ? 0 : 16,
+            ),
+            child: SizedBox(
+              width: double.infinity,
+              child: FilledButton(
+                style: FilledButton.styleFrom(
+                  backgroundColor: const Color(0xFFE8A15C),
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                ),
+                onPressed: onClose,
+                child: const Text(
+                  '收进相册',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
 }
 
 class _ArrivalHeader extends StatelessWidget {
@@ -198,15 +308,15 @@ class _ArrivalHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(18, 14, 10, 12),
+      padding: const EdgeInsets.fromLTRB(16, 12, 8, 10),
       child: Row(
         children: [
           const Icon(
             Icons.local_post_office_rounded,
             color: Color(0xFFE8A15C),
-            size: 24,
+            size: 22,
           ),
-          const SizedBox(width: 9),
+          const SizedBox(width: 8),
           Expanded(
             child: Text(
               '${card.petName} 从远方寄来一张明信片',
@@ -214,7 +324,7 @@ class _ArrivalHeader extends StatelessWidget {
               style: const TextStyle(
                 color: Color(0xFF6B5445),
                 fontWeight: FontWeight.w900,
-                fontSize: 16,
+                fontSize: 14.5,
               ),
             ),
           ),
@@ -231,7 +341,13 @@ class _ArrivalHeader extends StatelessWidget {
 
 class _PostcardPhoto extends StatelessWidget {
   final PostcardView card;
-  const _PostcardPhoto({required this.card});
+  final bool immersive;
+  final bool wideLayout;
+  const _PostcardPhoto({
+    required this.card,
+    this.immersive = false,
+    this.wideLayout = false,
+  });
 
   static const _muted = Color(0xFF8A7A6A);
 
@@ -241,12 +357,12 @@ class _PostcardPhoto extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         AspectRatio(
-          aspectRatio: 3 / 2,
+          aspectRatio: wideLayout ? 1.5 : (immersive ? 1.28 : 1.38),
           child: Stack(
             children: [
               Positioned.fill(
                 child: Image.asset(
-                  'assets/art/postcards/backgrounds/${card.photoBg}.png',
+                  'assets/art/postcards/backgrounds/${card.photoBg}.jpg',
                   fit: BoxFit.cover,
                   errorBuilder: (_, _, _) => Container(
                     color: const Color(0xFFDCEAD8),
@@ -338,12 +454,9 @@ class _TravelerSceneAsset extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final species = _speciesSlug(speciesId);
-    final variant = _variantSlug(variantId);
+    final variant = _variantSlug(variantId) ?? 'var01';
     final paths = <String>[
-      if (variant != null)
-        'assets/art/postcards/stickers/pc_sticker_traveler_${species}_${variant}_back.png',
-      'assets/art/postcards/stickers/pc_sticker_traveler_${species}_var01_back.png',
-      'assets/art/postcards/stickers/pc_sticker_traveler_${species}_back.png',
+      'assets/art/postcards/stickers/pc_sticker_traveler_${species}_${variant}_back.png',
     ];
     return _buildAsset(
       paths,
@@ -398,7 +511,7 @@ String _speciesSlug(String speciesId) {
 }
 
 String? _variantSlug(String variantId) {
-  final match = RegExp(r'_v([1-5])$').firstMatch(variantId);
+  final match = RegExp(r'(?:^|_)v(?:ar)?0?([1-5])$').firstMatch(variantId);
   final value = match == null ? null : int.tryParse(match.group(1)!);
   if (value == null) return null;
   return 'var${value.toString().padLeft(2, '0')}';

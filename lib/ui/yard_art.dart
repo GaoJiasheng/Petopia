@@ -20,7 +20,7 @@ class YardArt {
   /// 当前主题背景图。未知/默认主题回落到 meadow。
   static String themeBg(String themeId) {
     final slug = _themeSlug[themeId] ?? 'meadow';
-    return 'assets/art/world/themes/yard_theme_${slug}_bg.png';
+    return 'assets/art/world/themes/yard_theme_${slug}_bg.jpg';
   }
 
   static const Map<String, String> _decorFile = {

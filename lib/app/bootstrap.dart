@@ -3,30 +3,18 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 
+import '../config/game_config.dart';
 import '../data/audit_log_port_adapter.dart';
 import '../data/content/content_repository_impl.dart';
 import '../data/save/session_store.dart';
 import '../data/sqlite/petopia_sqlite_dao.dart';
-import '../domain/models/pet.dart';
+import '../domain/enums.dart';
 import '../services/clock_service_impl.dart';
 import 'game_services.dart';
 import 'game_state.dart';
 
-const _personalityIds = [
-  'p_glutton',
-  'p_lazy',
-  'p_curious',
-  'p_timid',
-  'p_energetic',
-  'p_clingy',
-  'p_aloof',
-  'p_naughty',
-  'p_gentle',
-  'p_dreamy',
-];
-
 /// 启动编排：加载存档 → 开库 → 加载内容 → 装配服务 → 首日调度。
-/// 首启暂领养一只默认橘猫（正式领养流程 UI 后续做）。
+/// 首次启动保持空宠位，由院子 CTA 进入正式领养和命名流程。
 Future<GameServices> bootstrapGame() async {
   final store = await SessionStore.create();
   final restored = await store.load();
@@ -41,20 +29,6 @@ Future<GameServices> bootstrapGame() async {
   final rng = Random();
   final uuid = const Uuid();
 
-  if (restored == null) {
-    final tags = List<String>.from(_personalityIds)..shuffle(rng);
-    session.current = Pet(
-      id: uuid.v4(),
-      speciesId: 'pet_cat',
-      variantId: 'pet_cat_v1',
-      name: '阿橘',
-      personality: tags.take(2).toList(),
-      bornAt: now,
-      lastOnlineAt: now,
-      offlineDayKey: _dayKey(now),
-    );
-    session.ownedSpecies.add('pet_cat');
-  }
   _advanceLoginStreak(session, now);
 
   final clock = ClockServiceImpl(SystemClock(), session.settings);
@@ -73,17 +47,37 @@ Future<GameServices> bootstrapGame() async {
     store: store,
   );
 
+  final current = session.current;
+  if (current != null) {
+    final elapsed = clock.resolveOfflineElapsed(
+      lastOnlineAt: current.lastOnlineAt,
+    );
+    final before = current.level;
+    svc.exp.grantOffline(pet: current, elapsed: elapsed);
+    for (var level = before + 1; level <= current.level; level++) {
+      svc.economy.earn(
+        GameConfig.levelUpFluff,
+        CurrencyReason.levelUp,
+        ref: 'levelup:${current.id}:$level',
+      );
+    }
+  }
   clock.markHeartbeat();
   await svc.scheduler.onDailyTick(clock.now());
   await svc.scheduler.onResume(clock.now());
   await svc.processRoaming(clock.now()); // 漫游宠寄明信片 + 回访
-  svc.syncAchievements(); // 后台日切进度并入成就
+  final newlyUnlocked = svc.syncAchievements();
+  for (final achievement in newlyUnlocked) {
+    svc.unlock.claimReward(achievement.id);
+  }
   await store.save(session);
   return svc;
 }
 
-String _dayKey(DateTime t) =>
-    '${t.year.toString().padLeft(4, '0')}-${t.month.toString().padLeft(2, '0')}-${t.day.toString().padLeft(2, '0')}';
+String _dayKey(DateTime t) {
+  final local = t.toLocal();
+  return '${local.year.toString().padLeft(4, '0')}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')}';
+}
 
 void _advanceLoginStreak(GameSession session, DateTime now) {
   final today = _dayKey(now);
@@ -91,9 +85,10 @@ void _advanceLoginStreak(GameSession session, DateTime now) {
   if (settings.lastLoginDay == today) return;
 
   var nextStreak = 1;
-  final lastDay = DateTime.tryParse('${settings.lastLoginDay}T00:00:00Z');
+  final lastDay = DateTime.tryParse(settings.lastLoginDay);
   if (lastDay != null) {
-    final currentDay = DateTime.utc(now.year, now.month, now.day);
+    final localNow = now.toLocal();
+    final currentDay = DateTime(localNow.year, localNow.month, localNow.day);
     if (currentDay.difference(lastDay).inDays == 1) {
       nextStreak = settings.loginStreakCurrent + 1;
     }

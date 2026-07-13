@@ -94,6 +94,67 @@ class ActiveVisitor {
   });
 }
 
+/// 当日照料账本。动作名使用稳定字符串，避免 UI 枚举进入 domain 层。
+class CareLedger {
+  String dayKey;
+  Map<String, int> counts;
+  Map<String, DateTime> lastAt;
+  bool firstCareRewarded;
+
+  CareLedger({
+    required this.dayKey,
+    Map<String, int>? counts,
+    Map<String, DateTime>? lastAt,
+    this.firstCareRewarded = false,
+  }) : counts = counts ?? <String, int>{},
+       lastAt = lastAt ?? <String, DateTime>{};
+
+  void renew(String today) {
+    if (dayKey == today) return;
+    dayKey = today;
+    counts.clear();
+    firstCareRewarded = false;
+  }
+}
+
+/// 事件演出队列。事件奖励在生成时结算，UI 只负责依次展示并标记已读。
+class PendingGameEvent {
+  String id;
+  String eventId;
+  String title;
+  String script;
+  EventType type;
+  int expReward;
+  int currencyReward;
+  DateTime createdAt;
+
+  PendingGameEvent({
+    required this.id,
+    required this.eventId,
+    required this.title,
+    required this.script,
+    required this.type,
+    required this.expReward,
+    required this.currencyReward,
+    required this.createdAt,
+  });
+}
+
+class ShopInventory {
+  Map<String, int> consumables;
+  Set<String> ownedAlbumSkinIds;
+  String activeAlbumSkinId;
+  String? activeVisitorFoodItemId;
+
+  ShopInventory({
+    Map<String, int>? consumables,
+    Set<String>? ownedAlbumSkinIds,
+    this.activeAlbumSkinId = 'default',
+    this.activeVisitorFoodItemId,
+  }) : consumables = consumables ?? <String, int>{},
+       ownedAlbumSkinIds = ownedAlbumSkinIds ?? <String>{'default'};
+}
+
 /// 统一日程队列作业（EventScheduler，§3.4）。priority 小=优先。
 class ScheduledJob {
   String id;
@@ -128,7 +189,7 @@ class Settings {
   Settings({
     required this.createdAt,
     required this.lastWallClockAt,
-    this.notifications = true,
+    this.notifications = false,
     this.sound = true,
     this.schemaVersion = 1,
     this.lastMonotonicRef = 0,

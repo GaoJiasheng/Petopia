@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import 'adaptive_layout.dart';
 import 'app_icons.dart';
 
 /// 成就页：明写目标与隐藏线索分组展示。
@@ -67,29 +68,39 @@ class _AchievementList extends StatelessWidget {
     final visible = achievements.where((entry) => !entry.hidden).toList();
     final hidden = achievements.where((entry) => entry.hidden).toList();
 
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
-      children: [
-        _SectionHeader(title: '明写', subtitle: _progressText(visible)),
-        const SizedBox(height: 10),
-        if (visible.isEmpty)
-          const _SectionEmpty(text: '明写成就还在装订中。')
-        else
-          for (final entry in visible) ...[
-            _AchievementCard(entry: entry),
-            const SizedBox(height: 12),
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 860),
+        child: ListView(
+          padding: EdgeInsets.fromLTRB(
+            PetopiaAdaptive.sideMargin(context),
+            8,
+            PetopiaAdaptive.sideMargin(context),
+            28,
+          ),
+          children: [
+            _SectionHeader(title: '明写', subtitle: _progressText(visible)),
+            const SizedBox(height: 10),
+            if (visible.isEmpty)
+              const _SectionEmpty(text: '明写成就还在装订中。')
+            else
+              for (final entry in visible) ...[
+                _AchievementCard(entry: entry),
+                const SizedBox(height: 12),
+              ],
+            const SizedBox(height: 8),
+            _SectionHeader(title: '隐藏', subtitle: _progressText(hidden)),
+            const SizedBox(height: 10),
+            if (hidden.isEmpty)
+              const _SectionEmpty(text: '隐藏成就还没有露出线索。')
+            else
+              for (final entry in hidden) ...[
+                _AchievementCard(entry: entry),
+                const SizedBox(height: 12),
+              ],
           ],
-        const SizedBox(height: 8),
-        _SectionHeader(title: '隐藏', subtitle: _progressText(hidden)),
-        const SizedBox(height: 10),
-        if (hidden.isEmpty)
-          const _SectionEmpty(text: '隐藏成就还没有露出线索。')
-        else
-          for (final entry in hidden) ...[
-            _AchievementCard(entry: entry),
-            const SizedBox(height: 12),
-          ],
-      ],
+        ),
+      ),
     );
   }
 

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../domain/enums.dart';
+import 'adaptive_layout.dart';
 import 'app_icons.dart';
 import 'pet_art.dart';
 
@@ -76,41 +77,47 @@ class _DexGrid extends StatelessWidget {
         .where((entry) => entry.state == DexState.available)
         .length;
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final width = constraints.maxWidth;
-        final columns = width >= 900 ? 4 : (width >= 600 ? 3 : 2);
-        final ratio = width >= 600 ? 0.86 : 0.62;
-        return CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(18, 8, 18, 14),
-                child: _DexSummary(
-                  total: entries.length,
-                  owned: owned,
-                  available: available,
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 1180),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final width = constraints.maxWidth;
+            final columns = width >= 900 ? 4 : (width >= 600 ? 3 : 2);
+            final ratio = width >= 600 ? 0.86 : 0.62;
+            final margin = PetopiaAdaptive.sideMargin(context);
+            return CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(margin, 8, margin, 14),
+                    child: _DexSummary(
+                      total: entries.length,
+                      owned: owned,
+                      available: available,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.fromLTRB(18, 0, 18, 28),
-              sliver: SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) => _DexCard(entry: entries[index]),
-                  childCount: entries.length,
+                SliverPadding(
+                  padding: EdgeInsets.fromLTRB(margin, 0, margin, 28),
+                  sliver: SliverGrid(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) => _DexCard(entry: entries[index]),
+                      childCount: entries.length,
+                    ),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: columns,
+                      mainAxisSpacing: 14,
+                      crossAxisSpacing: 14,
+                      childAspectRatio: ratio,
+                    ),
+                  ),
                 ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: columns,
-                  mainAxisSpacing: 14,
-                  crossAxisSpacing: 14,
-                  childAspectRatio: ratio,
-                ),
-              ),
-            ),
-          ],
-        );
-      },
+              ],
+            );
+          },
+        ),
+      ),
     );
   }
 }
@@ -350,8 +357,9 @@ class _DexMark extends StatelessWidget {
       return PetArt.portrait(entry.speciesId);
     }
     // 未解锁：剪影 / 问号渍（单色，无第二只之虞）。
-    final suffix =
-        entry.state == DexState.lockedKnown ? 'silhouette' : 'mystery';
+    final suffix = entry.state == DexState.lockedKnown
+        ? 'silhouette'
+        : 'mystery';
     // speciesId 已含 pet_ 前缀（pet_cat）；文件名即 <id>_dex_<suffix>.png。
     return 'assets/art/pets/dex/${entry.speciesId}_dex_$suffix.png';
   }

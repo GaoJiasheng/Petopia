@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
+import '../../domain/enums.dart';
 import '../pet_action_cue.dart';
 import '../pet_art.dart';
 import 'sprite_sheet_player.dart';
@@ -12,6 +13,8 @@ class PetSprite extends StatefulWidget {
   final double width;
   final VoidCallback? onTap;
   final String? speciesId; // 播动作帧需要
+  final String? variantId;
+  final PetStage? stage;
   final PetActionCue? cue; // 外部动作触发（喂/摸/玩/洗）
   const PetSprite({
     super.key,
@@ -19,6 +22,8 @@ class PetSprite extends StatefulWidget {
     this.width = 220,
     this.onTap,
     this.speciesId,
+    this.variantId,
+    this.stage,
     this.cue,
   });
 
@@ -27,11 +32,16 @@ class PetSprite extends StatefulWidget {
 }
 
 class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
+  static const _actionDuration = Duration(seconds: 5);
+
   late final AnimationController _breath = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 2600))
-    ..repeat(reverse: true);
+    vsync: this,
+    duration: const Duration(milliseconds: 2600),
+  )..repeat(reverse: true);
   late final AnimationController _bounce = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 420));
+    vsync: this,
+    duration: const Duration(milliseconds: 420),
+  );
   int _heartSeq = 0;
   final List<int> _hearts = [];
   String? _playing; // 当前正在播的动作（null=静止呼吸）
@@ -80,10 +90,12 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
           child: child,
         ),
       ),
-      child: Image.asset(widget.assetPath,
-          key: ValueKey(widget.assetPath),
-          width: widget.width,
-          errorBuilder: (_, _, _) => const SizedBox()),
+      child: Image.asset(
+        widget.assetPath,
+        key: ValueKey(widget.assetPath),
+        width: widget.width,
+        errorBuilder: (_, _, _) => const SizedBox(),
+      ),
     );
   }
 
@@ -94,11 +106,18 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
         final b = math.sin(_breath.value * math.pi);
         final dy = -b * 4;
         final scaleY = 1.0 + b * 0.025;
-        final pop = 1.0 +
-            Curves.elasticOut.transform(_bounce.value) * 0.08 * (1 - _bounce.value);
+        final pop =
+            1.0 +
+            Curves.elasticOut.transform(_bounce.value) *
+                0.08 *
+                (1 - _bounce.value);
         return Transform.translate(
           offset: Offset(0, dy),
-          child: Transform.scale(scaleX: pop, scaleY: scaleY * pop, child: child),
+          child: Transform.scale(
+            scaleX: pop,
+            scaleY: scaleY * pop,
+            child: child,
+          ),
         );
       },
       child: _staticSprite(),
@@ -107,18 +126,35 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
     final playing = _playing;
     final Widget body;
-    if (playing != null && widget.speciesId != null) {
-      body = SpriteSheetPlayer(
-        key: ValueKey('act_${widget.cue?.seq}'),
-        assetPath: PetArt.actionSheet(widget.speciesId!, playing),
-        size: widget.width,
-        onComplete: () {
-          if (mounted) setState(() => _playing = null);
-        },
-        fallback: _breathingStatic(), // 缺帧回落静态呼吸
-      );
+    if (reduceMotion) {
+      body = _staticSprite();
+    } else if (playing != null && widget.speciesId != null) {
+      void onComplete() {
+        if (mounted) setState(() => _playing = null);
+      }
+
+      if (PetArt.hasMatchingActionSheet(widget.variantId, widget.stage)) {
+        body = SpriteSheetPlayer(
+          key: ValueKey('act_${widget.cue?.seq}'),
+          assetPath: PetArt.actionSheet(widget.speciesId!, playing),
+          size: widget.width,
+          duration: const Duration(seconds: 1),
+          playDuration: _actionDuration,
+          onComplete: onComplete,
+          fallback: _breathingStatic(),
+        );
+      } else {
+        body = _StaticActionChoreography(
+          key: ValueKey('pose_${widget.cue?.seq}'),
+          action: playing,
+          duration: _actionDuration,
+          onComplete: onComplete,
+          child: _staticSprite(),
+        );
+      }
     } else {
       body = _breathingStatic();
     }
@@ -141,6 +177,84 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
   }
 }
 
+class _StaticActionChoreography extends StatefulWidget {
+  final String action;
+  final Duration duration;
+  final VoidCallback onComplete;
+  final Widget child;
+
+  const _StaticActionChoreography({
+    super.key,
+    required this.action,
+    required this.duration,
+    required this.onComplete,
+    required this.child,
+  });
+
+  @override
+  State<_StaticActionChoreography> createState() =>
+      _StaticActionChoreographyState();
+}
+
+class _StaticActionChoreographyState extends State<_StaticActionChoreography>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    vsync: this,
+    duration: widget.duration,
+  )..forward();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) widget.onComplete();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      child: widget.child,
+      builder: (context, child) {
+        final t = _controller.value;
+        final pulse = math.sin(t * math.pi * 8);
+        final wave = math.sin(t * math.pi * 4);
+        final (dy, dx, scale, angle) = switch (widget.action) {
+          'eat' => (pulse.abs() * 5, 0.0, 1.0 - pulse.abs() * 0.025, 0.0),
+          'pat' => (
+            -pulse.abs() * 4,
+            0.0,
+            1.0 + pulse.abs() * 0.025,
+            wave * 0.015,
+          ),
+          'play' => (
+            -pulse.abs() * 12,
+            wave * 8,
+            1.0 + pulse.abs() * 0.035,
+            wave * 0.04,
+          ),
+          'bath' => (pulse * 3, wave * 3, 1.0 + pulse * 0.018, wave * 0.025),
+          _ => (pulse * 2, 0.0, 1.0 + pulse * 0.015, 0.0),
+        };
+        return Transform.translate(
+          offset: Offset(dx, dy),
+          child: Transform.rotate(
+            angle: angle,
+            child: Transform.scale(scale: scale, child: child),
+          ),
+        );
+      },
+    );
+  }
+}
+
 /// 点击时向上飘散并淡出的小爱心。
 class _FloatingHeart extends StatefulWidget {
   const _FloatingHeart({super.key});
@@ -151,8 +265,9 @@ class _FloatingHeart extends StatefulWidget {
 class _FloatingHeartState extends State<_FloatingHeart>
     with SingleTickerProviderStateMixin {
   late final AnimationController _c = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 900))
-    ..forward();
+    vsync: this,
+    duration: const Duration(milliseconds: 900),
+  )..forward();
   late final double _dx = (math.Random().nextDouble() - 0.5) * 40;
 
   @override
@@ -173,7 +288,11 @@ class _FloatingHeartState extends State<_FloatingHeart>
             opacity: (1 - _c.value).clamp(0.0, 1.0),
             child: Transform.scale(
               scale: 0.6 + Curves.easeOut.transform(_c.value) * 0.6,
-              child: const Icon(Icons.favorite, color: Color(0xFFF4A7B9), size: 26),
+              child: const Icon(
+                Icons.favorite,
+                color: Color(0xFFF4A7B9),
+                size: 26,
+              ),
             ),
           ),
         );

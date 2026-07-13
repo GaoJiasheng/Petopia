@@ -11,7 +11,16 @@ class YardSlot {
 class FoodTray {
   String? foodType;
   DateTime? placedAt;
-  FoodTray({this.foodType, this.placedAt});
+  String? probabilityScope;
+  double probabilityDelta;
+  int remaining;
+  FoodTray({
+    this.foodType,
+    this.placedAt,
+    this.probabilityScope,
+    this.probabilityDelta = 0,
+    this.remaining = 0,
+  });
 }
 
 /// 院子状态（单例）。
@@ -35,11 +44,11 @@ class YardState {
     FoodTray? foodTray,
     List<String>? ownedPerks,
     List<String>? ownedDecorIds,
-  })  : ownedThemeIds = ownedThemeIds ?? <String>['theme_default'],
-        slots = slots ?? <YardSlot>[],
-        foodTray = foodTray ?? FoodTray(),
-        ownedPerks = ownedPerks ?? <String>[],
-        ownedDecorIds = ownedDecorIds ?? <String>[];
+  }) : ownedThemeIds = ownedThemeIds ?? <String>['theme_default'],
+       slots = slots ?? <YardSlot>[],
+       foodTray = foodTray ?? FoodTray(),
+       ownedPerks = ownedPerks ?? <String>[],
+       ownedDecorIds = ownedDecorIds ?? <String>[];
 }
 
 /// 暖绒钱包（单例）。balance≥0；INV-4（==Σcurrency_log.delta）。

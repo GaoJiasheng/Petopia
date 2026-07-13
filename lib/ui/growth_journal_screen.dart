@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../domain/enums.dart';
 import '../domain/models/logs.dart';
+import 'adaptive_layout.dart';
 import 'app_icons.dart';
 
 /// 成长手账：按天回看当前宠物的经验流水。
@@ -97,19 +98,29 @@ class _JournalContent extends StatelessWidget {
         .fold<int>(0, (sum, entry) => sum + entry.delta);
     final totalGain = entries.fold<int>(0, (sum, entry) => sum + entry.delta);
 
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
-      children: [
-        _SummaryCard(todayGain: todayGain, totalGain: totalGain),
-        const SizedBox(height: 16),
-        if (entries.isEmpty)
-          const _EmptyState()
-        else
-          for (final group in grouped.entries) ...[
-            _DaySection(day: group.key, entries: group.value),
-            const SizedBox(height: 14),
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 860),
+        child: ListView(
+          padding: EdgeInsets.fromLTRB(
+            PetopiaAdaptive.sideMargin(context),
+            8,
+            PetopiaAdaptive.sideMargin(context),
+            28,
+          ),
+          children: [
+            _SummaryCard(todayGain: todayGain, totalGain: totalGain),
+            const SizedBox(height: 16),
+            if (entries.isEmpty)
+              const _EmptyState()
+            else
+              for (final group in grouped.entries) ...[
+                _DaySection(day: group.key, entries: group.value),
+                const SizedBox(height: 14),
+              ],
           ],
-      ],
+        ),
+      ),
     );
   }
 

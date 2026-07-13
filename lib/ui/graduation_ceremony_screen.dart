@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
 import '../domain/enums.dart';
+import 'adaptive_layout.dart';
 import 'pet_art.dart';
 import 'widgets/pet_sprite.dart';
 
@@ -55,79 +56,128 @@ class _GraduationCeremonyScreenState
     return Scaffold(
       backgroundColor: const Color(0xFFFBF5E9),
       body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28),
-            child: AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
-              child: _sent ? _sentView(context) : _farewellView(context),
-            ),
-          ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final size = Size(constraints.maxWidth, constraints.maxHeight);
+            final petWidth = (PetopiaAdaptive.petStageWidth(size) * 0.82).clamp(
+              200.0,
+              280.0,
+            );
+            return Center(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.symmetric(
+                  horizontal: PetopiaAdaptive.sideMargin(context),
+                  vertical: 24,
+                ),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 620),
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    child: _sent
+                        ? _sentView(context)
+                        : _farewellView(context, petWidth),
+                  ),
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
   }
 
-  Widget _farewellView(BuildContext context) {
-    return Column(
+  Widget _farewellView(BuildContext context, double petWidth) {
+    return DecoratedBox(
       key: const ValueKey('farewell'),
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text('🎓 毕业啦',
-            style: TextStyle(
-                fontSize: 26, fontWeight: FontWeight.bold, color: _ink)),
-        const SizedBox(height: 8),
-        Text('「${widget.petName}」长大了，是时候去看看外面的世界',
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 15, color: _muted, height: 1.5)),
-        const SizedBox(height: 20),
-        PetSprite(
-          assetPath: PetArt.stage(widget.speciesId, PetStage.d),
-          width: 200,
+      decoration: _cardDecoration(),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 28, 24, 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text(
+              '🎓 毕业啦',
+              style: TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: _ink,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              '「${widget.petName}」长大了，是时候去看看外面的世界',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 15, color: _muted, height: 1.5),
+            ),
+            const SizedBox(height: 20),
+            PetSprite(
+              assetPath: PetArt.stage(widget.speciesId, PetStage.d),
+              width: petWidth,
+            ),
+            const SizedBox(height: 24),
+            _PrimaryButton(
+              label: _sending ? '正在收拾行囊…' : '送它去旅行  🎒',
+              onTap: _sending ? null : _sendOff,
+            ),
+            const SizedBox(height: 10),
+            if (!_sending)
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text(
+                  '再陪它一会儿',
+                  style: TextStyle(color: _muted, fontSize: 14),
+                ),
+              ),
+          ],
         ),
-        const SizedBox(height: 24),
-        _PrimaryButton(
-          label: _sending ? '正在收拾行囊…' : '送它去旅行  🎒',
-          onTap: _sending ? null : _sendOff,
-        ),
-        const SizedBox(height: 10),
-        if (!_sending)
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('再陪它一会儿',
-                style: TextStyle(color: _muted, fontSize: 14)),
-          ),
-      ],
+      ),
     );
   }
 
   Widget _sentView(BuildContext context) {
     final stops = _stops;
-    return Column(
+    return DecoratedBox(
       key: const ValueKey('sent'),
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const Text('💌', style: TextStyle(fontSize: 56)),
-        const SizedBox(height: 16),
-        Text('「${widget.petName}」出发了',
-            style: const TextStyle(
-                fontSize: 22, fontWeight: FontWeight.bold, color: _ink)),
-        const SizedBox(height: 12),
-        Text(
-          stops == null
-              ? '它会一路旅行，常寄明信片回来。\n院子空出来了，去迎接下一位小伙伴吧。'
-              : '它的旅途大约会经过 $stops 个地方，\n每隔些日子就会寄一张明信片回来 💌\n院子空出来了，去迎接下一位小伙伴吧。',
-          textAlign: TextAlign.center,
-          style: const TextStyle(fontSize: 15, color: _muted, height: 1.6),
+      decoration: _cardDecoration(),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(24, 30, 24, 26),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Text('💌', style: TextStyle(fontSize: 56)),
+            const SizedBox(height: 16),
+            Text(
+              '「${widget.petName}」出发了',
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: _ink,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              stops == null
+                  ? '它会一路旅行，常寄明信片回来。\n院子空出来了，去迎接下一位小伙伴吧。'
+                  : '它的旅途大约会经过 $stops 个地方，\n每隔些日子就会寄一张明信片回来 💌\n院子空出来了，去迎接下一位小伙伴吧。',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 15, color: _muted, height: 1.6),
+            ),
+            const SizedBox(height: 28),
+            _PrimaryButton(
+              label: '回到院子',
+              onTap: () => Navigator.of(context).pop(),
+            ),
+          ],
         ),
-        const SizedBox(height: 28),
-        _PrimaryButton(
-          label: '回到院子',
-          onTap: () => Navigator.of(context).pop(),
-        ),
-      ],
+      ),
     );
   }
+
+  BoxDecoration _cardDecoration() => BoxDecoration(
+    color: const Color(0xFFFFFDF7).withValues(alpha: 0.94),
+    borderRadius: BorderRadius.circular(26),
+    boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 16)],
+  );
 }
 
 class _PrimaryButton extends StatelessWidget {
@@ -148,11 +198,14 @@ class _PrimaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(26),
           boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 8)],
         ),
-        child: Text(label,
-            style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w700)),
+        child: Text(
+          label,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ),
     );
   }

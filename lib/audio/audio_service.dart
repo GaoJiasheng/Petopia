@@ -1,7 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// 情境 BGM（对应 assets/audio/bgm/mix/ogg/bgm_*.ogg）。
+/// 情境 BGM（对应 assets/audio/bgm/mix/m4a/bgm_*.m4a）。
 enum Bgm {
   opening('bgm_opening'),
   yardDay('bgm_yard_day'),
@@ -17,7 +17,7 @@ enum Bgm {
   final String file;
 }
 
-/// 事件 sting（对应 assets/audio/sting/ogg/sting_*.ogg）。
+/// 事件 sting（对应 assets/audio/sting/m4a/sting_*.m4a）。
 enum Sting {
   levelup('sting_levelup'),
   evolveB('sting_evolve_b'),
@@ -77,18 +77,26 @@ class AudioplayersAudioService implements AudioService {
     if (!_enabled) return;
     try {
       await _bgm.stop();
-      await _bgm.play(AssetSource('audio/bgm/mix/ogg/${bgm.file}.ogg'),
-          volume: 0.55);
-    } catch (_) {/* 无声降级 */}
+      await _bgm.play(
+        AssetSource('audio/bgm/mix/m4a/${bgm.file}.m4a'),
+        volume: 0.55,
+      );
+    } catch (_) {
+      /* 无声降级 */
+    }
   }
 
   @override
   Future<void> sting(Sting s) async {
     if (!_enabled) return;
     try {
-      await _sfx.play(AssetSource('audio/sting/ogg/${s.file}.ogg'),
-          volume: 0.9);
-    } catch (_) {/* 无声降级 */}
+      await _sfx.play(
+        AssetSource('audio/sting/m4a/${s.file}.m4a'),
+        volume: 0.9,
+      );
+    } catch (_) {
+      /* 无声降级 */
+    }
   }
 
   @override
@@ -101,7 +109,9 @@ class AudioplayersAudioService implements AudioService {
       } else if (_current != null) {
         await _bgm.resume();
       }
-    } catch (_) {/* 无声降级 */}
+    } catch (_) {
+      /* 无声降级 */
+    }
   }
 
   @override

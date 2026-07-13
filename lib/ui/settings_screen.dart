@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import 'adaptive_layout.dart';
 import 'app_icons.dart';
 
 /// 设置页：轻量控制通知与音效开关。
@@ -14,7 +15,7 @@ class SettingsScreen extends ConsumerWidget {
   static const _muted = Color(0xFF8A7A6A);
   static const _accent = Color(0xFFE8A15C);
   static const _line = Color(0xFFEDE4D3);
-  static const _version = '1.0.0+1';
+  static const _version = '1.0.0+9';
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -27,36 +28,46 @@ class SettingsScreen extends ConsumerWidget {
       data: (_) {
         final ctrl = ref.read(gameControllerProvider.notifier);
         return _WarmFrame(
-          child: ListView(
-            padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
-            children: [
-              _SectionTitle(
-                iconName: 'set_music',
-                fallbackIcon: Icons.tune_rounded,
-                title: '偏好',
-                subtitle: '拨动后会立刻写进当前存档。',
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 760),
+              child: ListView(
+                padding: EdgeInsets.fromLTRB(
+                  PetopiaAdaptive.sideMargin(context),
+                  8,
+                  PetopiaAdaptive.sideMargin(context),
+                  28,
+                ),
+                children: [
+                  _SectionTitle(
+                    iconName: 'set_music',
+                    fallbackIcon: Icons.tune_rounded,
+                    title: '偏好',
+                    subtitle: '拨动后会立刻写进当前存档。',
+                  ),
+                  const SizedBox(height: 10),
+                  _SwitchCard(
+                    iconName: 'set_notif',
+                    fallbackIcon: Icons.notifications_active_rounded,
+                    title: '通知',
+                    subtitle: '每天最多一次，轻轻提醒你回来看看院子。',
+                    value: ctrl.notificationsOn,
+                    onChanged: (_) => ctrl.toggleNotifications(),
+                  ),
+                  const SizedBox(height: 12),
+                  _SwitchCard(
+                    iconName: 'set_sound',
+                    fallbackIcon: Icons.volume_up_rounded,
+                    title: '音效',
+                    subtitle: '保留翻纸、铃声和点击的柔和声音。',
+                    value: ctrl.soundOn,
+                    onChanged: (_) => ctrl.toggleSound(),
+                  ),
+                  const SizedBox(height: 22),
+                  const _AboutCard(),
+                ],
               ),
-              const SizedBox(height: 10),
-              _SwitchCard(
-                iconName: 'set_notif',
-                fallbackIcon: Icons.notifications_active_rounded,
-                title: '通知',
-                subtitle: '明信片、回访和院子里的小事件会轻轻提醒你。',
-                value: ctrl.notificationsOn,
-                onChanged: (_) => ctrl.toggleNotifications(),
-              ),
-              const SizedBox(height: 12),
-              _SwitchCard(
-                iconName: 'set_sound',
-                fallbackIcon: Icons.volume_up_rounded,
-                title: '音效',
-                subtitle: '保留翻纸、铃声和点击的柔和声音。',
-                value: ctrl.soundOn,
-                onChanged: (_) => ctrl.toggleSound(),
-              ),
-              const SizedBox(height: 22),
-              const _AboutCard(),
-            ],
+            ),
           ),
         );
       },

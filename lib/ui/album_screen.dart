@@ -3,11 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
+import 'adaptive_layout.dart';
 import 'pet_art.dart';
 import 'postcard_viewer_screen.dart';
 
 /// 双相册：明信片相册（收到的每张卡）+ 旅行相册（已毕业漫游的伙伴）。
-class AlbumScreen extends ConsumerWidget {
+class AlbumScreen extends ConsumerStatefulWidget {
   const AlbumScreen({super.key});
 
   static const _ink = Color(0xFF6B5445);
@@ -15,28 +16,50 @@ class AlbumScreen extends ConsumerWidget {
   static const _accent = Color(0xFFE8A15C);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<AlbumScreen> createState() => _AlbumScreenState();
+}
+
+class _AlbumScreenState extends ConsumerState<AlbumScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Future<void>.microtask(() {
+      ref.read(gameControllerProvider.notifier).trackAlbumOpened();
+      ref.read(audioServiceProvider).playBgm(Bgm.albumBrowse);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final ctrl = ref.watch(gameControllerProvider.notifier);
-    ref.read(audioServiceProvider).playBgm(Bgm.albumBrowse);
     final cards = ctrl.postcards();
     final travel = ctrl.travelAlbum();
+    final background = _albumBackground(ctrl.activeAlbumSkinId);
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        backgroundColor: const Color(0xFFFBF5E9),
+        backgroundColor: background,
         appBar: AppBar(
-          title: const Text('相册',
-              style: TextStyle(color: _ink, fontWeight: FontWeight.bold)),
-          backgroundColor: const Color(0xFFFBF5E9),
+          title: const Text(
+            '相册',
+            style: TextStyle(
+              color: AlbumScreen._ink,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: background,
           elevation: 0,
           centerTitle: true,
-          iconTheme: const IconThemeData(color: _ink),
+          iconTheme: const IconThemeData(color: AlbumScreen._ink),
           bottom: const TabBar(
-            labelColor: _accent,
-            unselectedLabelColor: _muted,
-            indicatorColor: _accent,
+            labelColor: AlbumScreen._accent,
+            unselectedLabelColor: AlbumScreen._muted,
+            indicatorColor: AlbumScreen._accent,
             labelStyle: TextStyle(fontWeight: FontWeight.bold),
-            tabs: [Tab(text: '明信片'), Tab(text: '旅行伙伴')],
+            tabs: [
+              Tab(text: '明信片'),
+              Tab(text: '旅行伙伴'),
+            ],
           ),
         ),
         body: TabBarView(
@@ -48,6 +71,16 @@ class AlbumScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+Color _albumBackground(String skinId) {
+  return switch (skinId) {
+    'paper' => const Color(0xFFF2E3CA),
+    'picnic' => const Color(0xFFE7F1F2),
+    'dried_flower' => const Color(0xFFF7E8E5),
+    'star_chart' => const Color(0xFFE7EAF3),
+    _ => const Color(0xFFFBF5E9),
+  };
 }
 
 class _PostcardGrid extends StatelessWidget {
@@ -62,16 +95,29 @@ class _PostcardGrid extends StatelessWidget {
         text: '还没有明信片\n宠物毕业去旅行后，会隔些日子寄一张回来 💌',
       );
     }
-    return GridView.builder(
-      padding: const EdgeInsets.all(16),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.82,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-      ),
-      itemCount: cards.length,
-      itemBuilder: (context, i) => _PostcardThumb(card: cards[i]),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final columns = PetopiaAdaptive.postcardGridColumns(
+          constraints.maxWidth,
+        );
+        final margin = PetopiaAdaptive.sideMargin(context);
+        return Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1180),
+            child: GridView.builder(
+              padding: EdgeInsets.fromLTRB(margin, 16, margin, 24),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: columns,
+                childAspectRatio: columns >= 4 ? 0.88 : 0.82,
+                crossAxisSpacing: 14,
+                mainAxisSpacing: 14,
+              ),
+              itemCount: cards.length,
+              itemBuilder: (context, i) => _PostcardThumb(card: cards[i]),
+            ),
+          ),
+        );
+      },
     );
   }
 }
@@ -85,7 +131,8 @@ class _PostcardThumb extends StatelessWidget {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute<void>(
-            builder: (_) => PostcardViewerScreen(card: card)),
+          builder: (_) => PostcardViewerScreen(card: card),
+        ),
       ),
       child: Container(
         decoration: BoxDecoration(
@@ -99,12 +146,14 @@ class _PostcardThumb extends StatelessWidget {
           children: [
             Expanded(
               child: Image.asset(
-                'assets/art/postcards/backgrounds/${card.photoBg}.png',
+                'assets/art/postcards/backgrounds/${card.photoBg}.jpg',
                 fit: BoxFit.cover,
                 errorBuilder: (_, _, _) => Container(
                   color: const Color(0xFFDCEAD8),
-                  child: const Icon(Icons.photo_rounded,
-                      color: AlbumScreen._muted),
+                  child: const Icon(
+                    Icons.photo_rounded,
+                    color: AlbumScreen._muted,
+                  ),
                 ),
               ),
             ),
@@ -113,18 +162,25 @@ class _PostcardThumb extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(card.locationName,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: AlbumScreen._ink)),
-                  Text('${card.petName} · 第 ${card.seq + 1} 站',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontSize: 11, color: AlbumScreen._muted)),
+                  Text(
+                    card.locationName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: AlbumScreen._ink,
+                    ),
+                  ),
+                  Text(
+                    '${card.petName} · 第 ${card.seq + 1} 站',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: AlbumScreen._muted,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -147,54 +203,37 @@ class _TravelList extends StatelessWidget {
         text: '还没有毕业的旅行伙伴\n把宠物养到毕业，它就会踏上旅途 🎒',
       );
     }
-    return ListView.separated(
-      padding: const EdgeInsets.all(16),
-      itemCount: pets.length,
-      separatorBuilder: (_, _) => const SizedBox(height: 12),
-      itemBuilder: (context, i) {
-        final p = pets[i];
-        return Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: const Color(0xFFFFFDF7),
-            borderRadius: BorderRadius.circular(16),
-            boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 64,
-                height: 64,
-                child: Image.asset(
-                  PetArt.portrait(p.speciesId),
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, _, _) => const Icon(Icons.pets_rounded,
-                      size: 40, color: AlbumScreen._muted),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final columns = PetopiaAdaptive.travelColumns(constraints.maxWidth);
+        final margin = PetopiaAdaptive.sideMargin(context);
+        if (columns > 1) {
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1040),
+              child: GridView.builder(
+                padding: EdgeInsets.fromLTRB(margin, 16, margin, 24),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 4.2,
+                  crossAxisSpacing: 14,
+                  mainAxisSpacing: 14,
                 ),
+                itemCount: pets.length,
+                itemBuilder: (context, i) => _TravelPetCard(pet: pets[i]),
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(p.name,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: AlbumScreen._ink)),
-                    const SizedBox(height: 4),
-                    Text('旅程 ${p.stops} 站 · 已寄回 ${p.postcardCount} 张明信片',
-                        style: const TextStyle(
-                            fontSize: 12.5, color: AlbumScreen._muted)),
-                    if (p.graduatedAt != null)
-                      Text('毕业于 ${_date(p.graduatedAt!)}',
-                          style: const TextStyle(
-                              fontSize: 11.5, color: AlbumScreen._muted)),
-                  ],
-                ),
-              ),
-              const Text('🎒', style: TextStyle(fontSize: 22)),
-            ],
+            ),
+          );
+        }
+        return Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 680),
+            child: ListView.separated(
+              padding: EdgeInsets.fromLTRB(margin, 16, margin, 24),
+              itemCount: pets.length,
+              separatorBuilder: (_, _) => const SizedBox(height: 12),
+              itemBuilder: (context, i) => _TravelPetCard(pet: pets[i]),
+            ),
           ),
         );
       },
@@ -203,6 +242,140 @@ class _TravelList extends StatelessWidget {
 
   static String _date(DateTime t) =>
       '${t.year}.${t.month.toString().padLeft(2, '0')}.${t.day.toString().padLeft(2, '0')}';
+}
+
+class _TravelPetCard extends StatelessWidget {
+  final TravelPetView pet;
+  const _TravelPetCard({required this.pet});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFDF7),
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
+      ),
+      child: Row(
+        children: [
+          _TravelAvatar(pet: pet),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  pet.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                    color: AlbumScreen._ink,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '旅程 ${pet.stops} 站 · 已寄回 ${pet.postcardCount} 张明信片',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 12.5,
+                    color: AlbumScreen._muted,
+                  ),
+                ),
+                if (pet.graduatedAt != null)
+                  Text(
+                    '毕业于 ${_TravelList._date(pet.graduatedAt!)}',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 11.5,
+                      color: AlbumScreen._muted,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _TravelAvatar extends StatelessWidget {
+  final TravelPetView pet;
+  const _TravelAvatar({required this.pet});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 76,
+      height: 76,
+      padding: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFF1DF).withValues(alpha: 0.58),
+        borderRadius: BorderRadius.circular(18),
+      ),
+      child: _GraduationStageImage(
+        paths: _graduationStagePaths(pet.speciesId, pet.variantId),
+        fallback: Image.asset(
+          PetArt.portrait(pet.speciesId),
+          fit: BoxFit.contain,
+          errorBuilder: (_, _, _) => const Icon(
+            Icons.pets_rounded,
+            size: 40,
+            color: AlbumScreen._muted,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _GraduationStageImage extends StatelessWidget {
+  final List<String> paths;
+  final Widget fallback;
+  const _GraduationStageImage({required this.paths, required this.fallback});
+
+  @override
+  Widget build(BuildContext context) {
+    if (paths.isEmpty) return fallback;
+    final path = paths.first;
+    return Image.asset(
+      path,
+      fit: BoxFit.contain,
+      errorBuilder: (_, _, _) =>
+          _GraduationStageImage(paths: paths.sublist(1), fallback: fallback),
+    );
+  }
+}
+
+List<String> _graduationStagePaths(String speciesId, String variantId) {
+  final species = _speciesSlug(speciesId);
+  final variant = _variantSlug(variantId);
+  return <String>[
+    if (variant != null)
+      'assets/runtime/pets/$species/pet_${species}_${variant}_stageD.png',
+    'assets/runtime/pets/$species/pet_${species}_var01_stageD.png',
+  ];
+}
+
+String _speciesSlug(String speciesId) {
+  final id = speciesId.replaceFirst('pet_', '');
+  return switch (id) {
+    'cham' => 'chameleon',
+    _ => id,
+  };
+}
+
+String? _variantSlug(String variantId) {
+  final match = RegExp(r'(?:^|_)v(?:ar)?0?([1-5])$').firstMatch(variantId);
+  final value = match == null ? null : int.tryParse(match.group(1)!);
+  if (value == null) return null;
+  return 'var${value.toString().padLeft(2, '0')}';
 }
 
 class _Empty extends StatelessWidget {
@@ -220,10 +393,15 @@ class _Empty extends StatelessWidget {
           children: [
             Icon(icon, size: 56, color: const Color(0xFFCBBEA8)),
             const SizedBox(height: 16),
-            Text(text,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                    fontSize: 14, height: 1.6, color: AlbumScreen._muted)),
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 14,
+                height: 1.6,
+                color: AlbumScreen._muted,
+              ),
+            ),
           ],
         ),
       ),

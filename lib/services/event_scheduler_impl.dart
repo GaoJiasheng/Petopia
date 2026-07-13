@@ -25,12 +25,12 @@ class EventSchedulerImpl implements EventScheduler {
 
   /// 优先级（小=先）：REVISIT_DUE(1) > SPECIAL(2) > VISITOR(3) > DAILY_GEN(4) > POSTCARD(5)。
   static int priorityOf(JobType t) => switch (t) {
-        JobType.revisitDue => 1,
-        JobType.specialEventEval => 2,
-        JobType.visitorCheck => 3,
-        JobType.dailyEventGen => 4,
-        JobType.postcardDue => 5,
-      };
+    JobType.revisitDue => 1,
+    JobType.specialEventEval => 2,
+    JobType.visitorCheck => 3,
+    JobType.dailyEventGen => 4,
+    JobType.postcardDue => 5,
+  };
 
   @override
   Future<void> onDailyTick(DateTime today) async {
@@ -51,13 +51,12 @@ class EventSchedulerImpl implements EventScheduler {
 
   @override
   Future<void> onResume(DateTime now) async {
-    final due = _queue
-        .where((j) => !j.consumed && !j.dueAt.isAfter(now))
-        .toList()
-      ..sort((a, b) {
-        final p = a.priority.compareTo(b.priority);
-        return p != 0 ? p : a.dueAt.compareTo(b.dueAt);
-      });
+    final due =
+        _queue.where((j) => !j.consumed && !j.dueAt.isAfter(now)).toList()
+          ..sort((a, b) {
+            final p = a.priority.compareTo(b.priority);
+            return p != 0 ? p : a.dueAt.compareTo(b.dueAt);
+          });
     for (final job in due) {
       await _dispatch(job);
       job.consumed = true; // 保留不删，便于审计
@@ -69,15 +68,19 @@ class EventSchedulerImpl implements EventScheduler {
       _enqueue(type, dueAt, ref: ref);
 
   void _enqueue(JobType type, DateTime dueAt, {String? ref}) {
-    _queue.add(ScheduledJob(
-      id: _idGen(),
-      type: type,
-      dueAt: dueAt,
-      priority: priorityOf(type),
-      payloadRef: ref,
-    ));
+    _queue.add(
+      ScheduledJob(
+        id: _idGen(),
+        type: type,
+        dueAt: dueAt,
+        priority: priorityOf(type),
+        payloadRef: ref,
+      ),
+    );
   }
 
-  String _dayKey(DateTime t) =>
-      '${t.year.toString().padLeft(4, '0')}-${t.month.toString().padLeft(2, '0')}-${t.day.toString().padLeft(2, '0')}';
+  String _dayKey(DateTime t) {
+    final local = t.toLocal();
+    return '${local.year.toString().padLeft(4, '0')}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')}';
+  }
 }

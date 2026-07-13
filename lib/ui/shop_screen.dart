@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import 'adaptive_layout.dart';
 import 'app_icons.dart';
 
 /// 暖绒商店：按分类展示商品，并通过 GameController 完成兑换。
@@ -52,9 +53,11 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
     if (_buyingId != null || item.owned || !item.affordable) return;
     setState(() => _buyingId = item.id);
     try {
-      await ref.read(gameControllerProvider.notifier).buy(item.id);
+      final success = await ref
+          .read(gameControllerProvider.notifier)
+          .buy(item.id);
       if (!mounted) return;
-      _showMessage('${item.name} 已收进手账。');
+      _showMessage(success ? '${item.name} 已收进手账。' : '暖绒不足，或这件物品已经拥有。');
     } catch (e) {
       if (!mounted) return;
       _showMessage('这次没有兑换成功：$e');
@@ -67,9 +70,17 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
 
   void _apply(ShopItemView item) {
     final themeId = item.themeId;
-    if (themeId == null || !item.owned || item.active) return;
-    ref.read(gameControllerProvider.notifier).applyTheme(themeId);
-    _showMessage('已换上「${item.name}」院子主题。');
+    final albumSkinId = item.albumSkinId;
+    if (!item.owned || item.active) return;
+    final ctrl = ref.read(gameControllerProvider.notifier);
+    if (themeId != null) {
+      ctrl.applyTheme(themeId);
+    } else if (albumSkinId != null) {
+      ctrl.applyAlbumSkin(albumSkinId);
+    } else {
+      return;
+    }
+    _showMessage('已应用「${item.name}」。');
   }
 
   void _showMessage(String message) {
@@ -134,32 +145,96 @@ class _ShopContent extends StatelessWidget {
       grouped.putIfAbsent(item.category, () => []).add(item);
     }
 
-    return ListView(
-      padding: const EdgeInsets.fromLTRB(18, 8, 18, 28),
-      children: [
-        _WalletCard(wallet: wallet),
-        const SizedBox(height: 18),
-        for (final group in grouped.entries) ...[
-          _SectionHeader(
-            title: group.key,
-            subtitle: '${group.value.length} 件小物',
-            iconName: _categoryIconName(group.key),
-            fallbackIcon: _categoryFallbackIcon(group.key),
-          ),
-          const SizedBox(height: 10),
-          for (final item in group.value) ...[
-            _ShopItemCard(
-              item: item,
-              busy: buyingId == item.id,
-              disabledByAnotherBuy: buyingId != null && buyingId != item.id,
-              onBuy: onBuy,
-              onApply: onApply,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final wide = constraints.maxWidth >= 840;
+        return Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 1060),
+            child: ListView(
+              padding: EdgeInsets.fromLTRB(
+                PetopiaAdaptive.sideMargin(context),
+                8,
+                PetopiaAdaptive.sideMargin(context),
+                28,
+              ),
+              children: [
+                _WalletCard(wallet: wallet),
+                const SizedBox(height: 18),
+                for (final group in grouped.entries) ...[
+                  _SectionHeader(
+                    title: group.key,
+                    subtitle: '${group.value.length} 件小物',
+                    iconName: _categoryIconName(group.key),
+                    fallbackIcon: _categoryFallbackIcon(group.key),
+                  ),
+                  const SizedBox(height: 10),
+                  if (wide)
+                    _ShopItemWrap(
+                      items: group.value,
+                      buyingId: buyingId,
+                      onBuy: onBuy,
+                      onApply: onApply,
+                    )
+                  else
+                    for (final item in group.value) ...[
+                      _ShopItemCard(
+                        item: item,
+                        busy: buyingId == item.id,
+                        disabledByAnotherBuy:
+                            buyingId != null && buyingId != item.id,
+                        onBuy: onBuy,
+                        onApply: onApply,
+                      ),
+                      const SizedBox(height: 12),
+                    ],
+                  const SizedBox(height: 6),
+                ],
+              ],
             ),
-            const SizedBox(height: 12),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _ShopItemWrap extends StatelessWidget {
+  final List<ShopItemView> items;
+  final String? buyingId;
+  final ValueChanged<ShopItemView> onBuy;
+  final ValueChanged<ShopItemView> onApply;
+
+  const _ShopItemWrap({
+    required this.items,
+    required this.buyingId,
+    required this.onBuy,
+    required this.onApply,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final cardWidth = (constraints.maxWidth - 12) / 2;
+        return Wrap(
+          spacing: 12,
+          runSpacing: 12,
+          children: [
+            for (final item in items)
+              SizedBox(
+                width: cardWidth,
+                child: _ShopItemCard(
+                  item: item,
+                  busy: buyingId == item.id,
+                  disabledByAnotherBuy: buyingId != null && buyingId != item.id,
+                  onBuy: onBuy,
+                  onApply: onApply,
+                ),
+              ),
           ],
-          const SizedBox(height: 6),
-        ],
-      ],
+        );
+      },
     );
   }
 }
@@ -300,7 +375,10 @@ class _ShopItemCard extends StatelessWidget {
 
   /// 已拥有但未装备的主题 → 可「应用」。
   bool get _canApply =>
-      item.themeId != null && item.owned && !item.active && !busy;
+      (item.themeId != null || item.albumSkinId != null) &&
+      item.owned &&
+      !item.active &&
+      !busy;
 
   @override
   Widget build(BuildContext context) {
@@ -355,9 +433,11 @@ class _ShopItemCard extends StatelessWidget {
                           warmfluff: true,
                         ),
                         if (item.consumable)
-                          const _TinyTag(
+                          _TinyTag(
                             icon: Icons.refresh_rounded,
-                            label: '可重复',
+                            label: item.quantity > 0
+                                ? '库存 ${item.quantity}'
+                                : '可重复',
                             color: ShopScreen._green,
                           ),
                       ],

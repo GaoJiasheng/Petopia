@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 /// 横向序列帧条播放器（4096×512 = 8 帧，每帧 512×512）。
@@ -11,6 +12,8 @@ class SpriteSheetPlayer extends StatefulWidget {
   final double size;
   final int frameCount;
   final int fps;
+  final Duration? duration;
+  final Duration? playDuration;
   final bool loop;
   final VoidCallback? onComplete;
   final Widget fallback;
@@ -22,6 +25,8 @@ class SpriteSheetPlayer extends StatefulWidget {
     required this.fallback,
     this.frameCount = 8,
     this.fps = defaultFps,
+    this.duration,
+    this.playDuration,
     this.loop = false,
     this.onComplete,
   });
@@ -34,14 +39,15 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
     with SingleTickerProviderStateMixin {
   late final AnimationController _c = AnimationController(
     vsync: this,
-    duration: Duration(
-      milliseconds: (widget.frameCount / widget.fps * 1000).round(),
-    ),
+    duration:
+        widget.duration ??
+        Duration(milliseconds: (widget.frameCount / widget.fps * 1000).round()),
   );
   ui.Image? _image;
   bool _failed = false;
   ImageStream? _stream;
   ImageStreamListener? _listener;
+  Timer? _completionTimer;
 
   @override
   void initState() {
@@ -63,12 +69,29 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
         setState(() => _image = info.image);
         if (widget.loop) {
           _c.repeat();
+        } else if (widget.playDuration != null) {
+          _c.repeat();
+          _completionTimer = Timer(widget.playDuration!, () {
+            if (!mounted) return;
+            _c.stop();
+            widget.onComplete?.call();
+          });
         } else {
           _c.forward(from: 0);
         }
       },
       onError: (_, _) {
-        if (mounted) setState(() => _failed = true);
+        if (!mounted) return;
+        setState(() => _failed = true);
+        final fallbackDuration =
+            widget.playDuration ??
+            widget.duration ??
+            Duration(
+              milliseconds: (widget.frameCount / widget.fps * 1000).round(),
+            );
+        _completionTimer = Timer(fallbackDuration, () {
+          if (mounted) widget.onComplete?.call();
+        });
       },
     );
     _stream = stream;
@@ -82,6 +105,7 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
       _stream!.removeListener(_listener!);
     }
     _c.dispose();
+    _completionTimer?.cancel();
     super.dispose();
   }
 

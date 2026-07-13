@@ -8,10 +8,12 @@ import '../audio/audio_service.dart';
 import '../config/game_config.dart';
 import '../domain/enums.dart';
 import 'app_icons.dart';
+import 'adaptive_layout.dart';
 import 'pet_action_cue.dart';
 import 'pet_art.dart';
 import 'yard_art.dart';
 import 'widgets/pet_sprite.dart';
+import 'widgets/sprite_sheet_player.dart';
 import 'achievements_screen.dart';
 import 'adopt_screen.dart';
 import 'album_screen.dart';
@@ -41,28 +43,48 @@ class YardHomeScreen extends ConsumerStatefulWidget {
   ConsumerState<YardHomeScreen> createState() => _YardHomeScreenState();
 }
 
-class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
+class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
+    with WidgetsBindingObserver {
   Timer? _cooldownTimer;
   String? _precacheKey;
   final DateTime _openedAt = DateTime.now().toUtc();
   final Set<String> _shownArrivalPostcards = <String>{};
   bool _postcardDialogOpen = false;
   bool _visitorDialogOpen = false;
+  bool _revisitorDialogOpen = false;
+  bool _eventDialogOpen = false;
+  bool _eventPresentedThisActivation = false;
+  Bgm? _currentBgm;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _cooldownTimer = Timer.periodic(const Duration(seconds: 1), (_) {
       final async = ref.read(gameControllerProvider);
-      if (async.hasValue) {
+      if (async.hasValue &&
+          async.requireValue.cooldownSec.values.any((seconds) => seconds > 0)) {
         ref.read(gameControllerProvider.notifier).refreshView();
       }
     });
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _eventPresentedThisActivation = false;
+      unawaited(ref.read(gameControllerProvider.notifier).onAppResumed());
+    } else if (state == AppLifecycleState.paused ||
+        state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.detached) {
+      unawaited(ref.read(gameControllerProvider.notifier).onAppPaused());
+    }
+  }
+
+  @override
   void dispose() {
     _cooldownTimer?.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -95,85 +117,128 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
         final yardBgm = (hour >= 19 || hour < 6)
             ? Bgm.yardNight
             : (hour >= 16 ? Bgm.yardDusk : Bgm.yardDay);
-        ref.read(audioServiceProvider).playBgm(yardBgm);
+        if (_currentBgm != yardBgm) {
+          _currentBgm = yardBgm;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) ref.read(audioServiceProvider).playBgm(yardBgm);
+          });
+        }
         _schedulePostcardArrival(ctrl);
         _scheduleVisitorArrival(ctrl, view.visitorArrival);
+        _scheduleRevisitorArrival(ctrl, view.revisitorArrival);
+        _scheduleEvent(ctrl, view.pendingEvent);
         final petAsset = pet == null
             ? null
-            : PetArt.stage(pet.speciesId, pet.stage);
+            : PetArt.stage(pet.speciesId, pet.stage, variantId: pet.variantId);
         if (pet != null && petAsset != null) {
-          _precacheCurrentPetAssets(context, pet.speciesId, petAsset);
+          _precacheCurrentPetAssets(context, pet, petAsset);
         }
         return Scaffold(
-          body: Stack(
-            fit: StackFit.expand,
-            children: [
-              Image.asset(
-                YardArt.themeBg(view.activeThemeId),
-                fit: BoxFit.cover,
-                errorBuilder: (_, _, _) => Image.asset(
-                  'assets/art/world/themes/yard_theme_meadow_bg.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              // 摆件中景层（渲染在宠物之下）：自定义 slots 为空时使用默认布置。
-              for (final decor in _visibleDecor(view.decorSlots))
-                _YardDecor(
-                  align: decor.anchor.align,
-                  decorId: decor.decorId,
-                  width: decor.anchor.width,
-                ),
-              if (view.activeVisitor != null)
-                Align(
-                  alignment: const Alignment(-0.56, 0.48),
-                  child: _YardVisitor(visitor: view.activeVisitor!),
-                ),
-              if (petAsset != null)
-                Align(
-                  alignment: const Alignment(0, 0.4),
-                  child: PetSprite(
-                    assetPath: petAsset,
-                    width: 220,
-                    speciesId: pet!.speciesId,
-                    cue: ref.watch(petActionCueProvider),
-                    onTap: () {
-                      ctrl.pat(); // 点宠物 = 摸头（带冷却）
-                      _fireCue(ref, 'pat');
-                    },
+          body: LayoutBuilder(
+            builder: (context, constraints) {
+              final size = Size(constraints.maxWidth, constraints.maxHeight);
+              final wideLayout = constraints.maxWidth >= 840;
+              final sceneScale = wideLayout ? 1.16 : 1.0;
+              final petWidth = PetopiaAdaptive.petStageWidth(size);
+              final petAlignment = Alignment(0, wideLayout ? 0.32 : 0.4);
+              return Stack(
+                fit: StackFit.expand,
+                children: [
+                  Image.asset(
+                    YardArt.themeBg(view.activeThemeId),
+                    fit: BoxFit.cover,
+                    errorBuilder: (_, _, _) => Image.asset(
+                      'assets/art/world/themes/yard_theme_meadow_bg.jpg',
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-              SafeArea(
-                child: Column(
-                  children: [
-                    if (pet != null)
-                      _InfoCard(pet: pet, wallet: view.wallet)
-                    else
-                      const _TopMenuOnly(),
-                    const Spacer(),
-                    if (view.activeVisitor != null)
-                      _VisitorStayPill(visitor: view.activeVisitor!),
-                    if (view.activeVisitor != null) const SizedBox(height: 10),
-                    if (pet == null)
-                      const _AdoptCta()
-                    else ...[
-                      if (view.canGraduate)
-                        _GraduateBanner(
-                          onTap: () => Navigator.of(context).push(
-                            MaterialPageRoute<void>(
-                              builder: (_) => GraduationCeremonyScreen(
-                                petName: pet.name,
-                                speciesId: pet.speciesId,
+                  // 摆件中景层（渲染在宠物之下）：自定义 slots 为空时使用默认布置。
+                  for (final decor in _visibleDecor(view.decorSlots))
+                    _YardDecor(
+                      align: decor.anchor.align,
+                      decorId: decor.decorId,
+                      width: decor.anchor.width * sceneScale,
+                    ),
+                  if (view.activeVisitor != null)
+                    Builder(
+                      builder: (context) {
+                        final visitor = view.activeVisitor!;
+                        final placement = _visitorYardPlacement(visitor);
+                        final rect = PetopiaAdaptive.yardSideActorRect(
+                          sceneSize: size,
+                          petWidth: petWidth,
+                          petAlignment: petAlignment,
+                          preferredAlignment: placement.alignment,
+                          preferredSize: placement.size * sceneScale,
+                        );
+                        return Positioned.fromRect(
+                          rect: rect,
+                          child: _YardVisitor(
+                            visitor: visitor,
+                            size: rect.width,
+                            onTap: () =>
+                                showVisitorArrivalDialog(context, visitor),
+                          ),
+                        );
+                      },
+                    ),
+                  if (petAsset != null)
+                    Align(
+                      alignment: petAlignment,
+                      child: PetSprite(
+                        assetPath: petAsset,
+                        width: petWidth,
+                        speciesId: pet!.speciesId,
+                        variantId: pet.variantId,
+                        stage: pet.stage,
+                        cue: ref.watch(petActionCueProvider),
+                        onTap: () async {
+                          if (await ctrl.pat()) _fireCue(ref, 'pat');
+                        },
+                      ),
+                    ),
+                  if (view.revisitor != null)
+                    Builder(
+                      builder: (context) {
+                        final revisitor = view.revisitor!;
+                        final visitorUsesRightLane =
+                            view.activeVisitor != null &&
+                            _visitorYardPlacement(
+                                  view.activeVisitor!,
+                                ).alignment.x >
+                                0;
+                        final revisitorAlignment = Alignment(
+                          visitorUsesRightLane ? -0.56 : 0.56,
+                          0.46,
+                        );
+                        final rect = PetopiaAdaptive.yardSideActorRect(
+                          sceneSize: size,
+                          petWidth: petWidth,
+                          petAlignment: petAlignment,
+                          preferredAlignment: revisitorAlignment,
+                          preferredSize: petWidth * 0.48,
+                        );
+                        return Positioned.fromRect(
+                          rect: rect,
+                          child: GestureDetector(
+                            onTap: () => _showRevisitorDialog(ctrl, revisitor),
+                            child: Image.asset(
+                              PetArt.stage(
+                                revisitor.speciesId,
+                                PetStage.d,
+                                variantId: revisitor.variantId,
                               ),
+                              width: rect.width,
+                              fit: BoxFit.contain,
                             ),
                           ),
-                        ),
-                      _ActionBar(ref: ref, cooldown: view.cooldownSec),
-                    ],
-                    const SizedBox(height: 16),
-                  ],
-                ),
-              ),
-            ],
+                        );
+                      },
+                    ),
+                  _YardOverlay(view: view, ref: ref, wideLayout: wideLayout),
+                ],
+              );
+            },
           ),
         );
       },
@@ -248,6 +313,55 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
     });
   }
 
+  void _scheduleRevisitorArrival(
+    GameController ctrl,
+    RevisitorPresenceView? arrival,
+  ) {
+    if (_revisitorDialogOpen || _postcardDialogOpen || !mounted) return;
+    if (arrival == null) return;
+    _revisitorDialogOpen = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      await _showRevisitorDialog(ctrl, arrival);
+      ctrl.markRevisitorArrivalSeen(arrival.id);
+      if (mounted) _revisitorDialogOpen = false;
+    });
+  }
+
+  void _scheduleEvent(GameController ctrl, EventPresentationView? event) {
+    if (_eventDialogOpen ||
+        _eventPresentedThisActivation ||
+        _postcardDialogOpen ||
+        _visitorDialogOpen ||
+        _revisitorDialogOpen ||
+        !mounted ||
+        event == null) {
+      return;
+    }
+    _eventPresentedThisActivation = true;
+    _eventDialogOpen = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      await showDialog<void>(
+        context: context,
+        builder: (_) => _EventDialog(event: event),
+      );
+      ctrl.dismissEvent(event.id);
+      if (mounted) _eventDialogOpen = false;
+    });
+  }
+
+  Future<void> _showRevisitorDialog(
+    GameController ctrl,
+    RevisitorPresenceView revisitor,
+  ) async {
+    await showDialog<void>(
+      context: context,
+      builder: (_) => _RevisitorDialog(revisitor: revisitor),
+    );
+    ctrl.markRevisitorInteracted(revisitor.id);
+  }
+
   Future<void> showVisitorArrivalDialog(
     BuildContext context,
     VisitorPresenceView visitor,
@@ -259,11 +373,14 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
       barrierColor: Colors.black.withValues(alpha: 0.22),
       transitionDuration: const Duration(milliseconds: 320),
       pageBuilder: (context, _, _) {
-        return SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(22),
-              child: _VisitorArrivalCard(visitor: visitor),
+        return Material(
+          type: MaterialType.transparency,
+          child: SafeArea(
+            child: Center(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(22),
+                child: _VisitorArrivalCard(visitor: visitor),
+              ),
             ),
           ),
         );
@@ -286,32 +403,137 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen> {
 
   void _precacheCurrentPetAssets(
     BuildContext context,
-    String speciesId,
+    PetView pet,
     String staticAsset,
   ) {
-    final key = '$speciesId:$staticAsset';
+    final key = '${pet.speciesId}:${pet.variantId}:${pet.stage}:$staticAsset';
     if (_precacheKey == key) return;
     _precacheKey = key;
 
-    const actions = [
-      'idle',
-      'eat',
-      'pat',
-      'play',
-      'bath',
-      'sit',
-      'sleep',
-      'walk',
-    ];
+    const actions = ['eat', 'pat', 'play', 'bath'];
     final assets = [
       staticAsset,
-      for (final action in actions) PetArt.actionSheet(speciesId, action),
+      if (PetArt.hasMatchingActionSheet(pet.variantId, pet.stage))
+        for (final action in actions) PetArt.actionSheet(pet.speciesId, action),
     ];
     for (final asset in assets) {
       unawaited(
         precacheImage(AssetImage(asset), context).catchError((Object _) {}),
       );
     }
+  }
+}
+
+class _YardOverlay extends StatelessWidget {
+  final GameView view;
+  final WidgetRef ref;
+  final bool wideLayout;
+  const _YardOverlay({
+    required this.view,
+    required this.ref,
+    required this.wideLayout,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final pet = view.pet;
+    if (!wideLayout) {
+      return SafeArea(
+        child: Column(
+          children: [
+            if (pet != null)
+              _InfoCard(pet: pet, wallet: view.wallet)
+            else
+              const _TopMenuOnly(),
+            const Spacer(),
+            if (view.activeVisitor != null)
+              _VisitorStayPill(visitor: view.activeVisitor!),
+            if (view.activeVisitor != null) const SizedBox(height: 10),
+            if (pet == null)
+              const _AdoptCta()
+            else ...[
+              if (view.canGraduate)
+                _GraduateBanner(onTap: () => _graduate(context, pet)),
+              _ActionBar(
+                ref: ref,
+                cooldown: view.cooldownSec,
+                dailyMaxed: view.dailyMaxed,
+              ),
+            ],
+            const SizedBox(height: 16),
+          ],
+        ),
+      );
+    }
+
+    final margin = PetopiaAdaptive.sideMargin(context);
+    final panelWidth = PetopiaAdaptive.panelWidth(
+      MediaQuery.sizeOf(context).width,
+    );
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.all(margin),
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: SizedBox(
+                width: panelWidth,
+                child: pet != null
+                    ? _InfoCard(pet: pet, wallet: view.wallet, edgeToEdge: true)
+                    : const _TopMenuOnly(),
+              ),
+            ),
+            Align(
+              alignment: Alignment.topRight,
+              child: SizedBox(
+                width: panelWidth,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (view.activeVisitor != null)
+                        _VisitorStayPill(
+                          visitor: view.activeVisitor!,
+                          compact: true,
+                        ),
+                      if (view.activeVisitor != null)
+                        const SizedBox(height: 12),
+                      if (pet == null)
+                        const _AdoptCta(edgeToEdge: true)
+                      else ...[
+                        if (view.canGraduate)
+                          _GraduateBanner(
+                            edgeToEdge: true,
+                            onTap: () => _graduate(context, pet),
+                          ),
+                        _ActionBar(
+                          ref: ref,
+                          cooldown: view.cooldownSec,
+                          dailyMaxed: view.dailyMaxed,
+                          edgeToEdge: true,
+                        ),
+                      ],
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _graduate(BuildContext context, PetView pet) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => GraduationCeremonyScreen(
+          petName: pet.name,
+          speciesId: pet.speciesId,
+        ),
+      ),
+    );
   }
 }
 
@@ -455,6 +677,117 @@ class _VisitorArrivalCard extends StatelessWidget {
   }
 }
 
+class _RevisitorDialog extends StatelessWidget {
+  final RevisitorPresenceView revisitor;
+  const _RevisitorDialog({required this.revisitor});
+
+  @override
+  Widget build(BuildContext context) {
+    final days =
+        revisitor.leavesAt.difference(DateTime.now().toUtc()).inDays + 1;
+    return AlertDialog(
+      backgroundColor: const Color(0xFFFFFDF7),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+      title: Text(
+        '${revisitor.name} 回家看看了',
+        style: const TextStyle(
+          color: Color(0xFF6B5445),
+          fontWeight: FontWeight.w900,
+        ),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(
+            PetArt.stage(
+              revisitor.speciesId,
+              PetStage.d,
+              variantId: revisitor.variantId,
+            ),
+            width: 168,
+            height: 168,
+            fit: BoxFit.contain,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            '它从旅途中回来串门，还给院子带了一小包暖绒。接下来约 $days 天，它会和新伙伴一起待在这里。',
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Color(0xFF6B5445),
+              height: 1.55,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('欢迎回家'),
+        ),
+      ],
+    );
+  }
+}
+
+class _EventDialog extends StatelessWidget {
+  final EventPresentationView event;
+  const _EventDialog({required this.event});
+
+  @override
+  Widget build(BuildContext context) {
+    final special = event.type == EventType.special;
+    return AlertDialog(
+      backgroundColor: const Color(0xFFFFFDF7),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+      icon: AppIcon(
+        special ? 'ach_special' : 'ach_event',
+        size: 48,
+        fallback: special ? Icons.auto_awesome_rounded : Icons.wb_sunny_rounded,
+      ),
+      title: Text(
+        event.title,
+        textAlign: TextAlign.center,
+        style: const TextStyle(
+          color: Color(0xFF6B5445),
+          fontWeight: FontWeight.w900,
+        ),
+      ),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            event.script,
+            textAlign: TextAlign.center,
+            style: const TextStyle(
+              color: Color(0xFF6B5445),
+              height: 1.6,
+              fontSize: 16,
+            ),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            [
+              if (event.expReward > 0) '经验 +${event.expReward}',
+              if (event.currencyReward > 0) '暖绒 +${event.currencyReward}',
+            ].join(' · '),
+            style: const TextStyle(
+              color: Color(0xFFE8A15C),
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        FilledButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('记进手账'),
+        ),
+      ],
+    );
+  }
+}
+
 String _visitorRarityLabel(VisitorRarity rarity) {
   return switch (rarity) {
     VisitorRarity.common => '常见来客',
@@ -490,24 +823,102 @@ class _YardDecor extends StatelessWidget {
 
 class _YardVisitor extends StatelessWidget {
   final VisitorPresenceView visitor;
-  const _YardVisitor({required this.visitor});
+  final double size;
+  final VoidCallback onTap;
+  const _YardVisitor({
+    required this.visitor,
+    required this.size,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: Image.asset(
-        visitor.yardAsset,
-        width: 96,
-        fit: BoxFit.contain,
-        errorBuilder: (_, _, _) => const SizedBox(),
+    return Semantics(
+      button: true,
+      label: '来客 ${visitor.name}，点按查看互动',
+      child: GestureDetector(
+        onTap: onTap,
+        behavior: HitTestBehavior.opaque,
+        child: AnimatedOpacity(
+          duration: const Duration(milliseconds: 260),
+          opacity: 0.92,
+          child: SpriteSheetPlayer(
+            assetPath: visitor.yardAsset,
+            size: size,
+            duration: const Duration(milliseconds: 1200),
+            loop: true,
+            fallback: _VisitorLogoFallback(visitor: visitor, size: size),
+          ),
+        ),
       ),
     );
   }
 }
 
+class _VisitorLogoFallback extends StatelessWidget {
+  final VisitorPresenceView visitor;
+  final double size;
+  const _VisitorLogoFallback({required this.visitor, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size * 0.82,
+      height: size * 0.82,
+      padding: EdgeInsets.all(size * 0.16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFDF7).withValues(alpha: 0.72),
+        shape: BoxShape.circle,
+        boxShadow: const [
+          BoxShadow(color: Colors.black12, blurRadius: 8, offset: Offset(0, 3)),
+        ],
+      ),
+      child: Image.asset(
+        visitor.portraitAsset,
+        fit: BoxFit.contain,
+        errorBuilder: (_, _, _) => AppIcon(
+          'ach_visitor',
+          size: size * 0.42,
+          fallback: Icons.emoji_nature_rounded,
+        ),
+      ),
+    );
+  }
+}
+
+class _VisitorYardPlacement {
+  final Alignment alignment;
+  final double size;
+  const _VisitorYardPlacement(this.alignment, this.size);
+}
+
+_VisitorYardPlacement _visitorYardPlacement(VisitorPresenceView visitor) {
+  return switch (visitor.id) {
+    'visitor_butterfly' => const _VisitorYardPlacement(
+      Alignment(0.47, 0.24),
+      68,
+    ),
+    'visitor_firefly' || 'visitor_starbug' || 'visitor_campfire_light' =>
+      const _VisitorYardPlacement(Alignment(0.46, 0.22), 72),
+    'visitor_egret' ||
+    'visitor_deer' ||
+    'visitor_fox' => const _VisitorYardPlacement(Alignment(-0.54, 0.38), 104),
+    'visitor_calico' ||
+    'visitor_tanuki' ||
+    'visitor_owl' ||
+    'visitor_crow' ||
+    'visitor_snowhare' => const _VisitorYardPlacement(
+      Alignment(-0.50, 0.43),
+      92,
+    ),
+    _ => const _VisitorYardPlacement(Alignment(-0.52, 0.46), 78),
+  };
+}
+
 class _VisitorStayPill extends StatelessWidget {
   final VisitorPresenceView visitor;
-  const _VisitorStayPill({required this.visitor});
+  final bool compact;
+  const _VisitorStayPill({required this.visitor, this.compact = false});
 
   @override
   Widget build(BuildContext context) {
@@ -516,7 +927,9 @@ class _VisitorStayPill extends StatelessWidget {
         context,
       ).push(MaterialPageRoute<void>(builder: (_) => const VisitorDexScreen())),
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 22),
+        margin: compact
+            ? EdgeInsets.zero
+            : const EdgeInsets.symmetric(horizontal: 22),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
         decoration: BoxDecoration(
           color: const Color(0xFFFFFDF7).withValues(alpha: 0.94),
@@ -590,7 +1003,8 @@ List<_VisibleDecor> _visibleDecor(List<YardSlotView> slots) {
 /// 毕业提示横幅（达到毕业线时出现在动作栏上方）。
 class _GraduateBanner extends StatelessWidget {
   final VoidCallback onTap;
-  const _GraduateBanner({required this.onTap});
+  final bool edgeToEdge;
+  const _GraduateBanner({required this.onTap, this.edgeToEdge = false});
 
   @override
   Widget build(BuildContext context) {
@@ -599,7 +1013,9 @@ class _GraduateBanner extends StatelessWidget {
       child: GestureDetector(
         onTap: onTap,
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 20),
+          margin: edgeToEdge
+              ? EdgeInsets.zero
+              : const EdgeInsets.symmetric(horizontal: 20),
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
           decoration: BoxDecoration(
             gradient: const LinearGradient(
@@ -631,12 +1047,15 @@ class _GraduateBanner extends StatelessWidget {
 
 /// 空院子的领养召唤卡。
 class _AdoptCta extends StatelessWidget {
-  const _AdoptCta();
+  final bool edgeToEdge;
+  const _AdoptCta({this.edgeToEdge = false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 28),
+      margin: edgeToEdge
+          ? EdgeInsets.zero
+          : const EdgeInsets.symmetric(horizontal: 28),
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 22),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFDF7).withValues(alpha: 0.94),
@@ -689,12 +1108,19 @@ class _AdoptCta extends StatelessWidget {
 class _InfoCard extends StatelessWidget {
   final PetView pet;
   final int wallet;
-  const _InfoCard({required this.pet, required this.wallet});
+  final bool edgeToEdge;
+  const _InfoCard({
+    required this.pet,
+    required this.wallet,
+    this.edgeToEdge = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 12, left: 16, right: 16),
+      margin: edgeToEdge
+          ? EdgeInsets.zero
+          : const EdgeInsets.only(top: 12, left: 16, right: 16),
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFDF7).withValues(alpha: 0.92),
@@ -745,6 +1171,8 @@ class _InfoCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             '经验 ${pet.exp} / ${GameConfig.graduationExp}    性格：${pet.personality.join(" · ")}',
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontSize: 12, color: Color(0xFF8A7A6A)),
           ),
         ],
@@ -946,55 +1374,65 @@ class _YardDecorLayoutScreen extends ConsumerWidget {
         error: (e, _) => Center(child: Text('加载失败：$e')),
         data: (view) {
           final inventory = ctrl.decorInventory();
-          return ListView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            children: [
-              Container(
-                padding: const EdgeInsets.all(14),
-                decoration: BoxDecoration(
-                  color: _paper.withValues(alpha: 0.92),
-                  borderRadius: BorderRadius.circular(18),
-                  boxShadow: const [
-                    BoxShadow(color: Colors.black12, blurRadius: 8),
-                  ],
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 920),
+              child: ListView(
+                padding: EdgeInsets.fromLTRB(
+                  PetopiaAdaptive.sideMargin(context),
+                  8,
+                  PetopiaAdaptive.sideMargin(context),
+                  24,
                 ),
-                child: Text(
-                  inventory.isEmpty
-                      ? '还没有可摆放的小物。去商店买到装饰后，就能指定到院子的固定位置。'
-                      : '选择一个槽位，再点已拥有的小物；同一个小物只会出现在一个位置。',
-                  style: const TextStyle(
-                    color: _muted,
-                    height: 1.5,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 14),
-              if (inventory.isEmpty)
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: TextButton.icon(
-                    onPressed: () => Navigator.of(context).push(
-                      MaterialPageRoute<void>(
-                        builder: (_) => const ShopScreen(),
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: _paper.withValues(alpha: 0.92),
+                      borderRadius: BorderRadius.circular(18),
+                      boxShadow: const [
+                        BoxShadow(color: Colors.black12, blurRadius: 8),
+                      ],
+                    ),
+                    child: Text(
+                      inventory.isEmpty
+                          ? '还没有可摆放的小物。去商店买到装饰后，就能指定到院子的固定位置。'
+                          : '选择一个槽位，再点已拥有的小物；同一个小物只会出现在一个位置。',
+                      style: const TextStyle(
+                        color: _muted,
+                        height: 1.5,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
-                    icon: const AppIcon(
-                      'shop_deco',
-                      size: 22,
-                      fallback: Icons.storefront_rounded,
-                    ),
-                    label: const Text('去商店看看'),
                   ),
-                ),
-              for (var pos = 0; pos < GameController.decorSlotCount; pos++)
-                _DecorSlotEditor(
-                  pos: pos,
-                  current: _slotItem(view.decorSlots, pos),
-                  inventory: inventory,
-                  onSelect: (decorId) => ctrl.placeDecor(pos, decorId),
-                ),
-            ],
+                  const SizedBox(height: 14),
+                  if (inventory.isEmpty)
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: TextButton.icon(
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (_) => const ShopScreen(),
+                          ),
+                        ),
+                        icon: const AppIcon(
+                          'shop_deco',
+                          size: 22,
+                          fallback: Icons.storefront_rounded,
+                        ),
+                        label: const Text('去商店看看'),
+                      ),
+                    ),
+                  for (var pos = 0; pos < GameController.decorSlotCount; pos++)
+                    _DecorSlotEditor(
+                      pos: pos,
+                      current: _slotItem(view.decorSlots, pos),
+                      inventory: inventory,
+                      onSelect: (decorId) => ctrl.placeDecor(pos, decorId),
+                    ),
+                ],
+              ),
+            ),
           );
         },
       ),
@@ -1128,15 +1566,21 @@ class _DecorChoiceButton extends StatelessWidget {
 class _ActionBar extends StatelessWidget {
   final WidgetRef ref;
   final Map<CareAction, int> cooldown;
-  const _ActionBar({required this.ref, required this.cooldown});
+  final Set<CareAction> dailyMaxed;
+  final bool edgeToEdge;
+  const _ActionBar({
+    required this.ref,
+    required this.cooldown,
+    required this.dailyMaxed,
+    this.edgeToEdge = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     final ctrl = ref.read(gameControllerProvider.notifier);
     // 动作按钮：调用照料 + 触发对应序列帧动画（feed→eat/toy→play）。
-    void run(VoidCallback care, String pose) {
-      care();
-      _fireCue(ref, pose);
+    Future<void> run(Future<bool> Function() care, String pose) async {
+      if (await care()) _fireCue(ref, pose);
     }
 
     final actions = [
@@ -1170,7 +1614,9 @@ class _ActionBar extends StatelessWidget {
       ),
     ];
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: edgeToEdge
+          ? EdgeInsets.zero
+          : const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
       decoration: BoxDecoration(
         color: const Color(0xFFFFFDF7).withValues(alpha: 0.92),
@@ -1186,6 +1632,7 @@ class _ActionBar extends StatelessWidget {
               label: label,
               exp: exp,
               cooldownSec: cooldown[action] ?? 0,
+              dailyMaxed: dailyMaxed.contains(action),
               onTap: onTap,
             ),
         ],
@@ -1199,50 +1646,102 @@ class _ActionButton extends StatelessWidget {
   final String label;
   final int exp;
   final int cooldownSec;
+  final bool dailyMaxed;
   final VoidCallback onTap;
   const _ActionButton({
     required this.iconName,
     required this.label,
     required this.exp,
     required this.cooldownSec,
+    required this.dailyMaxed,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     final onCd = cooldownSec > 0;
-    return GestureDetector(
-      onTap: onCd ? null : onTap,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Opacity(
-            opacity: onCd ? 0.45 : 1,
-            child: Container(
+    final disabled = onCd || dailyMaxed;
+    final icon = AppIcon(iconName, size: 38, fallback: Icons.pets);
+    return Semantics(
+      button: true,
+      enabled: !disabled,
+      label: dailyMaxed
+          ? '$label，今日次数已完成'
+          : onCd
+          ? '$label，${_formatCooldown(cooldownSec)}后可用'
+          : '$label，增加$exp点经验',
+      child: GestureDetector(
+        onTap: disabled ? null : onTap,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
               width: 54,
               height: 54,
               padding: const EdgeInsets.all(8),
-              decoration: const BoxDecoration(
-                color: Color(0xFFFFF6E6),
+              decoration: BoxDecoration(
+                color: disabled
+                    ? const Color(0xFFF0EDE8).withValues(alpha: 0.92)
+                    : const Color(0xFFFFF6E6),
                 shape: BoxShape.circle,
               ),
-              child: AppIcon(
-                onCd ? 'hourglass_wc' : iconName,
-                size: 38,
-                fallback: Icons.pets,
+              child: disabled
+                  ? ColorFiltered(
+                      colorFilter: const ColorFilter.matrix(<double>[
+                        0.2126,
+                        0.7152,
+                        0.0722,
+                        0,
+                        0,
+                        0.2126,
+                        0.7152,
+                        0.0722,
+                        0,
+                        0,
+                        0.2126,
+                        0.7152,
+                        0.0722,
+                        0,
+                        0,
+                        0,
+                        0,
+                        0,
+                        1,
+                        0,
+                      ]),
+                      child: Opacity(opacity: 0.48, child: icon),
+                    )
+                  : icon,
+            ),
+            const SizedBox(height: 4),
+            SizedBox(
+              height: 14,
+              child: Text(
+                dailyMaxed
+                    ? '今日已完成'
+                    : onCd
+                    ? _formatCooldown(cooldownSec)
+                    : '$label +$exp',
+                style: TextStyle(
+                  fontSize: disabled ? 10.5 : 11,
+                  fontWeight: disabled ? FontWeight.w700 : FontWeight.w500,
+                  color: disabled
+                      ? const Color(0xFF9A9086)
+                      : const Color(0xFF6B5445),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            onCd ? '${cooldownSec}s' : '$label +$exp',
-            style: TextStyle(
-              fontSize: 11,
-              color: onCd ? const Color(0xFFB0A090) : const Color(0xFF6B5445),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  static String _formatCooldown(int seconds) {
+    if (seconds < 60) return '${seconds}s';
+    final minutes = seconds ~/ 60;
+    final rest = seconds % 60;
+    return '$minutes:${rest.toString().padLeft(2, '0')}';
   }
 }

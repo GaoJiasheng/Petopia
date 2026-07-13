@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:petopia/domain/enums.dart';
 import 'package:petopia/domain/item_effect.dart';
 import 'package:petopia/domain/models/logs.dart';
+import 'package:petopia/domain/models/game_state.dart';
 import 'package:petopia/domain/models/pet.dart';
 import 'package:petopia/domain/models/yard.dart';
 import 'package:petopia/domain/models/content_entities.dart';
@@ -25,35 +26,51 @@ class FixedClock implements ClockService {
   @override
   DateTime now() => DateTime.utc(2026, 7, 2, 12);
   @override
-  Duration resolveOfflineElapsed({required DateTime lastOnlineAt}) => Duration.zero;
+  Duration resolveOfflineElapsed({required DateTime lastOnlineAt}) =>
+      Duration.zero;
   @override
   void markHeartbeat() {}
 }
 
 Pet _pet(String species) => Pet(
-      id: 'petX', speciesId: species, variantId: 'v1', name: 'x',
-      personality: const ['p_curious', 'p_gentle'],
-      bornAt: DateTime.utc(2026, 7, 2), lastOnlineAt: DateTime.utc(2026, 7, 2),
-      offlineDayKey: '2026-07-02');
+  id: 'petX',
+  speciesId: species,
+  variantId: 'v1',
+  name: 'x',
+  personality: const ['p_curious', 'p_gentle'],
+  bornAt: DateTime.utc(2026, 7, 2),
+  lastOnlineAt: DateTime.utc(2026, 7, 2),
+  offlineDayKey: '2026-07-02',
+);
 
 void main() {
   late FakeLogPort port;
   late CurrencyWallet wallet;
   late YardState yard;
+  late ShopInventory inventory;
   int idc = 0;
 
   EconomyServiceImpl build({
     int events = 0,
     int visitors = 0,
     Set<String> fantasy = const {},
-  }) =>
-      EconomyServiceImpl(port, wallet, yard, FixedClock(), () => 'c${idc++}',
-          (_) => events, (_) => visitors, (sp) => fantasy.contains(sp));
+  }) => EconomyServiceImpl(
+    port,
+    wallet,
+    yard,
+    FixedClock(),
+    () => 'c${idc++}',
+    (_) => events,
+    (_) => visitors,
+    (sp) => fantasy.contains(sp),
+    inventory,
+  );
 
   setUp(() {
     port = FakeLogPort();
     wallet = CurrencyWallet(balance: 0);
     yard = YardState();
+    inventory = ShopInventory();
     idc = 0;
   });
 
@@ -77,7 +94,10 @@ void main() {
 
   group('settleGraduation 公式', () {
     test('常规：base200 + 事件封顶 + 访客封顶', () {
-      final e = build(events: 10, visitors: 5); // +min(20,100)=20, +min(15,60)=15
+      final e = build(
+        events: 10,
+        visitors: 5,
+      ); // +min(20,100)=20, +min(15,60)=15
       final f = e.settleGraduation(_pet('pet_cat'));
       expect(f, 235);
       expect(wallet.balance, 235);
@@ -97,8 +117,14 @@ void main() {
     final e = build();
     e.earn(500, CurrencyReason.graduation, ref: 'grad:petX');
     final item = ShopItem(
-      id: 'shop_theme_sakura', category: '院子主题', name: '樱花小径', price: 400,
-      effect: const ItemEffect(type: EffectType.themeSkin, params: {'themeId': 'theme_sakura'}),
+      id: 'shop_theme_sakura',
+      category: '院子主题',
+      name: '樱花小径',
+      price: 400,
+      effect: const ItemEffect(
+        type: EffectType.themeSkin,
+        params: {'themeId': 'theme_sakura'},
+      ),
       artRef: 'x',
     );
     final r = e.purchase(item);
@@ -110,12 +136,64 @@ void main() {
   test('purchase 余额不足 → 失败、不改院子', () {
     final e = build();
     final item = ShopItem(
-      id: 'shop_theme_x', category: '院子主题', name: 'x', price: 400,
-      effect: const ItemEffect(type: EffectType.themeSkin, params: {'themeId': 'theme_x'}),
+      id: 'shop_theme_x',
+      category: '院子主题',
+      name: 'x',
+      price: 400,
+      effect: const ItemEffect(
+        type: EffectType.themeSkin,
+        params: {'themeId': 'theme_x'},
+      ),
       artRef: 'x',
     );
     expect(e.purchase(item).success, false);
     expect(yard.ownedThemeIds.contains('theme_x'), false);
+  });
+
+  test('消耗品进入库存，访客粮同步食盆概率效果', () {
+    final e = build();
+    e.earn(100, CurrencyReason.graduation, ref: 'seed');
+    final item = ShopItem(
+      id: 'shop_food_grain_bag',
+      category: '特殊食粮',
+      name: '谷粒袋 ×3 盘',
+      price: 20,
+      effect: const ItemEffect(
+        type: EffectType.visitorProb,
+        params: {'scope': 'bird', 'delta': 0.8},
+      ),
+      artRef: 'x',
+      consumable: true,
+      stackCount: 3,
+    );
+
+    expect(e.purchase(item).success, true);
+    expect(inventory.consumables[item.id], 3);
+    expect(yard.foodTray.foodType, 'grain');
+    expect(yard.foodTray.probabilityScope, 'bird');
+    expect(yard.foodTray.remaining, 3);
+  });
+
+  test('相册皮肤可拥有，永久商品重复购买不会再次扣费', () {
+    final e = build();
+    e.earn(500, CurrencyReason.graduation, ref: 'seed');
+    final item = ShopItem(
+      id: 'shop_album_paper',
+      category: '明信片',
+      name: '相册皮肤·牛皮纸',
+      price: 150,
+      effect: const ItemEffect(
+        type: EffectType.albumSkin,
+        params: {'skinId': 'paper'},
+      ),
+      artRef: 'x',
+    );
+
+    expect(e.purchase(item).success, true);
+    expect(inventory.ownedAlbumSkinIds, contains('paper'));
+    expect(inventory.activeAlbumSkinId, 'paper');
+    expect(e.purchase(item).failReason, 'already_owned');
+    expect(wallet.balance, 350);
   });
 
   test('INV-4：balance == Σcurrency流水delta', () async {

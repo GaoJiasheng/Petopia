@@ -76,6 +76,8 @@ class UnlockServiceImpl implements UnlockService {
     final newly = <Achievement>[];
     for (final ach in _achievements) {
       if (ach.condition.type.name != signal.type) continue;
+      final achievementId = signal.params['achievementId'] as String?;
+      if (achievementId != null && ach.id != achievementId) continue;
       final p = _progress.putIfAbsent(
         ach.id,
         () => AchievementProgress(achievementId: ach.id),
@@ -97,8 +99,11 @@ class UnlockServiceImpl implements UnlockService {
     final ach = _achievements.where((a) => a.id == achievementId).firstOrNull;
     if (ach == null) return;
     if (ach.reward.fluff > 0) {
-      _economy.earn(ach.reward.fluff, CurrencyReason.achievement,
-          ref: 'ach:$achievementId'); // 稳定 ref（云同步幂等）
+      _economy.earn(
+        ach.reward.fluff,
+        CurrencyReason.achievement,
+        ref: 'ach:$achievementId',
+      ); // 稳定 ref（云同步幂等）
     }
     p.rewardClaimed = true;
   }

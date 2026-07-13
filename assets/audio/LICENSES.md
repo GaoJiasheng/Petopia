@@ -6,6 +6,7 @@ This folder contains Petopia-specific music assets generated for this project.
 
 - Covered assets: `bgm_*` and `sting_*` files under `assets/audio/bgm/` and `assets/audio/sting/`.
 - Current generation batch: see `assets/audio/provenance/music_provenance_manifest.json`.
+- Runtime `.m4a` files are platform-compatible transcodes of the declared WAV masters and inherit the same provenance.
 - These audio assets are not automatically covered by the repository root MIT License unless the project owner explicitly adds them to that license.
 
 ## Source Declaration

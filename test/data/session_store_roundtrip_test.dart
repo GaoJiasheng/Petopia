@@ -32,6 +32,22 @@ void main() {
     expect(loaded, isNotNull);
     _expectSessionEquals(loaded!, session);
   });
+
+  test(
+    'concurrent saves are serialized and keep the newest snapshot',
+    () async {
+      final session = _richSession();
+      final store = SessionStore(tempDir);
+
+      final first = store.save(session);
+      session.wallet.balance = 2048;
+      final second = store.save(session);
+      await Future.wait([first, second]);
+
+      final loaded = await store.load();
+      expect(loaded?.wallet.balance, 2048);
+    },
+  );
 }
 
 GameSession _richSession() {
@@ -69,6 +85,9 @@ GameSession _richSession() {
       foodTray: FoodTray(
         foodType: 'grain',
         placedAt: DateTime.utc(2026, 7, 3, 7, 30),
+        probabilityScope: 'bird',
+        probabilityDelta: 0.8,
+        remaining: 2,
       ),
       ownedPerks: const <String>['toy_yarn_perm'],
       ownedDecorIds: const <String>['deco_night_lamp', 'deco_blue_bowl'],
@@ -83,6 +102,36 @@ GameSession _richSession() {
       loginStreakCurrent: 3,
       loginStreakMax: 5,
       lastLoginDay: '2026-07-03',
+    ),
+    shopInventory: ShopInventory(
+      consumables: <String, int>{'shop_food_grain_bag': 2},
+      ownedAlbumSkinIds: <String>{'default', 'paper'},
+      activeAlbumSkinId: 'paper',
+      activeVisitorFoodItemId: 'shop_food_grain_bag',
+    ),
+  );
+
+  session.careLedger = CareLedger(
+    dayKey: '2026-07-03',
+    counts: <String, int>{'feed': 2, 'pat': 1},
+    lastAt: <String, DateTime>{'feed': DateTime.utc(2026, 7, 3, 11)},
+    firstCareRewarded: true,
+  );
+  session.achievementSignals.addAll(<String, int>{
+    'action:feed': 2,
+    'care:days': 1,
+  });
+  session.ownedVariants.addAll(<String>{'pet_cat_v3', 'pet_shiba_v2'});
+  session.pendingEvents.add(
+    PendingGameEvent(
+      id: 'pending-1',
+      eventId: 'ev_d01',
+      title: '追落叶',
+      script: '叼来一片落叶。',
+      type: EventType.daily,
+      expReward: 5,
+      currencyReward: 0,
+      createdAt: DateTime.utc(2026, 7, 3, 12),
     ),
   );
 
@@ -108,6 +157,7 @@ GameSession _richSession() {
     ),
   });
   session.eventCounts.addAll(<String, int>{'pet-current': 7, 'pet-roaming': 2});
+  session.eventLastFiredAt['pet-current:ev_d01'] = DateTime.utc(2026, 7, 3, 12);
   session.visitorCounts.addAll(<String, int>{
     'pet-current': 3,
     'pet-roaming': 1,
@@ -218,6 +268,10 @@ GameSession _richSession() {
     journeyId: 'journey-2',
     nextRevisitAt: DateTime.utc(2026, 7, 3),
   );
+  session.revisitorArrivedAt = DateTime.utc(2026, 7, 3, 12);
+  session.revisitorLeavesAt = DateTime.utc(2026, 7, 5, 12);
+  session.revisitorArrivalSeen = true;
+  session.revisitorInteracted = true;
   return session;
 }
 
@@ -229,7 +283,35 @@ void _expectSessionEquals(GameSession actual, GameSession expected) {
   _expectClueMapEquals(actual.clues, expected.clues);
   _expectAchievementMapEquals(actual.achievements, expected.achievements);
   expect(actual.eventCounts, expected.eventCounts);
+  expect(actual.eventLastFiredAt, expected.eventLastFiredAt);
   expect(actual.visitorCounts, expected.visitorCounts);
+  expect(actual.achievementSignals, expected.achievementSignals);
+  expect(actual.ownedVariants, unorderedEquals(expected.ownedVariants));
+  expect(actual.careLedger.dayKey, expected.careLedger.dayKey);
+  expect(actual.careLedger.counts, expected.careLedger.counts);
+  expect(actual.careLedger.lastAt, expected.careLedger.lastAt);
+  expect(
+    actual.careLedger.firstCareRewarded,
+    expected.careLedger.firstCareRewarded,
+  );
+  expect(actual.shopInventory.consumables, expected.shopInventory.consumables);
+  expect(
+    actual.shopInventory.ownedAlbumSkinIds,
+    unorderedEquals(expected.shopInventory.ownedAlbumSkinIds),
+  );
+  expect(
+    actual.shopInventory.activeAlbumSkinId,
+    expected.shopInventory.activeAlbumSkinId,
+  );
+  expect(
+    actual.shopInventory.activeVisitorFoodItemId,
+    expected.shopInventory.activeVisitorFoodItemId,
+  );
+  expect(actual.pendingEvents, hasLength(expected.pendingEvents.length));
+  expect(
+    actual.pendingEvents.single.title,
+    expected.pendingEvents.single.title,
+  );
   _expectPetListEquals(actual.roaming, expected.roaming);
   _expectJourneyListEquals(actual.journeys, expected.journeys);
   _expectJobListEquals(actual.jobs, expected.jobs);
@@ -243,6 +325,10 @@ void _expectSessionEquals(GameSession actual, GameSession expected) {
   expect(actual.ownedSpecies, unorderedEquals(expected.ownedSpecies));
   _expectPostcardListEquals(actual.postcards, expected.postcards);
   _expectNullablePetEquals(actual.revisitor, expected.revisitor);
+  expect(actual.revisitorArrivedAt, expected.revisitorArrivedAt);
+  expect(actual.revisitorLeavesAt, expected.revisitorLeavesAt);
+  expect(actual.revisitorArrivalSeen, expected.revisitorArrivalSeen);
+  expect(actual.revisitorInteracted, expected.revisitorInteracted);
 }
 
 void _expectNullablePetEquals(Pet? actual, Pet? expected) {
@@ -298,6 +384,9 @@ void _expectYardEquals(YardState actual, YardState expected) {
   }
   expect(actual.foodTray.foodType, expected.foodTray.foodType);
   expect(actual.foodTray.placedAt, expected.foodTray.placedAt);
+  expect(actual.foodTray.probabilityScope, expected.foodTray.probabilityScope);
+  expect(actual.foodTray.probabilityDelta, expected.foodTray.probabilityDelta);
+  expect(actual.foodTray.remaining, expected.foodTray.remaining);
   expect(actual.ownedPerks, expected.ownedPerks);
   expect(actual.ownedDecorIds, expected.ownedDecorIds);
 }

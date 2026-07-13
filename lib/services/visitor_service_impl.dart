@@ -52,7 +52,14 @@ class VisitorServiceImpl implements VisitorService {
     final cands = <MapEntry<Visitor, double>>[];
     for (final v in _visitors) {
       if (v.rarity == VisitorRarity.legendary) continue;
-      final p = _probability(v, window, yard, weather, season, legendary: false);
+      final p = _probability(
+        v,
+        window,
+        yard,
+        weather,
+        season,
+        legendary: false,
+      );
       if (p > 0) cands.add(MapEntry(v, p));
     }
     if (cands.isEmpty) return null;
@@ -128,13 +135,15 @@ class VisitorServiceImpl implements VisitorService {
 
   @override
   void recordVisit(Visitor v, Pet? pet, VisitorPetInteraction? it) {
-    _onLog(VisitorLogEntry(
-      id: _idGen(),
-      visitorId: v.id,
-      date: _now(),
-      interactionId: it?.id,
-      withPetId: pet?.id,
-    ));
+    _onLog(
+      VisitorLogEntry(
+        id: _idGen(),
+        visitorId: v.id,
+        date: _now(),
+        interactionId: it?.id,
+        withPetId: pet?.id,
+      ),
+    );
     // 彩蛋线索推进：互动自带 unlockClue 优先，否则传说访客用 clueRole。
     final clue = it?.unlockClue ?? v.clueRole;
     if (clue != null) _onClue(clue);
@@ -158,6 +167,10 @@ class VisitorServiceImpl implements VisitorService {
     p *= v.weatherPref[weather] ?? 1.0;
     final food = yard.foodTray.foodType;
     p *= food == null ? GameConfig.emptyTrayMult : (v.foodPref[food] ?? 1.0);
+    final scope = yard.foodTray.probabilityScope;
+    if (food != null && scope != null && _matchesFoodScope(v.id, scope)) {
+      p *= 1 + yard.foodTray.probabilityDelta.clamp(0.0, 2.0);
+    }
     p *= v.seasonPref[season] ?? 1.0;
     // 豪华度绝对加成（先乘后加）
     if (yard.luxuryStage >= 2) p += GameConfig.luxuryStage2AllBonus;
@@ -175,10 +188,29 @@ class VisitorServiceImpl implements VisitorService {
 
   bool _isNight(DateTime now) => now.hour >= 18 || now.hour < 6;
 
+  bool _matchesFoodScope(String visitorId, String scope) {
+    return switch (scope) {
+      'bird' || 'birds' =>
+        visitorId == 'visitor_sparrow' ||
+            visitorId == 'visitor_pigeon' ||
+            visitorId == 'visitor_crow' ||
+            visitorId == 'visitor_owl' ||
+            visitorId == 'visitor_egret',
+      'cat_egret' =>
+        visitorId == 'visitor_calico' || visitorId == 'visitor_egret',
+      'squirrel' => visitorId == 'visitor_squirrel',
+      'rabbit_deer' =>
+        visitorId == 'visitor_snowhare' || visitorId == 'visitor_deer',
+      'night' => true,
+      'legendary' => true,
+      _ => false,
+    };
+  }
+
   double _baseProb(VisitorRarity r) => switch (r) {
-        VisitorRarity.common => GameConfig.baseProbCommon,
-        VisitorRarity.uncommon => GameConfig.baseProbUncommon,
-        VisitorRarity.rare => GameConfig.baseProbRare,
-        VisitorRarity.legendary => GameConfig.baseProbLegendary,
-      };
+    VisitorRarity.common => GameConfig.baseProbCommon,
+    VisitorRarity.uncommon => GameConfig.baseProbUncommon,
+    VisitorRarity.rare => GameConfig.baseProbRare,
+    VisitorRarity.legendary => GameConfig.baseProbLegendary,
+  };
 }

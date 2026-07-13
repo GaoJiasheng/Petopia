@@ -73,19 +73,22 @@ class ExpEngineImpl implements ExpEngine {
     pet.level = deriveLevel(pet.exp);
     pet.stage = deriveStage(pet.level);
 
-    _audit.appendExpLog(ExpLogEntry(
-      id: _idGen(),
-      petId: pet.id,
-      timestamp: _clock.now(),
-      sourceType: source,
-      sourceRef: sourceRef,
-      delta: delta,
-      levelAt: levelBefore,
-      expAfter: pet.exp, // 冗余，供 INV-1 即时自检
-      note: note,
-    ));
+    _audit.appendExpLog(
+      ExpLogEntry(
+        id: _idGen(),
+        petId: pet.id,
+        timestamp: _clock.now(),
+        sourceType: source,
+        sourceRef: sourceRef,
+        delta: delta,
+        levelAt: levelBefore,
+        expAfter: pet.exp, // 冗余，供 INV-1 即时自检
+        note: note,
+      ),
+    );
 
-    final graduated = pet.level >= GameConfig.maxLevel && levelBefore < GameConfig.maxLevel;
+    final graduated =
+        pet.level >= GameConfig.maxLevel && levelBefore < GameConfig.maxLevel;
     return ExpResult(
       deltaApplied: delta,
       levelBefore: levelBefore,
@@ -136,6 +139,8 @@ class ExpEngineImpl implements ExpEngine {
 
   bool _isLazy(Pet pet) => pet.personality.contains('p_lazy');
 
-  String _dayKey(DateTime t) =>
-      '${t.year.toString().padLeft(4, '0')}-${t.month.toString().padLeft(2, '0')}-${t.day.toString().padLeft(2, '0')}';
+  String _dayKey(DateTime t) {
+    final local = t.toLocal();
+    return '${local.year.toString().padLeft(4, '0')}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')}';
+  }
 }

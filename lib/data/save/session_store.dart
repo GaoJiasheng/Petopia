@@ -18,6 +18,7 @@ class SessionStore {
   SessionStore(this.saveDir);
 
   final Directory saveDir;
+  Future<void> _saveChain = Future<void>.value();
 
   File get _sessionFile => File(p.join(saveDir.path, 'session.json'));
   File get _backupFile => File(p.join(saveDir.path, 'session.bak'));
@@ -28,7 +29,13 @@ class SessionStore {
     return SessionStore(Directory(p.join(documents.path, 'save')));
   }
 
-  Future<void> save(GameSession session) async {
+  Future<void> save(GameSession session) {
+    final next = _saveChain.then((_) => _saveNow(session));
+    _saveChain = next;
+    return next;
+  }
+
+  Future<void> _saveNow(GameSession session) async {
     try {
       await saveDir.create(recursive: true);
       final encoded = const JsonEncoder.withIndent(
@@ -110,6 +117,7 @@ Map<String, Object?> _sessionToJson(GameSession session) {
     'wallet': _walletToJson(session.wallet),
     'yard': _yardToJson(session.yard),
     'settings': _settingsToJson(session.settings),
+    'shopInventory': _shopInventoryToJson(session.shopInventory),
     'clues': session.clues.map(
       (key, value) => MapEntry(key, _clueToJson(value)),
     ),
@@ -121,16 +129,28 @@ Map<String, Object?> _sessionToJson(GameSession session) {
     'careActionCount': session.careActionCount,
     'revisitCount': session.revisitCount,
     'specialEventCount': session.specialEventCount,
+    'achievementSignals': session.achievementSignals,
+    'ownedVariants': session.ownedVariants.toList(),
     'roaming': session.roaming.map(_petToJson).toList(),
     'journeys': session.journeys.map(_journeyToJson).toList(),
     'jobs': session.jobs.map(_jobToJson).toList(),
     'generatedDays': session.generatedDays.toList(),
     'firedSpecials': session.firedSpecials.toList(),
+    'eventLastFiredAt': session.eventLastFiredAt.map(
+      (key, value) => MapEntry(key, _dateToJson(value)),
+    ),
     'visitorLog': session.visitorLog.map(_visitorLogToJson).toList(),
     'activeVisitor': _nullableActiveVisitorToJson(session.activeVisitor),
+    'careLedger': _careLedgerToJson(session.careLedger),
+    'pendingEvents': session.pendingEvents.map(_pendingEventToJson).toList(),
     'ownedSpecies': session.ownedSpecies.toList(),
     'postcards': session.postcards.map(_postcardToJson).toList(),
     'revisitor': _nullablePetToJson(session.revisitor),
+    'revisitorPetId': session.revisitor?.id,
+    'revisitorArrivedAt': _nullableDateToJson(session.revisitorArrivedAt),
+    'revisitorLeavesAt': _nullableDateToJson(session.revisitorLeavesAt),
+    'revisitorArrivalSeen': session.revisitorArrivalSeen,
+    'revisitorInteracted': session.revisitorInteracted,
   };
 }
 
@@ -141,6 +161,7 @@ GameSession _sessionFromJson(Map<String, Object?> json, DateTime now) {
     wallet: _walletFromJson(_jsonMapOrNull(json['wallet'])),
     yard: _yardFromJson(_jsonMapOrNull(json['yard']), now),
     settings: settings,
+    shopInventory: _shopInventoryFromJson(json['shopInventory']),
   );
   session.clues.addAll(_cluesFromJson(json['clues']));
   session.achievements.addAll(_achievementsFromJson(json['achievements']));
@@ -149,19 +170,43 @@ GameSession _sessionFromJson(Map<String, Object?> json, DateTime now) {
   session.careActionCount = _readInt(json['careActionCount'], 0);
   session.revisitCount = _readInt(json['revisitCount'], 0);
   session.specialEventCount = _readInt(json['specialEventCount'], 0);
+  session.achievementSignals.addAll(
+    _intMapFromJson(json['achievementSignals']),
+  );
+  session.ownedVariants.addAll(_stringListFromJson(json['ownedVariants']));
   session.roaming.addAll(_petListFromJson(json['roaming'], now));
   session.journeys.addAll(_journeyListFromJson(json['journeys'], now));
   session.jobs.addAll(_jobListFromJson(json['jobs'], now));
   session.generatedDays.addAll(_stringListFromJson(json['generatedDays']));
   session.firedSpecials.addAll(_stringListFromJson(json['firedSpecials']));
+  session.eventLastFiredAt.addAll(_dateMapFromJson(json['eventLastFiredAt']));
   session.visitorLog.addAll(_visitorLogListFromJson(json['visitorLog'], now));
   session.activeVisitor = _nullableActiveVisitorFromJson(
     json['activeVisitor'],
     now,
   );
+  session.careLedger = _careLedgerFromJson(json['careLedger'], now);
+  session.pendingEvents.addAll(
+    _pendingEventListFromJson(json['pendingEvents'], now),
+  );
   session.ownedSpecies.addAll(_stringListFromJson(json['ownedSpecies']));
   session.postcards.addAll(_postcardListFromJson(json['postcards'], now));
-  session.revisitor = _nullablePetFromJson(json['revisitor'], now);
+  final legacyRevisitor = _nullablePetFromJson(json['revisitor'], now);
+  final revisitorId =
+      _readNullableString(json['revisitorPetId']) ?? legacyRevisitor?.id;
+  if (revisitorId != null) {
+    for (final roamingPet in session.roaming) {
+      if (roamingPet.id == revisitorId) {
+        session.revisitor = roamingPet;
+        break;
+      }
+    }
+  }
+  session.revisitor ??= legacyRevisitor;
+  session.revisitorArrivedAt = _readNullableDate(json['revisitorArrivedAt']);
+  session.revisitorLeavesAt = _readNullableDate(json['revisitorLeavesAt']);
+  session.revisitorArrivalSeen = _readBool(json['revisitorArrivalSeen'], false);
+  session.revisitorInteracted = _readBool(json['revisitorInteracted'], false);
   return session;
 }
 
@@ -294,6 +339,9 @@ Map<String, Object?> _foodTrayToJson(FoodTray tray) {
   return <String, Object?>{
     'foodType': tray.foodType,
     'placedAt': _nullableDateToJson(tray.placedAt),
+    'probabilityScope': tray.probabilityScope,
+    'probabilityDelta': tray.probabilityDelta,
+    'remaining': tray.remaining,
   };
 }
 
@@ -304,6 +352,34 @@ FoodTray _foodTrayFromJson(Map<String, Object?>? json, DateTime now) {
   return FoodTray(
     foodType: _readNullableString(json['foodType']),
     placedAt: _readNullableDate(json['placedAt'], fallback: now),
+    probabilityScope: _readNullableString(json['probabilityScope']),
+    probabilityDelta: _readDouble(json['probabilityDelta'], 0),
+    remaining: _readInt(json['remaining'], 0),
+  );
+}
+
+Map<String, Object?> _shopInventoryToJson(ShopInventory inventory) {
+  return <String, Object?>{
+    'consumables': inventory.consumables,
+    'ownedAlbumSkinIds': inventory.ownedAlbumSkinIds.toList(),
+    'activeAlbumSkinId': inventory.activeAlbumSkinId,
+    'activeVisitorFoodItemId': inventory.activeVisitorFoodItemId,
+  };
+}
+
+ShopInventory _shopInventoryFromJson(Object? value) {
+  final json = _jsonMapOrNull(value);
+  if (json == null) return ShopInventory();
+  return ShopInventory(
+    consumables: _intMapFromJson(json['consumables']),
+    ownedAlbumSkinIds: _stringListFromJson(
+      json['ownedAlbumSkinIds'],
+      fallback: const <String>['default'],
+    ).toSet(),
+    activeAlbumSkinId: _readString(json['activeAlbumSkinId'], 'default'),
+    activeVisitorFoodItemId: _readNullableString(
+      json['activeVisitorFoodItemId'],
+    ),
   );
 }
 
@@ -328,7 +404,7 @@ Settings _settingsFromJson(Map<String, Object?>? json, DateTime now) {
   return Settings(
     createdAt: _readDate(json['createdAt'], now),
     lastWallClockAt: _readDate(json['lastWallClockAt'], now),
-    notifications: _readBool(json['notifications'], true),
+    notifications: _readBool(json['notifications'], false),
     sound: _readBool(json['sound'], true),
     schemaVersion: _readInt(json['schemaVersion'], 1),
     lastMonotonicRef: _readInt(json['lastMonotonicRef'], 0),
@@ -528,6 +604,71 @@ ActiveVisitor? _nullableActiveVisitorFromJson(Object? value, DateTime now) {
   );
 }
 
+Map<String, Object?> _careLedgerToJson(CareLedger ledger) {
+  return <String, Object?>{
+    'dayKey': ledger.dayKey,
+    'counts': ledger.counts,
+    'lastAt': ledger.lastAt.map(
+      (key, value) => MapEntry(key, _dateToJson(value)),
+    ),
+    'firstCareRewarded': ledger.firstCareRewarded,
+  };
+}
+
+CareLedger _careLedgerFromJson(Object? value, DateTime now) {
+  final json = _jsonMapOrNull(value);
+  if (json == null) return CareLedger(dayKey: _dayKey(now));
+  final lastAt = <String, DateTime>{};
+  final encodedLastAt = _jsonMapOrNull(json['lastAt']);
+  if (encodedLastAt != null) {
+    for (final entry in encodedLastAt.entries) {
+      final parsed = _readNullableDate(entry.value);
+      if (parsed != null) lastAt[entry.key] = parsed;
+    }
+  }
+  return CareLedger(
+    dayKey: _readString(json['dayKey'], _dayKey(now)),
+    counts: _intMapFromJson(json['counts']),
+    lastAt: lastAt,
+    firstCareRewarded: _readBool(json['firstCareRewarded'], false),
+  );
+}
+
+Map<String, Object?> _pendingEventToJson(PendingGameEvent event) {
+  return <String, Object?>{
+    'id': event.id,
+    'eventId': event.eventId,
+    'title': event.title,
+    'script': event.script,
+    'type': event.type.name,
+    'expReward': event.expReward,
+    'currencyReward': event.currencyReward,
+    'createdAt': _dateToJson(event.createdAt),
+  };
+}
+
+PendingGameEvent _pendingEventFromJson(
+  Map<String, Object?> json,
+  DateTime now,
+) {
+  return PendingGameEvent(
+    id: _readString(json['id'], ''),
+    eventId: _readString(json['eventId'], ''),
+    title: _readString(json['title'], '院子里的小事'),
+    script: _readString(json['script'], ''),
+    type: _readEnum(EventType.values, json['type'], EventType.daily),
+    expReward: _readInt(json['expReward'], 0),
+    currencyReward: _readInt(json['currencyReward'], 0),
+    createdAt: _readDate(json['createdAt'], now),
+  );
+}
+
+List<PendingGameEvent> _pendingEventListFromJson(Object? value, DateTime now) {
+  return _jsonMapListFromJson(
+    value,
+  ).map((json) => _pendingEventFromJson(json, now)).toList();
+}
+
 Map<String, Object?> _postcardToJson(Postcard postcard) {
   return <String, Object?>{
     'id': postcard.id,
@@ -588,6 +729,17 @@ Map<String, int> _intMapFromJson(Object? value) {
     return <String, int>{};
   }
   return json.map((key, value) => MapEntry(key, _readInt(value, 0)));
+}
+
+Map<String, DateTime> _dateMapFromJson(Object? value) {
+  final json = _jsonMapOrNull(value);
+  if (json == null) return <String, DateTime>{};
+  final result = <String, DateTime>{};
+  for (final entry in json.entries) {
+    final date = _readNullableDate(entry.value);
+    if (date != null) result[entry.key] = date;
+  }
+  return result;
 }
 
 List<Map<String, Object?>> _jsonMapListFromJson(Object? value) {
@@ -661,6 +813,10 @@ E _readEnum<E extends Enum>(List<E> values, Object? value, E fallback) {
 
 int _readInt(Object? value, int fallback) {
   return _intOrNull(value) ?? fallback;
+}
+
+double _readDouble(Object? value, double fallback) {
+  return value is num ? value.toDouble() : fallback;
 }
 
 int? _intOrNull(Object? value) {
