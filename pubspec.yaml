@@ -1,5 +1,5 @@
 name: petopia
-description: "A new Flutter project."
+description: "A hand-painted local-first companion game about raising pets, travel, and postcards."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+11
+version: 1.0.0+13
 
 environment:
   sdk: ^3.12.2
@@ -30,6 +30,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -39,14 +41,19 @@ dependencies:
   path_provider: ^2.1.6
   sqflite: ^2.4.3
   flutter_local_notifications: ^22.0.1
-  isar: ^3.1.0
-  isar_flutter_libs: ^3.1.0
   flutter_riverpod: ^2.6.1
   uuid: ^4.5.3
   audioplayers: ^6.1.0
+  package_info_plus: ^10.2.0
+  file_selector: ^1.1.0
+  share_plus: ^13.2.0
+  timezone: ^0.11.1
+  flutter_timezone: ^5.1.0
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -55,8 +62,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
-  isar_generator: ^3.1.0
-  build_runner: ^2.4.13
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

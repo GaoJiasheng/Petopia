@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../domain/enums.dart';
 import 'adaptive_layout.dart';
+import 'app_error_state.dart';
 import 'app_icons.dart';
 import 'pet_art.dart';
 
@@ -26,7 +27,15 @@ class PetDexScreen extends ConsumerWidget {
       loading: () => const _WarmFrame(
         child: Center(child: CircularProgressIndicator(color: _accent)),
       ),
-      error: (e, _) => _WarmFrame(child: _ErrorState(message: '图鉴暂时翻不开：$e')),
+      error: (error, stackTrace) {
+        logUiError('pet dex', error, stackTrace);
+        return _WarmFrame(
+          child: AppLoadError(
+            title: '宠物图鉴暂时没有翻开',
+            onRetry: () => ref.invalidate(gameControllerProvider),
+          ),
+        );
+      },
       data: (_) {
         final ctrl = ref.read(gameControllerProvider.notifier);
         final entries = ctrl.petDex();
@@ -441,26 +450,6 @@ class _EmptyState extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ErrorState extends StatelessWidget {
-  final String message;
-
-  const _ErrorState({required this.message});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: const TextStyle(color: PetDexScreen._ink),
         ),
       ),
     );

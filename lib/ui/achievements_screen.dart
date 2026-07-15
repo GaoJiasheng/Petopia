@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import 'adaptive_layout.dart';
+import 'app_error_state.dart';
 import 'app_icons.dart';
 
 /// 成就页：明写目标与隐藏线索分组展示。
@@ -24,7 +25,15 @@ class AchievementsScreen extends ConsumerWidget {
       loading: () => const _WarmFrame(
         child: Center(child: CircularProgressIndicator(color: _accent)),
       ),
-      error: (e, _) => _WarmFrame(child: _ErrorState(message: '成就册暂时翻不开：$e')),
+      error: (error, stackTrace) {
+        logUiError('achievements', error, stackTrace);
+        return _WarmFrame(
+          child: AppLoadError(
+            title: '成就册暂时没有翻开',
+            onRetry: () => ref.invalidate(gameControllerProvider),
+          ),
+        );
+      },
       data: (_) {
         final ctrl = ref.read(gameControllerProvider.notifier);
         final achievements = ctrl.achievementsView();
@@ -420,26 +429,6 @@ class _EmptyState extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ErrorState extends StatelessWidget {
-  final String message;
-
-  const _ErrorState({required this.message});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: const TextStyle(color: AchievementsScreen._ink),
         ),
       ),
     );

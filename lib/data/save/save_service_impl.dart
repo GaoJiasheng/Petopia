@@ -7,15 +7,13 @@ import 'package:path_provider/path_provider.dart';
 
 import '../../config/game_config.dart';
 import '../../domain/enums.dart';
-import '../../domain/models/game_state.dart';
 import '../../domain/models/logs.dart';
-import '../../domain/models/pet.dart';
-import '../../domain/models/yard.dart';
+import '../../app/game_state.dart';
 import '../../services/audit_service.dart';
 import '../../services/clock_service.dart';
 import '../../services/save_service.dart';
-import '../repositories/runtime_repositories.dart';
 import '../sqlite/petopia_sqlite_dao.dart';
+import 'session_store.dart';
 
 typedef NowProvider = DateTime Function();
 typedef MigrationStep =
@@ -48,6 +46,9 @@ class SaveDataSnapshot {
        sqlite = Map.unmodifiable(_copyJsonMap(sqlite));
 
   final int schemaVersion;
+
+  /// The `isar` archive key is retained for compatibility with v1 backups.
+  /// Production payloads now store the JSON game session beneath `session`.
   final Map<String, Object?> isar;
   final Map<String, Object?> sqlite;
 
@@ -81,39 +82,56 @@ class SaveDataSnapshot {
   }
 }
 
-class RepositorySaveSnapshotStore implements SaveSnapshotStore {
-  RepositorySaveSnapshotStore(this._repositories, this._dao, {NowProvider? now})
-    : _now = now ?? (() => DateTime.now().toUtc());
+/// Production snapshot adapter for the JSON game session and append-only logs.
+/// It keeps an imported session staged so the audit service validates imported
+/// data rather than the still-running controller instance.
+class SessionSaveSnapshotStore implements SaveSnapshotStore {
+  factory SessionSaveSnapshotStore({
+    required SessionStore sessionStore,
+    required PetopiaSqliteDao dao,
+    required GameSession Function() currentSession,
+  }) => SessionSaveSnapshotStore._(sessionStore, dao, currentSession);
 
-  final PetopiaRepositories _repositories;
+  SessionSaveSnapshotStore._(
+    this._sessionStore,
+    this._dao,
+    this._currentSession,
+  );
+
+  final SessionStore _sessionStore;
   final PetopiaSqliteDao _dao;
-  final NowProvider _now;
+  final GameSession Function() _currentSession;
+  GameSession? _stagedSession;
+
+  GameSession get activeSession => _stagedSession ?? _currentSession();
 
   @override
   Future<SaveDataSnapshot> exportSnapshot() async {
-    final runtime = await _repositories.exportSnapshot();
-    final sqlite = await _dao.exportSnapshot();
     return SaveDataSnapshot(
-      schemaVersion:
-          runtime.settings?.schemaVersion ?? GameConfig.currentSchemaVersion,
-      isar: _runtimeSnapshotToJson(runtime),
-      sqlite: _sqliteSnapshotToJson(sqlite),
+      schemaVersion: GameConfig.currentSchemaVersion,
+      isar: <String, Object?>{
+        'session': _sessionStore.encodeSnapshot(activeSession),
+      },
+      sqlite: _sqliteSnapshotToJson(await _dao.exportSnapshot()),
     );
   }
 
   @override
   Future<void> replaceAll(SaveDataSnapshot snapshot) async {
-    final original = await exportSnapshot();
+    final sessionJson = _readJsonMap(snapshot.isar['session'], 'state.session');
+    final nextSession = _sessionStore.decodeSnapshot(sessionJson);
+    final nextSqlite = _sqliteSnapshotFromJson(snapshot.sqlite);
+    final originalSession = _currentSession();
+    final originalSqlite = await _dao.exportSnapshot();
+
     try {
-      await _repositories.replaceAll(
-        _runtimeSnapshotFromJson(snapshot.isar, _now()),
-      );
-      await _dao.replaceAll(_sqliteSnapshotFromJson(snapshot.sqlite));
+      await _dao.replaceAll(nextSqlite);
+      await _sessionStore.save(nextSession);
+      _stagedSession = nextSession;
     } catch (_) {
-      await _repositories.replaceAll(
-        _runtimeSnapshotFromJson(original.isar, _now()),
-      );
-      await _dao.replaceAll(_sqliteSnapshotFromJson(original.sqlite));
+      await _dao.replaceAll(originalSqlite);
+      await _sessionStore.save(originalSession);
+      _stagedSession = null;
       rethrow;
     }
   }
@@ -121,26 +139,14 @@ class RepositorySaveSnapshotStore implements SaveSnapshotStore {
 
 class LocalSaveService implements SaveService {
   LocalSaveService({
-    PetopiaRepositories? repositories,
-    PetopiaSqliteDao? dao,
-    SaveSnapshotStore? snapshotStore,
+    required SaveSnapshotStore snapshotStore,
     required AuditService auditService,
     required Directory saveDirectory,
     ClockService? clock,
     NowProvider? now,
     Duration? autoSaveDebounce,
     List<Migration> migrations = const <Migration>[],
-  }) : assert(
-         snapshotStore != null || (repositories != null && dao != null),
-         'snapshotStore 或 repositories+dao 必须注入其一',
-       ),
-       _store =
-           snapshotStore ??
-           RepositorySaveSnapshotStore(
-             repositories!,
-             dao!,
-             now: now ?? clock?.now,
-           ),
+  }) : _store = snapshotStore,
        // ignore: prefer_initializing_formals
        _auditService = auditService,
        // ignore: prefer_initializing_formals
@@ -154,8 +160,7 @@ class LocalSaveService implements SaveService {
        };
 
   static Future<LocalSaveService> create({
-    required PetopiaRepositories repositories,
-    required PetopiaSqliteDao dao,
+    required SaveSnapshotStore snapshotStore,
     required AuditService auditService,
     ClockService? clock,
     NowProvider? now,
@@ -164,8 +169,7 @@ class LocalSaveService implements SaveService {
   }) async {
     final documents = await getApplicationDocumentsDirectory();
     return LocalSaveService(
-      repositories: repositories,
-      dao: dao,
+      snapshotStore: snapshotStore,
       auditService: auditService,
       saveDirectory: Directory(p.join(documents.path, 'save')),
       clock: clock,
@@ -532,75 +536,6 @@ int _crc32(List<int> bytes) {
   return (crc ^ 0xffffffff) & 0xffffffff;
 }
 
-Map<String, Object?> _runtimeSnapshotToJson(
-  RuntimeRepositorySnapshot snapshot,
-) {
-  final pets = List<Pet>.of(snapshot.pets)
-    ..sort((a, b) => a.id.compareTo(b.id));
-  final journeys = List<Journey>.of(snapshot.journeys)
-    ..sort((a, b) => a.id.compareTo(b.id));
-  final clues = List<ClueCounter>.of(snapshot.clues)
-    ..sort((a, b) => a.clueId.compareTo(b.clueId));
-  final achievements = List<AchievementProgress>.of(snapshot.achievements)
-    ..sort((a, b) => a.achievementId.compareTo(b.achievementId));
-  final visitorLogs = List<VisitorLogEntry>.of(snapshot.visitorLogs)
-    ..sort((a, b) => a.id.compareTo(b.id));
-  final jobs = List<ScheduledJob>.of(snapshot.jobs)
-    ..sort((a, b) => a.id.compareTo(b.id));
-
-  return <String, Object?>{
-    'pets': pets.map(_petToJson).toList(),
-    'wallet': snapshot.wallet == null ? null : _walletToJson(snapshot.wallet!),
-    'yard': snapshot.yard == null ? null : _yardToJson(snapshot.yard!),
-    'journeys': journeys.map(_journeyToJson).toList(),
-    'clues': clues.map(_clueToJson).toList(),
-    'achievements': achievements.map(_achievementToJson).toList(),
-    'visitorLogs': visitorLogs.map(_visitorLogToJson).toList(),
-    'jobs': jobs.map(_jobToJson).toList(),
-    'settings': snapshot.settings == null
-        ? null
-        : _settingsToJson(snapshot.settings!),
-  };
-}
-
-RuntimeRepositorySnapshot _runtimeSnapshotFromJson(
-  Map<String, Object?> json,
-  DateTime fallbackNow,
-) {
-  return RuntimeRepositorySnapshot(
-    pets: _readMapList(json['pets'], 'isar.pets').map(_petFromJson).toList(),
-    wallet: _readNullableJsonMap(json['wallet'], 'isar.wallet') == null
-        ? null
-        : _walletFromJson(_readJsonMap(json['wallet'], 'isar.wallet')),
-    yard: _readNullableJsonMap(json['yard'], 'isar.yard') == null
-        ? null
-        : _yardFromJson(_readJsonMap(json['yard'], 'isar.yard')),
-    journeys: _readMapList(
-      json['journeys'],
-      'isar.journeys',
-    ).map(_journeyFromJson).toList(),
-    clues: _readMapList(
-      json['clues'],
-      'isar.clues',
-    ).map(_clueFromJson).toList(),
-    achievements: _readMapList(
-      json['achievements'],
-      'isar.achievements',
-    ).map(_achievementFromJson).toList(),
-    visitorLogs: _readMapList(
-      json['visitorLogs'],
-      'isar.visitorLogs',
-    ).map(_visitorLogFromJson).toList(),
-    jobs: _readMapList(json['jobs'], 'isar.jobs').map(_jobFromJson).toList(),
-    settings: _readNullableJsonMap(json['settings'], 'isar.settings') == null
-        ? null
-        : _settingsFromJson(
-            _readJsonMap(json['settings'], 'isar.settings'),
-            fallbackNow,
-          ),
-  );
-}
-
 Map<String, Object?> _sqliteSnapshotToJson(PetopiaSqliteSnapshot snapshot) {
   return <String, Object?>{
     'expLogs': snapshot.expLogs.map(_expLogToJson).toList(),
@@ -628,275 +563,6 @@ PetopiaSqliteSnapshot _sqliteSnapshotFromJson(Map<String, Object?> json) {
       json['eventLogs'],
       'sqlite.eventLogs',
     ).map(_eventLogFromJson).toList(),
-  );
-}
-
-Map<String, Object?> _petToJson(Pet pet) {
-  return <String, Object?>{
-    'id': pet.id,
-    'speciesId': pet.speciesId,
-    'variantId': pet.variantId,
-    'name': pet.name,
-    'personality': pet.personality,
-    'bornAt': _dateToJson(pet.bornAt),
-    'level': pet.level,
-    'exp': pet.exp,
-    'stage': pet.stage.name,
-    'state': pet.state.name,
-    'lastOnlineAt': _dateToJson(pet.lastOnlineAt),
-    'offlineExpGrantedToday': pet.offlineExpGrantedToday,
-    'offlineDayKey': pet.offlineDayKey,
-    'wishId': pet.wishId,
-    'graduatedAt': _nullableDateToJson(pet.graduatedAt),
-    'journeyId': pet.journeyId,
-    'nextRevisitAt': _nullableDateToJson(pet.nextRevisitAt),
-    'pastNames': pet.pastNames,
-  };
-}
-
-Pet _petFromJson(Map<String, Object?> json) {
-  return Pet(
-    id: _readString(json['id'], 'pet.id'),
-    speciesId: _readString(json['speciesId'], 'pet.speciesId'),
-    variantId: _readString(json['variantId'], 'pet.variantId'),
-    name: _readString(json['name'], 'pet.name'),
-    personality: _readStringList(json['personality'], 'pet.personality'),
-    bornAt: _readDate(json['bornAt'], 'pet.bornAt'),
-    lastOnlineAt: _readDate(json['lastOnlineAt'], 'pet.lastOnlineAt'),
-    offlineDayKey: _readString(json['offlineDayKey'], 'pet.offlineDayKey'),
-    level: _readInt(json['level'], 'pet.level'),
-    exp: _readInt(json['exp'], 'pet.exp'),
-    stage: _readEnum(PetStage.values, json['stage'], 'pet.stage'),
-    state: _readEnum(PetState.values, json['state'], 'pet.state'),
-    offlineExpGrantedToday: _readInt(
-      json['offlineExpGrantedToday'],
-      'pet.offlineExpGrantedToday',
-    ),
-    wishId: json['wishId'] as String?,
-    graduatedAt: _readNullableDate(json['graduatedAt'], 'pet.graduatedAt'),
-    journeyId: json['journeyId'] as String?,
-    nextRevisitAt: _readNullableDate(
-      json['nextRevisitAt'],
-      'pet.nextRevisitAt',
-    ),
-    pastNames: _readStringList(json['pastNames'], 'pet.pastNames'),
-  );
-}
-
-Map<String, Object?> _walletToJson(CurrencyWallet wallet) {
-  return <String, Object?>{'balance': wallet.balance};
-}
-
-CurrencyWallet _walletFromJson(Map<String, Object?> json) {
-  return CurrencyWallet(balance: _readInt(json['balance'], 'wallet.balance'));
-}
-
-Map<String, Object?> _yardToJson(YardState yard) {
-  return <String, Object?>{
-    'luxuryStage': yard.luxuryStage,
-    'gradCount': yard.gradCount,
-    'activeThemeId': yard.activeThemeId,
-    'ownedThemeIds': yard.ownedThemeIds,
-    'slots': yard.slots.map(_yardSlotToJson).toList(),
-    'foodTray': _foodTrayToJson(yard.foodTray),
-    'ownedPerks': yard.ownedPerks,
-    'ownedDecorIds': yard.ownedDecorIds,
-  };
-}
-
-YardState _yardFromJson(Map<String, Object?> json) {
-  return YardState(
-    luxuryStage: _readInt(json['luxuryStage'], 'yard.luxuryStage'),
-    gradCount: _readInt(json['gradCount'], 'yard.gradCount'),
-    activeThemeId: _readString(json['activeThemeId'], 'yard.activeThemeId'),
-    ownedThemeIds: _readStringList(json['ownedThemeIds'], 'yard.ownedThemeIds'),
-    slots: _readMapList(
-      json['slots'],
-      'yard.slots',
-    ).map(_yardSlotFromJson).toList(),
-    foodTray: _foodTrayFromJson(
-      _readJsonMap(json['foodTray'], 'yard.foodTray'),
-    ),
-    ownedPerks: _readStringList(json['ownedPerks'], 'yard.ownedPerks'),
-    ownedDecorIds: _readStringList(json['ownedDecorIds'], 'yard.ownedDecorIds'),
-  );
-}
-
-Map<String, Object?> _yardSlotToJson(YardSlot slot) {
-  return <String, Object?>{'pos': slot.pos, 'itemId': slot.itemId};
-}
-
-YardSlot _yardSlotFromJson(Map<String, Object?> json) {
-  return YardSlot(
-    pos: _readInt(json['pos'], 'yard.slot.pos'),
-    itemId: json['itemId'] as String?,
-  );
-}
-
-Map<String, Object?> _foodTrayToJson(FoodTray tray) {
-  return <String, Object?>{
-    'foodType': tray.foodType,
-    'placedAt': _nullableDateToJson(tray.placedAt),
-  };
-}
-
-FoodTray _foodTrayFromJson(Map<String, Object?> json) {
-  return FoodTray(
-    foodType: json['foodType'] as String?,
-    placedAt: _readNullableDate(json['placedAt'], 'yard.foodTray.placedAt'),
-  );
-}
-
-Map<String, Object?> _journeyToJson(Journey journey) {
-  return <String, Object?>{
-    'id': journey.id,
-    'petId': journey.petId,
-    'stops': journey.stops,
-    'wanderStops': journey.wanderStops,
-    'currentIdx': journey.currentIdx,
-    'wanderIdx': journey.wanderIdx,
-    'longTermSeq': journey.longTermSeq,
-    'nextPostcardAt': _dateToJson(journey.nextPostcardAt),
-    'state': journey.state.name,
-  };
-}
-
-Journey _journeyFromJson(Map<String, Object?> json) {
-  return Journey(
-    id: _readString(json['id'], 'journey.id'),
-    petId: _readString(json['petId'], 'journey.petId'),
-    stops: _readStringList(json['stops'], 'journey.stops'),
-    wanderStops: json.containsKey('wanderStops')
-        ? _readStringList(json['wanderStops'], 'journey.wanderStops')
-        : <String>[],
-    currentIdx: _readInt(json['currentIdx'], 'journey.currentIdx'),
-    wanderIdx: json.containsKey('wanderIdx')
-        ? _readInt(json['wanderIdx'], 'journey.wanderIdx')
-        : 0,
-    longTermSeq: json.containsKey('longTermSeq')
-        ? _readInt(json['longTermSeq'], 'journey.longTermSeq')
-        : 0,
-    nextPostcardAt: _readDate(json['nextPostcardAt'], 'journey.nextPostcardAt'),
-    state: _readEnum(JourneyState.values, json['state'], 'journey.state'),
-  );
-}
-
-Map<String, Object?> _clueToJson(ClueCounter clue) {
-  return <String, Object?>{
-    'clueId': clue.clueId,
-    'count': clue.count,
-    'threshold': clue.threshold,
-    'visitorSeen': clue.visitorSeen,
-  };
-}
-
-ClueCounter _clueFromJson(Map<String, Object?> json) {
-  return ClueCounter(
-    clueId: _readString(json['clueId'], 'clue.clueId'),
-    threshold: _readInt(json['threshold'], 'clue.threshold'),
-    count: _readInt(json['count'], 'clue.count'),
-    visitorSeen: _readBool(json['visitorSeen'], 'clue.visitorSeen'),
-  );
-}
-
-Map<String, Object?> _achievementToJson(AchievementProgress achievement) {
-  return <String, Object?>{
-    'achievementId': achievement.achievementId,
-    'progress': achievement.progress,
-    'unlockedAt': _nullableDateToJson(achievement.unlockedAt),
-    'rewardClaimed': achievement.rewardClaimed,
-  };
-}
-
-AchievementProgress _achievementFromJson(Map<String, Object?> json) {
-  return AchievementProgress(
-    achievementId: _readString(
-      json['achievementId'],
-      'achievement.achievementId',
-    ),
-    progress: _readInt(json['progress'], 'achievement.progress'),
-    unlockedAt: _readNullableDate(json['unlockedAt'], 'achievement.unlockedAt'),
-    rewardClaimed: _readBool(
-      json['rewardClaimed'],
-      'achievement.rewardClaimed',
-    ),
-  );
-}
-
-Map<String, Object?> _visitorLogToJson(VisitorLogEntry entry) {
-  return <String, Object?>{
-    'id': entry.id,
-    'visitorId': entry.visitorId,
-    'date': _dateToJson(entry.date),
-    'interactionId': entry.interactionId,
-    'withPetId': entry.withPetId,
-  };
-}
-
-VisitorLogEntry _visitorLogFromJson(Map<String, Object?> json) {
-  return VisitorLogEntry(
-    id: _readString(json['id'], 'visitorLog.id'),
-    visitorId: _readString(json['visitorId'], 'visitorLog.visitorId'),
-    date: _readDate(json['date'], 'visitorLog.date'),
-    interactionId: json['interactionId'] as String?,
-    withPetId: json['withPetId'] as String?,
-  );
-}
-
-Map<String, Object?> _jobToJson(ScheduledJob job) {
-  return <String, Object?>{
-    'id': job.id,
-    'type': job.type.name,
-    'dueAt': _dateToJson(job.dueAt),
-    'priority': job.priority,
-    'payloadRef': job.payloadRef,
-    'consumed': job.consumed,
-  };
-}
-
-ScheduledJob _jobFromJson(Map<String, Object?> json) {
-  return ScheduledJob(
-    id: _readString(json['id'], 'job.id'),
-    type: _readEnum(JobType.values, json['type'], 'job.type'),
-    dueAt: _readDate(json['dueAt'], 'job.dueAt'),
-    priority: _readInt(json['priority'], 'job.priority'),
-    payloadRef: json['payloadRef'] as String?,
-    consumed: _readBool(json['consumed'], 'job.consumed'),
-  );
-}
-
-Map<String, Object?> _settingsToJson(Settings settings) {
-  return <String, Object?>{
-    'notifications': settings.notifications,
-    'sound': settings.sound,
-    'schemaVersion': settings.schemaVersion,
-    'createdAt': _dateToJson(settings.createdAt),
-    'lastMonotonicRef': settings.lastMonotonicRef,
-    'lastWallClockAt': _dateToJson(settings.lastWallClockAt),
-    'loginStreakCurrent': settings.loginStreakCurrent,
-    'loginStreakMax': settings.loginStreakMax,
-    'lastLoginDay': settings.lastLoginDay,
-  };
-}
-
-Settings _settingsFromJson(Map<String, Object?> json, DateTime fallbackNow) {
-  return Settings(
-    createdAt: _readOptionalDate(json['createdAt']) ?? fallbackNow.toUtc(),
-    lastWallClockAt:
-        _readOptionalDate(json['lastWallClockAt']) ?? fallbackNow.toUtc(),
-    notifications: _readBool(json['notifications'], 'settings.notifications'),
-    sound: _readBool(json['sound'], 'settings.sound'),
-    schemaVersion: _readInt(json['schemaVersion'], 'settings.schemaVersion'),
-    lastMonotonicRef: _readInt(
-      json['lastMonotonicRef'],
-      'settings.lastMonotonicRef',
-    ),
-    loginStreakCurrent: _readInt(
-      json['loginStreakCurrent'],
-      'settings.loginStreakCurrent',
-    ),
-    loginStreakMax: _readInt(json['loginStreakMax'], 'settings.loginStreakMax'),
-    lastLoginDay: _readString(json['lastLoginDay'], 'settings.lastLoginDay'),
   );
 }
 
@@ -1046,16 +712,6 @@ DateTime? _readNullableDate(Object? value, String field) {
   return _readDate(value, field);
 }
 
-DateTime? _readOptionalDate(Object? value) {
-  if (value == null) {
-    return null;
-  }
-  if (value is String) {
-    return DateTime.parse(value).toUtc();
-  }
-  return null;
-}
-
 String _readString(Object? value, String field) {
   if (value is String) {
     return value;
@@ -1070,13 +726,6 @@ int _readInt(Object? value, String field) {
   throw SaveArchiveException('$field 不是整数');
 }
 
-bool _readBool(Object? value, String field) {
-  if (value is bool) {
-    return value;
-  }
-  throw SaveArchiveException('$field 不是布尔值');
-}
-
 T _readEnum<T extends Enum>(List<T> values, Object? value, String field) {
   final name = _readString(value, field);
   try {
@@ -1084,13 +733,6 @@ T _readEnum<T extends Enum>(List<T> values, Object? value, String field) {
   } on ArgumentError {
     throw SaveArchiveException('$field 枚举值未知：$name');
   }
-}
-
-List<String> _readStringList(Object? value, String field) {
-  if (value is! List) {
-    throw SaveArchiveException('$field 不是数组');
-  }
-  return value.map((item) => _readString(item, field)).toList();
 }
 
 List<Map<String, Object?>> _readMapList(Object? value, String field) {
@@ -1110,13 +752,6 @@ Map<String, Object?> _readJsonMap(Object? value, String field) {
     };
   }
   throw SaveArchiveException('$field 不是对象');
-}
-
-Map<String, Object?>? _readNullableJsonMap(Object? value, String field) {
-  if (value == null) {
-    return null;
-  }
-  return _readJsonMap(value, field);
 }
 
 Map<String, Object?> _copyJsonMap(Map<String, Object?> source) {

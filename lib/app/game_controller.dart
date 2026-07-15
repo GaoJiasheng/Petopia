@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,7 +11,9 @@ import '../domain/enums.dart';
 import '../domain/unlock_rule.dart';
 import '../domain/models/content_entities.dart';
 import '../domain/models/logs.dart';
+import '../domain/models/pet.dart';
 import '../domain/models/yard.dart';
+import '../services/save_service.dart';
 import 'bootstrap.dart';
 import 'game_services.dart';
 import 'notification_service.dart';
@@ -27,19 +31,23 @@ class AchievementUnlockCue {
 class PetView {
   final String name;
   final String speciesId;
+  final String speciesName;
   final String variantId;
   final int level;
   final int exp;
   final PetStage stage;
   final List<String> personality;
+  final DateTime bornAt;
   const PetView({
     required this.name,
     required this.speciesId,
+    required this.speciesName,
     required this.variantId,
     required this.level,
     required this.exp,
     required this.stage,
     required this.personality,
+    required this.bornAt,
   });
 }
 
@@ -137,6 +145,7 @@ class GameView {
   final RevisitorPresenceView? revisitor;
   final RevisitorPresenceView? revisitorArrival;
   final EventPresentationView? pendingEvent;
+  final bool onboardingComplete;
 
   const GameView({
     required this.pet,
@@ -152,6 +161,7 @@ class GameView {
     this.revisitor,
     this.revisitorArrival,
     this.pendingEvent,
+    required this.onboardingComplete,
   });
 }
 
@@ -165,11 +175,11 @@ class GameController extends AsyncNotifier<GameView> {
   @override
   Future<GameView> build() async {
     _svc = await bootstrapGame();
-    // 同步声音开关到音频引擎；若开启通知则注册每日提醒。
-    ref.read(audioServiceProvider).setEnabled(_svc.session.settings.sound);
-    if (_svc.session.settings.notifications) {
-      ref.read(notificationServiceProvider).setDailyReminder(true);
-    }
+    ref.onDispose(() => unawaited(_svc.dispose()));
+    final settings = _svc.session.settings;
+    await ref.read(audioServiceProvider).setMusicEnabled(settings.music);
+    await ref.read(audioServiceProvider).setEffectsEnabled(settings.sound);
+    await _syncNotifications();
     return _snapshot();
   }
 
@@ -478,21 +488,84 @@ class GameController extends AsyncNotifier<GameView> {
 
   // ── 设置 ──────────────────────────────────────
   bool get notificationsOn => _svc.session.settings.notifications;
-  bool get soundOn => _svc.session.settings.sound;
-  void toggleNotifications() {
-    _svc.session.settings.notifications = !_svc.session.settings.notifications;
-    ref
-        .read(notificationServiceProvider)
-        .setDailyReminder(_svc.session.settings.notifications);
+  bool get postcardNotificationsOn => _svc.session.settings.notifyPostcards;
+  bool get visitorNotificationsOn => _svc.session.settings.notifyVisitors;
+  bool get eventNotificationsOn => _svc.session.settings.notifyEvents;
+  bool get musicOn => _svc.session.settings.music;
+  bool get effectsOn => _svc.session.settings.sound;
+
+  Future<bool> toggleNotifications() async {
+    final next = !_svc.session.settings.notifications;
+    _svc.session.settings.notifications = next;
+    state = AsyncData(_snapshot());
+    _persist();
+    final permission = await _syncNotifications(requestPermission: next);
+    if (next && permission == false) {
+      _svc.session.settings.notifications = false;
+      state = AsyncData(_snapshot());
+      await _persistNow();
+      return false;
+    }
+    return true;
+  }
+
+  void togglePostcardNotifications() {
+    _svc.session.settings.notifyPostcards =
+        !_svc.session.settings.notifyPostcards;
+    state = AsyncData(_snapshot());
+    _persist();
+    unawaited(_syncNotifications());
+  }
+
+  void toggleVisitorNotifications() {
+    _svc.session.settings.notifyVisitors =
+        !_svc.session.settings.notifyVisitors;
+    state = AsyncData(_snapshot());
+    _persist();
+    unawaited(_syncNotifications());
+  }
+
+  void toggleEventNotifications() {
+    _svc.session.settings.notifyEvents = !_svc.session.settings.notifyEvents;
+    state = AsyncData(_snapshot());
+    _persist();
+    unawaited(_syncNotifications());
+  }
+
+  void toggleMusic() {
+    _svc.session.settings.music = !_svc.session.settings.music;
+    unawaited(_audio.setMusicEnabled(_svc.session.settings.music));
     state = AsyncData(_snapshot());
     _persist();
   }
 
-  void toggleSound() {
+  void toggleEffects() {
     _svc.session.settings.sound = !_svc.session.settings.sound;
-    _audio.setEnabled(_svc.session.settings.sound);
+    unawaited(_audio.setEffectsEnabled(_svc.session.settings.sound));
     state = AsyncData(_snapshot());
     _persist();
+  }
+
+  Future<File> exportSave() async {
+    await _persistNow();
+    final save = _svc.portableSave;
+    if (save == null) throw StateError('portable save is unavailable');
+    return save.export();
+  }
+
+  Future<ImportResult> importSave(File file) async {
+    final save = _svc.portableSave;
+    if (save == null) {
+      return const ImportResult(success: false, failReason: '存档服务暂不可用');
+    }
+    return save.import(file);
+  }
+
+  Future<void> completeOnboarding() async {
+    if (_svc.session.settings.onboardingComplete) return;
+    _svc.session.settings.onboardingComplete = true;
+    state = AsyncData(_snapshot());
+    await _persistNow();
   }
 
   /// App 从后台恢复时统一推进离线成长、日程、明信片和回访。
@@ -517,7 +590,8 @@ class GameController extends AsyncNotifier<GameView> {
       _renewCareLedger();
       _afterGameAction();
       state = AsyncData(_snapshot());
-      await _svc.store.save(_svc.session);
+      await _persistNow();
+      await _syncNotifications();
     } finally {
       _resuming = false;
     }
@@ -528,11 +602,108 @@ class GameController extends AsyncNotifier<GameView> {
     final pet = _svc.session.current;
     if (pet != null) pet.lastOnlineAt = _svc.clock.now();
     _svc.clock.markHeartbeat();
-    await _svc.store.save(_svc.session);
+    await _persistNow();
+    await _syncNotifications();
   }
 
   void _persist() {
-    unawaited(_svc.store.save(_svc.session));
+    unawaited(
+      _persistNow().catchError((Object error, StackTrace stackTrace) {
+        debugPrint('Petopia save skipped: $error\n$stackTrace');
+      }),
+    );
+  }
+
+  Future<void> _persistNow() async {
+    await _svc.store.save(_svc.session);
+    await _svc.portableSave?.autoSave();
+  }
+
+  Future<bool?> _syncNotifications({bool requestPermission = false}) {
+    final settings = _svc.session.settings;
+    return ref
+        .read(notificationServiceProvider)
+        .sync(
+          candidates: _notificationCandidates(),
+          preferences: PetopiaNotificationPreferences(
+            enabled: settings.notifications,
+            postcards: settings.notifyPostcards,
+            visitors: settings.notifyVisitors,
+            events: settings.notifyEvents,
+          ),
+          requestPermission: requestPermission,
+        );
+  }
+
+  List<PetopiaNotificationCandidate> _notificationCandidates() {
+    final now = _svc.clock.now();
+    final pets = <String, Pet>{
+      for (final pet in _svc.session.allPets) pet.id: pet,
+    };
+    final candidates = <PetopiaNotificationCandidate>[];
+
+    for (final journey in _svc.session.journeys) {
+      if (journey.state == JourneyState.done ||
+          !journey.nextPostcardAt.isAfter(now)) {
+        continue;
+      }
+      final pet = pets[journey.petId];
+      if (pet == null) continue;
+      candidates.add(
+        PetopiaNotificationCandidate(
+          key: 'postcard:${journey.id}',
+          kind: PetopiaNotificationKind.postcard,
+          at: journey.nextPostcardAt,
+          title: '远方寄来一张明信片',
+          body: '${pet.name}从旅途中寄来一封信，邮箱轻轻亮起来了。',
+        ),
+      );
+    }
+
+    for (final pet in pets.values) {
+      final revisitAt = pet.nextRevisitAt;
+      if (revisitAt != null && revisitAt.isAfter(now)) {
+        candidates.add(
+          PetopiaNotificationCandidate(
+            key: 'revisit:${pet.id}',
+            kind: PetopiaNotificationKind.revisit,
+            at: revisitAt,
+            title: '好像听见了熟悉的铃铛',
+            body: '${pet.name}今天会回小院看看。',
+          ),
+        );
+      }
+
+      final anniversary = _nextAnniversary(pet.bornAt, now);
+      candidates.add(
+        PetopiaNotificationCandidate(
+          key: 'anniversary:${pet.id}:${anniversary.year}',
+          kind: PetopiaNotificationKind.anniversary,
+          at: anniversary,
+          title: '今天是一个温柔的纪念日',
+          body: '${pet.name}来到小院，又多了一年回忆。',
+        ),
+      );
+    }
+    return candidates;
+  }
+
+  static DateTime _nextAnniversary(DateTime adoptedAt, DateTime now) {
+    final localAdopted = adoptedAt.toLocal();
+    final localNow = now.toLocal();
+    DateTime inYear(int year) {
+      final lastDay = DateTime(year, localAdopted.month + 1, 0).day;
+      return DateTime(
+        year,
+        localAdopted.month,
+        localAdopted.day.clamp(1, lastDay).toInt(),
+        10,
+        30,
+      );
+    }
+
+    final thisYear = inYear(localNow.year);
+    return thisYear.isAfter(localNow) ? thisYear : inYear(localNow.year + 1);
   }
 
   /// 游戏推进类动作统一收尾：同步成就（新解锁播 sting）+ 存档。
@@ -598,10 +769,13 @@ class GameController extends AsyncNotifier<GameView> {
           : PetView(
               name: p.name,
               speciesId: p.speciesId,
+              speciesName:
+                  _svc.content.speciesById(p.speciesId)?.name ?? p.speciesId,
               variantId: p.variantId,
               level: p.level,
               exp: p.exp,
               stage: p.stage,
+              bornAt: p.bornAt,
               // 解析性格 id→展示名（爱幻想/温柔…），回退 id。
               personality: p.personality
                   .map((id) => _svc.content.personalityById(id)?.name ?? id)
@@ -631,6 +805,7 @@ class GameController extends AsyncNotifier<GameView> {
           ? _revisitorView()
           : null,
       pendingEvent: _pendingEventView(),
+      onboardingComplete: _svc.session.settings.onboardingComplete,
     );
   }
 
@@ -801,6 +976,7 @@ class GameController extends AsyncNotifier<GameView> {
       HapticFeedback.mediumImpact();
       _audio.sting(Sting.graduationDepart);
       _afterGameAction();
+      unawaited(_syncNotifications());
     }
     state = AsyncData(_snapshot());
     return stops;

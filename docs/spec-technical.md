@@ -2,8 +2,13 @@
 
 > 本文档是面向实现的技术规格（implementation spec），目标：让开发者（后续由 Codex CLI 实现）无需再猜测即可照做。
 > 上游依据：`docs/DESIGN.md`（v0.2 框架版）。凡与本文冲突处，以本文（实现口径）为准；凡本文未覆盖处，回退到 DESIGN.md。
-> Dart/Flutter 口径；纯本地存储、无后端；持久化建议 Isar（对象）+ SQLite（流水表）。
+> Dart/Flutter 口径；纯本地存储、无后端。
 > 标记：`[待细化]` = 确需后续决定；数值类已尽量给确定初值（标 `锁定` 或 `可调`）。
+
+> **当前生产实现（2026-07-14）**：对象状态以可迁移的 `session.json`
+> 原子落盘，并保留 `session.bak`；经验、暖绒、明信片和事件流水使用 SQLite。
+> 导出包同时包含对象快照、SQLite 快照和 checksum，导入先暂存、审计，失败则完整回滚。
+> 下文标注 “Isar” 的段落保留为早期逻辑模型设计，不代表当前二进制依赖；生产工程已不包含 Isar。
 
 ---
 
@@ -42,7 +47,7 @@
 ## 1. 终版数据模型 Schema
 
 > 存储方案总纲：
-> - **Isar collection（对象型，可查询/更新）**：`Pet`、`CurrencyWallet`、`YardState`、`Journey`、`ClueCounter`、`AchievementProgress`、`Settings`、`VisitorLogEntry`、`ScheduledJob`。
+> - **Session JSON（对象型、原子整体快照）**：`Pet`、`CurrencyWallet`、`YardState`、`Journey`、`ClueCounter`、`AchievementProgress`、`Settings`、`VisitorLogEntry`、`ScheduledJob`。主文件与 `.bak` 双副本，`schemaVersion` 驱动迁移。
 > - **SQLite（追加型流水大表，只 INSERT）**：`ExpLogEntry`、`CurrencyLog`、`Postcard`、`EventLogEntry`。理由：生命周期长、量大、只追加、需按时间/petId 范围扫描。
 > - **静态内容（只读，assets 加载）**：`PetSpecies`、`PersonalityTag`、`Location`、`Visitor`、`VisitorPetInteraction`、`Event`(定义)、`Achievement`(定义)、`ShopItem`。运行期常驻内存 `ContentRepository`。见 §5。
 > - 所有可迁移存储带全局 `schemaVersion`（存于 `Settings`）。
@@ -779,11 +784,11 @@ class SaveService {
   Future<void> autoSave();                       // debounce autoSaveDebounceMs，写当前 slot 后切换
   Future<void> load();                           // 优先 slot，校验失败回退备份 slot
   Future<int> migrateIfNeeded(int fromVersion);  // 顺序执行 migrations[from..current]
-  Future<File> export();                         // 打包 Isar+SQLite 为单文件（含 checksum）
+  Future<File> export();                         // 打包 Session JSON+SQLite 为单文件（含 checksum）
   Future<ImportResult> import(File f);           // 校验 checksum + schemaVersion → 迁移 → 校验 INV
 }
 ```
-**双备份**：A/B 两 slot 轮换写；load 时先读较新 slot，若反序列化/校验失败读另一 slot（`[待细化]` slot 元数据含写入时间+crc）。
+**双备份**：写入 `session.tmp` 并 flush，现有主档复制为 `session.bak` 后再原子 rename 为 `session.json`；主档无法反序列化时自动回退 `.bak`。
 **迁移**：`migrations: List<Migration>`，每个 `Migration{fromVersion, up(db)}`；`migrateIfNeeded` 从 stored version 顺序 up 到 `currentSchemaVersion`，成功后更新 `Settings.schemaVersion`。迁移全程事务；失败回滚并回退备份。
 **导入导出**：导入后必跑 `AuditService.verifyOnStartup`（`INV-1/4`）；校验不通过则拒绝导入并保留原档。导入是**覆盖式**（单宠位游戏，无合并语义）。
 
@@ -845,11 +850,10 @@ petopia/
 │  ├─ app.dart                   # 启动编排：load→migrate→audit→schedule
 │  ├─ config/
 │  │  └─ game_config.dart        # GameConfig（常量类或 JSON 解析器）
-│  ├─ data/                      # 持久化层（Isar/SQLite）+ repository 实现
-│  │  ├─ isar/ (collections, schemas)
+│  ├─ data/                      # 持久化层（Session JSON/SQLite）+ repository 实现
+│  │  ├─ save/ (SessionStore, portable archive, migrations)
 │  │  ├─ sqlite/ (dao: exp_log, currency_log, postcard, event_log)
 │  │  ├─ content/ (ContentRepository：加载 assets/data/*.json 到内存)
-│  │  └─ save/ (SaveService, migrations/)
 │  ├─ domain/                    # 纯模型 + 枚举 + 值对象（无 IO）
 │  │  ├─ models/ (Pet, Journey, Postcard, …)
 │  │  ├─ enums.dart

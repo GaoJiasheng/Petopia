@@ -48,6 +48,52 @@ void main() {
       expect(loaded?.wallet.balance, 2048);
     },
   );
+
+  test('a failed save does not block later saves', () async {
+    final blockedPath = '${tempDir.path}/blocked';
+    await File(blockedPath).writeAsString('not a directory');
+    final store = SessionStore(Directory(blockedPath));
+
+    await expectLater(
+      store.save(_richSession()),
+      throwsA(isA<FileSystemException>()),
+    );
+    await File(blockedPath).delete();
+
+    final session = _richSession()..wallet.balance = 4096;
+    await store.save(session);
+    expect((await store.load())?.wallet.balance, 4096);
+  });
+
+  test('schema v1 progress migrates without replaying onboarding', () {
+    final store = SessionStore(tempDir);
+    final encoded = store.encodeSnapshot(_richSession());
+    encoded['schemaVersion'] = 1;
+    final settings = encoded['settings']! as Map<String, Object?>;
+    settings
+      ..remove('onboardingComplete')
+      ..['schemaVersion'] = 1;
+
+    final migrated = store.decodeSnapshot(encoded);
+
+    expect(migrated.settings.schemaVersion, 2);
+    expect(migrated.settings.onboardingComplete, isTrue);
+  });
+
+  test('schema v1 empty save still receives first-run onboarding', () {
+    final store = SessionStore(tempDir);
+    final empty = GameSession();
+    final encoded = store.encodeSnapshot(empty);
+    encoded['schemaVersion'] = 1;
+    final settings = encoded['settings']! as Map<String, Object?>;
+    settings
+      ..remove('onboardingComplete')
+      ..['schemaVersion'] = 1;
+
+    final migrated = store.decodeSnapshot(encoded);
+
+    expect(migrated.settings.onboardingComplete, isFalse);
+  });
 }
 
 GameSession _richSession() {
@@ -96,8 +142,13 @@ GameSession _richSession() {
       createdAt: createdAt,
       lastWallClockAt: DateTime.utc(2026, 7, 3, 12),
       notifications: true,
+      notifyPostcards: false,
+      notifyVisitors: true,
+      notifyEvents: false,
+      music: false,
       sound: false,
-      schemaVersion: 1,
+      onboardingComplete: true,
+      schemaVersion: 2,
       lastMonotonicRef: 123456,
       loginStreakCurrent: 3,
       loginStreakMax: 5,
@@ -393,7 +444,12 @@ void _expectYardEquals(YardState actual, YardState expected) {
 
 void _expectSettingsEquals(Settings actual, Settings expected) {
   expect(actual.notifications, expected.notifications);
+  expect(actual.notifyPostcards, expected.notifyPostcards);
+  expect(actual.notifyVisitors, expected.notifyVisitors);
+  expect(actual.notifyEvents, expected.notifyEvents);
+  expect(actual.music, expected.music);
   expect(actual.sound, expected.sound);
+  expect(actual.onboardingComplete, expected.onboardingComplete);
   expect(actual.schemaVersion, expected.schemaVersion);
   expect(actual.createdAt, expected.createdAt);
   expect(actual.lastMonotonicRef, expected.lastMonotonicRef);

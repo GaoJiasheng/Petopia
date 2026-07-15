@@ -6,10 +6,12 @@ import 'package:uuid/uuid.dart';
 import '../config/game_config.dart';
 import '../data/audit_log_port_adapter.dart';
 import '../data/content/content_repository_impl.dart';
+import '../data/save/save_service_impl.dart';
 import '../data/save/session_store.dart';
 import '../data/sqlite/petopia_sqlite_dao.dart';
 import '../domain/enums.dart';
 import '../services/clock_service_impl.dart';
+import '../services/audit_service_impl.dart';
 import 'game_services.dart';
 import 'game_state.dart';
 
@@ -32,9 +34,29 @@ Future<GameServices> bootstrapGame() async {
   _advanceLoginStreak(session, now);
 
   final clock = ClockServiceImpl(SystemClock(), session.settings);
+  final logPort = DaoAuditLogPort(dao);
+  final snapshotStore = SessionSaveSnapshotStore(
+    sessionStore: store,
+    dao: dao,
+    currentSession: () => session,
+  );
+  final auditService = AuditServiceImpl(
+    logPort,
+    () => snapshotStore.activeSession.allPets,
+    () => snapshotStore.activeSession.wallet,
+  );
+  final startupAudit = await auditService.verifyOnStartup();
+  if (!startupAudit.ok) {
+    await store.save(session);
+  }
+  final portableSave = await LocalSaveService.create(
+    snapshotStore: snapshotStore,
+    auditService: auditService,
+    clock: clock,
+  );
   final svc = GameServices.wire(
     session: session,
-    port: DaoAuditLogPort(dao),
+    port: logPort,
     content: content,
     clock: clock,
     rng: rng.nextDouble,
@@ -45,6 +67,8 @@ Future<GameServices> bootstrapGame() async {
     incidents: content.incidents,
     expLogReader: dao.expLogsForPet,
     store: store,
+    portableSave: portableSave,
+    dispose: dao.close,
   );
 
   final current = session.current;

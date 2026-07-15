@@ -177,7 +177,12 @@ class ScheduledJob {
 /// 全局设置（单例）。含时钟锚点（§4 防调表）与连续登录状态。
 class Settings {
   bool notifications;
+  bool notifyPostcards;
+  bool notifyVisitors;
+  bool notifyEvents;
+  bool music;
   bool sound;
+  bool onboardingComplete;
   int schemaVersion; // 迁移用
   DateTime createdAt;
   int lastMonotonicRef; // 单调时钟基准（毫秒，§4）
@@ -190,8 +195,13 @@ class Settings {
     required this.createdAt,
     required this.lastWallClockAt,
     this.notifications = false,
+    this.notifyPostcards = true,
+    this.notifyVisitors = true,
+    this.notifyEvents = true,
+    this.music = true,
     this.sound = true,
-    this.schemaVersion = 1,
+    this.onboardingComplete = false,
+    this.schemaVersion = 2,
     this.lastMonotonicRef = 0,
     this.loginStreakCurrent = 0,
     this.loginStreakMax = 0,

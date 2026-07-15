@@ -34,17 +34,37 @@ class PetSprite extends StatefulWidget {
 class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
   static const _actionDuration = Duration(seconds: 5);
 
-  late final AnimationController _breath = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 2600),
-  )..repeat(reverse: true);
-  late final AnimationController _bounce = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 420),
-  );
+  late final AnimationController _breath;
+  late final AnimationController _bounce;
   int _heartSeq = 0;
   final List<int> _hearts = [];
   String? _playing; // 当前正在播的动作（null=静止呼吸）
+  bool _reduceMotion = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _breath = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2600),
+    );
+    _bounce = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 420),
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _reduceMotion = MediaQuery.disableAnimationsOf(context);
+    if (_reduceMotion) {
+      _breath.stop();
+      _breath.value = 0;
+    } else if (!_breath.isAnimating) {
+      _breath.repeat(reverse: true);
+    }
+  }
 
   @override
   void didUpdateWidget(PetSprite old) {
@@ -126,35 +146,36 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final reduceMotion = _reduceMotion;
     final playing = _playing;
     final Widget body;
-    if (reduceMotion) {
-      body = _staticSprite();
-    } else if (playing != null && widget.speciesId != null) {
+    if (playing != null && widget.speciesId != null) {
       void onComplete() {
         if (mounted) setState(() => _playing = null);
       }
 
-      if (PetArt.hasMatchingActionSheet(widget.variantId, widget.stage)) {
-        body = SpriteSheetPlayer(
+      body = KeyedSubtree(
+        key: ValueKey<String>('pet_action_$playing'),
+        child: SpriteSheetPlayer(
           key: ValueKey('act_${widget.cue?.seq}'),
           assetPath: PetArt.actionSheet(widget.speciesId!, playing),
           size: widget.width,
-          duration: const Duration(seconds: 1),
-          playDuration: _actionDuration,
+          // User-triggered feedback remains visible with Reduce Motion enabled,
+          // but traverses the strip only once instead of looping.
+          duration: reduceMotion ? _actionDuration : const Duration(seconds: 1),
+          playDuration: reduceMotion ? null : _actionDuration,
           onComplete: onComplete,
-          fallback: _breathingStatic(),
-        );
-      } else {
-        body = _StaticActionChoreography(
-          key: ValueKey('pose_${widget.cue?.seq}'),
-          action: playing,
-          duration: _actionDuration,
-          onComplete: onComplete,
-          child: _staticSprite(),
-        );
-      }
+          fallback: _StaticActionChoreography(
+            key: ValueKey('pose_${widget.cue?.seq}'),
+            action: playing,
+            duration: _actionDuration,
+            reduceMotion: reduceMotion,
+            child: _staticSprite(),
+          ),
+        ),
+      );
+    } else if (reduceMotion) {
+      body = _staticSprite();
     } else {
       body = _breathingStatic();
     }
@@ -180,14 +201,14 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
 class _StaticActionChoreography extends StatefulWidget {
   final String action;
   final Duration duration;
-  final VoidCallback onComplete;
+  final bool reduceMotion;
   final Widget child;
 
   const _StaticActionChoreography({
     super.key,
     required this.action,
     required this.duration,
-    required this.onComplete,
+    required this.reduceMotion,
     required this.child,
   });
 
@@ -204,14 +225,6 @@ class _StaticActionChoreographyState extends State<_StaticActionChoreography>
   )..forward();
 
   @override
-  void initState() {
-    super.initState();
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) widget.onComplete();
-    });
-  }
-
-  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
@@ -224,24 +237,40 @@ class _StaticActionChoreographyState extends State<_StaticActionChoreography>
       child: widget.child,
       builder: (context, child) {
         final t = _controller.value;
-        final pulse = math.sin(t * math.pi * 8);
-        final wave = math.sin(t * math.pi * 4);
+        final pulse = math.sin(t * math.pi * (widget.reduceMotion ? 2 : 8));
+        final wave = math.sin(t * math.pi * (widget.reduceMotion ? 1 : 4));
+        final motionScale = widget.reduceMotion ? 0.35 : 1.0;
         final (dy, dx, scale, angle) = switch (widget.action) {
-          'eat' => (pulse.abs() * 5, 0.0, 1.0 - pulse.abs() * 0.025, 0.0),
-          'pat' => (
-            -pulse.abs() * 4,
+          'eat' => (
+            pulse.abs() * 5 * motionScale,
             0.0,
-            1.0 + pulse.abs() * 0.025,
-            wave * 0.015,
+            1.0 - pulse.abs() * 0.025 * motionScale,
+            0.0,
+          ),
+          'pat' => (
+            -pulse.abs() * 4 * motionScale,
+            0.0,
+            1.0 + pulse.abs() * 0.025 * motionScale,
+            wave * 0.015 * motionScale,
           ),
           'play' => (
-            -pulse.abs() * 12,
-            wave * 8,
-            1.0 + pulse.abs() * 0.035,
-            wave * 0.04,
+            -pulse.abs() * 12 * motionScale,
+            wave * 8 * motionScale,
+            1.0 + pulse.abs() * 0.035 * motionScale,
+            wave * 0.04 * motionScale,
           ),
-          'bath' => (pulse * 3, wave * 3, 1.0 + pulse * 0.018, wave * 0.025),
-          _ => (pulse * 2, 0.0, 1.0 + pulse * 0.015, 0.0),
+          'bath' => (
+            pulse * 3 * motionScale,
+            wave * 3 * motionScale,
+            1.0 + pulse * 0.018 * motionScale,
+            wave * 0.025 * motionScale,
+          ),
+          _ => (
+            pulse * 2 * motionScale,
+            0.0,
+            1.0 + pulse * 0.015 * motionScale,
+            0.0,
+          ),
         };
         return Transform.translate(
           offset: Offset(dx, dy),

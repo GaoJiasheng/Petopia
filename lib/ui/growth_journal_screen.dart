@@ -5,6 +5,7 @@ import '../app/game_controller.dart';
 import '../domain/enums.dart';
 import '../domain/models/logs.dart';
 import 'adaptive_layout.dart';
+import 'app_error_state.dart';
 import 'app_icons.dart';
 
 /// 成长手账：按天回看当前宠物的经验流水。
@@ -27,10 +28,16 @@ class GrowthJournalScreen extends ConsumerWidget {
         title: '成长手账',
         child: Center(child: CircularProgressIndicator(color: _accent)),
       ),
-      error: (e, _) => _WarmFrame(
-        title: '成长手账',
-        child: _ErrorState(message: '手账暂时翻不开：$e'),
-      ),
+      error: (error, stackTrace) {
+        logUiError('growth journal', error, stackTrace);
+        return _WarmFrame(
+          title: '成长手账',
+          child: AppLoadError(
+            title: '成长手账暂时没有翻开',
+            onRetry: () => ref.invalidate(gameControllerProvider),
+          ),
+        );
+      },
       data: (_) {
         final ctrl = ref.read(gameControllerProvider.notifier);
         return _WarmFrame(
@@ -44,7 +51,15 @@ class GrowthJournalScreen extends ConsumerWidget {
                 );
               }
               if (snapshot.hasError) {
-                return _ErrorState(message: '手账暂时翻不开：${snapshot.error}');
+                logUiError(
+                  'growth journal entries',
+                  snapshot.error!,
+                  snapshot.stackTrace ?? StackTrace.current,
+                );
+                return AppLoadError(
+                  title: '成长记录暂时没有翻开',
+                  onRetry: () => ref.invalidate(gameControllerProvider),
+                );
               }
               return _JournalContent(entries: snapshot.data ?? const []);
             },
@@ -441,26 +456,6 @@ class _EmptyState extends StatelessWidget {
             style: TextStyle(color: GrowthJournalScreen._muted),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _ErrorState extends StatelessWidget {
-  final String message;
-
-  const _ErrorState({required this.message});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: const TextStyle(color: GrowthJournalScreen._ink),
-        ),
       ),
     );
   }

@@ -7,7 +7,7 @@
 > - `spec-art-overview.md` §1.2 顶级渲染红线（AAA 成品水彩，禁扁平占位）、§2.1 全屏 full-bleed / 参考画布 `1290×2796`。
 > - `spec-devices.md` §0 三条几何红线（**无黑边 / 不变形 / 不遮挡**）、§1 设备矩阵、§1.2.1 最低硬件档、§7 `DeviceTier` 分档钩子（本文件落成权威阈值）。
 > - `spec-gamefeel.md` §5 零焦虑手感红线、§6 High/Mid/Low 降级占位（本文件落成权威阈值）、§0.1 时长档、§0.2 帧率节拍。
-> - `spec-technical.md` §2 Game Config、§3 Service 契约、§3.9 SaveService、§1 Isar/SQLite 存储、`spec-cloudsave.md`。
+> - `spec-technical.md` §2 Game Config、§3 Service 契约、§3.9 SaveService、§1 Session JSON/SQLite 存储、`spec-cloudsave.md`。
 >
 > **仲裁顺序（冲突时）**：三红线（零焦虑 / 无黑边不变形不遮挡）> 情感关键帧 > 顶级渲染红线 > 本文件性能预算。即：**降级只降华丽度，绝不动三红线、绝不删情感关键帧**（毕业目送、换模凝出）。
 >
@@ -73,7 +73,7 @@
 
 | 阶段 | HIGH | MID | LOW（保底上限） | 说明 |
 |---|---|---|---|---|
-| 引擎 + Flutter 首帧（splash） | ≤ 0.8s | ≤ 1.2s | ≤ 1.8s | 含 Isar/SQLite open |
+| 引擎 + Flutter 首帧（splash） | ≤ 0.8s | ≤ 1.2s | ≤ 1.8s | 含 Session JSON 读取与 SQLite open |
 | 启动编排（load→migrate→audit→schedule，spec-technical §app.dart） | ≤ 0.5s | ≤ 0.8s | ≤ 1.5s | 见 §5.3 |
 | 首屏资产就绪（当前宠物 Spine + 当前主题背景 + 顶栏 UI） | ≤ 1.0s | ≤ 1.5s | ≤ 2.5s | 懒加载其余 |
 | **合计冷启动（可交互）** | **≤ 2.0s** | **≤ 3.0s** | **≤ 5.0s（硬上限）** | `[待验证]` |
@@ -335,7 +335,7 @@
 | `visitor_interactions.json`（~256 条矩阵，DESIGN §8.4） | 中 | **懒加载 + 索引**：启动只建 `(visitorId, speciesId)` 索引，命中互动时按需取 script（避免全 256 条常驻） `[待细化]` |
 | `postcard_templates.json`（240 骨架 + 60+60 词条，content-postcards） | 中大 | **懒加载**：生成明信片时按「主性格 × 地点类别」取对应模板段，不全量常驻 `[待细化]` |
 
-- **运行期动态数据**（Pet / ExpLog / Postcard / CurrencyLog 等）走 Isar/SQLite（spec-technical §1），非 JSON——按需查询，不预载全历史（相册按分页/时间窗查，§5.3）。
+- **运行期动态数据**：对象状态走原子 Session JSON 快照；ExpLog / Postcard / CurrencyLog 等流水走 SQLite（spec-technical §1）。对象快照随存档恢复，长期流水按需查询，不预载全历史。
 
 ## 5.3 存档读写性能（呼应 spec-technical §3.9 SaveService / spec-cloudsave）
 
@@ -344,7 +344,7 @@
   - **索引已定**（spec-technical §1.4）：按 `pet_id` / `timestamp` / `received_at` 建索引，成长手账/相册按 petId + 时间窗查，**不全表扫描**。
   - **启动 audit 移出关键路径**：`AuditService.verifyOnStartup`（`INV-1/4` 全表 SUM）随流水增长变慢——在后台 isolate 跑，主屏先可交互（§1.2）；不一致静默回正（spec-technical §3.3）。`[待细化]` 大流水下 audit 可增量校验（只校验上次校验点之后的新增）。
   - **归档**：毕业宠的成长手账「归档进旅行相册」（DESIGN §3.4）——归档后其 exp_log 可移入冷表/懒查，减小热表 `[待细化]`。
-- **存档体积**：Isar 对象 + SQLite 流水，长期上限 `[待验证]`（多宠物几百明信片 + 数千流水条 → 预估数 MB–数十 MB，远小于美术）。
+- **存档体积**：Session JSON 对象快照 + SQLite 流水，长期上限 `[待验证]`（多宠物几百明信片 + 数千流水条 → 预估数 MB–数十 MB，远小于美术）。
 - **双备份 A/B + 迁移**（spec-technical §3.9）：写当前 slot 后切换；load 校验失败回退备份。迁移全程事务。这些是正确性机制，性能上：备份写同样后台 isolate、debounce 内合并。
 - **云存档同步（spec-cloudsave）**：iCloud/Google 同步是**流水并集去重**，网络 IO 全后台、失败不阻塞离线游玩（DESIGN §0.2 离线优先恒定）。同步不在冷启动关键路径。`[待细化]` 同步节流与冲突解决性能。
 
@@ -394,7 +394,7 @@
 - **Spine/动画控制器未 dispose**：宠物毕业/访客离开后骨骼实例、`AnimationController`、`Ticker` 是否释放。
 - **粒子对象池泄漏**：粒子是否归池复用而非无限新建（§3.3）。
 - **监听器/定时器**：idle fidget 时钟、心跳（spec-technical §4.3 markHeartbeat）、云同步订阅是否在页面/宠物生命周期结束时取消。
-- **SQLite 游标 / Isar watcher**：相册分页查询游标、Isar `watch` 订阅是否关闭。
+- **SQLite 游标 / Provider 生命周期**：相册分页查询游标、页面订阅与数据库句柄是否关闭。
 - **Image cache 无上限**：确认 Flame `Images` 外挂了 LRU 上限（§3.2），未回退到默认无限缓存。
 - **isolate**：后台 audit/存档 isolate 用后是否回收。
 

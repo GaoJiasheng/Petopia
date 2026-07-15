@@ -39,9 +39,10 @@ enum Sting {
   final String file;
 }
 
-/// 音频引擎：循环 BGM（情境切换） + 一次性 sting。受 settings.sound 门控。
+/// 音频引擎：循环 BGM（情境切换） + 一次性 sting，支持独立开关。
 abstract interface class AudioService {
-  bool get enabled;
+  bool get musicEnabled;
+  bool get effectsEnabled;
 
   /// 切到某情境 BGM（已在播则忽略）。
   Future<void> playBgm(Bgm bgm);
@@ -49,8 +50,8 @@ abstract interface class AudioService {
   /// 播一段事件 sting（叠加在 BGM 之上）。
   Future<void> sting(Sting s);
 
-  /// 开关声音；关时暂停 BGM，开时恢复当前情境。
-  Future<void> setEnabled(bool enabled);
+  Future<void> setMusicEnabled(bool enabled);
+  Future<void> setEffectsEnabled(bool enabled);
 
   Future<void> dispose();
 }
@@ -59,8 +60,11 @@ abstract interface class AudioService {
 class AudioplayersAudioService implements AudioService {
   final AudioPlayer _bgm = AudioPlayer(playerId: 'petopia_bgm');
   final AudioPlayer _sfx = AudioPlayer(playerId: 'petopia_sfx');
-  bool _enabled = true;
+  bool _musicEnabled = true;
+  bool _effectsEnabled = true;
   Bgm? _current;
+  Bgm? _loaded;
+  int _bgmRequest = 0;
 
   AudioplayersAudioService() {
     _bgm.setReleaseMode(ReleaseMode.loop);
@@ -68,19 +72,37 @@ class AudioplayersAudioService implements AudioService {
   }
 
   @override
-  bool get enabled => _enabled;
+  bool get musicEnabled => _musicEnabled;
+
+  @override
+  bool get effectsEnabled => _effectsEnabled;
 
   @override
   Future<void> playBgm(Bgm bgm) async {
-    if (_current == bgm) return;
+    final previous = _current;
+    if (previous == bgm) return;
     _current = bgm;
-    if (!_enabled) return;
+    if (!_musicEnabled) return;
+    final request = ++_bgmRequest;
     try {
+      if (previous != null) {
+        for (var step = 3; step >= 0; step--) {
+          if (request != _bgmRequest) return;
+          await _bgm.setVolume(0.55 * step / 4);
+          await Future<void>.delayed(const Duration(milliseconds: 45));
+        }
+      }
       await _bgm.stop();
       await _bgm.play(
         AssetSource('audio/bgm/mix/m4a/${bgm.file}.m4a'),
-        volume: 0.55,
+        volume: 0,
       );
+      _loaded = bgm;
+      for (var step = 1; step <= 5; step++) {
+        if (request != _bgmRequest || !_musicEnabled) return;
+        await _bgm.setVolume(0.55 * step / 5);
+        await Future<void>.delayed(const Duration(milliseconds: 55));
+      }
     } catch (_) {
       /* 无声降级 */
     }
@@ -88,7 +110,7 @@ class AudioplayersAudioService implements AudioService {
 
   @override
   Future<void> sting(Sting s) async {
-    if (!_enabled) return;
+    if (!_effectsEnabled) return;
     try {
       await _sfx.play(
         AssetSource('audio/sting/m4a/${s.file}.m4a'),
@@ -100,17 +122,37 @@ class AudioplayersAudioService implements AudioService {
   }
 
   @override
-  Future<void> setEnabled(bool enabled) async {
-    if (_enabled == enabled) return;
-    _enabled = enabled;
+  Future<void> setMusicEnabled(bool enabled) async {
+    if (_musicEnabled == enabled) return;
+    _musicEnabled = enabled;
+    _bgmRequest += 1;
     try {
       if (!enabled) {
         await _bgm.pause();
       } else if (_current != null) {
-        await _bgm.resume();
+        if (_loaded == _current) {
+          await _bgm.setVolume(0.55);
+          await _bgm.resume();
+        } else {
+          final target = _current!;
+          _current = null;
+          await playBgm(target);
+        }
       }
     } catch (_) {
       /* 无声降级 */
+    }
+  }
+
+  @override
+  Future<void> setEffectsEnabled(bool enabled) async {
+    _effectsEnabled = enabled;
+    if (!enabled) {
+      try {
+        await _sfx.stop();
+      } catch (_) {
+        /* 无声降级 */
+      }
     }
   }
 

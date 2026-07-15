@@ -64,6 +64,7 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen> {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
+            final largeText = MediaQuery.textScalerOf(context).scale(14) >= 18;
             final columns = constraints.maxWidth >= 840
                 ? 4
                 : (constraints.maxWidth >= 600 ? 3 : 2);
@@ -86,7 +87,7 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen> {
                         ),
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: columns,
-                          childAspectRatio: 0.86,
+                          childAspectRatio: largeText ? 0.7 : 0.86,
                           crossAxisSpacing: 12,
                           mainAxisSpacing: 12,
                         ),
@@ -142,53 +143,66 @@ class _ChoiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFFFFFDF7),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(
-            color: selected
-                ? _AdoptScreenState._accent
-                : _AdoptScreenState._line,
-            width: selected ? 3 : 1.5,
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: '${choice.name}，${choice.baseTone}',
+      child: GestureDetector(
+        key: ValueKey<String>('adopt_choice_${choice.speciesId}'),
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 180),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFFDF7),
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: selected
+                  ? _AdoptScreenState._accent
+                  : _AdoptScreenState._line,
+              width: selected ? 3 : 1.5,
+            ),
+            boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
           ),
-          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
-        ),
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            Expanded(
-              child: Image.asset(
-                PetArt.portrait(choice.speciesId),
-                fit: BoxFit.contain,
-                errorBuilder: (_, _, _) => const Icon(
-                  Icons.pets_rounded,
-                  size: 56,
-                  color: _AdoptScreenState._muted,
+          padding: const EdgeInsets.all(10),
+          child: Column(
+            children: [
+              Expanded(
+                child: Image.asset(
+                  PetArt.portrait(choice.speciesId),
+                  fit: BoxFit.contain,
+                  excludeFromSemantics: true,
+                  errorBuilder: (_, _, _) => const Icon(
+                    Icons.pets_rounded,
+                    size: 56,
+                    color: _AdoptScreenState._muted,
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              choice.name,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: _AdoptScreenState._ink,
-                fontSize: 15,
+              const SizedBox(height: 6),
+              Text(
+                choice.name,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: _AdoptScreenState._ink,
+                  fontSize: 15,
+                ),
               ),
-            ),
-            Text(
-              choice.baseTone,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: _AdoptScreenState._muted,
-                fontSize: 12,
+              Text(
+                choice.baseTone,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: _AdoptScreenState._muted,
+                  fontSize: 12,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -209,6 +223,21 @@ class _NameAndConfirm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final largeText = MediaQuery.textScalerOf(context).scale(14) >= 18;
+    final confirm = FilledButton(
+      key: const ValueKey<String>('adopt_confirm'),
+      onPressed: enabled ? onConfirm : null,
+      style: FilledButton.styleFrom(
+        minimumSize: Size(largeText ? double.infinity : 104, 52),
+        backgroundColor: _AdoptScreenState._accent,
+        disabledBackgroundColor: const Color(0xFFE6DFD0),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      child: Text(
+        adopting ? '正在迎接…' : '领养',
+        style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+      ),
+    );
     return Container(
       padding: EdgeInsets.fromLTRB(
         16,
@@ -221,51 +250,45 @@ class _NameAndConfirm extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
         boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
       ),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: controller,
-              maxLength: 12,
-              enabled: enabled || adopting,
-              decoration: InputDecoration(
-                hintText: '给它取个名字',
-                counterText: '',
-                filled: true,
-                fillColor: const Color(0xFFFBF5E9),
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 14,
-                  vertical: 10,
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide.none,
-                ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final stackControls = largeText || constraints.maxWidth < 360;
+          final field = TextField(
+            controller: controller,
+            maxLength: 12,
+            enabled: enabled || adopting,
+            textInputAction: TextInputAction.done,
+            onSubmitted: enabled ? (_) => onConfirm() : null,
+            decoration: InputDecoration(
+              labelText: '伙伴名字',
+              hintText: '给它取个名字',
+              counterText: '',
+              filled: true,
+              fillColor: const Color(0xFFFBF5E9),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 14,
+                vertical: 12,
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: BorderSide.none,
               ),
             ),
-          ),
-          const SizedBox(width: 10),
-          GestureDetector(
-            onTap: enabled ? onConfirm : null,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 14),
-              decoration: BoxDecoration(
-                color: enabled
-                    ? _AdoptScreenState._accent
-                    : const Color(0xFFE6DFD0),
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Text(
-                adopting ? '…' : '领养',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 15,
-                ),
-              ),
-            ),
-          ),
-        ],
+          );
+          if (stackControls) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [field, const SizedBox(height: 10), confirm],
+            );
+          }
+          return Row(
+            children: [
+              Expanded(child: field),
+              const SizedBox(width: 10),
+              confirm,
+            ],
+          );
+        },
       ),
     );
   }

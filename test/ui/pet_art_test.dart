@@ -10,9 +10,14 @@ void main() {
     );
   });
 
-  test('sequence sheets are only used for their matching model', () {
-    expect(PetArt.hasMatchingActionSheet('pet_cat_v1', PetStage.c), isTrue);
-    expect(PetArt.hasMatchingActionSheet('pet_cat_v2', PetStage.c), isFalse);
-    expect(PetArt.hasMatchingActionSheet('pet_cat_v1', PetStage.d), isFalse);
+  test('every growth stage and variant uses the species action sheet', () {
+    expect(
+      PetArt.actionSheet('pet_cat', 'eat'),
+      'assets/runtime/pets/cat/actions/pet_cat_var01_stageC_eat.png',
+    );
+    expect(
+      PetArt.actionSheet('pet_rabbit', 'bath'),
+      'assets/runtime/pets/rabbit/actions/pet_rabbit_var01_stageC_bath.png',
+    );
   });
 }

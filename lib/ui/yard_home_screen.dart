@@ -7,6 +7,7 @@ import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
 import '../config/game_config.dart';
 import '../domain/enums.dart';
+import 'app_error_state.dart';
 import 'app_icons.dart';
 import 'adaptive_layout.dart';
 import 'pet_action_cue.dart';
@@ -19,7 +20,9 @@ import 'adopt_screen.dart';
 import 'album_screen.dart';
 import 'graduation_ceremony_screen.dart';
 import 'growth_journal_screen.dart';
+import 'onboarding_screen.dart';
 import 'pet_dex_screen.dart';
+import 'pet_detail_screen.dart';
 import 'postcard_viewer_screen.dart';
 import 'settings_screen.dart';
 import 'shop_screen.dart';
@@ -53,6 +56,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
   bool _visitorDialogOpen = false;
   bool _revisitorDialogOpen = false;
   bool _eventDialogOpen = false;
+  bool _onboardingOpen = false;
   bool _eventPresentedThisActivation = false;
   Bgm? _currentBgm;
 
@@ -101,17 +105,20 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
     return async.when(
       loading: () =>
           const Scaffold(body: Center(child: CircularProgressIndicator())),
-      error: (e, _) => Scaffold(
-        body: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(24),
-            child: Text('启动失败：$e'),
+      error: (error, stackTrace) {
+        logUiError('yard startup', error, stackTrace);
+        return Scaffold(
+          backgroundColor: const Color(0xFFFAF3E3),
+          body: AppLoadError(
+            title: '小院暂时没有醒来',
+            onRetry: () => ref.invalidate(gameControllerProvider),
           ),
-        ),
-      ),
+        );
+      },
       data: (view) {
         final pet = view.pet;
         final ctrl = ref.read(gameControllerProvider.notifier);
+        final routeIsCurrent = ModalRoute.of(context)?.isCurrent ?? true;
         // 院子 BGM 按时段切换（幂等，已在播则忽略）。
         final hour = DateTime.now().hour;
         final yardBgm = (hour >= 19 || hour < 6)
@@ -123,10 +130,14 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
             if (mounted) ref.read(audioServiceProvider).playBgm(yardBgm);
           });
         }
-        _schedulePostcardArrival(ctrl);
-        _scheduleVisitorArrival(ctrl, view.visitorArrival);
-        _scheduleRevisitorArrival(ctrl, view.revisitorArrival);
-        _scheduleEvent(ctrl, view.pendingEvent);
+        if (!view.onboardingComplete && routeIsCurrent) {
+          _scheduleOnboarding(ctrl, needsAdoption: view.pet == null);
+        } else if (!_onboardingOpen && routeIsCurrent) {
+          _schedulePostcardArrival(ctrl);
+          _scheduleVisitorArrival(ctrl, view.visitorArrival);
+          _scheduleRevisitorArrival(ctrl, view.revisitorArrival);
+          _scheduleEvent(ctrl, view.pendingEvent);
+        }
         final petAsset = pet == null
             ? null
             : PetArt.stage(pet.speciesId, pet.stage, variantId: pet.variantId);
@@ -277,6 +288,21 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
     );
   }
 
+  void _scheduleOnboarding(GameController ctrl, {required bool needsAdoption}) {
+    if (_onboardingOpen || !mounted) return;
+    _onboardingOpen = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (!mounted) return;
+      await Navigator.of(context).push(
+        MaterialPageRoute<void>(
+          fullscreenDialog: true,
+          builder: (_) => OnboardingScreen(needsAdoption: needsAdoption),
+        ),
+      );
+      if (mounted) setState(() => _onboardingOpen = false);
+    });
+  }
+
   void _schedulePostcardArrival(GameController ctrl) {
     if (_postcardDialogOpen || !mounted) return;
     final cards = ctrl.postcards();
@@ -413,8 +439,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
     const actions = ['eat', 'pat', 'play', 'bath'];
     final assets = [
       staticAsset,
-      if (PetArt.hasMatchingActionSheet(pet.variantId, pet.stage))
-        for (final action in actions) PetArt.actionSheet(pet.speciesId, action),
+      for (final action in actions) PetArt.actionSheet(pet.speciesId, action),
     ];
     for (final asset in assets) {
       unawaited(
@@ -442,7 +467,11 @@ class _YardOverlay extends StatelessWidget {
         child: Column(
           children: [
             if (pet != null)
-              _InfoCard(pet: pet, wallet: view.wallet)
+              _InfoCard(
+                pet: pet,
+                wallet: view.wallet,
+                onTap: () => _openPetDetail(context, pet),
+              )
             else
               const _TopMenuOnly(),
             const Spacer(),
@@ -480,7 +509,12 @@ class _YardOverlay extends StatelessWidget {
               child: SizedBox(
                 width: panelWidth,
                 child: pet != null
-                    ? _InfoCard(pet: pet, wallet: view.wallet, edgeToEdge: true)
+                    ? _InfoCard(
+                        pet: pet,
+                        wallet: view.wallet,
+                        edgeToEdge: true,
+                        onTap: () => _openPetDetail(context, pet),
+                      )
                     : const _TopMenuOnly(),
               ),
             ),
@@ -533,6 +567,12 @@ class _YardOverlay extends StatelessWidget {
           speciesId: pet.speciesId,
         ),
       ),
+    );
+  }
+
+  void _openPetDetail(BuildContext context, PetView pet) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => PetDetailScreen(initialPet: pet)),
     );
   }
 }
@@ -834,6 +874,7 @@ class _YardVisitor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
+      key: const ValueKey<String>('active_visitor'),
       button: true,
       label: '来客 ${visitor.name}，点按查看互动',
       child: GestureDetector(
@@ -922,42 +963,51 @@ class _VisitorStayPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.of(
-        context,
-      ).push(MaterialPageRoute<void>(builder: (_) => const VisitorDexScreen())),
-      child: Container(
-        margin: compact
-            ? EdgeInsets.zero
-            : const EdgeInsets.symmetric(horizontal: 22),
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-        decoration: BoxDecoration(
-          color: const Color(0xFFFFFDF7).withValues(alpha: 0.94),
-          borderRadius: BorderRadius.circular(999),
-          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 8)],
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const AppIcon(
-              'ach_visitor',
-              size: 20,
-              fallback: Icons.people_alt_rounded,
+    final largeText = MediaQuery.textScalerOf(context).scale(13) >= 17;
+    return Padding(
+      padding: compact
+          ? EdgeInsets.zero
+          : const EdgeInsets.symmetric(horizontal: 22),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(largeText ? 18 : 999),
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute<void>(builder: (_) => const VisitorDexScreen()),
+          ),
+          child: Ink(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFFDF7).withValues(alpha: 0.94),
+              borderRadius: BorderRadius.circular(largeText ? 18 : 999),
+              boxShadow: const [
+                BoxShadow(color: Colors.black12, blurRadius: 8),
+              ],
             ),
-            const SizedBox(width: 8),
-            Flexible(
-              child: Text(
-                '今日来客：${visitor.name} · 已记入来客图鉴',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  color: Color(0xFF6B5445),
-                  fontSize: 13,
-                  fontWeight: FontWeight.w800,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const AppIcon(
+                  'ach_visitor',
+                  size: 20,
+                  fallback: Icons.people_alt_rounded,
                 ),
-              ),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    '今日来客：${visitor.name} · 已记入来客图鉴',
+                    maxLines: largeText || compact ? 2 : 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Color(0xFF6B5445),
+                      fontSize: 13,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -1109,73 +1159,103 @@ class _InfoCard extends StatelessWidget {
   final PetView pet;
   final int wallet;
   final bool edgeToEdge;
+  final VoidCallback onTap;
   const _InfoCard({
     required this.pet,
     required this.wallet,
+    required this.onTap,
     this.edgeToEdge = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: edgeToEdge
-          ? EdgeInsets.zero
-          : const EdgeInsets.only(top: 12, left: 16, right: 16),
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
-      decoration: BoxDecoration(
-        color: const Color(0xFFFFFDF7).withValues(alpha: 0.92),
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 8)],
+    final largeText = MediaQuery.textScalerOf(context).scale(14) >= 18;
+    final title = Text(
+      '${pet.name} · Lv ${pet.level}（${pet.stage.name.toUpperCase()} 档）',
+      maxLines: largeText ? 2 : 1,
+      overflow: TextOverflow.ellipsis,
+      style: const TextStyle(
+        fontSize: 17,
+        fontWeight: FontWeight.bold,
+        color: Color(0xFF6B5445),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
+    );
+    final walletView = Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const WarmfluffIcon(size: 18),
+        const SizedBox(width: 3),
+        Text(
+          '$wallet',
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFFE8A15C),
+          ),
+        ),
+      ],
+    );
+    return Semantics(
+      key: const ValueKey<String>('pet_info_card'),
+      button: true,
+      label: '查看${pet.name}的详情',
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Container(
+          margin: edgeToEdge
+              ? EdgeInsets.zero
+              : const EdgeInsets.only(top: 12, left: 16, right: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
+          decoration: BoxDecoration(
+            color: const Color(0xFFFFFDF7).withValues(alpha: 0.92),
+            borderRadius: BorderRadius.circular(18),
+            boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 8)],
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Expanded(
-                child: Text(
-                  '${pet.name} · Lv ${pet.level}（${pet.stage.name.toUpperCase()} 档）',
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF6B5445),
-                  ),
+              if (largeText) ...[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(child: title),
+                    const SizedBox(width: 6),
+                    const _HomeMenuButton(),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                Align(alignment: Alignment.centerRight, child: walletView),
+              ] else
+                Row(
+                  children: [
+                    Expanded(child: title),
+                    const SizedBox(width: 8),
+                    walletView,
+                    const SizedBox(width: 4),
+                    const _HomeMenuButton(),
+                  ],
+                ),
+              const SizedBox(height: 6),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: LinearProgressIndicator(
+                  value: pet.exp / GameConfig.graduationExp,
+                  minHeight: 8,
+                  backgroundColor: const Color(0xFFEDE4D3),
+                  color: const Color(0xFFA7C4A0),
                 ),
               ),
-              const SizedBox(width: 8),
-              const WarmfluffIcon(size: 18),
-              const SizedBox(width: 3),
+              const SizedBox(height: 4),
               Text(
-                '$wallet',
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFFE8A15C),
-                ),
+                '经验 ${pet.exp} / ${GameConfig.graduationExp}    性格：${pet.personality.join(" · ")}',
+                maxLines: largeText ? 2 : 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(fontSize: 12, color: Color(0xFF8A7A6A)),
               ),
-              const SizedBox(width: 4),
-              const _HomeMenuButton(),
             ],
           ),
-          const SizedBox(height: 6),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: LinearProgressIndicator(
-              value: pet.exp / GameConfig.graduationExp,
-              minHeight: 8,
-              backgroundColor: const Color(0xFFEDE4D3),
-              color: const Color(0xFFA7C4A0),
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            '经验 ${pet.exp} / ${GameConfig.graduationExp}    性格：${pet.personality.join(" · ")}',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 12, color: Color(0xFF8A7A6A)),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -1220,6 +1300,7 @@ class _HomeMenuButton extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: PopupMenuButton<_HomeMenuTarget>(
+        key: const ValueKey<String>('home_menu'),
         tooltip: '手账菜单',
         color: const Color(0xFFFFFDF7),
         icon: const AppIcon(
@@ -1295,6 +1376,7 @@ class _HomeMenuButton extends StatelessWidget {
             ),
           ),
           PopupMenuItem(
+            key: ValueKey<String>('menu_settings'),
             value: _HomeMenuTarget.settings,
             child: _MenuRow(
               iconName: 'set_save',
@@ -1371,7 +1453,13 @@ class _YardDecorLayoutScreen extends ConsumerWidget {
       ),
       body: async.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('加载失败：$e')),
+        error: (error, stackTrace) {
+          logUiError('yard decor', error, stackTrace);
+          return AppLoadError(
+            title: '院子布置暂时没有打开',
+            onRetry: () => ref.invalidate(gameControllerProvider),
+          );
+        },
         data: (view) {
           final inventory = ctrl.decorInventory();
           return Center(
@@ -1613,6 +1701,19 @@ class _ActionBar extends StatelessWidget {
         () => run(ctrl.bath, 'bath'),
       ),
     ];
+    final buttons = [
+      for (final (action, iconName, label, exp, onTap) in actions)
+        _ActionButton(
+          key: ValueKey<String>('care_action_${action.name}'),
+          iconName: iconName,
+          label: label,
+          exp: exp,
+          cooldownSec: cooldown[action] ?? 0,
+          dailyMaxed: dailyMaxed.contains(action),
+          onTap: onTap,
+        ),
+    ];
+    final largeText = MediaQuery.textScalerOf(context).scale(14) >= 18;
     return Container(
       margin: edgeToEdge
           ? EdgeInsets.zero
@@ -1623,19 +1724,23 @@ class _ActionBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(22),
         boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 8)],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: [
-          for (final (action, iconName, label, exp, onTap) in actions)
-            _ActionButton(
-              iconName: iconName,
-              label: label,
-              exp: exp,
-              cooldownSec: cooldown[action] ?? 0,
-              dailyMaxed: dailyMaxed.contains(action),
-              onTap: onTap,
-            ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          if (largeText || constraints.maxWidth < 300) {
+            return GridView.count(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
+              mainAxisExtent: 94,
+              mainAxisSpacing: 6,
+              crossAxisSpacing: 6,
+              children: buttons,
+            );
+          }
+          return Row(
+            children: [for (final button in buttons) Expanded(child: button)],
+          );
+        },
       ),
     );
   }
@@ -1649,6 +1754,7 @@ class _ActionButton extends StatelessWidget {
   final bool dailyMaxed;
   final VoidCallback onTap;
   const _ActionButton({
+    super.key,
     required this.iconName,
     required this.label,
     required this.exp,
@@ -1670,69 +1776,83 @@ class _ActionButton extends StatelessWidget {
           : onCd
           ? '$label，${_formatCooldown(cooldownSec)}后可用'
           : '$label，增加$exp点经验',
-      child: GestureDetector(
-        onTap: disabled ? null : onTap,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 180),
-              width: 54,
-              height: 54,
-              padding: const EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: disabled
-                    ? const Color(0xFFF0EDE8).withValues(alpha: 0.92)
-                    : const Color(0xFFFFF6E6),
-                shape: BoxShape.circle,
-              ),
-              child: disabled
-                  ? ColorFiltered(
-                      colorFilter: const ColorFilter.matrix(<double>[
-                        0.2126,
-                        0.7152,
-                        0.0722,
-                        0,
-                        0,
-                        0.2126,
-                        0.7152,
-                        0.0722,
-                        0,
-                        0,
-                        0.2126,
-                        0.7152,
-                        0.0722,
-                        0,
-                        0,
-                        0,
-                        0,
-                        0,
-                        1,
-                        0,
-                      ]),
-                      child: Opacity(opacity: 0.48, child: icon),
-                    )
-                  : icon,
-            ),
-            const SizedBox(height: 4),
-            SizedBox(
-              height: 14,
-              child: Text(
-                dailyMaxed
-                    ? '今日已完成'
-                    : onCd
-                    ? _formatCooldown(cooldownSec)
-                    : '$label +$exp',
-                style: TextStyle(
-                  fontSize: disabled ? 10.5 : 11,
-                  fontWeight: disabled ? FontWeight.w700 : FontWeight.w500,
-                  color: disabled
-                      ? const Color(0xFF9A9086)
-                      : const Color(0xFF6B5445),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: disabled ? null : onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 180),
+                  width: 54,
+                  height: 54,
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: disabled
+                        ? const Color(0xFFF0EDE8).withValues(alpha: 0.92)
+                        : const Color(0xFFFFF6E6),
+                    shape: BoxShape.circle,
+                  ),
+                  child: disabled
+                      ? ColorFiltered(
+                          colorFilter: const ColorFilter.matrix(<double>[
+                            0.2126,
+                            0.7152,
+                            0.0722,
+                            0,
+                            0,
+                            0.2126,
+                            0.7152,
+                            0.0722,
+                            0,
+                            0,
+                            0.2126,
+                            0.7152,
+                            0.0722,
+                            0,
+                            0,
+                            0,
+                            0,
+                            0,
+                            1,
+                            0,
+                          ]),
+                          child: Opacity(opacity: 0.48, child: icon),
+                        )
+                      : icon,
                 ),
-              ),
+                const SizedBox(height: 4),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(minHeight: 28),
+                  child: Center(
+                    child: Text(
+                      dailyMaxed
+                          ? '今日已完成'
+                          : onCd
+                          ? _formatCooldown(cooldownSec)
+                          : '$label +$exp',
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: disabled ? 10.5 : 11,
+                        fontWeight: disabled
+                            ? FontWeight.w700
+                            : FontWeight.w500,
+                        color: disabled
+                            ? const Color(0xFF9A9086)
+                            : const Color(0xFF6B5445),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

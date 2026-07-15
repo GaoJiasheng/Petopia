@@ -1,5 +1,9 @@
 # Petopia 实现规格 · 云端存档同步 · v0.3 · 配套 DESIGN.md / spec-technical.md
 
+> **状态：未来方案，当前 App Store 版本未接入云同步。** 当前生产存档为
+> Session JSON + SQLite 的本地可携带归档；实施本规格时，应以该归档作为
+> SavePayload 真相源。下文 `isar` 字段仅为旧版 payload 兼容名，不代表重新引入 Isar。
+
 > 本文档是面向实现的**云端存档同步规格**（cloud save sync spec）。目标：让开发者（后续由 Codex CLI 实现）无需再猜测即可照做。
 > 上游依据：`docs/DESIGN.md`（§10 数据模型、§0.3 治愈支柱）、`docs/spec-technical.md`（§1 Schema、§3 Service 契约、§4 离线防作弊、INV-1..5）。凡与本文冲突处：数据模型/不变量以 spec-technical.md 为准；同步策略以本文为准。凡本文未覆盖处回退到 spec-technical.md。
 > **核心约束（不可动摇）**：纯本地存储、**无自建后端**；同步仅用**平台原生**能力——iOS 用 Apple iCloud，Android 用 Google（Play Games Saved Games / Drive AppData）。数据只存在用户自己的云空间，开发者不部署、不收集、不经手任何服务器。

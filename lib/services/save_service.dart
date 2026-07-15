@@ -14,7 +14,9 @@ class ImportResult {
 abstract interface class SaveService {
   Future<void> autoSave(); // debounce autoSaveDebounceMs，写当前 slot 后切换
   Future<void> load(); // 优先 slot，校验失败回退备份 slot
-  Future<int> migrateIfNeeded(int fromVersion); // 顺序执行 migrations[from..current]
-  Future<File> export(); // 打包 Isar+SQLite 单文件（含 checksum）
+  Future<int> migrateIfNeeded(
+    int fromVersion,
+  ); // 顺序执行 migrations[from..current]
+  Future<File> export(); // 打包 session+SQLite 单文件（含 checksum）
   Future<ImportResult> import(File f);
 }

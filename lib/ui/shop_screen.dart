@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import 'adaptive_layout.dart';
+import 'app_error_state.dart';
 import 'app_icons.dart';
 
 /// 暖绒商店：按分类展示商品，并通过 GameController 完成兑换。
@@ -33,7 +34,15 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
           child: CircularProgressIndicator(color: ShopScreen._accent),
         ),
       ),
-      error: (e, _) => _WarmFrame(child: _ErrorState(message: '商店暂时开不了门：$e')),
+      error: (error, stackTrace) {
+        logUiError('shop', error, stackTrace);
+        return _WarmFrame(
+          child: AppLoadError(
+            title: '商店暂时没有开门',
+            onRetry: () => ref.invalidate(gameControllerProvider),
+          ),
+        );
+      },
       data: (view) {
         final ctrl = ref.read(gameControllerProvider.notifier);
         return _WarmFrame(
@@ -58,9 +67,10 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
           .buy(item.id);
       if (!mounted) return;
       _showMessage(success ? '${item.name} 已收进手账。' : '暖绒不足，或这件物品已经拥有。');
-    } catch (e) {
+    } catch (error, stackTrace) {
+      logUiError('shop purchase', error, stackTrace);
       if (!mounted) return;
-      _showMessage('这次没有兑换成功：$e');
+      _showMessage('这次没有兑换成功，暖绒和物品都没有变化。');
     } finally {
       if (mounted) {
         setState(() => _buyingId = null);
@@ -637,26 +647,6 @@ class _EmptyState extends StatelessWidget {
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class _ErrorState extends StatelessWidget {
-  final String message;
-
-  const _ErrorState({required this.message});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Text(
-          message,
-          textAlign: TextAlign.center,
-          style: const TextStyle(color: ShopScreen._ink),
         ),
       ),
     );

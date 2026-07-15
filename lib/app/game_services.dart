@@ -27,6 +27,7 @@ import '../services/postcard_generator.dart';
 import '../services/postcard_generator_impl.dart';
 import '../services/revisit_service.dart';
 import '../services/revisit_service_impl.dart';
+import '../services/save_service.dart';
 import '../services/unlock_service.dart';
 import '../services/unlock_service_impl.dart';
 import '../services/visitor_service.dart';
@@ -53,11 +54,14 @@ class GameServices {
   final double Function() _rng;
   final String Function() _idGen;
   final Future<List<ExpLogEntry>> Function(String petId)? _expLogReader;
+  final SaveService? _portableSave;
+  final Future<void> Function()? _dispose;
 
   /// 当前游戏状态（UI 读取）。
   GameSession get session => _session;
   SessionStore get store => _store;
   ContentRepository get content => _content;
+  SaveService? get portableSave => _portableSave;
 
   /// 读某只宠物的经验流水（成长手账）；未接持久化时返回空。
   Future<List<ExpLogEntry>> readExpLog(String petId) async =>
@@ -80,12 +84,18 @@ class GameServices {
     required double Function() rng,
     required String Function() idGen,
     Future<List<ExpLogEntry>> Function(String petId)? expLogReader,
+    SaveService? portableSave,
+    Future<void> Function()? dispose,
   }) : _session = session,
        _store = store,
        _content = content,
        _rng = rng,
        _idGen = idGen,
-       _expLogReader = expLogReader;
+       _expLogReader = expLogReader,
+       _portableSave = portableSave,
+       _dispose = dispose;
+
+  Future<void> dispose() async => _dispose?.call();
 
   factory GameServices.wire({
     required GameSession session,
@@ -100,6 +110,8 @@ class GameServices {
     List<Incident> incidents = const [],
     Future<List<ExpLogEntry>> Function(String petId)? expLogReader,
     SessionStore? store,
+    SaveService? portableSave,
+    Future<void> Function()? dispose,
   }) {
     final audit = AuditServiceImpl(
       port,
@@ -202,6 +214,8 @@ class GameServices {
       idGen: idGen,
       expLogReader: expLogReader,
       store: store ?? _NoopSessionStore.instance,
+      portableSave: portableSave,
+      dispose: dispose,
     );
     return svc;
   }

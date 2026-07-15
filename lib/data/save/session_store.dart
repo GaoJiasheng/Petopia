@@ -12,7 +12,7 @@ import '../../domain/models/logs.dart';
 import '../../domain/models/pet.dart';
 import '../../domain/models/yard.dart';
 
-const int _schemaVersion = 1;
+const int _schemaVersion = 2;
 
 class SessionStore {
   SessionStore(this.saveDir);
@@ -29,9 +29,38 @@ class SessionStore {
     return SessionStore(Directory(p.join(documents.path, 'save')));
   }
 
+  int get schemaVersion => _schemaVersion;
+
+  /// Stable JSON snapshot used by the portable backup service.
+  Map<String, Object?> encodeSnapshot(GameSession session) =>
+      _sessionToJson(session);
+
+  /// Validates and decodes an imported snapshot before it can replace live data.
+  GameSession decodeSnapshot(Map<String, Object?> json, {DateTime? now}) {
+    final version = _intOrNull(json['schemaVersion']);
+    if (version == null || version < 1 || version > _schemaVersion) {
+      throw FormatException('unsupported session schemaVersion $version');
+    }
+    final session = _sessionFromJson(json, now ?? DateTime.now().toUtc());
+    final settingsJson = _jsonMapOrNull(json['settings']);
+    if (version == 1 &&
+        settingsJson?.containsKey('onboardingComplete') != true &&
+        _hasExistingProgress(session)) {
+      // Existing players should not be sent through first-run onboarding after
+      // upgrading from the pre-onboarding save schema.
+      session.settings.onboardingComplete = true;
+    }
+    session.settings.schemaVersion = _schemaVersion;
+    return session;
+  }
+
   Future<void> save(GameSession session) {
-    final next = _saveChain.then((_) => _saveNow(session));
-    _saveChain = next;
+    final next = _saveChain
+        .catchError((Object _, StackTrace _) {})
+        .then((_) => _saveNow(session));
+    // Keep the public Future truthful while ensuring a failed write cannot
+    // prevent every later save from running.
+    _saveChain = next.catchError((Object _, StackTrace _) {});
     return next;
   }
 
@@ -51,6 +80,7 @@ class SessionStore {
       await temp.rename(sessionFile.path);
     } catch (error, stackTrace) {
       debugPrint('SessionStore.save failed: $error\n$stackTrace');
+      rethrow;
     }
   }
 
@@ -86,14 +116,14 @@ class SessionStore {
         throw const FormatException('session archive root is not an object');
       }
       final version = _intOrNull(json['schemaVersion']);
-      if (version != _schemaVersion) {
+      if (version == null || version < 1 || version > _schemaVersion) {
         debugPrint(
           'SessionStore.load ignored ${p.basename(file.path)}: '
           'unsupported schemaVersion $version',
         );
         throw const _UnsupportedSessionSchema();
       }
-      return _sessionFromJson(json, DateTime.now().toUtc());
+      return decodeSnapshot(json);
     } on _UnsupportedSessionSchema {
       rethrow;
     } catch (error, stackTrace) {
@@ -104,6 +134,15 @@ class SessionStore {
       return null;
     }
   }
+}
+
+bool _hasExistingProgress(GameSession session) {
+  return session.current != null ||
+      session.roaming.isNotEmpty ||
+      session.journeys.isNotEmpty ||
+      session.postcards.isNotEmpty ||
+      session.ownedSpecies.isNotEmpty ||
+      session.careActionCount > 0;
 }
 
 class _UnsupportedSessionSchema implements Exception {
@@ -386,7 +425,12 @@ ShopInventory _shopInventoryFromJson(Object? value) {
 Map<String, Object?> _settingsToJson(Settings settings) {
   return <String, Object?>{
     'notifications': settings.notifications,
+    'notifyPostcards': settings.notifyPostcards,
+    'notifyVisitors': settings.notifyVisitors,
+    'notifyEvents': settings.notifyEvents,
+    'music': settings.music,
     'sound': settings.sound,
+    'onboardingComplete': settings.onboardingComplete,
     'schemaVersion': settings.schemaVersion,
     'createdAt': _dateToJson(settings.createdAt),
     'lastMonotonicRef': settings.lastMonotonicRef,
@@ -405,8 +449,13 @@ Settings _settingsFromJson(Map<String, Object?>? json, DateTime now) {
     createdAt: _readDate(json['createdAt'], now),
     lastWallClockAt: _readDate(json['lastWallClockAt'], now),
     notifications: _readBool(json['notifications'], false),
+    notifyPostcards: _readBool(json['notifyPostcards'], true),
+    notifyVisitors: _readBool(json['notifyVisitors'], true),
+    notifyEvents: _readBool(json['notifyEvents'], true),
+    music: _readBool(json['music'], true),
     sound: _readBool(json['sound'], true),
-    schemaVersion: _readInt(json['schemaVersion'], 1),
+    onboardingComplete: _readBool(json['onboardingComplete'], false),
+    schemaVersion: _readInt(json['schemaVersion'], _schemaVersion),
     lastMonotonicRef: _readInt(json['lastMonotonicRef'], 0),
     loginStreakCurrent: _readInt(json['loginStreakCurrent'], 0),
     loginStreakMax: _readInt(json['loginStreakMax'], 0),
