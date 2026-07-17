@@ -4,6 +4,8 @@
 
 公开页面：<https://blog.gavingao.cn/petopia/privacy.html>
 
+产品与支持：<https://blog.gavingao.cn/petopia/> · <https://blog.gavingao.cn/petopia/support.html>
+
 Petopia 是一款可完全离线游玩的本地单人游戏。我们重视你的隐私，并尽量减少数据处理。
 
 ## 我们处理的数据
