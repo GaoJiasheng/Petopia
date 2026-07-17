@@ -13,7 +13,8 @@
 - [ ] 填写简体中文名称、副标题、描述、关键词与促销文本
 - [ ] 上传 iPhone 6.9 英寸和 iPad 13 英寸截图
 - [ ] 配置主类别“游戏/休闲”与次类别“游戏/模拟”
-- [ ] 填写隐私政策 URL 与包含真实联系方式的支持 URL
+- [x] 填写隐私政策 URL：`https://blog.gavingao.cn/petopia/privacy.html`
+- [ ] 填写包含真实联系方式的支持 URL
 - [ ] 完成 App Privacy 问卷，并与 Xcode Privacy Report 复核
 - [ ] 完成年龄分级问卷
 - [ ] 确认出口合规答案与 `ITSAppUsesNonExemptEncryption=false` 一致
@@ -22,7 +23,7 @@
 
 ## 发布控制
 
-- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `13`）
+- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `14`）
 - [ ] 创建 Release archive，Validate App 后上传 TestFlight
 - [ ] 完成至少一次 iPhone 与 iPad 外部/内部测试
 - [ ] 检查 TestFlight 崩溃、卡死、资源缺失和通知权限行为

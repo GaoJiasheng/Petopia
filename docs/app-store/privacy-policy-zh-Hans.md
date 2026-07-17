@@ -2,6 +2,8 @@
 
 生效日期：2026 年 7 月 14 日
 
+公开页面：<https://blog.gavingao.cn/petopia/privacy.html>
+
 Petopia 是一款可完全离线游玩的本地单人游戏。我们重视你的隐私，并尽量减少数据处理。
 
 ## 我们处理的数据
@@ -38,7 +40,6 @@ Petopia 不会主动收集儿童的个人信息。由于游戏不提供账号、
 
 ## 联系我们
 
-隐私或支持问题请联系：`[开发者需填写支持邮箱]`
+隐私或支持问题请联系：[gaojiasheng.him@foxmail.com](mailto:gaojiasheng.him@foxmail.com)
 
-运营主体：`[开发者需填写个人或公司名称]`
-
+开发者：Gavin Gao
