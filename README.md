@@ -23,6 +23,6 @@ flutter build ios --simulator --no-codesign
 
 ## License
 
-本项目基于 [MIT License](LICENSE) 开源。
+本项目源代码基于 [Apache License 2.0](LICENSE) 开源。
 
-> 美术与音频素材由外部工具生成，其授权可能另行约定，不自动纳入本仓库的 MIT 授权范围。
+> 美术与音频素材由外部工具生成，其授权可能另行约定，不自动纳入本仓库的 Apache-2.0 授权范围。

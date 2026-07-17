@@ -77,7 +77,9 @@ Future<GameServices> bootstrapGame() async {
       lastOnlineAt: current.lastOnlineAt,
     );
     final before = current.level;
-    svc.exp.grantOffline(pet: current, elapsed: elapsed);
+    final offline = svc.exp.grantOffline(pet: current, elapsed: elapsed);
+    svc.startupOfflineElapsed = elapsed;
+    svc.startupOfflineExp = offline.deltaApplied;
     for (var level = before + 1; level <= current.level; level++) {
       svc.economy.earn(
         GameConfig.levelUpFluff,

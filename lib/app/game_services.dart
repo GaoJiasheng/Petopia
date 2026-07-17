@@ -34,6 +34,42 @@ import '../services/visitor_service.dart';
 import '../services/visitor_service_impl.dart';
 import 'game_state.dart';
 
+class EventResolution {
+  final int expApplied;
+  final int currencyApplied;
+  final String? resultScript;
+
+  const EventResolution({
+    required this.expApplied,
+    required this.currencyApplied,
+    this.resultScript,
+  });
+}
+
+class VisitorInteractionOutcome {
+  final String message;
+  final int expApplied;
+  final String animRef;
+
+  const VisitorInteractionOutcome({
+    required this.message,
+    required this.expApplied,
+    required this.animRef,
+  });
+}
+
+class RevisitInteractionOutcome {
+  final int gift;
+  final bool broughtCompanion;
+  final int currentPetExp;
+
+  const RevisitInteractionOutcome({
+    required this.gift,
+    required this.broughtCompanion,
+    required this.currentPetExp,
+  });
+}
+
 /// 组合根：按依赖顺序装配全部 Service，并把 EventScheduler.dispatch 路由到各服务。
 /// 通过注入 [AuditLogPort]（运行期=DAO适配器，单测=内存）与 [ContentRepository] 解耦。
 class GameServices {
@@ -56,6 +92,11 @@ class GameServices {
   final Future<List<ExpLogEntry>> Function(String petId)? _expLogReader;
   final SaveService? _portableSave;
   final Future<void> Function()? _dispose;
+
+  /// One-shot startup context consumed by the presentation layer. These stay
+  /// out of the save file because the underlying EXP grant is already audited.
+  Duration startupOfflineElapsed = Duration.zero;
+  int startupOfflineExp = 0;
 
   /// 当前游戏状态（UI 读取）。
   GameSession get session => _session;
@@ -146,6 +187,7 @@ class GameServices {
       session.ownedSpecies.contains,
       economy,
       () => clock.now(),
+      session.shopInventory,
     );
 
     final visitor = VisitorServiceImpl(
@@ -162,6 +204,30 @@ class GameServices {
         }
       },
       (clueId) => unlock.bumpClue(clueId),
+      themeBonus: (yard, candidate, season, window, weather) {
+        for (final item in content.shopItems) {
+          if (item.effect.type != EffectType.themeSkin ||
+              item.effect.params['themeId'] != yard.activeThemeId) {
+            continue;
+          }
+          final raw = item.effect.params['visitorProbBonus'];
+          if (raw is! Map) return 0;
+          final scope = raw['scope'] as String?;
+          final delta = (raw['delta'] as num?)?.toDouble() ?? 0;
+          final matches = switch (scope) {
+            'night' || 'nocturnal' => window == TimeWindow.night,
+            'morning' => window == TimeWindow.day,
+            'autumn' => season == Season.autumn,
+            'rainy' => weather == Weather.rain,
+            'snow_rabbit' => candidate.id == 'visitor_snowhare',
+            'bird' => _isBirdVisitor(candidate.id),
+            'seasonal' => true,
+            _ => false,
+          };
+          return matches ? delta : 0;
+        }
+        return 0;
+      },
     );
 
     final graduation = GraduationServiceImpl(
@@ -229,16 +295,20 @@ class GameServices {
   }).toList();
 
   /// 领养一只新宠为当前在养宠（INV-2：调用前需确保无在养宠）。
-  /// 随机 2 个不重复性格、变体随机；写入 ownedSpecies。
+  /// 随机 2 个不重复性格；变体优先从该物种未拥有集合中抽取。
   Pet adopt({required String speciesId, required String name}) {
     final sp = _content.speciesById(speciesId);
     final now = clock.now();
     final variants = sp?.variantIds ?? const <String>[];
-    final variantId = variants.isEmpty
+    final unseenVariants = variants
+        .where((variant) => !_session.ownedVariants.contains(variant))
+        .toList(growable: false);
+    final variantPool = unseenVariants.isNotEmpty ? unseenVariants : variants;
+    final variantId = variantPool.isEmpty
         ? '${speciesId}_v1'
-        : variants[(_rng() * variants.length).floor().clamp(
+        : variantPool[(_rng() * variantPool.length).floor().clamp(
             0,
-            variants.length - 1,
+            variantPool.length - 1,
           )];
     final trimmed = name.trim();
     final pet = Pet(
@@ -439,22 +509,31 @@ class GameServices {
       _session.revisitorLeavesAt = now.add(Duration(days: stayDays));
       _session.revisitorArrivalSeen = false;
       _session.revisitorInteracted = false;
-      final broughtCompanion = revisit.onRevisitInteract(
-        next,
-        _session.current,
-      );
-      if (broughtCompanion) _bumpSignal('custom:companion_joined');
-      final giftSpan =
-          GameConfig.revisitGiftMax - GameConfig.revisitGiftMin + 1;
-      final gift = GameConfig.revisitGiftMin + (_rng() * giftSpan).floor();
-      economy.earn(
-        gift,
-        CurrencyReason.revisitGift,
-        ref: 'revisit:${next.id}:${_dayKey(now)}',
-      );
-      _bumpSignal('custom:revisit_gift_received');
-      _session.revisitCount++; // 成就：回访累计
     }
+  }
+
+  RevisitInteractionOutcome? interactRevisitor(String petId) {
+    final pet = _session.revisitor;
+    if (pet == null || pet.id != petId || _session.revisitorInteracted) {
+      return null;
+    }
+    final broughtCompanion = revisit.onRevisitInteract(pet, _session.current);
+    if (broughtCompanion) _bumpSignal('custom:companion_joined');
+    final giftSpan = GameConfig.revisitGiftMax - GameConfig.revisitGiftMin + 1;
+    final gift = GameConfig.revisitGiftMin + (_rng() * giftSpan).floor();
+    economy.earn(
+      gift,
+      CurrencyReason.revisitGift,
+      ref: 'revisit:${pet.id}:${_dayKey(clock.now())}',
+    );
+    _bumpSignal('custom:revisit_gift_received');
+    _session.revisitCount++;
+    _session.revisitorInteracted = true;
+    return RevisitInteractionOutcome(
+      gift: gift,
+      broughtCompanion: broughtCompanion,
+      currentPetExp: _session.current == null ? 0 : GameConfig.revisitPetExp,
+    );
   }
 
   List<String> _pickTwoPersonalities() {
@@ -482,8 +561,8 @@ class GameServices {
         final window = job.payloadRef == 'night'
             ? TimeWindow.night
             : TimeWindow.day;
-        const weather = Weather.clear; // [待细化] 天气系统
-        final season = _seasonOf(now);
+        final weather = weatherAt(job.dueAt);
+        final season = _seasonOf(job.dueAt);
         var v = visitor.rollWindow(
           window: window,
           yard: _session.yard,
@@ -501,16 +580,6 @@ class GameServices {
             : null;
         if (v != null) {
           final it = visitor.pickInteraction(v, pet);
-          if (pet != null) {
-            exp.addExp(
-              pet: pet,
-              baseDelta: it.expReward,
-              source: ExpSource.visitor,
-              sourceRef: v.id,
-              note: it.script,
-            );
-          }
-          visitor.recordVisit(v, pet, it);
           _session.activeVisitor = ActiveVisitor(
             visitorId: v.id,
             arrivedAt: now,
@@ -518,23 +587,14 @@ class GameServices {
             interactionId: it.id,
             withPetId: pet?.id,
           );
-          _consumeVisitorFood();
         }
       case JobType.dailyEventGen:
         if (pet == null) break;
         final dailies = _eligibleEvents(EventType.daily, pet, now);
         if (dailies.isNotEmpty) {
-          final ev = _pickWeightedEvent(dailies, pet, now);
-          exp.addExp(
-            pet: pet,
-            baseDelta: ev.expReward,
-            source: ExpSource.eventDaily,
-            sourceRef: ev.id,
-          );
-          _session.eventCounts[pet.id] =
-              (_session.eventCounts[pet.id] ?? 0) + 1;
+          final ev = _pickWeightedEvent(dailies, pet, job.dueAt);
           _session.eventLastFiredAt['${pet.id}:${ev.id}'] = now;
-          _queueEvent(ev, now);
+          _queueEvent(ev, pet, now);
         }
       case JobType.specialEventEval:
         if (pet == null) break;
@@ -550,25 +610,10 @@ class GameServices {
         }).toList();
         if (eligible.isEmpty) break;
         if (_rng() >= _specialEventChance) break; // 低频彩蛋（日 cap=1）
-        final ev = _pickWeightedEvent(eligible, pet, now);
-        exp.addExp(
-          pet: pet,
-          baseDelta: ev.expReward,
-          source: ExpSource.eventSpecial,
-          sourceRef: ev.id,
-        );
-        if (ev.currencyReward != null) {
-          economy.earn(
-            ev.currencyReward!,
-            CurrencyReason.eventReward,
-            ref: 'evt:${pet.id}:${ev.id}',
-          );
-        }
+        final ev = _pickWeightedEvent(eligible, pet, job.dueAt);
         if (ev.oncePerPet) _session.firedSpecials.add('${pet.id}:${ev.id}');
-        _session.eventCounts[pet.id] = (_session.eventCounts[pet.id] ?? 0) + 1;
-        _session.specialEventCount++; // 成就：彩蛋事件累计
         _session.eventLastFiredAt['${pet.id}:${ev.id}'] = now;
-        _queueEvent(ev, now);
+        _queueEvent(ev, pet, now);
       case JobType.revisitDue:
       case JobType.postcardDue:
         break; // 漫游宠的明信片/回访不走 scheduler，由 processRoaming 驱动
@@ -579,6 +624,10 @@ class GameServices {
   static const double _specialEventChance = 0.25;
 
   List<Event> _eligibleEvents(EventType type, Pet pet, DateTime now) {
+    final weather = weatherAt(now);
+    final timeOfDay = _timeOfDay(now.toLocal().hour);
+    final season = _seasonOf(now);
+    final ageDays = now.difference(pet.bornAt).inDays;
     return _content.events.where((event) {
       if (event.type != type) return false;
       final weights = event.weights;
@@ -589,12 +638,27 @@ class GameServices {
           _session.yard.luxuryStage < weights.minLuxuryStage!) {
         return false;
       }
+      if (weights.minAgeDays != null && ageDays < weights.minAgeDays!) {
+        return false;
+      }
+      if (weights.requiredWeather.isNotEmpty &&
+          !weights.requiredWeather.contains(weather)) {
+        return false;
+      }
+      if (weights.requiredTimeOfDay.isNotEmpty &&
+          !weights.requiredTimeOfDay.contains(timeOfDay)) {
+        return false;
+      }
+      if (weights.requiredSeason.isNotEmpty &&
+          !weights.requiredSeason.contains(season)) {
+        return false;
+      }
       if (weights.requiresVisitor != null &&
           _session.activeVisitor?.visitorId != weights.requiresVisitor) {
         return false;
       }
       if (weights.requiresDecor != null &&
-          !_session.yard.ownedDecorIds.contains(weights.requiresDecor)) {
+          !_session.yard.activeDecorIds.contains(weights.requiresDecor)) {
         return false;
       }
       final last = _session.eventLastFiredAt['${pet.id}:${event.id}'];
@@ -618,7 +682,7 @@ class GameServices {
   Event _pickWeightedEvent(List<Event> events, Pet pet, DateTime now) {
     final season = _seasonOf(now);
     final time = _timeOfDay(now.hour);
-    const weather = Weather.clear;
+    final weather = weatherAt(now);
     final weighted = <MapEntry<Event, double>>[];
     var total = 0.0;
     for (final event in events) {
@@ -643,22 +707,175 @@ class GameServices {
     return weighted.last.key;
   }
 
-  void _queueEvent(Event event, DateTime now) {
+  void _queueEvent(Event event, Pet pet, DateTime now) {
     _session.pendingEvents.add(
       PendingGameEvent(
         id: _idGen(),
         eventId: event.id,
+        petId: pet.id,
         title: event.title,
         script: event.script,
         type: event.type,
         expReward: event.expReward,
         currencyReward: event.currencyReward ?? 0,
+        animRef: event.animRef,
+        illustrationRef: event.illustrationRef,
+        choices: event.choices
+            ?.map(
+              (choice) => PendingEventChoice(
+                text: choice.text,
+                resultScript: choice.resultScript,
+                expDelta: choice.expDelta,
+              ),
+            )
+            .toList(growable: false),
         createdAt: now,
       ),
     );
     if (_session.pendingEvents.length > 6) {
       _session.pendingEvents.removeRange(0, _session.pendingEvents.length - 6);
     }
+  }
+
+  EventResolution? resolveEvent(String pendingId, {int? choiceIndex}) {
+    final matches = _session.pendingEvents.where(
+      (item) => item.id == pendingId,
+    );
+    if (matches.isEmpty) return null;
+    final pending = matches.first;
+    PendingEventChoice? choice;
+    if (choiceIndex != null &&
+        choiceIndex >= 0 &&
+        choiceIndex < pending.choices.length) {
+      choice = pending.choices[choiceIndex];
+    }
+    var expApplied = 0;
+    if (!pending.rewardSettled) {
+      Pet? pet;
+      for (final candidate in _session.allPets) {
+        if (candidate.id == pending.petId) {
+          pet = candidate;
+          break;
+        }
+      }
+      pet ??= _session.current;
+      if (pet != null) {
+        final amount = pending.expReward + (choice?.expDelta ?? 0);
+        final result = exp.addExp(
+          pet: pet,
+          baseDelta: amount,
+          source: pending.type == EventType.special
+              ? ExpSource.eventSpecial
+              : ExpSource.eventDaily,
+          sourceRef: pending.eventId,
+          note: choice?.resultScript ?? pending.script,
+          applyPersonalityBonus: false,
+        );
+        expApplied = result.deltaApplied;
+        _session.eventCounts[pet.id] = (_session.eventCounts[pet.id] ?? 0) + 1;
+      }
+      if (pending.currencyReward > 0) {
+        economy.earn(
+          pending.currencyReward,
+          CurrencyReason.eventReward,
+          ref: 'evt:${pending.petId}:${pending.eventId}',
+        );
+      }
+      if (pending.type == EventType.special) _session.specialEventCount++;
+      if (choice != null) _bumpSignal('custom:branch_choice');
+      pending.rewardSettled = true;
+    }
+    _session.pendingEvents.remove(pending);
+    return EventResolution(
+      expApplied: expApplied,
+      currencyApplied: pending.currencyReward,
+      resultScript: choice?.resultScript,
+    );
+  }
+
+  VisitorInteractionOutcome? interactActiveVisitor(String visitorId) {
+    final active = _session.activeVisitor;
+    if (active == null || active.visitorId != visitorId || active.interacted) {
+      return null;
+    }
+    final candidate = _content.visitorById(visitorId);
+    if (candidate == null) return null;
+    final pet = _session.current;
+    final interaction =
+        _interactionById(active.interactionId) ??
+        visitor.pickInteraction(candidate, pet);
+    var expApplied = 0;
+    if (pet != null) {
+      expApplied = exp
+          .addExp(
+            pet: pet,
+            baseDelta: interaction.expReward,
+            source: ExpSource.visitor,
+            sourceRef: candidate.id,
+            note: interaction.script,
+            applyPersonalityBonus: false,
+          )
+          .deltaApplied;
+    }
+    visitor.recordVisit(candidate, pet, interaction);
+    active
+      ..interactionId = interaction.id
+      ..withPetId = pet?.id
+      ..interacted = true;
+    _consumeVisitorFood();
+    return VisitorInteractionOutcome(
+      message: interaction.script,
+      expApplied: expApplied,
+      animRef: interaction.animRef,
+    );
+  }
+
+  VisitorPetInteraction? _interactionById(String? id) {
+    if (id == null) return null;
+    for (final interaction in _content.visitorInteractions) {
+      if (interaction.id == id) return interaction;
+    }
+    return null;
+  }
+
+  Weather weatherAt(DateTime time) {
+    final local = time.toLocal();
+    final seed = local.year * 372 + local.month * 31 + local.day;
+    final roll = seed.abs() % 100;
+    return switch (_seasonOf(time)) {
+      Season.spring =>
+        roll < 18
+            ? Weather.rain
+            : roll < 23
+            ? Weather.rainbow
+            : roll < 43
+            ? Weather.cloudy
+            : Weather.clear,
+      Season.summer =>
+        roll < 10
+            ? Weather.thunder
+            : roll < 24
+            ? Weather.rain
+            : roll < 39
+            ? Weather.cloudy
+            : Weather.clear,
+      Season.autumn =>
+        roll < 15
+            ? Weather.fog
+            : roll < 31
+            ? Weather.rain
+            : roll < 51
+            ? Weather.cloudy
+            : Weather.clear,
+      Season.winter =>
+        roll < 21
+            ? Weather.snow
+            : roll < 34
+            ? Weather.fog
+            : roll < 57
+            ? Weather.cloudy
+            : Weather.clear,
+    };
   }
 
   TimeOfDayOfDay _timeOfDay(int hour) {
@@ -718,3 +935,11 @@ class _NoopSessionStore extends SessionStore {
   @override
   Future<void> save(GameSession session) async {}
 }
+
+bool _isBirdVisitor(String visitorId) => const {
+  'visitor_sparrow',
+  'visitor_pigeon',
+  'visitor_crow',
+  'visitor_owl',
+  'visitor_egret',
+}.contains(visitorId);

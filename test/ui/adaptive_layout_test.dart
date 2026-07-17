@@ -7,17 +7,22 @@ void main() {
     test('size classes match iPad adaptive breakpoints', () {
       expect(PetopiaAdaptive.sizeClassFor(390), PetopiaSizeClass.compact);
       expect(PetopiaAdaptive.sizeClassFor(600), PetopiaSizeClass.medium);
+      expect(PetopiaAdaptive.sizeClassFor(834), PetopiaSizeClass.expanded);
       expect(PetopiaAdaptive.sizeClassFor(840), PetopiaSizeClass.expanded);
+      expect(PetopiaAdaptive.sizeClassFor(1194), PetopiaSizeClass.wide);
       expect(PetopiaAdaptive.sizeClassFor(1200), PetopiaSizeClass.wide);
     });
 
     test('postcard and travel grids expand predictably', () {
       expect(PetopiaAdaptive.postcardGridColumns(430), 2);
       expect(PetopiaAdaptive.postcardGridColumns(700), 3);
+      expect(PetopiaAdaptive.postcardGridColumns(834), 4);
       expect(PetopiaAdaptive.postcardGridColumns(900), 4);
+      expect(PetopiaAdaptive.postcardGridColumns(1194), 5);
       expect(PetopiaAdaptive.postcardGridColumns(1366), 5);
 
       expect(PetopiaAdaptive.travelColumns(700), 1);
+      expect(PetopiaAdaptive.travelColumns(834), 2);
       expect(PetopiaAdaptive.travelColumns(900), 2);
     });
 
@@ -36,12 +41,18 @@ void main() {
         Size(393, 852),
         Size(430, 932),
         Size(768, 1024),
+        Size(834, 1194),
+        Size(1194, 834),
         Size(1024, 1366),
+        Size(1366, 1024),
       ];
 
       for (final scene in scenes) {
         final petWidth = PetopiaAdaptive.petStageWidth(scene);
-        final petAlignment = Alignment(0, scene.width >= 840 ? 0.32 : 0.4);
+        final petAlignment = Alignment(
+          0,
+          PetopiaAdaptive.useYardSidePanels(scene) ? 0.32 : 0.4,
+        );
         final petRect = PetopiaAdaptive.alignedSquareRect(
           sceneSize: scene,
           squareSize: petWidth,
@@ -66,6 +77,16 @@ void main() {
           );
         }
       }
+    });
+
+    test('iPad Pro 11/13 仅横屏启用院子双侧工作区', () {
+      expect(PetopiaAdaptive.useYardSidePanels(const Size(834, 1194)), isFalse);
+      expect(PetopiaAdaptive.useYardSidePanels(const Size(1194, 834)), isTrue);
+      expect(
+        PetopiaAdaptive.useYardSidePanels(const Size(1024, 1366)),
+        isFalse,
+      );
+      expect(PetopiaAdaptive.useYardSidePanels(const Size(1366, 1024)), isTrue);
     });
 
     test('opposite yard side lanes keep two visitors separated', () {

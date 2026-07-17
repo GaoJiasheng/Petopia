@@ -75,10 +75,13 @@
 { "id":"ev_d01", "type":"daily", "title":"追落叶", "script":"追住了一片打转的落叶，得意地叼来给你看",
   "animRef":null, "illustrationRef":null, "expReward":5, "currencyReward":null,
   "weights":{ "personality":{ "p_energetic":2.0 }, "weather":{}, "timeOfDay":{}, "season":{ "autumn":1.5 },
-              "requiresVisitor":null, "requiresDecor":null, "minLevel":null, "minLuxuryStage":null },
+              "requiredWeather":[], "requiredTimeOfDay":[], "requiredSeason":[],
+              "requiresVisitor":null, "requiresDecor":null, "minLevel":null, "minLuxuryStage":null, "minAgeDays":null },
   "cooldownDays":0, "oncePerPet":false, "choices":null }
 ```
 带分支示例：`"choices":[ { "text":"拍照留念", "resultScript":"...", "expDelta":2 }, { "text":"帮它翻回来", "resultScript":"...", "expDelta":1 } ]`。
+
+`weather/timeOfDay/season` 是命中后的**软权重乘数**；`requiredWeather/requiredTimeOfDay/requiredSeason` 是进入候选池前的**硬门槛数组**。`minAgeDays` 按领养日起算整日数。硬门槛不满足时事件权重为 0，不能用极低软权重替代。
 
 ### achievements.json（Achievement[]）
 ```json

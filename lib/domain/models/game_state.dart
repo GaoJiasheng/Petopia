@@ -83,6 +83,7 @@ class ActiveVisitor {
   String? interactionId;
   String? withPetId;
   bool arrivalSeen;
+  bool interacted;
 
   ActiveVisitor({
     required this.visitorId,
@@ -91,6 +92,7 @@ class ActiveVisitor {
     this.interactionId,
     this.withPetId,
     this.arrivalSeen = false,
+    this.interacted = false,
   });
 }
 
@@ -117,42 +119,71 @@ class CareLedger {
   }
 }
 
-/// 事件演出队列。事件奖励在生成时结算，UI 只负责依次展示并标记已读。
+/// 事件分支快照。事件入队时固化，避免内容热更新改变待处理选择。
+class PendingEventChoice {
+  String text;
+  String resultScript;
+  int expDelta;
+
+  PendingEventChoice({
+    required this.text,
+    required this.resultScript,
+    required this.expDelta,
+  });
+}
+
+/// 事件演出队列。奖励在玩家确认分支后统一结算，避免“没看见也领奖”。
 class PendingGameEvent {
   String id;
   String eventId;
+  String petId;
   String title;
   String script;
   EventType type;
   int expReward;
   int currencyReward;
+  String? animRef;
+  String? illustrationRef;
+  List<PendingEventChoice> choices;
+  bool rewardSettled;
   DateTime createdAt;
 
   PendingGameEvent({
     required this.id,
     required this.eventId,
+    required this.petId,
     required this.title,
     required this.script,
     required this.type,
     required this.expReward,
     required this.currencyReward,
     required this.createdAt,
-  });
+    this.animRef,
+    this.illustrationRef,
+    List<PendingEventChoice>? choices,
+    this.rewardSettled = false,
+  }) : choices = choices ?? <PendingEventChoice>[];
 }
 
 class ShopInventory {
   Map<String, int> consumables;
   Set<String> ownedAlbumSkinIds;
+  Set<String> ownedCouponIds;
+  Set<String> ownedStickerIds;
   String activeAlbumSkinId;
   String? activeVisitorFoodItemId;
 
   ShopInventory({
     Map<String, int>? consumables,
     Set<String>? ownedAlbumSkinIds,
+    Set<String>? ownedCouponIds,
+    Set<String>? ownedStickerIds,
     this.activeAlbumSkinId = 'default',
     this.activeVisitorFoodItemId,
   }) : consumables = consumables ?? <String, int>{},
-       ownedAlbumSkinIds = ownedAlbumSkinIds ?? <String>{'default'};
+       ownedAlbumSkinIds = ownedAlbumSkinIds ?? <String>{'default'},
+       ownedCouponIds = ownedCouponIds ?? <String>{},
+       ownedStickerIds = ownedStickerIds ?? <String>{};
 }
 
 /// 统一日程队列作业（EventScheduler，§3.4）。priority 小=优先。
@@ -183,6 +214,7 @@ class Settings {
   bool music;
   bool sound;
   bool onboardingComplete;
+  int careTutorialStep; // 0=摸头，1=喂食，2=邮箱提示，3=完成
   int schemaVersion; // 迁移用
   DateTime createdAt;
   int lastMonotonicRef; // 单调时钟基准（毫秒，§4）
@@ -201,6 +233,7 @@ class Settings {
     this.music = true,
     this.sound = true,
     this.onboardingComplete = false,
+    this.careTutorialStep = 0,
     this.schemaVersion = 2,
     this.lastMonotonicRef = 0,
     this.loginStreakCurrent = 0,

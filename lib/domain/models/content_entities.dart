@@ -139,8 +139,12 @@ class EventWeights {
   final Map<Season, double> season;
   final String? requiresVisitor; // visitorId 在场
   final String? requiresDecor; // decorId 存在
+  final List<Weather> requiredWeather;
+  final List<TimeOfDayOfDay> requiredTimeOfDay;
+  final List<Season> requiredSeason;
   final int? minLevel;
   final int? minLuxuryStage;
+  final int? minAgeDays;
 
   const EventWeights({
     this.personality = const {},
@@ -149,8 +153,12 @@ class EventWeights {
     this.season = const {},
     this.requiresVisitor,
     this.requiresDecor,
+    this.requiredWeather = const [],
+    this.requiredTimeOfDay = const [],
+    this.requiredSeason = const [],
     this.minLevel,
     this.minLuxuryStage,
+    this.minAgeDays,
   });
 }
 

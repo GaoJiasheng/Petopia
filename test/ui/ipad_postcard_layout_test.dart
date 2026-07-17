@@ -6,6 +6,7 @@ import 'package:petopia/ui/postcard_viewer_screen.dart';
 void main() {
   final card = PostcardView(
     id: 'pc-test',
+    petId: 'pet-instance-test',
     petName: '阿橘',
     speciesId: 'pet_cat',
     variantId: 'pet_cat_v1',

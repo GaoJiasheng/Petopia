@@ -92,8 +92,10 @@ class _DexGrid extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             final width = constraints.maxWidth;
-            final columns = width >= 900 ? 4 : (width >= 600 ? 3 : 2);
-            final ratio = width >= 600 ? 0.86 : 0.62;
+            final columns = PetopiaAdaptive.postcardGridColumns(width);
+            final tileHeight = width >= 820
+                ? 250.0
+                : (width >= 600 ? 278.0 : 300.0);
             final margin = PetopiaAdaptive.sideMargin(context);
             return CustomScrollView(
               slivers: [
@@ -118,7 +120,7 @@ class _DexGrid extends StatelessWidget {
                       crossAxisCount: columns,
                       mainAxisSpacing: 14,
                       crossAxisSpacing: 14,
-                      childAspectRatio: ratio,
+                      mainAxisExtent: tileHeight,
                     ),
                   ),
                 ),

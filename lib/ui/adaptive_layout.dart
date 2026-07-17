@@ -8,8 +8,8 @@ class PetopiaAdaptive {
   const PetopiaAdaptive._();
 
   static PetopiaSizeClass sizeClassFor(double width) {
-    if (width >= 1200) return PetopiaSizeClass.wide;
-    if (width >= 840) return PetopiaSizeClass.expanded;
+    if (width >= 1180) return PetopiaSizeClass.wide;
+    if (width >= 820) return PetopiaSizeClass.expanded;
     if (width >= 600) return PetopiaSizeClass.medium;
     return PetopiaSizeClass.compact;
   }
@@ -21,10 +21,13 @@ class PetopiaAdaptive {
       MediaQuery.sizeOf(context).width >= 600;
 
   static bool isExpandedUp(BuildContext context) =>
-      MediaQuery.sizeOf(context).width >= 840;
+      MediaQuery.sizeOf(context).width >= 820;
 
   static bool isWide(BuildContext context) =>
-      MediaQuery.sizeOf(context).width >= 1200;
+      MediaQuery.sizeOf(context).width >= 1180;
+
+  static bool useYardSidePanels(Size size) =>
+      size.width >= 900 && size.width > size.height * 1.05;
 
   static double sideMargin(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -41,13 +44,13 @@ class PetopiaAdaptive {
   }
 
   static int postcardGridColumns(double width) {
-    if (width >= 1200) return 5;
-    if (width >= 840) return 4;
+    if (width >= 1180) return 5;
+    if (width >= 820) return 4;
     if (width >= 600) return 3;
     return 2;
   }
 
-  static int travelColumns(double width) => width >= 840 ? 2 : 1;
+  static int travelColumns(double width) => width >= 760 ? 2 : 1;
 
   static double postcardMaxWidth(double width) =>
       (width * 0.72).clamp(560.0, 860.0);

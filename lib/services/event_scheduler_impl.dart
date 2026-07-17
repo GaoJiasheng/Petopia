@@ -40,12 +40,13 @@ class EventSchedulerImpl implements EventScheduler {
 
     final range = GameConfig.dailyEventMax - GameConfig.dailyEventMin + 1;
     final n = GameConfig.dailyEventMin + (_rng() * range).floor(); // 1..3
+    const dailyHours = <int>[10, 14, 17];
     for (var i = 0; i < n; i++) {
-      _enqueue(JobType.dailyEventGen, today);
+      _enqueue(JobType.dailyEventGen, _localTime(today, dailyHours[i], 15));
     }
-    _enqueue(JobType.visitorCheck, today, ref: 'day');
-    _enqueue(JobType.visitorCheck, today, ref: 'night');
-    _enqueue(JobType.specialEventEval, today);
+    _enqueue(JobType.visitorCheck, _localTime(today, 7, 30), ref: 'day');
+    _enqueue(JobType.visitorCheck, _localTime(today, 19, 30), ref: 'night');
+    _enqueue(JobType.specialEventEval, _localTime(today, 20, 45));
     // REVISIT_DUE / POSTCARD_DUE 由各自服务在需要时 enqueue（见 enqueue）。
   }
 
@@ -82,5 +83,10 @@ class EventSchedulerImpl implements EventScheduler {
   String _dayKey(DateTime t) {
     final local = t.toLocal();
     return '${local.year.toString().padLeft(4, '0')}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')}';
+  }
+
+  DateTime _localTime(DateTime day, int hour, int minute) {
+    final local = day.toLocal();
+    return DateTime(local.year, local.month, local.day, hour, minute).toUtc();
   }
 }

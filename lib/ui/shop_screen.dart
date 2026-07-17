@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import '../domain/enums.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
+import 'yard_art.dart';
 
 /// 暖绒商店：按分类展示商品，并通过 GameController 完成兑换。
 class ShopScreen extends ConsumerStatefulWidget {
@@ -24,6 +26,7 @@ class ShopScreen extends ConsumerStatefulWidget {
 
 class _ShopScreenState extends ConsumerState<ShopScreen> {
   String? _buyingId;
+  String? _selectedCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +53,9 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
             wallet: view.wallet,
             items: ctrl.shopItems(),
             buyingId: _buyingId,
+            selectedCategory: _selectedCategory,
+            onCategoryChanged: (value) =>
+                setState(() => _selectedCategory = value),
             onBuy: _buy,
             onApply: _apply,
           ),
@@ -66,7 +72,14 @@ class _ShopScreenState extends ConsumerState<ShopScreen> {
           .read(gameControllerProvider.notifier)
           .buy(item.id);
       if (!mounted) return;
-      _showMessage(success ? '${item.name} 已收进手账。' : '暖绒不足，或这件物品已经拥有。');
+      final discount = item.discountLabel;
+      _showMessage(
+        success
+            ? discount == null
+                  ? '${item.name} 已收进手账。'
+                  : '${item.name} 已收进手账，已使用$discount。'
+            : '暖绒不足，或这件物品已经拥有。',
+      );
     } catch (error, stackTrace) {
       logUiError('shop purchase', error, stackTrace);
       if (!mounted) return;
@@ -133,6 +146,8 @@ class _ShopContent extends StatelessWidget {
   final int wallet;
   final List<ShopItemView> items;
   final String? buyingId;
+  final String? selectedCategory;
+  final ValueChanged<String> onCategoryChanged;
   final ValueChanged<ShopItemView> onBuy;
   final ValueChanged<ShopItemView> onApply;
 
@@ -140,6 +155,8 @@ class _ShopContent extends StatelessWidget {
     required this.wallet,
     required this.items,
     required this.buyingId,
+    required this.selectedCategory,
+    required this.onCategoryChanged,
     required this.onBuy,
     required this.onApply,
   });
@@ -157,7 +174,68 @@ class _ShopContent extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final wide = constraints.maxWidth >= 840;
+        final wide = constraints.maxWidth >= 820;
+        final selected = grouped.containsKey(selectedCategory)
+            ? selectedCategory!
+            : grouped.keys.first;
+        if (wide) {
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1180),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  PetopiaAdaptive.sideMargin(context),
+                  8,
+                  PetopiaAdaptive.sideMargin(context),
+                  24,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    SizedBox(
+                      width: 224,
+                      child: ListView(
+                        children: [
+                          _CompactWalletCard(wallet: wallet),
+                          const SizedBox(height: 14),
+                          for (final entry in grouped.entries) ...[
+                            _CategoryButton(
+                              category: entry.key,
+                              count: entry.value.length,
+                              selected: selected == entry.key,
+                              onTap: () => onCategoryChanged(entry.key),
+                            ),
+                            const SizedBox(height: 8),
+                          ],
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 18),
+                    Expanded(
+                      child: ListView(
+                        children: [
+                          _SectionHeader(
+                            title: selected,
+                            subtitle: '${grouped[selected]!.length} 件小物',
+                            iconName: _categoryIconName(selected),
+                            fallbackIcon: _categoryFallbackIcon(selected),
+                          ),
+                          const SizedBox(height: 12),
+                          _ShopItemWrap(
+                            items: grouped[selected]!,
+                            buyingId: buyingId,
+                            onBuy: onBuy,
+                            onApply: onApply,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
         return Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 1060),
@@ -179,25 +257,17 @@ class _ShopContent extends StatelessWidget {
                     fallbackIcon: _categoryFallbackIcon(group.key),
                   ),
                   const SizedBox(height: 10),
-                  if (wide)
-                    _ShopItemWrap(
-                      items: group.value,
-                      buyingId: buyingId,
+                  for (final item in group.value) ...[
+                    _ShopItemCard(
+                      item: item,
+                      busy: buyingId == item.id,
+                      disabledByAnotherBuy:
+                          buyingId != null && buyingId != item.id,
                       onBuy: onBuy,
                       onApply: onApply,
-                    )
-                  else
-                    for (final item in group.value) ...[
-                      _ShopItemCard(
-                        item: item,
-                        busy: buyingId == item.id,
-                        disabledByAnotherBuy:
-                            buyingId != null && buyingId != item.id,
-                        onBuy: onBuy,
-                        onApply: onApply,
-                      ),
-                      const SizedBox(height: 12),
-                    ],
+                    ),
+                    const SizedBox(height: 12),
+                  ],
                   const SizedBox(height: 6),
                 ],
               ],
@@ -226,7 +296,8 @@ class _ShopItemWrap extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final cardWidth = (constraints.maxWidth - 12) / 2;
+        final columns = constraints.maxWidth >= 820 ? 3 : 2;
+        final cardWidth = (constraints.maxWidth - 12 * (columns - 1)) / columns;
         return Wrap(
           spacing: 12,
           runSpacing: 12,
@@ -245,6 +316,112 @@ class _ShopItemWrap extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+}
+
+class _CompactWalletCard extends StatelessWidget {
+  final int wallet;
+
+  const _CompactWalletCard({required this.wallet});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: _cardDecoration(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            '暖绒余额',
+            style: TextStyle(
+              color: ShopScreen._muted,
+              fontSize: 12.5,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            children: [
+              const WarmfluffIcon(size: 22),
+              const SizedBox(width: 7),
+              Flexible(
+                child: Text(
+                  '$wallet',
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: ShopScreen._accent,
+                    fontSize: 24,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CategoryButton extends StatelessWidget {
+  final String category;
+  final int count;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _CategoryButton({
+    required this.category,
+    required this.count,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: selected
+          ? ShopScreen._accent.withValues(alpha: 0.16)
+          : Colors.transparent,
+      borderRadius: BorderRadius.circular(8),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(8),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          child: Row(
+            children: [
+              AppIcon(
+                _categoryIconName(category),
+                size: 22,
+                fallback: _categoryFallbackIcon(category),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  category,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: selected ? ShopScreen._accent : ShopScreen._ink,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ),
+              Text(
+                '$count',
+                style: const TextStyle(
+                  color: ShopScreen._muted,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -403,6 +580,8 @@ class _ShopItemCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          _ItemPreview(item: item),
+          const SizedBox(height: 12),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -442,6 +621,13 @@ class _ShopItemCard extends StatelessWidget {
                           color: ShopScreen._accent,
                           warmfluff: true,
                         ),
+                        if (item.discountLabel != null)
+                          _TinyTag(
+                            icon: Icons.discount_outlined,
+                            label:
+                                '${item.discountLabel} · 原价 ${item.originalPrice}',
+                            color: ShopScreen._green,
+                          ),
                         if (item.consumable)
                           _TinyTag(
                             icon: Icons.refresh_rounded,
@@ -451,6 +637,18 @@ class _ShopItemCard extends StatelessWidget {
                             color: ShopScreen._green,
                           ),
                       ],
+                    ),
+                    const SizedBox(height: 9),
+                    Text(
+                      item.effectSummary,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: ShopScreen._muted,
+                        fontSize: 12.5,
+                        height: 1.35,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
                 ),
@@ -505,6 +703,84 @@ class _ShopItemCard extends StatelessWidget {
     if (item.owned) return '已拥有';
     if (!item.affordable) return '暖绒不够';
     return '兑换';
+  }
+}
+
+class _ItemPreview extends StatelessWidget {
+  final ShopItemView item;
+
+  const _ItemPreview({required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    final themeId = item.themeId;
+    final decorId = item.decorId;
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: SizedBox(
+        width: double.infinity,
+        height: 112,
+        child: ColoredBox(
+          color: _categoryColor(item.category).withValues(alpha: 0.12),
+          child: themeId != null
+              ? Image.asset(
+                  YardArt.themeBg(themeId),
+                  fit: BoxFit.cover,
+                  alignment: Alignment.center,
+                  cacheWidth: 480,
+                  errorBuilder: (_, _, _) => _ProductIcon(item: item),
+                )
+              : decorId != null
+              ? Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Image.asset(
+                    YardArt.decor(decorId),
+                    fit: BoxFit.contain,
+                    cacheWidth: 260,
+                    errorBuilder: (_, _, _) => _ProductIcon(item: item),
+                  ),
+                )
+              : _ProductIcon(item: item),
+        ),
+      ),
+    );
+  }
+}
+
+class _ProductIcon extends StatelessWidget {
+  final ShopItemView item;
+
+  const _ProductIcon({required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    final asset = switch (item.id) {
+      final id when id.contains('grain') =>
+        'assets/art/ui/ui_icon_food_grain.png',
+      final id when id.contains('dried_fish') =>
+        'assets/art/ui/ui_icon_food_fish.png',
+      final id when id.contains('nut') => 'assets/art/ui/ui_icon_food_nut.png',
+      final id when id.contains('apple') =>
+        'assets/art/ui/ui_icon_food_apple.png',
+      _ when item.effectType == EffectType.toyPermanentBonus =>
+        'assets/art/ui/ui_icon_shop_toy.png',
+      _ when item.effectType == EffectType.albumSkin =>
+        'assets/art/ui/ui_icon_shop_albumskin.png',
+      _ => 'assets/art/ui/ui_icon_shop_food.png',
+    };
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Image.asset(
+        asset,
+        fit: BoxFit.contain,
+        cacheWidth: 180,
+        errorBuilder: (_, _, _) => Icon(
+          _categoryFallbackIcon(item.category),
+          size: 44,
+          color: _categoryColor(item.category),
+        ),
+      ),
+    );
   }
 }
 

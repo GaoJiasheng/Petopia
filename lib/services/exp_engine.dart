@@ -31,7 +31,7 @@ class ExpResult {
 
 /// ExpEngine（spec-technical §3.2）。
 ///
-/// 唯一加经验入口：负责性格加成(floor)、升级、换档、写审计流水。
+/// 唯一加经验入口：负责性格加成余数累计、升级、换档、写审计流水。
 /// 任何经验变动必须经此。不变量 INV-1（exp==Σ流水）、INV-5（delta≥0）。
 abstract interface class ExpEngine {
   /// 统一加经验。写 ExpLogEntry；触发升级/换档/毕业。

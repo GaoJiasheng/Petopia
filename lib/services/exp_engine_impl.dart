@@ -30,7 +30,7 @@ int deriveLevel(int exp) {
 
 /// ExpEngine 实现（spec-technical §3.2）。
 ///
-/// 唯一加经验入口。性格加成按 tag 各自 floor 后累加（bonusRounding=floor，防通胀）。
+/// 唯一加经验入口。性格小数加成按 tag 累积余数后取整，长期严格兑现配置比例。
 /// 每次变动写 ExpLogEntry（INV-1：pet.exp==Σdelta；expAfter 冗余便于即时自检）。
 /// 毕业仅置 ExpResult.graduated=true，由上层交 GraduationService 编排（保持本类纯粹）。
 class ExpEngineImpl implements ExpEngine {
@@ -61,7 +61,12 @@ class ExpEngineImpl implements ExpEngine {
     if (applyPersonalityBonus) {
       for (final tag in pet.personality) {
         final b = _tagBonus(tag, source);
-        if (b > 0) delta += (baseDelta * b).floor(); // 各 tag 分别 floor 后累加
+        if (b <= 0) continue;
+        final key = '$tag:${source.name}';
+        final accrued = (pet.personalityBonusCarry[key] ?? 0) + baseDelta * b;
+        final whole = accrued.floor();
+        delta += whole;
+        pet.personalityBonusCarry[key] = accrued - whole;
       }
     }
     if (delta == 0) return ExpResult.noop;

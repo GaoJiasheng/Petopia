@@ -280,55 +280,317 @@ class _VisitorCard extends StatelessWidget {
     final color = entry.collected
         ? _rarityColor(entry.rarity)
         : const Color(0xFFB8B0A6);
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: _cardDecoration(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: _RarityBadge(
-              rarity: entry.rarity,
-              collected: entry.collected,
-            ),
+    return Semantics(
+      button: entry.collected,
+      label: entry.collected ? '${entry.name}，查看来客回忆' : '尚未收录的来客',
+      child: GestureDetector(
+        onTap: entry.collected
+            ? () => _showVisitorDetails(context, entry)
+            : null,
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: _cardDecoration(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: _RarityBadge(
+                  rarity: entry.rarity,
+                  collected: entry.collected,
+                ),
+              ),
+              const Spacer(),
+              Center(
+                child: _VisitorMark(
+                  id: entry.id,
+                  collected: entry.collected,
+                  color: color,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                entry.collected ? entry.name : '？',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: entry.collected ? VisitorDexScreen._ink : color,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              const SizedBox(height: 8),
+              if (entry.collected) ...[
+                _InfoTag(
+                  icon: Icons.repeat_rounded,
+                  label: '到访 ${entry.count} 次',
+                  color: VisitorDexScreen._accent,
+                ),
+                const SizedBox(height: 6),
+                _InfoTag(
+                  icon: Icons.today_rounded,
+                  label: '首次 ${_dateLabel(entry.firstSeen)}',
+                  color: VisitorDexScreen._green,
+                ),
+                const SizedBox(height: 7),
+                const Row(
+                  children: [
+                    Icon(
+                      Icons.auto_stories_rounded,
+                      size: 14,
+                      color: VisitorDexScreen._muted,
+                    ),
+                    SizedBox(width: 4),
+                    Flexible(
+                      child: Text(
+                        '翻看相遇回忆',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          color: VisitorDexScreen._muted,
+                          fontSize: 11.5,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ] else
+                _LockedHint(rarity: entry.rarity),
+            ],
           ),
-          const Spacer(),
-          Center(
-            child: _VisitorMark(
-              id: entry.id,
-              collected: entry.collected,
-              color: color,
-            ),
-          ),
-          const Spacer(),
-          Text(
-            entry.collected ? entry.name : '？',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: entry.collected ? VisitorDexScreen._ink : color,
-              fontSize: 17,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-          const SizedBox(height: 8),
-          if (entry.collected) ...[
-            _InfoTag(
-              icon: Icons.repeat_rounded,
-              label: '到访 ${entry.count} 次',
-              color: VisitorDexScreen._accent,
-            ),
-            const SizedBox(height: 6),
-            _InfoTag(
-              icon: Icons.today_rounded,
-              label: '首次 ${_dateLabel(entry.firstSeen)}',
-              color: VisitorDexScreen._green,
-            ),
-          ] else
-            _LockedHint(rarity: entry.rarity),
-        ],
+        ),
       ),
+    );
+  }
+}
+
+Future<void> _showVisitorDetails(BuildContext context, VisitorDexView entry) {
+  final expanded = PetopiaAdaptive.isExpandedUp(context);
+  final panel = _VisitorMemoryPanel(entry: entry, sidePanel: expanded);
+  if (!expanded) {
+    return showModalBottomSheet<void>(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      backgroundColor: VisitorDexScreen._paper,
+      builder: (_) => panel,
+    );
+  }
+  return showGeneralDialog<void>(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+    barrierColor: Colors.black26,
+    transitionDuration: const Duration(milliseconds: 280),
+    pageBuilder: (context, _, _) => SafeArea(
+      child: Align(
+        alignment: Alignment.centerRight,
+        child: Material(
+          color: VisitorDexScreen._paper,
+          elevation: 16,
+          borderRadius: const BorderRadius.horizontal(left: Radius.circular(8)),
+          clipBehavior: Clip.antiAlias,
+          child: SizedBox(width: 500, height: double.infinity, child: panel),
+        ),
+      ),
+    ),
+    transitionBuilder: (context, animation, _, child) => SlideTransition(
+      position: Tween<Offset>(
+        begin: const Offset(0.12, 0),
+        end: Offset.zero,
+      ).animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
+      child: FadeTransition(opacity: animation, child: child),
+    ),
+  );
+}
+
+class _VisitorMemoryPanel extends StatelessWidget {
+  final VisitorDexView entry;
+  final bool sidePanel;
+
+  const _VisitorMemoryPanel({required this.entry, required this.sidePanel});
+
+  @override
+  Widget build(BuildContext context) {
+    final maxHeight = (MediaQuery.sizeOf(context).height * 0.84).clamp(
+      480.0,
+      780.0,
+    );
+    return SafeArea(
+      top: sidePanel,
+      child: SizedBox(
+        height: sidePanel ? null : maxHeight,
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(22, 8, 10, 14),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${entry.name}的来访手账',
+                      style: const TextStyle(
+                        color: VisitorDexScreen._ink,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                    tooltip: '关闭',
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(Icons.close_rounded),
+                    color: VisitorDexScreen._muted,
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 22),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 126,
+                    height: 126,
+                    child: Image.asset(
+                      'assets/art/world/visitors/${entry.id}_yard_base.png',
+                      fit: BoxFit.contain,
+                      cacheWidth: 420,
+                      errorBuilder: (_, _, _) => _VisitorMark(
+                        id: entry.id,
+                        collected: true,
+                        color: _rarityColor(entry.rarity),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _InfoTag(
+                          icon: Icons.auto_awesome_rounded,
+                          label: _rarityLabel(entry.rarity),
+                          color: _rarityColor(entry.rarity),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          '到访 ${entry.count} 次',
+                          style: const TextStyle(
+                            color: VisitorDexScreen._ink,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w900,
+                          ),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          '第一次见面：${_dateLabel(entry.firstSeen)}',
+                          style: const TextStyle(
+                            color: VisitorDexScreen._muted,
+                            fontSize: 12.5,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(22, 16, 22, 10),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '相遇回忆',
+                  style: TextStyle(
+                    color: VisitorDexScreen._ink,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ),
+            ),
+            const Divider(height: 1, color: VisitorDexScreen._line),
+            Expanded(
+              child: ListView.separated(
+                padding: const EdgeInsets.fromLTRB(22, 14, 22, 28),
+                itemCount: entry.memories.length,
+                separatorBuilder: (_, _) =>
+                    const Divider(height: 26, color: VisitorDexScreen._line),
+                itemBuilder: (context, index) =>
+                    _VisitorMemoryRow(memory: entry.memories[index]),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _VisitorMemoryRow extends StatelessWidget {
+  final VisitorMemoryView memory;
+
+  const _VisitorMemoryRow({required this.memory});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: 10,
+          height: 10,
+          margin: const EdgeInsets.only(top: 5),
+          decoration: const BoxDecoration(
+            color: VisitorDexScreen._accent,
+            shape: BoxShape.circle,
+          ),
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                _dateLabel(memory.date),
+                style: const TextStyle(
+                  color: VisitorDexScreen._muted,
+                  fontSize: 11.5,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                memory.script,
+                style: const TextStyle(
+                  color: VisitorDexScreen._ink,
+                  fontSize: 13.5,
+                  height: 1.55,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              if (memory.petName != null || memory.expReward > 0) ...[
+                const SizedBox(height: 7),
+                Text(
+                  [
+                    if (memory.petName != null) '和 ${memory.petName}',
+                    if (memory.expReward > 0) '陪伴经验 +${memory.expReward}',
+                  ].join(' · '),
+                  style: const TextStyle(
+                    color: VisitorDexScreen._accent,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -378,6 +640,7 @@ class _VisitorMark extends StatelessWidget {
                   // id 已含 visitor_ 前缀；文件名即 <id>_portrait.png。
                   'assets/art/world/visitors/${id}_portrait.png',
                   fit: BoxFit.contain,
+                  cacheWidth: 220,
                   errorBuilder: (_, _, _) => icon,
                 ),
               ),

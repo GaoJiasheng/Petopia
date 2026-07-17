@@ -2829,6 +2829,8 @@
         "weather": {},
         "timeOfDay": {},
         "season": {},
+        "requiredWeather": ["snow"],
+        "requiredSeason": ["winter"],
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
@@ -2855,10 +2857,11 @@
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
-        "minLuxuryStage": 7
+        "minLuxuryStage": null,
+        "minAgeDays": 7
       },
       "cooldownDays": 0,
-      "oncePerPet": false,
+      "oncePerPet": true,
       "choices": null
     },
     {
@@ -2879,6 +2882,8 @@
           "night": 1.0
         },
         "season": {},
+        "requiredWeather": ["clear"],
+        "requiredTimeOfDay": ["night"],
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
@@ -2932,6 +2937,7 @@
         },
         "timeOfDay": {},
         "season": {},
+        "requiredWeather": ["thunder"],
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
@@ -3006,8 +3012,10 @@
         "season": {
           "winter": 1.0
         },
+        "requiredTimeOfDay": ["evening", "night"],
+        "requiredSeason": ["winter"],
         "requiresVisitor": null,
-        "requiresDecor": "暖炉",
+        "requiresDecor": "fireplace",
         "minLevel": null,
         "minLuxuryStage": null
       },
@@ -3032,6 +3040,7 @@
         },
         "timeOfDay": {},
         "season": {},
+        "requiredWeather": ["rain", "rainbow"],
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
@@ -3057,6 +3066,7 @@
           "night": 1.0
         },
         "season": {},
+        "requiredTimeOfDay": ["night"],
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
@@ -3082,6 +3092,7 @@
         "season": {
           "spring": 1.0
         },
+        "requiredSeason": ["spring"],
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
@@ -3109,6 +3120,8 @@
         "season": {
           "summer": 1.0
         },
+        "requiredTimeOfDay": ["night"],
+        "requiredSeason": ["summer"],
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
@@ -3136,6 +3149,8 @@
         "season": {
           "autumn": 1.0
         },
+        "requiredWeather": ["clear"],
+        "requiredSeason": ["autumn"],
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
@@ -3161,6 +3176,7 @@
         "season": {
           "winter": 1.0
         },
+        "requiredSeason": ["winter"],
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
@@ -3234,8 +3250,10 @@
           "night": 1.0
         },
         "season": {},
+        "requiredWeather": ["clear"],
+        "requiredTimeOfDay": ["night"],
         "requiresVisitor": null,
-        "requiresDecor": "夜灯",
+        "requiresDecor": "night_light",
         "minLevel": null,
         "minLuxuryStage": null
       },
@@ -3259,6 +3277,7 @@
           "night": 1.0
         },
         "season": {},
+        "requiredTimeOfDay": ["night"],
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
@@ -3284,6 +3303,7 @@
         },
         "timeOfDay": {},
         "season": {},
+        "requiredWeather": ["fog"],
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
@@ -3310,7 +3330,8 @@
         "requiresVisitor": null,
         "requiresDecor": null,
         "minLevel": null,
-        "minLuxuryStage": 14
+        "minLuxuryStage": null,
+        "minAgeDays": 14
       },
       "cooldownDays": 0,
       "oncePerPet": true,

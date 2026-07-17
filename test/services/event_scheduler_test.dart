@@ -11,8 +11,13 @@ void main() {
   var idc = 0;
 
   EventSchedulerImpl build({double rng = 0.0}) {
-    return EventSchedulerImpl(queue, gen, () => 'j${idc++}', () => rng,
-        (j) async => dispatched.add(j));
+    return EventSchedulerImpl(
+      queue,
+      gen,
+      () => 'j${idc++}',
+      () => rng,
+      (j) async => dispatched.add(j),
+    );
   }
 
   setUp(() {
@@ -47,6 +52,37 @@ void main() {
     expect(after1, 6);
   });
 
+  test('onDailyTick 将来客与事件分布到真实日夜时窗', () async {
+    await build(rng: 0.0).onDailyTick(today);
+    final dayVisitor = queue.singleWhere(
+      (job) => job.type == JobType.visitorCheck && job.payloadRef == 'day',
+    );
+    final nightVisitor = queue.singleWhere(
+      (job) => job.type == JobType.visitorCheck && job.payloadRef == 'night',
+    );
+    final daily = queue.singleWhere((job) => job.type == JobType.dailyEventGen);
+    final special = queue.singleWhere(
+      (job) => job.type == JobType.specialEventEval,
+    );
+
+    expect(
+      (dayVisitor.dueAt.toLocal().hour, dayVisitor.dueAt.toLocal().minute),
+      (7, 30),
+    );
+    expect(
+      (nightVisitor.dueAt.toLocal().hour, nightVisitor.dueAt.toLocal().minute),
+      (19, 30),
+    );
+    expect(
+      (daily.dueAt.toLocal().hour, daily.dueAt.toLocal().minute),
+      (10, 15),
+    );
+    expect(
+      (special.dueAt.toLocal().hour, special.dueAt.toLocal().minute),
+      (20, 45),
+    );
+  });
+
   test('onResume 按优先级、dueAt 升序处理并置 consumed', () async {
     final s = build();
     // 手动塞入乱序 job（同 today 到期）
@@ -54,8 +90,11 @@ void main() {
     s.enqueue(JobType.revisitDue, today); // pri1
     s.enqueue(JobType.visitorCheck, today); // pri3
     await s.onResume(today);
-    expect(dispatched.map((j) => j.type).toList(),
-        [JobType.revisitDue, JobType.visitorCheck, JobType.postcardDue]);
+    expect(dispatched.map((j) => j.type).toList(), [
+      JobType.revisitDue,
+      JobType.visitorCheck,
+      JobType.postcardDue,
+    ]);
     expect(queue.every((j) => j.consumed), true);
   });
 

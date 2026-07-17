@@ -19,6 +19,14 @@ class VisitorServiceImpl implements VisitorService {
   final DateTime Function() _now;
   final void Function(VisitorLogEntry) _onLog;
   final void Function(String clueId) _onClue;
+  final double Function(
+    YardState yard,
+    Visitor visitor,
+    Season season,
+    TimeWindow window,
+    Weather weather,
+  )?
+  _themeBonus;
 
   VisitorServiceImpl(
     this._visitors,
@@ -27,8 +35,18 @@ class VisitorServiceImpl implements VisitorService {
     this._idGen,
     this._now,
     this._onLog,
-    this._onClue,
-  );
+    this._onClue, {
+    double Function(
+      YardState yard,
+      Visitor visitor,
+      Season season,
+      TimeWindow window,
+      Weather weather,
+    )?
+    themeBonus,
+    // Named public argument keeps composition readable while the field stays private.
+    // ignore: prefer_initializing_formals
+  }) : _themeBonus = themeBonus;
 
   static const Set<TimeOfDayOfDay> _dayTimes = {
     TimeOfDayOfDay.dawn,
@@ -160,8 +178,9 @@ class VisitorServiceImpl implements VisitorService {
   }) {
     if (!_timeEligible(v, window)) return 0;
     // 必要装饰硬门槛
+    final activeDecor = yard.activeDecorIds;
     for (final d in v.decorReq) {
-      if (!yard.ownedDecorIds.contains(d)) return 0;
+      if (!activeDecor.contains(d)) return 0;
     }
     double p = _baseProb(v.rarity);
     p *= v.weatherPref[weather] ?? 1.0;
@@ -172,6 +191,7 @@ class VisitorServiceImpl implements VisitorService {
       p *= 1 + yard.foodTray.probabilityDelta.clamp(0.0, 2.0);
     }
     p *= v.seasonPref[season] ?? 1.0;
+    p += _themeBonus?.call(yard, v, season, window, weather) ?? 0;
     // 豪华度绝对加成（先乘后加）
     if (yard.luxuryStage >= 2) p += GameConfig.luxuryStage2AllBonus;
     if (legendary && yard.luxuryStage >= 5) {

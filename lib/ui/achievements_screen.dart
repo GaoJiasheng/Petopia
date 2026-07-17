@@ -77,45 +77,111 @@ class _AchievementList extends StatelessWidget {
     final visible = achievements.where((entry) => !entry.hidden).toList();
     final hidden = achievements.where((entry) => entry.hidden).toList();
 
-    return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 860),
-        child: ListView(
-          padding: EdgeInsets.fromLTRB(
-            PetopiaAdaptive.sideMargin(context),
-            8,
-            PetopiaAdaptive.sideMargin(context),
-            28,
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final wide =
+            constraints.maxWidth >= 1000 &&
+            constraints.maxWidth > constraints.maxHeight;
+        final margin = PetopiaAdaptive.sideMargin(context);
+        if (wide) {
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1180),
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(margin, 8, margin, 20),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Expanded(
+                      child: _AchievementColumn(
+                        title: '明写',
+                        entries: visible,
+                        emptyText: '明写成就还在装订中。',
+                      ),
+                    ),
+                    const SizedBox(width: 22),
+                    Expanded(
+                      child: _AchievementColumn(
+                        title: '隐藏',
+                        entries: hidden,
+                        emptyText: '隐藏成就还没有露出线索。',
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        }
+        return Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 860),
+            child: ListView(
+              padding: EdgeInsets.fromLTRB(margin, 8, margin, 28),
+              children: [
+                ..._sectionChildren(
+                  title: '明写',
+                  entries: visible,
+                  emptyText: '明写成就还在装订中。',
+                ),
+                const SizedBox(height: 8),
+                ..._sectionChildren(
+                  title: '隐藏',
+                  entries: hidden,
+                  emptyText: '隐藏成就还没有露出线索。',
+                ),
+              ],
+            ),
           ),
-          children: [
-            _SectionHeader(title: '明写', subtitle: _progressText(visible)),
-            const SizedBox(height: 10),
-            if (visible.isEmpty)
-              const _SectionEmpty(text: '明写成就还在装订中。')
-            else
-              for (final entry in visible) ...[
-                _AchievementCard(entry: entry),
-                const SizedBox(height: 12),
-              ],
-            const SizedBox(height: 8),
-            _SectionHeader(title: '隐藏', subtitle: _progressText(hidden)),
-            const SizedBox(height: 10),
-            if (hidden.isEmpty)
-              const _SectionEmpty(text: '隐藏成就还没有露出线索。')
-            else
-              for (final entry in hidden) ...[
-                _AchievementCard(entry: entry),
-                const SizedBox(height: 12),
-              ],
-          ],
-        ),
-      ),
+        );
+      },
     );
   }
 
   static String _progressText(List<AchievementView> entries) {
     final done = entries.where((entry) => entry.unlocked).length;
     return '$done / ${entries.length} 已达成';
+  }
+
+  static List<Widget> _sectionChildren({
+    required String title,
+    required List<AchievementView> entries,
+    required String emptyText,
+  }) {
+    return <Widget>[
+      _SectionHeader(title: title, subtitle: _progressText(entries)),
+      const SizedBox(height: 10),
+      if (entries.isEmpty)
+        _SectionEmpty(text: emptyText)
+      else
+        for (final entry in entries) ...[
+          _AchievementCard(entry: entry),
+          const SizedBox(height: 12),
+        ],
+    ];
+  }
+}
+
+class _AchievementColumn extends StatelessWidget {
+  const _AchievementColumn({
+    required this.title,
+    required this.entries,
+    required this.emptyText,
+  });
+
+  final String title;
+  final List<AchievementView> entries;
+  final String emptyText;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: _AchievementList._sectionChildren(
+        title: title,
+        entries: entries,
+        emptyText: emptyText,
+      ),
+    );
   }
 }
 
@@ -211,7 +277,10 @@ class _AchievementCard extends StatelessWidget {
             const SizedBox(height: 14),
             _ProgressLine(entry: entry),
             const SizedBox(height: 10),
-            _RewardLine(rewardFluff: entry.rewardFluff),
+            _RewardLine(
+              summary: entry.rewardSummary,
+              claimed: entry.rewardClaimed,
+            ),
           ],
         ],
       ),
@@ -340,9 +409,10 @@ class _ProgressLine extends StatelessWidget {
 }
 
 class _RewardLine extends StatelessWidget {
-  final int rewardFluff;
+  final String summary;
+  final bool claimed;
 
-  const _RewardLine({required this.rewardFluff});
+  const _RewardLine({required this.summary, required this.claimed});
 
   @override
   Widget build(BuildContext context) {
@@ -361,12 +431,15 @@ class _RewardLine extends StatelessWidget {
             fallback: Icons.card_giftcard_rounded,
           ),
           const SizedBox(width: 6),
-          Text(
-            rewardFluff > 0 ? '暖绒 +$rewardFluff' : '特别奖励',
-            style: const TextStyle(
-              color: AchievementsScreen._ink,
-              fontSize: 13,
-              fontWeight: FontWeight.w800,
+          Flexible(
+            child: Text(
+              claimed ? '已收下 · $summary' : summary,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(
+                color: AchievementsScreen._ink,
+                fontSize: 13,
+                fontWeight: FontWeight.w800,
+              ),
             ),
           ),
         ],

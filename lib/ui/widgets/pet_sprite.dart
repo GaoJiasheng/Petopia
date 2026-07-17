@@ -160,10 +160,9 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
           key: ValueKey('act_${widget.cue?.seq}'),
           assetPath: PetArt.actionSheet(widget.speciesId!, playing),
           size: widget.width,
-          // User-triggered feedback remains visible with Reduce Motion enabled,
-          // but traverses the strip only once instead of looping.
-          duration: reduceMotion ? _actionDuration : const Duration(seconds: 1),
-          playDuration: reduceMotion ? null : _actionDuration,
+          duration: _actionDuration,
+          cycles: reduceMotion ? 1 : 2,
+          holdTailFraction: reduceMotion ? 0.48 : 0.16,
           onComplete: onComplete,
           fallback: _StaticActionChoreography(
             key: ValueKey('pose_${widget.cue?.seq}'),
@@ -189,7 +188,12 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
           alignment: Alignment.center,
           clipBehavior: Clip.none,
           children: [
-            body,
+            AnimatedSwitcher(
+              duration: const Duration(milliseconds: 260),
+              switchInCurve: Curves.easeOutCubic,
+              switchOutCurve: Curves.easeInOut,
+              child: body,
+            ),
             for (final id in _hearts) _FloatingHeart(key: ValueKey(id)),
           ],
         ),

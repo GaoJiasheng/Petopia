@@ -76,6 +76,42 @@ void main() {
     expect(daily, 100);
     expect(special, 20);
 
+    expect(
+      repo.events.every(
+        (event) =>
+            (event.weights.minLevel ?? 1) <= 10 &&
+            (event.weights.minLuxuryStage ?? 1) <= 6,
+      ),
+      isTrue,
+      reason: 'event gates must be reachable within progression caps',
+    );
+    final decorIds = <String>{
+      for (final item in repo.shopItems)
+        if (item.effect.type.name == 'decor')
+          item.effect.params['decorId'] as String,
+      'deco_tree',
+      'deco_pond',
+      'deco_night_lamp',
+      'deco_stove',
+      'deco_shiny_bells',
+    };
+    expect(
+      repo.events.every(
+        (event) =>
+            event.weights.requiresDecor == null ||
+            decorIds.contains(event.weights.requiresDecor),
+      ),
+      isTrue,
+      reason: 'event decor requirements must use stable runtime ids',
+    );
+    final firstSnow = repo.eventById('ev_s01')!;
+    expect(
+      firstSnow.weights.requiredWeather.map((value) => value.name),
+      contains('snow'),
+    );
+    expect(repo.eventById('ev_s02')!.weights.minAgeDays, 7);
+    expect(repo.eventById('ev_s20')!.weights.minAgeDays, 14);
+
     // 传说访客 clueRole 存在
     final legendary = repo.visitors
         .where((v) => v.rarity.name == 'legendary')

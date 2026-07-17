@@ -84,14 +84,62 @@ class EconomyServiceImpl implements EconomyService {
     if (!item.consumable && _isOwned(item)) {
       return const PurchaseResult(success: false, failReason: 'already_owned');
     }
-    if (!spend(item.price, CurrencyReason.shopPurchase, ref: item.id)) {
+    final purchaseQuote = quote(item);
+    if (!spend(
+      purchaseQuote.price,
+      CurrencyReason.shopPurchase,
+      ref: item.id,
+    )) {
       return const PurchaseResult(
         success: false,
         failReason: 'insufficient_balance',
       );
     }
+    final couponId = purchaseQuote.couponId;
+    if (couponId != null) _inventory.ownedCouponIds.remove(couponId);
     _applyEffect(item);
     return const PurchaseResult(success: true);
+  }
+
+  @override
+  PurchaseQuote quote(ShopItem item) {
+    if (item.effect.type != EffectType.themeSkin) {
+      return PurchaseQuote(price: item.price);
+    }
+    final themeId = item.effect.params['themeId'] as String?;
+    final candidates = <({String id, double multiplier, String label})>[];
+    void add(
+      String id,
+      double multiplier,
+      String label, {
+      String? requiredTheme,
+    }) {
+      if (!_inventory.ownedCouponIds.contains(id)) return;
+      if (requiredTheme != null && themeId != requiredTheme) return;
+      candidates.add((id: id, multiplier: multiplier, label: label));
+    }
+
+    add(
+      'theme_four_seasons_garden_50',
+      0.5,
+      '四季花园 5 折券',
+      requiredTheme: 'four_seasons',
+    );
+    add(
+      'theme_candy_bakery_80',
+      0.8,
+      '糖果焙房 8 折券',
+      requiredTheme: 'candy_bakery',
+    );
+    add('any_theme_50', 0.5, '任意主题 5 折券');
+    if (candidates.isEmpty) return PurchaseQuote(price: item.price);
+    candidates.sort((a, b) => a.multiplier.compareTo(b.multiplier));
+    final selected = candidates.first;
+    return PurchaseQuote(
+      price: (item.price * selected.multiplier).round(),
+      couponId: selected.id,
+      couponLabel: selected.label,
+    );
   }
 
   void _applyEffect(ShopItem item) {

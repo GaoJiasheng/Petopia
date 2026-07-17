@@ -15,6 +15,8 @@ class SpriteSheetPlayer extends StatefulWidget {
   final Duration? duration;
   final Duration? playDuration;
   final bool loop;
+  final int cycles;
+  final double holdTailFraction;
   final VoidCallback? onComplete;
   final Widget fallback;
 
@@ -28,6 +30,8 @@ class SpriteSheetPlayer extends StatefulWidget {
     this.duration,
     this.playDuration,
     this.loop = false,
+    this.cycles = 1,
+    this.holdTailFraction = 0,
     this.onComplete,
   });
 
@@ -119,7 +123,8 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
       child: AnimatedBuilder(
         animation: _c,
         builder: (context, _) {
-          final frame = (_c.value * widget.frameCount).floor().clamp(
+          final progress = _frameProgress(_c.value);
+          final frame = (progress * widget.frameCount).floor().clamp(
             0,
             widget.frameCount - 1,
           );
@@ -129,6 +134,15 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
         },
       ),
     );
+  }
+
+  double _frameProgress(double value) {
+    if (widget.loop || widget.playDuration != null) return value;
+    final hold = widget.holdTailFraction.clamp(0.0, 0.9);
+    final active = 1 - hold;
+    if (value >= active) return 1;
+    final scaled = value / active * widget.cycles.clamp(1, 20);
+    return scaled - scaled.floor();
   }
 }
 

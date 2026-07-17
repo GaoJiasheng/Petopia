@@ -23,6 +23,25 @@ class YardArt {
     return 'assets/art/world/themes/yard_theme_${slug}_bg.jpg';
   }
 
+  static String? luxuryDelta(int stage) {
+    if (stage < 2 || stage > 6) return null;
+    final number = stage.toString().padLeft(2, '0');
+    return 'assets/art/world/layouts/yard_luxury${number}_delta.png';
+  }
+
+  static String timeFx(int hour) {
+    if (hour >= 19 || hour < 6) {
+      return 'assets/art/world/fx/yard_fx_night.png';
+    }
+    return 'assets/art/world/fx/yard_fx_dusk.png';
+  }
+
+  static String weatherFx(String weather) => switch (weather) {
+    'rain' || 'thunder' => 'assets/art/world/fx/yard_fx_rain_overlay.png',
+    'snow' => 'assets/art/world/fx/yard_fx_snow_overlay.png',
+    _ => '',
+  };
+
   static const Map<String, String> _decorFile = {
     'water_bowl': 'deco_water_bowl.png',
     'night_light': 'deco_night_lamp.png',

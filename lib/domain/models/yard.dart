@@ -49,6 +49,37 @@ class YardState {
        foodTray = foodTray ?? FoodTray(),
        ownedPerks = ownedPerks ?? <String>[],
        ownedDecorIds = ownedDecorIds ?? <String>[];
+
+  int get slotCapacity => switch (luxuryStage.clamp(1, 6)) {
+    1 => 4,
+    2 => 6,
+    3 => 8,
+    4 => 10,
+    5 => 12,
+    _ => 14,
+  };
+
+  Set<String> get placedDecorIds => slots
+      .map((slot) => slot.itemId)
+      .whereType<String>()
+      .where((id) => id.isNotEmpty)
+      .toSet();
+
+  Set<String> get activeDecorIds {
+    final active = placedDecorIds;
+    for (final id in placedDecorIds) {
+      final requirementAlias = switch (id) {
+        'night_light' => 'deco_night_lamp',
+        'fireplace' => 'deco_stove',
+        'wind_chime' => 'deco_shiny_bells',
+        _ => null,
+      };
+      if (requirementAlias != null) active.add(requirementAlias);
+    }
+    if (luxuryStage >= 3) active.add('deco_tree');
+    if (luxuryStage >= 4) active.add('deco_pond');
+    return active;
+  }
 }
 
 /// 暖绒钱包（单例）。balance≥0；INV-4（==Σcurrency_log.delta）。

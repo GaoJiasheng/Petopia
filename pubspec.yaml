@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+13
+version: 1.0.0+14
 
 environment:
   sdk: ^3.12.2
@@ -104,6 +104,10 @@ flutter:
     - assets/art/ui/ui_icon_shop_food.png
     - assets/art/ui/ui_icon_shop_theme.png
     - assets/art/ui/ui_icon_shop_toy.png
+    - assets/art/ui/ui_icon_food_apple.png
+    - assets/art/ui/ui_icon_food_fish.png
+    - assets/art/ui/ui_icon_food_grain.png
+    - assets/art/ui/ui_icon_food_nut.png
     - assets/art/ui/ui_icon_src_bath.png
     - assets/art/ui/ui_icon_src_event.png
     - assets/art/ui/ui_icon_src_feed.png
@@ -238,6 +242,16 @@ flutter:
     - assets/art/world/themes/yard_theme_snowhut_bg.jpg
     - assets/art/world/themes/yard_theme_starcamp_bg.jpg
     - assets/art/world/themes/yard_theme_wheatkite_bg.jpg
+    - assets/art/world/layouts/yard_luxury02_delta.png
+    - assets/art/world/layouts/yard_luxury03_delta.png
+    - assets/art/world/layouts/yard_luxury04_delta.png
+    - assets/art/world/layouts/yard_luxury05_delta.png
+    - assets/art/world/layouts/yard_luxury06_delta.png
+    - assets/art/world/fx/yard_fx_dusk.png
+    - assets/art/world/fx/yard_fx_night.png
+    - assets/art/world/fx/yard_fx_night_stars.png
+    - assets/art/world/fx/yard_fx_rain_overlay.png
+    - assets/art/world/fx/yard_fx_snow_overlay.png
     - assets/art/world/decor/deco_water_bowl.png
     - assets/art/world/decor/deco_night_lamp.png
     - assets/art/world/decor/deco_heater_stove.png

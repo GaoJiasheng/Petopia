@@ -72,12 +72,14 @@ void main() {
     final settings = encoded['settings']! as Map<String, Object?>;
     settings
       ..remove('onboardingComplete')
+      ..remove('careTutorialStep')
       ..['schemaVersion'] = 1;
 
     final migrated = store.decodeSnapshot(encoded);
 
     expect(migrated.settings.schemaVersion, 2);
     expect(migrated.settings.onboardingComplete, isTrue);
+    expect(migrated.settings.careTutorialStep, 3);
   });
 
   test('schema v1 empty save still receives first-run onboarding', () {
@@ -88,11 +90,13 @@ void main() {
     final settings = encoded['settings']! as Map<String, Object?>;
     settings
       ..remove('onboardingComplete')
+      ..remove('careTutorialStep')
       ..['schemaVersion'] = 1;
 
     final migrated = store.decodeSnapshot(encoded);
 
     expect(migrated.settings.onboardingComplete, isFalse);
+    expect(migrated.settings.careTutorialStep, 0);
   });
 }
 
@@ -114,6 +118,7 @@ GameSession _richSession() {
     offlineExpGrantedToday: 12,
     wishId: 'wish-meteor',
     pastNames: const <String>['橘一', '橘二'],
+    personalityBonusCarry: const <String, double>{'p_glutton:feed': 0.6},
   );
 
   final session = GameSession(
@@ -148,6 +153,7 @@ GameSession _richSession() {
       music: false,
       sound: false,
       onboardingComplete: true,
+      careTutorialStep: 3,
       schemaVersion: 2,
       lastMonotonicRef: 123456,
       loginStreakCurrent: 3,
@@ -159,6 +165,8 @@ GameSession _richSession() {
       ownedAlbumSkinIds: <String>{'default', 'paper'},
       activeAlbumSkinId: 'paper',
       activeVisitorFoodItemId: 'shop_food_grain_bag',
+      ownedCouponIds: const <String>{'any_theme_50'},
+      ownedStickerIds: const <String>{'calendar_sticker'},
     ),
   );
 
@@ -177,12 +185,18 @@ GameSession _richSession() {
     PendingGameEvent(
       id: 'pending-1',
       eventId: 'ev_d01',
+      petId: 'pet-current',
       title: '追落叶',
       script: '叼来一片落叶。',
       type: EventType.daily,
       expReward: 5,
       currencyReward: 0,
       createdAt: DateTime.utc(2026, 7, 3, 12),
+      animRef: 'event_leaf',
+      illustrationRef: 'ill_s01',
+      choices: [
+        PendingEventChoice(text: '追过去', resultScript: '接住了。', expDelta: 1),
+      ],
     ),
   );
 
@@ -279,6 +293,7 @@ GameSession _richSession() {
     interactionId: 'int_fox_cat',
     withPetId: 'pet-current',
     arrivalSeen: true,
+    interacted: true,
   );
   session.ownedSpecies.addAll(<String>{'pet_cat', 'pet_shiba'});
   session.postcards.add(
@@ -351,6 +366,14 @@ void _expectSessionEquals(GameSession actual, GameSession expected) {
     unorderedEquals(expected.shopInventory.ownedAlbumSkinIds),
   );
   expect(
+    actual.shopInventory.ownedCouponIds,
+    unorderedEquals(expected.shopInventory.ownedCouponIds),
+  );
+  expect(
+    actual.shopInventory.ownedStickerIds,
+    unorderedEquals(expected.shopInventory.ownedStickerIds),
+  );
+  expect(
     actual.shopInventory.activeAlbumSkinId,
     expected.shopInventory.activeAlbumSkinId,
   );
@@ -359,9 +382,21 @@ void _expectSessionEquals(GameSession actual, GameSession expected) {
     expected.shopInventory.activeVisitorFoodItemId,
   );
   expect(actual.pendingEvents, hasLength(expected.pendingEvents.length));
+  final actualEvent = actual.pendingEvents.single;
+  final expectedEvent = expected.pendingEvents.single;
+  expect(actualEvent.petId, expectedEvent.petId);
+  expect(actualEvent.title, expectedEvent.title);
+  expect(actualEvent.animRef, expectedEvent.animRef);
+  expect(actualEvent.illustrationRef, expectedEvent.illustrationRef);
+  expect(actualEvent.rewardSettled, expectedEvent.rewardSettled);
+  expect(actualEvent.choices.single.text, expectedEvent.choices.single.text);
   expect(
-    actual.pendingEvents.single.title,
-    expected.pendingEvents.single.title,
+    actualEvent.choices.single.resultScript,
+    expectedEvent.choices.single.resultScript,
+  );
+  expect(
+    actualEvent.choices.single.expDelta,
+    expectedEvent.choices.single.expDelta,
   );
   _expectPetListEquals(actual.roaming, expected.roaming);
   _expectJourneyListEquals(actual.journeys, expected.journeys);
@@ -417,6 +452,7 @@ void _expectPetEquals(Pet actual, Pet expected) {
   expect(actual.journeyId, expected.journeyId);
   expect(actual.nextRevisitAt, expected.nextRevisitAt);
   expect(actual.pastNames, expected.pastNames);
+  expect(actual.personalityBonusCarry, expected.personalityBonusCarry);
 }
 
 void _expectWalletEquals(CurrencyWallet actual, CurrencyWallet expected) {
@@ -450,6 +486,7 @@ void _expectSettingsEquals(Settings actual, Settings expected) {
   expect(actual.music, expected.music);
   expect(actual.sound, expected.sound);
   expect(actual.onboardingComplete, expected.onboardingComplete);
+  expect(actual.careTutorialStep, expected.careTutorialStep);
   expect(actual.schemaVersion, expected.schemaVersion);
   expect(actual.createdAt, expected.createdAt);
   expect(actual.lastMonotonicRef, expected.lastMonotonicRef);
@@ -544,6 +581,7 @@ void _expectNullableActiveVisitorEquals(
   expect(actual.interactionId, expected.interactionId);
   expect(actual.withPetId, expected.withPetId);
   expect(actual.arrivalSeen, expected.arrivalSeen);
+  expect(actual.interacted, expected.interacted);
 }
 
 void _expectPostcardListEquals(List<Postcard> actual, List<Postcard> expected) {

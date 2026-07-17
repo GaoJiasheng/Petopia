@@ -58,6 +58,9 @@ class EventPresentationView {
   final EventType type;
   final int expReward;
   final int currencyReward;
+  final String? animRef;
+  final String? illustrationRef;
+  final List<EventChoiceView> choices;
 
   const EventPresentationView({
     required this.id,
@@ -66,6 +69,21 @@ class EventPresentationView {
     required this.type,
     required this.expReward,
     required this.currencyReward,
+    this.animRef,
+    this.illustrationRef,
+    this.choices = const <EventChoiceView>[],
+  });
+}
+
+class EventChoiceView {
+  final String text;
+  final String resultScript;
+  final int expDelta;
+
+  const EventChoiceView({
+    required this.text,
+    required this.resultScript,
+    required this.expDelta,
   });
 }
 
@@ -100,6 +118,7 @@ class VisitorPresenceView {
   final DateTime arrivedAt;
   final DateTime leavesAt;
   final bool arrivalSeen;
+  final bool interacted;
   final String yardAsset;
   final String portraitAsset;
 
@@ -111,9 +130,54 @@ class VisitorPresenceView {
     required this.arrivedAt,
     required this.leavesAt,
     required this.arrivalSeen,
+    required this.interacted,
     required this.yardAsset,
     required this.portraitAsset,
   });
+}
+
+class OfflineWelcomeView {
+  final int seq;
+  final String petName;
+  final String speciesId;
+  final String variantId;
+  final PetStage stage;
+  final int expGained;
+  final String story;
+
+  const OfflineWelcomeView({
+    required this.seq,
+    required this.petName,
+    required this.speciesId,
+    required this.variantId,
+    required this.stage,
+    required this.expGained,
+    required this.story,
+  });
+}
+
+enum TodayYardKind { pat, feed, toy, bath, visitor, event }
+
+class TodayYardItemView {
+  final String id;
+  final TodayYardKind kind;
+  final String label;
+  final bool completed;
+
+  const TodayYardItemView({
+    required this.id,
+    required this.kind,
+    required this.label,
+    required this.completed,
+  });
+}
+
+class TodayYardView {
+  final List<TodayYardItemView> items;
+
+  const TodayYardView(this.items);
+
+  int get completedCount => items.where((item) => item.completed).length;
 }
 
 /// 游戏视图快照。
@@ -145,7 +209,12 @@ class GameView {
   final RevisitorPresenceView? revisitor;
   final RevisitorPresenceView? revisitorArrival;
   final EventPresentationView? pendingEvent;
+  final Weather weather;
   final bool onboardingComplete;
+  final bool needsFirstCare;
+  final int careTutorialStep;
+  final OfflineWelcomeView? offlineWelcome;
+  final TodayYardView? todayYard;
 
   const GameView({
     required this.pet,
@@ -161,7 +230,12 @@ class GameView {
     this.revisitor,
     this.revisitorArrival,
     this.pendingEvent,
+    required this.weather,
     required this.onboardingComplete,
+    required this.needsFirstCare,
+    required this.careTutorialStep,
+    this.offlineWelcome,
+    this.todayYard,
   });
 }
 
@@ -170,6 +244,8 @@ class GameView {
 class GameController extends AsyncNotifier<GameView> {
   late GameServices _svc;
   int _achievementCueSeq = 0;
+  int _offlineWelcomeSeq = 0;
+  OfflineWelcomeView? _offlineWelcome;
   bool _resuming = false;
 
   @override
@@ -179,6 +255,11 @@ class GameController extends AsyncNotifier<GameView> {
     final settings = _svc.session.settings;
     await ref.read(audioServiceProvider).setMusicEnabled(settings.music);
     await ref.read(audioServiceProvider).setEffectsEnabled(settings.sound);
+    _queueOfflineWelcome(
+      _svc.session.current,
+      elapsed: _svc.startupOfflineElapsed,
+      expGained: _svc.startupOfflineExp,
+    );
     await _syncNotifications();
     return _snapshot();
   }
@@ -260,6 +341,12 @@ class GameController extends AsyncNotifier<GameView> {
     if (action == CareAction.pat && pet.personality.contains('p_aloof')) {
       _svc.bumpAchievementSignal('custom:pat');
     }
+    final tutorialStep = _svc.session.settings.careTutorialStep;
+    if (tutorialStep == 0 && action == CareAction.pat) {
+      _svc.session.settings.careTutorialStep = 1;
+    } else if (tutorialStep == 1 && action == CareAction.feed) {
+      _svc.session.settings.careTutorialStep = 2;
+    }
     if (beforeLevel < GameConfig.stageBLevel &&
         pet.level >= GameConfig.stageBLevel) {
       _svc.bumpAchievementSignal('action:evolve_lv5');
@@ -271,7 +358,13 @@ class GameController extends AsyncNotifier<GameView> {
     _grantLevelRewards(pet.id, beforeLevel, pet.level);
     // 升级 / 换模 的手感 + 音效反馈。
     if (pet.stage != beforeStage) {
-      HapticFeedback.mediumImpact();
+      HapticFeedback.lightImpact();
+      unawaited(
+        Future<void>.delayed(
+          const Duration(milliseconds: 90),
+          HapticFeedback.lightImpact,
+        ),
+      );
       _audio.sting(switch (pet.stage) {
         PetStage.b => Sting.evolveB,
         PetStage.c => Sting.evolveC,
@@ -401,8 +494,23 @@ class GameController extends AsyncNotifier<GameView> {
         target: a.condition.target,
         clueText: (a.hidden && !unlocked) ? a.clueText : null,
         rewardFluff: a.reward.fluff,
+        rewardSummary: _achievementRewardSummary(a),
+        rewardClaimed: p?.rewardClaimed ?? false,
       );
     }).toList();
+  }
+
+  String _achievementRewardSummary(Achievement achievement) {
+    final reward = achievement.reward;
+    final couponId = reward.couponId;
+    final parts = <String>[
+      if (reward.fluff > 0) '暖绒 +${reward.fluff}',
+      if (reward.decorItemId != null) '纪念收藏',
+      if (couponId?.startsWith('album_skin_') ?? false) '相册装帧',
+      if (couponId != null && !couponId.startsWith('album_skin_')) '主题折扣券',
+      if (reward.stickerId != null) '纪念贴纸',
+    ];
+    return parts.isEmpty ? '纪念章' : parts.join(' · ');
   }
 
   /// 成长手账：当前宠的经验流水（按时间升序）。
@@ -417,6 +525,7 @@ class GameController extends AsyncNotifier<GameView> {
     final yard = _svc.session.yard;
     final bal = _svc.session.wallet.balance;
     return _svc.content.shopItems.map((it) {
+      final quote = _svc.economy.quote(it);
       final owned = switch (it.effect.type) {
         EffectType.themeSkin => yard.ownedThemeIds.contains(
           it.effect.params['themeId'],
@@ -441,11 +550,19 @@ class GameController extends AsyncNotifier<GameView> {
         id: it.id,
         name: it.name,
         category: it.category,
-        price: it.price,
+        artRef: it.artRef,
+        effectType: it.effect.type,
+        effectSummary: _shopEffectSummary(it.effect.type, it.effect.params),
+        price: quote.price,
+        originalPrice: it.price,
+        discountLabel: quote.couponLabel,
         owned: owned,
-        affordable: bal >= it.price,
+        affordable: bal >= quote.price,
         consumable: it.consumable,
         themeId: themeId,
+        decorId: it.effect.type == EffectType.decor
+            ? it.effect.params['decorId'] as String?
+            : null,
         albumSkinId: albumSkinId,
         quantity: _svc.session.shopInventory.consumables[it.id] ?? 0,
         active:
@@ -470,8 +587,14 @@ class GameController extends AsyncNotifier<GameView> {
   /// 来客图鉴（含是否已收录 / 首次到访 / 次数）。
   List<VisitorDexView> visitorDex() {
     final log = _svc.session.visitorLog;
+    final pets = {for (final pet in _svc.session.allPets) pet.id: pet};
+    final interactions = {
+      for (final interaction in _svc.content.visitorInteractions)
+        interaction.id: interaction,
+    };
     return _svc.content.visitors.map((v) {
       final visits = log.where((e) => e.visitorId == v.id).toList();
+      visits.sort((a, b) => b.date.compareTo(a.date));
       final first = visits.isEmpty
           ? null
           : visits.map((e) => e.date).reduce((a, b) => a.isBefore(b) ? a : b);
@@ -482,8 +605,55 @@ class GameController extends AsyncNotifier<GameView> {
         collected: visits.isNotEmpty,
         count: visits.length,
         firstSeen: first,
+        memories: visits
+            .map((visit) {
+              final interaction = interactions[visit.interactionId];
+              return VisitorMemoryView(
+                date: visit.date,
+                petName: pets[visit.withPetId]?.name,
+                script: interaction?.script ?? '${v.name}在院子里安静地停留了一会儿。',
+                expReward: interaction?.expReward ?? 0,
+              );
+            })
+            .toList(growable: false),
       );
     }).toList();
+  }
+
+  String _shopEffectSummary(EffectType type, Map<String, dynamic> params) {
+    final bonus = params['visitorProbBonus'];
+    if (bonus is Map) {
+      final scope = bonus['scope']?.toString() ?? '';
+      final delta = (bonus['delta'] as num?)?.toDouble() ?? 0;
+      return '${_visitorScopeLabel(scope)}来客缘分 +${(delta * 100).round()}%';
+    }
+    return switch (type) {
+      EffectType.themeSkin => '完整更换院子的季节、光影与景色',
+      EffectType.decor => '可自由摆进院子，也可能吸引特别来客',
+      EffectType.feedBonus => '下一次使用时，经验提升至 ${params['expTo'] ?? 0} 点',
+      EffectType.toyPermanentBonus => '永久拥有，玩耍经验提升至 ${params['expTo'] ?? 0} 点',
+      EffectType.albumSkin => '更换相册纸张与收藏页的整体气氛',
+      EffectType.visitorProb =>
+        '${_visitorScopeLabel(params['scope']?.toString() ?? '')}来客缘分 +${(((params['delta'] as num?)?.toDouble() ?? 0) * 100).round()}%',
+    };
+  }
+
+  static String _visitorScopeLabel(String scope) {
+    return switch (scope) {
+      'night' || 'nocturnal' => '夜间',
+      'morning' => '清晨',
+      'rainy' => '雨天',
+      'autumn' => '秋日',
+      'seasonal' => '季节限定',
+      'bird' || 'birds' => '鸟类',
+      'cat_egret' => '猫与白鹭',
+      'rabbit_deer' => '兔与小鹿',
+      'snow_rabbit' => '雪兔',
+      'squirrel' => '松鼠',
+      'butterfly' => '蝴蝶',
+      'crow_liang' => '亮亮乌鸦',
+      _ => '特别',
+    };
   }
 
   // ── 设置 ──────────────────────────────────────
@@ -579,7 +749,12 @@ class GameController extends AsyncNotifier<GameView> {
         final elapsed = _svc.clock.resolveOfflineElapsed(
           lastOnlineAt: pet.lastOnlineAt,
         );
-        _svc.exp.grantOffline(pet: pet, elapsed: elapsed);
+        final offline = _svc.exp.grantOffline(pet: pet, elapsed: elapsed);
+        _queueOfflineWelcome(
+          pet,
+          elapsed: elapsed,
+          expGained: offline.deltaApplied,
+        );
         _grantLevelRewards(pet.id, before, pet.level);
       }
       final now = _svc.clock.now();
@@ -743,16 +918,48 @@ class GameController extends AsyncNotifier<GameView> {
     _persist();
   }
 
-  void markRevisitorInteracted(String petId) {
-    final revisitor = _svc.session.revisitor;
-    if (revisitor == null || revisitor.id != petId) return;
-    _svc.session.revisitorInteracted = true;
+  RevisitInteractionOutcome? interactRevisitor(String petId) {
+    final outcome = _svc.interactRevisitor(petId);
+    if (outcome == null) return null;
     state = AsyncData(_snapshot());
-    _persist();
+    _afterGameAction();
+    return outcome;
   }
 
-  void dismissEvent(String id) {
-    _svc.session.pendingEvents.removeWhere((event) => event.id == id);
+  EventResolution? resolveEvent(String id, {int? choiceIndex}) {
+    String? eventId;
+    for (final event in _svc.session.pendingEvents) {
+      if (event.id == id) {
+        eventId = event.eventId;
+        break;
+      }
+    }
+    final resolution = _svc.resolveEvent(id, choiceIndex: choiceIndex);
+    if (resolution == null) return null;
+    final sting = _eventSting(eventId);
+    if (sting != null) _audio.sting(sting);
+    state = AsyncData(_snapshot());
+    _afterGameAction();
+    return resolution;
+  }
+
+  VisitorInteractionOutcome? interactVisitor(String visitorId) {
+    final outcome = _svc.interactActiveVisitor(visitorId);
+    if (outcome == null) return null;
+    state = AsyncData(_snapshot());
+    _afterGameAction();
+    return outcome;
+  }
+
+  void dismissOfflineWelcome(int seq) {
+    if (_offlineWelcome?.seq != seq) return;
+    _offlineWelcome = null;
+    state = AsyncData(_snapshot());
+  }
+
+  void completeCareTutorial() {
+    if (_svc.session.settings.careTutorialStep >= 3) return;
+    _svc.session.settings.careTutorialStep = 3;
     state = AsyncData(_snapshot());
     _persist();
   }
@@ -805,9 +1012,154 @@ class GameController extends AsyncNotifier<GameView> {
           ? _revisitorView()
           : null,
       pendingEvent: _pendingEventView(),
+      weather: _svc.weatherAt(_svc.clock.now()),
       onboardingComplete: _svc.session.settings.onboardingComplete,
+      needsFirstCare: p != null && _svc.session.settings.careTutorialStep == 0,
+      careTutorialStep: _svc.session.settings.careTutorialStep,
+      offlineWelcome: _offlineWelcome,
+      todayYard: p == null || _svc.session.settings.careTutorialStep < 3
+          ? null
+          : _todayYardView(p),
     );
   }
+
+  TodayYardView _todayYardView(Pet pet) {
+    _renewCareLedger();
+    final ledger = _svc.session.careLedger;
+    final items = <TodayYardItemView>[];
+    final usedKinds = <TodayYardKind>{};
+
+    TodayYardKind preferredKind() {
+      for (final trait in pet.personality) {
+        final kind = switch (trait) {
+          'p_glutton' => TodayYardKind.feed,
+          'p_energetic' || 'p_mischievous' || 'p_curious' => TodayYardKind.toy,
+          'p_lazy' => TodayYardKind.bath,
+          _ => TodayYardKind.pat,
+        };
+        return kind;
+      }
+      return TodayYardKind.pat;
+    }
+
+    void addCare(TodayYardKind kind) {
+      if (!usedKinds.add(kind)) return;
+      final actionName = switch (kind) {
+        TodayYardKind.pat => CareAction.pat.name,
+        TodayYardKind.feed => CareAction.feed.name,
+        TodayYardKind.toy => CareAction.toy.name,
+        TodayYardKind.bath => CareAction.bath.name,
+        _ => '',
+      };
+      final label = switch (kind) {
+        TodayYardKind.pat => '摸摸${pet.name}，听听今天的心情',
+        TodayYardKind.feed => '${pet.name}好像想尝点好吃的',
+        TodayYardKind.toy => '把玩具滚到${pet.name}身边',
+        TodayYardKind.bath => '让${pet.name}洗得软乎乎',
+        _ => '',
+      };
+      items.add(
+        TodayYardItemView(
+          id: 'care:$actionName',
+          kind: kind,
+          label: label,
+          completed: (ledger.counts[actionName] ?? 0) > 0,
+        ),
+      );
+    }
+
+    addCare(preferredKind());
+
+    final today = _svc.clock.now().toLocal();
+    bool isToday(DateTime value) {
+      final local = value.toLocal();
+      return local.year == today.year &&
+          local.month == today.month &&
+          local.day == today.day;
+    }
+
+    final activeVisitor = _svc.session.activeVisitor;
+    final visitsToday = _svc.session.visitorLog
+        .where((entry) => isToday(entry.date))
+        .toList(growable: false);
+    if (activeVisitor != null || visitsToday.isNotEmpty) {
+      final visitorId = activeVisitor?.visitorId ?? visitsToday.last.visitorId;
+      final visitorName = _svc.content.visitorById(visitorId)?.name ?? '今天的来客';
+      items.add(
+        TodayYardItemView(
+          id: 'visitor:$visitorId',
+          kind: TodayYardKind.visitor,
+          label: '和$visitorName打个招呼',
+          completed: activeVisitor?.interacted ?? true,
+        ),
+      );
+      usedKinds.add(TodayYardKind.visitor);
+    }
+
+    final eventToday = _svc.session.eventLastFiredAt.values.any(isToday);
+    if (_svc.session.pendingEvents.isNotEmpty || eventToday) {
+      items.add(
+        TodayYardItemView(
+          id: 'event:today',
+          kind: TodayYardKind.event,
+          label: '翻开今天刚写下的新故事',
+          completed: _svc.session.pendingEvents.isEmpty && eventToday,
+        ),
+      );
+      usedKinds.add(TodayYardKind.event);
+    }
+
+    for (final kind in const <TodayYardKind>[
+      TodayYardKind.pat,
+      TodayYardKind.feed,
+      TodayYardKind.toy,
+      TodayYardKind.bath,
+    ]) {
+      if (items.length >= 3) break;
+      addCare(kind);
+    }
+    return TodayYardView(items.take(3).toList(growable: false));
+  }
+
+  void _queueOfflineWelcome(
+    Pet? pet, {
+    required Duration elapsed,
+    required int expGained,
+  }) {
+    if (pet == null || elapsed < const Duration(hours: 3)) return;
+    final story = switch (pet.personality.firstOrNull) {
+      'p_clingy' => '你不在的时候，它把窝悄悄挪到了最靠近门口的地方。',
+      'p_aloof' => '它才没有一直看门口。（只是偶尔路过了很多次。）',
+      'p_lazy' => '这段时间它认真忙了一件事：把同一个午觉睡完。',
+      'p_glutton' => '它把食盆检查得很仔细，也给你留了一小口想象中的点心。',
+      'p_curious' => '它把院子的每一阵风都闻了一遍，正等着讲给你听。',
+      'p_energetic' => '它自己在草地上跑了好几圈，现在刚好愿意靠着你歇一会儿。',
+      'p_mischievous' => '院子里好像有几片叶子换了位置，但它决定先不解释。',
+      'p_gentle' => '它替你看顾了花和来客，院子一直好好的。',
+      'p_dreamy' => '它睡着时梦见一朵云落进院子，醒来还记得云的形状。',
+      _ => '它睡饱了，也把院子照看得好好的。',
+    };
+    _offlineWelcome = OfflineWelcomeView(
+      seq: ++_offlineWelcomeSeq,
+      petName: pet.name,
+      speciesId: pet.speciesId,
+      variantId: pet.variantId,
+      stage: pet.stage,
+      expGained: expGained,
+      story: story,
+    );
+  }
+
+  static Sting? _eventSting(String? eventId) => switch (eventId) {
+    'ev_s01' => Sting.firstSnow,
+    'ev_s02' => Sting.birthday,
+    'ev_s03' => Sting.meteor,
+    'ev_s08' => Sting.bonfire,
+    'ev_s09' => Sting.rainbow,
+    'ev_s10' => Sting.fullmoon,
+    'ev_s17' || 'ev_s18' => Sting.eggUnlock,
+    _ => null,
+  };
 
   RevisitorPresenceView? _revisitorView() {
     final pet = _svc.session.revisitor;
@@ -837,6 +1189,17 @@ class GameController extends AsyncNotifier<GameView> {
       type: event.type,
       expReward: event.expReward,
       currencyReward: event.currencyReward,
+      animRef: event.animRef,
+      illustrationRef: event.illustrationRef,
+      choices: event.choices
+          .map(
+            (choice) => EventChoiceView(
+              text: choice.text,
+              resultScript: choice.resultScript,
+              expDelta: choice.expDelta,
+            ),
+          )
+          .toList(growable: false),
     );
   }
 
@@ -858,10 +1221,13 @@ class GameController extends AsyncNotifier<GameView> {
       id: visitor.id,
       name: visitor.name,
       rarity: visitor.rarity,
-      message: interaction?.script ?? '${visitor.name}正在院子里慢慢逛。',
+      message: active.interacted
+          ? (interaction?.script ?? '${visitor.name}正在院子里慢慢逛。')
+          : '${visitor.name}刚到院子，正等着和你们打个招呼。',
       arrivedAt: active.arrivedAt,
       leavesAt: active.leavesAt,
       arrivalSeen: active.arrivalSeen,
+      interacted: active.interacted,
       yardAsset: _visitorArtAsset(visitor.id, 'yard'),
       portraitAsset: _visitorArtAsset(visitor.id, 'portrait'),
     );
@@ -899,6 +1265,38 @@ class GameController extends AsyncNotifier<GameView> {
 
   String get activeAlbumSkinId => _svc.session.shopInventory.activeAlbumSkinId;
 
+  List<AlbumSkinView> albumSkins() {
+    const labels = <String, String>{
+      'default': '默认手账',
+      'paper': '牛皮纸',
+      'picnic': '蓝格野餐',
+      'dried_flower': '干花押纸',
+      'star_chart': '星图夜航',
+      'old_ticket': '旧船票',
+      'global_courier': '环球邮差',
+      'years_journal': '岁月手账',
+    };
+    final inventory = _svc.session.shopInventory;
+    final ids = inventory.ownedAlbumSkinIds.toList()
+      ..sort((a, b) {
+        final aIndex = labels.keys.toList().indexOf(a);
+        final bIndex = labels.keys.toList().indexOf(b);
+        if (aIndex == -1 && bIndex == -1) return a.compareTo(b);
+        if (aIndex == -1) return 1;
+        if (bIndex == -1) return -1;
+        return aIndex.compareTo(bIndex);
+      });
+    return ids
+        .map(
+          (id) => AlbumSkinView(
+            id: id,
+            name: labels[id] ?? id,
+            active: id == inventory.activeAlbumSkinId,
+          ),
+        )
+        .toList(growable: false);
+  }
+
   void applyAlbumSkin(String skinId) {
     final inventory = _svc.session.shopInventory;
     if (!inventory.ownedAlbumSkinIds.contains(skinId)) return;
@@ -923,8 +1321,8 @@ class GameController extends AsyncNotifier<GameView> {
 
   /// 指派院子摆件到固定槽位。decorId=null 表示清空。
   void placeDecor(int pos, String? decorId) {
-    if (pos < 0 || pos >= decorSlotCount) return;
     final yard = _svc.session.yard;
+    if (pos < 0 || pos >= yard.slotCapacity) return;
     if (decorId != null && !yard.ownedDecorIds.contains(decorId)) return;
 
     yard.slots.removeWhere(
@@ -936,7 +1334,7 @@ class GameController extends AsyncNotifier<GameView> {
     _persist();
   }
 
-  static const int decorSlotCount = 6;
+  int get decorSlotCount => _svc.session.yard.slotCapacity;
 
   /// 仅刷新派生视图数据（例如动作冷却剩余秒数），不改存档。
   void refreshView() {
@@ -1006,6 +1404,7 @@ class GameController extends AsyncNotifier<GameView> {
       final incident = pc.incidentId == null ? null : incidents[pc.incidentId];
       return PostcardView(
         id: pc.id,
+        petId: pc.petId,
         petName: pet?.name ?? '旅行者',
         speciesId: pet?.speciesId ?? 'pet_cat',
         variantId: pet?.variantId ?? '',
@@ -1054,6 +1453,7 @@ class GameController extends AsyncNotifier<GameView> {
     return _svc.session.roaming.map((p) {
       final journey = _svc.session.journeys.where((j) => j.id == p.journeyId);
       return TravelPetView(
+        petId: p.id,
         speciesId: p.speciesId,
         variantId: p.variantId,
         name: p.name,
@@ -1062,6 +1462,10 @@ class GameController extends AsyncNotifier<GameView> {
             ? 0
             : journey.first.stops.length + journey.first.wanderStops.length,
         postcardCount: counts[p.id] ?? 0,
+        completedStops: journey.isEmpty
+            ? 0
+            : journey.first.currentIdx + journey.first.wanderIdx,
+        journeyState: journey.isEmpty ? null : journey.first.state,
       );
     }).toList();
   }
@@ -1070,6 +1474,7 @@ class GameController extends AsyncNotifier<GameView> {
 /// 明信片视图（旅行相册 / 查看器）。
 class PostcardView {
   final String id;
+  final String petId;
   final String petName;
   final String speciesId;
   final String variantId;
@@ -1083,6 +1488,7 @@ class PostcardView {
   final int seq;
   const PostcardView({
     required this.id,
+    required this.petId,
     required this.petName,
     required this.speciesId,
     required this.variantId,
@@ -1099,19 +1505,25 @@ class PostcardView {
 
 /// 旅行相册条目（已毕业漫游的宠物）。
 class TravelPetView {
+  final String petId;
   final String speciesId;
   final String variantId;
   final String name;
   final DateTime? graduatedAt;
   final int stops;
   final int postcardCount;
+  final int completedStops;
+  final JourneyState? journeyState;
   const TravelPetView({
+    required this.petId,
     required this.speciesId,
     required this.variantId,
     required this.name,
     required this.graduatedAt,
     required this.stops,
     required this.postcardCount,
+    required this.completedStops,
+    required this.journeyState,
   });
 }
 
@@ -1157,6 +1569,8 @@ class AchievementView {
   final int target;
   final String? clueText;
   final int rewardFluff;
+  final String rewardSummary;
+  final bool rewardClaimed;
   const AchievementView({
     required this.id,
     required this.name,
@@ -1166,6 +1580,8 @@ class AchievementView {
     required this.target,
     this.clueText,
     required this.rewardFluff,
+    required this.rewardSummary,
+    required this.rewardClaimed,
   });
 }
 
@@ -1174,11 +1590,17 @@ class ShopItemView {
   final String id;
   final String name;
   final String category;
+  final String artRef;
+  final EffectType effectType;
+  final String effectSummary;
   final int price;
+  final int originalPrice;
+  final String? discountLabel;
   final bool owned;
   final bool affordable;
   final bool consumable;
   final String? themeId; // themeSkin 类的主题 id（可装备）；否则 null
+  final String? decorId;
   final String? albumSkinId;
   final int quantity;
   final bool active; // 是否当前装备中的主题
@@ -1186,14 +1608,32 @@ class ShopItemView {
     required this.id,
     required this.name,
     required this.category,
+    required this.artRef,
+    required this.effectType,
+    required this.effectSummary,
     required this.price,
+    required this.originalPrice,
+    this.discountLabel,
     required this.owned,
     required this.affordable,
     required this.consumable,
     this.themeId,
+    this.decorId,
     this.albumSkinId,
     this.quantity = 0,
     this.active = false,
+  });
+}
+
+class AlbumSkinView {
+  final String id;
+  final String name;
+  final bool active;
+
+  const AlbumSkinView({
+    required this.id,
+    required this.name,
+    required this.active,
   });
 }
 
@@ -1219,13 +1659,29 @@ class VisitorDexView {
   final bool collected;
   final int count;
   final DateTime? firstSeen;
+  final List<VisitorMemoryView> memories;
   const VisitorDexView({
     required this.id,
     required this.name,
     required this.rarity,
     required this.collected,
     required this.count,
+    required this.memories,
     this.firstSeen,
+  });
+}
+
+class VisitorMemoryView {
+  final DateTime date;
+  final String? petName;
+  final String script;
+  final int expReward;
+
+  const VisitorMemoryView({
+    required this.date,
+    required this.petName,
+    required this.script,
+    required this.expReward,
   });
 }
 

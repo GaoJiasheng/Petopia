@@ -132,46 +132,54 @@ extension _PostcardLoading on AssetContentRepository {
     final root = _asObject(jsonDecode(raw), path);
     final sv = root['schemaVersion'];
     if (sv != _contentSchemaVersion) {
-      throw StateError('$path schemaVersion=$sv, expected $_contentSchemaVersion');
+      throw StateError(
+        '$path schemaVersion=$sv, expected $_contentSchemaVersion',
+      );
     }
     _postcardTemplates = List<PostcardTemplate>.unmodifiable(
-      _asList(root['templates'], '$path.templates')
-          .map((e) => _parseTemplate(_asObject(e, '$path.templates[]'))),
+      _asList(
+        root['templates'],
+        '$path.templates',
+      ).map((e) => _parseTemplate(_asObject(e, '$path.templates[]'))),
     );
     _encounters = List<Encounter>.unmodifiable(
-      _asList(root['encounters'], '$path.encounters')
-          .map((e) => _parseEncounter(_asObject(e, '$path.encounters[]'))),
+      _asList(
+        root['encounters'],
+        '$path.encounters',
+      ).map((e) => _parseEncounter(_asObject(e, '$path.encounters[]'))),
     );
     _incidents = List<Incident>.unmodifiable(
-      _asList(root['incidents'], '$path.incidents')
-          .map((e) => _parseIncident(_asObject(e, '$path.incidents[]'))),
+      _asList(
+        root['incidents'],
+        '$path.incidents',
+      ).map((e) => _parseIncident(_asObject(e, '$path.incidents[]'))),
     );
   }
 }
 
 PostcardTemplate _parseTemplate(Map<String, dynamic> json) => PostcardTemplate(
-      id: _string(json['id'], 'tpl.id'),
-      personalityId: _string(json['personalityId'], 'tpl.personalityId'),
-      category: _string(json['category'], 'tpl.category'),
-      skeleton: _string(json['skeleton'], 'tpl.skeleton'),
-      slots: _stringList(json['slots']),
-      tone: _nullableString(json['tone']) ?? '',
-    );
+  id: _string(json['id'], 'tpl.id'),
+  personalityId: _string(json['personalityId'], 'tpl.personalityId'),
+  category: _string(json['category'], 'tpl.category'),
+  skeleton: _string(json['skeleton'], 'tpl.skeleton'),
+  slots: _stringList(json['slots']),
+  tone: _nullableString(json['tone']) ?? '',
+);
 
 Encounter _parseEncounter(Map<String, dynamic> json) => Encounter(
-      id: _string(json['id'], 'enc.id'),
-      poolId: _string(json['poolId'], 'enc.poolId'),
-      phrase: _string(json['phrase'], 'enc.phrase'),
-      personalityBias: _biasMap(json['personalityBias']),
-    );
+  id: _string(json['id'], 'enc.id'),
+  poolId: _string(json['poolId'], 'enc.poolId'),
+  phrase: _string(json['phrase'], 'enc.phrase'),
+  personalityBias: _biasMap(json['personalityBias']),
+);
 
 Incident _parseIncident(Map<String, dynamic> json) => Incident(
-      id: _string(json['id'], 'inc.id'),
-      vibe: _string(json['vibe'], 'inc.vibe'),
-      phrase: _string(json['phrase'], 'inc.phrase'),
-      poseHint: _nullableString(json['poseHint']) ?? 'idle',
-      personalityBias: _biasMap(json['personalityBias']),
-    );
+  id: _string(json['id'], 'inc.id'),
+  vibe: _string(json['vibe'], 'inc.vibe'),
+  phrase: _string(json['phrase'], 'inc.phrase'),
+  poseHint: _nullableString(json['poseHint']) ?? 'idle',
+  personalityBias: _biasMap(json['personalityBias']),
+);
 
 Map<String, double> _biasMap(dynamic value) {
   if (value is! Map) return const <String, double>{};
@@ -354,8 +362,15 @@ EventWeights _parseEventWeights(Map<String, dynamic> json) {
     season: _enumDoubleMap(json['season'], Season.values),
     requiresVisitor: _nullableString(json['requiresVisitor']),
     requiresDecor: _nullableString(json['requiresDecor']),
+    requiredWeather: _enumList(json['requiredWeather'], Weather.values),
+    requiredTimeOfDay: _enumList(
+      json['requiredTimeOfDay'],
+      TimeOfDayOfDay.values,
+    ),
+    requiredSeason: _enumList(json['requiredSeason'], Season.values),
     minLevel: _nullableInt(json['minLevel']),
     minLuxuryStage: _nullableInt(json['minLuxuryStage']),
+    minAgeDays: _nullableInt(json['minAgeDays']),
   );
 }
 

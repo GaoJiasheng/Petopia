@@ -25,7 +25,8 @@ class FakeClockService implements ClockService {
   @override
   DateTime now() => nowValue;
   @override
-  Duration resolveOfflineElapsed({required DateTime lastOnlineAt}) => Duration.zero;
+  Duration resolveOfflineElapsed({required DateTime lastOnlineAt}) =>
+      Duration.zero;
   @override
   void markHeartbeat() {}
 }
@@ -43,7 +44,8 @@ void main() {
   late ExpEngineImpl engine;
   int idc = 0;
 
-  Pet newPet({List<String> personality = const ['p_glutton', 'p_curious']}) => Pet(
+  Pet newPet({List<String> personality = const ['p_glutton', 'p_curious']}) =>
+      Pet(
         id: 'pet1',
         speciesId: 'pet_cat',
         variantId: 'v1',
@@ -79,21 +81,33 @@ void main() {
     });
   });
 
-  group('addExp 性格加成（floor 防通胀）', () {
+  group('addExp 性格加成（余数累计）', () {
     test('贪吃 feed baseDelta=20 → +floor(2.0)=2 → 22', () {
       final pet = newPet();
       final r = engine.addExp(pet: pet, baseDelta: 20, source: ExpSource.feed);
       expect(r.deltaApplied, 22);
     });
-    test('贪吃 feed baseDelta=3 → floor(0.3)=0 → 3（小值无加成）', () {
+    test('贪吃 feed 小额加成跨动作累计，不会被永久吞掉', () {
       final pet = newPet();
-      final r = engine.addExp(pet: pet, baseDelta: 3, source: ExpSource.feed);
-      expect(r.deltaApplied, 3);
+      final applied = <int>[];
+      for (var i = 0; i < 4; i++) {
+        applied.add(
+          engine
+              .addExp(pet: pet, baseDelta: 3, source: ExpSource.feed)
+              .deltaApplied,
+        );
+      }
+      expect(applied, <int>[3, 3, 3, 4]);
+      expect(pet.personalityBonusCarry['p_glutton:feed'], closeTo(0.2, 0.0001));
     });
     test('applyPersonalityBonus=false 不加成', () {
       final pet = newPet();
       final r = engine.addExp(
-          pet: pet, baseDelta: 20, source: ExpSource.feed, applyPersonalityBonus: false);
+        pet: pet,
+        baseDelta: 20,
+        source: ExpSource.feed,
+        applyPersonalityBonus: false,
+      );
       expect(r.deltaApplied, 20);
     });
   });
@@ -101,20 +115,32 @@ void main() {
   group('升级 / 换档 / 毕业', () {
     test('跨 30 → Lv2 leveledUp', () {
       final pet = newPet();
-      final r = engine.addExp(pet: pet, baseDelta: 30, source: ExpSource.eventDaily);
+      final r = engine.addExp(
+        pet: pet,
+        baseDelta: 30,
+        source: ExpSource.eventDaily,
+      );
       expect(pet.level, 2);
       expect(r.leveledUp, true);
     });
     test('到 210 → Lv5 换档 B evolved', () {
       final pet = newPet();
-      final r = engine.addExp(pet: pet, baseDelta: 210, source: ExpSource.eventDaily);
+      final r = engine.addExp(
+        pet: pet,
+        baseDelta: 210,
+        source: ExpSource.eventDaily,
+      );
       expect(pet.level, 5);
       expect(pet.stage, PetStage.b);
       expect(r.evolved, true);
     });
     test('到 800 → Lv10 graduated；再加不重复 graduated', () {
       final pet = newPet();
-      final r1 = engine.addExp(pet: pet, baseDelta: 800, source: ExpSource.eventDaily);
+      final r1 = engine.addExp(
+        pet: pet,
+        baseDelta: 800,
+        source: ExpSource.eventDaily,
+      );
       expect(pet.level, 10);
       expect(pet.stage, PetStage.d);
       expect(r1.graduated, true);
@@ -127,7 +153,11 @@ void main() {
     final pet = newPet();
     engine.addExp(pet: pet, baseDelta: 3, source: ExpSource.feed); // +3
     engine.addExp(pet: pet, baseDelta: 20, source: ExpSource.feed); // +22
-    engine.addExp(pet: pet, baseDelta: 4, source: ExpSource.toy); // +4 (curious 无 toy 加成)
+    engine.addExp(
+      pet: pet,
+      baseDelta: 4,
+      source: ExpSource.toy,
+    ); // +4 (curious 无 toy 加成)
     engine.addExp(pet: pet, baseDelta: 5, source: ExpSource.eventDaily); // +5
     expect(pet.exp, audit.sumFor('pet1'));
     // 每条 expAfter 冗余应等于累计
@@ -138,18 +168,30 @@ void main() {
     test('3h → +3；lastOnlineAt renew 到 now', () {
       final pet = newPet();
       clock.nowValue = t0.add(const Duration(hours: 6));
-      final r = engine.grantOffline(pet: pet, elapsed: const Duration(hours: 3));
+      final r = engine.grantOffline(
+        pet: pet,
+        elapsed: const Duration(hours: 3),
+      );
       expect(r.deltaApplied, 3);
       expect(pet.offlineExpGrantedToday, 3);
       expect(pet.lastOnlineAt, clock.nowValue);
     });
     test('单段封顶 12 + 自然日累计 12', () {
       final pet = newPet();
-      engine.grantOffline(pet: pet, elapsed: const Duration(hours: 3)); // +3 → 3
-      final r2 = engine.grantOffline(pet: pet, elapsed: const Duration(hours: 20)); // 单段封12,余9 → +9
+      engine.grantOffline(
+        pet: pet,
+        elapsed: const Duration(hours: 3),
+      ); // +3 → 3
+      final r2 = engine.grantOffline(
+        pet: pet,
+        elapsed: const Duration(hours: 20),
+      ); // 单段封12,余9 → +9
       expect(r2.deltaApplied, 9);
       expect(pet.offlineExpGrantedToday, 12);
-      final r3 = engine.grantOffline(pet: pet, elapsed: const Duration(hours: 5)); // 余0 → 0
+      final r3 = engine.grantOffline(
+        pet: pet,
+        elapsed: const Duration(hours: 5),
+      ); // 余0 → 0
       expect(r3.deltaApplied, 0);
       expect(pet.offlineExpGrantedToday, 12);
     });
@@ -158,17 +200,26 @@ void main() {
       engine.grantOffline(pet: pet, elapsed: const Duration(hours: 12)); // 满 12
       expect(pet.offlineExpGrantedToday, 12);
       clock.nowValue = t0.add(const Duration(days: 1)); // 次日
-      final r = engine.grantOffline(pet: pet, elapsed: const Duration(hours: 3));
+      final r = engine.grantOffline(
+        pet: pet,
+        elapsed: const Duration(hours: 3),
+      );
       expect(r.deltaApplied, 3); // 归零后重新计
       expect(pet.offlineExpGrantedToday, 3);
     });
     test('慵懒离线上限 13', () {
       final pet = newPet(personality: ['p_lazy', 'p_gentle']);
-      final r = engine.grantOffline(pet: pet, elapsed: const Duration(hours: 30));
+      final r = engine.grantOffline(
+        pet: pet,
+        elapsed: const Duration(hours: 30),
+      );
       // 单段封 12 → +12（不到 13，因单段上限 12）
       expect(r.deltaApplied, 12);
       // 再来一段：日上限 13，余 1 → +1
-      final r2 = engine.grantOffline(pet: pet, elapsed: const Duration(hours: 5));
+      final r2 = engine.grantOffline(
+        pet: pet,
+        elapsed: const Duration(hours: 5),
+      );
       expect(r2.deltaApplied, 1);
       expect(pet.offlineExpGrantedToday, 13);
     });

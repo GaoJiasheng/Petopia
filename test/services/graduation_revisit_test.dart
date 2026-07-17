@@ -24,6 +24,9 @@ class FakeEconomy implements EconomyService {
   }
 
   @override
+  PurchaseQuote quote(ShopItem item) => PurchaseQuote(price: item.price);
+
+  @override
   PurchaseResult purchase(item) => const PurchaseResult(success: true);
 }
 

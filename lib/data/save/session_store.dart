@@ -50,6 +50,12 @@ class SessionStore {
       // upgrading from the pre-onboarding save schema.
       session.settings.onboardingComplete = true;
     }
+    if (settingsJson?.containsKey('careTutorialStep') != true &&
+        _hasExistingProgress(session)) {
+      // Existing players have already discovered the care loop. A newly added
+      // tutorial must never send them back through first-care guidance.
+      session.settings.careTutorialStep = 3;
+    }
     session.settings.schemaVersion = _schemaVersion;
     return session;
   }
@@ -273,6 +279,7 @@ Map<String, Object?> _petToJson(Pet pet) {
     'journeyId': pet.journeyId,
     'nextRevisitAt': _nullableDateToJson(pet.nextRevisitAt),
     'pastNames': pet.pastNames,
+    'personalityBonusCarry': pet.personalityBonusCarry,
   };
 }
 
@@ -303,6 +310,7 @@ Pet _petFromJson(Map<String, Object?> json, DateTime now) {
     journeyId: _readNullableString(json['journeyId']),
     nextRevisitAt: _readNullableDate(json['nextRevisitAt']),
     pastNames: _stringListFromJson(json['pastNames']),
+    personalityBonusCarry: _doubleMapFromJson(json['personalityBonusCarry']),
   );
 }
 
@@ -401,6 +409,8 @@ Map<String, Object?> _shopInventoryToJson(ShopInventory inventory) {
   return <String, Object?>{
     'consumables': inventory.consumables,
     'ownedAlbumSkinIds': inventory.ownedAlbumSkinIds.toList(),
+    'ownedCouponIds': inventory.ownedCouponIds.toList(),
+    'ownedStickerIds': inventory.ownedStickerIds.toList(),
     'activeAlbumSkinId': inventory.activeAlbumSkinId,
     'activeVisitorFoodItemId': inventory.activeVisitorFoodItemId,
   };
@@ -415,6 +425,8 @@ ShopInventory _shopInventoryFromJson(Object? value) {
       json['ownedAlbumSkinIds'],
       fallback: const <String>['default'],
     ).toSet(),
+    ownedCouponIds: _stringListFromJson(json['ownedCouponIds']).toSet(),
+    ownedStickerIds: _stringListFromJson(json['ownedStickerIds']).toSet(),
     activeAlbumSkinId: _readString(json['activeAlbumSkinId'], 'default'),
     activeVisitorFoodItemId: _readNullableString(
       json['activeVisitorFoodItemId'],
@@ -431,6 +443,7 @@ Map<String, Object?> _settingsToJson(Settings settings) {
     'music': settings.music,
     'sound': settings.sound,
     'onboardingComplete': settings.onboardingComplete,
+    'careTutorialStep': settings.careTutorialStep,
     'schemaVersion': settings.schemaVersion,
     'createdAt': _dateToJson(settings.createdAt),
     'lastMonotonicRef': settings.lastMonotonicRef,
@@ -455,6 +468,7 @@ Settings _settingsFromJson(Map<String, Object?>? json, DateTime now) {
     music: _readBool(json['music'], true),
     sound: _readBool(json['sound'], true),
     onboardingComplete: _readBool(json['onboardingComplete'], false),
+    careTutorialStep: _readInt(json['careTutorialStep'], 0).clamp(0, 3),
     schemaVersion: _readInt(json['schemaVersion'], _schemaVersion),
     lastMonotonicRef: _readInt(json['lastMonotonicRef'], 0),
     loginStreakCurrent: _readInt(json['loginStreakCurrent'], 0),
@@ -631,6 +645,7 @@ Map<String, Object?>? _nullableActiveVisitorToJson(ActiveVisitor? visitor) {
     'interactionId': visitor.interactionId,
     'withPetId': visitor.withPetId,
     'arrivalSeen': visitor.arrivalSeen,
+    'interacted': visitor.interacted,
   };
 }
 
@@ -650,6 +665,8 @@ ActiveVisitor? _nullableActiveVisitorFromJson(Object? value, DateTime now) {
     interactionId: _readNullableString(json['interactionId']),
     withPetId: _readNullableString(json['withPetId']),
     arrivalSeen: _readBool(json['arrivalSeen'], false),
+    // v2 旧存档里的到访已在生成时自动结算，缺字段时视为已互动。
+    interacted: _readBool(json['interacted'], !json.containsKey('interacted')),
   );
 }
 
@@ -687,11 +704,16 @@ Map<String, Object?> _pendingEventToJson(PendingGameEvent event) {
   return <String, Object?>{
     'id': event.id,
     'eventId': event.eventId,
+    'petId': event.petId,
     'title': event.title,
     'script': event.script,
     'type': event.type.name,
     'expReward': event.expReward,
     'currencyReward': event.currencyReward,
+    'animRef': event.animRef,
+    'illustrationRef': event.illustrationRef,
+    'choices': event.choices.map(_pendingEventChoiceToJson).toList(),
+    'rewardSettled': event.rewardSettled,
     'createdAt': _dateToJson(event.createdAt),
   };
 }
@@ -703,13 +725,42 @@ PendingGameEvent _pendingEventFromJson(
   return PendingGameEvent(
     id: _readString(json['id'], ''),
     eventId: _readString(json['eventId'], ''),
+    petId: _readString(json['petId'], ''),
     title: _readString(json['title'], '院子里的小事'),
     script: _readString(json['script'], ''),
     type: _readEnum(EventType.values, json['type'], EventType.daily),
     expReward: _readInt(json['expReward'], 0),
     currencyReward: _readInt(json['currencyReward'], 0),
+    animRef: _readNullableString(json['animRef']),
+    illustrationRef: _readNullableString(json['illustrationRef']),
+    choices: _pendingEventChoicesFromJson(json['choices']),
+    // 旧队列的奖励已在入队时结算，避免升级后重复领取。
+    rewardSettled: _readBool(
+      json['rewardSettled'],
+      !json.containsKey('rewardSettled'),
+    ),
     createdAt: _readDate(json['createdAt'], now),
   );
+}
+
+Map<String, Object?> _pendingEventChoiceToJson(PendingEventChoice choice) {
+  return <String, Object?>{
+    'text': choice.text,
+    'resultScript': choice.resultScript,
+    'expDelta': choice.expDelta,
+  };
+}
+
+List<PendingEventChoice> _pendingEventChoicesFromJson(Object? value) {
+  return _jsonMapListFromJson(value)
+      .map(
+        (json) => PendingEventChoice(
+          text: _readString(json['text'], ''),
+          resultScript: _readString(json['resultScript'], ''),
+          expDelta: _readInt(json['expDelta'], 0),
+        ),
+      )
+      .toList();
 }
 
 List<PendingGameEvent> _pendingEventListFromJson(Object? value, DateTime now) {
@@ -778,6 +829,12 @@ Map<String, int> _intMapFromJson(Object? value) {
     return <String, int>{};
   }
   return json.map((key, value) => MapEntry(key, _readInt(value, 0)));
+}
+
+Map<String, double> _doubleMapFromJson(Object? value) {
+  final json = _jsonMapOrNull(value);
+  if (json == null) return <String, double>{};
+  return json.map((key, value) => MapEntry(key, _readDouble(value, 0)));
 }
 
 Map<String, DateTime> _dateMapFromJson(Object? value) {

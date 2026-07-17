@@ -19,6 +19,7 @@ class UnlockServiceImpl implements UnlockService {
   final bool Function(String speciesId) _wasOwned; // 是否曾养过该物种
   final EconomyService _economy;
   final DateTime Function() _now;
+  final ShopInventory _inventory;
 
   UnlockServiceImpl(
     this._achievements,
@@ -27,8 +28,9 @@ class UnlockServiceImpl implements UnlockService {
     this._progress,
     this._wasOwned,
     this._economy,
-    this._now,
-  );
+    this._now, [
+    ShopInventory? inventory,
+  ]) : _inventory = inventory ?? ShopInventory();
 
   @override
   DexState dexStateOf(PetSpecies s) {
@@ -105,6 +107,22 @@ class UnlockServiceImpl implements UnlockService {
         ref: 'ach:$achievementId',
       ); // 稳定 ref（云同步幂等）
     }
+    final decorId = ach.reward.decorItemId;
+    if (decorId != null && !_yard.ownedDecorIds.contains(decorId)) {
+      _yard.ownedDecorIds.add(decorId);
+    }
+    final couponId = ach.reward.couponId;
+    if (couponId != null) {
+      if (couponId.startsWith('album_skin_')) {
+        final skinId = couponId.substring('album_skin_'.length);
+        _inventory.ownedAlbumSkinIds.add(skinId);
+        _inventory.activeAlbumSkinId = skinId;
+      } else {
+        _inventory.ownedCouponIds.add(couponId);
+      }
+    }
+    final stickerId = ach.reward.stickerId;
+    if (stickerId != null) _inventory.ownedStickerIds.add(stickerId);
     p.rewardClaimed = true;
   }
 }

@@ -23,6 +23,7 @@ class Pet {
   String? journeyId;
   DateTime? nextRevisitAt; // ROAMING 时设置
   List<String> pastNames; // 支持「名字不重复」隐藏成就判定
+  Map<String, double> personalityBonusCarry; // 小额性格加成的跨动作余数，避免 floor 永久吞掉
 
   Pet({
     required this.id,
@@ -43,5 +44,7 @@ class Pet {
     this.journeyId,
     this.nextRevisitAt,
     List<String>? pastNames,
-  }) : pastNames = pastNames ?? <String>[];
+    Map<String, double>? personalityBonusCarry,
+  }) : pastNames = pastNames ?? <String>[],
+       personalityBonusCarry = personalityBonusCarry ?? <String, double>{};
 }

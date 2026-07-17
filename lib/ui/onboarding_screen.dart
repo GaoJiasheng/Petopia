@@ -217,50 +217,69 @@ class _OnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.sizeOf(context);
     final imageSize = (size.shortestSide * 0.54).clamp(220.0, 380.0);
+    final wide = size.width >= 900 && size.width > size.height;
+    final art = Semantics(
+      image: true,
+      label: data.semantics,
+      child: Image.asset(
+        PetArt.stage('pet_cat', data.stage),
+        width: imageSize,
+        height: imageSize,
+        fit: BoxFit.contain,
+        excludeFromSemantics: true,
+      ),
+    );
+    final words = Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: wide
+          ? CrossAxisAlignment.start
+          : CrossAxisAlignment.center,
+      children: [
+        Text(
+          data.title,
+          textAlign: wide ? TextAlign.start : TextAlign.center,
+          style: const TextStyle(
+            color: _OnboardingScreenState._ink,
+            fontSize: 30,
+            fontWeight: FontWeight.w900,
+            height: 1.2,
+          ),
+        ),
+        const SizedBox(height: 12),
+        ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 520),
+          child: Text(
+            data.body,
+            textAlign: wide ? TextAlign.start : TextAlign.center,
+            style: TextStyle(
+              color: _OnboardingScreenState._ink.withValues(alpha: 0.88),
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+              height: 1.6,
+            ),
+          ),
+        ),
+      ],
+    );
+    if (wide) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 56, vertical: 12),
+        child: Row(
+          children: [
+            Expanded(child: Center(child: art)),
+            const SizedBox(width: 52),
+            Expanded(child: words),
+          ],
+        ),
+      );
+    }
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 28),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: Center(
-              child: Semantics(
-                image: true,
-                label: data.semantics,
-                child: Image.asset(
-                  PetArt.stage('pet_cat', data.stage),
-                  width: imageSize,
-                  height: imageSize,
-                  fit: BoxFit.contain,
-                  excludeFromSemantics: true,
-                ),
-              ),
-            ),
-          ),
-          Text(
-            data.title,
-            textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: _OnboardingScreenState._ink,
-              fontSize: 30,
-              fontWeight: FontWeight.w900,
-              height: 1.2,
-            ),
-          ),
-          const SizedBox(height: 12),
-          ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 520),
-            child: Text(
-              data.body,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: _OnboardingScreenState._ink.withValues(alpha: 0.88),
-                fontSize: 17,
-                fontWeight: FontWeight.w600,
-                height: 1.6,
-              ),
-            ),
-          ),
+          Expanded(child: Center(child: art)),
+          words,
           const SizedBox(height: 18),
         ],
       ),

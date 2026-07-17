@@ -23,8 +23,10 @@ void main() {
         player.assetPath,
         'assets/runtime/pets/cat/actions/pet_cat_var01_stageC_eat.png',
       );
-      expect(player.duration, const Duration(seconds: 1));
-      expect(player.playDuration, const Duration(seconds: 5));
+      expect(player.duration, const Duration(seconds: 5));
+      expect(player.playDuration, isNull);
+      expect(player.cycles, 2);
+      expect(player.holdTailFraction, 0.16);
 
       await tester.pumpWidget(const SizedBox.shrink());
     },
@@ -47,6 +49,8 @@ void main() {
     );
     expect(player.duration, const Duration(seconds: 5));
     expect(player.playDuration, isNull);
+    expect(player.cycles, 1);
+    expect(player.holdTailFraction, 0.48);
 
     await tester.pumpWidget(const SizedBox.shrink());
   });

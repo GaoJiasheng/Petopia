@@ -133,6 +133,71 @@ void main() {
     expect(yard.ownedThemeIds.contains('theme_sakura'), true);
   });
 
+  test('主题券给出实际报价，成功兑换后才消耗', () {
+    final e = build();
+    inventory.ownedCouponIds.add('theme_four_seasons_garden_50');
+    e.earn(500, CurrencyReason.graduation, ref: 'seed');
+    final item = ShopItem(
+      id: 'shop_theme_four_seasons',
+      category: '院子主题',
+      name: '四季花园',
+      price: 800,
+      effect: const ItemEffect(
+        type: EffectType.themeSkin,
+        params: {'themeId': 'four_seasons'},
+      ),
+      artRef: 'x',
+    );
+
+    final quote = e.quote(item);
+    expect(quote.price, 400);
+    expect(quote.couponId, 'theme_four_seasons_garden_50');
+    expect(quote.couponLabel, '四季花园 5 折券');
+    expect(e.purchase(item).success, true);
+    expect(wallet.balance, 100);
+    expect(inventory.ownedCouponIds, isNot(contains(quote.couponId)));
+  });
+
+  test('余额不足不消耗主题券', () {
+    final e = build();
+    inventory.ownedCouponIds.add('any_theme_50');
+    final item = ShopItem(
+      id: 'shop_theme_sakura',
+      category: '院子主题',
+      name: '樱花小径',
+      price: 400,
+      effect: const ItemEffect(
+        type: EffectType.themeSkin,
+        params: {'themeId': 'sakura'},
+      ),
+      artRef: 'x',
+    );
+
+    expect(e.purchase(item).success, false);
+    expect(inventory.ownedCouponIds, contains('any_theme_50'));
+    expect(yard.ownedThemeIds, isNot(contains('sakura')));
+  });
+
+  test('多张适用券自动采用最低价格', () {
+    final e = build();
+    inventory.ownedCouponIds.addAll({'theme_candy_bakery_80', 'any_theme_50'});
+    final item = ShopItem(
+      id: 'shop_theme_candy_bakery',
+      category: '院子主题',
+      name: '糖果焙房',
+      price: 600,
+      effect: const ItemEffect(
+        type: EffectType.themeSkin,
+        params: {'themeId': 'candy_bakery'},
+      ),
+      artRef: 'x',
+    );
+
+    final quote = e.quote(item);
+    expect(quote.price, 300);
+    expect(quote.couponId, 'any_theme_50');
+  });
+
   test('purchase 余额不足 → 失败、不改院子', () {
     final e = build();
     final item = ShopItem(

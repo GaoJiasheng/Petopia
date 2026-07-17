@@ -9,6 +9,14 @@ class PurchaseResult {
   const PurchaseResult({required this.success, this.failReason});
 }
 
+class PurchaseQuote {
+  final int price;
+  final String? couponId;
+  final String? couponLabel;
+
+  const PurchaseQuote({required this.price, this.couponId, this.couponLabel});
+}
+
 /// EconomyService（spec-technical §3.8）。
 ///
 /// 暖绒收支唯一入口（写 CurrencyLog）、毕业结算、商店购买、发奖。
@@ -28,6 +36,9 @@ abstract interface class EconomyService {
 
   /// 毕业结算（§4.2 公式，预期 260..380）。返回结算的暖绒。
   int settleGraduation(Pet pet);
+
+  /// 当前实际兑换价；若有适用券，返回最低价且标明将消费的券。
+  PurchaseQuote quote(ShopItem item);
 
   /// 购买：spend(price) 成功后按 ItemEffect.type 应用。
   PurchaseResult purchase(ShopItem item);

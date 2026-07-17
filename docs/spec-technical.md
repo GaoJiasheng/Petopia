@@ -193,10 +193,14 @@ class EventWeights {
   Map<Weather,double> weather;
   Map<TimeOfDay_,double> timeOfDay;
   Map<Season,double> season;
+  Set<Weather> requiredWeather;     // 硬门槛；空集合=不限
+  Set<TimeOfDay_> requiredTimeOfDay;
+  Set<Season> requiredSeason;
   String? requiresVisitor;          // visitorId 在场
   String? requiresDecor;            // decorId 存在
   int? minLevel;                    // 如 ev_s04 Lv6+
   int? minLuxuryStage;              // 如 ev_d23 豪华度④+
+  int? minAgeDays;                  // 自 bornAt 起整日数
 }
 class EventChoice { String text; String resultScript; int expDelta; }
 ```
@@ -673,7 +677,7 @@ onResume(now):
 ```
 **约束**：SPECIAL 日上限 1；DAILY 演出上线时触发；REVISIT 唯一（`INV-2`）。事件命中用 §8/§9 权重轮盘（见 VisitorService.roulette 复用）。
 
-**事件权重最终值**（§2.3）：`finalWeight = baseWeight × Π(personalityMult) × weatherMult × timeMult × seasonMult`，无关标签系数 = 1.0；不满足 `requiresVisitor/requiresDecor/minLevel/minLuxuryStage` 则权重=0（不参与）；`cooldownDays` 内（查 event_log）与 `oncePerPet` 已触发则排除。
+**事件权重最终值**（§2.3）：先按 `requiredWeather/requiredTimeOfDay/requiredSeason/requiresVisitor/requiresDecor/minLevel/minLuxuryStage/minAgeDays` 做硬过滤；任一不满足则权重=0（不参与）。通过后再算 `finalWeight = baseWeight × Π(personalityMult) × weatherMult × timeMult × seasonMult`，无关标签系数 = 1.0；`cooldownDays` 内（查 event_log）与 `oncePerPet` 已触发则排除。
 
 ### 3.5 PostcardGenerator
 **职责**：实现 §6.3 生成管线；旅程寄片调度。
@@ -763,9 +767,11 @@ class EconomyService {
   void earn(int amount, CurrencyReason reason, {String? ref});   // amount>0
   bool spend(int amount, CurrencyReason reason, {String? ref});  // 余额不足返回 false，不透支
   int settleGraduation(Pet pet);                                 // §4.2 公式
+  PurchaseQuote quote(ShopItem item);                            // 计算最优适用券后的实际价
   PurchaseResult purchase(ShopItem item);                        // 扣费 + 应用 effect
 }
 ```
+**优惠券原子性**：`purchase` 先按 `quote` 校验并扣除实际价，扣费成功后才移除对应券并应用 `ItemEffect`；失败不得改变余额、券库存或拥有状态。`album_skin_*` 为直接解锁的成就装帧，不进入主题券集合。
 **settleGraduation 算法**（§4.2）：
 ```pseudo
 fluff = gradBaseFluff(200)

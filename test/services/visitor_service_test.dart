@@ -84,7 +84,7 @@ void main() {
     );
   });
 
-  test('装饰硬门槛：缺必要装饰→排除；有→可命中', () {
+  test('装饰硬门槛：仅拥有但未摆放仍排除；摆放后可命中', () {
     final lampBug = _v(
       'v_lampbug',
       VisitorRarity.rare,
@@ -100,7 +100,21 @@ void main() {
       ),
       isNull,
     );
-    final yardLamp = YardState(ownedDecorIds: ['deco_night_lamp']);
+    final yardOwned = YardState(ownedDecorIds: ['deco_night_lamp']);
+    expect(
+      _svc([lampBug], [0.001]).rollWindow(
+        window: TimeWindow.night,
+        yard: yardOwned,
+        weather: clear,
+        season: summer,
+        now: night,
+      ),
+      isNull,
+    );
+    final yardLamp = YardState(
+      ownedDecorIds: ['deco_night_lamp'],
+      slots: [YardSlot(pos: 0, itemId: 'deco_night_lamp')],
+    );
     expect(
       _svc([lampBug], [0.001]).rollWindow(
         window: TimeWindow.night,
@@ -190,7 +204,10 @@ void main() {
       decorReq: ['deco_night_lamp'],
       clue: 'clue_starbug',
     );
-    final yardLamp = YardState(ownedDecorIds: ['deco_night_lamp']);
+    final yardLamp = YardState(
+      ownedDecorIds: ['deco_night_lamp'],
+      slots: [YardSlot(pos: 0, itemId: 'deco_night_lamp')],
+    );
     expect(
       _svc([star], [0.01])
           .rollLegendary(

@@ -36,4 +36,37 @@ void main() {
     expect(find.text('陪它慢慢长大'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
+
+  for (final size in const <Size>[
+    Size(834, 1194),
+    Size(1194, 834),
+    Size(1024, 1366),
+    Size(1366, 1024),
+  ]) {
+    testWidgets(
+      'onboarding composes on iPad Pro ${size.width.toInt()}x${size.height.toInt()}',
+      (tester) async {
+        tester.view.physicalSize = size;
+        tester.view.devicePixelRatio = 1;
+        addTearDown(tester.view.resetPhysicalSize);
+        addTearDown(tester.view.resetDevicePixelRatio);
+
+        await tester.pumpWidget(
+          ProviderScope(
+            child: MaterialApp(
+              home: MediaQuery(
+                data: MediaQueryData(size: size),
+                child: const OnboardingScreen(needsAdoption: true),
+              ),
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+
+        expect(find.text('院子醒来了'), findsOneWidget);
+        expect(find.text('继续'), findsOneWidget);
+        expect(tester.takeException(), isNull);
+      },
+    );
+  }
 }
