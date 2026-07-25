@@ -1,0 +1,60 @@
+{
+  "generatedAt": "2026-07-23",
+  "generator": "OpenAI imagegen",
+  "thirdPartyAssets": false,
+  "references": "Petopia-owned portrait theme art in assets/art/world/themes/",
+  "sourceResolution": "1448x1086",
+  "deliveryResolution": "2732x2048",
+  "deliveryFormat": "opaque JPEG, quality 92, lossless Huffman optimization",
+  "composition": "native 4:3 repaint with full-bleed perimeter detail and a quiet central interaction field",
+  "assets": [
+    {
+      "asset": "yard_theme_autumnjam_bg_wide.jpg",
+      "sha256": "a5491f05d19bfd93e277b45e73c10124d03909a890e70da68c4e2c515366e1b7"
+    },
+    {
+      "asset": "yard_theme_bambootea_bg_wide.jpg",
+      "sha256": "fdd5ac5f25ef7cc3d18472c3cbce8e572191f25c378eb3f0379b53bee677f565"
+    },
+    {
+      "asset": "yard_theme_candybake_bg_wide.jpg",
+      "sha256": "af41c7a7d59efa8ce62e2ca1c259da6fa54733884ad1e9d329f0e9db34282f03"
+    },
+    {
+      "asset": "yard_theme_fourseasons_bg_wide.jpg",
+      "sha256": "a38dbff00186cc4eb127e78e4af235e861c071c81f27ff29ea4a32389bf5d6d1"
+    },
+    {
+      "asset": "yard_theme_meadow_bg_wide.jpg",
+      "sha256": "c62cad5935955c757a5d55cbdee1aaeee908fc4c3ddd50ed499e2a8705323d43"
+    },
+    {
+      "asset": "yard_theme_moongreen_bg_wide.jpg",
+      "sha256": "56cb41e51a4d41e025dfce3e2ce986ce0472244a2230f877412ac65787065ab2"
+    },
+    {
+      "asset": "yard_theme_mossrain_bg_wide.jpg",
+      "sha256": "4f79365ae7d8edfddbccfa9d544fff2ebbd7661099b9fcbbe232638a2a3d5a3a"
+    },
+    {
+      "asset": "yard_theme_sakura_bg_wide.jpg",
+      "sha256": "f83d98f8a80ec760f8f84825ea41fe631f1573a59a2d1259515e538bf14384ee"
+    },
+    {
+      "asset": "yard_theme_seaside_bg_wide.jpg",
+      "sha256": "582f6ee29aba0a9f69ba9b6fcc5196f982c0577e3c84d43115a9aa2e12e7fb65"
+    },
+    {
+      "asset": "yard_theme_snowhut_bg_wide.jpg",
+      "sha256": "4022f6e0ad0d488b3a1f50ff4bffd7583adc47e0857a7d51174eb6035ec731f2"
+    },
+    {
+      "asset": "yard_theme_starcamp_bg_wide.jpg",
+      "sha256": "71bb54848598236414f54e99d090d56a2670bbc905034154bcd4cf5825c2f8bc"
+    },
+    {
+      "asset": "yard_theme_wheatkite_bg_wide.jpg",
+      "sha256": "89b4800ce7dc6dfcd828583963c268c07be7e8892d460f93da539199de1adff6"
+    }
+  ]
+}

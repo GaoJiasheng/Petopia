@@ -7,6 +7,8 @@ import '../domain/models/game_state.dart';
 import '../domain/models/logs.dart';
 import '../domain/models/content_entities.dart';
 import '../domain/models/postcard_content.dart';
+import 'local_calendar.dart';
+import 'postcard_content_alignment.dart';
 import 'postcard_generator.dart';
 
 /// PostcardGenerator 实现（spec-technical §3.5 / §6.3）。
@@ -69,26 +71,44 @@ class PostcardGeneratorImpl implements PostcardGenerator {
       throw StateError('Unknown postcard location: $locationId');
     }
     final mainP = pet.personality.isNotEmpty ? pet.personality.first : '';
-
-    final season = _seasonOf(_now());
-    final timeOfDay = _pick(TimeOfDayOfDay.values);
-    final weather = _pick(_weatherPool);
+    final generatedAt = _now();
+    final season = _preferSceneValue(
+      loc.allowedSeasons,
+      LocalCalendar.season(generatedAt),
+    );
+    final timeOfDay = _preferSceneValue(
+      loc.allowedTimesOfDay,
+      LocalCalendar.timeOfDay(generatedAt),
+    );
+    final weather = _pick(loc.allowedWeather);
 
     final enc = _pickWeighted(
-      _encounters.where((e) => e.poolId == loc.encounterPoolId).toList(),
+      preferPostcardLocationSpecific(
+        _encounters.where((e) => e.poolId == loc.encounterPoolId),
+        loc.id,
+        (item) => item.locationIds,
+      ),
       pet.personality,
     );
     final inc = _pickWeighted(
-      _incidents.where((i) => loc.vibeTags.contains(i.vibe)).toList(),
+      preferPostcardLocationSpecific(
+        _incidents.where((i) => loc.vibeTags.contains(i.vibe)),
+        loc.id,
+        (item) => item.locationIds,
+      ),
       pet.personality,
     );
 
     final body = _render(
-      _pickTemplate(mainP, loc.category),
+      _pickTemplate(mainP, loc),
       loc,
       enc,
       inc,
       pet,
+      season: season,
+      timeOfDay: timeOfDay,
+      weather: weather,
+      seq: seq,
     );
     final photoId =
         'pc_photo_${loc.photoStyle}_${pet.speciesId}_${inc?.poseHint ?? 'idle'}';
@@ -99,7 +119,7 @@ class PostcardGeneratorImpl implements PostcardGenerator {
       journeyId: journey.id,
       locationId: loc.id,
       seq: seq,
-      sentAt: _now(),
+      sentAt: generatedAt,
       season: season,
       timeOfDay: timeOfDay,
       weather: weather,
@@ -129,13 +149,6 @@ class PostcardGeneratorImpl implements PostcardGenerator {
   }
 
   // ── 内部 ──────────────────────────────────────
-  static const List<Weather> _weatherPool = [
-    Weather.clear,
-    Weather.cloudy,
-    Weather.rain,
-    Weather.snow,
-  ];
-
   void _tickActiveJourney({required Pet pet, required Journey journey}) {
     final locationId = _locationAt(journey.stops, journey.currentIdx);
     if (locationId == null) return;
@@ -320,16 +333,17 @@ class PostcardGeneratorImpl implements PostcardGenerator {
     return weight;
   }
 
-  PostcardTemplate? _pickTemplate(String personalityId, String category) {
-    final exact = _templates
-        .where(
-          (t) => t.personalityId == personalityId && t.category == category,
-        )
-        .toList();
+  PostcardTemplate? _pickTemplate(String personalityId, Location location) {
+    final exact = preferPostcardLocationSpecific(
+      _templates.where(
+        (t) =>
+            t.personalityId == personalityId && t.category == location.category,
+      ),
+      location.id,
+      (item) => item.locationIds,
+    );
     if (exact.isNotEmpty) return exact[(_rng() * exact.length).floor()];
-    final byCat = _templates.where((t) => t.category == category).toList();
-    if (byCat.isNotEmpty) return byCat[(_rng() * byCat.length).floor()];
-    return _templates.isNotEmpty ? _templates.first : null;
+    return null;
   }
 
   /// 按性格权重挑选（personalityBias 命中 pet 标签则乘权）；空则 null。
@@ -361,25 +375,33 @@ class PostcardGeneratorImpl implements PostcardGenerator {
     Location loc,
     Encounter? enc,
     Incident? inc,
-    Pet pet,
-  ) {
-    final skeleton =
-        tpl?.skeleton ?? '主人，我到了{location}。{incident}。想你。——{petName}';
-    return skeleton
-        .replaceAll('{location}', loc.name)
-        .replaceAll('{encounter}', enc?.phrase ?? '')
-        .replaceAll('{incident}', inc?.phrase ?? '')
-        .replaceAll('{petName}', pet.name)
-        .replaceAll('{ownerName}', _ownerName);
+    Pet pet, {
+    required Season season,
+    required TimeOfDayOfDay timeOfDay,
+    required Weather weather,
+    required int seq,
+  }) {
+    final personalityId = pet.personality.isEmpty ? '' : pet.personality.first;
+    return renderPostcardText(
+      skeleton: tpl?.skeleton ?? fallbackPostcardSkeleton(personalityId),
+      location: loc,
+      encounter: enc,
+      incident: inc,
+      pet: pet,
+      ownerName: _ownerName,
+      season: season,
+      timeOfDay: timeOfDay,
+      weather: weather,
+      seq: seq,
+    );
   }
 
   T _pick<T>(List<T> pool) => pool[(_rng() * pool.length).floor()];
 
-  Season _seasonOf(DateTime t) {
-    final m = t.month;
-    if (m >= 3 && m <= 5) return Season.spring;
-    if (m >= 6 && m <= 8) return Season.summer;
-    if (m >= 9 && m <= 11) return Season.autumn;
-    return Season.winter;
+  T _preferSceneValue<T>(List<T> allowed, T preferred) {
+    if (allowed.isEmpty) {
+      throw StateError('Postcard scene profile must not be empty');
+    }
+    return allowed.contains(preferred) ? preferred : _pick(allowed);
   }
 }

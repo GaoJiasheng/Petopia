@@ -11,14 +11,18 @@ import '../../domain/models/game_state.dart';
 import '../../domain/models/logs.dart';
 import '../../domain/models/pet.dart';
 import '../../domain/models/yard.dart';
+import '../../services/local_calendar.dart';
 
 const int _schemaVersion = 2;
+
+enum SessionLoadSource { none, primary, backup }
 
 class SessionStore {
   SessionStore(this.saveDir);
 
   final Directory saveDir;
   Future<void> _saveChain = Future<void>.value();
+  SessionLoadSource lastLoadSource = SessionLoadSource.none;
 
   File get _sessionFile => File(p.join(saveDir.path, 'session.json'));
   File get _backupFile => File(p.join(saveDir.path, 'session.bak'));
@@ -73,9 +77,8 @@ class SessionStore {
   Future<void> _saveNow(GameSession session) async {
     try {
       await saveDir.create(recursive: true);
-      final encoded = const JsonEncoder.withIndent(
-        '  ',
-      ).convert(_sessionToJson(session));
+      final snapshot = _sessionToJson(session);
+      final encoded = await compute(_encodeSessionJson, snapshot);
       final temp = _tempFile;
       await temp.writeAsString(encoded, flush: true);
 
@@ -91,17 +94,21 @@ class SessionStore {
   }
 
   Future<GameSession?> load() async {
+    lastLoadSource = SessionLoadSource.none;
     try {
       try {
         final primary = await _loadFile(_sessionFile);
         if (primary != null) {
+          lastLoadSource = SessionLoadSource.primary;
           return primary;
         }
       } on _UnsupportedSessionSchema {
         return null;
       }
       try {
-        return await _loadFile(_backupFile);
+        final backup = await _loadFile(_backupFile);
+        if (backup != null) lastLoadSource = SessionLoadSource.backup;
+        return backup;
       } on _UnsupportedSessionSchema {
         return null;
       }
@@ -141,6 +148,9 @@ class SessionStore {
     }
   }
 }
+
+String _encodeSessionJson(Map<String, Object?> snapshot) =>
+    jsonEncode(snapshot);
 
 bool _hasExistingProgress(GameSession session) {
   return session.current != null ||
@@ -442,6 +452,8 @@ Map<String, Object?> _settingsToJson(Settings settings) {
     'notifyEvents': settings.notifyEvents,
     'music': settings.music,
     'sound': settings.sound,
+    'haptics': settings.haptics,
+    'renderQuality': settings.renderQuality.name,
     'onboardingComplete': settings.onboardingComplete,
     'careTutorialStep': settings.careTutorialStep,
     'schemaVersion': settings.schemaVersion,
@@ -467,6 +479,12 @@ Settings _settingsFromJson(Map<String, Object?>? json, DateTime now) {
     notifyEvents: _readBool(json['notifyEvents'], true),
     music: _readBool(json['music'], true),
     sound: _readBool(json['sound'], true),
+    haptics: _readBool(json['haptics'], true),
+    renderQuality: _readEnum(
+      RenderQuality.values,
+      json['renderQuality'],
+      RenderQuality.auto,
+    ),
     onboardingComplete: _readBool(json['onboardingComplete'], false),
     careTutorialStep: _readInt(json['careTutorialStep'], 0).clamp(0, 3),
     schemaVersion: _readInt(json['schemaVersion'], _schemaVersion),
@@ -957,8 +975,5 @@ String? _readNullableString(Object? value) {
 }
 
 String _dayKey(DateTime value) {
-  final local = value.toUtc();
-  return '${local.year.toString().padLeft(4, '0')}-'
-      '${local.month.toString().padLeft(2, '0')}-'
-      '${local.day.toString().padLeft(2, '0')}';
+  return LocalCalendar.dayKey(value);
 }

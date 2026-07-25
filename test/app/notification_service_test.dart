@@ -152,4 +152,31 @@ void main() {
       'future-3',
     ]);
   });
+
+  test('notification payloads map to stable in-app destinations', () {
+    final postcard = NotificationOpenRequest.tryParse('postcard:journey-123');
+    expect(postcard?.destination, NotificationDestination.postcard);
+    expect(postcard?.targetId, 'journey-123');
+
+    final revisit = NotificationOpenRequest.tryParse('revisit:pet-9');
+    expect(revisit?.destination, NotificationDestination.revisit);
+    expect(revisit?.targetId, 'pet-9');
+
+    final event = NotificationOpenRequest.tryParse('event:pending-4');
+    expect(event?.destination, NotificationDestination.event);
+    expect(event?.targetId, 'pending-4');
+
+    final anniversary = NotificationOpenRequest.tryParse(
+      'anniversary:pet-2:2027',
+    );
+    expect(anniversary?.destination, NotificationDestination.anniversary);
+    expect(anniversary?.targetId, 'pet-2');
+  });
+
+  test('malformed or unknown notification payloads are ignored', () {
+    expect(NotificationOpenRequest.tryParse(null), isNull);
+    expect(NotificationOpenRequest.tryParse(''), isNull);
+    expect(NotificationOpenRequest.tryParse('postcard:'), isNull);
+    expect(NotificationOpenRequest.tryParse('unknown:value'), isNull);
+  });
 }

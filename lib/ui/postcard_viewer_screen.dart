@@ -24,7 +24,9 @@ class _PostcardViewerScreenState extends ConsumerState<PostcardViewerScreen> {
   void initState() {
     super.initState();
     Future<void>.microtask(
-      () => ref.read(gameControllerProvider.notifier).trackPostcardRead(),
+      () => ref
+          .read(gameControllerProvider.notifier)
+          .trackPostcardRead(widget.card.id),
     );
   }
 
@@ -58,8 +60,9 @@ class _PostcardViewerScreenState extends ConsumerState<PostcardViewerScreen> {
 
 Future<void> showPostcardArrivalDialog(
   BuildContext context,
-  PostcardView card,
-) {
+  PostcardView card, {
+  int arrivalCount = 1,
+}) {
   return showGeneralDialog<void>(
     context: context,
     barrierDismissible: true,
@@ -88,6 +91,7 @@ Future<void> showPostcardArrivalDialog(
                   child: PostcardDisplayCard(
                     card: card,
                     arrivalMode: true,
+                    arrivalCount: arrivalCount,
                     onClose: () => Navigator.of(context).pop(),
                   ),
                 ),
@@ -117,11 +121,13 @@ Future<void> showPostcardArrivalDialog(
 class PostcardDisplayCard extends StatelessWidget {
   final PostcardView card;
   final bool arrivalMode;
+  final int arrivalCount;
   final VoidCallback? onClose;
   const PostcardDisplayCard({
     super.key,
     required this.card,
     this.arrivalMode = false,
+    this.arrivalCount = 1,
     this.onClose,
   });
 
@@ -149,7 +155,12 @@ class PostcardDisplayCard extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (arrivalMode) _ArrivalHeader(card: card, onClose: onClose),
+          if (arrivalMode)
+            _ArrivalHeader(
+              card: card,
+              arrivalCount: arrivalCount,
+              onClose: onClose,
+            ),
           if (wideLayout)
             Padding(
               padding: const EdgeInsets.fromLTRB(14, 0, 14, 14),
@@ -212,6 +223,28 @@ class _PostcardTextPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bodyFont = wideLayout ? 12.8 : (arrivalMode ? 13.0 : 13.8);
+    final largeText = MediaQuery.textScalerOf(context).scale(12) >= 24;
+    final petMeta = Row(
+      mainAxisSize: largeText ? MainAxisSize.max : MainAxisSize.min,
+      children: [
+        const Icon(Icons.pets_rounded, size: 14, color: _muted),
+        const SizedBox(width: 5),
+        Flexible(
+          child: Text(
+            card.petName,
+            style: const TextStyle(
+              fontSize: 11.5,
+              fontWeight: FontWeight.w600,
+              color: _muted,
+            ),
+          ),
+        ),
+      ],
+    );
+    final journeyMeta = Text(
+      '第 ${card.seq + 1} 站 · ${PostcardDisplayCard._date(card.sentAt)}',
+      style: const TextStyle(fontSize: 11, color: _muted),
+    );
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -245,28 +278,18 @@ class _PostcardTextPanel extends StatelessWidget {
             wideLayout ? 0 : 18,
             arrivalMode ? 8 : 14,
           ),
-          child: Row(
-            children: [
-              const Icon(Icons.pets_rounded, size: 14, color: _muted),
-              const SizedBox(width: 5),
-              Flexible(
-                child: Text(
-                  card.petName,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 11.5,
-                    fontWeight: FontWeight.w600,
-                    color: _muted,
-                  ),
+          child: largeText
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [petMeta, const SizedBox(height: 6), journeyMeta],
+                )
+              : Row(
+                  children: [
+                    Flexible(child: petMeta),
+                    const Spacer(),
+                    journeyMeta,
+                  ],
                 ),
-              ),
-              const Spacer(),
-              Text(
-                '第 ${card.seq + 1} 站 · ${PostcardDisplayCard._date(card.sentAt)}',
-                style: const TextStyle(fontSize: 11, color: _muted),
-              ),
-            ],
-          ),
         ),
         if (arrivalMode)
           Padding(
@@ -302,8 +325,13 @@ class _PostcardTextPanel extends StatelessWidget {
 
 class _ArrivalHeader extends StatelessWidget {
   final PostcardView card;
+  final int arrivalCount;
   final VoidCallback? onClose;
-  const _ArrivalHeader({required this.card, this.onClose});
+  const _ArrivalHeader({
+    required this.card,
+    required this.arrivalCount,
+    this.onClose,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -318,14 +346,33 @@ class _ArrivalHeader extends StatelessWidget {
           ),
           const SizedBox(width: 8),
           Expanded(
-            child: Text(
-              '${card.petName} 从远方寄来一张明信片',
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                color: Color(0xFF6B5445),
-                fontWeight: FontWeight.w900,
-                fontSize: 14.5,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  arrivalCount > 1
+                      ? '${card.petName} 从远方寄来 $arrivalCount 张明信片'
+                      : '${card.petName} 从远方寄来一张明信片',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Color(0xFF6B5445),
+                    fontWeight: FontWeight.w900,
+                    fontSize: 14.5,
+                  ),
+                ),
+                if (arrivalCount > 1)
+                  Text(
+                    '先拆开最新一张，其余已经收进相册',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: Color(0xFF8A7A6A),
+                      fontWeight: FontWeight.w600,
+                      fontSize: 11.5,
+                    ),
+                  ),
+              ],
             ),
           ),
           IconButton(
@@ -364,6 +411,7 @@ class _PostcardPhoto extends StatelessWidget {
                 child: Image.asset(
                   'assets/art/postcards/backgrounds/${card.photoBg}.jpg',
                   fit: BoxFit.cover,
+                  semanticLabel: '${card.locationName}的旅行风景',
                   errorBuilder: (_, _, _) => Container(
                     color: const Color(0xFFDCEAD8),
                     alignment: Alignment.center,

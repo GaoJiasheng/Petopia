@@ -67,5 +67,34 @@ void main() {
       expect(settings.lastMonotonicRef, 4242);
       expect(settings.lastWallClockAt, t0);
     });
+
+    test('world time stays monotonic when the wall clock moves backward', () {
+      final clock = FakeClock(t0, 1000);
+      final svc = ClockServiceImpl(clock, _newSettings(t0));
+
+      clock.wall = t0.subtract(const Duration(hours: 8));
+      clock.mono += const Duration(minutes: 20).inMilliseconds;
+
+      expect(svc.now(), t0.add(const Duration(minutes: 20)));
+      expect(svc.now().isBefore(t0), isFalse);
+    });
+
+    test('same-process future clock jump cannot fast-forward the world', () {
+      final clock = FakeClock(t0, 1000);
+      final svc = ClockServiceImpl(clock, _newSettings(t0));
+
+      clock.wall = t0.add(const Duration(days: 30));
+      clock.mono += const Duration(minutes: 5).inMilliseconds;
+
+      expect(svc.now(), t0.add(const Duration(minutes: 5)));
+    });
+
+    test('cold start never moves behind the last persisted trusted time', () {
+      final persisted = t0.add(const Duration(hours: 2));
+      final clock = FakeClock(t0, 50);
+      final svc = ClockServiceImpl(clock, _newSettings(persisted));
+
+      expect(svc.now(), persisted);
+    });
   });
 }

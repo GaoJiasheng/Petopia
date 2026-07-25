@@ -1,6 +1,9 @@
 # Petopia 美术生成状态
 
-> 当前 session 边界：只生成和整理视觉美术素材；不改代码、不改逻辑、不做 Flutter/Flame、不做数据转换。
+> 状态说明（2026-07-24）：本文保留美术生产批次的历史记录；其中“session 边界”
+> 仅指当时的美术专用会话，不是当前工程工作的限制。运行时是否可发布，以
+> `python3 tools/audit_runtime_art.py` 和 `docs/app-store/release-checklist.md`
+> 为准。
 >
 > 当前风格基准：奶油卡通可爱风（creamy cartoon cute），v5 Golden Set 已作为最新 polish 方向参考：`assets/art/samples/petopia-golden-v5-contact-sheet.png`。要求更鲜艳、更卡通，避免整体偏黄，并遵守 full-bleed/分层/无文字硬约束。
 

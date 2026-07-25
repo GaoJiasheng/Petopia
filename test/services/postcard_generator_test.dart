@@ -119,6 +119,175 @@ void main() {
     expect(pc.bodyText, contains('阿橘'));
   });
 
+  test('地点白名单阻止屋顶/电车内容串入旧书坊背景', () {
+    final sink = <Postcard>[];
+    final pet = _pet()..personality = ['p_energetic'];
+    final oldBook = Location(
+      id: 'loc_oldbook_alley',
+      name: '旧书坊巷',
+      category: '城市',
+      climate: '温带城市',
+      vibeTags: const ['city'],
+      photoStyle: 'pc_bg_oldbook_alley',
+      encounterPoolId: 'enc_city',
+      personalityWeight: const {},
+      stampId: 'pc_stamp_oldbook_alley',
+    );
+    final gen = PostcardGeneratorImpl(
+      locations: {oldBook.id: oldBook},
+      templates: const [
+        PostcardTemplate(
+          id: 'tpl_rooftop',
+          personalityId: 'p_energetic',
+          category: '城市',
+          locationIds: ['loc_rooftop_city'],
+          skeleton: '屋顶水塔上视野超好！——{petName}',
+        ),
+        PostcardTemplate(
+          id: 'tpl_city_generic',
+          personalityId: 'p_energetic',
+          category: '城市',
+          skeleton: '我跑到{location}啦！{incident}。——{petName}',
+        ),
+      ],
+      encounters: const [],
+      incidents: const [
+        Incident(
+          id: 'inc_tram',
+          vibe: 'city',
+          locationIds: ['loc_tram_street'],
+          phrase: '学电车报站',
+        ),
+        Incident(
+          id: 'inc_book',
+          vibe: 'city',
+          locationIds: ['loc_oldbook_alley'],
+          phrase: '在旧书堆里发现一枚书签',
+        ),
+      ],
+      rng: () => 0,
+      now: () => now,
+      idGen: () => 'pc',
+      ownerName: '主人',
+      onPostcard: sink.add,
+    );
+    final card = gen.generate(
+      pet: pet,
+      journey: Journey(
+        id: 'journey',
+        petId: pet.id,
+        stops: [oldBook.id],
+        nextPostcardAt: now,
+      ),
+    );
+
+    expect(card.bodyText, contains('旧书坊巷'));
+    expect(card.bodyText, contains('旧书堆'));
+    expect(card.bodyText, isNot(contains('屋顶水塔')));
+    expect(card.bodyText, isNot(contains('电车')));
+    expect(card.incidentId, 'inc_book');
+  });
+
+  test('季节、天气、时段和站数占位符全部渲染', () {
+    final sink = <Postcard>[];
+    final location = Location(
+      id: 'loc_lighthouse',
+      name: '灯塔湾',
+      category: '海滨',
+      climate: '温润',
+      vibeTags: const ['sea'],
+      photoStyle: 'seaside_lighthouse',
+      encounterPoolId: 'enc_seaside',
+      personalityWeight: const {},
+      stampId: 'stamp_loc_lighthouse',
+      allowedSeasons: const [Season.summer],
+      allowedTimesOfDay: const [TimeOfDayOfDay.dawn],
+      allowedWeather: const [Weather.clear],
+    );
+    final gen = PostcardGeneratorImpl(
+      locations: {location.id: location},
+      templates: const [
+        PostcardTemplate(
+          id: 'tpl_slots',
+          personalityId: 'p_glutton',
+          category: '海滨',
+          skeleton:
+              '{season}·{timeOfDay}·{weather}·第{seq}站·{location}——{petName}',
+        ),
+      ],
+      encounters: const [],
+      incidents: const [],
+      rng: () => 0,
+      now: () => now,
+      idGen: () => 'pc',
+      ownerName: '主人',
+      onPostcard: sink.add,
+    );
+    final card = gen.generate(
+      pet: _pet(),
+      journey: Journey(
+        id: 'journey',
+        petId: 'pet1',
+        stops: [location.id],
+        nextPostcardAt: now,
+      ),
+    );
+
+    expect(card.bodyText, '夏天·清晨·晴朗·第1站·灯塔湾——阿橘');
+    expect(card.bodyText, isNot(contains('{')));
+  });
+
+  test('固定背景只生成允许的季节、时段和天气', () {
+    final sink = <Postcard>[];
+    final location = Location(
+      id: 'loc_aurora_village',
+      name: '极光渔村',
+      category: '极地水域',
+      climate: '极寒',
+      vibeTags: const ['aurora'],
+      photoStyle: 'pc_bg_aurora_village',
+      encounterPoolId: 'enc_polar',
+      personalityWeight: const {},
+      stampId: 'pc_stamp_aurora_village',
+      allowedSeasons: const [Season.winter],
+      allowedTimesOfDay: const [TimeOfDayOfDay.night],
+      allowedWeather: const [Weather.snow],
+    );
+    final generator = PostcardGeneratorImpl(
+      locations: {location.id: location},
+      templates: const [
+        PostcardTemplate(
+          id: 'tpl_scene',
+          personalityId: 'p_glutton',
+          category: '极地水域',
+          skeleton: '{season}的{timeOfDay}，{weather}的{location}。——{petName}',
+        ),
+      ],
+      encounters: const [],
+      incidents: const [],
+      rng: () => 0.99,
+      now: () => DateTime(2026, 7, 15, 12),
+      idGen: () => 'pc-scene',
+      ownerName: '主人',
+      onPostcard: sink.add,
+    );
+
+    final card = generator.generate(
+      pet: _pet(),
+      journey: Journey(
+        id: 'journey',
+        petId: 'pet1',
+        stops: [location.id],
+        nextPostcardAt: now,
+      ),
+    );
+
+    expect(card.season, Season.winter);
+    expect(card.timeOfDay, TimeOfDayOfDay.night);
+    expect(card.weather, Weather.snow);
+    expect(card.bodyText, '冬天的深夜，下雪的极光渔村。——阿橘');
+  });
+
   test('dailyTick：未到寄片时刻不生成', () async {
     final sink = <Postcard>[];
     final j = Journey(

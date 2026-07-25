@@ -5,7 +5,46 @@ import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz_data;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../services/local_calendar.dart';
+
 enum PetopiaNotificationKind { postcard, revisit, event, anniversary }
+
+enum NotificationDestination { postcard, revisit, event, anniversary }
+
+class NotificationOpenRequest {
+  const NotificationOpenRequest({
+    required this.destination,
+    required this.targetId,
+    required this.payload,
+  });
+
+  final NotificationDestination destination;
+  final String targetId;
+  final String payload;
+
+  static NotificationOpenRequest? tryParse(String? payload) {
+    if (payload == null || payload.isEmpty) return null;
+    final separator = payload.indexOf(':');
+    if (separator <= 0 || separator == payload.length - 1) return null;
+    final kind = payload.substring(0, separator);
+    final value = payload.substring(separator + 1);
+    final targetId = value.split(':').first;
+    if (targetId.isEmpty) return null;
+    final destination = switch (kind) {
+      'postcard' => NotificationDestination.postcard,
+      'revisit' => NotificationDestination.revisit,
+      'event' => NotificationDestination.event,
+      'anniversary' => NotificationDestination.anniversary,
+      _ => null,
+    };
+    if (destination == null) return null;
+    return NotificationOpenRequest(
+      destination: destination,
+      targetId: targetId,
+      payload: payload,
+    );
+  }
+}
 
 class PetopiaNotificationCandidate {
   const PetopiaNotificationCandidate({
@@ -77,10 +116,10 @@ abstract final class NotificationPlanner {
 
     final byDay = <String, PlannedNotification>{};
     for (final candidate in sorted) {
-      final local = candidate.at.toLocal();
+      final local = LocalCalendar.local(candidate.at);
       final scheduled = _withinQuietWindow(local);
-      if (!scheduled.isAfter(now.toLocal())) continue;
-      final day = _dayKey(scheduled);
+      if (!scheduled.isAfter(LocalCalendar.local(now))) continue;
+      final day = LocalCalendar.dayKey(scheduled);
       final existing = byDay[day];
       if (existing == null ||
           _priority(candidate.kind) < _priority(existing.candidate.kind)) {
@@ -94,10 +133,13 @@ abstract final class NotificationPlanner {
 
   static DateTime _withinQuietWindow(DateTime local) {
     if (local.hour < 9) {
-      return DateTime(local.year, local.month, local.day, 9);
+      return LocalCalendar.at(local, 9);
     }
     if (local.hour >= 21) {
-      return DateTime(local.year, local.month, local.day + 1, 9);
+      return LocalCalendar.at(
+        DateTime(local.year, local.month, local.day + 1),
+        9,
+      );
     }
     return local;
   }
@@ -108,11 +150,6 @@ abstract final class NotificationPlanner {
     PetopiaNotificationKind.event => 2,
     PetopiaNotificationKind.anniversary => 3,
   };
-
-  static String _dayKey(DateTime date) =>
-      '${date.year.toString().padLeft(4, '0')}-'
-      '${date.month.toString().padLeft(2, '0')}-'
-      '${date.day.toString().padLeft(2, '0')}';
 }
 
 class NotificationService {
@@ -121,8 +158,11 @@ class NotificationService {
 
   final FlutterLocalNotificationsPlugin _plugin =
       FlutterLocalNotificationsPlugin();
+  final void Function(NotificationOpenRequest request) onOpen;
   bool _inited = false;
   bool _timezoneReady = false;
+
+  NotificationService({required this.onOpen});
 
   Future<bool?> sync({
     required List<PetopiaNotificationCandidate> candidates,
@@ -188,7 +228,18 @@ class NotificationService {
     );
     await _plugin.initialize(
       settings: const InitializationSettings(android: android, iOS: ios),
+      onDidReceiveNotificationResponse: (response) {
+        final request = NotificationOpenRequest.tryParse(response.payload);
+        if (request != null) onOpen(request);
+      },
     );
+    final launch = await _plugin.getNotificationAppLaunchDetails();
+    if (launch?.didNotificationLaunchApp ?? false) {
+      final request = NotificationOpenRequest.tryParse(
+        launch?.notificationResponse?.payload,
+      );
+      if (request != null) onOpen(request);
+    }
     _inited = true;
   }
 
@@ -230,6 +281,14 @@ class NotificationService {
   }
 }
 
+final notificationOpenRequestProvider = StateProvider<NotificationOpenRequest?>(
+  (ref) => null,
+);
+
 final notificationServiceProvider = Provider<NotificationService>(
-  (ref) => NotificationService(),
+  (ref) => NotificationService(
+    onOpen: (request) {
+      ref.read(notificationOpenRequestProvider.notifier).state = request;
+    },
+  ),
 );

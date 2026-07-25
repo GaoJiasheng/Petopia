@@ -162,6 +162,7 @@ PostcardTemplate _parseTemplate(Map<String, dynamic> json) => PostcardTemplate(
   personalityId: _string(json['personalityId'], 'tpl.personalityId'),
   category: _string(json['category'], 'tpl.category'),
   skeleton: _string(json['skeleton'], 'tpl.skeleton'),
+  locationIds: _stringList(json['locationIds']),
   slots: _stringList(json['slots']),
   tone: _nullableString(json['tone']) ?? '',
 );
@@ -170,6 +171,7 @@ Encounter _parseEncounter(Map<String, dynamic> json) => Encounter(
   id: _string(json['id'], 'enc.id'),
   poolId: _string(json['poolId'], 'enc.poolId'),
   phrase: _string(json['phrase'], 'enc.phrase'),
+  locationIds: _stringList(json['locationIds']),
   personalityBias: _biasMap(json['personalityBias']),
 );
 
@@ -177,6 +179,7 @@ Incident _parseIncident(Map<String, dynamic> json) => Incident(
   id: _string(json['id'], 'inc.id'),
   vibe: _string(json['vibe'], 'inc.vibe'),
   phrase: _string(json['phrase'], 'inc.phrase'),
+  locationIds: _stringList(json['locationIds']),
   poseHint: _nullableString(json['poseHint']) ?? 'idle',
   personalityBias: _biasMap(json['personalityBias']),
 );
@@ -303,6 +306,12 @@ Location _parseLocation(Map<String, dynamic> json) {
     ),
     personalityWeight: _stringDoubleMap(json['personalityWeight']),
     stampId: _string(json['stampId'], 'location.stampId'),
+    allowedSeasons: _enumList(json['allowedSeasons'], Season.values),
+    allowedTimesOfDay: _enumList(
+      json['allowedTimesOfDay'],
+      TimeOfDayOfDay.values,
+    ),
+    allowedWeather: _enumList(json['allowedWeather'], Weather.values),
   );
 }
 

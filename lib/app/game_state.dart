@@ -2,6 +2,7 @@ import '../domain/models/pet.dart';
 import '../domain/models/yard.dart';
 import '../domain/models/game_state.dart';
 import '../domain/models/logs.dart';
+import '../services/local_calendar.dart';
 
 /// 运行期游戏状态容器（单宠位）。装配层持有，服务读写它。
 /// 生产由 SaveService 与各 Repository 持久化；单测用内存实例。
@@ -60,14 +61,9 @@ class GameSession {
              lastWallClockAt: DateTime.now().toUtc(),
            ) {
     final now = DateTime.now();
-    careLedger = CareLedger(dayKey: _dayKey(now));
+    careLedger = CareLedger(dayKey: LocalCalendar.dayKey(now));
   }
 
   /// 参与审计的全部宠物（在养 + 漫游）。
   List<Pet> get allPets => [?current, ...roaming];
-
-  static String _dayKey(DateTime t) {
-    final local = t.toLocal();
-    return '${local.year.toString().padLeft(4, '0')}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')}';
-  }
 }

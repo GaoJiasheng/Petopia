@@ -104,6 +104,30 @@ void main() {
     expect(slotBIsar['marker'], 2);
   });
 
+  test(
+    'flushAutoSave bypasses debounce and completes the pending request',
+    () async {
+      final store = FakeStore(_snapshot(7));
+      final save = LocalSaveService(
+        snapshotStore: store,
+        auditService: FakeAudit(const AuditReport(ok: true)),
+        saveDirectory: tempDir,
+        now: () => now,
+        autoSaveDebounce: const Duration(minutes: 1),
+      );
+
+      final pending = save.autoSave();
+      await save.flushAutoSave();
+      await pending;
+
+      final slot = File('${tempDir.path}/slot_A.json');
+      expect(slot.existsSync(), isTrue);
+      final payload = _readJson(slot)['payload']! as Map<String, Object?>;
+      final state = payload['isar']! as Map<String, Object?>;
+      expect(state['marker'], 7);
+    },
+  );
+
   test('load 优先较新 slot，较新损坏时回退另一 slot', () async {
     final store = FakeStore(_snapshot(1));
     final save = service(store);
@@ -129,6 +153,35 @@ void main() {
     final slotBIsar = slotBPayload['isar']! as Map<String, Object?>;
     expect(slotBIsar['marker'], 3);
   });
+
+  test(
+    'all corrupt slots fail without replacing the current session',
+    () async {
+      final store = FakeStore(_snapshot(1));
+      final save = service(store);
+      await save.autoSave();
+      store.snapshot = _snapshot(2);
+      now = now.add(const Duration(minutes: 1));
+      await save.autoSave();
+
+      File('${tempDir.path}/slot_A.json').writeAsStringSync('broken-a');
+      File('${tempDir.path}/slot_B.json').writeAsStringSync('broken-b');
+      store.snapshot = _snapshot(99);
+
+      await expectLater(
+        save.load(),
+        throwsA(
+          isA<SaveArchiveException>().having(
+            (error) => error.message,
+            'message',
+            contains('所有存档 slot 均不可用'),
+          ),
+        ),
+      );
+      expect(_marker(store.snapshot), 99);
+      expect(store.replacements, isEmpty);
+    },
+  );
 
   test('import audit 不通过则拒绝并保留原档', () async {
     final exportDir = Directory('${tempDir.path}/export');

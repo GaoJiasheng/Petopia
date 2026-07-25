@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../app/app_info.dart';
 
 class PrivacyScreen extends StatelessWidget {
   const PrivacyScreen({super.key});
@@ -22,31 +25,31 @@ class PrivacyScreen extends StatelessWidget {
             constraints: const BoxConstraints(maxWidth: 720),
             child: ListView(
               padding: const EdgeInsets.fromLTRB(24, 12, 24, 40),
-              children: const [
-                _PolicySection(
+              children: [
+                const _PolicySection(
                   title: '你的院子只留在设备上',
                   body:
                       'Petopia 不要求注册账号，也不会把宠物、明信片、互动记录或设备标识上传到服务器。游戏进度保存在当前设备的应用沙盒中。',
                 ),
-                _PolicySection(
+                const _PolicySection(
                   title: '通知由你决定',
                   body:
                       '只有在你主动开启后，App 才会请求本地通知权限。提醒仅用于明信片、老朋友回访和纪念日；可随时在设置中分类关闭，也不会使用广告追踪。',
                 ),
-                _PolicySection(
+                const _PolicySection(
                   title: '存档备份',
                   body: '导出存档时，文件由你选择保存或分享的位置。导入会先校验文件完整性和数据流水，校验失败不会覆盖当前院子。',
                 ),
-                _PolicySection(
+                const _PolicySection(
                   title: '第三方服务',
                   body:
                       '当前版本不包含广告、第三方分析、跨 App 追踪、社交登录或联网内容服务。系统分享面板和文件选择器仅在你主动操作时打开。',
                 ),
-                _PolicySection(
+                const _PolicySection(
                   title: '删除数据',
                   body: '卸载 App 会删除保存在本机的游戏数据。建议在卸载或换机前，从设置页导出一份存档备份。',
                 ),
-                Padding(
+                const Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: Text(
                     '生效日期：2026 年 7 月 14 日',
@@ -57,10 +60,58 @@ class PrivacyScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                const SizedBox(height: 18),
+                _PolicyLink(
+                  icon: Icons.open_in_new_rounded,
+                  label: '查看完整隐私政策',
+                  uri: AppUrls.privacy,
+                ),
+                const SizedBox(height: 10),
+                _PolicyLink(
+                  icon: Icons.support_agent_rounded,
+                  label: '联系支持',
+                  uri: AppUrls.support,
+                ),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _PolicyLink extends StatelessWidget {
+  const _PolicyLink({
+    required this.icon,
+    required this.label,
+    required this.uri,
+  });
+
+  final IconData icon;
+  final String label;
+  final Uri uri;
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton.icon(
+      onPressed: () async {
+        final opened = await launchUrl(
+          uri,
+          mode: LaunchMode.externalApplication,
+        );
+        if (!opened && context.mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('暂时无法打开网页，请稍后再试。')));
+        }
+      },
+      icon: Icon(icon),
+      label: Text(label),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: const Color(0xFF6B5445),
+        minimumSize: const Size.fromHeight(50),
+        side: const BorderSide(color: Color(0xFFE3C8A7)),
       ),
     );
   }

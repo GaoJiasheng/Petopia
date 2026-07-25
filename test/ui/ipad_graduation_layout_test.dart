@@ -12,10 +12,22 @@ class _SilentAudio implements AudioService {
   bool get musicEnabled => false;
 
   @override
+  Future<void> initialize() async {}
+
+  @override
   Future<void> dispose() async {}
 
   @override
   Future<void> playBgm(Bgm bgm) async {}
+
+  @override
+  Future<void> playYardAmbience(YardAmbience ambience) async {}
+
+  @override
+  Future<void> pauseForInterruption() async {}
+
+  @override
+  Future<void> resumeAfterInterruption() async {}
 
   @override
   Future<void> setEffectsEnabled(bool enabled) async {}
@@ -24,7 +36,13 @@ class _SilentAudio implements AudioService {
   Future<void> setMusicEnabled(bool enabled) async {}
 
   @override
+  Future<void> sfx(Sfx s) async {}
+
+  @override
   Future<void> sting(Sting s) async {}
+
+  @override
+  Future<void> visitorVoice(String visitorId) async {}
 }
 
 void main() {

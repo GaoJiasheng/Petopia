@@ -925,7 +925,7 @@
       "clueText": "有人在星星最亮时来过。",
       "condition": {
         "type": "custom",
-        "target": 1,
+        "target": 7,
         "params": {
           "action": "night_care",
           "timeRange": "0-2",
@@ -1125,7 +1125,7 @@
       "clueText": "其实什么都发生了，只是很轻。",
       "condition": {
         "type": "custom",
-        "target": 1,
+        "target": 3,
         "params": {
           "action": "care_only",
           "noEvent": true,

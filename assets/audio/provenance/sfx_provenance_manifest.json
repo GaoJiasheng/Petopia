@@ -1,0 +1,95 @@
+{
+  "generator": "assets/audio/provenance/generate_sfx_assets.py",
+  "seed": 1947223,
+  "thirdPartySamples": false,
+  "assets": [
+    {
+      "asset": "assets/audio/sfx/wav/sfx_feed_eat.wav",
+      "sha256": "21ddcfe14de04ddf9032a37c444528a92da5d6eee07ecd9a84efe840fb02cd21",
+      "sampleRate": 48000,
+      "channels": 2,
+      "sampleWidthBits": 16,
+      "durationMs": 920,
+      "peakDbfs": -5.5,
+      "rmsDbfs": -24.11,
+      "source": "deterministic original procedural synthesis"
+    },
+    {
+      "asset": "assets/audio/sfx/wav/sfx_pat_fur.wav",
+      "sha256": "09939d642158ccbfa2af3f9cf2becf24a3024edca69d1fc50e3fbc935d8818fe",
+      "sampleRate": 48000,
+      "channels": 2,
+      "sampleWidthBits": 16,
+      "durationMs": 940,
+      "peakDbfs": -5.46,
+      "rmsDbfs": -18.91,
+      "source": "deterministic original procedural synthesis"
+    },
+    {
+      "asset": "assets/audio/sfx/wav/sfx_toy_play.wav",
+      "sha256": "ef05df20b343245a9337d29290b1bd8a9123e7329200252200b2027adba8bd29",
+      "sampleRate": 48000,
+      "channels": 2,
+      "sampleWidthBits": 16,
+      "durationMs": 1000,
+      "peakDbfs": -5.5,
+      "rmsDbfs": -20.38,
+      "source": "deterministic original procedural synthesis"
+    },
+    {
+      "asset": "assets/audio/sfx/wav/sfx_bath_bubbles.wav",
+      "sha256": "c2ce81cdcda7385851955a76bd84fe356207a29a552db7b05ac58bb815f48a12",
+      "sampleRate": 48000,
+      "channels": 2,
+      "sampleWidthBits": 16,
+      "durationMs": 1180,
+      "peakDbfs": -5.5,
+      "rmsDbfs": -19.89,
+      "source": "deterministic original procedural synthesis"
+    },
+    {
+      "asset": "assets/audio/sfx/wav/sfx_event_card.wav",
+      "sha256": "f86ae390555f426c2dcf41bb5c23615e80a32e04419ded081c458a50471e2d49",
+      "sampleRate": 48000,
+      "channels": 2,
+      "sampleWidthBits": 16,
+      "durationMs": 1050,
+      "peakDbfs": -5.49,
+      "rmsDbfs": -20.26,
+      "source": "deterministic original procedural synthesis"
+    },
+    {
+      "asset": "assets/audio/sfx/wav/sfx_visitor_arrive.wav",
+      "sha256": "90752d6a7d845350f98f72f9351da814dd51014926a312e2e23aa3d33730158a",
+      "sampleRate": 48000,
+      "channels": 2,
+      "sampleWidthBits": 16,
+      "durationMs": 1150,
+      "peakDbfs": -5.5,
+      "rmsDbfs": -20.04,
+      "source": "deterministic original procedural synthesis"
+    },
+    {
+      "asset": "assets/audio/ui/wav/ui_paper_open.wav",
+      "sha256": "647ce7c45a56dbd0ae51dacd064e984391d00b502c9fed4e0813c0f8082d650d",
+      "sampleRate": 48000,
+      "channels": 2,
+      "sampleWidthBits": 16,
+      "durationMs": 740,
+      "peakDbfs": -5.49,
+      "rmsDbfs": -21.56,
+      "source": "deterministic original procedural synthesis"
+    },
+    {
+      "asset": "assets/audio/ui/wav/ui_tap_soft.wav",
+      "sha256": "06e6675a8f66ec5e8a8a69938e20fee5b4fd453b8fd0d3dc4ca11967db8f7aec",
+      "sampleRate": 48000,
+      "channels": 2,
+      "sampleWidthBits": 16,
+      "durationMs": 420,
+      "peakDbfs": -5.5,
+      "rmsDbfs": -20.71,
+      "source": "deterministic original procedural synthesis"
+    }
+  ]
+}

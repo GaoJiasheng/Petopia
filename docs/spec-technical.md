@@ -339,14 +339,18 @@ class FoodTray { String? foodType; DateTime? placedAt; }   // foodType: grain/fi
 | dueAt | DateTime | 否 | | 到期时间（本地日粒度或精确时刻） |
 | priority | int | 否 | 见 §3 | 数值小=优先 |
 | payloadRef | String? | 是 | | 如 petId/visitorId/eventId |
-| consumed | bool | 否 | false | 处理后置 true（不删，便于审计），或直接删除 `[待细化]` |
+| consumed | bool | 否 | false | 处理后置 true；已完成记录保留 90 天后裁剪，未完成记录绝不裁剪 |
 
-#### Settings（Isar，单例）
+#### Settings（Session JSON，单例）
 | 字段 | 类型 | 默认 | 说明 |
 |---|---|---|---|
-| notifications | bool | true | |
-| sound | bool | true | |
-| schemaVersion | int | 1 | 迁移用 |
+| notifications | bool | false | 总通知开关 |
+| notifyPostcards / notifyVisitors / notifyEvents | bool | true | 通知分类 |
+| music / sound / haptics | bool | true | 音乐、互动音效、轻触反馈 |
+| renderQuality | RenderQuality | auto | `auto / high / low`，内存压力临时降级不写回 |
+| onboardingComplete | bool | false | 首次引导完成状态 |
+| careTutorialStep | int | 0 | 0–3，首轮照料提示进度 |
+| schemaVersion | int | 2 | Session JSON 迁移用 |
 | createdAt | DateTime | now | |
 | lastMonotonicRef | int | 0 | 单调时钟基准（§4，毫秒） |
 | lastWallClockAt | DateTime | now | 上次记录的真实时钟（§4 交叉校验） |
@@ -667,15 +671,22 @@ onDailyTick(today):
         n = randInt(dailyEventMin, dailyEventMax)     # 1..3
         enqueue n×DAILY_EVENT_GEN (dueAt=today)
         enqueue VISITOR_CHECK ×2 (dayWindow, nightWindow)
-        enqueue SPECIAL_EVENT_EVAL (today)
+        enqueue SPECIAL_EVENT_EVAL (dueAt=today 21:15 local)
     # 2. 回访：见 RevisitService.dailyTick
     # 3. 明信片：见 PostcardGenerator.dailyTick
 
 onResume(now):
     catchUp: 对所有 dueAt<=now 且未 consumed 的 job，按 priority 升序、dueAt 升序处理
+    延迟补跑时按 job.dueAt 判定天气/时段/季节，不能用恢复时刻篡改原触发语义
     演出串行：同一次上线最多演出 1 组（避免弹窗轰炸，§11.2）——其余标记「待演出」下次上线补
 ```
-**约束**：SPECIAL 日上限 1；DAILY 演出上线时触发；REVISIT 唯一（`INV-2`）。事件命中用 §8/§9 权重轮盘（见 VisitorService.roulette 复用）。
+**保留策略**：`consumed` job 保留 90 天供本地审计后裁剪；每日幂等键
+`generatedDays` 保留 120 天。任何 pending job 均不因保留窗口被删除，避免长时间离线
+后漏事件。
+
+**约束**：SPECIAL 日上限 1；夜间 SPECIAL 在 21:15 后求值；DAILY 演出上线时触发；
+REVISIT 唯一（`INV-2`）。事件命中用 §8/§9 权重轮盘（见
+VisitorService.roulette 复用）。
 
 **事件权重最终值**（§2.3）：先按 `requiredWeather/requiredTimeOfDay/requiredSeason/requiresVisitor/requiresDecor/minLevel/minLuxuryStage/minAgeDays` 做硬过滤；任一不满足则权重=0（不参与）。通过后再算 `finalWeight = baseWeight × Π(personalityMult) × weatherMult × timeMult × seasonMult`，无关标签系数 = 1.0；`cooldownDays` 内（查 event_log）与 `oncePerPet` 已触发则排除。
 

@@ -193,7 +193,10 @@ class _SectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Wrap(
+      spacing: 10,
+      runSpacing: 6,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
         Text(
           title,
@@ -203,7 +206,6 @@ class _SectionHeader extends StatelessWidget {
             fontWeight: FontWeight.w900,
           ),
         ),
-        const SizedBox(width: 10),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
@@ -232,13 +234,44 @@ class _AchievementCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final veiled = entry.hidden && !entry.unlocked;
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: _cardDecoration(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
+    final largeText = MediaQuery.textScalerOf(context).scale(14) >= 28;
+    final subtitle = _subtitleFor(entry, veiled);
+    final status = entry.unlocked ? '已达成' : (veiled ? '线索' : '进行中');
+    final heading = largeText
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _AchievementIcon(entry: entry, veiled: veiled),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      entry.name,
+                      style: const TextStyle(
+                        color: AchievementsScreen._ink,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Text(
+                subtitle,
+                style: const TextStyle(
+                  color: AchievementsScreen._muted,
+                  height: 1.25,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              const SizedBox(height: 10),
+              _StatusBadge(unlocked: entry.unlocked, veiled: veiled),
+            ],
+          )
+        : Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _AchievementIcon(entry: entry, veiled: veiled),
@@ -259,7 +292,7 @@ class _AchievementCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 6),
                     Text(
-                      _subtitleFor(entry, veiled),
+                      subtitle,
                       style: const TextStyle(
                         color: AchievementsScreen._muted,
                         height: 1.25,
@@ -272,17 +305,34 @@ class _AchievementCard extends StatelessWidget {
               const SizedBox(width: 8),
               _StatusBadge(unlocked: entry.unlocked, veiled: veiled),
             ],
+          );
+
+    return Semantics(
+      container: true,
+      label: veiled
+          ? '${entry.name}，$status，$subtitle'
+          : '${entry.name}，$status，$subtitle，'
+                '进度 ${entry.progress} / ${entry.target}，奖励 ${entry.rewardSummary}',
+      child: ExcludeSemantics(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: _cardDecoration(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              heading,
+              if (!veiled) ...[
+                const SizedBox(height: 14),
+                _ProgressLine(entry: entry),
+                const SizedBox(height: 10),
+                _RewardLine(
+                  summary: entry.rewardSummary,
+                  claimed: entry.rewardClaimed,
+                ),
+              ],
+            ],
           ),
-          if (!veiled) ...[
-            const SizedBox(height: 14),
-            _ProgressLine(entry: entry),
-            const SizedBox(height: 10),
-            _RewardLine(
-              summary: entry.rewardSummary,
-              claimed: entry.rewardClaimed,
-            ),
-          ],
-        ],
+        ),
       ),
     );
   }
@@ -423,7 +473,6 @@ class _RewardLine extends StatelessWidget {
         borderRadius: BorderRadius.circular(999),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
         children: [
           const AppIcon(
             'gift',
@@ -431,10 +480,9 @@ class _RewardLine extends StatelessWidget {
             fallback: Icons.card_giftcard_rounded,
           ),
           const SizedBox(width: 6),
-          Flexible(
+          Expanded(
             child: Text(
               claimed ? '已收下 · $summary' : summary,
-              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 color: AchievementsScreen._ink,
                 fontSize: 13,

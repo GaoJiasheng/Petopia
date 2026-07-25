@@ -25,7 +25,10 @@
     "location",
     "petName"
    ],
-   "tone": "把探索行为全部翻译成「找吃的」。"
+   "tone": "把探索行为全部翻译成「找吃的」。",
+   "locationIds": [
+    "loc_tide_flat"
+   ]
   },
   {
    "id": "tpl_gl_hb_03",
@@ -64,7 +67,10 @@
     "ownerName",
     "petName"
    ],
-   "tone": "嗅觉导航；「风景在饭旁边」句式。"
+   "tone": "嗅觉导航；「风景在饭旁边」句式。",
+   "locationIds": [
+    "loc_snowline_cabin"
+   ]
   },
   {
    "id": "tpl_gl_sd_03",
@@ -266,7 +272,10 @@
     "location",
     "petName"
    ],
-   "tone": "嘴硬后的小让步，可爱不刻薄。"
+   "tone": "嘴硬后的小让步，可爱不刻薄。",
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "tpl_gl_qh_01",
@@ -280,7 +289,10 @@
     "ownerName",
     "petName"
    ],
-   "tone": "奇幻设定第一时间用嘴验证。"
+   "tone": "奇幻设定第一时间用嘴验证。",
+   "locationIds": [
+    "loc_frosting_volcano"
+   ]
   },
   {
    "id": "tpl_gl_qh_02",
@@ -340,7 +352,10 @@
     "incident",
     "petName"
    ],
-   "tone": "行程表反差萌。"
+   "tone": "行程表反差萌。",
+   "locationIds": [
+    "loc_catback_reef"
+   ]
   },
   {
    "id": "tpl_lz_sd_01",
@@ -352,7 +367,10 @@
     "location",
     "petName"
    ],
-   "tone": "极短句 + 沉默社交。"
+   "tone": "极短句 + 沉默社交。",
+   "locationIds": [
+    "loc_monkey_spring"
+   ]
   },
   {
    "id": "tpl_lz_sd_02",
@@ -375,7 +393,10 @@
     "petName",
     "season"
    ],
-   "tone": "与云比慢并获胜的荒诞成就感。"
+   "tone": "与云比慢并获胜的荒诞成就感。",
+   "locationIds": [
+    "loc_cloud_pass"
+   ]
   },
   {
    "id": "tpl_lz_cs_01",
@@ -387,7 +408,10 @@
     "location",
     "petName"
    ],
-   "tone": "把整座城市浓缩成一个晒点。"
+   "tone": "把整座城市浓缩成一个晒点。",
+   "locationIds": [
+    "loc_rooftop_city"
+   ]
   },
   {
    "id": "tpl_lz_cs_02",
@@ -399,7 +423,10 @@
     "petName",
     "timeOfDay"
    ],
-   "tone": "三步弃追；万物皆催眠。"
+   "tone": "三步弃追；万物皆催眠。",
+   "locationIds": [
+    "loc_tram_street"
+   ]
   },
   {
    "id": "tpl_lz_cs_03",
@@ -422,7 +449,11 @@
     "location",
     "petName"
    ],
-   "tone": "与家具/环境融为一体。"
+   "tone": "与家具/环境融为一体。",
+   "locationIds": [
+    "loc_wheat_post",
+    "loc_apple_farm"
+   ]
   },
   {
    "id": "tpl_lz_xy_02",
@@ -446,7 +477,10 @@
     "ownerName",
     "petName"
    ],
-   "tone": "排比式偷懒宣言。"
+   "tone": "排比式偷懒宣言。",
+   "locationIds": [
+    "loc_windmill_pond"
+   ]
   },
   {
    "id": "tpl_lz_sl_01",
@@ -529,7 +563,10 @@
     "location",
     "petName"
    ],
-   "tone": "把「窝着」安排得明明白白。"
+   "tone": "把「窝着」安排得明明白白。",
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "tpl_lz_jd_02",
@@ -552,7 +589,10 @@
     "ownerName",
     "petName"
    ],
-   "tone": "漂流=懒的哲学化。"
+   "tone": "漂流=懒的哲学化。",
+   "locationIds": [
+    "loc_icefloe_lighthouse"
+   ]
   },
   {
    "id": "tpl_lz_qh_01",
@@ -564,7 +604,10 @@
     "location",
     "petName"
    ],
-   "tone": "连寄信都外包。"
+   "tone": "连寄信都外包。",
+   "locationIds": [
+    "loc_cloud_ranch"
+   ]
   },
   {
    "id": "tpl_lz_qh_02",
@@ -586,7 +629,10 @@
     "incident",
     "petName"
    ],
-   "tone": "静止旅行法专利宣言。"
+   "tone": "静止旅行法专利宣言。",
+   "locationIds": [
+    "loc_walking_island"
+   ]
   },
   {
    "id": "tpl_cu_hb_01",
@@ -598,7 +644,10 @@
     "location",
     "petName"
    ],
-   "tone": "数数执念 + 复核精神 + 尾留问题。"
+   "tone": "数数执念 + 复核精神 + 尾留问题。",
+   "locationIds": [
+    "loc_lighthouse_bay"
+   ]
   },
   {
    "id": "tpl_cu_hb_02",
@@ -622,7 +671,10 @@
     "petName",
     "weather"
    ],
-   "tone": "连环问；调查范围夸张。"
+   "tone": "连环问；调查范围夸张。",
+   "locationIds": [
+    "loc_tide_flat"
+   ]
   },
   {
    "id": "tpl_cu_sd_01",
@@ -634,7 +686,10 @@
     "location",
     "petName"
    ],
-   "tone": "重复实验 + 未解之谜的抓狂可爱。"
+   "tone": "重复实验 + 未解之谜的抓狂可爱。",
+   "locationIds": [
+    "loc_echo_canyon"
+   ]
   },
   {
    "id": "tpl_cu_sd_02",
@@ -657,7 +712,10 @@
     "petName",
     "timeOfDay"
    ],
-   "tone": "自问自答 + 生活化类比。"
+   "tone": "自问自答 + 生活化类比。",
+   "locationIds": [
+    "loc_cloud_pass"
+   ]
   },
   {
    "id": "tpl_cu_cs_01",
@@ -683,7 +741,10 @@
     "petName",
     "timeOfDay"
    ],
-   "tone": "研究结论=继续研究。"
+   "tone": "研究结论=继续研究。",
+   "locationIds": [
+    "loc_tram_street"
+   ]
   },
   {
    "id": "tpl_cu_cs_03",
@@ -695,7 +756,10 @@
     "location",
     "petName"
    ],
-   "tone": "清单式发现 + 认真排除法。"
+   "tone": "清单式发现 + 认真排除法。",
+   "locationIds": [
+    "loc_oldbook_alley"
+   ]
   },
   {
    "id": "tpl_cu_xy_01",
@@ -708,7 +772,10 @@
     "petName",
     "timeOfDay"
    ],
-   "tone": "蹲点失败不气馁。"
+   "tone": "蹲点失败不气馁。",
+   "locationIds": [
+    "loc_sunflower_station"
+   ]
   },
   {
    "id": "tpl_cu_xy_02",
@@ -720,7 +787,10 @@
     "petName",
     "weather"
    ],
-   "tone": "技能清单 + 预言应验的得意。"
+   "tone": "技能清单 + 预言应验的得意。",
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "tpl_cu_xy_03",
@@ -731,7 +801,10 @@
     "incident",
     "petName"
    ],
-   "tone": "信没写完人已出发。"
+   "tone": "信没写完人已出发。",
+   "locationIds": [
+    "loc_firefly_paddy"
+   ]
   },
   {
    "id": "tpl_cu_sl_01",
@@ -744,7 +817,10 @@
     "location",
     "petName"
    ],
-   "tone": "测量狂魔遇到全森林都不知道的谜。"
+   "tone": "测量狂魔遇到全森林都不知道的谜。",
+   "locationIds": [
+    "loc_mushroom_ring"
+   ]
   },
   {
    "id": "tpl_cu_sl_02",
@@ -754,7 +830,10 @@
    "slots": [
     "petName"
    ],
-   "tone": "跟踪送快递的执行力。"
+   "tone": "跟踪送快递的执行力。",
+   "locationIds": [
+    "loc_oak_postbox"
+   ]
   },
   {
    "id": "tpl_cu_sl_03",
@@ -766,7 +845,10 @@
     "petName",
     "timeOfDay"
    ],
-   "tone": "步数不对称的细思恐萌。"
+   "tone": "步数不对称的细思恐萌。",
+   "locationIds": [
+    "loc_fog_bridge"
+   ]
   },
   {
    "id": "tpl_cu_sm_01",
@@ -789,7 +871,10 @@
     "incident",
     "petName"
    ],
-   "tone": "动手派验证世界。"
+   "tone": "动手派验证世界。",
+   "locationIds": [
+    "loc_salt_lake"
+   ]
   },
   {
    "id": "tpl_cu_sm_03",
@@ -800,7 +885,10 @@
     "incident",
     "petName"
    ],
-   "tone": "进度条式好奇心。"
+   "tone": "进度条式好奇心。",
+   "locationIds": [
+    "loc_painted_bazaar"
+   ]
   },
   {
    "id": "tpl_cu_jd_01",
@@ -813,7 +901,10 @@
     "petName",
     "timeOfDay"
    ],
-   "tone": "卖关子失败的诚实。"
+   "tone": "卖关子失败的诚实。",
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "tpl_cu_jd_02",
@@ -835,7 +926,10 @@
     "incident",
     "petName"
    ],
-   "tone": "括号里的险情缩小化。"
+   "tone": "括号里的险情缩小化。",
+   "locationIds": [
+    "loc_blue_spring"
+   ]
   },
   {
    "id": "tpl_cu_qh_01",
@@ -847,7 +941,10 @@
     "location",
     "petName"
    ],
-   "tone": "追问到对方沉默。"
+   "tone": "追问到对方沉默。",
+   "locationIds": [
+    "loc_moon_post"
+   ]
   },
   {
    "id": "tpl_cu_qh_02",
@@ -858,7 +955,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "谜团+跟进宣言。"
+   "tone": "谜团+跟进宣言。",
+   "locationIds": [
+    "loc_walking_island"
+   ]
   },
   {
    "id": "tpl_cu_qh_03",
@@ -869,7 +969,10 @@
     "incident",
     "petName"
    ],
-   "tone": "荒诞设定下依然较真归属权。"
+   "tone": "荒诞设定下依然较真归属权。",
+   "locationIds": [
+    "loc_cloud_ranch"
+   ]
   },
   {
    "id": "tpl_ti_hb_01",
@@ -905,20 +1008,26 @@
     "location",
     "petName"
    ],
-   "tone": "把安全感对象拟人化收编。"
+   "tone": "把安全感对象拟人化收编。",
+   "locationIds": [
+    "loc_seafog_pier"
+   ]
   },
   {
    "id": "tpl_ti_sd_01",
    "personalityId": "p_timid",
    "category": "山地",
-   "skeleton": "{location}的吊桥会晃！我在桥头坐了半个{timeOfDay}做心理建设。{encounter}，它牵（叼）着我过去的。桥那边的风景我一点没敢看，回头补。——{petName}",
+   "skeleton": "{location}的峡谷风会突然变大！我在转弯处坐了半个{timeOfDay}做心理建设。{encounter}，它带我贴着岩壁慢慢走过去。路上的风景我一点没敢看，回头补。——{petName}",
    "slots": [
     "encounter",
     "location",
     "petName",
     "timeOfDay"
    ],
-   "tone": "被搭救式过桥；诚实的没看风景。"
+   "tone": "被搭救式穿过峡谷；诚实的没看风景。",
+   "locationIds": [
+    "loc_echo_canyon"
+   ]
   },
   {
    "id": "tpl_ti_sd_02",
@@ -929,7 +1038,10 @@
     "incident",
     "petName"
    ],
-   "tone": "把自然现象当成「凶我的人」。"
+   "tone": "把自然现象当成「凶我的人」。",
+   "locationIds": [
+    "loc_snowline_cabin"
+   ]
   },
   {
    "id": "tpl_ti_sd_03",
@@ -941,7 +1053,10 @@
     "petName",
     "season"
    ],
-   "tone": "同类安抚；「球朋友」暖点。"
+   "tone": "同类安抚；「球朋友」暖点。",
+   "locationIds": [
+    "loc_monkey_spring"
+   ]
   },
   {
    "id": "tpl_ti_cs_01",
@@ -953,7 +1068,10 @@
     "location",
     "petName"
    ],
-   "tone": "连箱子被搬走的好笑与善意。"
+   "tone": "连箱子被搬走的好笑与善意。",
+   "locationIds": [
+    "loc_tram_street"
+   ]
   },
   {
    "id": "tpl_ti_cs_02",
@@ -1000,7 +1118,10 @@
     "incident",
     "petName"
    ],
-   "tone": "胆小者的交友逻辑自洽。"
+   "tone": "胆小者的交友逻辑自洽。",
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "tpl_ti_xy_03",
@@ -1012,7 +1133,10 @@
     "petName",
     "timeOfDay"
    ],
-   "tone": "惊吓事后被重新解释为善意。"
+   "tone": "惊吓事后被重新解释为善意。",
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "tpl_ti_sl_01",
@@ -1047,7 +1171,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "末句「自己迈的一步」是本骨架泪点。"
+   "tone": "末句「自己迈的一步」是本骨架泪点。",
+   "locationIds": [
+    "loc_fog_bridge"
+   ]
   },
   {
    "id": "tpl_ti_sm_01",
@@ -1059,7 +1186,10 @@
     "location",
     "petName"
    ],
-   "tone": "数数镇静法 + 温柔比喻。"
+   "tone": "数数镇静法 + 温柔比喻。",
+   "locationIds": [
+    "loc_camel_oasis"
+   ]
   },
   {
    "id": "tpl_ti_sm_02",
@@ -1070,7 +1200,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "以「没有后退」立碑。"
+   "tone": "以「没有后退」立碑。",
+   "locationIds": [
+    "loc_painted_bazaar"
+   ]
   },
   {
    "id": "tpl_ti_sm_03",
@@ -1081,7 +1214,10 @@
     "petName",
     "timeOfDay"
    ],
-   "tone": "恐惧对象反转为守护者。"
+   "tone": "恐惧对象反转为守护者。",
+   "locationIds": [
+    "loc_wind_rocks"
+   ]
   },
   {
    "id": "tpl_ti_jd_01",
@@ -1105,7 +1241,10 @@
     "ownerName",
     "petName"
    ],
-   "tone": "三段式脱敏 + 末句纯净惊叹。"
+   "tone": "三段式脱敏 + 末句纯净惊叹。",
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "tpl_ti_jd_03",
@@ -1116,7 +1255,10 @@
     "incident",
     "petName"
    ],
-   "tone": "层层包裹的安全感句式。"
+   "tone": "层层包裹的安全感句式。",
+   "locationIds": [
+    "loc_steamboat_pier"
+   ]
   },
   {
    "id": "tpl_ti_qh_01",
@@ -1128,7 +1270,10 @@
     "location",
     "petName"
    ],
-   "tone": "恐惧动作被世界温柔接住。"
+   "tone": "恐惧动作被世界温柔接住。",
+   "locationIds": [
+    "loc_walking_island"
+   ]
   },
   {
    "id": "tpl_ti_qh_02",
@@ -1140,7 +1285,10 @@
     "ownerName",
     "petName"
    ],
-   "tone": "怕→被解释→安心使用；结尾轻。"
+   "tone": "怕→被解释→安心使用；结尾轻。",
+   "locationIds": [
+    "loc_moon_post"
+   ]
   },
   {
    "id": "tpl_ti_qh_03",
@@ -1151,7 +1299,10 @@
     "incident",
     "petName"
    ],
-   "tone": "惊吓的后果是甜的；秒原谅。"
+   "tone": "惊吓的后果是甜的；秒原谅。",
+   "locationIds": [
+    "loc_frosting_volcano"
+   ]
   },
   {
    "id": "tpl_en_hb_01",
@@ -1186,7 +1337,10 @@
     "incident",
     "petName"
    ],
-   "tone": "无理由快乐惊动他人。"
+   "tone": "无理由快乐惊动他人。",
+   "locationIds": [
+    "loc_lighthouse_bay"
+   ]
   },
   {
    "id": "tpl_en_sd_01",
@@ -1216,14 +1370,17 @@
    "id": "tpl_en_sd_03",
    "personalityId": "p_energetic",
    "category": "山地",
-   "skeleton": "山里的{timeOfDay}空气一吸就想跑！我从枫树跑到雪线又跑回来，一路的季节全见了一遍！！{ownerName}，我今天跑过了{season}！！——{petName}",
+   "skeleton": "山里的{timeOfDay}空气一吸就想跑！我沿着枫火岭一路跑上山脊又跑回来，满地枫叶都被我带着一起冲线！！{ownerName}，我今天跑过了整个{season}！！——{petName}",
    "slots": [
     "ownerName",
     "petName",
     "season",
     "timeOfDay"
    ],
-   "tone": "「跑过一个季节」的豪言。"
+   "tone": "「跑过一个季节」的豪言。",
+   "locationIds": [
+    "loc_maple_ridge"
+   ]
   },
   {
    "id": "tpl_en_cs_01",
@@ -1236,7 +1393,10 @@
     "location",
     "petName"
    ],
-   "tone": "城市地形=跑酷场。"
+   "tone": "城市地形=跑酷场。",
+   "locationIds": [
+    "loc_tram_street"
+   ]
   },
   {
    "id": "tpl_en_cs_02",
@@ -1246,7 +1406,10 @@
    "slots": [
     "petName"
    ],
-   "tone": "败也昂扬；把铃声解释为欢呼。"
+   "tone": "败也昂扬；把铃声解释为欢呼。",
+   "locationIds": [
+    "loc_tram_street"
+   ]
   },
   {
    "id": "tpl_en_cs_03",
@@ -1257,7 +1420,10 @@
     "incident",
     "petName"
    ],
-   "tone": "上得去就下得来的迷之自信。"
+   "tone": "上得去就下得来的迷之自信。",
+   "locationIds": [
+    "loc_rooftop_city"
+   ]
   },
   {
    "id": "tpl_en_xy_01",
@@ -1269,7 +1435,10 @@
     "location",
     "petName"
    ],
-   "tone": "给自然排名次。"
+   "tone": "给自然排名次。",
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "tpl_en_xy_02",
@@ -1280,7 +1449,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "一呼百应的群跑 + 夕阳=金牌。"
+   "tone": "一呼百应的群跑 + 夕阳=金牌。",
+   "locationIds": [
+    "loc_windmill_pond"
+   ]
   },
   {
    "id": "tpl_en_xy_03",
@@ -1292,7 +1464,10 @@
     "ownerName",
     "petName"
    ],
-   "tone": "给自己加班的快乐劳模。"
+   "tone": "给自己加班的快乐劳模。",
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "tpl_en_sl_01",
@@ -1315,7 +1490,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "平局大笑，胜负其次。"
+   "tone": "平局大笑，胜负其次。",
+   "locationIds": [
+    "loc_oak_postbox"
+   ]
   },
   {
    "id": "tpl_en_sl_03",
@@ -1326,7 +1504,10 @@
     "incident",
     "petName"
    ],
-   "tone": "自带解说的一人运动会。"
+   "tone": "自带解说的一人运动会。",
+   "locationIds": [
+    "loc_fog_bridge"
+   ]
   },
   {
    "id": "tpl_en_sm_01",
@@ -1360,7 +1541,10 @@
     "ownerName",
     "petName"
    ],
-   "tone": "追气球/追影子的无用功快乐。"
+   "tone": "追气球/追影子的无用功快乐。",
+   "locationIds": [
+    "loc_balloon_camp"
+   ]
   },
   {
    "id": "tpl_en_jd_01",
@@ -1393,7 +1577,10 @@
     "incident",
     "petName"
    ],
-   "tone": "发明多、成功少、快乐满。"
+   "tone": "发明多、成功少、快乐满。",
+   "locationIds": [
+    "loc_canal_town"
+   ]
   },
   {
    "id": "tpl_en_qh_01",
@@ -1405,7 +1592,10 @@
     "location",
     "petName"
    ],
-   "tone": "世界为我而建的自信。"
+   "tone": "世界为我而建的自信。",
+   "locationIds": [
+    "loc_cloud_ranch"
+   ]
   },
   {
    "id": "tpl_en_qh_02",
@@ -1416,7 +1606,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "自创纪录自己保持。"
+   "tone": "自创纪录自己保持。",
+   "locationIds": [
+    "loc_walking_island"
+   ]
   },
   {
    "id": "tpl_en_qh_03",
@@ -1427,7 +1620,10 @@
     "incident",
     "petName"
    ],
-   "tone": "口头答应身体诚实。"
+   "tone": "口头答应身体诚实。",
+   "locationIds": [
+    "loc_moon_post"
+   ]
   },
   {
    "id": "tpl_cl_hb_01",
@@ -1464,7 +1660,10 @@
     "incident",
     "petName"
    ],
-   "tone": "给想念找信使。"
+   "tone": "给想念找信使。",
+   "locationIds": [
+    "loc_shell_town"
+   ]
   },
   {
    "id": "tpl_cl_sd_01",
@@ -1499,7 +1698,10 @@
     "incident",
     "petName"
    ],
-   "tone": "想念打断享受的真实感。"
+   "tone": "想念打断享受的真实感。",
+   "locationIds": [
+    "loc_monkey_spring"
+   ]
   },
   {
    "id": "tpl_cl_cs_01",
@@ -1535,7 +1737,10 @@
     "incident",
     "petName"
    ],
-   "tone": "愿望清单置顶不变。"
+   "tone": "愿望清单置顶不变。",
+   "locationIds": [
+    "loc_ferris_wharf"
+   ]
   },
   {
    "id": "tpl_cl_xy_01",
@@ -1547,7 +1752,10 @@
     "location",
     "petName"
    ],
-   "tone": "高频寄信被工作人员盖章认证。"
+   "tone": "高频寄信被工作人员盖章认证。",
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "tpl_cl_xy_02",
@@ -1571,7 +1779,10 @@
     "incident",
     "petName"
    ],
-   "tone": "比喻怕不达意干脆注明。"
+   "tone": "比喻怕不达意干脆注明。",
+   "locationIds": [
+    "loc_sunflower_station"
+   ]
   },
   {
    "id": "tpl_cl_sl_01",
@@ -1583,7 +1794,10 @@
     "location",
     "petName"
    ],
-   "tone": "声音赛跑式想念。"
+   "tone": "声音赛跑式想念。",
+   "locationIds": [
+    "loc_oak_postbox"
+   ]
   },
   {
    "id": "tpl_cl_sl_02",
@@ -1605,7 +1819,10 @@
     "incident",
     "petName"
    ],
-   "tone": "信物=同行。"
+   "tone": "信物=同行。",
+   "locationIds": [
+    "loc_fog_bridge"
+   ]
   },
   {
    "id": "tpl_cl_sm_01",
@@ -1617,7 +1834,10 @@
     "ownerName",
     "petName"
    ],
-   "tone": "跨地共星的约定。"
+   "tone": "跨地共星的约定。",
+   "locationIds": [
+    "loc_salt_lake"
+   ]
   },
   {
    "id": "tpl_cl_sm_02",
@@ -1628,7 +1848,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "预约回家后的节目。"
+   "tone": "预约回家后的节目。",
+   "locationIds": [
+    "loc_camel_oasis"
+   ]
   },
   {
    "id": "tpl_cl_sm_03",
@@ -1650,7 +1873,10 @@
     "incident",
     "petName"
    ],
-   "tone": "美景的第一反应=分享给你。"
+   "tone": "美景的第一反应=分享给你。",
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "tpl_cl_jd_02",
@@ -1674,7 +1900,10 @@
     "ownerName",
     "petName"
    ],
-   "tone": "灯语拟人 + 复读的安心感。"
+   "tone": "灯语拟人 + 复读的安心感。",
+   "locationIds": [
+    "loc_icefloe_lighthouse"
+   ]
   },
   {
    "id": "tpl_cl_qh_01",
@@ -1686,7 +1915,10 @@
     "location",
     "petName"
    ],
-   "tone": "免邮票规则（承接示例 9）+ 隔空互动邀请。"
+   "tone": "免邮票规则（承接示例 9）+ 隔空互动邀请。",
+   "locationIds": [
+    "loc_moon_post"
+   ]
   },
   {
    "id": "tpl_cl_qh_02",
@@ -1697,7 +1929,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "把想念做成实体化浪漫。"
+   "tone": "把想念做成实体化浪漫。",
+   "locationIds": [
+    "loc_cloud_ranch"
+   ]
   },
   {
    "id": "tpl_cl_qh_03",
@@ -1708,7 +1943,10 @@
     "incident",
     "petName"
    ],
-   "tone": "万物助攻的甜。"
+   "tone": "万物助攻的甜。",
+   "locationIds": [
+    "loc_walking_island"
+   ]
   },
   {
    "id": "tpl_al_hb_01",
@@ -1741,7 +1979,10 @@
    "slots": [
     "petName"
    ],
-   "tone": "借光思家，说一半掐断。"
+   "tone": "借光思家，说一半掐断。",
+   "locationIds": [
+    "loc_lighthouse_bay"
+   ]
   },
   {
    "id": "tpl_al_sd_01",
@@ -1776,7 +2017,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "「仅记录事实」式的口是心非。"
+   "tone": "「仅记录事实」式的口是心非。",
+   "locationIds": [
+    "loc_snowline_cabin"
+   ]
   },
   {
    "id": "tpl_al_cs_01",
@@ -1810,7 +2054,10 @@
     "incident",
     "petName"
    ],
-   "tone": "最高评价也就到「勉强有点意思」。"
+   "tone": "最高评价也就到「勉强有点意思」。",
+   "locationIds": [
+    "loc_oldbook_alley"
+   ]
   },
   {
    "id": "tpl_al_xy_01",
@@ -1833,7 +2080,10 @@
     "incident",
     "petName"
    ],
-   "tone": "情绪归因给风沙的经典嘴硬。"
+   "tone": "情绪归因给风沙的经典嘴硬。",
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "tpl_al_xy_03",
@@ -1845,7 +2095,10 @@
     "location",
     "petName"
    ],
-   "tone": "「就提一句」的克制回忆。"
+   "tone": "「就提一句」的克制回忆。",
+   "locationIds": [
+    "loc_firefly_paddy"
+   ]
   },
   {
    "id": "tpl_al_sl_01",
@@ -1857,7 +2110,10 @@
     "location",
     "petName"
    ],
-   "tone": "独处宣言的小裂缝。"
+   "tone": "独处宣言的小裂缝。",
+   "locationIds": [
+    "loc_fog_bridge"
+   ]
   },
   {
    "id": "tpl_al_sl_02",
@@ -1878,7 +2134,10 @@
    "slots": [
     "petName"
    ],
-   "tone": "保密的告白等于告白。"
+   "tone": "保密的告白等于告白。",
+   "locationIds": [
+    "loc_oak_postbox"
+   ]
   },
   {
    "id": "tpl_al_sm_01",
@@ -1911,7 +2170,10 @@
    "slots": [
     "petName"
    ],
-   "tone": "万物「一般」，唯院子例外。"
+   "tone": "万物「一般」，唯院子例外。",
+   "locationIds": [
+    "loc_balloon_camp"
+   ]
   },
   {
    "id": "tpl_al_jd_01",
@@ -1923,7 +2185,10 @@
     "location",
     "petName"
    ],
-   "tone": "高冷破防的珍稀瞬间。"
+   "tone": "高冷破防的珍稀瞬间。",
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "tpl_al_jd_02",
@@ -1945,7 +2210,10 @@
     "incident",
     "petName"
    ],
-   "tone": "落款前的自我博弈直接写出来。"
+   "tone": "落款前的自我博弈直接写出来。",
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "tpl_al_qh_01",
@@ -1979,7 +2247,10 @@
     "incident",
     "petName"
    ],
-   "tone": "「不解释」三个字胜过千言。"
+   "tone": "「不解释」三个字胜过千言。",
+   "locationIds": [
+    "loc_moon_post"
+   ]
   },
   {
    "id": "tpl_na_hb_01",
@@ -1991,7 +2262,10 @@
     "location",
     "petName"
    ],
-   "tone": "澄清体+罚变赏（基准句式）。"
+   "tone": "澄清体+罚变赏（基准句式）。",
+   "locationIds": [
+    "loc_seafog_pier"
+   ]
   },
   {
    "id": "tpl_na_hb_02",
@@ -2025,7 +2299,10 @@
     "location",
     "petName"
    ],
-   "tone": "「我错了但是」句式。"
+   "tone": "「我错了但是」句式。",
+   "locationIds": [
+    "loc_echo_canyon"
+   ]
   },
   {
    "id": "tpl_na_sd_02",
@@ -2048,7 +2325,10 @@
     "incident",
     "petName"
    ],
-   "tone": "钻字眼的歪才。"
+   "tone": "钻字眼的歪才。",
+   "locationIds": [
+    "loc_monkey_spring"
+   ]
   },
   {
    "id": "tpl_na_cs_01",
@@ -2072,7 +2352,10 @@
     "incident",
     "petName"
    ],
-   "tone": "声明到一半自己招了。"
+   "tone": "声明到一半自己招了。",
+   "locationIds": [
+    "loc_oldbook_alley"
+   ]
   },
   {
    "id": "tpl_na_cs_03",
@@ -2084,7 +2367,10 @@
     "location",
     "petName"
    ],
-   "tone": "向主人炫耀式自首。"
+   "tone": "向主人炫耀式自首。",
+   "locationIds": [
+    "loc_rooftop_city"
+   ]
   },
   {
    "id": "tpl_na_xy_01",
@@ -2108,7 +2394,10 @@
     "incident",
     "petName"
    ],
-   "tone": "篡位式恶作剧的荒诞治理成果。"
+   "tone": "篡位式恶作剧的荒诞治理成果。",
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "tpl_na_xy_03",
@@ -2120,7 +2409,10 @@
     "petName",
     "season"
    ],
-   "tone": "找到共犯 + 受害者不知情的圆满。"
+   "tone": "找到共犯 + 受害者不知情的圆满。",
+   "locationIds": [
+    "loc_windmill_pond"
+   ]
   },
   {
    "id": "tpl_na_sl_01",
@@ -2131,7 +2423,10 @@
     "incident",
     "petName"
    ],
-   "tone": "从作案到入伙的丝滑。"
+   "tone": "从作案到入伙的丝滑。",
+   "locationIds": [
+    "loc_pinecone_market"
+   ]
   },
   {
    "id": "tpl_na_sl_02",
@@ -2142,7 +2437,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "恶作剧反噬自己。"
+   "tone": "恶作剧反噬自己。",
+   "locationIds": [
+    "loc_mushroom_ring"
+   ]
   },
   {
    "id": "tpl_na_sl_03",
@@ -2153,7 +2451,10 @@
     "incident",
     "petName"
    ],
-   "tone": "闯祸产出公共事业。"
+   "tone": "闯祸产出公共事业。",
+   "locationIds": [
+    "loc_oak_postbox"
+   ]
   },
   {
    "id": "tpl_na_sm_01",
@@ -2164,7 +2465,10 @@
     "incident",
     "petName"
    ],
-   "tone": "事故变作品变商品的三级跳。"
+   "tone": "事故变作品变商品的三级跳。",
+   "locationIds": [
+    "loc_painted_bazaar"
+   ]
   },
   {
    "id": "tpl_na_sm_02",
@@ -2175,7 +2479,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "混乱被官方采纳。"
+   "tone": "混乱被官方采纳。",
+   "locationIds": [
+    "loc_camel_oasis"
+   ]
   },
   {
    "id": "tpl_na_sm_03",
@@ -2186,7 +2493,10 @@
     "incident",
     "petName"
    ],
-   "tone": "出名不问方式。"
+   "tone": "出名不问方式。",
+   "locationIds": [
+    "loc_balloon_camp"
+   ]
   },
   {
    "id": "tpl_na_jd_01",
@@ -2198,7 +2508,10 @@
     "location",
     "petName"
    ],
-   "tone": "坏事其实是好事，且顺杆爬。"
+   "tone": "坏事其实是好事，且顺杆爬。",
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "tpl_na_jd_02",
@@ -2215,12 +2528,15 @@
    "id": "tpl_na_jd_03",
    "personalityId": "p_naughty",
    "category": "极地水域",
-   "skeleton": "往温泉里丢了颗雪球，想看它化。旁边泡汤的老海豹被溅了一脸。{incident}。现在丢雪球成了这里的泡汤仪式，是我发明的，没人知道，你知道就行。——{petName}",
+   "skeleton": "往蓝洞泉里丢了颗雪球，想看它会不会染成蓝色。旁边看水的老海豹被溅了一脸。{incident}。现在丢雪球成了这里的许愿仪式，是我发明的，没人知道，你知道就行。——{petName}",
    "slots": [
     "incident",
     "petName"
    ],
-   "tone": "匿名发明家只向主人邀功。"
+   "tone": "匿名发明家只向主人邀功。",
+   "locationIds": [
+    "loc_blue_spring"
+   ]
   },
   {
    "id": "tpl_na_qh_01",
@@ -2231,7 +2547,10 @@
     "incident",
     "petName"
    ],
-   "tone": "单方面宣布获得同意。"
+   "tone": "单方面宣布获得同意。",
+   "locationIds": [
+    "loc_cloud_ranch"
+   ]
   },
   {
    "id": "tpl_na_qh_02",
@@ -2242,7 +2561,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "无中生有的恶作剧美学。"
+   "tone": "无中生有的恶作剧美学。",
+   "locationIds": [
+    "loc_moon_post"
+   ]
   },
   {
    "id": "tpl_na_qh_03",
@@ -2253,7 +2575,10 @@
     "incident",
     "petName"
    ],
-   "tone": "狼来了的现世报。"
+   "tone": "狼来了的现世报。",
+   "locationIds": [
+    "loc_frosting_volcano"
+   ]
   },
   {
    "id": "tpl_ge_hb_01",
@@ -2276,7 +2601,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "信物的对半逻辑，温柔的仪式感。"
+   "tone": "信物的对半逻辑，温柔的仪式感。",
+   "locationIds": [
+    "loc_shell_town"
+   ]
   },
   {
    "id": "tpl_ge_hb_03",
@@ -2288,7 +2616,10 @@
     "petName",
     "timeOfDay"
    ],
-   "tone": "微小善行的可爱计量。"
+   "tone": "微小善行的可爱计量。",
+   "locationIds": [
+    "loc_tide_flat"
+   ]
   },
   {
    "id": "tpl_ge_sd_01",
@@ -2312,7 +2643,10 @@
     "incident",
     "petName"
    ],
-   "tone": "无名善意接力。"
+   "tone": "无名善意接力。",
+   "locationIds": [
+    "loc_snowline_cabin"
+   ]
   },
   {
    "id": "tpl_ge_sd_03",
@@ -2323,7 +2657,10 @@
     "location",
     "petName"
    ],
-   "tone": "被善意感染后的顺手善意。"
+   "tone": "被善意感染后的顺手善意。",
+   "locationIds": [
+    "loc_monkey_spring"
+   ]
   },
   {
    "id": "tpl_ge_cs_01",
@@ -2335,7 +2672,10 @@
     "location",
     "petName"
    ],
-   "tone": "「比白天软」的城市观察。"
+   "tone": "「比白天软」的城市观察。",
+   "locationIds": [
+    "loc_midnight_noodles"
+   ]
   },
   {
    "id": "tpl_ge_cs_02",
@@ -2357,7 +2697,10 @@
     "incident",
     "petName"
    ],
-   "tone": "连「赶」都照顾对方情绪。"
+   "tone": "连「赶」都照顾对方情绪。",
+   "locationIds": [
+    "loc_oldbook_alley"
+   ]
   },
   {
    "id": "tpl_ge_xy_01",
@@ -2391,7 +2734,10 @@
     "incident",
     "petName"
    ],
-   "tone": "为一颗纽扣反复斟酌的细腻。"
+   "tone": "为一颗纽扣反复斟酌的细腻。",
+   "locationIds": [
+    "loc_sunflower_station"
+   ]
   },
   {
    "id": "tpl_ge_sl_01",
@@ -2425,7 +2771,10 @@
     "incident",
     "petName"
    ],
-   "tone": "「反正会照亮谁的」的笃定善意。"
+   "tone": "「反正会照亮谁的」的笃定善意。",
+   "locationIds": [
+    "loc_fog_bridge"
+   ]
   },
   {
    "id": "tpl_ge_sm_01",
@@ -2436,7 +2785,10 @@
     "incident",
     "petName"
    ],
-   "tone": "注意到「最小的那只」是温柔性格的雷达。"
+   "tone": "注意到「最小的那只」是温柔性格的雷达。",
+   "locationIds": [
+    "loc_camel_oasis"
+   ]
   },
   {
    "id": "tpl_ge_sm_02",
@@ -2447,7 +2799,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "陪伴式帮助的回礼闭环。"
+   "tone": "陪伴式帮助的回礼闭环。",
+   "locationIds": [
+    "loc_painted_bazaar"
+   ]
   },
   {
    "id": "tpl_ge_sm_03",
@@ -2469,7 +2824,10 @@
     "incident",
     "petName"
    ],
-   "tone": "静默陪伴的高级温柔。"
+   "tone": "静默陪伴的高级温柔。",
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "tpl_ge_jd_02",
@@ -2492,7 +2850,10 @@
     "location",
     "petName"
    ],
-   "tone": "末句反转「冷是假的」。"
+   "tone": "末句反转「冷是假的」。",
+   "locationIds": [
+    "loc_icefloe_lighthouse"
+   ]
   },
   {
    "id": "tpl_ge_qh_01",
@@ -2503,7 +2864,10 @@
     "incident",
     "petName"
    ],
-   "tone": "对「等待」本身的温柔。"
+   "tone": "对「等待」本身的温柔。",
+   "locationIds": [
+    "loc_moon_post"
+   ]
   },
   {
    "id": "tpl_ge_qh_02",
@@ -2515,7 +2879,10 @@
     "petName",
     "season"
    ],
-   "tone": "为大地投温柔一票。"
+   "tone": "为大地投温柔一票。",
+   "locationIds": [
+    "loc_walking_island"
+   ]
   },
   {
    "id": "tpl_ge_qh_03",
@@ -2526,7 +2893,10 @@
     "incident",
     "petName"
    ],
-   "tone": "告别写成轻盈的仪式——呼应设计支柱 2。"
+   "tone": "告别写成轻盈的仪式——呼应设计支柱 2。",
+   "locationIds": [
+    "loc_cloud_ranch"
+   ]
   },
   {
    "id": "tpl_dr_hb_01",
@@ -2550,7 +2920,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "给海编年史。"
+   "tone": "给海编年史。",
+   "locationIds": [
+    "loc_shell_town"
+   ]
   },
   {
    "id": "tpl_dr_hb_03",
@@ -2562,7 +2935,10 @@
     "location",
     "petName"
    ],
-   "tone": "自我物化成罐头的奇想 + 落点想家。"
+   "tone": "自我物化成罐头的奇想 + 落点想家。",
+   "locationIds": [
+    "loc_seafog_pier"
+   ]
   },
   {
    "id": "tpl_dr_sd_01",
@@ -2574,7 +2950,10 @@
     "location",
     "petName"
    ],
-   "tone": "绵羊云原句系（§2.3 基准）；数羊→想家的滑轨。"
+   "tone": "绵羊云原句系（§2.3 基准）；数羊→想家的滑轨。",
+   "locationIds": [
+    "loc_cloud_pass"
+   ]
   },
   {
    "id": "tpl_dr_sd_02",
@@ -2585,7 +2964,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "山=记事本；保密式点名。"
+   "tone": "山=记事本；保密式点名。",
+   "locationIds": [
+    "loc_echo_canyon"
+   ]
   },
   {
    "id": "tpl_dr_sd_03",
@@ -2597,7 +2979,10 @@
     "petName",
     "season"
    ],
-   "tone": "双重幻想并行不悖，「都信」。"
+   "tone": "双重幻想并行不悖，「都信」。",
+   "locationIds": [
+    "loc_maple_ridge"
+   ]
   },
   {
    "id": "tpl_dr_cs_01",
@@ -2621,7 +3006,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "城市拟人化到「翻身」。"
+   "tone": "城市拟人化到「翻身」。",
+   "locationIds": [
+    "loc_ferris_wharf"
+   ]
   },
   {
    "id": "tpl_dr_cs_03",
@@ -2632,7 +3020,10 @@
     "incident",
     "petName"
    ],
-   "tone": "托运梦境的浪漫物流。"
+   "tone": "托运梦境的浪漫物流。",
+   "locationIds": [
+    "loc_tram_street"
+   ]
   },
   {
    "id": "tpl_dr_xy_01",
@@ -2643,7 +3034,10 @@
     "incident",
     "petName"
    ],
-   "tone": "稻田=星空幼儿园；「毕业」一词轻触玩家泪点。"
+   "tone": "稻田=星空幼儿园；「毕业」一词轻触玩家泪点。",
+   "locationIds": [
+    "loc_firefly_paddy"
+   ]
   },
   {
    "id": "tpl_dr_xy_02",
@@ -2654,7 +3048,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "「没有证据但有道理」的幻想派认证。"
+   "tone": "「没有证据但有道理」的幻想派认证。",
+   "locationIds": [
+    "loc_windmill_pond"
+   ]
   },
   {
    "id": "tpl_dr_xy_03",
@@ -2665,7 +3062,10 @@
     "incident",
     "petName"
    ],
-   "tone": "置身信中；麦子点头收尾。"
+   "tone": "置身信中；麦子点头收尾。",
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "tpl_dr_sl_01",
@@ -2677,7 +3077,10 @@
     "location",
     "petName"
    ],
-   "tone": "自比标点的元幻想。"
+   "tone": "自比标点的元幻想。",
+   "locationIds": [
+    "loc_fog_bridge"
+   ]
   },
   {
    "id": "tpl_dr_sl_02",
@@ -2688,7 +3091,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "年轮=日记；存心事的动作落地。"
+   "tone": "年轮=日记；存心事的动作落地。",
+   "locationIds": [
+    "loc_oak_postbox"
+   ]
   },
   {
    "id": "tpl_dr_sl_03",
@@ -2700,7 +3106,10 @@
     "petName",
     "timeOfDay"
    ],
-   "tone": "对幻想世界的礼貌边界感。"
+   "tone": "对幻想世界的礼貌边界感。",
+   "locationIds": [
+    "loc_mushroom_ring"
+   ]
   },
   {
    "id": "tpl_dr_sm_01",
@@ -2714,7 +3123,10 @@
     "petName",
     "timeOfDay"
    ],
-   "tone": "人融进画（承接示例 8）；颜色系于主人。"
+   "tone": "人融进画（承接示例 8）；颜色系于主人。",
+   "locationIds": [
+    "loc_painted_bazaar"
+   ]
   },
   {
    "id": "tpl_dr_sm_02",
@@ -2725,7 +3137,10 @@
     "incident",
     "petName"
    ],
-   "tone": "镜像世界的双倍愿望；可挂接 ev_s03 呼应位。"
+   "tone": "镜像世界的双倍愿望；可挂接 ev_s03 呼应位。",
+   "locationIds": [
+    "loc_salt_lake"
+   ]
   },
   {
    "id": "tpl_dr_sm_03",
@@ -2736,7 +3151,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "接过别人的幻想再加工。"
+   "tone": "接过别人的幻想再加工。",
+   "locationIds": [
+    "loc_camel_oasis"
+   ]
   },
   {
    "id": "tpl_dr_jd_01",
@@ -2748,7 +3166,10 @@
     "location",
     "petName"
    ],
-   "tone": "给极光当翻译；译文治愈且极简。"
+   "tone": "给极光当翻译；译文治愈且极简。",
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "tpl_dr_jd_02",
@@ -2759,7 +3180,10 @@
     "encounter",
     "petName"
    ],
-   "tone": "对视句式「安静也看了看我」。"
+   "tone": "对视句式「安静也看了看我」。",
+   "locationIds": [
+    "loc_blue_spring"
+   ]
   },
   {
    "id": "tpl_dr_jd_03",
@@ -2770,7 +3194,10 @@
     "incident",
     "petName"
    ],
-   "tone": "灯塔读信的守夜意象。"
+   "tone": "灯塔读信的守夜意象。",
+   "locationIds": [
+    "loc_icefloe_lighthouse"
+   ]
   },
   {
    "id": "tpl_dr_qh_01",
@@ -2804,7 +3231,10 @@
     "incident",
     "petName"
    ],
-   "tone": "为「突然想念」发明世界观机制。"
+   "tone": "为「突然想念」发明世界观机制。",
+   "locationIds": [
+    "loc_moon_post"
+   ]
   }
  ],
  "encounters": [
@@ -2822,7 +3252,10 @@
    "phrase": "灯塔管理员留我在塔里过了一夜",
    "personalityBias": {
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_lighthouse_bay"
+   ]
   },
   {
    "id": "enc_hb_03",
@@ -2849,7 +3282,10 @@
    "personalityBias": {
     "p_curious": 2.0,
     "p_clingy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_shell_town"
+   ]
   },
   {
    "id": "enc_hb_06",
@@ -2857,7 +3293,10 @@
    "phrase": "帮寄居蟹搬家队抬了一下午「新房」",
    "personalityBias": {
     "p_gentle": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_shell_town"
+   ]
   },
   {
    "id": "enc_hb_07",
@@ -2866,7 +3305,10 @@
    "personalityBias": {
     "p_aloof": 2.0,
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_seafog_pier"
+   ]
   },
   {
    "id": "enc_hb_08",
@@ -2883,7 +3325,10 @@
    "personalityBias": {
     "p_aloof": 2.0,
     "p_clingy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_monkey_spring"
+   ]
   },
   {
    "id": "enc_sd_02",
@@ -2909,7 +3354,10 @@
    "personalityBias": {
     "p_glutton": 2.0,
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_maple_ridge"
+   ]
   },
   {
    "id": "enc_sd_05",
@@ -2918,7 +3366,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_aloof": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_cloud_pass"
+   ]
   },
   {
    "id": "enc_sd_06",
@@ -2936,7 +3387,10 @@
    "personalityBias": {
     "p_timid": 2.0,
     "p_gentle": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_snowline_cabin"
+   ]
   },
   {
    "id": "enc_sd_08",
@@ -2945,7 +3399,10 @@
    "personalityBias": {
     "p_curious": 2.0,
     "p_lazy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_monkey_spring"
+   ]
   },
   {
    "id": "enc_cs_01",
@@ -2953,7 +3410,10 @@
    "phrase": "面馆老板给我留了一块叉烧",
    "personalityBias": {
     "p_glutton": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_midnight_noodles"
+   ]
   },
   {
    "id": "enc_cs_02",
@@ -2962,7 +3422,10 @@
    "personalityBias": {
     "p_naughty": 2.0,
     "p_energetic": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_tram_street"
+   ]
   },
   {
    "id": "enc_cs_03",
@@ -2971,7 +3434,10 @@
    "personalityBias": {
     "p_aloof": 2.0,
     "p_lazy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_oldbook_alley"
+   ]
   },
   {
    "id": "enc_cs_04",
@@ -2980,7 +3446,10 @@
    "personalityBias": {
     "p_lazy": 2.0,
     "p_curious": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_rooftop_city"
+   ]
   },
   {
    "id": "enc_cs_05",
@@ -2989,7 +3458,10 @@
    "personalityBias": {
     "p_gentle": 2.0,
     "p_clingy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_tram_street"
+   ]
   },
   {
    "id": "enc_cs_06",
@@ -2997,7 +3469,10 @@
    "phrase": "街头画家边画我边跟我聊了一下午",
    "personalityBias": {
     "p_dreamy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_ferris_wharf"
+   ]
   },
   {
    "id": "enc_cs_07",
@@ -3006,7 +3481,10 @@
    "personalityBias": {
     "p_aloof": 2.0,
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_midnight_noodles"
+   ]
   },
   {
    "id": "enc_cs_08",
@@ -3015,7 +3493,10 @@
    "personalityBias": {
     "p_energetic": 2.0,
     "p_naughty": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_ferris_wharf"
+   ]
   },
   {
    "id": "enc_xy_01",
@@ -3024,7 +3505,10 @@
    "personalityBias": {
     "p_glutton": 2.0,
     "p_naughty": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_apple_farm"
+   ]
   },
   {
    "id": "enc_xy_02",
@@ -3033,7 +3517,10 @@
    "personalityBias": {
     "p_clingy": 2.0,
     "p_energetic": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "enc_xy_03",
@@ -3041,7 +3528,10 @@
    "phrase": "凶了我一路的大鹅最后给我带了路",
    "personalityBias": {
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_windmill_pond"
+   ]
   },
   {
    "id": "enc_xy_04",
@@ -3050,7 +3540,10 @@
    "personalityBias": {
     "p_gentle": 2.0,
     "p_glutton": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "enc_xy_05",
@@ -3058,7 +3551,10 @@
    "phrase": "我和看田大爷在风车下拼了一场午觉",
    "personalityBias": {
     "p_lazy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_windmill_pond"
+   ]
   },
   {
    "id": "enc_xy_06",
@@ -3067,7 +3563,11 @@
    "personalityBias": {
     "p_timid": 2.0,
     "p_dreamy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_wheat_post",
+    "loc_sunflower_station"
+   ]
   },
   {
    "id": "enc_xy_07",
@@ -3076,7 +3576,10 @@
    "personalityBias": {
     "p_glutton": 2.0,
     "p_curious": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_apple_farm"
+   ]
   },
   {
    "id": "enc_xy_08",
@@ -3085,7 +3588,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_gentle": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_firefly_paddy"
+   ]
   },
   {
    "id": "enc_sl_01",
@@ -3094,7 +3600,10 @@
    "personalityBias": {
     "p_glutton": 2.0,
     "p_naughty": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_pinecone_market"
+   ]
   },
   {
    "id": "enc_sl_02",
@@ -3103,7 +3612,10 @@
    "personalityBias": {
     "p_timid": 2.0,
     "p_gentle": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_logger_lodge"
+   ]
   },
   {
    "id": "enc_sl_03",
@@ -3111,7 +3623,10 @@
    "phrase": "猫头鹰局长请我参观了树洞邮筒的内部",
    "personalityBias": {
     "p_curious": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_oak_postbox"
+   ]
   },
   {
    "id": "enc_sl_04",
@@ -3120,7 +3635,10 @@
    "personalityBias": {
     "p_gentle": 2.0,
     "p_glutton": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_mushroom_ring"
+   ]
   },
   {
    "id": "enc_sl_05",
@@ -3128,7 +3646,11 @@
    "phrase": "伐木屋的大狗约我赛跑到千年橡树",
    "personalityBias": {
     "p_energetic": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_logger_lodge",
+    "loc_oak_postbox"
+   ]
   },
   {
    "id": "enc_sl_06",
@@ -3137,7 +3659,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_fog_bridge"
+   ]
   },
   {
    "id": "enc_sl_07",
@@ -3146,7 +3671,10 @@
    "personalityBias": {
     "p_curious": 2.0,
     "p_aloof": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_fog_bridge"
+   ]
   },
   {
    "id": "enc_sl_08",
@@ -3155,7 +3683,10 @@
    "personalityBias": {
     "p_glutton": 2.0,
     "p_lazy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_logger_lodge"
+   ]
   },
   {
    "id": "enc_sm_01",
@@ -3164,7 +3695,10 @@
    "personalityBias": {
     "p_energetic": 2.0,
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_camel_oasis"
+   ]
   },
   {
    "id": "enc_sm_02",
@@ -3172,7 +3706,10 @@
    "phrase": "画家找了我半小时，然后请我当了颜色顾问",
    "personalityBias": {
     "p_dreamy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_painted_bazaar"
+   ]
   },
   {
    "id": "enc_sm_03",
@@ -3181,7 +3718,10 @@
    "personalityBias": {
     "p_glutton": 2.0,
     "p_aloof": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_painted_bazaar"
+   ]
   },
   {
    "id": "enc_sm_04",
@@ -3199,7 +3739,10 @@
    "personalityBias": {
     "p_energetic": 2.0,
     "p_dreamy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_balloon_camp"
+   ]
   },
   {
    "id": "enc_sm_06",
@@ -3207,7 +3750,10 @@
    "phrase": "我帮看井人给排队的旅客舀了一下午水",
    "personalityBias": {
     "p_gentle": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_camel_oasis"
+   ]
   },
   {
    "id": "enc_sm_07",
@@ -3216,7 +3762,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_clingy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_salt_lake"
+   ]
   },
   {
    "id": "enc_jd_01",
@@ -3225,7 +3774,10 @@
    "personalityBias": {
     "p_timid": 2.0,
     "p_gentle": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "enc_jd_02",
@@ -3251,7 +3803,10 @@
    "personalityBias": {
     "p_aloof": 2.0,
     "p_dreamy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_icefloe_lighthouse"
+   ]
   },
   {
    "id": "enc_jd_05",
@@ -3268,7 +3823,10 @@
    "phrase": "船夫分了我半条热气腾腾的烤鱼",
    "personalityBias": {
     "p_glutton": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_steamboat_pier"
+   ]
   },
   {
    "id": "enc_jd_07",
@@ -3277,7 +3835,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_aloof": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "enc_qh_01",
@@ -3286,7 +3847,10 @@
    "personalityBias": {
     "p_clingy": 2.0,
     "p_gentle": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_moon_post"
+   ]
   },
   {
    "id": "enc_qh_02",
@@ -3295,7 +3859,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_energetic": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_cloud_ranch"
+   ]
   },
   {
    "id": "enc_qh_03",
@@ -3304,7 +3871,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_curious": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_walking_island"
+   ]
   },
   {
    "id": "enc_qh_04",
@@ -3313,7 +3883,10 @@
    "personalityBias": {
     "p_glutton": 2.0,
     "p_naughty": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_frosting_volcano"
+   ]
   },
   {
    "id": "enc_qh_05",
@@ -3322,7 +3895,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_star_repair"
+   ]
   },
   {
    "id": "enc_qh_06",
@@ -3331,7 +3907,10 @@
    "personalityBias": {
     "p_gentle": 2.0,
     "p_clingy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_moon_post"
+   ]
   }
  ],
  "incidents": [
@@ -3363,7 +3942,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_curious": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_tide_flat"
+   ]
   },
   {
    "id": "inc_hb_04",
@@ -3392,7 +3974,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_gentle": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_lighthouse_bay"
+   ]
   },
   {
    "id": "inc_hb_07",
@@ -3421,7 +4006,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_energetic": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_cloud_pass"
+   ]
   },
   {
    "id": "inc_sd_02",
@@ -3431,7 +4019,10 @@
    "personalityBias": {
     "p_lazy": 2.0,
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_monkey_spring"
+   ]
   },
   {
    "id": "inc_sd_03",
@@ -3441,7 +4032,10 @@
    "personalityBias": {
     "p_naughty": 2.0,
     "p_curious": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_echo_canyon"
+   ]
   },
   {
    "id": "inc_sd_04",
@@ -3451,7 +4045,10 @@
    "personalityBias": {
     "p_glutton": 2.0,
     "p_naughty": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_maple_ridge"
+   ]
   },
   {
    "id": "inc_sd_05",
@@ -3461,7 +4058,10 @@
    "personalityBias": {
     "p_gentle": 2.0,
     "p_dreamy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_maple_ridge"
+   ]
   },
   {
    "id": "inc_sd_06",
@@ -3471,7 +4071,10 @@
    "personalityBias": {
     "p_aloof": 2.0,
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_snowline_cabin"
+   ]
   },
   {
    "id": "inc_sd_07",
@@ -3481,7 +4084,10 @@
    "personalityBias": {
     "p_energetic": 2.0,
     "p_lazy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_cloud_pass"
+   ]
   },
   {
    "id": "inc_sd_08",
@@ -3490,7 +4096,10 @@
    "poseHint": "gaze",
    "personalityBias": {
     "p_clingy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_snowline_cabin"
+   ]
   },
   {
    "id": "inc_cs_01",
@@ -3499,7 +4108,10 @@
    "poseHint": "surprise",
    "personalityBias": {
     "p_naughty": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_tram_street"
+   ]
   },
   {
    "id": "inc_cs_02",
@@ -3508,7 +4120,10 @@
    "poseHint": "eat",
    "personalityBias": {
     "p_clingy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_midnight_noodles"
+   ]
   },
   {
    "id": "inc_cs_03",
@@ -3518,7 +4133,11 @@
    "personalityBias": {
     "p_aloof": 2.0,
     "p_naughty": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_tram_street",
+    "loc_midnight_noodles"
+   ]
   },
   {
    "id": "inc_cs_04",
@@ -3528,7 +4147,10 @@
    "personalityBias": {
     "p_lazy": 2.0,
     "p_curious": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_oldbook_alley"
+   ]
   },
   {
    "id": "inc_cs_05",
@@ -3538,7 +4160,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_ferris_wharf"
+   ]
   },
   {
    "id": "inc_cs_06",
@@ -3548,7 +4173,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_lazy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_rooftop_city"
+   ]
   },
   {
    "id": "inc_cs_07",
@@ -3558,7 +4186,10 @@
    "personalityBias": {
     "p_energetic": 2.0,
     "p_glutton": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_midnight_noodles"
+   ]
   },
   {
    "id": "inc_cs_08",
@@ -3568,7 +4199,10 @@
    "personalityBias": {
     "p_curious": 2.0,
     "p_aloof": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_oldbook_alley"
+   ]
   },
   {
    "id": "inc_xy_01",
@@ -3578,7 +4212,10 @@
    "personalityBias": {
     "p_glutton": 2.0,
     "p_naughty": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_apple_farm"
+   ]
   },
   {
    "id": "inc_xy_02",
@@ -3588,7 +4225,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_gentle": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_firefly_paddy"
+   ]
   },
   {
    "id": "inc_xy_03",
@@ -3598,7 +4238,10 @@
    "personalityBias": {
     "p_curious": 2.0,
     "p_gentle": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_sunflower_station"
+   ]
   },
   {
    "id": "inc_xy_04",
@@ -3607,7 +4250,10 @@
    "poseHint": "sleep",
    "personalityBias": {
     "p_lazy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "inc_xy_05",
@@ -3617,7 +4263,10 @@
    "personalityBias": {
     "p_energetic": 2.0,
     "p_naughty": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_windmill_pond"
+   ]
   },
   {
    "id": "inc_xy_06",
@@ -3626,7 +4275,10 @@
    "poseHint": "gaze",
    "personalityBias": {
     "p_dreamy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "inc_xy_07",
@@ -3636,7 +4288,10 @@
    "personalityBias": {
     "p_naughty": 2.0,
     "p_gentle": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_apple_farm"
+   ]
   },
   {
    "id": "inc_xy_08",
@@ -3645,7 +4300,10 @@
    "poseHint": "photo",
    "personalityBias": {
     "p_clingy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_wheat_post"
+   ]
   },
   {
    "id": "inc_sl_01",
@@ -3655,7 +4313,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_mushroom_ring"
+   ]
   },
   {
    "id": "inc_sl_02",
@@ -3664,7 +4325,10 @@
    "poseHint": "surprise",
    "personalityBias": {
     "p_glutton": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_pinecone_market"
+   ]
   },
   {
    "id": "inc_sl_03",
@@ -3684,7 +4348,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_aloof": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_fog_bridge"
+   ]
   },
   {
    "id": "inc_sl_05",
@@ -3704,7 +4371,10 @@
    "personalityBias": {
     "p_gentle": 2.0,
     "p_clingy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_oak_postbox"
+   ]
   },
   {
    "id": "inc_sl_07",
@@ -3714,7 +4384,10 @@
    "personalityBias": {
     "p_glutton": 2.0,
     "p_dreamy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_pinecone_market"
+   ]
   },
   {
    "id": "inc_sl_08",
@@ -3733,7 +4406,10 @@
    "poseHint": "gaze",
    "personalityBias": {
     "p_dreamy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_salt_lake"
+   ]
   },
   {
    "id": "inc_sm_02",
@@ -3742,7 +4418,10 @@
    "poseHint": "surprise",
    "personalityBias": {
     "p_naughty": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_painted_bazaar"
+   ]
   },
   {
    "id": "inc_sm_03",
@@ -3762,7 +4441,10 @@
    "personalityBias": {
     "p_glutton": 2.0,
     "p_energetic": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_camel_oasis"
+   ]
   },
   {
    "id": "inc_sm_05",
@@ -3782,7 +4464,10 @@
    "personalityBias": {
     "p_clingy": 2.0,
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_painted_bazaar"
+   ]
   },
   {
    "id": "inc_sm_07",
@@ -3792,7 +4477,10 @@
    "personalityBias": {
     "p_energetic": 2.0,
     "p_naughty": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_balloon_camp"
+   ]
   },
   {
    "id": "inc_sm_08",
@@ -3802,7 +4490,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_clingy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_salt_lake"
+   ]
   },
   {
    "id": "inc_jd_01",
@@ -3812,7 +4503,10 @@
    "personalityBias": {
     "p_energetic": 2.0,
     "p_dreamy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "inc_jd_02",
@@ -3831,7 +4525,10 @@
    "poseHint": "surprise",
    "personalityBias": {
     "p_curious": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_steamboat_pier"
+   ]
   },
   {
    "id": "inc_jd_04",
@@ -3841,7 +4538,10 @@
    "personalityBias": {
     "p_lazy": 2.0,
     "p_timid": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_icefloe_lighthouse"
+   ]
   },
   {
    "id": "inc_jd_05",
@@ -3851,7 +4551,10 @@
    "personalityBias": {
     "p_curious": 2.0,
     "p_naughty": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_icefloe_lighthouse"
+   ]
   },
   {
    "id": "inc_jd_06",
@@ -3861,7 +4564,10 @@
    "personalityBias": {
     "p_gentle": 2.0,
     "p_clingy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_aurora_village"
+   ]
   },
   {
    "id": "inc_jd_07",
@@ -3871,7 +4577,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_aloof": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_blue_spring"
+   ]
   },
   {
    "id": "inc_qh_01",
@@ -3881,7 +4590,10 @@
    "personalityBias": {
     "p_dreamy": 2.0,
     "p_gentle": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_cloud_ranch"
+   ]
   },
   {
    "id": "inc_qh_02",
@@ -3891,7 +4603,10 @@
    "personalityBias": {
     "p_naughty": 2.0,
     "p_energetic": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_walking_island"
+   ]
   },
   {
    "id": "inc_qh_03",
@@ -3901,7 +4616,10 @@
    "personalityBias": {
     "p_clingy": 2.0,
     "p_aloof": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_moon_post"
+   ]
   },
   {
    "id": "inc_qh_04",
@@ -3911,7 +4629,10 @@
    "personalityBias": {
     "p_glutton": 2.0,
     "p_curious": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_frosting_volcano"
+   ]
   },
   {
    "id": "inc_qh_05",
@@ -3921,7 +4642,10 @@
    "personalityBias": {
     "p_clingy": 2.0,
     "p_dreamy": 2.0
-   }
+   },
+   "locationIds": [
+    "loc_star_repair"
+   ]
   }
  ]
 }

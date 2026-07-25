@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../app/app_error_log.dart';
+
 void logUiError(String surface, Object error, StackTrace stackTrace) {
+  AppErrorLog.instance.record(error, stackTrace, source: 'ui:$surface');
   debugPrint('Petopia $surface failed: $error\n$stackTrace');
 }
 

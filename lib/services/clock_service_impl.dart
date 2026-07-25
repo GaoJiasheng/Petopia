@@ -22,14 +22,42 @@ class SystemClock implements Clock {
 class ClockServiceImpl implements ClockService {
   final Clock _clock;
   final Settings _settings;
+  late final DateTime _wallAnchor;
+  late final int _monoAnchor;
+  late DateTime _lastTrustedNow;
 
   /// 上次 markHeartbeat 记录的单调值（进程内内存）。null = 单调不可用（冷启动/重启）。
   int? _monoRefAtLastOnline;
 
-  ClockServiceImpl(this._clock, this._settings);
+  ClockServiceImpl(this._clock, this._settings) {
+    final raw = _clock.wallNow();
+    _wallAnchor = raw.isBefore(_settings.lastWallClockAt)
+        ? _settings.lastWallClockAt
+        : raw;
+    _monoAnchor = _clock.monotonicMillis();
+    _lastTrustedNow = _wallAnchor;
+  }
 
   @override
-  DateTime now() => _clock.wallNow();
+  DateTime now() {
+    final raw = _clock.wallNow();
+    final monoElapsed = Duration(
+      milliseconds: _clock.monotonicMillis() - _monoAnchor,
+    );
+    final monotonicNow = _wallAnchor.add(
+      monoElapsed.isNegative ? Duration.zero : monoElapsed,
+    );
+    const tolerance = Duration(minutes: 2);
+    final lower = monotonicNow.subtract(tolerance);
+    final upper = monotonicNow.add(tolerance);
+    final candidate = raw.isBefore(lower) || raw.isAfter(upper)
+        ? monotonicNow
+        : raw;
+    if (candidate.isAfter(_lastTrustedNow)) {
+      _lastTrustedNow = candidate;
+    }
+    return _lastTrustedNow;
+  }
 
   @override
   Duration resolveOfflineElapsed({required DateTime lastOnlineAt}) {
@@ -38,7 +66,9 @@ class ClockServiceImpl implements ClockService {
     final ref = _monoRefAtLastOnline;
     if (ref != null) {
       // 单调时钟自上次在线起仍连续有效：取二者较小（改表往前时 mono 更小 → 少给）。
-      final monoElapsed = Duration(milliseconds: _clock.monotonicMillis() - ref);
+      final monoElapsed = Duration(
+        milliseconds: _clock.monotonicMillis() - ref,
+      );
       elapsed = wallElapsed <= monoElapsed ? wallElapsed : monoElapsed;
     } else {
       // 进程重启/冷启动，单调失效，只能信 wall（上限钳制交给 ExpEngine）。
@@ -54,6 +84,6 @@ class ClockServiceImpl implements ClockService {
     final mono = _clock.monotonicMillis();
     _monoRefAtLastOnline = mono;
     _settings.lastMonotonicRef = mono;
-    _settings.lastWallClockAt = _clock.wallNow();
+    _settings.lastWallClockAt = now();
   }
 }

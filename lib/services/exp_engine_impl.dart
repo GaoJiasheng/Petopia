@@ -5,6 +5,7 @@ import '../domain/models/logs.dart';
 import 'audit_service.dart';
 import 'clock_service.dart';
 import 'exp_engine.dart';
+import 'local_calendar.dart';
 
 /// 由等级派生 stage（Lv1-4=A, 5-7=B, 8-9=C, 10=D）。
 PetStage deriveStage(int level) {
@@ -107,7 +108,7 @@ class ExpEngineImpl implements ExpEngine {
   @override
   ExpResult grantOffline({required Pet pet, required Duration elapsed}) {
     // 跨自然日则归零离线计数（renew 的日粒度部分）。
-    final key = _dayKey(_clock.now());
+    final key = LocalCalendar.dayKey(_clock.now());
     if (pet.offlineDayKey != key) {
       pet.offlineExpGrantedToday = 0;
       pet.offlineDayKey = key;
@@ -143,9 +144,4 @@ class ExpEngineImpl implements ExpEngine {
   }
 
   bool _isLazy(Pet pet) => pet.personality.contains('p_lazy');
-
-  String _dayKey(DateTime t) {
-    final local = t.toLocal();
-    return '${local.year.toString().padLeft(4, '0')}-${local.month.toString().padLeft(2, '0')}-${local.day.toString().padLeft(2, '0')}';
-  }
 }

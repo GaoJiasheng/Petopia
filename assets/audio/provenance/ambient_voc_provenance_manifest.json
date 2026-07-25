@@ -1,0 +1,218 @@
+{
+  "schemaVersion": 1,
+  "generator": "generate_ambient_assets.py",
+  "sampleRate": 48000,
+  "channels": 2,
+  "thirdPartySamples": false,
+  "sourceMethod": "deterministic procedural synthesis",
+  "assets": [
+    {
+      "id": "amb_meadow_day",
+      "kind": "seamless_ambient_loop",
+      "durationSeconds": 24.0,
+      "wav": "assets/audio/ambient/wav/amb_meadow_day.wav",
+      "m4a": "assets/audio/ambient/m4a/amb_meadow_day.m4a",
+      "sha256": "98e7258bf69f5b857294399fd772de199a0503890740e05acb94620b578e117a"
+    },
+    {
+      "id": "amb_meadow_dusk",
+      "kind": "seamless_ambient_loop",
+      "durationSeconds": 24.0,
+      "wav": "assets/audio/ambient/wav/amb_meadow_dusk.wav",
+      "m4a": "assets/audio/ambient/m4a/amb_meadow_dusk.m4a",
+      "sha256": "2e087363862ebdf8c8f77e767a648f789a2d5f8fe6316c0b0c5f4d033b5f0c82"
+    },
+    {
+      "id": "amb_meadow_night",
+      "kind": "seamless_ambient_loop",
+      "durationSeconds": 24.0,
+      "wav": "assets/audio/ambient/wav/amb_meadow_night.wav",
+      "m4a": "assets/audio/ambient/m4a/amb_meadow_night.m4a",
+      "sha256": "9f7df13cac0bfa698709afcc5f99634f3decdbf866236039fd641546dfae8727"
+    },
+    {
+      "id": "amb_gentle_rain",
+      "kind": "seamless_ambient_loop",
+      "durationSeconds": 24.0,
+      "wav": "assets/audio/ambient/wav/amb_gentle_rain.wav",
+      "m4a": "assets/audio/ambient/m4a/amb_gentle_rain.m4a",
+      "sha256": "5d03de1670f3d502857a638d2053be3577c8ac4adbc3215107ac399bd92490a0"
+    },
+    {
+      "id": "amb_soft_snow",
+      "kind": "seamless_ambient_loop",
+      "durationSeconds": 24.0,
+      "wav": "assets/audio/ambient/wav/amb_soft_snow.wav",
+      "m4a": "assets/audio/ambient/m4a/amb_soft_snow.m4a",
+      "sha256": "3ba4fe3d6ed70ccb1d9e4e765617b31c982c66e817651a8afa40ecd0f6d311f7"
+    },
+    {
+      "id": "amb_seaside",
+      "kind": "seamless_ambient_loop",
+      "durationSeconds": 24.0,
+      "wav": "assets/audio/ambient/wav/amb_seaside.wav",
+      "m4a": "assets/audio/ambient/m4a/amb_seaside.m4a",
+      "sha256": "8429e1a9068b357e4eb20361aa51c6e16e7eff023ba19deb007ed500eb12f10c"
+    },
+    {
+      "id": "visitor_sparrow",
+      "kind": "visitor_voice",
+      "durationSeconds": 0.9,
+      "wav": "assets/audio/voc/wav/voc_visitor_sparrow.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_sparrow.m4a",
+      "sha256": "9cc1684200a0d1302cc764eae72f90dc27c82cdb4ef242026fccc7a02936f448"
+    },
+    {
+      "id": "visitor_calico",
+      "kind": "visitor_voice",
+      "durationSeconds": 1.0,
+      "wav": "assets/audio/voc/wav/voc_visitor_calico.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_calico.m4a",
+      "sha256": "20d0132c9a3b996a7460cdbdc588e03ccfe30a9574a377c6237634e46c5ce587"
+    },
+    {
+      "id": "visitor_snail",
+      "kind": "visitor_voice",
+      "durationSeconds": 0.72,
+      "wav": "assets/audio/voc/wav/voc_visitor_snail.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_snail.m4a",
+      "sha256": "a09a5cd0c505d1576a9f8dccda809f8a2cd47ecff1cf68cd008d1ca8c5d760b4"
+    },
+    {
+      "id": "visitor_butterfly",
+      "kind": "visitor_voice",
+      "durationSeconds": 0.72,
+      "wav": "assets/audio/voc/wav/voc_visitor_butterfly.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_butterfly.m4a",
+      "sha256": "76b135444357670975ebd054e31b0fc39b4fcc063e62493a7651e259492f43db"
+    },
+    {
+      "id": "visitor_hedgehog",
+      "kind": "visitor_voice",
+      "durationSeconds": 0.85,
+      "wav": "assets/audio/voc/wav/voc_visitor_hedgehog.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_hedgehog.m4a",
+      "sha256": "267ac46fb21c138f715d9c3352670479171de3add0c58bbce6cde1b5fb50cc22"
+    },
+    {
+      "id": "visitor_pigeon",
+      "kind": "visitor_voice",
+      "durationSeconds": 1.05,
+      "wav": "assets/audio/voc/wav/voc_visitor_pigeon.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_pigeon.m4a",
+      "sha256": "fadc94234dc75e7a4a558c8ebbf7fe147156ee020ff1a5282a12d792ff943c9e"
+    },
+    {
+      "id": "visitor_squirrel",
+      "kind": "visitor_voice",
+      "durationSeconds": 0.9,
+      "wav": "assets/audio/voc/wav/voc_visitor_squirrel.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_squirrel.m4a",
+      "sha256": "fb5da66bb9cf43f9c7d79f173db4ab6a355c7680b62a071ec4b767cf52d95a7a"
+    },
+    {
+      "id": "visitor_crow",
+      "kind": "visitor_voice",
+      "durationSeconds": 1.0,
+      "wav": "assets/audio/voc/wav/voc_visitor_crow.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_crow.m4a",
+      "sha256": "7bb88b0a27808774eed119a87e8ca407f62915bbcb82406f6e6dcbcb2f21fba7"
+    },
+    {
+      "id": "visitor_frog",
+      "kind": "visitor_voice",
+      "durationSeconds": 1.0,
+      "wav": "assets/audio/voc/wav/voc_visitor_frog.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_frog.m4a",
+      "sha256": "2c914c7d4f9ef4cf59fdf721acdbf69460e6b4281aae6df9b9a695a0f9c53627"
+    },
+    {
+      "id": "visitor_firefly",
+      "kind": "visitor_voice",
+      "durationSeconds": 0.9,
+      "wav": "assets/audio/voc/wav/voc_visitor_firefly.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_firefly.m4a",
+      "sha256": "90006ee6b8c03ab999ab4ac64b54eee6898b85ef6ad0c4bd2c4e7e8e320a9b34"
+    },
+    {
+      "id": "visitor_tanuki",
+      "kind": "visitor_voice",
+      "durationSeconds": 1.0,
+      "wav": "assets/audio/voc/wav/voc_visitor_tanuki.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_tanuki.m4a",
+      "sha256": "da2b84af92d84c25d81890b5bc484d1a132af1ed01a35c24adaab45ee7fde30a"
+    },
+    {
+      "id": "visitor_egret",
+      "kind": "visitor_voice",
+      "durationSeconds": 0.88,
+      "wav": "assets/audio/voc/wav/voc_visitor_egret.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_egret.m4a",
+      "sha256": "b61c40051e25681cbe747088dc8e2d6734af55665e0e8dbd5517b37ec5b7e930"
+    },
+    {
+      "id": "visitor_fox",
+      "kind": "visitor_voice",
+      "durationSeconds": 0.92,
+      "wav": "assets/audio/voc/wav/voc_visitor_fox.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_fox.m4a",
+      "sha256": "c923f6130e46483e72281b899ce8c81d0328fcb758dcfdaa4084252510690be0"
+    },
+    {
+      "id": "visitor_owl",
+      "kind": "visitor_voice",
+      "durationSeconds": 1.15,
+      "wav": "assets/audio/voc/wav/voc_visitor_owl.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_owl.m4a",
+      "sha256": "2fd4b56e76a8e8fafacc7ae032c1da79e58a621b47fd5bb1595d1dd6e357ac17"
+    },
+    {
+      "id": "visitor_deer",
+      "kind": "visitor_voice",
+      "durationSeconds": 0.9,
+      "wav": "assets/audio/voc/wav/voc_visitor_deer.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_deer.m4a",
+      "sha256": "209b4407193757825518c7962d43f5579cd522938a39b8b835591802e32242d5"
+    },
+    {
+      "id": "visitor_snowhare",
+      "kind": "visitor_voice",
+      "durationSeconds": 0.82,
+      "wav": "assets/audio/voc/wav/voc_visitor_snowhare.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_snowhare.m4a",
+      "sha256": "5d8ccb7f4d3dd082e197263b188cfc5c4a75f353b20fee3a7051d976e7b0d9a6"
+    },
+    {
+      "id": "visitor_starbug",
+      "kind": "visitor_voice",
+      "durationSeconds": 0.9,
+      "wav": "assets/audio/voc/wav/voc_visitor_starbug.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_starbug.m4a",
+      "sha256": "2a58b284278b0f975f45d76ad0be245358e4ba1673cc98685493bcbffbee2d0b"
+    },
+    {
+      "id": "visitor_campfire_light",
+      "kind": "visitor_voice",
+      "durationSeconds": 0.9,
+      "wav": "assets/audio/voc/wav/voc_visitor_campfire_light.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_campfire_light.m4a",
+      "sha256": "3578f3036572a3e46cbbdee24719c26d01cd7605d2f32bfd96e1bc3c30ec5675"
+    },
+    {
+      "id": "visitor_rainbow_shade",
+      "kind": "visitor_voice",
+      "durationSeconds": 1.08,
+      "wav": "assets/audio/voc/wav/voc_visitor_rainbow_shade.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_rainbow_shade.m4a",
+      "sha256": "13e6d2afff3367a325e317055b054a46e3ba9dd2ac432b164f5eebb1e4a5f0d2"
+    },
+    {
+      "id": "visitor_night_blob",
+      "kind": "visitor_voice",
+      "durationSeconds": 1.08,
+      "wav": "assets/audio/voc/wav/voc_visitor_night_blob.wav",
+      "m4a": "assets/audio/voc/m4a/voc_visitor_night_blob.m4a",
+      "sha256": "eee2ffdc6362a3cac2d84522b6e3e13dc6ae89c7cd677a9a62f90492d74273cc"
+    }
+  ]
+}

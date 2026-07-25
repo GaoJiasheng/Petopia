@@ -10,14 +10,26 @@ void main() {
     );
   });
 
-  test('every growth stage and variant uses the species action sheet', () {
+  test('action sheets are only exact for the delivered anchor identity', () {
     expect(
       PetArt.actionSheet('pet_cat', 'eat'),
-      'assets/runtime/pets/cat/actions/pet_cat_var01_stageC_eat.png',
+      'assets/runtime/pets/cat/actions/pet_cat_var01_stageC_eat.webp',
     );
     expect(
       PetArt.actionSheet('pet_rabbit', 'bath'),
-      'assets/runtime/pets/rabbit/actions/pet_rabbit_var01_stageC_bath.png',
+      'assets/runtime/pets/rabbit/actions/pet_rabbit_var01_stageC_bath.webp',
+    );
+    expect(
+      PetArt.hasExactAction(variantId: 'pet_cat_v1', stage: PetStage.c),
+      isTrue,
+    );
+    expect(
+      PetArt.hasExactAction(variantId: 'pet_cat_v5', stage: PetStage.c),
+      isFalse,
+    );
+    expect(
+      PetArt.hasExactAction(variantId: 'pet_cat_v1', stage: PetStage.a),
+      isFalse,
     );
   });
 }

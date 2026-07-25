@@ -15,7 +15,20 @@
    "photoStyle": "pc_bg_lighthouse_bay",
    "encounterPoolId": "enc_seaside",
    "personalityWeight": {},
-   "stampId": "pc_stamp_lighthouse_bay"
+   "stampId": "pc_stamp_lighthouse_bay",
+   "allowedSeasons": [
+    "spring",
+    "summer"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_catback_reef",
@@ -30,7 +43,20 @@
    "photoStyle": "pc_bg_catback_reef",
    "encounterPoolId": "enc_seaside",
    "personalityWeight": {},
-   "stampId": "pc_stamp_catback_reef"
+   "stampId": "pc_stamp_catback_reef",
+   "allowedSeasons": [
+    "spring",
+    "summer"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_shell_town",
@@ -45,7 +71,20 @@
    "photoStyle": "pc_bg_shell_town",
    "encounterPoolId": "enc_seaside",
    "personalityWeight": {},
-   "stampId": "pc_stamp_shell_town"
+   "stampId": "pc_stamp_shell_town",
+   "allowedSeasons": [
+    "spring",
+    "summer"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_tide_flat",
@@ -60,7 +99,20 @@
    "photoStyle": "pc_bg_tide_flat",
    "encounterPoolId": "enc_seaside",
    "personalityWeight": {},
-   "stampId": "pc_stamp_tide_flat"
+   "stampId": "pc_stamp_tide_flat",
+   "allowedSeasons": [
+    "spring",
+    "summer"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_seafog_pier",
@@ -76,7 +128,24 @@
    "photoStyle": "pc_bg_seafog_pier",
    "encounterPoolId": "enc_seaside",
    "personalityWeight": {},
-   "stampId": "pc_stamp_seafog_pier"
+   "stampId": "pc_stamp_seafog_pier",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "dawn",
+    "morning",
+    "afternoon",
+    "evening"
+   ],
+   "allowedWeather": [
+    "fog",
+    "cloudy",
+    "rain"
+   ]
   },
   {
    "id": "loc_cloud_pass",
@@ -92,7 +161,22 @@
    "photoStyle": "pc_bg_cloud_pass",
    "encounterPoolId": "enc_mountain",
    "personalityWeight": {},
-   "stampId": "pc_stamp_cloud_pass"
+   "stampId": "pc_stamp_cloud_pass",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "fog"
+   ]
   },
   {
    "id": "loc_monkey_spring",
@@ -108,7 +192,22 @@
    "photoStyle": "pc_bg_monkey_spring",
    "encounterPoolId": "enc_mountain",
    "personalityWeight": {},
-   "stampId": "pc_stamp_monkey_spring"
+   "stampId": "pc_stamp_monkey_spring",
+   "allowedSeasons": [
+    "spring",
+    "autumn",
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "fog"
+   ]
   },
   {
    "id": "loc_maple_ridge",
@@ -124,7 +223,18 @@
    "photoStyle": "pc_bg_maple_ridge",
    "encounterPoolId": "enc_mountain",
    "personalityWeight": {},
-   "stampId": "pc_stamp_maple_ridge"
+   "stampId": "pc_stamp_maple_ridge",
+   "allowedSeasons": [
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "afternoon",
+    "evening"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_snowline_cabin",
@@ -140,7 +250,19 @@
    "photoStyle": "pc_bg_snowline_cabin",
    "encounterPoolId": "enc_mountain",
    "personalityWeight": {},
-   "stampId": "pc_stamp_snowline_cabin"
+   "stampId": "pc_stamp_snowline_cabin",
+   "allowedSeasons": [
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "evening",
+    "night"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "snow"
+   ]
   },
   {
    "id": "loc_echo_canyon",
@@ -156,7 +278,21 @@
    "photoStyle": "pc_bg_echo_canyon",
    "encounterPoolId": "enc_mountain",
    "personalityWeight": {},
-   "stampId": "pc_stamp_echo_canyon"
+   "stampId": "pc_stamp_echo_canyon",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_tram_street",
@@ -171,7 +307,21 @@
    "photoStyle": "pc_bg_tram_street",
    "encounterPoolId": "enc_city",
    "personalityWeight": {},
-   "stampId": "pc_stamp_tram_street"
+   "stampId": "pc_stamp_tram_street",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "afternoon",
+    "evening"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "rain"
+   ]
   },
   {
    "id": "loc_rooftop_city",
@@ -187,7 +337,20 @@
    "photoStyle": "pc_bg_rooftop_city",
    "encounterPoolId": "enc_city",
    "personalityWeight": {},
-   "stampId": "pc_stamp_rooftop_city"
+   "stampId": "pc_stamp_rooftop_city",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "afternoon",
+    "evening"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_midnight_noodles",
@@ -203,7 +366,22 @@
    "photoStyle": "pc_bg_midnight_noodles",
    "encounterPoolId": "enc_city",
    "personalityWeight": {},
-   "stampId": "pc_stamp_midnight_noodles"
+   "stampId": "pc_stamp_midnight_noodles",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "evening",
+    "night"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "rain"
+   ]
   },
   {
    "id": "loc_oldbook_alley",
@@ -219,7 +397,24 @@
    "photoStyle": "pc_bg_oldbook_alley",
    "encounterPoolId": "enc_city",
    "personalityWeight": {},
-   "stampId": "pc_stamp_oldbook_alley"
+   "stampId": "pc_stamp_oldbook_alley",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon",
+    "evening"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "rain"
+   ]
   },
   {
    "id": "loc_ferris_wharf",
@@ -235,7 +430,22 @@
    "photoStyle": "pc_bg_ferris_wharf",
    "encounterPoolId": "enc_city",
    "personalityWeight": {},
-   "stampId": "pc_stamp_ferris_wharf"
+   "stampId": "pc_stamp_ferris_wharf",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "evening",
+    "night"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "rain"
+   ]
   },
   {
    "id": "loc_wheat_post",
@@ -251,7 +461,20 @@
    "photoStyle": "pc_bg_wheat_post",
    "encounterPoolId": "enc_countryside",
    "personalityWeight": {},
-   "stampId": "pc_stamp_wheat_post"
+   "stampId": "pc_stamp_wheat_post",
+   "allowedSeasons": [
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_sunflower_station",
@@ -267,7 +490,19 @@
    "photoStyle": "pc_bg_sunflower_station",
    "encounterPoolId": "enc_countryside",
    "personalityWeight": {},
-   "stampId": "pc_stamp_sunflower_station"
+   "stampId": "pc_stamp_sunflower_station",
+   "allowedSeasons": [
+    "summer"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_firefly_paddy",
@@ -283,7 +518,18 @@
    "photoStyle": "pc_bg_firefly_paddy",
    "encounterPoolId": "enc_countryside",
    "personalityWeight": {},
-   "stampId": "pc_stamp_firefly_paddy"
+   "stampId": "pc_stamp_firefly_paddy",
+   "allowedSeasons": [
+    "summer"
+   ],
+   "allowedTimesOfDay": [
+    "evening",
+    "night"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_apple_farm",
@@ -299,7 +545,20 @@
    "photoStyle": "pc_bg_apple_farm",
    "encounterPoolId": "enc_countryside",
    "personalityWeight": {},
-   "stampId": "pc_stamp_apple_farm"
+   "stampId": "pc_stamp_apple_farm",
+   "allowedSeasons": [
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_windmill_pond",
@@ -315,7 +574,20 @@
    "photoStyle": "pc_bg_windmill_pond",
    "encounterPoolId": "enc_countryside",
    "personalityWeight": {},
-   "stampId": "pc_stamp_windmill_pond"
+   "stampId": "pc_stamp_windmill_pond",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "afternoon",
+    "evening"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_mushroom_ring",
@@ -331,7 +603,21 @@
    "photoStyle": "pc_bg_mushroom_ring",
    "encounterPoolId": "enc_forest",
    "personalityWeight": {},
-   "stampId": "pc_stamp_mushroom_ring"
+   "stampId": "pc_stamp_mushroom_ring",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "evening",
+    "night"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "fog"
+   ]
   },
   {
    "id": "loc_oak_postbox",
@@ -347,7 +633,20 @@
    "photoStyle": "pc_bg_oak_postbox",
    "encounterPoolId": "enc_forest",
    "personalityWeight": {},
-   "stampId": "pc_stamp_oak_postbox"
+   "stampId": "pc_stamp_oak_postbox",
+   "allowedSeasons": [
+    "spring",
+    "summer"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_pinecone_market",
@@ -363,7 +662,19 @@
    "photoStyle": "pc_bg_pinecone_market",
    "encounterPoolId": "enc_forest",
    "personalityWeight": {},
-   "stampId": "pc_stamp_pinecone_market"
+   "stampId": "pc_stamp_pinecone_market",
+   "allowedSeasons": [
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_fog_bridge",
@@ -379,7 +690,23 @@
    "photoStyle": "pc_bg_fog_bridge",
    "encounterPoolId": "enc_forest",
    "personalityWeight": {},
-   "stampId": "pc_stamp_fog_bridge"
+   "stampId": "pc_stamp_fog_bridge",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "dawn",
+    "morning",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "fog",
+    "cloudy",
+    "rain"
+   ]
   },
   {
    "id": "loc_logger_lodge",
@@ -395,7 +722,20 @@
    "photoStyle": "pc_bg_logger_lodge",
    "encounterPoolId": "enc_forest",
    "personalityWeight": {},
-   "stampId": "pc_stamp_logger_lodge"
+   "stampId": "pc_stamp_logger_lodge",
+   "allowedSeasons": [
+    "autumn",
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "evening",
+    "night"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "snow"
+   ]
   },
   {
    "id": "loc_salt_lake",
@@ -411,7 +751,21 @@
    "photoStyle": "pc_bg_salt_lake",
    "encounterPoolId": "enc_desert",
    "personalityWeight": {},
-   "stampId": "pc_stamp_salt_lake"
+   "stampId": "pc_stamp_salt_lake",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "evening",
+    "night"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_camel_oasis",
@@ -427,7 +781,21 @@
    "photoStyle": "pc_bg_camel_oasis",
    "encounterPoolId": "enc_desert",
    "personalityWeight": {},
-   "stampId": "pc_stamp_camel_oasis"
+   "stampId": "pc_stamp_camel_oasis",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_painted_bazaar",
@@ -443,7 +811,21 @@
    "photoStyle": "pc_bg_painted_bazaar",
    "encounterPoolId": "enc_desert",
    "personalityWeight": {},
-   "stampId": "pc_stamp_painted_bazaar"
+   "stampId": "pc_stamp_painted_bazaar",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_wind_rocks",
@@ -459,7 +841,20 @@
    "photoStyle": "pc_bg_wind_rocks",
    "encounterPoolId": "enc_desert",
    "personalityWeight": {},
-   "stampId": "pc_stamp_wind_rocks"
+   "stampId": "pc_stamp_wind_rocks",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "afternoon",
+    "evening"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_balloon_camp",
@@ -475,7 +870,21 @@
    "photoStyle": "pc_bg_balloon_camp",
    "encounterPoolId": "enc_desert",
    "personalityWeight": {},
-   "stampId": "pc_stamp_balloon_camp"
+   "stampId": "pc_stamp_balloon_camp",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "dawn",
+    "morning",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_aurora_village",
@@ -491,7 +900,18 @@
    "photoStyle": "pc_bg_aurora_village",
    "encounterPoolId": "enc_polar",
    "personalityWeight": {},
-   "stampId": "pc_stamp_aurora_village"
+   "stampId": "pc_stamp_aurora_village",
+   "allowedSeasons": [
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "night"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "snow"
+   ]
   },
   {
    "id": "loc_icefloe_lighthouse",
@@ -507,7 +927,21 @@
    "photoStyle": "pc_bg_icefloe_lighthouse",
    "encounterPoolId": "enc_polar",
    "personalityWeight": {},
-   "stampId": "pc_stamp_icefloe_lighthouse"
+   "stampId": "pc_stamp_icefloe_lighthouse",
+   "allowedSeasons": [
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "snow",
+    "fog"
+   ]
   },
   {
    "id": "loc_blue_spring",
@@ -523,7 +957,20 @@
    "photoStyle": "pc_bg_blue_spring",
    "encounterPoolId": "enc_polar",
    "personalityWeight": {},
-   "stampId": "pc_stamp_blue_spring"
+   "stampId": "pc_stamp_blue_spring",
+   "allowedSeasons": [
+    "spring",
+    "summer"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_canal_town",
@@ -539,7 +986,21 @@
    "photoStyle": "pc_bg_canal_town",
    "encounterPoolId": "enc_polar",
    "personalityWeight": {},
-   "stampId": "pc_stamp_canal_town"
+   "stampId": "pc_stamp_canal_town",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_steamboat_pier",
@@ -555,7 +1016,23 @@
    "photoStyle": "pc_bg_steamboat_pier",
    "encounterPoolId": "enc_polar",
    "personalityWeight": {},
-   "stampId": "pc_stamp_steamboat_pier"
+   "stampId": "pc_stamp_steamboat_pier",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn"
+   ],
+   "allowedTimesOfDay": [
+    "dawn",
+    "morning",
+    "afternoon",
+    "evening"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "fog"
+   ]
   },
   {
    "id": "loc_cloud_ranch",
@@ -573,7 +1050,20 @@
    "personalityWeight": {
     "p_dreamy": 1.3
    },
-   "stampId": "pc_stamp_cloud_ranch"
+   "stampId": "pc_stamp_cloud_ranch",
+   "allowedSeasons": [
+    "spring",
+    "summer"
+   ],
+   "allowedTimesOfDay": [
+    "dawn",
+    "morning",
+    "evening"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_moon_post",
@@ -591,7 +1081,20 @@
    "personalityWeight": {
     "p_dreamy": 1.3
    },
-   "stampId": "pc_stamp_moon_post"
+   "stampId": "pc_stamp_moon_post",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "night"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_frosting_volcano",
@@ -609,7 +1112,23 @@
    "personalityWeight": {
     "p_dreamy": 1.3
    },
-   "stampId": "pc_stamp_frosting_volcano"
+   "stampId": "pc_stamp_frosting_volcano",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy",
+    "snow"
+   ]
   },
   {
    "id": "loc_walking_island",
@@ -627,7 +1146,20 @@
    "personalityWeight": {
     "p_dreamy": 1.3
    },
-   "stampId": "pc_stamp_walking_island"
+   "stampId": "pc_stamp_walking_island",
+   "allowedSeasons": [
+    "spring",
+    "summer"
+   ],
+   "allowedTimesOfDay": [
+    "morning",
+    "noon",
+    "afternoon"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   },
   {
    "id": "loc_star_repair",
@@ -645,7 +1177,20 @@
    "personalityWeight": {
     "p_dreamy": 1.3
    },
-   "stampId": "pc_stamp_star_repair"
+   "stampId": "pc_stamp_star_repair",
+   "allowedSeasons": [
+    "spring",
+    "summer",
+    "autumn",
+    "winter"
+   ],
+   "allowedTimesOfDay": [
+    "night"
+   ],
+   "allowedWeather": [
+    "clear",
+    "cloudy"
+   ]
   }
  ]
 }

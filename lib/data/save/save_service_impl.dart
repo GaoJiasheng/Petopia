@@ -104,6 +104,7 @@ class SessionSaveSnapshotStore implements SaveSnapshotStore {
   GameSession? _stagedSession;
 
   GameSession get activeSession => _stagedSession ?? _currentSession();
+  GameSession? get recoveredSession => _stagedSession;
 
   @override
   Future<SaveDataSnapshot> exportSnapshot() async {
@@ -207,6 +208,26 @@ class LocalSaveService implements SaveService {
       );
     });
     return completer.future;
+  }
+
+  @override
+  Future<void> flushAutoSave() {
+    _debounceTimer?.cancel();
+    _debounceTimer = null;
+    final pending = _pendingAutoSave;
+    _pendingAutoSave = null;
+    final write = _enqueue<void>(_writeCurrentSlot);
+    if (pending != null) {
+      write.then(
+        (_) {
+          if (!pending.isCompleted) pending.complete();
+        },
+        onError: (Object error, StackTrace stackTrace) {
+          if (!pending.isCompleted) pending.completeError(error, stackTrace);
+        },
+      );
+    }
+    return write;
   }
 
   @override

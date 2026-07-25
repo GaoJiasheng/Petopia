@@ -42,14 +42,29 @@ void main() {
     expect(tester.takeException(), isNull);
     await _capture(tester, binding, 'yard');
 
-    final feedButton = find.byKey(const ValueKey('care_action_feed'));
-    expect(feedButton, findsOneWidget);
-    await tester.tap(feedButton);
-    await _pumpUntil(tester, find.byKey(const ValueKey('pet_action_eat')));
-    expect(tester.takeException(), isNull);
-    await _capture(tester, binding, 'interaction-eat');
-    await tester.pump(const Duration(seconds: 6));
-    expect(find.byKey(const ValueKey('pet_action_eat')), findsNothing);
+    for (final interaction in const <(String, String)>[
+      ('feed', 'eat'),
+      ('pat', 'pat'),
+      ('toy', 'play'),
+      ('bath', 'bath'),
+    ]) {
+      final button = find.byKey(
+        ValueKey<String>('care_action_${interaction.$1}'),
+      );
+      final animation = find.byKey(
+        ValueKey<String>('pet_action_${interaction.$2}'),
+      );
+      expect(button, findsOneWidget);
+      await tester.tap(button);
+      await _pumpUntil(tester, animation);
+      expect(tester.takeException(), isNull);
+      await _capture(tester, binding, 'interaction-${interaction.$2}');
+      await _pumpUntilGone(
+        tester,
+        animation,
+        timeout: const Duration(seconds: 8),
+      );
+    }
 
     await tester.tap(find.byKey(const ValueKey('pet_info_card')));
     await _pumpUntil(tester, find.text('翻开成长手账'));
@@ -74,7 +89,13 @@ void main() {
     await _pumpUntil(tester, find.text('温柔提醒'));
     await tester.pump(const Duration(seconds: 1));
     expect(find.text('存档与隐私'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.text('隐私说明'),
+      280,
+      scrollable: find.byType(Scrollable).last,
+    );
     expect(find.text('隐私说明'), findsOneWidget);
+    expect(find.text('帮助与支持'), findsOneWidget);
     expect(tester.takeException(), isNull);
     await _capture(tester, binding, 'settings');
 
@@ -107,7 +128,15 @@ Future<void> _capture(
 }
 
 Future<void> _dismissArrivalDialogs(WidgetTester tester) async {
-  const labels = <String>['欢迎它', '欢迎回家', '记进手账', '收进相册'];
+  const labels = <String>[
+    '和它打个招呼',
+    '收进来客图鉴',
+    '欢迎它',
+    '欢迎回家',
+    '在院子里好好休息',
+    '记进手账',
+    '收进相册',
+  ];
   for (var pass = 0; pass < 6; pass++) {
     Finder? target;
     for (final label in labels) {
@@ -142,4 +171,16 @@ Future<void> _pumpUntil(
     await tester.pump(const Duration(milliseconds: 100));
   }
   expect(finder, findsWidgets);
+}
+
+Future<void> _pumpUntilGone(
+  WidgetTester tester,
+  Finder finder, {
+  Duration timeout = const Duration(seconds: 20),
+}) async {
+  final end = DateTime.now().add(timeout);
+  while (finder.evaluate().isNotEmpty && DateTime.now().isBefore(end)) {
+    await tester.pump(const Duration(milliseconds: 100));
+  }
+  expect(finder, findsNothing);
 }

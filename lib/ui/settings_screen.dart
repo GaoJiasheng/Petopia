@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:share_plus/share_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../app/app_info.dart';
 import '../app/game_controller.dart';
+import '../domain/enums.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
@@ -46,7 +48,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           ),
         );
       },
-      data: (_) {
+      data: (view) {
         final ctrl = ref.read(gameControllerProvider.notifier);
         final appInfo = ref.watch(appInfoProvider).valueOrNull;
         return _WarmFrame(
@@ -88,6 +90,27 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     subtitle: '保留铃声、升级和点击的柔和声音。',
                     value: ctrl.effectsOn,
                     onChanged: (_) => ctrl.toggleEffects(),
+                  ),
+                  const SizedBox(height: 12),
+                  _SwitchCard(
+                    iconName: 'set_sound',
+                    fallbackIcon: Icons.vibration_rounded,
+                    title: '轻柔触感',
+                    subtitle: '摸摸、成长和告别时的轻触反馈，可独立关闭。',
+                    value: ctrl.hapticsOn,
+                    onChanged: (_) => ctrl.toggleHaptics(),
+                  ),
+                  const SizedBox(height: 24),
+                  const _SectionTitle(
+                    iconName: 'set_about',
+                    fallbackIcon: Icons.auto_awesome_rounded,
+                    title: '画面',
+                    subtitle: '自动档会保持完整质感，并在系统内存紧张时安静降级。',
+                  ),
+                  const SizedBox(height: 10),
+                  _RenderQualityCard(
+                    value: view.renderQuality,
+                    onChanged: ctrl.setRenderQuality,
                   ),
                   const SizedBox(height: 24),
                   const _SectionTitle(
@@ -150,6 +173,23 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       ),
                     ),
                   ),
+                  const SizedBox(height: 12),
+                  _CommandCard(
+                    icon: Icons.support_agent_rounded,
+                    title: '帮助与支持',
+                    subtitle: '查看常见问题，或通过支持页面联系我们。',
+                    onTap: () => _openExternal(AppUrls.support),
+                  ),
+                  const SizedBox(height: 12),
+                  _CommandCard(
+                    icon: Icons.monitor_heart_outlined,
+                    title: '导出诊断信息',
+                    subtitle: '仅分享版本与运行状态，不包含昵称、明信片正文或设备标识。',
+                    onTap: () => _shareDiagnostics(
+                      ctrl,
+                      appInfo?.displayVersion ?? 'unknown',
+                    ),
+                  ),
                   const SizedBox(height: 24),
                   _AboutCard(version: appInfo?.displayVersion ?? '读取中'),
                 ],
@@ -190,6 +230,36 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       if (mounted) setState(() => _status = '这次没有导出成功，当前存档没有受到影响。');
     } finally {
       if (mounted) setState(() => _backupBusy = false);
+    }
+  }
+
+  Future<void> _openExternal(Uri uri) async {
+    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+    if (!opened && mounted) {
+      setState(() => _status = '暂时无法打开网页，请稍后再试。');
+    }
+  }
+
+  Future<void> _shareDiagnostics(GameController ctrl, String appVersion) async {
+    try {
+      final box = context.findRenderObject() as RenderBox?;
+      final origin = box == null
+          ? null
+          : box.localToGlobal(Offset.zero) & box.size;
+      await SharePlus.instance.share(
+        ShareParams(
+          subject: 'Petopia 诊断信息',
+          text: ctrl.diagnosticReport(
+            appVersion: appVersion,
+            platform: Platform.operatingSystem,
+          ),
+          sharePositionOrigin: origin,
+        ),
+      );
+      if (mounted) setState(() => _status = '诊断信息已经准备好，可发送给支持人员。');
+    } catch (error, stackTrace) {
+      logUiError('diagnostic export', error, stackTrace);
+      if (mounted) setState(() => _status = '这次没有导出成功，请稍后再试。');
     }
   }
 
@@ -433,6 +503,83 @@ class _SettingIcon extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Center(child: AppIcon(iconName, size: 24, fallback: fallbackIcon)),
+    );
+  }
+}
+
+class _RenderQualityCard extends StatelessWidget {
+  const _RenderQualityCard({required this.value, required this.onChanged});
+
+  final RenderQuality value;
+  final ValueChanged<RenderQuality> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      label: '画面质量',
+      value: switch (value) {
+        RenderQuality.auto => '自动',
+        RenderQuality.high => '精致',
+        RenderQuality.low => '省电',
+      },
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: _cardDecoration(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SegmentedButton<RenderQuality>(
+              showSelectedIcon: false,
+              segments: const <ButtonSegment<RenderQuality>>[
+                ButtonSegment(
+                  value: RenderQuality.auto,
+                  icon: Icon(Icons.auto_awesome_rounded),
+                  label: Text('自动'),
+                ),
+                ButtonSegment(
+                  value: RenderQuality.high,
+                  icon: Icon(Icons.high_quality_rounded),
+                  label: Text('精致'),
+                ),
+                ButtonSegment(
+                  value: RenderQuality.low,
+                  icon: Icon(Icons.battery_saver_rounded),
+                  label: Text('省电'),
+                ),
+              ],
+              selected: <RenderQuality>{value},
+              onSelectionChanged: (selected) => onChanged(selected.first),
+              style: ButtonStyle(
+                foregroundColor: WidgetStateProperty.resolveWith(
+                  (states) => states.contains(WidgetState.selected)
+                      ? _SettingsScreenState._ink
+                      : _SettingsScreenState._muted,
+                ),
+                backgroundColor: WidgetStateProperty.resolveWith(
+                  (states) => states.contains(WidgetState.selected)
+                      ? const Color(0xFFFFE4BC)
+                      : Colors.transparent,
+                ),
+                visualDensity: VisualDensity.compact,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              switch (value) {
+                RenderQuality.auto => '推荐。完整水彩层次，系统有压力时只收起非关键动态。',
+                RenderQuality.high => '始终保留完整氛围动态，适合性能充足的设备。',
+                RenderQuality.low => '保留宠物和互动演出，减少背景动态与纹理预热。',
+              },
+              style: const TextStyle(
+                color: _SettingsScreenState._muted,
+                fontSize: 12,
+                height: 1.4,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

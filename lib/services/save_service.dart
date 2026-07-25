@@ -13,6 +13,7 @@ class ImportResult {
 /// 导入是覆盖式（单宠位无合并语义）；导入后必跑 AuditService 校验 INV-1/4，不过则拒绝并保留原档。
 abstract interface class SaveService {
   Future<void> autoSave(); // debounce autoSaveDebounceMs，写当前 slot 后切换
+  Future<void> flushAutoSave(); // 立即写当前 slot；用于进入后台/关键生命周期
   Future<void> load(); // 优先 slot，校验失败回退备份 slot
   Future<int> migrateIfNeeded(
     int fromVersion,

@@ -104,11 +104,16 @@
 ```json
 { "schemaVersion":1,
   "templates":[ { "id":"tpl_glutton_seaside_01", "personalityId":"p_glutton", "category":"海滨",
-                  "skeleton":"主人！{location}的{encounter}……{incident}。——{petName}", "slots":["encounter","incident"], "tone":"通篇讲吃的" } ],
-  "encounters":[ { "id":"enc_seaside_01", "poolId":"enc_seaside", "phrase":"烤鱼摊老板", "verb":"请我吃", "personalityBias":{ "p_glutton":2.0 } } ],
-  "incidents":[ { "id":"inc_sea_01", "vibe":"sea", "type":"小奇迹", "phrase":"浪花在脚边写了个字", "poseHint":"gaze", "personalityBias":{} } ] }
+                  "locationIds":[], "skeleton":"主人！{location}的{encounter}……{incident}。——{petName}", "slots":["encounter","incident"], "tone":"通篇讲吃的" } ],
+  "encounters":[ { "id":"enc_seaside_01", "poolId":"enc_seaside", "locationIds":["loc_lighthouse_bay"], "phrase":"灯塔管理员留我住了一夜", "personalityBias":{ "p_glutton":2.0 } } ],
+  "incidents":[ { "id":"inc_sea_01", "vibe":"seaside", "locationIds":["loc_lighthouse_bay"], "phrase":"灯塔光把海面照成碎金", "poseHint":"gaze", "personalityBias":{} } ] }
 ```
 （此文件顶层用 `templates/encounters/incidents` 三数组，非通用 `items`。）
+
+`locationIds` 为空表示同类别/池内通用；非空表示仅能与列出的地点背景组合。
+运行时必须先按类别/池筛选，再按地点白名单筛选；存在当前地点专属项时只抽
+专属项，没有专属项才回退通用项。历史存档若检测到模板、遭遇或碰撞与
+`Postcard.locationId` 不一致，应以原卡 ID 做稳定重选并覆盖错误定稿。
 
 ### clue_defs.json（彩蛋链定义）
 ```json

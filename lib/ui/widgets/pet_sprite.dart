@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../domain/enums.dart';
+import '../app_icons.dart';
 import '../pet_action_cue.dart';
 import '../pet_art.dart';
 import 'sprite_sheet_player.dart';
@@ -16,6 +18,7 @@ class PetSprite extends StatefulWidget {
   final String? variantId;
   final PetStage? stage;
   final PetActionCue? cue; // 外部动作触发（喂/摸/玩/洗）
+  final String? semanticLabel;
   const PetSprite({
     super.key,
     required this.assetPath,
@@ -25,6 +28,7 @@ class PetSprite extends StatefulWidget {
     this.variantId,
     this.stage,
     this.cue,
+    this.semanticLabel,
   });
 
   @override
@@ -36,6 +40,11 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
 
   late final AnimationController _breath;
   late final AnimationController _bounce;
+  late final AnimationController _fidget;
+  final math.Random _random = math.Random();
+  Timer? _fidgetTimer;
+  Timer? _actionTimer;
+  int _fidgetKind = 0;
   int _heartSeq = 0;
   final List<int> _hearts = [];
   String? _playing; // 当前正在播的动作（null=静止呼吸）
@@ -52,6 +61,16 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 420),
     );
+    _fidget =
+        AnimationController(
+          vsync: this,
+          duration: const Duration(milliseconds: 1500),
+        )..addStatusListener((status) {
+          if (status == AnimationStatus.completed) {
+            _fidget.value = 0;
+            _scheduleFidget();
+          }
+        });
   }
 
   @override
@@ -59,10 +78,14 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
     super.didChangeDependencies();
     _reduceMotion = MediaQuery.disableAnimationsOf(context);
     if (_reduceMotion) {
+      _fidgetTimer?.cancel();
+      _fidget.stop();
+      _fidget.value = 0;
       _breath.stop();
       _breath.value = 0;
     } else if (!_breath.isAnimating) {
       _breath.repeat(reverse: true);
+      _scheduleFidget();
     }
   }
 
@@ -71,7 +94,12 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
     super.didUpdateWidget(old);
     final cue = widget.cue;
     if (cue != null && cue.seq != old.cue?.seq) {
+      _fidgetTimer?.cancel();
+      _fidget.stop();
+      _fidget.value = 0;
       setState(() => _playing = cue.action);
+      _actionTimer?.cancel();
+      _actionTimer = Timer(_actionDuration, () => _finishAction(cue.seq));
       if (cue.action == 'pat') _spawnHeart();
     }
   }
@@ -80,7 +108,44 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
   void dispose() {
     _breath.dispose();
     _bounce.dispose();
+    _fidgetTimer?.cancel();
+    _actionTimer?.cancel();
+    _fidget.dispose();
     super.dispose();
+  }
+
+  void _finishAction(int seq) {
+    if (!mounted || widget.cue?.seq != seq || _playing == null) return;
+    _actionTimer?.cancel();
+    _actionTimer = null;
+    setState(() => _playing = null);
+    _scheduleFidget();
+  }
+
+  void _scheduleFidget() {
+    if (_reduceMotion ||
+        _playing != null ||
+        _fidget.isAnimating ||
+        _fidgetTimer?.isActive == true) {
+      return;
+    }
+    final delay = Duration(milliseconds: 8000 + _random.nextInt(7001));
+    _fidgetTimer = Timer(delay, () {
+      _fidgetTimer = null;
+      if (!mounted || _reduceMotion || _playing != null) return;
+      _fidgetKind = _nextFidgetKind();
+      _fidget.forward(from: 0);
+    });
+  }
+
+  int _nextFidgetKind() {
+    final species = PetArt.dir(widget.speciesId ?? '');
+    final offset = switch (species) {
+      'parrot' || 'starbug' => 2,
+      'snake' || 'cham' || 'turtle' => 1,
+      _ => 0,
+    };
+    return (offset + _random.nextInt(3)) % 3;
   }
 
   void _spawnHeart() {
@@ -92,9 +157,13 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
   }
 
   void _onTap() {
+    _fidgetTimer?.cancel();
+    _fidget.stop();
+    _fidget.value = 0;
     _bounce.forward(from: 0);
     _spawnHeart();
     widget.onTap?.call();
+    _scheduleFidget();
   }
 
   Widget _staticSprite() {
@@ -121,7 +190,7 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
 
   Widget _breathingStatic() {
     return AnimatedBuilder(
-      animation: Listenable.merge([_breath, _bounce]),
+      animation: Listenable.merge([_breath, _bounce, _fidget]),
       builder: (context, child) {
         final b = math.sin(_breath.value * math.pi);
         final dy = -b * 4;
@@ -131,17 +200,55 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
             Curves.elasticOut.transform(_bounce.value) *
                 0.08 *
                 (1 - _bounce.value);
+        final fidget = _fidgetTransform(_fidget.value);
         return Transform.translate(
-          offset: Offset(0, dy),
-          child: Transform.scale(
-            scaleX: pop,
-            scaleY: scaleY * pop,
-            child: child,
+          offset: Offset(fidget.dx, dy + fidget.dy),
+          child: Transform.rotate(
+            angle: fidget.angle,
+            alignment: Alignment.bottomCenter,
+            child: Transform.scale(
+              alignment: Alignment.bottomCenter,
+              scaleX: pop * fidget.scaleX,
+              scaleY: scaleY * pop * fidget.scaleY,
+              child: child,
+            ),
           ),
         );
       },
       child: _staticSprite(),
     );
+  }
+
+  ({double dx, double dy, double angle, double scaleX, double scaleY})
+  _fidgetTransform(double value) {
+    if (value <= 0) {
+      return (dx: 0, dy: 0, angle: 0, scaleX: 1, scaleY: 1);
+    }
+    final rise = math.sin(value * math.pi);
+    final wave = math.sin(value * math.pi * 2);
+    return switch (_fidgetKind) {
+      0 => (
+        dx: wave * 3.5,
+        dy: -rise * 2.5,
+        angle: wave * 0.04,
+        scaleX: 1 + rise * 0.012,
+        scaleY: 1 - rise * 0.008,
+      ),
+      1 => (
+        dx: wave * 1.5,
+        dy: rise * 2.5,
+        angle: wave * 0.02,
+        scaleX: 1 + rise * 0.035,
+        scaleY: 1 - rise * 0.025,
+      ),
+      _ => (
+        dx: wave * 2,
+        dy: -rise * 5,
+        angle: wave * 0.025,
+        scaleX: 1 + rise * 0.018,
+        scaleY: 1 + rise * 0.012,
+      ),
+    };
   }
 
   @override
@@ -151,34 +258,47 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
     final Widget body;
     if (playing != null && widget.speciesId != null) {
       void onComplete() {
-        if (mounted) setState(() => _playing = null);
+        _finishAction(widget.cue?.seq ?? -1);
       }
 
+      final choreography = _StaticActionChoreography(
+        key: ValueKey('pose_${widget.cue?.seq}'),
+        action: playing,
+        species: PetArt.dir(widget.speciesId!),
+        stage: widget.stage ?? PetStage.c,
+        duration: _actionDuration,
+        reduceMotion: reduceMotion,
+        onComplete: onComplete,
+        child: _staticSprite(),
+      );
+      final useSheet =
+          !reduceMotion &&
+          PetArt.hasExactAction(
+            variantId: widget.variantId,
+            stage: widget.stage,
+          );
       body = KeyedSubtree(
         key: ValueKey<String>('pet_action_$playing'),
-        child: SpriteSheetPlayer(
-          key: ValueKey('act_${widget.cue?.seq}'),
-          assetPath: PetArt.actionSheet(widget.speciesId!, playing),
-          size: widget.width,
-          duration: _actionDuration,
-          cycles: reduceMotion ? 1 : 2,
-          holdTailFraction: reduceMotion ? 0.48 : 0.16,
-          onComplete: onComplete,
-          fallback: _StaticActionChoreography(
-            key: ValueKey('pose_${widget.cue?.seq}'),
-            action: playing,
-            duration: _actionDuration,
-            reduceMotion: reduceMotion,
-            child: _staticSprite(),
-          ),
-        ),
+        child: useSheet
+            ? SpriteSheetPlayer(
+                key: ValueKey('act_${widget.cue?.seq}'),
+                assetPath: PetArt.actionSheet(widget.speciesId!, playing),
+                size: widget.width,
+                duration: _actionDuration,
+                cycles: 2,
+                holdTailFraction: 0.16,
+                evictOnDispose: true,
+                onComplete: onComplete,
+                fallback: choreography,
+              )
+            : choreography,
       );
     } else if (reduceMotion) {
       body = _staticSprite();
     } else {
       body = _breathingStatic();
     }
-    return GestureDetector(
+    final content = GestureDetector(
       onTap: _onTap,
       behavior: HitTestBehavior.opaque,
       child: SizedBox(
@@ -199,20 +319,32 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
         ),
       ),
     );
+    return Semantics(
+      button: true,
+      label: widget.semanticLabel ?? '摸摸宠物',
+      onTap: widget.onTap == null ? null : _onTap,
+      child: ExcludeSemantics(child: content),
+    );
   }
 }
 
 class _StaticActionChoreography extends StatefulWidget {
   final String action;
+  final String species;
+  final PetStage stage;
   final Duration duration;
   final bool reduceMotion;
+  final VoidCallback onComplete;
   final Widget child;
 
   const _StaticActionChoreography({
     super.key,
     required this.action,
+    required this.species,
+    required this.stage,
     required this.duration,
     required this.reduceMotion,
+    required this.onComplete,
     required this.child,
   });
 
@@ -223,10 +355,17 @@ class _StaticActionChoreography extends StatefulWidget {
 
 class _StaticActionChoreographyState extends State<_StaticActionChoreography>
     with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    vsync: this,
-    duration: widget.duration,
-  )..forward();
+  late final AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(vsync: this, duration: widget.duration)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) widget.onComplete();
+      })
+      ..forward();
+  }
 
   @override
   void dispose() {
@@ -241,51 +380,301 @@ class _StaticActionChoreographyState extends State<_StaticActionChoreography>
       child: widget.child,
       builder: (context, child) {
         final t = _controller.value;
-        final pulse = math.sin(t * math.pi * (widget.reduceMotion ? 2 : 8));
-        final wave = math.sin(t * math.pi * (widget.reduceMotion ? 1 : 4));
-        final motionScale = widget.reduceMotion ? 0.35 : 1.0;
-        final (dy, dx, scale, angle) = switch (widget.action) {
-          'eat' => (
-            pulse.abs() * 5 * motionScale,
-            0.0,
-            1.0 - pulse.abs() * 0.025 * motionScale,
-            0.0,
-          ),
-          'pat' => (
-            -pulse.abs() * 4 * motionScale,
-            0.0,
-            1.0 + pulse.abs() * 0.025 * motionScale,
-            wave * 0.015 * motionScale,
-          ),
-          'play' => (
-            -pulse.abs() * 12 * motionScale,
-            wave * 8 * motionScale,
-            1.0 + pulse.abs() * 0.035 * motionScale,
-            wave * 0.04 * motionScale,
-          ),
-          'bath' => (
-            pulse * 3 * motionScale,
-            wave * 3 * motionScale,
-            1.0 + pulse * 0.018 * motionScale,
-            wave * 0.025 * motionScale,
-          ),
-          _ => (
-            pulse * 2 * motionScale,
-            0.0,
-            1.0 + pulse * 0.015 * motionScale,
-            0.0,
-          ),
-        };
-        return Transform.translate(
-          offset: Offset(dx, dy),
-          child: Transform.rotate(
-            angle: angle,
-            child: Transform.scale(scale: scale, child: child),
-          ),
+        final frame = _petActionFrame(
+          action: widget.action,
+          species: widget.species,
+          stage: widget.stage,
+          t: t,
+          reduceMotion: widget.reduceMotion,
+        );
+        final accentProgress = math.sin(t * math.pi).clamp(0.0, 1.0);
+        return Stack(
+          alignment: Alignment.center,
+          clipBehavior: Clip.none,
+          children: [
+            Transform.translate(
+              offset: Offset(frame.dx, frame.dy),
+              child: Transform.rotate(
+                angle: frame.angle,
+                alignment: Alignment.bottomCenter,
+                child: Opacity(
+                  opacity: frame.opacity,
+                  child: Transform.scale(
+                    alignment: Alignment.bottomCenter,
+                    scaleX: frame.scaleX,
+                    scaleY: frame.scaleY,
+                    child: child,
+                  ),
+                ),
+              ),
+            ),
+            if (!widget.reduceMotion)
+              Align(
+                alignment: const Alignment(0.72, -0.68),
+                child: Opacity(
+                  opacity: accentProgress * 0.92,
+                  child: Transform.translate(
+                    offset: Offset(0, -accentProgress * 12),
+                    child: Transform.scale(
+                      scale: 0.82 + accentProgress * 0.18,
+                      child: AppIcon(
+                        switch (widget.action) {
+                          'eat' => 'act_feed',
+                          'pat' => 'act_pat',
+                          'play' => 'act_toy',
+                          'bath' => 'act_bath',
+                          _ => 'act_pat',
+                        },
+                        size: 34,
+                        fallback: switch (widget.action) {
+                          'eat' => Icons.restaurant_rounded,
+                          'play' => Icons.sports_baseball_rounded,
+                          'bath' => Icons.bubble_chart_rounded,
+                          _ => Icons.favorite_rounded,
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
         );
       },
     );
   }
+}
+
+typedef _PetActionFrame = ({
+  double dx,
+  double dy,
+  double scaleX,
+  double scaleY,
+  double angle,
+  double opacity,
+});
+
+typedef _PetMotionProfile = ({
+  double tempo,
+  double lift,
+  double travel,
+  double squash,
+  double sway,
+  double floatiness,
+});
+
+_PetMotionProfile _petMotionProfile(String species) {
+  return switch (species) {
+    'shiba' => (
+      tempo: 1.18,
+      lift: 1.08,
+      travel: 1.12,
+      squash: 0.92,
+      sway: 0.75,
+      floatiness: 0,
+    ),
+    'rabbit' => (
+      tempo: 1.08,
+      lift: 1.30,
+      travel: 0.90,
+      squash: 1.08,
+      sway: 0.62,
+      floatiness: 0,
+    ),
+    'uni' => (
+      tempo: 0.96,
+      lift: 1.24,
+      travel: 0.96,
+      squash: 0.82,
+      sway: 0.70,
+      floatiness: 0.35,
+    ),
+    'hamster' => (
+      tempo: 1.36,
+      lift: 0.82,
+      travel: 0.72,
+      squash: 1.24,
+      sway: 0.72,
+      floatiness: 0,
+    ),
+    'turtle' => (
+      tempo: 0.52,
+      lift: 0.30,
+      travel: 0.42,
+      squash: 0.38,
+      sway: 0.34,
+      floatiness: 0,
+    ),
+    'parrot' => (
+      tempo: 1.24,
+      lift: 1.12,
+      travel: 0.76,
+      squash: 0.60,
+      sway: 1.16,
+      floatiness: 0.22,
+    ),
+    'snake' => (
+      tempo: 0.72,
+      lift: 0.34,
+      travel: 1.28,
+      squash: 0.28,
+      sway: 1.42,
+      floatiness: 0,
+    ),
+    'cham' => (
+      tempo: 0.62,
+      lift: 0.46,
+      travel: 0.64,
+      squash: 0.44,
+      sway: 1.18,
+      floatiness: 0,
+    ),
+    'ember' => (
+      tempo: 1.04,
+      lift: 1.02,
+      travel: 1.0,
+      squash: 0.78,
+      sway: 1.0,
+      floatiness: 0.12,
+    ),
+    'boo' => (
+      tempo: 0.68,
+      lift: 0.72,
+      travel: 0.70,
+      squash: 0.72,
+      sway: 0.92,
+      floatiness: 1,
+    ),
+    'starbug' => (
+      tempo: 1.10,
+      lift: 1.18,
+      travel: 1.02,
+      squash: 0.42,
+      sway: 1.14,
+      floatiness: 0.82,
+    ),
+    _ => (
+      tempo: 0.88,
+      lift: 0.82,
+      travel: 0.78,
+      squash: 0.86,
+      sway: 0.72,
+      floatiness: 0,
+    ),
+  };
+}
+
+_PetActionFrame _petActionFrame({
+  required String action,
+  required String species,
+  required PetStage stage,
+  required double t,
+  required bool reduceMotion,
+}) {
+  final profile = _petMotionProfile(species);
+  final stageWeight = switch (stage) {
+    PetStage.a => 0.72,
+    PetStage.b => 0.86,
+    PetStage.c => 1.0,
+    PetStage.d => 0.92,
+  };
+  final reduced = reduceMotion ? 0.28 : 1.0;
+  final strength = stageWeight * reduced;
+  final edge = math
+      .min(1.0, math.min(t / 0.10, (1 - t) / 0.10))
+      .clamp(0.0, 1.0)
+      .toDouble();
+  final phase = t * math.pi * 2 * profile.tempo;
+  final wave = math.sin(phase * 2) * edge;
+  final beat = math.sin(phase * 4).abs() * edge;
+  final leap = math.sin(phase * 2).abs() * edge;
+
+  var dx = 0.0;
+  var dy = 0.0;
+  var scaleX = 1.0;
+  var scaleY = 1.0;
+  var angle = 0.0;
+  var opacity = 1.0;
+
+  switch (action) {
+    case 'eat':
+      if (species == 'snake') {
+        dx = wave * 5.5 * profile.travel * strength;
+        dy = beat * 1.5 * strength;
+        angle = wave * 0.026 * strength;
+      } else if (species == 'turtle') {
+        dx = leap * 3.2 * strength;
+        dy = beat * 1.2 * strength;
+        angle = -leap * 0.018 * strength;
+      } else {
+        dy = beat * 5.2 * profile.squash * strength;
+        angle = wave * 0.010 * profile.sway * strength;
+        scaleX += beat * 0.018 * profile.squash * strength;
+        scaleY -= beat * 0.028 * profile.squash * strength;
+      }
+      break;
+    case 'pat':
+      dy = -leap * 4.2 * profile.lift * strength;
+      dx = wave * 1.2 * profile.travel * strength;
+      angle = wave * 0.018 * profile.sway * strength;
+      scaleX += leap * 0.012 * profile.squash * strength;
+      scaleY += leap * 0.027 * profile.squash * strength;
+      if (species == 'snake' || species == 'cham') {
+        dy *= 0.45;
+        dx = wave * 4.4 * profile.travel * strength;
+      }
+      break;
+    case 'play':
+      if (species == 'snake') {
+        dx = wave * 10.5 * strength;
+        dy = -beat * 3.0 * strength;
+        angle = wave * 0.052 * strength;
+      } else if (species == 'turtle') {
+        dx = wave * 3.2 * strength;
+        dy = -leap * 2.4 * strength;
+        angle = wave * 0.018 * strength;
+      } else {
+        dy = -leap * 12 * profile.lift * strength;
+        dx = wave * 8 * profile.travel * strength;
+        angle = wave * 0.045 * profile.sway * strength;
+        scaleX += beat * 0.034 * profile.squash * strength;
+        scaleY -= beat * 0.020 * profile.squash * strength;
+      }
+      break;
+    case 'bath':
+      if (species == 'parrot') {
+        dy = -beat * 7.0 * strength;
+        dx = wave * 5.0 * strength;
+        angle = wave * 0.070 * strength;
+      } else if (species == 'snake') {
+        dx = wave * 6.0 * strength;
+        scaleX += beat * 0.024 * strength;
+        scaleY -= beat * 0.016 * strength;
+      } else {
+        dy = wave * 2.8 * profile.lift * strength;
+        dx = wave * 3.2 * profile.travel * strength;
+        angle = wave * 0.032 * profile.sway * strength;
+        scaleX += beat * 0.019 * profile.squash * strength;
+        scaleY -= beat * 0.013 * profile.squash * strength;
+      }
+      break;
+    default:
+      dy = -leap * 2.2 * profile.lift * strength;
+      angle = wave * 0.012 * profile.sway * strength;
+      break;
+  }
+
+  if (profile.floatiness > 0) {
+    dy -= math.sin(phase).abs() * 4.0 * profile.floatiness * strength;
+    opacity = 1 - math.sin(phase).abs() * 0.045 * profile.floatiness * strength;
+  }
+  return (
+    dx: dx,
+    dy: dy,
+    scaleX: scaleX,
+    scaleY: scaleY,
+    angle: angle,
+    opacity: opacity.clamp(0.88, 1.0).toDouble(),
+  );
 }
 
 /// 点击时向上飘散并淡出的小爱心。
@@ -314,17 +703,19 @@ class _FloatingHeartState extends State<_FloatingHeart>
     return AnimatedBuilder(
       animation: _c,
       builder: (context, _) {
-        return Positioned(
-          top: 30 - _c.value * 80,
-          left: 90 + _dx,
-          child: Opacity(
-            opacity: (1 - _c.value).clamp(0.0, 1.0),
-            child: Transform.scale(
-              scale: 0.6 + Curves.easeOut.transform(_c.value) * 0.6,
-              child: const Icon(
-                Icons.favorite,
-                color: Color(0xFFF4A7B9),
-                size: 26,
+        return Align(
+          alignment: Alignment.topCenter,
+          child: Transform.translate(
+            offset: Offset(_dx, 28 - _c.value * 80),
+            child: Opacity(
+              opacity: (1 - _c.value).clamp(0.0, 1.0),
+              child: Transform.scale(
+                scale: 0.6 + Curves.easeOut.transform(_c.value) * 0.6,
+                child: const Icon(
+                  Icons.favorite,
+                  color: Color(0xFFF4A7B9),
+                  size: 26,
+                ),
               ),
             ),
           ),

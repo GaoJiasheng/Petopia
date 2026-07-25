@@ -30,6 +30,7 @@ void main() {
     final loaded = await store.load();
 
     expect(loaded, isNotNull);
+    expect(store.lastLoadSource, SessionLoadSource.primary);
     _expectSessionEquals(loaded!, session);
   });
 
@@ -65,6 +66,35 @@ void main() {
     expect((await store.load())?.wallet.balance, 4096);
   });
 
+  test(
+    'corrupt primary automatically falls back to the previous snapshot',
+    () async {
+      final store = SessionStore(tempDir);
+      final session = _richSession()..wallet.balance = 1024;
+      await store.save(session);
+      session.wallet.balance = 2048;
+      await store.save(session);
+
+      await File('${tempDir.path}/session.json').writeAsString('not-json');
+
+      expect((await store.load())?.wallet.balance, 1024);
+      expect(store.lastLoadSource, SessionLoadSource.backup);
+    },
+  );
+
+  test('corrupt primary and backup report no recoverable session', () async {
+    final store = SessionStore(tempDir);
+    final session = _richSession();
+    await store.save(session);
+    await store.save(session);
+
+    await File('${tempDir.path}/session.json').writeAsString('not-json');
+    await File('${tempDir.path}/session.bak').writeAsString('not-json');
+
+    expect(await store.load(), isNull);
+    expect(store.lastLoadSource, SessionLoadSource.none);
+  });
+
   test('schema v1 progress migrates without replaying onboarding', () {
     final store = SessionStore(tempDir);
     final encoded = store.encodeSnapshot(_richSession());
@@ -98,6 +128,66 @@ void main() {
     expect(migrated.settings.onboardingComplete, isFalse);
     expect(migrated.settings.careTutorialStep, 0);
   });
+
+  test(
+    'decade-scale local history stays compact and round-trips',
+    () async {
+      final session = _richSession();
+      session.postcards.clear();
+      session.visitorLog.clear();
+      final start = DateTime.utc(2026, 1, 1);
+      for (var index = 0; index < 2200; index++) {
+        final sentAt = start.add(Duration(days: index ~/ 6));
+        session.postcards.add(
+          Postcard(
+            id: 'postcard-$index',
+            petId: 'pet-${index % 12}',
+            journeyId: 'journey-${index % 12}',
+            locationId: 'loc-${index % 40}',
+            seq: index + 1,
+            sentAt: sentAt,
+            receivedAt: sentAt.add(const Duration(minutes: 4)),
+            season: Season.values[index % Season.values.length],
+            timeOfDay:
+                TimeOfDayOfDay.values[index % TimeOfDayOfDay.values.length],
+            weather: Weather.values[index % Weather.values.length],
+            bodyText: '远方的第 $index 个小故事，今天也被好好收进相册。',
+            photoAssetId: 'pc_bg_${index % 40}',
+            stampId: 'stamp_${index % 40}',
+          ),
+        );
+      }
+      for (var index = 0; index < 3650; index++) {
+        session.visitorLog.add(
+          VisitorLogEntry(
+            id: 'visit-$index',
+            visitorId: 'visitor-${index % 20}',
+            date: start.add(Duration(days: index)),
+            interactionId: 'interaction-${index % 8}',
+            withPetId: 'pet-${index % 12}',
+          ),
+        );
+      }
+
+      final store = SessionStore(tempDir);
+      final stopwatch = Stopwatch()..start();
+      await store.save(session);
+      final loaded = await store.load();
+      stopwatch.stop();
+
+      final file = File('${tempDir.path}/session.json');
+      expect(file.lengthSync(), lessThan(3 * 1024 * 1024));
+      expect(file.readAsStringSync().contains('\n  "'), isFalse);
+      expect(loaded?.postcards, hasLength(2200));
+      expect(loaded?.visitorLog, hasLength(3650));
+      expect(
+        stopwatch.elapsed,
+        lessThan(const Duration(seconds: 10)),
+        reason: 'large local history should remain practical on CI hardware',
+      );
+    },
+    timeout: const Timeout(Duration(seconds: 20)),
+  );
 }
 
 GameSession _richSession() {
@@ -152,6 +242,8 @@ GameSession _richSession() {
       notifyEvents: false,
       music: false,
       sound: false,
+      haptics: false,
+      renderQuality: RenderQuality.low,
       onboardingComplete: true,
       careTutorialStep: 3,
       schemaVersion: 2,
@@ -485,6 +577,8 @@ void _expectSettingsEquals(Settings actual, Settings expected) {
   expect(actual.notifyEvents, expected.notifyEvents);
   expect(actual.music, expected.music);
   expect(actual.sound, expected.sound);
+  expect(actual.haptics, expected.haptics);
+  expect(actual.renderQuality, expected.renderQuality);
   expect(actual.onboardingComplete, expected.onboardingComplete);
   expect(actual.careTutorialStep, expected.careTutorialStep);
   expect(actual.schemaVersion, expected.schemaVersion);

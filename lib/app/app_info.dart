@@ -1,6 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+abstract final class AppUrls {
+  static final Uri home = Uri.parse('https://blog.gavingao.cn/petopia/');
+  static final Uri privacy = Uri.parse(
+    'https://blog.gavingao.cn/petopia/privacy.html',
+  );
+  static final Uri support = Uri.parse(
+    'https://blog.gavingao.cn/petopia/support.html',
+  );
+}
+
 class AppInfo {
   const AppInfo({required this.version, required this.buildNumber});
 

@@ -89,7 +89,10 @@ class _VisitorDexGrid extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             final width = constraints.maxWidth;
-            final columns = width >= 900 ? 4 : (width >= 600 ? 3 : 2);
+            final largeText = MediaQuery.textScalerOf(context).scale(14) >= 28;
+            final columns = largeText
+                ? (width >= 900 ? 2 : 1)
+                : (width >= 900 ? 4 : (width >= 600 ? 3 : 2));
             final ratio = width >= 900 ? 0.88 : (width >= 600 ? 0.74 : 0.62);
             final margin = PetopiaAdaptive.sideMargin(context);
             return CustomScrollView(
@@ -130,6 +133,7 @@ class _VisitorDexGrid extends StatelessWidget {
                           mainAxisSpacing: 14,
                           crossAxisSpacing: 14,
                           childAspectRatio: ratio,
+                          mainAxisExtent: largeText ? 560 : null,
                         ),
                       ),
                     ),
@@ -233,23 +237,30 @@ class _RarityHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = _rarityColor(rarity);
-    return Row(
+    return Wrap(
+      spacing: 10,
+      runSpacing: 6,
+      crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        Container(
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 10,
+              height: 10,
+              decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              _rarityLabel(rarity),
+              style: const TextStyle(
+                color: VisitorDexScreen._ink,
+                fontSize: 18,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 8),
-        Text(
-          _rarityLabel(rarity),
-          style: const TextStyle(
-            color: VisitorDexScreen._ink,
-            fontSize: 18,
-            fontWeight: FontWeight.w900,
-          ),
-        ),
-        const SizedBox(width: 10),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
           decoration: BoxDecoration(
@@ -418,6 +429,13 @@ class _VisitorMemoryPanel extends StatelessWidget {
       480.0,
       780.0,
     );
+    if (MediaQuery.textScalerOf(context).scale(14) >= 28) {
+      return _LargeTextVisitorMemoryPanel(
+        entry: entry,
+        sidePanel: sidePanel,
+        maxHeight: maxHeight,
+      );
+    }
     return SafeArea(
       top: sidePanel,
       child: SizedBox(
@@ -524,6 +542,116 @@ class _VisitorMemoryPanel extends StatelessWidget {
                     _VisitorMemoryRow(memory: entry.memories[index]),
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LargeTextVisitorMemoryPanel extends StatelessWidget {
+  const _LargeTextVisitorMemoryPanel({
+    required this.entry,
+    required this.sidePanel,
+    required this.maxHeight,
+  });
+
+  final VisitorDexView entry;
+  final bool sidePanel;
+  final double maxHeight;
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      top: sidePanel,
+      child: SizedBox(
+        height: sidePanel ? null : maxHeight,
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(22, 8, 22, 28),
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Text(
+                    '${entry.name}的来访手账',
+                    style: const TextStyle(
+                      color: VisitorDexScreen._ink,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  tooltip: '关闭',
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.close_rounded),
+                  color: VisitorDexScreen._muted,
+                ),
+              ],
+            ),
+            const SizedBox(height: 18),
+            Center(
+              child: SizedBox(
+                width: 126,
+                height: 126,
+                child: Image.asset(
+                  'assets/art/world/visitors/${entry.id}_yard_base.png',
+                  fit: BoxFit.contain,
+                  cacheWidth: 420,
+                  semanticLabel: entry.name,
+                  errorBuilder: (_, _, _) => _VisitorMark(
+                    id: entry.id,
+                    collected: true,
+                    color: _rarityColor(entry.rarity),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 18),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: _InfoTag(
+                icon: Icons.auto_awesome_rounded,
+                label: _rarityLabel(entry.rarity),
+                color: _rarityColor(entry.rarity),
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              '到访 ${entry.count} 次',
+              style: const TextStyle(
+                color: VisitorDexScreen._ink,
+                fontSize: 16,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              '第一次见面：${_dateLabel(entry.firstSeen)}',
+              style: const TextStyle(
+                color: VisitorDexScreen._muted,
+                fontSize: 12.5,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 24),
+            const Text(
+              '相遇回忆',
+              style: TextStyle(
+                color: VisitorDexScreen._ink,
+                fontSize: 16,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            const SizedBox(height: 12),
+            const Divider(height: 1, color: VisitorDexScreen._line),
+            const SizedBox(height: 16),
+            for (var index = 0; index < entry.memories.length; index++) ...[
+              _VisitorMemoryRow(memory: entry.memories[index]),
+              if (index < entry.memories.length - 1)
+                const Divider(height: 30, color: VisitorDexScreen._line),
+            ],
           ],
         ),
       ),

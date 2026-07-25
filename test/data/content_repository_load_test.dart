@@ -43,7 +43,77 @@ void main() {
     );
     expect(repo.postcardTemplates.first.slots, contains('petName'));
 
+    final locationsById = {
+      for (final location in repo.locations) location.id: location,
+    };
+    for (final template in repo.postcardTemplates) {
+      for (final locationId in template.locationIds) {
+        final location = locationsById[locationId];
+        expect(
+          location,
+          isNotNull,
+          reason: '${template.id}: unknown $locationId',
+        );
+        expect(
+          location!.category,
+          template.category,
+          reason: '${template.id}: category mismatch at $locationId',
+        );
+      }
+    }
+    for (final encounter in repo.encounters) {
+      for (final locationId in encounter.locationIds) {
+        final location = locationsById[locationId];
+        expect(
+          location,
+          isNotNull,
+          reason: '${encounter.id}: unknown $locationId',
+        );
+        expect(
+          location!.encounterPoolId,
+          encounter.poolId,
+          reason: '${encounter.id}: pool mismatch at $locationId',
+        );
+      }
+    }
+    for (final incident in repo.incidents) {
+      for (final locationId in incident.locationIds) {
+        final location = locationsById[locationId];
+        expect(
+          location,
+          isNotNull,
+          reason: '${incident.id}: unknown $locationId',
+        );
+        expect(
+          location!.vibeTags,
+          contains(incident.vibe),
+          reason: '${incident.id}: vibe mismatch at $locationId',
+        );
+      }
+    }
+    final affinityCount = [
+      ...repo.postcardTemplates.map((item) => item.locationIds),
+      ...repo.encounters.map((item) => item.locationIds),
+      ...repo.incidents.map((item) => item.locationIds),
+    ].where((ids) => ids.isNotEmpty).length;
+    expect(affinityCount, 240, reason: 'landmark-specific postcard entries');
+
     for (final location in repo.locations) {
+      expect(
+        location.allowedSeasons,
+        isNotEmpty,
+        reason: '${location.id}: missing postcard seasons',
+      );
+      expect(
+        location.allowedTimesOfDay,
+        isNotEmpty,
+        reason: '${location.id}: missing postcard times',
+      );
+      expect(
+        location.allowedWeather,
+        isNotEmpty,
+        reason: '${location.id}: missing postcard weather',
+      );
       expect(
         File(
           'assets/art/postcards/backgrounds/${location.photoStyle}.png',

@@ -205,8 +205,8 @@ class PetopiaSqliteDao {
     final query = _rangeWhere('timestamp', from, to);
     final rows = await _db.query(
       'currency_log',
-      where: query.where,
-      whereArgs: query.args,
+      where: query.where.isEmpty ? null : query.where,
+      whereArgs: query.where.isEmpty ? null : query.args,
       orderBy: 'timestamp ASC',
     );
     return rows.map(_currencyLogFromRow).toList();

@@ -31,13 +31,17 @@ class PetArt {
   }
 
   /// 动作序列帧条（4096×512 = 8 帧）。
-  ///
-  /// 美术规范只为每个物种交付一套 var01/stageC 动作条，并明确要求 A/B/D
-  /// 档也复用这套动作。静态立绘仍按宠物实际花色和成长档显示。
   static String actionSheet(String speciesId, String action) {
     final d = dir(speciesId);
-    return 'assets/runtime/pets/$d/actions/pet_${d}_var01_stageC_$action.png';
+    return 'assets/runtime/pets/$d/actions/pet_${d}_var01_stageC_$action.webp';
   }
+
+  /// 现有序列帧只与 var01 / stage C 的角色身份完全一致。
+  ///
+  /// 其他花色或成长阶段必须使用保留原立绘的动作编排，不能在互动期间
+  /// 突然换成另一只成年宠物。
+  static bool hasExactAction({String? variantId, PetStage? stage}) =>
+      variantSlug(variantId) == 'var01' && stage == PetStage.c;
 
   static String? variantSlug(String? variantId) {
     if (variantId == null) return null;

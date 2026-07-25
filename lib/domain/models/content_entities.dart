@@ -66,6 +66,9 @@ class Location {
   final String encounterPoolId; // 遭遇池引用
   final Map<String, double> personalityWeight; // 性格→抽取权重
   final String stampId; // 邮戳徽章
+  final List<Season> allowedSeasons; // 固定背景允许出现的季节叙述
+  final List<TimeOfDayOfDay> allowedTimesOfDay; // 固定背景允许出现的时段叙述
+  final List<Weather> allowedWeather; // 固定背景允许出现的天气叙述
 
   const Location({
     required this.id,
@@ -77,6 +80,29 @@ class Location {
     required this.encounterPoolId,
     required this.personalityWeight,
     required this.stampId,
+    this.allowedSeasons = const [
+      Season.spring,
+      Season.summer,
+      Season.autumn,
+      Season.winter,
+    ],
+    this.allowedTimesOfDay = const [
+      TimeOfDayOfDay.dawn,
+      TimeOfDayOfDay.morning,
+      TimeOfDayOfDay.noon,
+      TimeOfDayOfDay.afternoon,
+      TimeOfDayOfDay.evening,
+      TimeOfDayOfDay.night,
+    ],
+    this.allowedWeather = const [
+      Weather.clear,
+      Weather.cloudy,
+      Weather.rain,
+      Weather.thunder,
+      Weather.snow,
+      Weather.fog,
+      Weather.rainbow,
+    ],
   });
 }
 

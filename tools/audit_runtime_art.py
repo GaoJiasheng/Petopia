@@ -68,7 +68,7 @@ def _audit_cutout(path: Path) -> int:
 def _cutout_paths() -> list[Path]:
     patterns = (
         "assets/runtime/pets/*/pet_*_stage?.png",
-        "assets/runtime/pets/*/actions/*.png",
+        "assets/runtime/pets/*/actions/*.webp",
         "assets/art/world/visitors/*_yard.png",
         "assets/art/world/visitors/*_portrait.png",
         "assets/art/postcards/poses/*.png",
@@ -125,4 +125,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

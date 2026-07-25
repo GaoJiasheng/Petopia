@@ -6,7 +6,9 @@ class PostcardTemplate {
   final String id;
   final String personalityId; // p_glutton 等
   final String category; // 海滨/山地/…
-  final String skeleton; // 带占位符：{location}{encounter}{incident}{petName}{ownerName}
+  final List<String> locationIds; // 空=该类别内通用；非空=仅允许这些地点
+  final String
+  skeleton; // 带占位符：{location}{encounter}{incident}{petName}{ownerName}
   final List<String> slots; // 需要的槽位
   final String tone; // 语气要点
 
@@ -15,6 +17,7 @@ class PostcardTemplate {
     required this.personalityId,
     required this.category,
     required this.skeleton,
+    this.locationIds = const [],
     this.slots = const [],
     this.tone = '',
   });
@@ -24,6 +27,7 @@ class PostcardTemplate {
 class Encounter {
   final String id;
   final String poolId; // 关联 Location.encounterPoolId
+  final List<String> locationIds; // 空=该遭遇池内通用
   final String phrase; // 可入句短语
   final Map<String, double> personalityBias;
 
@@ -31,6 +35,7 @@ class Encounter {
     required this.id,
     required this.poolId,
     required this.phrase,
+    this.locationIds = const [],
     this.personalityBias = const {},
   });
 }
@@ -39,6 +44,7 @@ class Encounter {
 class Incident {
   final String id;
   final String vibe; // 关联 Location.vibeTags
+  final List<String> locationIds; // 空=该 vibe 内通用
   final String phrase;
   final String poseHint; // 对齐 §6.5 姿态（用于照片合成）
   final Map<String, double> personalityBias;
@@ -47,6 +53,7 @@ class Incident {
     required this.id,
     required this.vibe,
     required this.phrase,
+    this.locationIds = const [],
     this.poseHint = 'idle',
     this.personalityBias = const {},
   });

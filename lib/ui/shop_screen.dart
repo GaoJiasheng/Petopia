@@ -174,7 +174,8 @@ class _ShopContent extends StatelessWidget {
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final wide = constraints.maxWidth >= 820;
+        final largeText = MediaQuery.textScalerOf(context).scale(14) >= 28;
+        final wide = constraints.maxWidth >= 820 && !largeText;
         final selected = grouped.containsKey(selectedCategory)
             ? selectedCategory!
             : grouped.keys.first;

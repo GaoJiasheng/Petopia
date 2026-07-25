@@ -14,7 +14,10 @@ import '../domain/models/logs.dart';
 import '../domain/models/pet.dart';
 import '../domain/models/yard.dart';
 import '../services/save_service.dart';
+import '../services/local_calendar.dart';
 import 'bootstrap.dart';
+import 'diagnostic_report.dart';
+import 'app_error_log.dart';
 import 'game_services.dart';
 import 'notification_service.dart';
 
@@ -53,6 +56,7 @@ class PetView {
 
 class EventPresentationView {
   final String id;
+  final String eventId;
   final String title;
   final String script;
   final EventType type;
@@ -64,6 +68,7 @@ class EventPresentationView {
 
   const EventPresentationView({
     required this.id,
+    required this.eventId,
     required this.title,
     required this.script,
     required this.type,
@@ -156,6 +161,12 @@ class OfflineWelcomeView {
   });
 }
 
+class SaveRecoveryView {
+  final String message;
+
+  const SaveRecoveryView(this.message);
+}
+
 enum TodayYardKind { pat, feed, toy, bath, visitor, event }
 
 class TodayYardItemView {
@@ -214,7 +225,9 @@ class GameView {
   final bool needsFirstCare;
   final int careTutorialStep;
   final OfflineWelcomeView? offlineWelcome;
+  final SaveRecoveryView? saveRecovery;
   final TodayYardView? todayYard;
+  final RenderQuality renderQuality;
 
   const GameView({
     required this.pet,
@@ -235,7 +248,9 @@ class GameView {
     required this.needsFirstCare,
     required this.careTutorialStep,
     this.offlineWelcome,
+    this.saveRecovery,
     this.todayYard,
+    this.renderQuality = RenderQuality.auto,
   });
 }
 
@@ -246,15 +261,24 @@ class GameController extends AsyncNotifier<GameView> {
   int _achievementCueSeq = 0;
   int _offlineWelcomeSeq = 0;
   OfflineWelcomeView? _offlineWelcome;
+  SaveRecoveryView? _saveRecovery;
   bool _resuming = false;
+  DateTime? _activePresenceAt;
 
   @override
   Future<GameView> build() async {
     _svc = await bootstrapGame();
+    _activePresenceAt = _svc.clock.now();
+    final recoveryReason = _svc.startupRecoveryReason;
+    if (recoveryReason != null) {
+      _saveRecovery = SaveRecoveryView(recoveryReason);
+    }
     ref.onDispose(() => unawaited(_svc.dispose()));
     final settings = _svc.session.settings;
-    await ref.read(audioServiceProvider).setMusicEnabled(settings.music);
-    await ref.read(audioServiceProvider).setEffectsEnabled(settings.sound);
+    final audio = ref.read(audioServiceProvider);
+    await audio.initialize();
+    await audio.setMusicEnabled(settings.music);
+    await audio.setEffectsEnabled(settings.sound);
     _queueOfflineWelcome(
       _svc.session.current,
       elapsed: _svc.startupOfflineElapsed,
@@ -306,7 +330,15 @@ class GameController extends AsyncNotifier<GameView> {
     if (_remainingSec(action, cooldownMin) > 0) return false;
     final beforeLevel = pet.level;
     final beforeStage = pet.stage;
-    HapticFeedback.lightImpact();
+    _hapticLight();
+    unawaited(
+      _audio.sfx(switch (action) {
+        CareAction.feed => Sfx.feed,
+        CareAction.pat => Sfx.pat,
+        CareAction.toy => Sfx.toy,
+        CareAction.bath => Sfx.bath,
+      }),
+    );
     final effectiveExp = _effectiveCareExp(action, baseExp);
     _svc.exp.addExp(pet: pet, baseDelta: effectiveExp, source: source);
     _svc.session.careActionCount++; // 成就：照料动作累计
@@ -328,13 +360,16 @@ class GameController extends AsyncNotifier<GameView> {
       _ => action.name,
     };
     _svc.bumpAchievementSignal('action:$actionSignal');
-    final localNow = _svc.clock.now().toLocal();
-    if (localNow.hour < 2) {
-      _svc.bumpAchievementSignal('custom:night_care');
-    }
-    if (localNow.hour == 5 || (localNow.hour == 6 && localNow.minute <= 30)) {
-      _svc.bumpAchievementSignal('custom:dawn_care');
-    }
+    final localNow = LocalCalendar.local(_svc.clock.now());
+    final fullCareDay = CareAction.values.every(
+      (candidate) =>
+          (ledger.counts[candidate.name] ?? 0) >= _dailyCapOf[candidate]!,
+    );
+    _svc.recordCareAchievementFacts(
+      at: localNow,
+      action: action.name,
+      fullCareDay: fullCareDay,
+    );
     if (localNow.month == 1 && localNow.day == 1) {
       _svc.bumpAchievementSignal('custom:care');
     }
@@ -358,13 +393,7 @@ class GameController extends AsyncNotifier<GameView> {
     _grantLevelRewards(pet.id, beforeLevel, pet.level);
     // 升级 / 换模 的手感 + 音效反馈。
     if (pet.stage != beforeStage) {
-      HapticFeedback.lightImpact();
-      unawaited(
-        Future<void>.delayed(
-          const Duration(milliseconds: 90),
-          HapticFeedback.lightImpact,
-        ),
-      );
+      _hapticWarm();
       _audio.sting(switch (pet.stage) {
         PetStage.b => Sting.evolveB,
         PetStage.c => Sting.evolveC,
@@ -372,7 +401,7 @@ class GameController extends AsyncNotifier<GameView> {
         PetStage.a => Sting.levelup,
       });
     } else if (pet.level > beforeLevel) {
-      HapticFeedback.selectionClick();
+      _hapticTick();
       _audio.sting(Sting.levelup);
     }
     state = AsyncData(_snapshot());
@@ -406,7 +435,7 @@ class GameController extends AsyncNotifier<GameView> {
   };
 
   void _renewCareLedger() {
-    _svc.session.careLedger.renew(_dayKey(_svc.clock.now().toLocal()));
+    _svc.session.careLedger.renew(LocalCalendar.dayKey(_svc.clock.now()));
   }
 
   bool _dailyMaxed(CareAction action) {
@@ -449,9 +478,6 @@ class GameController extends AsyncNotifier<GameView> {
     }
     return baseExp;
   }
-
-  static String _dayKey(DateTime t) =>
-      '${t.year.toString().padLeft(4, '0')}-${t.month.toString().padLeft(2, '0')}-${t.day.toString().padLeft(2, '0')}';
 
   // ── 各屏数据（供 UI）──────────────────────────
 
@@ -663,6 +689,8 @@ class GameController extends AsyncNotifier<GameView> {
   bool get eventNotificationsOn => _svc.session.settings.notifyEvents;
   bool get musicOn => _svc.session.settings.music;
   bool get effectsOn => _svc.session.settings.sound;
+  bool get hapticsOn => _svc.session.settings.haptics;
+  RenderQuality get renderQuality => _svc.session.settings.renderQuality;
 
   Future<bool> toggleNotifications() async {
     final next = !_svc.session.settings.notifications;
@@ -716,6 +744,41 @@ class GameController extends AsyncNotifier<GameView> {
     _persist();
   }
 
+  void toggleHaptics() {
+    _svc.session.settings.haptics = !_svc.session.settings.haptics;
+    state = AsyncData(_snapshot());
+    _persist();
+  }
+
+  void setRenderQuality(RenderQuality quality) {
+    if (_svc.session.settings.renderQuality == quality) return;
+    _svc.session.settings.renderQuality = quality;
+    state = AsyncData(_snapshot());
+    _persist();
+  }
+
+  void _hapticLight() {
+    if (!_svc.session.settings.haptics) return;
+    unawaited(HapticFeedback.lightImpact());
+  }
+
+  void _hapticTick() {
+    if (!_svc.session.settings.haptics) return;
+    unawaited(HapticFeedback.selectionClick());
+  }
+
+  void _hapticWarm() {
+    if (!_svc.session.settings.haptics) return;
+    unawaited(HapticFeedback.lightImpact());
+    unawaited(
+      Future<void>.delayed(const Duration(milliseconds: 90), () {
+        if (_svc.session.settings.haptics) {
+          return HapticFeedback.lightImpact();
+        }
+      }),
+    );
+  }
+
   Future<File> exportSave() async {
     await _persistNow();
     final save = _svc.portableSave;
@@ -731,6 +794,20 @@ class GameController extends AsyncNotifier<GameView> {
     return save.import(file);
   }
 
+  /// Privacy-safe aggregate report for support conversations.
+  String diagnosticReport({
+    required String appVersion,
+    required String platform,
+  }) {
+    return buildDiagnosticReport(
+      session: _svc.session,
+      generatedAt: _svc.clock.now(),
+      appVersion: appVersion,
+      platform: platform,
+      runtimeDiagnostics: AppErrorLog.instance.diagnosticLines(),
+    );
+  }
+
   Future<void> completeOnboarding() async {
     if (_svc.session.settings.onboardingComplete) return;
     _svc.session.settings.onboardingComplete = true;
@@ -740,9 +817,13 @@ class GameController extends AsyncNotifier<GameView> {
 
   /// App 从后台恢复时统一推进离线成长、日程、明信片和回访。
   Future<void> onAppResumed() async {
-    if (_resuming) return;
+    // A resumed callback can arrive while the initial async bootstrap is still
+    // loading. Bootstrap already performs the same catch-up work, so defer to
+    // it instead of touching services that are not ready yet.
+    if (!state.hasValue || _resuming) return;
     _resuming = true;
     try {
+      await _audio.resumeAfterInterruption();
       final pet = _svc.session.current;
       if (pet != null) {
         final before = pet.level;
@@ -767,6 +848,7 @@ class GameController extends AsyncNotifier<GameView> {
       state = AsyncData(_snapshot());
       await _persistNow();
       await _syncNotifications();
+      _activePresenceAt = _svc.clock.now();
     } finally {
       _resuming = false;
     }
@@ -774,11 +856,33 @@ class GameController extends AsyncNotifier<GameView> {
 
   Future<void> onAppPaused() async {
     if (!state.hasValue) return;
+    await _audio.pauseForInterruption();
+    _flushActivePresence();
+    _activePresenceAt = null;
+    _settleAchievements(playSound: false);
     final pet = _svc.session.current;
     if (pet != null) pet.lastOnlineAt = _svc.clock.now();
     _svc.clock.markHeartbeat();
-    await _persistNow();
+    await _persistNow(flushPortable: true);
     await _syncNotifications();
+  }
+
+  /// Periodic foreground checkpoint used by weather-duration achievements.
+  /// The next checkpoint starts at the same instant, so repeated calls cannot
+  /// double count.
+  void recordActiveHeartbeat() {
+    if (!state.hasValue || !_flushActivePresence()) return;
+    _afterGameAction();
+  }
+
+  bool _flushActivePresence() {
+    final from = _activePresenceAt;
+    if (from == null) return false;
+    final now = _svc.clock.now();
+    _activePresenceAt = now;
+    if (!now.isAfter(from)) return false;
+    _svc.recordActivePresence(from: from, to: now);
+    return true;
   }
 
   void _persist() {
@@ -789,9 +893,19 @@ class GameController extends AsyncNotifier<GameView> {
     );
   }
 
-  Future<void> _persistNow() async {
+  Future<void> _persistNow({bool flushPortable = false}) async {
     await _svc.store.save(_svc.session);
-    await _svc.portableSave?.autoSave();
+    final portableSave = _svc.portableSave;
+    if (portableSave == null) return;
+    if (flushPortable) {
+      await portableSave.flushAutoSave();
+      return;
+    }
+    unawaited(
+      portableSave.autoSave().catchError((Object error, StackTrace stackTrace) {
+        debugPrint('Petopia portable backup skipped: $error\n$stackTrace');
+      }),
+    );
   }
 
   Future<bool?> _syncNotifications({bool requestPermission = false}) {
@@ -816,6 +930,18 @@ class GameController extends AsyncNotifier<GameView> {
       for (final pet in _svc.session.allPets) pet.id: pet,
     };
     final candidates = <PetopiaNotificationCandidate>[];
+
+    for (final event in _svc.session.pendingEvents) {
+      candidates.add(
+        PetopiaNotificationCandidate(
+          key: 'event:${event.id}',
+          kind: PetopiaNotificationKind.event,
+          at: now.add(const Duration(minutes: 5)),
+          title: event.type == EventType.special ? '院子里发生了一件特别的事' : '手账多了一页新故事',
+          body: event.title,
+        ),
+      );
+    }
 
     for (final journey in _svc.session.journeys) {
       if (journey.state == JourneyState.done ||
@@ -864,8 +990,8 @@ class GameController extends AsyncNotifier<GameView> {
   }
 
   static DateTime _nextAnniversary(DateTime adoptedAt, DateTime now) {
-    final localAdopted = adoptedAt.toLocal();
-    final localNow = now.toLocal();
+    final localAdopted = LocalCalendar.local(adoptedAt);
+    final localNow = LocalCalendar.local(now);
     DateTime inYear(int year) {
       final lastDay = DateTime(year, localAdopted.month + 1, 0).day;
       return DateTime(
@@ -883,12 +1009,17 @@ class GameController extends AsyncNotifier<GameView> {
 
   /// 游戏推进类动作统一收尾：同步成就（新解锁播 sting）+ 存档。
   void _afterGameAction() {
+    _settleAchievements();
+    _persist();
+  }
+
+  void _settleAchievements({bool playSound = true}) {
     final newly = _svc.syncAchievements();
     if (newly.isNotEmpty) {
       for (final achievement in newly) {
         _svc.unlock.claimReward(achievement.id);
       }
-      _audio.sting(Sting.achievement);
+      if (playSound) _audio.sting(Sting.achievement);
       ref
           .read(achievementUnlockCueProvider.notifier)
           .state = AchievementUnlockCue(
@@ -896,7 +1027,6 @@ class GameController extends AsyncNotifier<GameView> {
         ++_achievementCueSeq,
       );
     }
-    _persist();
   }
 
   /// 首页欢迎弹框展示后调用；访客仍会继续驻留到 leavesAt。
@@ -940,6 +1070,7 @@ class GameController extends AsyncNotifier<GameView> {
     if (sting != null) _audio.sting(sting);
     state = AsyncData(_snapshot());
     _afterGameAction();
+    unawaited(_syncNotifications());
     return resolution;
   }
 
@@ -954,6 +1085,12 @@ class GameController extends AsyncNotifier<GameView> {
   void dismissOfflineWelcome(int seq) {
     if (_offlineWelcome?.seq != seq) return;
     _offlineWelcome = null;
+    state = AsyncData(_snapshot());
+  }
+
+  void dismissSaveRecovery() {
+    if (_saveRecovery == null) return;
+    _saveRecovery = null;
     state = AsyncData(_snapshot());
   }
 
@@ -1017,9 +1154,11 @@ class GameController extends AsyncNotifier<GameView> {
       needsFirstCare: p != null && _svc.session.settings.careTutorialStep == 0,
       careTutorialStep: _svc.session.settings.careTutorialStep,
       offlineWelcome: _offlineWelcome,
+      saveRecovery: _saveRecovery,
       todayYard: p == null || _svc.session.settings.careTutorialStep < 3
           ? null
           : _todayYardView(p),
+      renderQuality: _svc.session.settings.renderQuality,
     );
   }
 
@@ -1070,13 +1209,8 @@ class GameController extends AsyncNotifier<GameView> {
 
     addCare(preferredKind());
 
-    final today = _svc.clock.now().toLocal();
-    bool isToday(DateTime value) {
-      final local = value.toLocal();
-      return local.year == today.year &&
-          local.month == today.month &&
-          local.day == today.day;
-    }
+    final today = _svc.clock.now();
+    bool isToday(DateTime value) => LocalCalendar.isSameDay(value, today);
 
     final activeVisitor = _svc.session.activeVisitor;
     final visitsToday = _svc.session.visitorLog
@@ -1184,6 +1318,7 @@ class GameController extends AsyncNotifier<GameView> {
     final event = _svc.session.pendingEvents.first;
     return EventPresentationView(
       id: event.id,
+      eventId: event.eventId,
       title: event.title,
       script: event.script,
       type: event.type,
@@ -1357,7 +1492,7 @@ class GameController extends AsyncNotifier<GameView> {
   /// 领养新宠为当前在养宠，刷新快照。
   Future<void> adopt(String speciesId, String name) async {
     _svc.adopt(speciesId: speciesId, name: name);
-    HapticFeedback.mediumImpact();
+    _hapticWarm();
     _audio.sting(Sting.adoptionWelcome);
     state = AsyncData(_snapshot());
     _afterGameAction();
@@ -1365,13 +1500,13 @@ class GameController extends AsyncNotifier<GameView> {
 
   /// 举行毕业典礼：结算 + 送宠去旅行。返回旅程站点数（未达标返回 null）。
   Future<int?> graduate() async {
-    final localNow = _svc.clock.now().toLocal();
+    final localNow = LocalCalendar.local(_svc.clock.now());
     final stops = await _svc.graduateCurrent();
     if (stops != null) {
       if (localNow.hour >= 5 && localNow.hour < 8) {
         _svc.bumpAchievementSignal('custom:graduation');
       }
-      HapticFeedback.mediumImpact();
+      _hapticWarm();
       _audio.sting(Sting.graduationDepart);
       _afterGameAction();
       unawaited(_syncNotifications());
@@ -1386,8 +1521,9 @@ class GameController extends AsyncNotifier<GameView> {
     _afterGameAction();
   }
 
-  void trackPostcardRead() {
-    final hour = _svc.clock.now().toLocal().hour;
+  void trackPostcardRead(String postcardId) {
+    _svc.recordPostcardRead(postcardId);
+    final hour = LocalCalendar.local(_svc.clock.now()).hour;
     if (hour < 2) _svc.bumpAchievementSignal('custom:read_postcard');
     _afterGameAction();
   }
@@ -1405,6 +1541,7 @@ class GameController extends AsyncNotifier<GameView> {
       return PostcardView(
         id: pc.id,
         petId: pc.petId,
+        journeyId: pc.journeyId,
         petName: pet?.name ?? '旅行者',
         speciesId: pet?.speciesId ?? 'pet_cat',
         variantId: pet?.variantId ?? '',
@@ -1475,6 +1612,7 @@ class GameController extends AsyncNotifier<GameView> {
 class PostcardView {
   final String id;
   final String petId;
+  final String journeyId;
   final String petName;
   final String speciesId;
   final String variantId;
@@ -1489,6 +1627,7 @@ class PostcardView {
   const PostcardView({
     required this.id,
     required this.petId,
+    this.journeyId = '',
     required this.petName,
     required this.speciesId,
     required this.variantId,

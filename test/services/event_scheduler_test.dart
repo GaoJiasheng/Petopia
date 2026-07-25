@@ -79,7 +79,7 @@ void main() {
     );
     expect(
       (special.dueAt.toLocal().hour, special.dueAt.toLocal().minute),
-      (20, 45),
+      (21, 15),
     );
   });
 
@@ -104,5 +104,39 @@ void main() {
     await s.onResume(today);
     expect(dispatched, isEmpty);
     expect(queue.single.consumed, false);
+  });
+
+  test('日切只清理超出窗口的已完成历史，未完成任务始终保留', () async {
+    queue.addAll([
+      ScheduledJob(
+        id: 'old-consumed',
+        type: JobType.dailyEventGen,
+        dueAt: today.subtract(const Duration(days: 91)),
+        priority: 4,
+        consumed: true,
+      ),
+      ScheduledJob(
+        id: 'old-pending',
+        type: JobType.revisitDue,
+        dueAt: today.subtract(const Duration(days: 180)),
+        priority: 1,
+      ),
+      ScheduledJob(
+        id: 'recent-consumed',
+        type: JobType.visitorCheck,
+        dueAt: today.subtract(const Duration(days: 20)),
+        priority: 3,
+        consumed: true,
+      ),
+    ]);
+    gen.addAll({'2026-02-01', '2026-07-01'});
+
+    await build().onDailyTick(today);
+
+    expect(queue.any((job) => job.id == 'old-consumed'), isFalse);
+    expect(queue.any((job) => job.id == 'old-pending'), isTrue);
+    expect(queue.any((job) => job.id == 'recent-consumed'), isTrue);
+    expect(gen, isNot(contains('2026-02-01')));
+    expect(gen, containsAll(<String>['2026-07-01', '2026-07-02']));
   });
 }

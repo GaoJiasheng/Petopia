@@ -52,22 +52,24 @@ VisitorServiceImpl _svc(
   List<VisitorPetInteraction> inter = const [],
   void Function(VisitorLogEntry)? onLog,
   void Function(String)? onClue,
+  List<VisitorLogEntry> history = const <VisitorLogEntry>[],
 }) => VisitorServiceImpl(
   vis,
   inter,
   _rngOf(rng),
   () => 'log',
-  () => DateTime.utc(2026, 7, 2, 22),
+  () => DateTime(2026, 7, 2, 22),
   onLog ?? (_) {},
   onClue ?? (_) {},
+  history: () => history,
 );
 
 void main() {
   final yardEmpty = YardState(); // luxuryStage1, 空盘, 无装饰
   const clear = Weather.clear;
   const summer = Season.summer;
-  final noon = DateTime.utc(2026, 7, 2, 12);
-  final night = DateTime.utc(2026, 7, 2, 22);
+  final noon = DateTime(2026, 7, 2, 12);
+  final night = DateTime(2026, 7, 2, 22);
 
   test('时段门槛：夜行访客在白天窗被排除', () {
     final owl = _v('v_owl', VisitorRarity.rare, active: [TimeOfDayOfDay.night]);
@@ -168,6 +170,81 @@ void main() {
           )
           ?.id,
       'v_sparrow',
+    );
+  });
+
+  test('近期到访者降权，候选池有选择时优先带来不同访客', () {
+    final first = _v('v_first', VisitorRarity.common);
+    final fresh = _v('v_fresh', VisitorRarity.common);
+    final history = <VisitorLogEntry>[
+      VisitorLogEntry(
+        id: 'visit-1',
+        visitorId: first.id,
+        date: noon.subtract(const Duration(days: 1)),
+      ),
+    ];
+
+    expect(
+      _svc([first, fresh], [0.1], history: history)
+          .rollWindow(
+            window: TimeWindow.day,
+            yard: yardEmpty,
+            weather: clear,
+            season: summer,
+            now: noon,
+          )
+          ?.id,
+      fresh.id,
+    );
+  });
+
+  test('单一候选不受重复降权，避免特殊条件访客被意外隐藏', () {
+    final only = _v('v_only', VisitorRarity.common);
+    final history = <VisitorLogEntry>[
+      VisitorLogEntry(
+        id: 'visit-1',
+        visitorId: only.id,
+        date: noon.subtract(const Duration(days: 1)),
+      ),
+    ];
+
+    expect(
+      _svc([only], [0.1], history: history)
+          .rollWindow(
+            window: TimeWindow.day,
+            yard: yardEmpty,
+            weather: clear,
+            season: summer,
+            now: noon,
+          )
+          ?.id,
+      only.id,
+    );
+  });
+
+  test('连续多次未见稀有访客时柔性提高稀有权重', () {
+    final common = _v('v_common', VisitorRarity.common);
+    final rare = _v('v_rare', VisitorRarity.rare);
+    final history = <VisitorLogEntry>[
+      for (var index = 0; index < 14; index++)
+        VisitorLogEntry(
+          id: 'visit-$index',
+          visitorId: 'old-common-$index',
+          date: noon.subtract(Duration(days: 14 - index)),
+        ),
+    ];
+
+    expect(
+      _svc([common, rare], [0.37], history: history)
+          .rollWindow(
+            window: TimeWindow.day,
+            yard: yardEmpty,
+            weather: clear,
+            season: summer,
+            now: noon,
+          )
+          ?.id,
+      rare.id,
     );
   });
 

@@ -47,7 +47,9 @@
 
 宽屏改成三层关系：
 
-- **背景层**：继续 full-bleed cover。若后续补齐横屏美术，优先使用 `yard_theme_*_wide_bg`；缺失时使用竖屏背景 cover 兜底。
+- **背景层**：12 套主题均使用原生 4:3 横屏重绘母图
+  `assets/art/world/themes/wide/yard_theme_*_bg_wide.jpg`，full-bleed
+  cover。禁止镜像填充、拉伸竖图或把竖向豪华叠层强行 cover 到横屏。
 - **院子舞台层**：宠物、访客、摆件集中在画面中央 60% 区域，宠物尺寸用 `petStageWidth`。
 - **UI 面板层**：
   - 左侧：宠物名牌、等级、经验、暖绒余额、主导航入口。

@@ -15,10 +15,12 @@ class SpriteSheetPlayer extends StatefulWidget {
   final Duration? duration;
   final Duration? playDuration;
   final bool loop;
+  final bool animate;
   final int cycles;
   final double holdTailFraction;
   final VoidCallback? onComplete;
   final Widget fallback;
+  final bool evictOnDispose;
 
   const SpriteSheetPlayer({
     super.key,
@@ -30,9 +32,11 @@ class SpriteSheetPlayer extends StatefulWidget {
     this.duration,
     this.playDuration,
     this.loop = false,
+    this.animate = true,
     this.cycles = 1,
     this.holdTailFraction = 0,
     this.onComplete,
+    this.evictOnDispose = false,
   });
 
   @override
@@ -64,6 +68,35 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
     _resolveImage();
   }
 
+  @override
+  void didUpdateWidget(SpriteSheetPlayer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.animate == widget.animate) return;
+    if (!widget.animate) {
+      _completionTimer?.cancel();
+      _c.stop();
+      _c.value = 0;
+    } else if (_image != null) {
+      _startPlayback();
+    }
+  }
+
+  void _startPlayback() {
+    if (!widget.animate) return;
+    if (widget.loop) {
+      _c.repeat();
+    } else if (widget.playDuration != null) {
+      _c.repeat();
+      _completionTimer = Timer(widget.playDuration!, () {
+        if (!mounted) return;
+        _c.stop();
+        widget.onComplete?.call();
+      });
+    } else {
+      _c.forward(from: 0);
+    }
+  }
+
   void _resolveImage() {
     final provider = AssetImage(widget.assetPath);
     final stream = provider.resolve(const ImageConfiguration());
@@ -71,18 +104,7 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
       (info, _) {
         if (!mounted) return;
         setState(() => _image = info.image);
-        if (widget.loop) {
-          _c.repeat();
-        } else if (widget.playDuration != null) {
-          _c.repeat();
-          _completionTimer = Timer(widget.playDuration!, () {
-            if (!mounted) return;
-            _c.stop();
-            widget.onComplete?.call();
-          });
-        } else {
-          _c.forward(from: 0);
-        }
+        _startPlayback();
       },
       onError: (_, _) {
         if (!mounted) return;
@@ -93,9 +115,11 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
             Duration(
               milliseconds: (widget.frameCount / widget.fps * 1000).round(),
             );
-        _completionTimer = Timer(fallbackDuration, () {
-          if (mounted) widget.onComplete?.call();
-        });
+        if (widget.animate) {
+          _completionTimer = Timer(fallbackDuration, () {
+            if (mounted) widget.onComplete?.call();
+          });
+        }
       },
     );
     _stream = stream;
@@ -110,6 +134,9 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
     }
     _c.dispose();
     _completionTimer?.cancel();
+    if (widget.evictOnDispose) {
+      unawaited(AssetImage(widget.assetPath).evict());
+    }
     super.dispose();
   }
 

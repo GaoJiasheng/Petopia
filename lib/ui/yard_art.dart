@@ -18,27 +18,31 @@ class YardArt {
   };
 
   /// 当前主题背景图。未知/默认主题回落到 meadow。
-  static String themeBg(String themeId) {
+  ///
+  /// iPad 横屏使用单独重绘的 4:3 母图，避免把竖屏背景裁切或拉伸。
+  static String themeBg(String themeId, {bool wide = false}) {
     final slug = _themeSlug[themeId] ?? 'meadow';
-    return 'assets/art/world/themes/yard_theme_${slug}_bg.jpg';
+    final suffix = wide ? '_bg_wide.jpg' : '_bg.jpg';
+    return 'assets/art/world/themes${wide ? '/wide' : ''}/'
+        'yard_theme_$slug$suffix';
   }
 
   static String? luxuryDelta(int stage) {
     if (stage < 2 || stage > 6) return null;
     final number = stage.toString().padLeft(2, '0');
-    return 'assets/art/world/layouts/yard_luxury${number}_delta.png';
+    return 'assets/art/world/layouts/yard_luxury${number}_delta.webp';
   }
 
   static String timeFx(int hour) {
     if (hour >= 19 || hour < 6) {
-      return 'assets/art/world/fx/yard_fx_night.png';
+      return 'assets/art/world/fx/yard_fx_night.webp';
     }
-    return 'assets/art/world/fx/yard_fx_dusk.png';
+    return 'assets/art/world/fx/yard_fx_dusk.webp';
   }
 
   static String weatherFx(String weather) => switch (weather) {
-    'rain' || 'thunder' => 'assets/art/world/fx/yard_fx_rain_overlay.png',
-    'snow' => 'assets/art/world/fx/yard_fx_snow_overlay.png',
+    'rain' || 'thunder' => 'assets/art/world/fx/yard_fx_rain_overlay.webp',
+    'snow' => 'assets/art/world/fx/yard_fx_snow_overlay.webp',
     _ => '',
   };
 

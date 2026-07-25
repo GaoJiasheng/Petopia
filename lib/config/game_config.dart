@@ -90,6 +90,8 @@ abstract final class GameConfig {
   static const int dailyEventMax = 3; // 可调
   static const int specialEventDailyCap = 1; // 锁定
   static const int defaultCooldownDays = 0; // 可调
+  static const int schedulerHistoryRetentionDays = 90; // 已完成 job 审计窗口
+  static const int schedulerDayKeyRetentionDays = 120; // 日幂等键保留窗口
 
   // ── 2.7 明信片 / 旅行 ──────────────────────────
   static const int journeyStopsMin = 25; // 可调：毕业主旅程站数

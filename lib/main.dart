@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
@@ -5,22 +6,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'app/app_error_log.dart';
 import 'ui/yard_home_screen.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  PaintingBinding.instance.imageCache
-    ..maximumSize = 320
-    ..maximumSizeBytes = 96 << 20;
-  FlutterError.onError = (details) {
-    FlutterError.presentError(details);
-    debugPrint('Petopia Flutter error: ${details.exceptionAsString()}');
-  };
-  PlatformDispatcher.instance.onError = (error, stackTrace) {
-    debugPrint('Petopia platform error: $error\n$stackTrace');
-    return true;
-  };
-  runApp(const ProviderScope(child: PetopiaApp()));
+  runZonedGuarded(
+    () {
+      WidgetsFlutterBinding.ensureInitialized();
+      PaintingBinding.instance.imageCache
+        ..maximumSize = 320
+        ..maximumSizeBytes = 96 << 20;
+      unawaited(AppErrorLog.instance.initialize());
+      FlutterError.onError = (details) {
+        FlutterError.presentError(details);
+        AppErrorLog.instance.record(
+          details.exception,
+          details.stack ?? StackTrace.current,
+          source: 'flutter',
+        );
+        debugPrint('Petopia Flutter error: ${details.exceptionAsString()}');
+      };
+      PlatformDispatcher.instance.onError = (error, stackTrace) {
+        AppErrorLog.instance.record(error, stackTrace, source: 'platform');
+        debugPrint('Petopia platform error: $error\n$stackTrace');
+        return true;
+      };
+      runApp(const ProviderScope(child: PetopiaApp()));
+    },
+    (error, stackTrace) {
+      AppErrorLog.instance.record(error, stackTrace, source: 'zone');
+      debugPrint('Petopia zone error: $error\n$stackTrace');
+    },
+  );
 }
 
 /// Petopia 根组件。

@@ -92,3 +92,8 @@ enum JobType {
 }
 
 enum JourneyState { active, wandering, done }
+
+/// Runtime rendering preference. `auto` may temporarily reduce optional
+/// effects after an OS memory-pressure signal without changing the saved
+/// preference.
+enum RenderQuality { auto, high, low }

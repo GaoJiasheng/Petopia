@@ -92,10 +92,13 @@ class _DexGrid extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             final width = constraints.maxWidth;
-            final columns = PetopiaAdaptive.postcardGridColumns(width);
-            final tileHeight = width >= 820
-                ? 250.0
-                : (width >= 600 ? 278.0 : 300.0);
+            final largeText = MediaQuery.textScalerOf(context).scale(14) >= 28;
+            final columns = largeText
+                ? (width >= 900 ? 2 : 1)
+                : PetopiaAdaptive.postcardGridColumns(width);
+            final tileHeight = largeText
+                ? 520.0
+                : (width >= 820 ? 250.0 : (width >= 600 ? 278.0 : 300.0));
             final margin = PetopiaAdaptive.sideMargin(context);
             return CustomScrollView(
               slivers: [
@@ -200,50 +203,60 @@ class _DexCard extends StatelessWidget {
     final colored =
         state == DexState.ownedBefore || state == DexState.available;
     final accent = colored ? _accentFor(entry) : const Color(0xFFB8B0A6);
+    final largeText = MediaQuery.textScalerOf(context).scale(14) >= 28;
+    final description = _descriptionFor(entry);
 
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: _cardDecoration(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Align(
-            alignment: Alignment.topRight,
-            child: _StateBadge(state: state),
+    return Semantics(
+      container: true,
+      label:
+          '${lockedHidden ? '未知宠物' : entry.name}，'
+          '${_StateBadge.labelFor(state)}，$description',
+      child: ExcludeSemantics(
+        child: Container(
+          padding: const EdgeInsets.all(14),
+          decoration: _cardDecoration(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: _StateBadge(state: state),
+              ),
+              const Spacer(),
+              Center(
+                child: _DexMark(
+                  entry: entry,
+                  accent: accent,
+                  lockedKnown: lockedKnown,
+                  lockedHidden: lockedHidden,
+                ),
+              ),
+              const Spacer(),
+              Text(
+                lockedHidden ? '？？？' : entry.name,
+                maxLines: largeText ? 2 : 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: PetDexScreen._ink,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                description,
+                maxLines: largeText ? 4 : 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: PetDexScreen._muted,
+                  fontSize: 12,
+                  height: 1.25,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ),
-          const Spacer(),
-          Center(
-            child: _DexMark(
-              entry: entry,
-              accent: accent,
-              lockedKnown: lockedKnown,
-              lockedHidden: lockedHidden,
-            ),
-          ),
-          const Spacer(),
-          Text(
-            lockedHidden ? '？？？' : entry.name,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: PetDexScreen._ink,
-              fontSize: 17,
-              fontWeight: FontWeight.w900,
-            ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            _descriptionFor(entry),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              color: PetDexScreen._muted,
-              fontSize: 12,
-              height: 1.25,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -396,7 +409,7 @@ class _StateBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(999),
       ),
       child: Text(
-        _labelFor(state),
+        labelFor(state),
         style: TextStyle(
           color: color,
           fontSize: 12,
@@ -406,7 +419,7 @@ class _StateBadge extends StatelessWidget {
     );
   }
 
-  static String _labelFor(DexState state) {
+  static String labelFor(DexState state) {
     return switch (state) {
       DexState.ownedBefore => '已养过',
       DexState.available => '可领养',

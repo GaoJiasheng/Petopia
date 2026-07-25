@@ -4,6 +4,7 @@ import '../domain/models/pet.dart';
 import '../domain/models/yard.dart';
 import '../domain/models/game_state.dart';
 import '../domain/models/content_entities.dart';
+import 'local_calendar.dart';
 import 'visitor_service.dart';
 
 /// VisitorService 实现（spec-technical §3.6 / §8）。
@@ -27,6 +28,7 @@ class VisitorServiceImpl implements VisitorService {
     Weather weather,
   )?
   _themeBonus;
+  final List<VisitorLogEntry> Function()? _history;
 
   VisitorServiceImpl(
     this._visitors,
@@ -44,9 +46,12 @@ class VisitorServiceImpl implements VisitorService {
       Weather weather,
     )?
     themeBonus,
-    // Named public argument keeps composition readable while the field stays private.
-    // ignore: prefer_initializing_formals
-  }) : _themeBonus = themeBonus;
+    List<VisitorLogEntry> Function()? history,
+  }) : // Public named arguments keep composition readable while fields stay private.
+       // ignore: prefer_initializing_formals
+       _themeBonus = themeBonus,
+       // ignore: prefer_initializing_formals
+       _history = history;
 
   static const Set<TimeOfDayOfDay> _dayTimes = {
     TimeOfDayOfDay.dawn,
@@ -81,16 +86,17 @@ class VisitorServiceImpl implements VisitorService {
       if (p > 0) cands.add(MapEntry(v, p));
     }
     if (cands.isEmpty) return null;
+    final weighted = _collectionWeighted(cands);
 
     double sum = 0;
-    for (final e in cands) {
+    for (final e in weighted) {
       sum += e.value;
     }
     // ΣP>1 时归一化到无 miss；否则 miss 区间 = [sum, 1)。
     final total = sum > 1 ? sum : 1.0;
     final r = _rng() * total;
     double acc = 0;
-    for (final e in cands) {
+    for (final e in weighted) {
       acc += e.value;
       if (r < acc) return e.key;
     }
@@ -107,7 +113,9 @@ class VisitorServiceImpl implements VisitorService {
     // 传说访客不限时段窗口，用夜窗判定（多为夜行）；各自独立伯努利。
     for (final v in _visitors) {
       if (v.rarity != VisitorRarity.legendary) continue;
-      final window = _isNight(now) ? TimeWindow.night : TimeWindow.day;
+      final window = LocalCalendar.isNight(now)
+          ? TimeWindow.night
+          : TimeWindow.day;
       final p = _probability(v, window, yard, weather, season, legendary: true);
       if (p > 0 && _rng() < p) return v;
     }
@@ -168,6 +176,50 @@ class VisitorServiceImpl implements VisitorService {
   }
 
   // ── 内部 ──────────────────────────────────────
+  List<MapEntry<Visitor, double>> _collectionWeighted(
+    List<MapEntry<Visitor, double>> candidates,
+  ) {
+    final history = _history?.call() ?? const <VisitorLogEntry>[];
+    if (history.isEmpty || candidates.length < 2) return candidates;
+
+    final latestIds = history.reversed
+        .take(3)
+        .map((entry) => entry.visitorId)
+        .toList(growable: false);
+    final seenIds = history.map((entry) => entry.visitorId).toSet();
+    var visitsSinceRare = 0;
+    for (final entry in history.reversed) {
+      final rarity = _rarityOf(entry.visitorId);
+      if (rarity == VisitorRarity.rare || rarity == VisitorRarity.legendary) {
+        break;
+      }
+      visitsSinceRare++;
+      if (visitsSinceRare >= 30) break;
+    }
+
+    return candidates
+        .map((entry) {
+          var multiplier = seenIds.contains(entry.key.id) ? 1.0 : 1.12;
+          if (latestIds.isNotEmpty && latestIds.first == entry.key.id) {
+            multiplier *= 0.12;
+          } else if (latestIds.contains(entry.key.id)) {
+            multiplier *= 0.45;
+          }
+          if (entry.key.rarity == VisitorRarity.rare && visitsSinceRare >= 8) {
+            multiplier *= 1 + ((visitsSinceRare - 7) * 0.15).clamp(0.0, 1.5);
+          }
+          return MapEntry(entry.key, entry.value * multiplier);
+        })
+        .toList(growable: false);
+  }
+
+  VisitorRarity? _rarityOf(String visitorId) {
+    for (final visitor in _visitors) {
+      if (visitor.id == visitorId) return visitor.rarity;
+    }
+    return null;
+  }
+
   double _probability(
     Visitor v,
     TimeWindow window,
@@ -205,8 +257,6 @@ class VisitorServiceImpl implements VisitorService {
     final set = window == TimeWindow.day ? _dayTimes : _nightTimes;
     return v.activeTime.any(set.contains);
   }
-
-  bool _isNight(DateTime now) => now.hour >= 18 || now.hour < 6;
 
   bool _matchesFoodScope(String visitorId, String scope) {
     return switch (scope) {

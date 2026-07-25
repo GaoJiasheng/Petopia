@@ -1,5 +1,10 @@
 # Petopia 美术素材制作 TODO
 
+> **状态说明（2026-07-24）**：这是立项期的历史生产清单，不再代表当前完成度，
+> 也不可据此批量重生成已入库素材。当前资产状态以
+> `art-generation-status.md`、`art-qa-visitor-prototypes-v10.md` 和
+> `python3 tools/audit_runtime_art.py` 的发布审计结果为准。
+>
 > 范围：视觉美术素材全量制作，不只 MVP。依据 `spec-art-overview.md`、`spec-art-pets.md`、`spec-art-world.md`、`spec-art-postcards.md`、`spec-art-ui.md`。音频素材另见 `spec-audio.md`，不混入本文。
 >
 > 当前 session 执行边界：**只处理美术素材**，包括风格板、样张、资产清单、图片生成、素材入库与美术规格文档同步。代码实现、工程骨架、Flutter/Flame、数据转换、运行时逻辑由其他 session 处理，本 session 不改。
