@@ -6,18 +6,19 @@ import '../domain/enums.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
+import 'petopia_theme.dart';
 
 /// 来客图鉴：按稀有度整理院子里出现过的访客记录。
 class VisitorDexScreen extends ConsumerWidget {
   const VisitorDexScreen({super.key});
 
-  static const _bg = Color(0xFFFAF3E3);
-  static const _paper = Color(0xFFFFFDF7);
-  static const _ink = Color(0xFF6B5445);
-  static const _muted = Color(0xFF8A7A6A);
-  static const _accent = Color(0xFFE8A15C);
-  static const _green = Color(0xFFA7C4A0);
-  static const _line = Color(0xFFEDE4D3);
+  static const _bg = PetopiaColors.background;
+  static const _paper = PetopiaColors.paper;
+  static const _ink = PetopiaColors.ink;
+  static const _muted = PetopiaColors.mutedText;
+  static const _accent = PetopiaColors.actionAccent;
+  static const _green = PetopiaColors.green;
+  static const _line = PetopiaColors.line;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -294,82 +295,85 @@ class _VisitorCard extends StatelessWidget {
     return Semantics(
       button: entry.collected,
       label: entry.collected ? '${entry.name}，查看来客回忆' : '尚未收录的来客',
-      child: GestureDetector(
-        onTap: entry.collected
-            ? () => _showVisitorDetails(context, entry)
-            : null,
-        behavior: HitTestBehavior.opaque,
-        child: Container(
-          padding: const EdgeInsets.all(14),
-          decoration: _cardDecoration(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: _RarityBadge(
-                  rarity: entry.rarity,
-                  collected: entry.collected,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: entry.collected
+              ? () => _showVisitorDetails(context, entry)
+              : null,
+          child: Container(
+            padding: const EdgeInsets.all(14),
+            decoration: _cardDecoration(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: _RarityBadge(
+                    rarity: entry.rarity,
+                    collected: entry.collected,
+                  ),
                 ),
-              ),
-              const Spacer(),
-              Center(
-                child: _VisitorMark(
-                  id: entry.id,
-                  collected: entry.collected,
-                  color: color,
+                const Spacer(),
+                Center(
+                  child: _VisitorMark(
+                    id: entry.id,
+                    collected: entry.collected,
+                    color: color,
+                  ),
                 ),
-              ),
-              const Spacer(),
-              Text(
-                entry.collected ? entry.name : '？',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: entry.collected ? VisitorDexScreen._ink : color,
-                  fontSize: 17,
-                  fontWeight: FontWeight.w900,
+                const Spacer(),
+                Text(
+                  entry.collected ? entry.name : '？',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: entry.collected ? VisitorDexScreen._ink : color,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              if (entry.collected) ...[
-                _InfoTag(
-                  icon: Icons.repeat_rounded,
-                  label: '到访 ${entry.count} 次',
-                  color: VisitorDexScreen._accent,
-                ),
-                const SizedBox(height: 6),
-                _InfoTag(
-                  icon: Icons.today_rounded,
-                  label: '首次 ${_dateLabel(entry.firstSeen)}',
-                  color: VisitorDexScreen._green,
-                ),
-                const SizedBox(height: 7),
-                const Row(
-                  children: [
-                    Icon(
-                      Icons.auto_stories_rounded,
-                      size: 14,
-                      color: VisitorDexScreen._muted,
-                    ),
-                    SizedBox(width: 4),
-                    Flexible(
-                      child: Text(
-                        '翻看相遇回忆',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          color: VisitorDexScreen._muted,
-                          fontSize: 11.5,
-                          fontWeight: FontWeight.w700,
+                const SizedBox(height: 8),
+                if (entry.collected) ...[
+                  _InfoTag(
+                    icon: Icons.repeat_rounded,
+                    label: '到访 ${entry.count} 次',
+                    color: VisitorDexScreen._accent,
+                  ),
+                  const SizedBox(height: 6),
+                  _InfoTag(
+                    icon: Icons.today_rounded,
+                    label: '首次 ${_dateLabel(entry.firstSeen)}',
+                    color: VisitorDexScreen._green,
+                  ),
+                  const SizedBox(height: 7),
+                  const Row(
+                    children: [
+                      Icon(
+                        Icons.auto_stories_rounded,
+                        size: 14,
+                        color: VisitorDexScreen._muted,
+                      ),
+                      SizedBox(width: 4),
+                      Flexible(
+                        child: Text(
+                          '翻看相遇回忆',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: VisitorDexScreen._muted,
+                            fontSize: 11.5,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ] else
-                _LockedHint(rarity: entry.rarity),
-            ],
+                    ],
+                  ),
+                ] else
+                  _LockedHint(rarity: entry.rarity),
+              ],
+            ),
           ),
         ),
       ),
@@ -391,10 +395,14 @@ Future<void> _showVisitorDetails(BuildContext context, VisitorDexView entry) {
   }
   return showGeneralDialog<void>(
     context: context,
+    requestFocus: true,
     barrierDismissible: true,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     barrierColor: Colors.black26,
-    transitionDuration: const Duration(milliseconds: 280),
+    transitionDuration: PetopiaMotion.duration(
+      context,
+      const Duration(milliseconds: 280),
+    ),
     pageBuilder: (context, _, _) => SafeArea(
       child: Align(
         alignment: Alignment.centerRight,

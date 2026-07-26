@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import '../audio/audio_service.dart';
+import '../audio/route_audio.dart';
 import 'adaptive_layout.dart';
+import 'petopia_theme.dart';
 
 /// 明信片查看器：单张明信片的手账式展示——
 /// 上半为地点照片（pc_bg）+ 邮戳贴角，下半为手写体正文，页脚署名/站序/日期。
@@ -12,14 +15,18 @@ class PostcardViewerScreen extends ConsumerStatefulWidget {
   final PostcardView card;
   const PostcardViewerScreen({super.key, required this.card});
 
-  static const _ink = Color(0xFF6B5445);
+  static const _ink = PetopiaColors.ink;
 
   @override
   ConsumerState<PostcardViewerScreen> createState() =>
       _PostcardViewerScreenState();
 }
 
-class _PostcardViewerScreenState extends ConsumerState<PostcardViewerScreen> {
+class _PostcardViewerScreenState extends ConsumerState<PostcardViewerScreen>
+    with RouteAudio<PostcardViewerScreen> {
+  @override
+  Bgm get routeBgm => Bgm.postcardRead;
+
   @override
   void initState() {
     super.initState();
@@ -62,25 +69,37 @@ Future<void> showPostcardArrivalDialog(
   BuildContext context,
   PostcardView card, {
   int arrivalCount = 1,
+  bool useBackdropBlur = true,
 }) {
   return showGeneralDialog<void>(
     context: context,
+    requestFocus: true,
     barrierDismissible: true,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     barrierColor: Colors.transparent,
-    transitionDuration: const Duration(milliseconds: 360),
+    transitionDuration: PetopiaMotion.duration(
+      context,
+      const Duration(milliseconds: 360),
+    ),
     pageBuilder: (context, _, _) {
       return Material(
         type: MaterialType.transparency,
         child: Stack(
           fit: StackFit.expand,
           children: [
-            BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
-              child: ColoredBox(
-                color: const Color(0xFFF3E9D6).withValues(alpha: 0.82),
+            if (useBackdropBlur)
+              BackdropFilter(
+                key: const ValueKey('postcard_arrival_backdrop_blur'),
+                filter: ImageFilter.blur(sigmaX: 14, sigmaY: 14),
+                child: ColoredBox(
+                  color: const Color(0xFFF3E9D6).withValues(alpha: 0.82),
+                ),
+              )
+            else
+              const ColoredBox(
+                key: ValueKey('postcard_arrival_backdrop_solid'),
+                color: Color(0xFFF3E9D6),
               ),
-            ),
             SafeArea(
               child: Center(
                 child: SingleChildScrollView(
@@ -88,11 +107,17 @@ Future<void> showPostcardArrivalDialog(
                     horizontal: PetopiaAdaptive.sideMargin(context) * 0.5,
                     vertical: 16,
                   ),
-                  child: PostcardDisplayCard(
-                    card: card,
-                    arrivalMode: true,
-                    arrivalCount: arrivalCount,
-                    onClose: () => Navigator.of(context).pop(),
+                  child: Semantics(
+                    scopesRoute: true,
+                    namesRoute: true,
+                    label: '收到${card.petName}从远方寄来的明信片',
+                    explicitChildNodes: true,
+                    child: PostcardDisplayCard(
+                      card: card,
+                      arrivalMode: true,
+                      arrivalCount: arrivalCount,
+                      onClose: () => Navigator.of(context).pop(),
+                    ),
                   ),
                 ),
               ),
@@ -218,7 +243,7 @@ class _PostcardTextPanel extends StatelessWidget {
   });
 
   static const _ink = Color(0xFF6B5445);
-  static const _muted = Color(0xFF8A7A6A);
+  static const _muted = PetopiaColors.mutedText;
 
   @override
   Widget build(BuildContext context) {
@@ -302,8 +327,9 @@ class _PostcardTextPanel extends StatelessWidget {
             child: SizedBox(
               width: double.infinity,
               child: FilledButton(
+                autofocus: true,
                 style: FilledButton.styleFrom(
-                  backgroundColor: const Color(0xFFE8A15C),
+                  backgroundColor: PetopiaColors.actionAccent,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(22),
@@ -341,7 +367,7 @@ class _ArrivalHeader extends StatelessWidget {
         children: [
           const Icon(
             Icons.local_post_office_rounded,
-            color: Color(0xFFE8A15C),
+            color: PetopiaColors.actionAccent,
             size: 22,
           ),
           const SizedBox(width: 8),
@@ -367,7 +393,7 @@ class _ArrivalHeader extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
-                      color: Color(0xFF8A7A6A),
+                      color: PetopiaColors.mutedText,
                       fontWeight: FontWeight.w600,
                       fontSize: 11.5,
                     ),
@@ -378,7 +404,10 @@ class _ArrivalHeader extends StatelessWidget {
           IconButton(
             tooltip: '关闭',
             onPressed: onClose,
-            icon: const Icon(Icons.close_rounded, color: Color(0xFF8A7A6A)),
+            icon: const Icon(
+              Icons.close_rounded,
+              color: PetopiaColors.mutedText,
+            ),
           ),
         ],
       ),
@@ -396,7 +425,7 @@ class _PostcardPhoto extends StatelessWidget {
     this.wideLayout = false,
   });
 
-  static const _muted = Color(0xFF8A7A6A);
+  static const _muted = PetopiaColors.mutedText;
 
   @override
   Widget build(BuildContext context) {
@@ -409,7 +438,7 @@ class _PostcardPhoto extends StatelessWidget {
             children: [
               Positioned.fill(
                 child: Image.asset(
-                  'assets/art/postcards/backgrounds/${card.photoBg}.jpg',
+                  'assets/runtime/postcards/backgrounds/${card.photoBg}.webp',
                   fit: BoxFit.cover,
                   semanticLabel: '${card.locationName}的旅行风景',
                   errorBuilder: (_, _, _) => Container(
@@ -504,7 +533,8 @@ class _TravelerSceneAsset extends StatelessWidget {
     final species = _speciesSlug(speciesId);
     final variant = _variantSlug(variantId) ?? 'var01';
     final paths = <String>[
-      'assets/art/postcards/stickers/pc_sticker_traveler_${species}_${variant}_back.png',
+      'assets/runtime/postcards/stickers/'
+          'pc_sticker_traveler_${species}_${variant}_back.webp',
     ];
     return _buildAsset(
       paths,
@@ -540,7 +570,7 @@ class _StickerAsset extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      'assets/art/postcards/stickers/$id.png',
+      'assets/runtime/postcards/stickers/$id.webp',
       width: size,
       height: size,
       fit: BoxFit.contain,
@@ -567,5 +597,6 @@ String? _variantSlug(String variantId) {
 
 String _poseAsset(String speciesId, String poseHint) {
   final pose = poseHint == 'idle' ? 'gaze' : poseHint;
-  return 'assets/art/postcards/poses/pc_pose_${_speciesSlug(speciesId)}_$pose.png';
+  return 'assets/runtime/postcards/poses/'
+      'pc_pose_${_speciesSlug(speciesId)}_$pose.webp';
 }

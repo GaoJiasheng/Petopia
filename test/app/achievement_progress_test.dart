@@ -563,7 +563,12 @@ void main() {
       },
       AchievementCondType.postcardCount: {'categories', 'allReadSameDay'},
       AchievementCondType.visitorDexCount: {'rarity', 'types'},
-      AchievementCondType.actionCount: {'action', 'actions', 'dailyMax'},
+      AchievementCondType.actionCount: {
+        'action',
+        'actions',
+        'dailyMax',
+        'eachActionCount',
+      },
       AchievementCondType.revisitCount: {
         'samePet',
         'interaction',

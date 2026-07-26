@@ -7,5 +7,5 @@ import '../domain/models/pet.dart';
 /// 由 ExpEngine 触发 graduated 时调用。
 abstract interface class GraduationService {
   /// 执行毕业典礼编排，返回创建的 Journey id。
-  Future<String> graduate(Pet pet);
+  Future<String> graduate(Pet pet, {String? routeTheme});
 }

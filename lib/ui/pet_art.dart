@@ -6,6 +6,7 @@ class PetArt {
   const PetArt._();
 
   static const _stageLetter = ['A', 'B', 'C', 'D'];
+  static const interactionNames = <String>['eat', 'pat', 'play', 'bath'];
 
   /// speciesId（如 pet_cat）→ 目录名（cat）。
   static String dir(String speciesId) =>
@@ -15,7 +16,7 @@ class PetArt {
   static String stage(String speciesId, PetStage s, {String? variantId}) {
     final d = dir(speciesId);
     final variant = variantSlug(variantId) ?? 'var01';
-    return 'assets/runtime/pets/$d/pet_${d}_${variant}_stage${_stageLetter[s.index]}.png';
+    return 'assets/runtime/pets/$d/pet_${d}_${variant}_stage${_stageLetter[s.index]}.webp';
   }
 
   /// 图鉴彩色肖像（图鉴收藏卡：含徽章/点缀，仅图鉴用）。

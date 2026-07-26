@@ -5,18 +5,19 @@ import '../app/game_controller.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
+import 'petopia_theme.dart';
 
 /// 成就页：明写目标与隐藏线索分组展示。
 class AchievementsScreen extends ConsumerWidget {
   const AchievementsScreen({super.key});
 
-  static const _bg = Color(0xFFFAF3E3);
-  static const _paper = Color(0xFFFFFDF7);
-  static const _ink = Color(0xFF6B5445);
-  static const _muted = Color(0xFF8A7A6A);
-  static const _accent = Color(0xFFE8A15C);
-  static const _green = Color(0xFFA7C4A0);
-  static const _line = Color(0xFFEDE4D3);
+  static const _bg = PetopiaColors.background;
+  static const _paper = PetopiaColors.paper;
+  static const _ink = PetopiaColors.ink;
+  static const _muted = PetopiaColors.mutedText;
+  static const _accent = PetopiaColors.actionAccent;
+  static const _green = PetopiaColors.green;
+  static const _line = PetopiaColors.line;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

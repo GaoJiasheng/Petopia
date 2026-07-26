@@ -35,6 +35,7 @@ class GameSession {
   final Set<String> firedSpecials = {}; // 'petId:eventId'，oncePerPet 特殊事件去重
   final Map<String, DateTime> eventLastFiredAt = {};
   final List<VisitorLogEntry> visitorLog = [];
+  final List<YardMemoryEntry> yardMemories = [];
   ActiveVisitor? activeVisitor; // 当前在院子停留的野生访客（≤1，默认 24h）
   late CareLedger careLedger;
   final List<PendingGameEvent> pendingEvents = [];

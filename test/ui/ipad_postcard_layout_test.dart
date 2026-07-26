@@ -76,4 +76,36 @@ void main() {
     }
     expect(tester.takeException(), isNull);
   });
+
+  testWidgets('postcard arrival can use a solid low-cost backdrop', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Builder(
+          builder: (context) => TextButton(
+            onPressed: () => showPostcardArrivalDialog(
+              context,
+              card,
+              useBackdropBlur: false,
+            ),
+            child: const Text('打开'),
+          ),
+        ),
+      ),
+    );
+
+    await tester.tap(find.text('打开'));
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const ValueKey('postcard_arrival_backdrop_solid')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('postcard_arrival_backdrop_blur')),
+      findsNothing,
+    );
+    expect(tester.takeException(), isNull);
+  });
 }

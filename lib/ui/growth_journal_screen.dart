@@ -7,18 +7,19 @@ import '../domain/models/logs.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
+import 'petopia_theme.dart';
 
 /// 成长手账：按天回看当前宠物的经验流水。
 class GrowthJournalScreen extends ConsumerWidget {
   const GrowthJournalScreen({super.key});
 
-  static const _bg = Color(0xFFFAF3E3);
-  static const _paper = Color(0xFFFFFDF7);
-  static const _ink = Color(0xFF6B5445);
-  static const _muted = Color(0xFF8A7A6A);
-  static const _accent = Color(0xFFE8A15C);
-  static const _green = Color(0xFFA7C4A0);
-  static const _line = Color(0xFFEDE4D3);
+  static const _bg = PetopiaColors.background;
+  static const _paper = PetopiaColors.paper;
+  static const _ink = PetopiaColors.ink;
+  static const _muted = PetopiaColors.mutedText;
+  static const _accent = PetopiaColors.actionAccent;
+  static const _green = PetopiaColors.green;
+  static const _line = PetopiaColors.line;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -61,7 +62,10 @@ class GrowthJournalScreen extends ConsumerWidget {
                   onRetry: () => ref.invalidate(gameControllerProvider),
                 );
               }
-              return _JournalContent(entries: snapshot.data ?? const []);
+              return _JournalContent(
+                entries: snapshot.data ?? const [],
+                milestones: ctrl.growthMemories(),
+              );
             },
           ),
         );
@@ -93,8 +97,9 @@ class _WarmFrame extends StatelessWidget {
 
 class _JournalContent extends StatelessWidget {
   final List<ExpLogEntry> entries;
+  final List<YardMemoryView> milestones;
 
-  const _JournalContent({required this.entries});
+  const _JournalContent({required this.entries, required this.milestones});
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +130,10 @@ class _JournalContent extends StatelessWidget {
           ),
           children: [
             _SummaryCard(todayGain: todayGain, totalGain: totalGain),
+            if (milestones.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              _GrowthMoments(memories: milestones),
+            ],
             const SizedBox(height: 16),
             if (entries.isEmpty)
               const _EmptyState()
@@ -143,6 +152,69 @@ class _JournalContent extends StatelessWidget {
       a.year == b.year && a.month == b.month && a.day == b.day;
 }
 
+class _GrowthMoments extends StatelessWidget {
+  final List<YardMemoryView> memories;
+  const _GrowthMoments({required this.memories});
+
+  @override
+  Widget build(BuildContext context) {
+    final recent = memories.reversed.take(3).toList(growable: false);
+    return Container(
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
+      decoration: _cardDecoration(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Row(
+            children: [
+              Icon(Icons.spa_rounded, color: GrowthJournalScreen._green),
+              SizedBox(width: 8),
+              Text(
+                '慢慢长大的时刻',
+                style: TextStyle(
+                  color: GrowthJournalScreen._ink,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          for (final memory in recent)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 5),
+                    child: Icon(
+                      Icons.circle,
+                      size: 6,
+                      color: GrowthJournalScreen._accent,
+                    ),
+                  ),
+                  const SizedBox(width: 9),
+                  Expanded(
+                    child: Text(
+                      memory.text,
+                      style: const TextStyle(
+                        color: GrowthJournalScreen._muted,
+                        fontSize: 13.5,
+                        height: 1.45,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
 class _SummaryCard extends StatelessWidget {
   final int todayGain;
   final int totalGain;
@@ -154,25 +226,33 @@ class _SummaryCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: _cardDecoration(),
-      child: Row(
-        children: [
-          Expanded(
-            child: _StatPill(
-              icon: Icons.wb_sunny_outlined,
-              label: '今日',
-              value: '+$todayGain',
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: _StatPill(
-              icon: Icons.auto_stories_outlined,
-              iconName: 'nav_menu',
-              label: '累计',
-              value: '+$totalGain',
-            ),
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final stack =
+              MediaQuery.textScalerOf(context).scale(14) >= 28 &&
+              constraints.maxWidth < 560;
+          final today = _StatPill(
+            icon: Icons.wb_sunny_outlined,
+            label: '今日',
+            value: '+$todayGain',
+          );
+          final total = _StatPill(
+            icon: Icons.auto_stories_outlined,
+            iconName: 'nav_menu',
+            label: '累计',
+            value: '+$totalGain',
+          );
+          if (stack) {
+            return Column(children: [today, const SizedBox(height: 12), total]);
+          }
+          return Row(
+            children: [
+              Expanded(child: today),
+              const SizedBox(width: 12),
+              Expanded(child: total),
+            ],
+          );
+        },
       ),
     );
   }

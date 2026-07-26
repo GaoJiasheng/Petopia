@@ -58,6 +58,7 @@ class UnlockServiceImpl implements UnlockService {
         threshold: GameConfig.clueThresholds[clueId] ?? 1 << 30,
       ),
     );
+    c.visitorSeen = true;
     c.count += by;
   }
 

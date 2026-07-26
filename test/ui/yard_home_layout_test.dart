@@ -5,7 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:petopia/app/game_controller.dart';
 import 'package:petopia/app/game_services.dart';
 import 'package:petopia/audio/audio_service.dart';
+import 'package:petopia/audio/route_audio.dart';
 import 'package:petopia/domain/enums.dart';
+import 'package:petopia/ui/petopia_theme.dart';
 import 'package:petopia/ui/yard_home_screen.dart';
 
 class _SilentAudio implements AudioService {
@@ -49,6 +51,21 @@ class _SilentAudio implements AudioService {
   Future<void> visitorVoice(String visitorId) async {}
 }
 
+class _RecordingAudio extends _SilentAudio {
+  final List<Bgm> bgms = <Bgm>[];
+  final List<YardAmbience> ambiences = <YardAmbience>[];
+
+  @override
+  Future<void> playBgm(Bgm bgm) async {
+    bgms.add(bgm);
+  }
+
+  @override
+  Future<void> playYardAmbience(YardAmbience ambience) async {
+    ambiences.add(ambience);
+  }
+}
+
 class _FixtureGameController extends GameController {
   _FixtureGameController(this.fixture);
 
@@ -77,6 +94,12 @@ class _FixtureGameController extends GameController {
 
   @override
   void completeCareTutorial() {}
+
+  @override
+  Future<void> onAppResumed() async {}
+
+  @override
+  Future<void> onAppPaused() async {}
 
   @override
   EventResolution? resolveEvent(String id, {int? choiceIndex}) => null;
@@ -113,6 +136,19 @@ VisitorPresenceView _visitor() {
   );
 }
 
+RevisitorPresenceView _revisitor() {
+  return RevisitorPresenceView(
+    id: 'pet-graduated',
+    name: '云朵',
+    speciesId: 'pet_rabbit',
+    variantId: 'pet_rabbit_v1',
+    arrivedAt: DateTime.utc(2026, 7, 22),
+    leavesAt: DateTime.utc(2026, 7, 23),
+    arrivalSeen: true,
+    interacted: true,
+  );
+}
+
 const _today = TodayYardView([
   TodayYardItemView(
     id: 'pat',
@@ -143,8 +179,12 @@ GameView _view({
   bool canGraduate = false,
   int luxuryStage = 1,
   VisitorPresenceView? visitor,
+  RevisitorPresenceView? revisitor,
   EventPresentationView? pendingEvent,
   int careTutorialStep = 3,
+  CareAction? preferredAction,
+  bool careContented = false,
+  List<YardMemoryView> recentMemories = const <YardMemoryView>[],
 }) {
   return GameView(
     pet: emptyYard ? null : (pet ?? _pet()),
@@ -156,12 +196,16 @@ GameView _view({
     activeThemeId: theme,
     decorSlots: const <YardSlotView>[],
     activeVisitor: visitor,
+    revisitor: revisitor,
     pendingEvent: pendingEvent,
     weather: Weather.clear,
     onboardingComplete: true,
     needsFirstCare: false,
     careTutorialStep: careTutorialStep,
     todayYard: careTutorialStep >= 3 ? _today : null,
+    preferredCareAction: preferredAction,
+    careContented: careContented,
+    recentMemories: recentMemories,
   );
 }
 
@@ -171,6 +215,7 @@ Future<void> _pumpYard(
   required EdgeInsets safeArea,
   required GameView view,
   double textScale = 1,
+  AudioService? audio,
 }) async {
   await tester.binding.setSurfaceSize(size);
   tester.platformDispatcher.textScaleFactorTestValue = textScale;
@@ -178,15 +223,16 @@ Future<void> _pumpYard(
     ProviderScope(
       key: ValueKey<String>('yard_fixture_${_fixtureSequence++}'),
       overrides: [
-        audioServiceProvider.overrideWithValue(_SilentAudio()),
+        audioServiceProvider.overrideWithValue(audio ?? _SilentAudio()),
         gameControllerProvider.overrideWith(() => _FixtureGameController(view)),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        navigatorObservers: <NavigatorObserver>[petopiaRouteObserver],
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color(0xFFE8A15C),
-            surface: const Color(0xFFFFFDF7),
+            seedColor: PetopiaColors.actionAccent,
+            surface: PetopiaColors.paper,
           ),
           useMaterial3: true,
         ),
@@ -258,6 +304,44 @@ void main() {
     await _disposeYard(tester);
   });
 
+  testWidgets('returning from a secondary route restores yard soundscape', (
+    tester,
+  ) async {
+    final audio = _RecordingAudio();
+    await _pumpYard(
+      tester,
+      size: const Size(393, 852),
+      safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+      view: _view(theme: 'sea_breeze'),
+      audio: audio,
+    );
+    final yardBgm = audio.bgms.last;
+    final yardAmbience = audio.ambiences.last;
+    expect(
+      yardBgm,
+      isIn(const <Bgm>[Bgm.yardDay, Bgm.yardDusk, Bgm.yardNight]),
+    );
+    expect(yardAmbience, YardAmbience.seaside);
+
+    final context = tester.element(find.byType(YardHomeScreen));
+    audio.bgms.add(Bgm.shop);
+    final pushed = Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(
+        builder: (_) => const Scaffold(body: SizedBox.expand()),
+      ),
+    );
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    Navigator.of(context).pop();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 400));
+    await pushed;
+
+    expect(audio.bgms.last, yardBgm);
+    expect(audio.ambiences.last, yardAmbience);
+    await _disposeYard(tester);
+  });
+
   testWidgets('phone states stay composed without persistent status banners', (
     tester,
   ) async {
@@ -311,6 +395,38 @@ void main() {
     await _disposeYard(tester);
   });
 
+  testWidgets('pet and daily visitor keep separate layout lanes', (
+    tester,
+  ) async {
+    for (final size in const <Size>[
+      Size(320, 568),
+      Size(393, 852),
+      Size(834, 1194),
+      Size(1194, 834),
+      Size(1366, 1024),
+    ]) {
+      await _pumpYard(
+        tester,
+        size: size,
+        safeArea: const EdgeInsets.only(top: 24, bottom: 20),
+        view: _view(theme: 'sakura', visitor: _visitor()),
+      );
+      final petRect = tester.getRect(
+        find.byKey(const ValueKey<String>('yard_pet_sprite')),
+      );
+      final visitorRect = tester.getRect(
+        find.byKey(const ValueKey<String>('active_visitor')),
+      );
+      expect(
+        petRect.overlaps(visitorRect),
+        isFalse,
+        reason: 'pet and visitor overlap at ${size.width}x${size.height}',
+      );
+      expect(tester.takeException(), isNull);
+    }
+    await _disposeYard(tester);
+  });
+
   testWidgets('notebook is a bottom sheet on phone and owns daily context', (
     tester,
   ) async {
@@ -318,7 +434,24 @@ void main() {
       tester,
       size: const Size(393, 852),
       safeArea: const EdgeInsets.only(top: 59, bottom: 34),
-      view: _view(visitor: _visitor()),
+      view: _view(
+        visitor: _visitor(),
+        preferredAction: CareAction.pat,
+        recentMemories: <YardMemoryView>[
+          YardMemoryView(
+            id: 'growth:pet-current:lv6',
+            type: 'growth',
+            text: '橘团听见门响时，总会第一个跑过去等你。',
+            createdAt: DateTime.utc(2026, 7, 22),
+          ),
+          YardMemoryView(
+            id: 'visitor:visitor_calico:1',
+            type: 'visitor',
+            text: '流浪三花猫离开前又回头看了看橘团。',
+            createdAt: DateTime.utc(2026, 7, 23),
+          ),
+        ],
+      ),
     );
     await tester.tap(find.byKey(const ValueKey<String>('home_menu')));
     await tester.pump();
@@ -330,6 +463,8 @@ void main() {
     );
     expect(find.text('今日院子'), findsOneWidget);
     expect(find.text('今天的来客'), findsOneWidget);
+    expect(find.text('院子记住的事'), findsOneWidget);
+    expect(find.textContaining('流浪三花猫离开前'), findsOneWidget);
     expect(find.textContaining('/'), findsNothing);
     expect(tester.takeException(), isNull);
     await _disposeYard(tester);
@@ -390,9 +525,14 @@ void main() {
       final background = tester.widget<Image>(
         find.byKey(const ValueKey<String>('yard_background')),
       );
-      final backgroundAsset = background.image as AssetImage;
+      final resizedBackground = background.image as ResizeImage;
+      final backgroundAsset = resizedBackground.imageProvider as AssetImage;
       expect(hud.center.dx, closeTo(size.width / 2, 1));
       expect(action.center.dx, lessThan(size.width / 2));
+      expect(
+        resizedBackground.width,
+        lessThanOrEqualTo(name.endsWith('landscape') ? 2732 : 1290),
+      );
       if (name.endsWith('landscape')) {
         expect(backgroundAsset.assetName, contains('/themes/wide/'));
       } else {
@@ -589,6 +729,7 @@ void main() {
       safeArea: const EdgeInsets.only(top: 59, bottom: 34),
       view: _view(
         visitor: _visitor(),
+        revisitor: _revisitor(),
         cooldown: const <CareAction, int>{CareAction.feed: 65},
       ),
     );
@@ -607,10 +748,49 @@ void main() {
     );
     expect(
       tester
+          .getSemantics(find.byKey(const ValueKey<String>('active_revisitor')))
+          .label,
+      contains('回访伙伴 云朵'),
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey<String>('active_visitor')),
+        matching: find.byType(InkResponse),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey<String>('active_revisitor')),
+        matching: find.byType(InkResponse),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      tester
           .getSemantics(find.byKey(const ValueKey<String>('pet_info_card')))
           .label,
       contains('查看橘团的详情'),
     );
+
+    semantics.dispose();
+    await _disposeYard(tester);
+  });
+
+  testWidgets('core yard controls meet platform accessibility guidelines', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await _pumpYard(
+      tester,
+      size: const Size(393, 852),
+      safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+      view: _view(visitor: _visitor()),
+    );
+
+    await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+    await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
 
     semantics.dispose();
     await _disposeYard(tester);

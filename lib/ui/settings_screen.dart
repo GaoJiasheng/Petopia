@@ -13,6 +13,7 @@ import '../domain/enums.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
+import 'petopia_theme.dart';
 import 'privacy_screen.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
@@ -26,11 +27,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   bool _backupBusy = false;
   String? _status;
 
-  static const _bg = Color(0xFFFAF3E3);
-  static const _paper = Color(0xFFFFFDF7);
-  static const _ink = Color(0xFF6B5445);
-  static const _muted = Color(0xFF8A7A6A);
-  static const _accent = Color(0xFFE8A15C);
+  static const _bg = PetopiaColors.background;
+  static const _paper = PetopiaColors.paper;
+  static const _ink = PetopiaColors.ink;
+  static const _muted = PetopiaColors.mutedText;
+  static const _accent = PetopiaColors.actionAccent;
 
   @override
   Widget build(BuildContext context) {
@@ -171,6 +172,19 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       MaterialPageRoute<void>(
                         builder: (_) => const PrivacyScreen(),
                       ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  _CommandCard(
+                    icon: Icons.balance_rounded,
+                    title: '开源许可',
+                    subtitle: '查看 Flutter 与第三方开源组件的许可证。',
+                    onTap: () => showLicensePage(
+                      context: context,
+                      applicationName: 'Petopia',
+                      applicationVersion: appInfo?.displayVersion ?? '',
+                      applicationLegalese:
+                          '源代码使用 Apache-2.0；美术与音频为 Petopia 专有素材。',
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -435,44 +449,46 @@ class _SwitchCard extends StatelessWidget {
     );
     final toggle = Switch.adaptive(value: value, onChanged: onChanged);
 
-    return Semantics(
-      toggled: value,
-      label: title,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: _cardDecoration(),
-        child: largeText
-            ? Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _SettingIcon(
-                        iconName: iconName,
-                        fallbackIcon: fallbackIcon,
-                        active: value,
-                      ),
-                      const SizedBox(width: 14),
-                      copy,
-                    ],
-                  ),
-                  Align(alignment: Alignment.centerRight, child: toggle),
-                ],
-              )
-            : Row(
-                children: [
-                  _SettingIcon(
-                    iconName: iconName,
-                    fallbackIcon: fallbackIcon,
-                    active: value,
-                  ),
-                  const SizedBox(width: 14),
-                  copy,
-                  const SizedBox(width: 10),
-                  toggle,
-                ],
-              ),
+    return MergeSemantics(
+      child: Semantics(
+        toggled: value,
+        label: title,
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          decoration: _cardDecoration(),
+          child: largeText
+              ? Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _SettingIcon(
+                          iconName: iconName,
+                          fallbackIcon: fallbackIcon,
+                          active: value,
+                        ),
+                        const SizedBox(width: 14),
+                        copy,
+                      ],
+                    ),
+                    Align(alignment: Alignment.centerRight, child: toggle),
+                  ],
+                )
+              : Row(
+                  children: [
+                    _SettingIcon(
+                      iconName: iconName,
+                      fallbackIcon: fallbackIcon,
+                      active: value,
+                    ),
+                    const SizedBox(width: 14),
+                    copy,
+                    const SizedBox(width: 10),
+                    toggle,
+                  ],
+                ),
+        ),
       ),
     );
   }
@@ -566,9 +582,9 @@ class _RenderQualityCard extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               switch (value) {
-                RenderQuality.auto => '推荐。完整水彩层次，系统有压力时只收起非关键动态。',
-                RenderQuality.high => '始终保留完整氛围动态，适合性能充足的设备。',
-                RenderQuality.low => '保留宠物和互动演出，减少背景动态与纹理预热。',
+                RenderQuality.auto => '推荐。优先预热常用互动，系统有压力时自动保护。',
+                RenderQuality.high => '优先预热全部互动；内存紧张时仍会暂时降低负载。',
+                RenderQuality.low => '保留宠物和互动反馈，减少背景动态且不预热动作。',
               },
               style: const TextStyle(
                 color: _SettingsScreenState._muted,
@@ -632,19 +648,24 @@ class _MiniToggle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      label: label,
-      toggled: value,
-      child: ListTile(
-        contentPadding: EdgeInsets.zero,
-        title: Text(
-          label,
-          style: const TextStyle(
-            color: _SettingsScreenState._ink,
-            fontWeight: FontWeight.w700,
+    return MergeSemantics(
+      child: Semantics(
+        label: label,
+        toggled: value,
+        child: ListTile(
+          contentPadding: EdgeInsets.zero,
+          title: Text(
+            label,
+            style: const TextStyle(
+              color: _SettingsScreenState._ink,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          trailing: Switch.adaptive(
+            value: value,
+            onChanged: (_) => onChanged(),
           ),
         ),
-        trailing: Switch.adaptive(value: value, onChanged: (_) => onChanged()),
       ),
     );
   }
@@ -759,6 +780,8 @@ class _AboutCard extends StatelessWidget {
           _InfoLine(label: '版本', value: version),
           const SizedBox(height: 10),
           const _InfoLine(label: '数据', value: '本地保存 · 无账号 · 无广告追踪'),
+          const SizedBox(height: 10),
+          const _InfoLine(label: '素材', value: 'Petopia 专有素材 · 禁止单独转载'),
         ],
       ),
     );

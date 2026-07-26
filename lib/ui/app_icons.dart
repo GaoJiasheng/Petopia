@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'petopia_theme.dart';
+
 /// 统一 UI 美术助手：把语义名映射到 assets/art/ui/ 下的水彩图标/徽章，
 /// 缺图回落到 Material Icon，绝不崩。集中管理避免各屏散落 Image.asset。
 ///
@@ -22,7 +24,12 @@ class AppIcon extends StatelessWidget {
   final String name;
   final double size;
   final IconData fallback;
-  const AppIcon(this.name, {super.key, this.size = 28, this.fallback = Icons.circle});
+  const AppIcon(
+    this.name, {
+    super.key,
+    this.size = 28,
+    this.fallback = Icons.circle,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +38,8 @@ class AppIcon extends StatelessWidget {
       width: size,
       height: size,
       fit: BoxFit.contain,
-      errorBuilder: (_, _, _) => Icon(fallback, size: size, color: const Color(0xFF8A7A6A)),
+      errorBuilder: (_, _, _) =>
+          Icon(fallback, size: size, color: PetopiaColors.mutedText),
     );
   }
 }

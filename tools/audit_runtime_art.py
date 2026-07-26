@@ -67,11 +67,11 @@ def _audit_cutout(path: Path) -> int:
 
 def _cutout_paths() -> list[Path]:
     patterns = (
-        "assets/runtime/pets/*/pet_*_stage?.png",
+        "assets/runtime/pets/*/pet_*_stage?.webp",
         "assets/runtime/pets/*/actions/*.webp",
+        "assets/runtime/postcards/poses/*.webp",
         "assets/art/world/visitors/*_yard.png",
         "assets/art/world/visitors/*_portrait.png",
-        "assets/art/postcards/poses/*.png",
     )
     paths: set[Path] = set()
     for pattern in patterns:

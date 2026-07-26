@@ -22,6 +22,8 @@ abstract final class GameConfig {
   static const int bathDailyCap = 1; // 锁定（按自然日，无分钟冷却）
   static const double gluttonFeedBonus = 0.10; // 可调：贪吃喂食 +10%
   static const double energeticToyBonus = 0.10; // 可调：活力玩具 +10%
+  static const int careVarietyBonusExp = 2; // 每日首次完成三种不同照料
+  static const int careContentedActionKinds = 3; // 达成后只表达满足，不制造刷取压力
   // 加成取整规则：向下取整（避免通胀）。锁定。见 ExpEngine。
   static const String bonusRounding = 'floor';
 

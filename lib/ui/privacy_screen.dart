@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../app/app_info.dart';
+import 'petopia_theme.dart';
 
 class PrivacyScreen extends StatelessWidget {
   const PrivacyScreen({super.key});
@@ -54,7 +55,7 @@ class PrivacyScreen extends StatelessWidget {
                   child: Text(
                     '生效日期：2026 年 7 月 14 日',
                     style: TextStyle(
-                      color: Color(0xFF8A7A6A),
+                      color: PetopiaColors.mutedText,
                       fontSize: 13,
                       fontWeight: FontWeight.w600,
                     ),

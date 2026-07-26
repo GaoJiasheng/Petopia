@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../app/app_error_log.dart';
+import 'petopia_theme.dart';
 
 void logUiError(String surface, Object error, StackTrace stackTrace) {
   AppErrorLog.instance.record(error, stackTrace, source: 'ui:$surface');
@@ -46,7 +47,7 @@ class AppLoadError extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(
-                      Icons.cloud_off_rounded,
+                      Icons.home_outlined,
                       size: 34,
                       color: Color(0xFFE8A15C),
                     ),
@@ -65,7 +66,7 @@ class AppLoadError extends StatelessWidget {
                       message,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        color: Color(0xFF8A7A6A),
+                        color: PetopiaColors.mutedText,
                         fontSize: 14,
                         height: 1.45,
                       ),

@@ -2,31 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import '../audio/audio_service.dart';
+import '../audio/route_audio.dart';
 import '../domain/enums.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
+import 'petopia_theme.dart';
 import 'yard_art.dart';
 
 /// 暖绒商店：按分类展示商品，并通过 GameController 完成兑换。
 class ShopScreen extends ConsumerStatefulWidget {
   const ShopScreen({super.key});
 
-  static const _bg = Color(0xFFFAF3E3);
-  static const _paper = Color(0xFFFFFDF7);
-  static const _ink = Color(0xFF6B5445);
-  static const _muted = Color(0xFF8A7A6A);
-  static const _accent = Color(0xFFE8A15C);
-  static const _green = Color(0xFFA7C4A0);
-  static const _line = Color(0xFFEDE4D3);
+  static const _bg = PetopiaColors.background;
+  static const _paper = PetopiaColors.paper;
+  static const _ink = PetopiaColors.ink;
+  static const _muted = PetopiaColors.mutedText;
+  static const _accent = PetopiaColors.actionAccent;
+  static const _green = PetopiaColors.green;
+  static const _line = PetopiaColors.line;
 
   @override
   ConsumerState<ShopScreen> createState() => _ShopScreenState();
 }
 
-class _ShopScreenState extends ConsumerState<ShopScreen> {
+class _ShopScreenState extends ConsumerState<ShopScreen>
+    with RouteAudio<ShopScreen> {
   String? _buyingId;
   String? _selectedCategory;
+
+  @override
+  Bgm get routeBgm => Bgm.shop;
 
   @override
   Widget build(BuildContext context) {

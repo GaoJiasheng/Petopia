@@ -1,0 +1,24 @@
+Petopia Asset License
+
+Copyright (c) 2026 Gavin Gao. All rights reserved.
+
+This license applies to the visual artwork, illustrations, animation frames,
+icons, audio recordings, music, sound effects, and derived runtime asset files
+under assets/art/, assets/audio/, and assets/runtime/.
+
+The assets may be copied, transformed, and distributed only as part of the
+Petopia application and its official marketing, review, archival, and store
+submission materials. No permission is granted to extract, redistribute,
+resell, sublicense, train on, or use the assets in another product.
+
+The repository's source code is licensed separately under Apache License 2.0.
+That source-code license does not apply to the assets covered here.
+
+To the extent copyright or other intellectual-property rights subsist in
+generated output, the project owner reserves those rights, including rights in
+the human-authored selection, editing, compositing, color correction,
+animation preparation, and arrangement. The provenance records in this
+repository document how the assets were produced and reviewed.
+
+Third-party replacement assets, if introduced later, remain governed by their
+own licenses and must be added to the release rights register before shipping.

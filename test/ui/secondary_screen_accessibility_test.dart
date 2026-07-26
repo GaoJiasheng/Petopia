@@ -5,10 +5,16 @@ import 'package:petopia/app/app_info.dart';
 import 'package:petopia/app/game_controller.dart';
 import 'package:petopia/audio/audio_service.dart';
 import 'package:petopia/domain/enums.dart';
+import 'package:petopia/domain/models/logs.dart';
 import 'package:petopia/ui/achievements_screen.dart';
+import 'package:petopia/ui/adopt_screen.dart';
 import 'package:petopia/ui/album_screen.dart';
+import 'package:petopia/ui/graduation_ceremony_screen.dart';
+import 'package:petopia/ui/growth_journal_screen.dart';
+import 'package:petopia/ui/pet_detail_screen.dart';
 import 'package:petopia/ui/pet_dex_screen.dart';
 import 'package:petopia/ui/postcard_viewer_screen.dart';
+import 'package:petopia/ui/privacy_screen.dart';
 import 'package:petopia/ui/settings_screen.dart';
 import 'package:petopia/ui/shop_screen.dart';
 import 'package:petopia/ui/visitor_dex_screen.dart';
@@ -55,6 +61,18 @@ class _SilentAudio implements AudioService {
 }
 
 class _FixtureController extends GameController {
+  static final pet = PetView(
+    name: '云朵',
+    speciesId: 'pet_rabbit',
+    speciesName: '垂耳兔',
+    variantId: 'pet_rabbit_v1',
+    level: 10,
+    exp: 2400,
+    stage: PetStage.d,
+    personality: const <String>['温柔', '爱幻想'],
+    bornAt: DateTime.utc(2026, 7, 1),
+  );
+
   static final postcard = PostcardView(
     id: 'postcard-test',
     petId: 'pet-test',
@@ -105,6 +123,28 @@ class _FixtureController extends GameController {
   void applyTheme(String themeId) {}
 
   @override
+  List<AdoptChoiceView> adoptChoices() => const <AdoptChoiceView>[
+    AdoptChoiceView(
+      speciesId: 'pet_rabbit',
+      name: '垂耳兔',
+      category: PetCategory.real,
+      baseTone: '安静、柔软，也会认真听院子里的每一种声音。',
+    ),
+    AdoptChoiceView(
+      speciesId: 'pet_cat',
+      name: '橘猫',
+      category: PetCategory.real,
+      baseTone: '温暖、亲人，喜欢守在你身边。',
+    ),
+  ];
+
+  @override
+  Future<List<ExpLogEntry>> growthJournal() async => const <ExpLogEntry>[];
+
+  @override
+  List<YardMemoryView> growthMemories() => const <YardMemoryView>[];
+
+  @override
   List<PostcardView> postcards() => <PostcardView>[postcard];
 
   @override
@@ -119,6 +159,8 @@ class _FixtureController extends GameController {
       postcardCount: 3,
       completedStops: 7,
       journeyState: JourneyState.active,
+      routeTheme: '海滨',
+      nextPostcardAt: DateTime.now().toUtc().add(const Duration(days: 3)),
     ),
   ];
 
@@ -241,6 +283,15 @@ Future<void> _pump(
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  const adaptiveSizes = <Size>[
+    Size(393, 852),
+    Size(390, 1024),
+    Size(683, 1024),
+    Size(820, 700),
+    Size(1100, 760),
+    Size(1194, 834),
+  ];
+
   final screens = <(String, Widget)>[
     ('album', const AlbumScreen()),
     ('pet dex', const PetDexScreen()),
@@ -249,12 +300,24 @@ void main() {
     ('shop', const ShopScreen()),
     ('settings', const SettingsScreen()),
     ('postcard', PostcardViewerScreen(card: _FixtureController.postcard)),
+    ('adoption', const AdoptScreen()),
+    ('pet detail', PetDetailScreen(initialPet: _FixtureController.pet)),
+    ('growth journal', const GrowthJournalScreen()),
+    (
+      'graduation',
+      const GraduationCeremonyScreen(
+        petName: '云朵',
+        speciesId: 'pet_rabbit',
+        variantId: 'pet_rabbit_v1',
+      ),
+    ),
+    ('privacy', const PrivacyScreen()),
   ];
 
   testWidgets('secondary screens support the largest accessibility text', (
     tester,
   ) async {
-    for (final size in const <Size>[Size(393, 852), Size(1194, 834)]) {
+    for (final size in adaptiveSizes) {
       for (final (name, screen) in screens) {
         await _pump(tester, size: size, screen: screen);
         expect(
@@ -264,6 +327,26 @@ void main() {
         );
       }
     }
+  });
+
+  testWidgets('secondary screen controls meet accessibility guidelines', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    for (final (name, screen) in screens) {
+      await _pump(tester, size: const Size(393, 852), screen: screen);
+      await expectLater(
+        tester,
+        meetsGuideline(labeledTapTargetGuideline),
+        reason: '$name has an unlabeled control',
+      );
+      await expectLater(
+        tester,
+        meetsGuideline(iOSTapTargetGuideline),
+        reason: '$name has a tap target smaller than 44 points',
+      );
+    }
+    semantics.dispose();
   });
 
   testWidgets('settings keeps support diagnostics reachable at large text', (
@@ -334,6 +417,7 @@ void main() {
     await tester.tap(find.text('云朵'));
     await tester.pumpAndSettle();
     expect(find.text('云朵的旅程'), findsOneWidget);
+    expect(find.textContaining('第一程：海风'), findsOneWidget);
     expect(tester.takeException(), isNull);
   });
 

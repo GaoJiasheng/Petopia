@@ -342,8 +342,23 @@ VisitorPetInteraction _parseVisitorInteraction(Map<String, dynamic> json) {
     animRef: _string(json['animRef'], 'visitorInteraction.animRef'),
     expReward: _int(json['expReward'], 'visitorInteraction.expReward'),
     personalityBias: _nullableStringList(json['personalityBias']),
-    unlockClue: _nullableString(json['unlockClue']),
+    unlockClue: _normalizedClueId(json['unlockClue']),
   );
+}
+
+String? _normalizedClueId(Object? value) {
+  final encoded = _nullableString(value);
+  if (encoded == null) return null;
+  final withoutIncrement = encoded.endsWith('+1')
+      ? encoded.substring(0, encoded.length - 2)
+      : encoded;
+  return switch (withoutIncrement) {
+    'starbug' => 'clue_starbug',
+    'ember' => 'clue_ember',
+    'uni' => 'clue_uni',
+    'boo' => 'clue_boo',
+    _ => withoutIncrement,
+  };
 }
 
 Event _parseEvent(Map<String, dynamic> json) {

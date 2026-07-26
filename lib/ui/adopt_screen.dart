@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
+import '../audio/route_audio.dart';
 import 'adaptive_layout.dart';
 import 'pet_art.dart';
+import 'petopia_theme.dart';
 
 /// 领养流程：院子空出后迎接下一只。选物种 → 取名 → 领养。
 /// 性格在领养时随机 2 个（终身，spec DESIGN）；变体随机。
@@ -15,10 +17,11 @@ class AdoptScreen extends ConsumerStatefulWidget {
   ConsumerState<AdoptScreen> createState() => _AdoptScreenState();
 }
 
-class _AdoptScreenState extends ConsumerState<AdoptScreen> {
-  static const _ink = Color(0xFF6B5445);
-  static const _muted = Color(0xFF8A7A6A);
-  static const _accent = Color(0xFFE8A15C);
+class _AdoptScreenState extends ConsumerState<AdoptScreen>
+    with RouteAudio<AdoptScreen> {
+  static const _ink = PetopiaColors.ink;
+  static const _muted = PetopiaColors.mutedText;
+  static const _accent = PetopiaColors.actionAccent;
   static const _line = Color(0xFFE6DCC8);
 
   String? _selectedId;
@@ -26,10 +29,7 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen> {
   bool _adopting = false;
 
   @override
-  void initState() {
-    super.initState();
-    ref.read(audioServiceProvider).playBgm(Bgm.adoption);
-  }
+  Bgm get routeBgm => Bgm.adoption;
 
   @override
   void dispose() {
@@ -64,10 +64,15 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen> {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            final largeText = MediaQuery.textScalerOf(context).scale(14) >= 18;
-            final columns = constraints.maxWidth >= 840
+            final scaledBody = MediaQuery.textScalerOf(context).scale(14);
+            final largeText = scaledBody >= 18;
+            final accessibilityText = scaledBody >= 28;
+            final regularColumns = constraints.maxWidth >= 840
                 ? 4
                 : (constraints.maxWidth >= 600 ? 3 : 2);
+            final columns = accessibilityText
+                ? (constraints.maxWidth >= 840 ? 2 : 1)
+                : regularColumns;
             return Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 1040),
@@ -85,12 +90,19 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen> {
                         padding: EdgeInsets.symmetric(
                           horizontal: PetopiaAdaptive.sideMargin(context),
                         ),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: columns,
-                          childAspectRatio: largeText ? 0.7 : 0.86,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                        ),
+                        gridDelegate: accessibilityText
+                            ? SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: columns,
+                                mainAxisExtent: 340,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
+                              )
+                            : SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: columns,
+                                childAspectRatio: largeText ? 0.7 : 0.86,
+                                crossAxisSpacing: 12,
+                                mainAxisSpacing: 12,
+                              ),
                         itemCount: choices.length,
                         itemBuilder: (context, i) {
                           final c = choices[i];
@@ -147,61 +159,69 @@ class _ChoiceCard extends StatelessWidget {
       button: true,
       selected: selected,
       label: '${choice.name}，${choice.baseTone}',
-      child: GestureDetector(
-        key: ValueKey<String>('adopt_choice_${choice.speciesId}'),
-        behavior: HitTestBehavior.opaque,
-        onTap: onTap,
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          decoration: BoxDecoration(
-            color: const Color(0xFFFFFDF7),
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: selected
-                  ? _AdoptScreenState._accent
-                  : _AdoptScreenState._line,
-              width: selected ? 3 : 1.5,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          key: ValueKey<String>('adopt_choice_${choice.speciesId}'),
+          borderRadius: BorderRadius.circular(12),
+          onTap: onTap,
+          child: AnimatedContainer(
+            duration: PetopiaMotion.duration(
+              context,
+              const Duration(milliseconds: 180),
             ),
-            boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 6)],
-          ),
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [
-              Expanded(
-                child: Image.asset(
-                  PetArt.portrait(choice.speciesId),
-                  fit: BoxFit.contain,
-                  excludeFromSemantics: true,
-                  errorBuilder: (_, _, _) => const Icon(
-                    Icons.pets_rounded,
-                    size: 56,
-                    color: _AdoptScreenState._muted,
+            decoration: BoxDecoration(
+              color: const Color(0xFFFFFDF7),
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: selected
+                    ? _AdoptScreenState._accent
+                    : _AdoptScreenState._line,
+                width: selected ? 3 : 1.5,
+              ),
+              boxShadow: const [
+                BoxShadow(color: Colors.black12, blurRadius: 6),
+              ],
+            ),
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Image.asset(
+                    PetArt.portrait(choice.speciesId),
+                    fit: BoxFit.contain,
+                    excludeFromSemantics: true,
+                    errorBuilder: (_, _, _) => const Icon(
+                      Icons.pets_rounded,
+                      size: 56,
+                      color: _AdoptScreenState._muted,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 6),
-              Text(
-                choice.name,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: _AdoptScreenState._ink,
-                  fontSize: 15,
+                const SizedBox(height: 6),
+                Text(
+                  choice.name,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: _AdoptScreenState._ink,
+                    fontSize: 15,
+                  ),
                 ),
-              ),
-              Text(
-                choice.baseTone,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: const TextStyle(
-                  color: _AdoptScreenState._muted,
-                  fontSize: 12,
+                Text(
+                  choice.baseTone,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: _AdoptScreenState._muted,
+                    fontSize: 12,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

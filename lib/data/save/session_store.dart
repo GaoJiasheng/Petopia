@@ -13,7 +13,7 @@ import '../../domain/models/pet.dart';
 import '../../domain/models/yard.dart';
 import '../../services/local_calendar.dart';
 
-const int _schemaVersion = 2;
+const int _schemaVersion = 3;
 
 enum SessionLoadSource { none, primary, backup }
 
@@ -67,30 +67,48 @@ class SessionStore {
   Future<void> save(GameSession session) {
     final next = _saveChain
         .catchError((Object _, StackTrace _) {})
-        .then((_) => _saveNow(session));
+        .then((_) => _saveWithRetry(session));
     // Keep the public Future truthful while ensuring a failed write cannot
     // prevent every later save from running.
     _saveChain = next.catchError((Object _, StackTrace _) {});
     return next;
   }
 
-  Future<void> _saveNow(GameSession session) async {
-    try {
-      await saveDir.create(recursive: true);
-      final snapshot = _sessionToJson(session);
-      final encoded = await compute(_encodeSessionJson, snapshot);
-      final temp = _tempFile;
-      await temp.writeAsString(encoded, flush: true);
-
-      final sessionFile = _sessionFile;
-      if (await sessionFile.exists()) {
-        await sessionFile.copy(_backupFile.path);
+  Future<void> _saveWithRetry(GameSession session) async {
+    const retryDelays = <Duration>[
+      Duration.zero,
+      Duration(milliseconds: 160),
+      Duration(milliseconds: 520),
+    ];
+    Object? lastError;
+    StackTrace? lastStackTrace;
+    for (var attempt = 0; attempt < retryDelays.length; attempt++) {
+      final delay = retryDelays[attempt];
+      if (delay > Duration.zero) await Future<void>.delayed(delay);
+      try {
+        await _saveNow(session);
+        return;
+      } catch (error, stackTrace) {
+        lastError = error;
+        lastStackTrace = stackTrace;
       }
-      await temp.rename(sessionFile.path);
-    } catch (error, stackTrace) {
-      debugPrint('SessionStore.save failed: $error\n$stackTrace');
-      rethrow;
     }
+    debugPrint('SessionStore.save failed: $lastError\n$lastStackTrace');
+    Error.throwWithStackTrace(lastError!, lastStackTrace!);
+  }
+
+  Future<void> _saveNow(GameSession session) async {
+    await saveDir.create(recursive: true);
+    final snapshot = _sessionToJson(session);
+    final encoded = await compute(_encodeSessionJson, snapshot);
+    final temp = _tempFile;
+    await temp.writeAsString(encoded, flush: true);
+
+    final sessionFile = _sessionFile;
+    if (await sessionFile.exists()) {
+      await sessionFile.copy(_backupFile.path);
+    }
+    await temp.rename(sessionFile.path);
   }
 
   Future<GameSession?> load() async {
@@ -195,6 +213,7 @@ Map<String, Object?> _sessionToJson(GameSession session) {
       (key, value) => MapEntry(key, _dateToJson(value)),
     ),
     'visitorLog': session.visitorLog.map(_visitorLogToJson).toList(),
+    'yardMemories': session.yardMemories.map(_yardMemoryToJson).toList(),
     'activeVisitor': _nullableActiveVisitorToJson(session.activeVisitor),
     'careLedger': _careLedgerToJson(session.careLedger),
     'pendingEvents': session.pendingEvents.map(_pendingEventToJson).toList(),
@@ -236,6 +255,9 @@ GameSession _sessionFromJson(Map<String, Object?> json, DateTime now) {
   session.firedSpecials.addAll(_stringListFromJson(json['firedSpecials']));
   session.eventLastFiredAt.addAll(_dateMapFromJson(json['eventLastFiredAt']));
   session.visitorLog.addAll(_visitorLogListFromJson(json['visitorLog'], now));
+  session.yardMemories.addAll(
+    _yardMemoryListFromJson(json['yardMemories'], now),
+  );
   session.activeVisitor = _nullableActiveVisitorFromJson(
     json['activeVisitor'],
     now,
@@ -505,11 +527,12 @@ Map<String, Object?> _clueToJson(ClueCounter clue) {
 }
 
 ClueCounter _clueFromJson(Map<String, Object?> json, String defaultId) {
+  final count = _readInt(json['count'], 0);
   return ClueCounter(
     clueId: _readString(json['clueId'], defaultId),
     threshold: _readInt(json['threshold'], 0),
-    count: _readInt(json['count'], 0),
-    visitorSeen: _readBool(json['visitorSeen'], false),
+    count: count,
+    visitorSeen: _readBool(json['visitorSeen'], false) || count > 0,
   );
 }
 
@@ -570,10 +593,12 @@ Map<String, Object?> _journeyToJson(Journey journey) {
     'petId': journey.petId,
     'stops': journey.stops,
     'wanderStops': journey.wanderStops,
+    'routeTheme': journey.routeTheme,
     'currentIdx': journey.currentIdx,
     'wanderIdx': journey.wanderIdx,
     'longTermSeq': journey.longTermSeq,
     'nextPostcardAt': _dateToJson(journey.nextPostcardAt),
+    'nextTravelNoteAt': _nullableDateToJson(journey.nextTravelNoteAt),
     'state': journey.state.name,
   };
 }
@@ -584,7 +609,9 @@ Journey _journeyFromJson(Map<String, Object?> json, DateTime now) {
     petId: _readString(json['petId'], ''),
     stops: _stringListFromJson(json['stops']),
     wanderStops: _stringListFromJson(json['wanderStops']),
+    routeTheme: _readNullableString(json['routeTheme']),
     nextPostcardAt: _readDate(json['nextPostcardAt'], now),
+    nextTravelNoteAt: _readNullableDate(json['nextTravelNoteAt']),
     currentIdx: _readInt(json['currentIdx'], 0),
     wanderIdx: _readInt(json['wanderIdx'], 0),
     longTermSeq: _readInt(json['longTermSeq'], 0),
@@ -652,6 +679,34 @@ List<VisitorLogEntry> _visitorLogListFromJson(Object? value, DateTime now) {
   ).map((json) => _visitorLogFromJson(json, now)).toList();
 }
 
+Map<String, Object?> _yardMemoryToJson(YardMemoryEntry entry) {
+  return <String, Object?>{
+    'id': entry.id,
+    'type': entry.type,
+    'text': entry.text,
+    'createdAt': _dateToJson(entry.createdAt),
+    'petId': entry.petId,
+    'visitorId': entry.visitorId,
+  };
+}
+
+YardMemoryEntry _yardMemoryFromJson(Map<String, Object?> json, DateTime now) {
+  return YardMemoryEntry(
+    id: _readString(json['id'], ''),
+    type: _readString(json['type'], 'yard'),
+    text: _readString(json['text'], ''),
+    createdAt: _readDate(json['createdAt'], now),
+    petId: _readNullableString(json['petId']),
+    visitorId: _readNullableString(json['visitorId']),
+  );
+}
+
+List<YardMemoryEntry> _yardMemoryListFromJson(Object? value, DateTime now) {
+  return _jsonMapListFromJson(
+    value,
+  ).map((json) => _yardMemoryFromJson(json, now)).toList();
+}
+
 Map<String, Object?>? _nullableActiveVisitorToJson(ActiveVisitor? visitor) {
   if (visitor == null) {
     return null;
@@ -673,9 +728,6 @@ ActiveVisitor? _nullableActiveVisitorFromJson(Object? value, DateTime now) {
     return null;
   }
   final leavesAt = _readDate(json['leavesAt'], now);
-  if (!leavesAt.isAfter(now)) {
-    return null;
-  }
   return ActiveVisitor(
     visitorId: _readString(json['visitorId'], ''),
     arrivedAt: _readDate(json['arrivedAt'], now),

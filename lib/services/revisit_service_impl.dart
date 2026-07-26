@@ -14,7 +14,10 @@ class RevisitServiceImpl implements RevisitService {
 
   @override
   void scheduleNextRevisit(Pet pet) {
-    final span = GameConfig.revisitWindowMaxDays - GameConfig.revisitWindowMinDays + 1; // 7..14 → 8
+    final span =
+        GameConfig.revisitWindowMaxDays -
+        GameConfig.revisitWindowMinDays +
+        1; // 7..14 → 8
     final days = GameConfig.revisitWindowMinDays + (_rng() * span).floor();
     pet.nextRevisitAt = _now().add(Duration(days: days));
   }
@@ -27,13 +30,17 @@ class RevisitServiceImpl implements RevisitService {
   }
 
   @override
-  Pet? pickRevisitor(List<Pet> roaming, DateTime today,
-      {bool hasCurrentRevisitor = false}) {
+  Pet? pickRevisitor(
+    List<Pet> roaming,
+    DateTime today, {
+    bool hasCurrentRevisitor = false,
+  }) {
     if (hasCurrentRevisitor) return null; // INV-2：同时最多 1 只
     Pet? earliest;
     for (final p in roaming) {
       if (!isDue(p, today)) continue;
-      if (earliest == null || p.nextRevisitAt!.isBefore(earliest.nextRevisitAt!)) {
+      if (earliest == null ||
+          p.nextRevisitAt!.isBefore(earliest.nextRevisitAt!)) {
         earliest = p;
       }
     }

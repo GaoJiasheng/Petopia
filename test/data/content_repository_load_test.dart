@@ -188,5 +188,19 @@ void main() {
         .toList();
     expect(legendary.length, 4);
     expect(legendary.every((v) => v.clueRole != null), true);
+
+    // 策划数据允许使用 clue_xxx+1 / starbug+1 记法；
+    // 运行时只接收稳定 clue id，避免访客彩蛋静默失效。
+    final visitorClues = repo.visitorInteractions
+        .map((interaction) => interaction.unlockClue)
+        .whereType<String>()
+        .toSet();
+    expect(visitorClues, {
+      'clue_ember',
+      'clue_uni',
+      'clue_boo',
+      'clue_starbug',
+    });
+    expect(visitorClues.every((clue) => !clue.contains('+')), isTrue);
   });
 }

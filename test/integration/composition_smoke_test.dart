@@ -231,6 +231,188 @@ void main() {
     expect(firstRound, contains(repeated));
   });
 
+  test('访客离开后只写一条安静的院子记忆', () async {
+    final content = AssetContentRepository();
+    await content.loadAll();
+    final arrivedAt = DateTime.utc(2026, 7, 3, 8);
+    final clock = MutableClock(arrivedAt);
+    final session = GameSession(
+      current: Pet(
+        id: 'pet-current',
+        speciesId: 'pet_cat',
+        variantId: 'pet_cat_v1',
+        name: '阿橘',
+        personality: const ['p_gentle', 'p_curious'],
+        bornAt: arrivedAt,
+        lastOnlineAt: arrivedAt,
+        offlineDayKey: '2026-07-03',
+      ),
+    );
+    session.activeVisitor = ActiveVisitor(
+      visitorId: 'visitor_sparrow',
+      arrivedAt: arrivedAt,
+      leavesAt: arrivedAt.add(const Duration(days: 1)),
+      withPetId: 'pet-current',
+      interacted: true,
+    );
+    var id = 0;
+    final svc = GameServices.wire(
+      session: session,
+      port: MemPort(),
+      content: content,
+      clock: clock,
+      rng: () => 0.2,
+      idGen: () => 'id${id++}',
+      ownerName: '小明',
+    );
+
+    clock.t = arrivedAt.add(const Duration(days: 2));
+    expect(svc.clearExpiredActiveVisitor(clock.now()), isTrue);
+    expect(session.activeVisitor, isNull);
+    expect(session.yardMemories, hasLength(1));
+    expect(session.yardMemories.single.type, 'visitor');
+    expect(session.yardMemories.single.text, contains('阿橘'));
+
+    expect(svc.clearExpiredActiveVisitor(clock.now()), isFalse);
+    expect(session.yardMemories, hasLength(1));
+  });
+
+  test('中间等级成长记忆完整且幂等', () async {
+    final content = AssetContentRepository();
+    await content.loadAll();
+    final now = DateTime.utc(2026, 7, 3, 8);
+    final pet = Pet(
+      id: 'pet-growth',
+      speciesId: 'pet_rabbit',
+      variantId: 'pet_rabbit_v1',
+      name: '团子',
+      personality: const ['p_clingy', 'p_dreamy'],
+      bornAt: now,
+      lastOnlineAt: now,
+      offlineDayKey: '2026-07-03',
+      level: 9,
+    );
+    final session = GameSession(current: pet);
+    var id = 0;
+    final svc = GameServices.wire(
+      session: session,
+      port: MemPort(),
+      content: content,
+      clock: FixedClock(now),
+      rng: () => 0.2,
+      idGen: () => 'id${id++}',
+      ownerName: '小明',
+    );
+
+    svc.recordGrowthMemories(pet, 1, 9);
+    svc.recordGrowthMemories(pet, 1, 9);
+
+    expect(session.yardMemories, hasLength(6));
+    expect(session.yardMemories.map((memory) => memory.id), <String>[
+      'growth:pet-growth:lv2',
+      'growth:pet-growth:lv3',
+      'growth:pet-growth:lv4',
+      'growth:pet-growth:lv6',
+      'growth:pet-growth:lv7',
+      'growth:pet-growth:lv9',
+    ]);
+  });
+
+  test('特殊事件文案中的彩蛋线索会真实推进且只结算一次', () async {
+    final content = AssetContentRepository();
+    await content.loadAll();
+    final now = DateTime.utc(2026, 7, 3, 20);
+    final session = GameSession(
+      current: Pet(
+        id: 'pet-clue',
+        speciesId: 'pet_cat',
+        variantId: 'pet_cat_v1',
+        name: '阿橘',
+        personality: const ['p_dreamy', 'p_gentle'],
+        bornAt: now,
+        lastOnlineAt: now,
+        offlineDayKey: '2026-07-03',
+      ),
+    );
+    var id = 0;
+    final svc = GameServices.wire(
+      session: session,
+      port: MemPort(),
+      content: content,
+      clock: FixedClock(now),
+      rng: () => 0.2,
+      idGen: () => 'id${id++}',
+      ownerName: '小明',
+    );
+    session.pendingEvents.add(
+      PendingGameEvent(
+        id: 'rainbow-clue',
+        eventId: 'ev_s09',
+        petId: 'pet-clue',
+        title: '彩虹尽头',
+        script: '独角兔线索+1。',
+        type: EventType.special,
+        expReward: 10,
+        currencyReward: 0,
+        createdAt: now,
+      ),
+    );
+
+    expect(svc.resolveEvent('rainbow-clue'), isNotNull);
+    expect(session.clues['clue_uni']?.count, 1);
+    expect(session.clues['clue_uni']?.visitorSeen, isTrue);
+    expect(svc.resolveEvent('rainbow-clue'), isNull);
+    expect(session.clues['clue_uni']?.count, 1);
+  });
+
+  test('真实访客互动数据会归一化并推进对应彩蛋线索', () async {
+    final content = AssetContentRepository();
+    await content.loadAll();
+    final now = DateTime.utc(2026, 7, 3, 20);
+    final session = GameSession(
+      current: Pet(
+        id: 'pet-visitor-clue',
+        speciesId: 'pet_cat',
+        variantId: 'pet_cat_v1',
+        name: '阿橘',
+        personality: const ['p_dreamy', 'p_gentle'],
+        bornAt: now,
+        lastOnlineAt: now,
+        offlineDayKey: '2026-07-03',
+      ),
+    );
+    final interaction = content.visitorInteractions.firstWhere(
+      (item) =>
+          item.visitorId == 'visitor_rainbow_shade' &&
+          item.petSpeciesId == 'pet_cat',
+    );
+    expect(interaction.unlockClue, 'clue_uni');
+    session.activeVisitor = ActiveVisitor(
+      visitorId: interaction.visitorId,
+      arrivedAt: now,
+      leavesAt: now.add(const Duration(days: 1)),
+      interactionId: interaction.id,
+      withPetId: session.current!.id,
+    );
+    var id = 0;
+    final svc = GameServices.wire(
+      session: session,
+      port: MemPort(),
+      content: content,
+      clock: FixedClock(now),
+      rng: () => 0.2,
+      idGen: () => 'visitor-clue-${id++}',
+      ownerName: '小明',
+    );
+
+    expect(svc.interactActiveVisitor(interaction.visitorId), isNotNull);
+    expect(session.clues['clue_uni']?.count, 1);
+    expect(session.clues['clue_uni']?.visitorSeen, isTrue);
+    expect(session.clues.keys.any((key) => key.contains('+')), isFalse);
+    expect(svc.interactActiveVisitor(interaction.visitorId), isNull);
+    expect(session.clues['clue_uni']?.count, 1);
+  });
+
   test('特殊事件硬条件阻止初雪在夏天触发', () async {
     final content = AssetContentRepository();
     await content.loadAll();
@@ -361,6 +543,16 @@ void main() {
     expect(
       journey.nextPostcardAt.difference(clock.t).inDays,
       inInclusiveRange(18, 22),
+    );
+    expect(
+      session.yardMemories.where((memory) => memory.type == 'travel'),
+      hasLength(1),
+    );
+    expect(
+      session.yardMemories
+          .singleWhere((memory) => memory.type == 'travel')
+          .text,
+      contains('阿橘'),
     );
 
     final second = svc.adopt(speciesId: 'pet_shiba', name: '柴犬');

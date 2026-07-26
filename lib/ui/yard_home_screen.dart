@@ -9,7 +9,9 @@ import '../app/game_controller.dart';
 import '../app/game_services.dart';
 import '../app/home_moment_queue.dart';
 import '../app/notification_service.dart';
+import '../app/startup_metrics.dart';
 import '../audio/audio_service.dart';
+import '../audio/route_audio.dart';
 import '../config/game_config.dart';
 import '../domain/enums.dart';
 import 'app_error_state.dart';
@@ -17,7 +19,9 @@ import 'app_icons.dart';
 import 'adaptive_layout.dart';
 import 'pet_action_cue.dart';
 import 'pet_art.dart';
+import 'petopia_theme.dart';
 import 'yard_art.dart';
+import 'yard_render_policy.dart';
 import 'widgets/pet_sprite.dart';
 import 'widgets/sprite_sheet_player.dart';
 import 'achievements_screen.dart';
@@ -40,6 +44,78 @@ void _fireCue(WidgetRef ref, String pose) {
     pose,
     (prev?.seq ?? 0) + 1,
   );
+}
+
+String _interactionName(CareAction action) => switch (action) {
+  CareAction.feed => 'eat',
+  CareAction.pat => 'pat',
+  CareAction.toy => 'play',
+  CareAction.bath => 'bath',
+};
+
+void _showCareFeedback(BuildContext context, CareFeedbackView? feedback) {
+  if (feedback == null) return;
+  final messenger = ScaffoldMessenger.of(context);
+  messenger
+    ..clearSnackBars()
+    ..showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: const Color(0xFFFDF8EE),
+        margin: EdgeInsets.fromLTRB(
+          18,
+          0,
+          18,
+          MediaQuery.paddingOf(context).bottom + 124,
+        ),
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(
+            color: feedback.contented
+                ? const Color(0xFFA7C4A0)
+                : const Color(0xFFE9DECD),
+          ),
+        ),
+        duration: const Duration(milliseconds: 2400),
+        content: Row(
+          children: [
+            Icon(
+              feedback.contented
+                  ? Icons.favorite_rounded
+                  : feedback.preferred
+                  ? Icons.auto_awesome_rounded
+                  : Icons.pets_rounded,
+              size: 20,
+              color: feedback.contented
+                  ? const Color(0xFF7FA778)
+                  : PetopiaColors.actionAccent,
+            ),
+            const SizedBox(width: 9),
+            Expanded(
+              child: Text(
+                feedback.message,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Color(0xFF6B5445),
+                  fontSize: 13,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              '+${feedback.expApplied}',
+              style: const TextStyle(
+                color: PetopiaColors.actionAccent,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
 }
 
 YardAmbience _yardAmbience({
@@ -70,9 +146,12 @@ class YardHomeScreen extends ConsumerStatefulWidget {
 }
 
 class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
-    with WidgetsBindingObserver {
-  Timer? _cooldownTimer;
+    with WidgetsBindingObserver, RouteAware {
   Timer? _presenceTimer;
+  Timer? _memoryRecoveryTimer;
+  PageRoute<dynamic>? _yardRoute;
+  Bgm? _currentYardBgm;
+  YardAmbience? _currentYardAmbience;
   String? _precacheKey;
   int _precacheGeneration = 0;
   final DateTime _openedAt = DateTime.now().toUtc();
@@ -90,15 +169,6 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     if (widget.enableCooldownRefresh) {
-      _cooldownTimer = Timer.periodic(const Duration(seconds: 1), (_) {
-        final async = ref.read(gameControllerProvider);
-        if (async.hasValue &&
-            async.requireValue.cooldownSec.values.any(
-              (seconds) => seconds > 0,
-            )) {
-          ref.read(gameControllerProvider.notifier).refreshView();
-        }
-      });
       _presenceTimer = Timer.periodic(const Duration(minutes: 1), (_) {
         ref.read(gameControllerProvider.notifier).recordActiveHeartbeat();
       });
@@ -119,20 +189,59 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    if (route is! PageRoute<dynamic> || identical(route, _yardRoute)) return;
+    if (_yardRoute != null) {
+      petopiaRouteObserver.unsubscribe(this);
+    }
+    _yardRoute = route;
+    petopiaRouteObserver.subscribe(this, route);
+  }
+
+  @override
+  void didPopNext() {
+    final bgm = _currentYardBgm;
+    final ambience = _currentYardAmbience;
+    if (bgm == null || ambience == null) return;
+    final audio = ref.read(audioServiceProvider);
+    unawaited(audio.playBgm(bgm));
+    unawaited(audio.playYardAmbience(ambience));
+  }
+
+  @override
+  void didPop() {}
+
+  @override
+  void didPush() {}
+
+  @override
+  void didPushNext() {}
+
+  @override
   void didHaveMemoryPressure() {
-    if (_memoryPressureConstrained) return;
     _precacheGeneration += 1;
     _precacheKey = null;
+    _memoryRecoveryTimer?.cancel();
     PaintingBinding.instance.imageCache.clear();
-    if (mounted) setState(() => _memoryPressureConstrained = true);
+    if (mounted && !_memoryPressureConstrained) {
+      setState(() => _memoryPressureConstrained = true);
+    }
+    _memoryRecoveryTimer = Timer(const Duration(minutes: 2), () {
+      if (!mounted) return;
+      _precacheKey = null;
+      setState(() => _memoryPressureConstrained = false);
+    });
   }
 
   @override
   void dispose() {
-    _cooldownTimer?.cancel();
     _presenceTimer?.cancel();
+    _memoryRecoveryTimer?.cancel();
     _precacheGeneration += 1;
     WidgetsBinding.instance.removeObserver(this);
+    petopiaRouteObserver.unsubscribe(this);
     super.dispose();
   }
 
@@ -148,11 +257,58 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
         if (mounted) setState(() {});
       });
     });
+    ref.listen<SaveWriteCue?>(saveWriteCueProvider, (previous, next) {
+      if (next == null || next.seq == previous?.seq) return;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        final recovered = next.status == SaveWriteStatus.recovered;
+        final messenger = ScaffoldMessenger.of(context);
+        messenger
+          ..clearSnackBars()
+          ..showSnackBar(
+            SnackBar(
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: const Color(0xFFFDF8EE),
+              margin: EdgeInsets.fromLTRB(
+                18,
+                0,
+                18,
+                MediaQuery.paddingOf(context).bottom + 124,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+                side: const BorderSide(color: PetopiaColors.line),
+              ),
+              content: Row(
+                children: [
+                  Icon(
+                    recovered
+                        ? Icons.save_rounded
+                        : Icons.warning_amber_rounded,
+                    color: recovered
+                        ? const Color(0xFF668B61)
+                        : PetopiaColors.actionAccent,
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Text(
+                      recovered ? '小院记录已经安全补上。' : '暂时无法写入记录，稍后会自动重试。',
+                      style: const TextStyle(
+                        color: PetopiaColors.ink,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+      });
+    });
     final notificationRequest = ref.watch(notificationOpenRequestProvider);
     final async = ref.watch(gameControllerProvider);
     return async.when(
-      loading: () =>
-          const Scaffold(body: Center(child: CircularProgressIndicator())),
+      loading: () => const _AppLaunchSurface(),
       error: (error, stackTrace) {
         logUiError('yard startup', error, stackTrace);
         return Scaffold(
@@ -164,6 +320,19 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
         );
       },
       data: (view) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (!mounted) return;
+          StartupMetrics.markFirstInteractiveFrame();
+          final lifecycleState =
+              WidgetsBinding.instance.lifecycleState ??
+              AppLifecycleState.resumed;
+          final controller = ref.read(gameControllerProvider.notifier);
+          if (lifecycleState == AppLifecycleState.resumed) {
+            unawaited(controller.onAppResumed());
+          } else {
+            unawaited(controller.onAppPaused());
+          }
+        });
         final pet = view.pet;
         final ctrl = ref.read(gameControllerProvider.notifier);
         final routeIsCurrent = ModalRoute.of(context)?.isCurrent ?? true;
@@ -177,9 +346,17 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
           weather: view.weather,
           themeId: view.activeThemeId,
         );
+        _currentYardBgm = yardBgm;
+        _currentYardAmbience = yardAmbience;
         if (routeIsCurrent) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (!mounted || !(ModalRoute.of(context)?.isCurrent ?? true)) {
+              return;
+            }
+            final lifecycleState =
+                WidgetsBinding.instance.lifecycleState ??
+                AppLifecycleState.resumed;
+            if (lifecycleState != AppLifecycleState.resumed) {
               return;
             }
             final audio = ref.read(audioServiceProvider);
@@ -200,159 +377,211 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
         final petAsset = pet == null
             ? null
             : PetArt.stage(pet.speciesId, pet.stage, variantId: pet.variantId);
-        final conserveMemory =
-            view.renderQuality == RenderQuality.low ||
-            _memoryPressureConstrained;
+        final conserveMemory = YardRenderPolicy.conserveMemory(
+          view.renderQuality,
+          memoryPressure: _memoryPressureConstrained,
+        );
         if (pet != null && petAsset != null) {
           _precacheCurrentPetAssets(
             context,
             pet,
             petAsset,
-            conserveMemory: conserveMemory,
+            preloadLimit: YardRenderPolicy.actionPreloadLimit(
+              view.renderQuality,
+              memoryPressure: _memoryPressureConstrained,
+            ),
+            preloadBudgetFraction: YardRenderPolicy.actionPreloadBudgetFraction(
+              view.renderQuality,
+              memoryPressure: _memoryPressureConstrained,
+            ),
+            priorityAction: switch (view.careTutorialStep) {
+              0 => 'pat',
+              1 => 'eat',
+              _ =>
+                view.preferredCareAction == null
+                    ? null
+                    : _interactionName(view.preferredCareAction!),
+            },
           );
         }
-        return Scaffold(
-          body: LayoutBuilder(
-            builder: (context, constraints) {
-              final size = Size(constraints.maxWidth, constraints.maxHeight);
-              final wideLayout = PetopiaAdaptive.useYardSidePanels(size);
-              final sceneScale = wideLayout ? 1.16 : 1.0;
-              final petWidth = PetopiaAdaptive.petStageWidth(size);
-              final petAlignment = Alignment(0, wideLayout ? 0.32 : 0.4);
-              return Stack(
-                fit: StackFit.expand,
-                children: [
-                  Image.asset(
-                    YardArt.themeBg(view.activeThemeId, wide: wideLayout),
-                    key: const ValueKey<String>('yard_background'),
-                    fit: BoxFit.cover,
-                    errorBuilder: (_, _, _) => Image.asset(
-                      YardArt.themeBg('', wide: wideLayout),
-                      fit: BoxFit.cover,
-                    ),
+        return AnnotatedRegion(
+          value: PetopiaSystemUi.yard(hour: hour),
+          child: Scaffold(
+            body: LayoutBuilder(
+              builder: (context, constraints) {
+                final size = Size(constraints.maxWidth, constraints.maxHeight);
+                final wideLayout = PetopiaAdaptive.useYardSidePanels(size);
+                final sceneScale = wideLayout ? 1.16 : 1.0;
+                final petWidth = PetopiaAdaptive.petStageWidth(size);
+                final petAlignment = Alignment(0, wideLayout ? 0.32 : 0.4);
+                final sourceWidth = wideLayout ? 2732 : 1290;
+                final backgroundCacheWidth = math.min(
+                  sourceWidth,
+                  math.max(
+                    1,
+                    (constraints.maxWidth *
+                            MediaQuery.devicePixelRatioOf(context))
+                        .ceil(),
                   ),
-                  if (!wideLayout)
-                    if (YardArt.luxuryDelta(view.luxuryStage) case final asset?)
-                      IgnorePointer(
-                        child: Image.asset(
-                          asset,
-                          key: ValueKey('yard_luxury_${view.luxuryStage}'),
-                          fit: BoxFit.cover,
-                          alignment: Alignment.center,
-                          errorBuilder: (_, _, _) => const SizedBox(),
-                        ),
+                );
+                return Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Image.asset(
+                      YardArt.themeBg(view.activeThemeId, wide: wideLayout),
+                      key: const ValueKey<String>('yard_background'),
+                      fit: BoxFit.cover,
+                      cacheWidth: backgroundCacheWidth,
+                      errorBuilder: (_, _, _) => Image.asset(
+                        YardArt.themeBg('', wide: wideLayout),
+                        fit: BoxFit.cover,
+                        cacheWidth: backgroundCacheWidth,
                       ),
-                  // 摆件中景层（渲染在宠物之下）：自定义 slots 为空时使用默认布置。
-                  for (final decor in _visibleDecor(
-                    view.decorSlots,
-                    view.luxuryStage,
-                    wideLayout: wideLayout,
-                  ))
-                    _YardDecor(
-                      imageKey: ValueKey<String>(
-                        'yard_decor_${view.luxuryStage}_${decor.decorId}',
-                      ),
-                      align: decor.anchor.align,
-                      decorId: decor.decorId,
-                      width: decor.anchor.width * sceneScale,
                     ),
-                  if (view.activeVisitor != null)
-                    Builder(
-                      builder: (context) {
-                        final visitor = view.activeVisitor!;
-                        final placement = _visitorYardPlacement(visitor);
-                        final rect = PetopiaAdaptive.yardSideActorRect(
-                          sceneSize: size,
-                          petWidth: petWidth,
-                          petAlignment: petAlignment,
-                          preferredAlignment: placement.alignment,
-                          preferredSize: placement.size * sceneScale,
-                        );
-                        return Positioned.fromRect(
-                          rect: rect,
-                          child: _YardVisitor(
-                            visitor: visitor,
-                            size: rect.width,
-                            onTap: () async {
-                              await showVisitorArrivalDialog(
-                                context,
-                                ctrl,
-                                visitor,
-                              );
-                              ctrl.markVisitorArrivalSeen(visitor.id);
-                            },
+                    if (!wideLayout)
+                      if (YardArt.luxuryDelta(view.luxuryStage)
+                          case final asset?)
+                        IgnorePointer(
+                          child: Image.asset(
+                            asset,
+                            key: ValueKey('yard_luxury_${view.luxuryStage}'),
+                            fit: BoxFit.cover,
+                            alignment: Alignment.center,
+                            errorBuilder: (_, _, _) => const SizedBox(),
                           ),
-                        );
-                      },
-                    ),
-                  if (petAsset != null)
-                    Align(
-                      alignment: petAlignment,
-                      child: PetSprite(
-                        assetPath: petAsset,
-                        width: petWidth,
-                        speciesId: pet!.speciesId,
-                        variantId: pet.variantId,
-                        stage: pet.stage,
-                        cue: ref.watch(petActionCueProvider),
-                        semanticLabel: '摸摸${pet.name}',
-                        onTap: () async {
-                          if (await ctrl.pat()) _fireCue(ref, 'pat');
+                        ),
+                    // 摆件中景层（渲染在宠物之下）：自定义 slots 为空时使用默认布置。
+                    for (final decor in _visibleDecor(
+                      view.decorSlots,
+                      view.luxuryStage,
+                      wideLayout: wideLayout,
+                    ))
+                      _YardDecor(
+                        imageKey: ValueKey<String>(
+                          'yard_decor_${view.luxuryStage}_${decor.decorId}',
+                        ),
+                        align: decor.anchor.align,
+                        decorId: decor.decorId,
+                        width: decor.anchor.width * sceneScale,
+                      ),
+                    if (view.activeVisitor != null)
+                      Builder(
+                        builder: (context) {
+                          final visitor = view.activeVisitor!;
+                          final placement = _visitorYardPlacement(visitor);
+                          final rect = PetopiaAdaptive.yardSideActorRect(
+                            sceneSize: size,
+                            petWidth: petWidth,
+                            petAlignment: petAlignment,
+                            preferredAlignment: placement.alignment,
+                            preferredSize: placement.size * sceneScale,
+                          );
+                          return Positioned.fromRect(
+                            rect: rect,
+                            child: _YardVisitor(
+                              visitor: visitor,
+                              size: rect.width,
+                              reduceEffects: conserveMemory,
+                              onTap: () async {
+                                await showVisitorArrivalDialog(
+                                  context,
+                                  ctrl,
+                                  visitor,
+                                );
+                                ctrl.markVisitorArrivalSeen(visitor.id);
+                              },
+                            ),
+                          );
                         },
                       ),
-                    ),
-                  if (view.revisitor != null)
-                    Builder(
-                      builder: (context) {
-                        final revisitor = view.revisitor!;
-                        final visitorUsesRightLane =
-                            view.activeVisitor != null &&
-                            _visitorYardPlacement(
-                                  view.activeVisitor!,
-                                ).alignment.x >
-                                0;
-                        final revisitorAlignment = Alignment(
-                          visitorUsesRightLane ? -0.56 : 0.56,
-                          0.46,
-                        );
-                        final rect = PetopiaAdaptive.yardSideActorRect(
-                          sceneSize: size,
-                          petWidth: petWidth,
-                          petAlignment: petAlignment,
-                          preferredAlignment: revisitorAlignment,
-                          preferredSize: petWidth * 0.48,
-                        );
-                        return Positioned.fromRect(
-                          rect: rect,
-                          child: GestureDetector(
-                            onTap: () async {
-                              await _showRevisitorDialog(ctrl, revisitor);
-                              ctrl.markRevisitorArrivalSeen(revisitor.id);
-                            },
-                            child: Image.asset(
-                              PetArt.stage(
-                                revisitor.speciesId,
-                                PetStage.d,
-                                variantId: revisitor.variantId,
+                    if (petAsset != null)
+                      Align(
+                        alignment: petAlignment,
+                        child: PetSprite(
+                          key: const ValueKey<String>('yard_pet_sprite'),
+                          assetPath: petAsset,
+                          width: petWidth,
+                          speciesId: pet!.speciesId,
+                          variantId: pet.variantId,
+                          stage: pet.stage,
+                          reduceEffects: conserveMemory,
+                          cue: ref.watch(petActionCueProvider),
+                          semanticLabel: '摸摸${pet.name}',
+                          onTap: () async {
+                            if (await ctrl.pat()) {
+                              _fireCue(ref, 'pat');
+                              if (context.mounted) {
+                                _showCareFeedback(
+                                  context,
+                                  ctrl.takeCareFeedback(),
+                                );
+                              }
+                            }
+                          },
+                        ),
+                      ),
+                    if (view.revisitor != null)
+                      Builder(
+                        builder: (context) {
+                          final revisitor = view.revisitor!;
+                          final visitorUsesRightLane =
+                              view.activeVisitor != null &&
+                              _visitorYardPlacement(
+                                    view.activeVisitor!,
+                                  ).alignment.x >
+                                  0;
+                          final revisitorAlignment = Alignment(
+                            visitorUsesRightLane ? -0.56 : 0.56,
+                            0.46,
+                          );
+                          final rect = PetopiaAdaptive.yardSideActorRect(
+                            sceneSize: size,
+                            petWidth: petWidth,
+                            petAlignment: petAlignment,
+                            preferredAlignment: revisitorAlignment,
+                            preferredSize: petWidth * 0.48,
+                          );
+                          return Positioned.fromRect(
+                            rect: rect,
+                            child: Semantics(
+                              key: const ValueKey<String>('active_revisitor'),
+                              button: true,
+                              label: '回访伙伴 ${revisitor.name}，点按查看近况',
+                              child: Material(
+                                type: MaterialType.transparency,
+                                child: InkResponse(
+                                  radius: rect.width * 0.5,
+                                  onTap: () async {
+                                    await _showRevisitorDialog(ctrl, revisitor);
+                                    ctrl.markRevisitorArrivalSeen(revisitor.id);
+                                  },
+                                  child: Image.asset(
+                                    PetArt.stage(
+                                      revisitor.speciesId,
+                                      PetStage.d,
+                                      variantId: revisitor.variantId,
+                                    ),
+                                    width: rect.width,
+                                    fit: BoxFit.contain,
+                                  ),
+                                ),
                               ),
-                              width: rect.width,
-                              fit: BoxFit.contain,
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
+                    Positioned.fill(
+                      child: _YardAtmosphere(
+                        weather: view.weather,
+                        hour: DateTime.now().hour,
+                        reduceEffects: conserveMemory,
+                      ),
                     ),
-                  Positioned.fill(
-                    child: _YardAtmosphere(
-                      weather: view.weather,
-                      hour: DateTime.now().hour,
-                      reduceEffects: conserveMemory,
-                    ),
-                  ),
-                  _YardOverlay(view: view, ref: ref, wideLayout: wideLayout),
-                ],
-              );
-            },
+                    _YardOverlay(view: view, ref: ref, wideLayout: wideLayout),
+                  ],
+                );
+              },
+            ),
           ),
         );
       },
@@ -450,6 +679,10 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
             context,
             item,
             arrivalCount: postcards.length,
+            useBackdropBlur: YardRenderPolicy.useBackdropBlur(
+              view.renderQuality,
+              memoryPressure: _memoryPressureConstrained,
+            ),
           );
         });
         return;
@@ -522,7 +755,14 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
         if (match != null) {
           _shownArrivalPostcards.add(match.id);
           ctrl.trackPostcardRead(match.id);
-          await showPostcardArrivalDialog(context, match);
+          await showPostcardArrivalDialog(
+            context,
+            match,
+            useBackdropBlur: YardRenderPolicy.useBackdropBlur(
+              view.renderQuality,
+              memoryPressure: _memoryPressureConstrained,
+            ),
+          );
         } else {
           await Navigator.of(
             context,
@@ -602,10 +842,14 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
   Future<void> _showOfflineWelcome(OfflineWelcomeView welcome) async {
     await showGeneralDialog<void>(
       context: context,
+      requestFocus: true,
       barrierDismissible: true,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       barrierColor: Colors.black.withValues(alpha: 0.18),
-      transitionDuration: const Duration(milliseconds: 360),
+      transitionDuration: PetopiaMotion.duration(
+        context,
+        const Duration(milliseconds: 360),
+      ),
       pageBuilder: (context, _, _) => Material(
         type: MaterialType.transparency,
         child: SafeArea(
@@ -658,6 +902,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
         actionsAlignment: MainAxisAlignment.center,
         actions: [
           FilledButton(
+            autofocus: true,
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('回到小院'),
           ),
@@ -716,10 +961,14 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
     unawaited(ref.read(audioServiceProvider).visitorVoice(visitor.id));
     return showGeneralDialog<void>(
       context: context,
+      requestFocus: true,
       barrierDismissible: true,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       barrierColor: Colors.black.withValues(alpha: 0.22),
-      transitionDuration: const Duration(milliseconds: 320),
+      transitionDuration: PetopiaMotion.duration(
+        context,
+        const Duration(milliseconds: 320),
+      ),
       pageBuilder: (context, _, _) {
         return Material(
           type: MaterialType.transparency,
@@ -727,9 +976,15 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
             child: Center(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(22),
-                child: _VisitorArrivalCard(
-                  visitor: visitor,
-                  onInteract: () => ctrl.interactVisitor(visitor.id),
+                child: Semantics(
+                  scopesRoute: true,
+                  namesRoute: true,
+                  label: '${visitor.name}来到院子',
+                  explicitChildNodes: true,
+                  child: _VisitorArrivalCard(
+                    visitor: visitor,
+                    onInteract: () => ctrl.interactVisitor(visitor.id),
+                  ),
                 ),
               ),
             ),
@@ -756,39 +1011,125 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
     BuildContext context,
     PetView pet,
     String staticAsset, {
-    required bool conserveMemory,
+    required int preloadLimit,
+    required double preloadBudgetFraction,
+    required String? priorityAction,
   }) {
     final key =
         '${pet.speciesId}:${pet.variantId}:${pet.stage}:$staticAsset:'
-        '$conserveMemory';
+        '$preloadLimit:$preloadBudgetFraction:$priorityAction';
     if (_precacheKey == key) return;
     _precacheKey = key;
     final generation = ++_precacheGeneration;
 
-    final assets = [
-      staticAsset,
-      if (!conserveMemory &&
-          PetArt.hasExactAction(variantId: pet.variantId, stage: pet.stage))
-        PetArt.actionSheet(pet.speciesId, 'pat'),
+    final hasExactActions =
+        preloadLimit > 0 &&
+        PetArt.hasExactAction(variantId: pet.variantId, stage: pet.stage);
+    if (!hasExactActions) return;
+    final orderedActions = <String>[
+      ?priorityAction,
+      for (final action in PetArt.interactionNames)
+        if (action != priorityAction) action,
+    ];
+    final assets = <String>[
+      for (final action in orderedActions)
+        PetArt.actionSheet(pet.speciesId, action),
     ];
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted || generation != _precacheGeneration) return;
-      unawaited(_precachePetAssets(assets, generation));
+      unawaited(
+        _precachePetAssets(
+          assets,
+          generation,
+          preloadLimit: preloadLimit,
+          preloadBudgetFraction: preloadBudgetFraction,
+        ),
+      );
     });
   }
 
-  Future<void> _precachePetAssets(List<String> assets, int generation) async {
+  Future<void> _precachePetAssets(
+    List<String> assets,
+    int generation, {
+    required int preloadLimit,
+    required double preloadBudgetFraction,
+  }) async {
+    // Let the full-bleed yard and current static pet settle before decoding
+    // optional 4096px action sheets. Memory pressure cancels this queue.
+    await Future<void>.delayed(const Duration(milliseconds: 700));
     for (var index = 0; index < assets.length; index++) {
       if (!mounted || generation != _precacheGeneration) return;
+      final cache = PaintingBinding.instance.imageCache;
+      const projectedSheetBytes = 4096 * 512 * 4;
+      final preloadBudget = (cache.maximumSizeBytes * preloadBudgetFraction)
+          .round();
+      if (index >= preloadLimit ||
+          (index > 0 &&
+              cache.currentSizeBytes + projectedSheetBytes > preloadBudget)) {
+        return;
+      }
       try {
         await precacheImage(AssetImage(assets[index]), context);
       } catch (_) {
         // PetSprite keeps its static fallback when an optional sheet is absent.
       }
       if (index < assets.length - 1) {
-        await Future<void>.delayed(const Duration(milliseconds: 90));
+        await Future<void>.delayed(const Duration(milliseconds: 180));
       }
     }
+  }
+}
+
+class _AppLaunchSurface extends StatelessWidget {
+  const _AppLaunchSurface();
+
+  @override
+  Widget build(BuildContext context) {
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    return AnnotatedRegion(
+      value: PetopiaSystemUi.lightSurface(),
+      child: Scaffold(
+        backgroundColor: PetopiaColors.background,
+        body: Semantics(
+          liveRegion: true,
+          label: '小院正在醒来',
+          child: ExcludeSemantics(
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    'assets/runtime/pets/cat/pet_cat_var01_stageA.webp',
+                    width: 132,
+                    height: 132,
+                    fit: BoxFit.contain,
+                  ),
+                  const SizedBox(height: 14),
+                  if (reduceMotion)
+                    const SizedBox.square(
+                      dimension: 8,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: PetopiaColors.actionAccent,
+                          shape: BoxShape.circle,
+                        ),
+                      ),
+                    )
+                  else
+                    const SizedBox.square(
+                      dimension: 18,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: PetopiaColors.actionAccent,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -969,6 +1310,8 @@ class _YardOverlay extends StatelessWidget {
                                   ref: ref,
                                   cooldown: view.cooldownSec,
                                   dailyMaxed: view.dailyMaxed,
+                                  preferredAction: view.preferredCareAction,
+                                  careContented: view.careContented,
                                   careTutorialStep: view.careTutorialStep,
                                   onTutorialDone: ref
                                       .read(gameControllerProvider.notifier)
@@ -1061,7 +1404,10 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
               IconButton(
                 tooltip: '关闭',
                 onPressed: () => Navigator.of(context).pop(),
-                icon: const Icon(Icons.close_rounded, color: Color(0xFF8A7A6A)),
+                icon: const Icon(
+                  Icons.close_rounded,
+                  color: PetopiaColors.mutedText,
+                ),
               ),
             ],
           ),
@@ -1098,7 +1444,7 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
           Text(
             _visitorRarityLabel(visitor.rarity),
             style: const TextStyle(
-              color: Color(0xFFE8A15C),
+              color: PetopiaColors.actionAccent,
               fontSize: 13,
               fontWeight: FontWeight.w800,
             ),
@@ -1142,8 +1488,9 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
           SizedBox(
             width: double.infinity,
             child: FilledButton(
+              autofocus: true,
               style: FilledButton.styleFrom(
-                backgroundColor: const Color(0xFFE8A15C),
+                backgroundColor: PetopiaColors.actionAccent,
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 13),
                 shape: RoundedRectangleBorder(
@@ -1342,7 +1689,10 @@ class _EventDialogState extends State<_EventDialog> {
                         ),
                         const SizedBox(height: 12),
                         AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 260),
+                          duration: PetopiaMotion.duration(
+                            context,
+                            const Duration(milliseconds: 260),
+                          ),
                           child: Text(
                             selected?.resultScript ?? event.script,
                             key: ValueKey(_selectedChoice),
@@ -1615,16 +1965,31 @@ class _YardAtmosphereState extends State<_YardAtmosphere>
       vsync: this,
       duration: const Duration(seconds: 7),
     );
-    if (widget.weather == Weather.thunder) _thunder.repeat();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _syncThunder();
   }
 
   @override
   void didUpdateWidget(covariant _YardAtmosphere oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.weather == Weather.thunder && !_thunder.isAnimating) {
+    _syncThunder();
+  }
+
+  void _syncThunder() {
+    final shouldAnimate =
+        widget.weather == Weather.thunder &&
+        !widget.reduceEffects &&
+        !MediaQuery.disableAnimationsOf(context) &&
+        TickerMode.valuesOf(context).enabled;
+    if (shouldAnimate && !_thunder.isAnimating) {
       _thunder.repeat();
-    } else if (widget.weather != Weather.thunder && _thunder.isAnimating) {
+    } else if (!shouldAnimate && _thunder.isAnimating) {
       _thunder.stop();
+      _thunder.value = 0;
     }
   }
 
@@ -1833,10 +2198,12 @@ _VisitorMotionProfile _visitorMotionProfile(String id) {
 class _YardVisitor extends StatefulWidget {
   final VisitorPresenceView visitor;
   final double size;
+  final bool reduceEffects;
   final VoidCallback onTap;
   const _YardVisitor({
     required this.visitor,
     required this.size,
+    required this.reduceEffects,
     required this.onTap,
   });
 
@@ -1849,12 +2216,20 @@ class _YardVisitorState extends State<_YardVisitor>
   late final AnimationController _motion = AnimationController(
     vsync: this,
     duration: _visitorMotionProfile(widget.visitor.id).driftDuration,
-  )..repeat();
+  );
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (MediaQuery.disableAnimationsOf(context)) {
+    _syncMotion();
+  }
+
+  void _syncMotion() {
+    final shouldAnimate =
+        !widget.reduceEffects &&
+        !MediaQuery.disableAnimationsOf(context) &&
+        TickerMode.valuesOf(context).enabled;
+    if (!shouldAnimate) {
       _motion.stop();
       _motion.value = 0;
     } else if (!_motion.isAnimating) {
@@ -1865,9 +2240,10 @@ class _YardVisitorState extends State<_YardVisitor>
   @override
   void didUpdateWidget(_YardVisitor oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.visitor.id == widget.visitor.id) return;
-    _motion.duration = _visitorMotionProfile(widget.visitor.id).driftDuration;
-    if (!MediaQuery.disableAnimationsOf(context)) _motion.repeat();
+    if (oldWidget.visitor.id != widget.visitor.id) {
+      _motion.duration = _visitorMotionProfile(widget.visitor.id).driftDuration;
+    }
+    _syncMotion();
   }
 
   @override
@@ -1880,7 +2256,8 @@ class _YardVisitorState extends State<_YardVisitor>
   Widget build(BuildContext context) {
     final visitor = widget.visitor;
     final profile = _visitorMotionProfile(visitor.id);
-    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final reduceMotion =
+        widget.reduceEffects || MediaQuery.disableAnimationsOf(context);
     final sprite = SpriteSheetPlayer(
       assetPath: visitor.yardAsset,
       size: widget.size,
@@ -1893,39 +2270,42 @@ class _YardVisitorState extends State<_YardVisitor>
       key: const ValueKey<String>('active_visitor'),
       button: true,
       label: '来客 ${visitor.name}，点按查看互动',
-      child: GestureDetector(
-        onTap: widget.onTap,
-        behavior: HitTestBehavior.opaque,
-        child: reduceMotion
-            ? Opacity(opacity: 0.94, child: sprite)
-            : RepaintBoundary(
-                child: AnimatedBuilder(
-                  animation: _motion,
-                  child: sprite,
-                  builder: (context, child) {
-                    final phase = math.sin(_motion.value * math.pi * 2);
-                    final lift = profile.hop
-                        ? -phase.abs() * profile.dy
-                        : phase * profile.dy;
-                    final scale = 1 + phase.abs() * profile.scale;
-                    return Opacity(
-                      opacity: 0.94 - phase.abs() * profile.opacityPulse,
-                      child: Transform.translate(
-                        offset: Offset(phase * profile.dx, lift),
-                        child: Transform.rotate(
-                          angle: phase * profile.angle,
-                          alignment: Alignment.bottomCenter,
-                          child: Transform.scale(
-                            scale: scale,
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkResponse(
+          onTap: widget.onTap,
+          radius: widget.size * 0.5,
+          child: reduceMotion
+              ? Opacity(opacity: 0.94, child: sprite)
+              : RepaintBoundary(
+                  child: AnimatedBuilder(
+                    animation: _motion,
+                    child: sprite,
+                    builder: (context, child) {
+                      final phase = math.sin(_motion.value * math.pi * 2);
+                      final lift = profile.hop
+                          ? -phase.abs() * profile.dy
+                          : phase * profile.dy;
+                      final scale = 1 + phase.abs() * profile.scale;
+                      return Opacity(
+                        opacity: 0.94 - phase.abs() * profile.opacityPulse,
+                        child: Transform.translate(
+                          offset: Offset(phase * profile.dx, lift),
+                          child: Transform.rotate(
+                            angle: phase * profile.angle,
                             alignment: Alignment.bottomCenter,
-                            child: child,
+                            child: Transform.scale(
+                              scale: scale,
+                              alignment: Alignment.bottomCenter,
+                              child: child,
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
+        ),
       ),
     );
   }
@@ -2006,7 +2386,10 @@ class _TodayYardRow extends StatelessWidget {
         child: Row(
           children: [
             AnimatedContainer(
-              duration: const Duration(milliseconds: 220),
+              duration: PetopiaMotion.duration(
+                context,
+                const Duration(milliseconds: 220),
+              ),
               width: 28,
               height: 28,
               decoration: BoxDecoration(
@@ -2031,7 +2414,7 @@ class _TodayYardRow extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: item.completed
-                      ? const Color(0xFF8A7A6A)
+                      ? PetopiaColors.mutedText
                       : const Color(0xFF604B3E),
                   fontSize: 12.5,
                   fontWeight: item.completed
@@ -2263,7 +2646,10 @@ class _AdoptCta extends StatelessWidget {
                   SizedBox(height: 3),
                   Text(
                     '开启下一段安静的陪伴',
-                    style: TextStyle(fontSize: 12, color: Color(0xFF8A7A6A)),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: PetopiaColors.mutedText,
+                    ),
                   ),
                 ],
               ),
@@ -2276,7 +2662,7 @@ class _AdoptCta extends StatelessWidget {
               icon: const Icon(Icons.add_rounded, size: 18),
               label: const Text('领养'),
               style: FilledButton.styleFrom(
-                minimumSize: const Size(88, 42),
+                minimumSize: const Size(88, 48),
                 padding: const EdgeInsets.symmetric(horizontal: 14),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -2422,22 +2808,25 @@ class _WalletButton extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(8),
           onTap: () => _openHomeTarget(context, _HomeMenuTarget.shop),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 7),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const WarmfluffIcon(size: 18),
-                const SizedBox(width: 3),
-                Text(
-                  '$wallet',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFFD99048),
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 48),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const WarmfluffIcon(size: 18),
+                  const SizedBox(width: 3),
+                  Text(
+                    '$wallet',
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFFD99048),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -2543,7 +2932,7 @@ class _HomeMenuButton extends ConsumerWidget {
       key: const ValueKey<String>('home_menu'),
       tooltip: '打开手账',
       style: IconButton.styleFrom(
-        fixedSize: const Size(38, 38),
+        fixedSize: const Size(48, 48),
         padding: EdgeInsets.zero,
         backgroundColor: const Color(0xFFFFF1DF).withValues(alpha: 0.90),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -2566,10 +2955,14 @@ class _HomeMenuButton extends ConsumerWidget {
   Future<_HomeMenuTarget?> _showAdaptiveNotebook(BuildContext context) {
     return showGeneralDialog<_HomeMenuTarget>(
       context: context,
+      requestFocus: true,
       barrierDismissible: true,
       barrierLabel: '关闭手账',
       barrierColor: Colors.black.withValues(alpha: 0.22),
-      transitionDuration: const Duration(milliseconds: 260),
+      transitionDuration: PetopiaMotion.duration(
+        context,
+        const Duration(milliseconds: 260),
+      ),
       pageBuilder: (context, animation, secondaryAnimation) =>
           _AdaptiveNotebookDialog(view: view),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
@@ -2707,6 +3100,10 @@ class _HomeMenuSheet extends StatelessWidget {
                   ],
                   if (view.activeVisitor != null) ...[
                     _NotebookVisitorCard(visitor: view.activeVisitor!),
+                    const SizedBox(height: 10),
+                  ],
+                  if (view.recentMemories.isNotEmpty) ...[
+                    _NotebookMemoryCard(memories: view.recentMemories),
                     const SizedBox(height: 16),
                   ],
                   const Text(
@@ -2886,6 +3283,80 @@ class _NotebookVisitorCard extends StatelessWidget {
   }
 }
 
+class _NotebookMemoryCard extends StatelessWidget {
+  final List<YardMemoryView> memories;
+  const _NotebookMemoryCard({required this.memories});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(13, 11, 13, 8),
+      decoration: BoxDecoration(
+        color: const Color(0xFFF9F4EA),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: const Color(0xFFE7DDCF)),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Row(
+            children: [
+              Icon(
+                Icons.bookmark_added_rounded,
+                size: 19,
+                color: Color(0xFF9B846F),
+              ),
+              SizedBox(width: 7),
+              Text(
+                '院子记住的事',
+                style: TextStyle(
+                  color: Color(0xFF604B3E),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 13,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          for (final memory in memories.take(3))
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Icon(
+                    switch (memory.type) {
+                      'growth' => Icons.spa_rounded,
+                      'visitor' => Icons.emoji_nature_rounded,
+                      'travel' => Icons.near_me_rounded,
+                      _ => Icons.circle,
+                    },
+                    size: 15,
+                    color: const Color(0xFFA68E77),
+                  ),
+                  const SizedBox(width: 7),
+                  Expanded(
+                    child: Text(
+                      memory.text,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        color: Color(0xFF77675A),
+                        fontSize: 12,
+                        height: 1.35,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
 class _HomeFeatureTile extends StatelessWidget {
   final ({
     _HomeMenuTarget target,
@@ -2943,7 +3414,7 @@ class _YardDecorLayoutScreen extends ConsumerWidget {
   const _YardDecorLayoutScreen();
 
   static const _ink = Color(0xFF6B5445);
-  static const _muted = Color(0xFF8A7A6A);
+  static const _muted = PetopiaColors.mutedText;
   static const _paper = Color(0xFFFFFDF7);
   static const _bg = Color(0xFFF3E9D6);
 
@@ -3121,68 +3592,160 @@ class _DecorChoiceButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 140),
-        width: 86,
-        height: 92,
-        margin: const EdgeInsets.only(right: 10),
-        padding: const EdgeInsets.all(8),
-        decoration: BoxDecoration(
-          color: selected ? const Color(0xFFFFE8BF) : const Color(0xFFFFF7EA),
+    return Semantics(
+      button: true,
+      selected: selected,
+      label: item.name,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
           borderRadius: BorderRadius.circular(14),
-          border: Border.all(
-            color: selected ? const Color(0xFFE8A15C) : const Color(0xFFEDE4D3),
-            width: selected ? 2 : 1,
-          ),
-        ),
-        child: Column(
-          children: [
-            Expanded(
-              child: Image.asset(
-                YardArt.decor(item.decorId),
-                fit: BoxFit.contain,
-                errorBuilder: (_, _, _) => const Icon(
-                  Icons.image_not_supported_rounded,
-                  color: Color(0xFF8A7A6A),
-                ),
+          onTap: onTap,
+          child: AnimatedContainer(
+            duration: PetopiaMotion.duration(
+              context,
+              const Duration(milliseconds: 140),
+            ),
+            width: 86,
+            height: 92,
+            margin: const EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: selected
+                  ? const Color(0xFFFFE8BF)
+                  : const Color(0xFFFFF7EA),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: selected
+                    ? const Color(0xFFE8A15C)
+                    : const Color(0xFFEDE4D3),
+                width: selected ? 2 : 1,
               ),
             ),
-            const SizedBox(height: 4),
-            Text(
-              item.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 11, color: Color(0xFF6B5445)),
+            child: Column(
+              children: [
+                Expanded(
+                  child: Image.asset(
+                    YardArt.decor(item.decorId),
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, _, _) => const Icon(
+                      Icons.image_not_supported_rounded,
+                      color: PetopiaColors.mutedText,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  item.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 11,
+                    color: Color(0xFF6B5445),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-class _ActionBar extends StatelessWidget {
+class _ActionBar extends StatefulWidget {
   final WidgetRef ref;
   final Map<CareAction, int> cooldown;
   final Set<CareAction> dailyMaxed;
+  final CareAction? preferredAction;
+  final bool careContented;
   final int careTutorialStep;
   final VoidCallback onTutorialDone;
   const _ActionBar({
     required this.ref,
     required this.cooldown,
     required this.dailyMaxed,
+    required this.preferredAction,
+    required this.careContented,
     required this.careTutorialStep,
     required this.onTutorialDone,
   });
 
   @override
+  State<_ActionBar> createState() => _ActionBarState();
+}
+
+class _ActionBarState extends State<_ActionBar> {
+  Timer? _cooldownTimer;
+  late Map<CareAction, int> _remaining;
+
+  @override
+  void initState() {
+    super.initState();
+    _remaining = Map<CareAction, int>.from(widget.cooldown);
+    _updateTimer();
+  }
+
+  @override
+  void didUpdateWidget(covariant _ActionBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (!_sameCooldowns(oldWidget.cooldown, widget.cooldown)) {
+      _remaining = Map<CareAction, int>.from(widget.cooldown);
+      _updateTimer();
+    }
+  }
+
+  bool _sameCooldowns(Map<CareAction, int> left, Map<CareAction, int> right) {
+    if (left.length != right.length) return false;
+    for (final entry in left.entries) {
+      if (right[entry.key] != entry.value) return false;
+    }
+    return true;
+  }
+
+  void _updateTimer() {
+    final hasCooldown = _remaining.values.any((seconds) => seconds > 0);
+    if (!hasCooldown) {
+      _cooldownTimer?.cancel();
+      _cooldownTimer = null;
+      return;
+    }
+    _cooldownTimer ??= Timer.periodic(const Duration(seconds: 1), (_) {
+      if (!mounted) return;
+      var hasMore = false;
+      setState(() {
+        for (final action in CareAction.values) {
+          final seconds = _remaining[action] ?? 0;
+          if (seconds <= 0) continue;
+          final next = seconds - 1;
+          _remaining[action] = next;
+          hasMore = hasMore || next > 0;
+        }
+      });
+      if (!hasMore) {
+        _cooldownTimer?.cancel();
+        _cooldownTimer = null;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _cooldownTimer?.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final ctrl = ref.read(gameControllerProvider.notifier);
+    final ctrl = widget.ref.read(gameControllerProvider.notifier);
     // 动作按钮：调用照料 + 触发对应序列帧动画（feed→eat/toy→play）。
     Future<void> run(Future<bool> Function() care, String pose) async {
-      if (await care()) _fireCue(ref, pose);
+      if (await care()) {
+        _fireCue(widget.ref, pose);
+        if (context.mounted) {
+          _showCareFeedback(context, ctrl.takeCareFeedback());
+        }
+      }
     }
 
     final actions = [
@@ -3222,14 +3785,17 @@ class _ActionBar extends StatelessWidget {
           iconName: iconName,
           label: label,
           exp: exp,
-          cooldownSec: cooldown[action] ?? 0,
-          dailyMaxed: dailyMaxed.contains(action),
+          cooldownSec: _remaining[action] ?? 0,
+          dailyMaxed: widget.dailyMaxed.contains(action),
+          preferred:
+              widget.preferredAction == action && widget.careTutorialStep >= 3,
+          contented: widget.careContented,
           highlighted:
-              (careTutorialStep == 0 && action == CareAction.pat) ||
-              (careTutorialStep == 1 && action == CareAction.feed),
-          highlightLabel: careTutorialStep == 0
+              (widget.careTutorialStep == 0 && action == CareAction.pat) ||
+              (widget.careTutorialStep == 1 && action == CareAction.feed),
+          highlightLabel: widget.careTutorialStep == 0
               ? '先摸摸头'
-              : careTutorialStep == 1
+              : widget.careTutorialStep == 1
               ? '再喂点东西'
               : null,
           onTap: onTap,
@@ -3273,8 +3839,8 @@ class _ActionBar extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (careTutorialStep == 2) ...[
-            _MailboxTutorialRow(onDone: onTutorialDone),
+          if (widget.careTutorialStep == 2) ...[
+            _MailboxTutorialRow(onDone: widget.onTutorialDone),
             const Divider(height: 9, color: Color(0xFFE9DECD)),
           ],
           actionLayout,
@@ -3313,9 +3879,8 @@ class _MailboxTutorialRow extends StatelessWidget {
         TextButton(
           onPressed: onDone,
           style: TextButton.styleFrom(
-            minimumSize: const Size(58, 34),
+            minimumSize: const Size(64, 48),
             padding: const EdgeInsets.symmetric(horizontal: 8),
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           ),
           child: const Text('记住啦'),
         ),
@@ -3330,6 +3895,8 @@ class _ActionButton extends StatelessWidget {
   final int exp;
   final int cooldownSec;
   final bool dailyMaxed;
+  final bool preferred;
+  final bool contented;
   final bool highlighted;
   final String? highlightLabel;
   final VoidCallback onTap;
@@ -3340,6 +3907,8 @@ class _ActionButton extends StatelessWidget {
     required this.exp,
     required this.cooldownSec,
     required this.dailyMaxed,
+    this.preferred = false,
+    this.contented = false,
     this.highlighted = false,
     this.highlightLabel,
     required this.onTap,
@@ -3357,100 +3926,132 @@ class _ActionButton extends StatelessWidget {
           ? '$label，今日次数已完成'
           : onCd
           ? '$label，${_formatCooldown(cooldownSec)}后可用'
+          : preferred
+          ? '$label，今天更合它心意，增加$exp点经验'
+          : contented
+          ? '$label，今天已经满足，仍可继续陪伴'
           : '$label，增加$exp点经验',
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(8),
-          onTap: disabled ? null : onTap,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 1),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                AnimatedContainer(
-                  duration: const Duration(milliseconds: 180),
-                  width: 46,
-                  height: 46,
-                  padding: const EdgeInsets.all(7),
-                  decoration: BoxDecoration(
-                    color: highlighted && !disabled
-                        ? const Color(0xFFFFE2B8)
-                        : disabled
-                        ? const Color(0xFFF0EDE8).withValues(alpha: 0.92)
-                        : const Color(0xFFFFF6E6),
-                    shape: BoxShape.circle,
-                    border: highlighted && !disabled
-                        ? Border.all(color: const Color(0xFFE8A15C), width: 2)
-                        : null,
-                    boxShadow: highlighted && !disabled
-                        ? [
-                            BoxShadow(
-                              color: const Color(
-                                0xFFE8A15C,
-                              ).withValues(alpha: 0.28),
-                              blurRadius: 10,
-                              spreadRadius: 2,
-                            ),
-                          ]
-                        : null,
+      child: ExcludeSemantics(
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(8),
+            onTap: disabled ? null : onTap,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 1),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Stack(
+                    clipBehavior: Clip.none,
+                    children: [
+                      AnimatedContainer(
+                        duration: PetopiaMotion.duration(
+                          context,
+                          const Duration(milliseconds: 180),
+                        ),
+                        width: 46,
+                        height: 46,
+                        padding: const EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                          color: highlighted && !disabled
+                              ? const Color(0xFFFFE2B8)
+                              : disabled
+                              ? const Color(0xFFF0EDE8).withValues(alpha: 0.92)
+                              : const Color(0xFFFFF6E6),
+                          shape: BoxShape.circle,
+                          border: highlighted && !disabled
+                              ? Border.all(
+                                  color: const Color(0xFFE8A15C),
+                                  width: 2,
+                                )
+                              : preferred && !disabled
+                              ? Border.all(
+                                  color: const Color(0xFFA7C4A0),
+                                  width: 1.5,
+                                )
+                              : null,
+                          boxShadow: highlighted && !disabled
+                              ? [
+                                  BoxShadow(
+                                    color: const Color(
+                                      0xFFE8A15C,
+                                    ).withValues(alpha: 0.28),
+                                    blurRadius: 10,
+                                    spreadRadius: 2,
+                                  ),
+                                ]
+                              : null,
+                        ),
+                        child: disabled
+                            ? ColorFiltered(
+                                colorFilter: const ColorFilter.matrix(<double>[
+                                  0.2126,
+                                  0.7152,
+                                  0.0722,
+                                  0,
+                                  0,
+                                  0.2126,
+                                  0.7152,
+                                  0.0722,
+                                  0,
+                                  0,
+                                  0.2126,
+                                  0.7152,
+                                  0.0722,
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                  0,
+                                  1,
+                                  0,
+                                ]),
+                                child: Opacity(opacity: 0.48, child: icon),
+                              )
+                            : icon,
+                      ),
+                      if (preferred && !disabled)
+                        const Positioned(
+                          right: -2,
+                          top: -2,
+                          child: Icon(
+                            Icons.favorite_rounded,
+                            size: 13,
+                            color: Color(0xFF7FA778),
+                          ),
+                        ),
+                    ],
                   ),
-                  child: disabled
-                      ? ColorFiltered(
-                          colorFilter: const ColorFilter.matrix(<double>[
-                            0.2126,
-                            0.7152,
-                            0.0722,
-                            0,
-                            0,
-                            0.2126,
-                            0.7152,
-                            0.0722,
-                            0,
-                            0,
-                            0.2126,
-                            0.7152,
-                            0.0722,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0,
-                            1,
-                            0,
-                          ]),
-                          child: Opacity(opacity: 0.48, child: icon),
-                        )
-                      : icon,
-                ),
-                const SizedBox(height: 3),
-                ConstrainedBox(
-                  constraints: const BoxConstraints(minHeight: 20),
-                  child: Center(
-                    child: Text(
-                      dailyMaxed
-                          ? '今日已完成'
-                          : onCd
-                          ? _formatCooldown(cooldownSec)
-                          : highlighted
-                          ? (highlightLabel ?? label)
-                          : '$label +$exp',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: disabled ? 10 : 10.5,
-                        fontWeight: disabled
-                            ? FontWeight.w700
-                            : FontWeight.w500,
-                        color: disabled
-                            ? const Color(0xFF9A9086)
-                            : const Color(0xFF6B5445),
+                  const SizedBox(height: 3),
+                  ConstrainedBox(
+                    constraints: const BoxConstraints(minHeight: 20),
+                    child: Center(
+                      child: Text(
+                        dailyMaxed
+                            ? '今日已完成'
+                            : onCd
+                            ? _formatCooldown(cooldownSec)
+                            : highlighted
+                            ? (highlightLabel ?? label)
+                            : '$label +$exp',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: disabled ? 10 : 10.5,
+                          fontWeight: disabled
+                              ? FontWeight.w700
+                              : FontWeight.w500,
+                          color: disabled
+                              ? const Color(0xFF9A9086)
+                              : const Color(0xFF6B5445),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

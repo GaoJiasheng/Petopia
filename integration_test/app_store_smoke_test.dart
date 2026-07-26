@@ -42,28 +42,39 @@ void main() {
     expect(tester.takeException(), isNull);
     await _capture(tester, binding, 'yard');
 
-    for (final interaction in const <(String, String)>[
-      ('feed', 'eat'),
-      ('pat', 'pat'),
-      ('toy', 'play'),
-      ('bath', 'bath'),
-    ]) {
-      final button = find.byKey(
-        ValueKey<String>('care_action_${interaction.$1}'),
+    Future<void> runCareInteractions() async {
+      for (final interaction in const <(String, String)>[
+        ('feed', 'eat'),
+        ('pat', 'pat'),
+        ('toy', 'play'),
+        ('bath', 'bath'),
+      ]) {
+        final button = find.byKey(
+          ValueKey<String>('care_action_${interaction.$1}'),
+        );
+        final animation = find.byKey(
+          ValueKey<String>('pet_action_${interaction.$2}'),
+        );
+        expect(button, findsOneWidget);
+        await tester.tap(button);
+        await _pumpUntil(tester, animation);
+        expect(tester.takeException(), isNull);
+        await _capture(tester, binding, 'interaction-${interaction.$2}');
+        await _pumpUntilGone(
+          tester,
+          animation,
+          timeout: const Duration(seconds: 8),
+        );
+      }
+    }
+
+    if (_capturePerformance) {
+      await binding.watchPerformance(
+        runCareInteractions,
+        reportKey: 'care_interactions',
       );
-      final animation = find.byKey(
-        ValueKey<String>('pet_action_${interaction.$2}'),
-      );
-      expect(button, findsOneWidget);
-      await tester.tap(button);
-      await _pumpUntil(tester, animation);
-      expect(tester.takeException(), isNull);
-      await _capture(tester, binding, 'interaction-${interaction.$2}');
-      await _pumpUntilGone(
-        tester,
-        animation,
-        timeout: const Duration(seconds: 8),
-      );
+    } else {
+      await runCareInteractions();
     }
 
     await tester.tap(find.byKey(const ValueKey('pet_info_card')));
@@ -88,6 +99,11 @@ void main() {
 
     await _pumpUntil(tester, find.text('温柔提醒'));
     await tester.pump(const Duration(seconds: 1));
+    await tester.scrollUntilVisible(
+      find.text('存档与隐私'),
+      280,
+      scrollable: find.byType(Scrollable).last,
+    );
     expect(find.text('存档与隐私'), findsOneWidget);
     await tester.scrollUntilVisible(
       find.text('隐私说明'),
@@ -95,9 +111,26 @@ void main() {
       scrollable: find.byType(Scrollable).last,
     );
     expect(find.text('隐私说明'), findsOneWidget);
+    expect(find.text('开源许可'), findsOneWidget);
     expect(find.text('帮助与支持'), findsOneWidget);
     expect(tester.takeException(), isNull);
     await _capture(tester, binding, 'settings');
+
+    // Recreate the complete provider tree without clearing local storage. This
+    // exercises the returning-player bootstrap against the save produced by
+    // the same first-session flow.
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump(const Duration(seconds: 1));
+    await tester.pumpWidget(
+      ProviderScope(key: UniqueKey(), child: const PetopiaApp()),
+    );
+    await _pumpUntil(tester, find.byKey(const ValueKey('pet_info_card')));
+    await tester.pump(const Duration(seconds: 1));
+    expect(find.text('院子醒来了'), findsNothing);
+    expect(find.text('领养新伙伴'), findsNothing);
+    expect(find.textContaining('Lv 1'), findsWidgets);
+    expect(tester.takeException(), isNull);
+    await _capture(tester, binding, 'returning-yard');
 
     // Dispose providers before the test binding performs its final scheduler
     // assertion so native audio position callbacks have one frame to stop.
@@ -107,6 +140,7 @@ void main() {
 }
 
 const _captureScreenshots = bool.fromEnvironment('PETOPIA_CAPTURE_SCREENSHOTS');
+const _capturePerformance = bool.fromEnvironment('PETOPIA_CAPTURE_PERFORMANCE');
 const _capturePrefix = String.fromEnvironment(
   'PETOPIA_CAPTURE_PREFIX',
   defaultValue: 'petopia',

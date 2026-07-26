@@ -9,10 +9,12 @@ class Journey {
   String petId;
   List<String> stops;
   List<String> wanderStops;
+  String? routeTheme; // 毕业时选择的第一程方向：海滨 / 森林 / 城市
   int currentIdx; // 0..stops.length
   int wanderIdx; // 0..wanderStops.length
   int longTermSeq; // 40 张完成后的长期循环寄片序号
   DateTime nextPostcardAt;
+  DateTime? nextTravelNoteAt; // 全地点走完后，手账近况的低频时间点
   JourneyState state; // ACTIVE→WANDERING（补完剩余地点）→ 永久 WANDERING
 
   Journey({
@@ -21,9 +23,11 @@ class Journey {
     required this.stops,
     required this.nextPostcardAt,
     List<String>? wanderStops,
+    this.routeTheme,
     this.currentIdx = 0,
     this.wanderIdx = 0,
     this.longTermSeq = 0,
+    this.nextTravelNoteAt,
     this.state = JourneyState.active,
   }) : wanderStops = wanderStops ?? <String>[];
 }
@@ -93,6 +97,25 @@ class ActiveVisitor {
     this.withPetId,
     this.arrivalSeen = false,
     this.interacted = false,
+  });
+}
+
+/// 不打断首页的轻量记忆。成长、访客离开和远方近况统一写进手账。
+class YardMemoryEntry {
+  String id;
+  String type;
+  String text;
+  DateTime createdAt;
+  String? petId;
+  String? visitorId;
+
+  YardMemoryEntry({
+    required this.id,
+    required this.type,
+    required this.text,
+    required this.createdAt,
+    this.petId,
+    this.visitorId,
   });
 }
 
@@ -238,7 +261,7 @@ class Settings {
     this.renderQuality = RenderQuality.auto,
     this.onboardingComplete = false,
     this.careTutorialStep = 0,
-    this.schemaVersion = 2,
+    this.schemaVersion = 3,
     this.lastMonotonicRef = 0,
     this.loginStreakCurrent = 0,
     this.loginStreakMax = 0,

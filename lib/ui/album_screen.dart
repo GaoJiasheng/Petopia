@@ -3,29 +3,34 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
+import '../audio/route_audio.dart';
 import 'adaptive_layout.dart';
 import 'pet_art.dart';
+import 'petopia_theme.dart';
 import 'postcard_viewer_screen.dart';
 
 /// 双相册：明信片相册（收到的每张卡）+ 旅行相册（已毕业漫游的伙伴）。
 class AlbumScreen extends ConsumerStatefulWidget {
   const AlbumScreen({super.key});
 
-  static const _ink = Color(0xFF6B5445);
-  static const _muted = Color(0xFF8A7A6A);
-  static const _accent = Color(0xFFE8A15C);
+  static const _ink = PetopiaColors.ink;
+  static const _muted = PetopiaColors.mutedText;
+  static const _accent = PetopiaColors.actionAccent;
 
   @override
   ConsumerState<AlbumScreen> createState() => _AlbumScreenState();
 }
 
-class _AlbumScreenState extends ConsumerState<AlbumScreen> {
+class _AlbumScreenState extends ConsumerState<AlbumScreen>
+    with RouteAudio<AlbumScreen> {
+  @override
+  Bgm get routeBgm => Bgm.albumBrowse;
+
   @override
   void initState() {
     super.initState();
     Future<void>.microtask(() {
       ref.read(gameControllerProvider.notifier).trackAlbumOpened();
-      ref.read(audioServiceProvider).playBgm(Bgm.albumBrowse);
     });
   }
 
@@ -281,7 +286,8 @@ class _JourneyPreviewEmpty extends StatelessWidget {
                 child: AspectRatio(
                   aspectRatio: 1.6,
                   child: Image.asset(
-                    'assets/art/postcards/backgrounds/pc_bg_lighthouse_bay.jpg',
+                    'assets/runtime/postcards/backgrounds/'
+                    'pc_bg_lighthouse_bay.webp',
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -486,69 +492,74 @@ class _PostcardThumb extends StatelessWidget {
       button: true,
       label: '打开${card.petName}从${card.locationName}寄来的第 ${card.seq + 1} 张明信片',
       child: ExcludeSemantics(
-        child: GestureDetector(
-          onTap: () => Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (_) => PostcardViewerScreen(card: card),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(14),
+            onTap: () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (_) => PostcardViewerScreen(card: card),
+              ),
             ),
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFFDF7),
-              borderRadius: BorderRadius.circular(14),
-              boxShadow: const [
-                BoxShadow(color: Colors.black12, blurRadius: 6),
-              ],
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Expanded(
-                  child: Image.asset(
-                    'assets/art/postcards/backgrounds/${card.photoBg}.jpg',
-                    fit: BoxFit.cover,
-                    cacheWidth: 520,
-                    errorBuilder: (_, _, _) => Container(
-                      color: const Color(0xFFDCEAD8),
-                      child: const Icon(
-                        Icons.photo_rounded,
-                        color: AlbumScreen._muted,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 8,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        card.locationName,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13,
-                          color: AlbumScreen._ink,
-                        ),
-                      ),
-                      Text(
-                        '${card.petName} · 第 ${card.seq + 1} 站',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(
-                          fontSize: 11,
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFFDF7),
+                borderRadius: BorderRadius.circular(14),
+                boxShadow: const [
+                  BoxShadow(color: Colors.black12, blurRadius: 6),
+                ],
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Expanded(
+                    child: Image.asset(
+                      'assets/runtime/postcards/backgrounds/'
+                      '${card.photoBg}.webp',
+                      fit: BoxFit.cover,
+                      cacheWidth: 520,
+                      errorBuilder: (_, _, _) => Container(
+                        color: const Color(0xFFDCEAD8),
+                        child: const Icon(
+                          Icons.photo_rounded,
                           color: AlbumScreen._muted,
                         ),
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 8,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          card.locationName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                            color: AlbumScreen._ink,
+                          ),
+                        ),
+                        Text(
+                          '${card.petName} · 第 ${card.seq + 1} 站',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 11,
+                            color: AlbumScreen._muted,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -727,97 +738,219 @@ class _TravelJourneySheet extends StatelessWidget {
     final progress = pet.stops == 0
         ? 0.0
         : (pet.completedStops / pet.stops).clamp(0.0, 1.0);
+    final largeText = MediaQuery.textScalerOf(context).scale(14) > 22;
     return SafeArea(
       top: false,
       child: SizedBox(
         height: height,
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(22, 4, 12, 14),
-              child: Row(
+        child: largeText
+            ? LayoutBuilder(
+                builder: (context, constraints) {
+                  final columns = constraints.maxWidth >= 760
+                      ? 4
+                      : (constraints.maxWidth >= 520 ? 3 : 2);
+                  return CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(22, 4, 12, 14),
+                          child: _TravelJourneyHeader(
+                            pet: pet,
+                            progress: progress,
+                          ),
+                        ),
+                      ),
+                      const SliverToBoxAdapter(
+                        child: Divider(height: 1, color: Color(0xFFEDE4D3)),
+                      ),
+                      if (cards.isEmpty)
+                        const SliverToBoxAdapter(
+                          child: SizedBox(
+                            height: 240,
+                            child: _Empty(
+                              icon: Icons.mark_email_unread_outlined,
+                              text: '它已经在路上了\n第一封信会在合适的时候寄回来',
+                            ),
+                          ),
+                        )
+                      else
+                        SliverPadding(
+                          padding: const EdgeInsets.all(20),
+                          sliver: SliverGrid(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: columns,
+                                  childAspectRatio: 0.84,
+                                  crossAxisSpacing: 12,
+                                  mainAxisSpacing: 12,
+                                ),
+                            delegate: SliverChildBuilderDelegate(
+                              (context, index) =>
+                                  _PostcardThumb(card: cards[index]),
+                              childCount: cards.length,
+                            ),
+                          ),
+                        ),
+                    ],
+                  );
+                },
+              )
+            : Column(
                 children: [
-                  SizedBox(
-                    width: 82,
-                    height: 82,
-                    child: _TravelAvatar(pet: pet),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(22, 4, 12, 14),
+                    child: _TravelJourneyHeader(pet: pet, progress: progress),
                   ),
-                  const SizedBox(width: 14),
+                  const Divider(height: 1, color: Color(0xFFEDE4D3)),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${pet.name}的旅程',
-                          style: const TextStyle(
-                            color: AlbumScreen._ink,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w900,
+                    child: cards.isEmpty
+                        ? const _Empty(
+                            icon: Icons.mark_email_unread_outlined,
+                            text: '它已经在路上了\n第一封信会在合适的时候寄回来',
+                          )
+                        : LayoutBuilder(
+                            builder: (context, constraints) {
+                              final columns = constraints.maxWidth >= 760
+                                  ? 4
+                                  : (constraints.maxWidth >= 520 ? 3 : 2);
+                              return GridView.builder(
+                                padding: const EdgeInsets.all(20),
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: columns,
+                                      childAspectRatio: 0.84,
+                                      crossAxisSpacing: 12,
+                                      mainAxisSpacing: 12,
+                                    ),
+                                itemCount: cards.length,
+                                itemBuilder: (context, index) =>
+                                    _PostcardThumb(card: cards[index]),
+                              );
+                            },
                           ),
-                        ),
-                        const SizedBox(height: 5),
-                        Text(
-                          '${pet.completedStops} / ${pet.stops} 站 · 已寄回 ${pet.postcardCount} 张',
-                          style: const TextStyle(
-                            color: AlbumScreen._muted,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        const SizedBox(height: 9),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(999),
-                          child: LinearProgressIndicator(
-                            value: progress,
-                            minHeight: 8,
-                            backgroundColor: const Color(0xFFEDE4D3),
-                            color: AlbumScreen._accent,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                    tooltip: '关闭',
-                    onPressed: () => Navigator.of(context).pop(),
-                    icon: const Icon(Icons.close_rounded),
-                    color: AlbumScreen._muted,
                   ),
                 ],
               ),
-            ),
-            const Divider(height: 1, color: Color(0xFFEDE4D3)),
-            Expanded(
-              child: cards.isEmpty
-                  ? const _Empty(
-                      icon: Icons.mark_email_unread_outlined,
-                      text: '它已经在路上了\n第一封信会在合适的时候寄回来',
-                    )
-                  : LayoutBuilder(
-                      builder: (context, constraints) {
-                        final columns = constraints.maxWidth >= 760
-                            ? 4
-                            : (constraints.maxWidth >= 520 ? 3 : 2);
-                        return GridView.builder(
-                          padding: const EdgeInsets.all(20),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: columns,
-                                childAspectRatio: 0.84,
-                                crossAxisSpacing: 12,
-                                mainAxisSpacing: 12,
-                              ),
-                          itemCount: cards.length,
-                          itemBuilder: (context, index) =>
-                              _PostcardThumb(card: cards[index]),
-                        );
-                      },
-                    ),
-            ),
-          ],
-        ),
       ),
     );
+  }
+}
+
+class _TravelJourneyHeader extends StatelessWidget {
+  final TravelPetView pet;
+  final double progress;
+
+  const _TravelJourneyHeader({required this.pet, required this.progress});
+
+  @override
+  Widget build(BuildContext context) {
+    final largeText = MediaQuery.textScalerOf(context).scale(14) > 22;
+    final summary = _summary();
+    if (largeText) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              SizedBox(width: 58, height: 58, child: _TravelAvatar(pet: pet)),
+              const SizedBox(width: 12),
+              Expanded(child: _title()),
+              _closeButton(context),
+            ],
+          ),
+          const SizedBox(height: 10),
+          ...summary,
+        ],
+      );
+    }
+    return Row(
+      children: [
+        SizedBox(width: 82, height: 82, child: _TravelAvatar(pet: pet)),
+        const SizedBox(width: 14),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [_title(), const SizedBox(height: 5), ...summary],
+          ),
+        ),
+        _closeButton(context),
+      ],
+    );
+  }
+
+  Widget _title() {
+    return Text(
+      '${pet.name}的旅程',
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      style: const TextStyle(
+        color: AlbumScreen._ink,
+        fontSize: 20,
+        fontWeight: FontWeight.w900,
+      ),
+    );
+  }
+
+  List<Widget> _summary() {
+    return [
+      Text(
+        '${pet.completedStops} / ${pet.stops} 站 · 已寄回 ${pet.postcardCount} 张',
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+          color: AlbumScreen._muted,
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+        ),
+      ),
+      if (pet.routeTheme != null) ...[
+        const SizedBox(height: 3),
+        Text(
+          '第一程：${_routeLabel(pet.routeTheme!)} · ${_letterHint(pet.nextPostcardAt)}',
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+          style: const TextStyle(
+            color: AlbumScreen._muted,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ],
+      const SizedBox(height: 9),
+      ClipRRect(
+        borderRadius: BorderRadius.circular(999),
+        child: LinearProgressIndicator(
+          value: progress,
+          minHeight: 8,
+          backgroundColor: const Color(0xFFEDE4D3),
+          color: AlbumScreen._accent,
+        ),
+      ),
+    ];
+  }
+
+  Widget _closeButton(BuildContext context) {
+    return IconButton(
+      tooltip: '关闭',
+      onPressed: () => Navigator.of(context).pop(),
+      icon: const Icon(Icons.close_rounded),
+      color: AlbumScreen._muted,
+    );
+  }
+
+  static String _routeLabel(String routeTheme) => switch (routeTheme) {
+    '海滨' => '海风',
+    '森林' => '森林',
+    '城市' => '街灯',
+    _ => routeTheme,
+  };
+
+  static String _letterHint(DateTime? next) {
+    if (next == null) return '会在合适的时候来信';
+    final days = next.difference(DateTime.now().toUtc()).inDays;
+    if (days <= 1) return '也许很快会有新信';
+    if (days <= 5) return '这几天也许会有新信';
+    return '它正在慢慢走下一段路';
   }
 }
 
@@ -875,8 +1008,8 @@ List<String> _graduationStagePaths(String speciesId, String variantId) {
   final variant = _variantSlug(variantId);
   return <String>[
     if (variant != null)
-      'assets/runtime/pets/$species/pet_${species}_${variant}_stageD.png',
-    'assets/runtime/pets/$species/pet_${species}_var01_stageD.png',
+      'assets/runtime/pets/$species/pet_${species}_${variant}_stageD.webp',
+    'assets/runtime/pets/$species/pet_${species}_var01_stageD.webp',
   ];
 }
 

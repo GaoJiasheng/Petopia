@@ -82,7 +82,7 @@ void main() {
           .toList();
       expect(
         assetNames,
-        contains('assets/runtime/pets/rabbit/pet_rabbit_var05_stageD.png'),
+        contains('assets/runtime/pets/rabbit/pet_rabbit_var05_stageD.webp'),
         reason: 'variant must remain stable at $size',
       );
       expect(find.textContaining('云朵'), findsOneWidget);
@@ -92,6 +92,41 @@ void main() {
         reason: 'layout overflow at $size',
       );
     }
+    await tester.binding.setSurfaceSize(null);
+  });
+
+  testWidgets('graduation route choice remains usable with large text', (
+    tester,
+  ) async {
+    await tester.binding.setSurfaceSize(const Size(393, 852));
+    tester.platformDispatcher.textScaleFactorTestValue = 2;
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [audioServiceProvider.overrideWithValue(_SilentAudio())],
+        child: MaterialApp(
+          builder: (context, child) {
+            final media = MediaQuery.of(context);
+            return MediaQuery(
+              data: media.copyWith(textScaler: const TextScaler.linear(2)),
+              child: child!,
+            );
+          },
+          home: const GraduationCeremonyScreen(
+            petName: '云朵',
+            speciesId: 'pet_rabbit',
+            variantId: 'pet_rabbit_v5',
+          ),
+        ),
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 80));
+
+    expect(find.text('海边'), findsOneWidget);
+    expect(find.text('森林'), findsOneWidget);
+    expect(find.text('城市'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+
+    tester.platformDispatcher.clearTextScaleFactorTestValue();
     await tester.binding.setSurfaceSize(null);
   });
 }

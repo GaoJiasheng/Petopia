@@ -7,17 +7,18 @@ import '../domain/enums.dart';
 import 'adaptive_layout.dart';
 import 'growth_journal_screen.dart';
 import 'pet_art.dart';
+import 'petopia_theme.dart';
 
 class PetDetailScreen extends ConsumerWidget {
   const PetDetailScreen({super.key, required this.initialPet});
 
   final PetView initialPet;
 
-  static const _bg = Color(0xFFFAF3E3);
-  static const _paper = Color(0xFFFFFDF7);
+  static const _bg = PetopiaColors.background;
+  static const _paper = PetopiaColors.paper;
   static const _ink = Color(0xFF604B3E);
-  static const _muted = Color(0xFF8A7A6A);
-  static const _accent = Color(0xFFE8A15C);
+  static const _muted = PetopiaColors.mutedText;
+  static const _accent = PetopiaColors.actionAccent;
   static const _green = Color(0xFF91B78B);
 
   @override

@@ -66,6 +66,19 @@ void main() {
     expect((await store.load())?.wallet.balance, 4096);
   });
 
+  test('a transient filesystem failure is retried before surfacing', () async {
+    final blockedPath = '${tempDir.path}/transient';
+    await File(blockedPath).writeAsString('not a directory');
+    final store = SessionStore(Directory(blockedPath));
+    final pendingSave = store.save(_richSession());
+
+    await Future<void>.delayed(const Duration(milliseconds: 40));
+    await File(blockedPath).delete();
+
+    await pendingSave;
+    expect((await store.load())?.wallet.balance, 1280);
+  });
+
   test(
     'corrupt primary automatically falls back to the previous snapshot',
     () async {
@@ -107,7 +120,7 @@ void main() {
 
     final migrated = store.decodeSnapshot(encoded);
 
-    expect(migrated.settings.schemaVersion, 2);
+    expect(migrated.settings.schemaVersion, 3);
     expect(migrated.settings.onboardingComplete, isTrue);
     expect(migrated.settings.careTutorialStep, 3);
   });
@@ -127,6 +140,38 @@ void main() {
 
     expect(migrated.settings.onboardingComplete, isFalse);
     expect(migrated.settings.careTutorialStep, 0);
+  });
+
+  test('TestFlight build 16 schema v2 upgrades without losing progress', () {
+    final store = SessionStore(tempDir);
+    final encoded = store.encodeSnapshot(_richSession());
+    encoded
+      ..['schemaVersion'] = 2
+      ..remove('yardMemories');
+    final settings = encoded['settings']! as Map<String, Object?>;
+    settings['schemaVersion'] = 2;
+    final journeys = encoded['journeys']! as List<Object?>;
+    for (final entry in journeys) {
+      final journey = entry! as Map<String, Object?>;
+      journey
+        ..remove('routeTheme')
+        ..remove('nextTravelNoteAt');
+    }
+
+    final migrated = store.decodeSnapshot(
+      encoded,
+      now: DateTime.utc(2026, 7, 26),
+    );
+
+    expect(migrated.settings.schemaVersion, 3);
+    expect(migrated.current?.id, 'pet-current');
+    expect(migrated.wallet.balance, 1280);
+    expect(migrated.postcards.single.id, 'postcard-1');
+    expect(migrated.visitorLog, hasLength(2));
+    expect(migrated.achievements, contains('ach_first_grad'));
+    expect(migrated.journeys.single.routeTheme, isNull);
+    expect(migrated.journeys.single.nextTravelNoteAt, isNull);
+    expect(migrated.yardMemories, isEmpty);
   });
 
   test(
@@ -246,7 +291,7 @@ GameSession _richSession() {
       renderQuality: RenderQuality.low,
       onboardingComplete: true,
       careTutorialStep: 3,
-      schemaVersion: 2,
+      schemaVersion: 3,
       lastMonotonicRef: 123456,
       loginStreakCurrent: 3,
       loginStreakMax: 5,
@@ -299,7 +344,12 @@ GameSession _richSession() {
       count: 2,
       visitorSeen: true,
     ),
-    'clue_starbug': ClueCounter(clueId: 'clue_starbug', threshold: 5, count: 1),
+    'clue_starbug': ClueCounter(
+      clueId: 'clue_starbug',
+      threshold: 5,
+      count: 1,
+      visitorSeen: true,
+    ),
   });
   session.achievements.addAll(<String, AchievementProgress>{
     'ach_first_grad': AchievementProgress(
@@ -345,10 +395,12 @@ GameSession _richSession() {
       petId: 'pet-roaming',
       stops: const <String>['loc_lighthouse', 'loc_forest', 'loc_city'],
       wanderStops: const <String>['loc_cloud', 'loc_library'],
+      routeTheme: '森林',
       currentIdx: 1,
       wanderIdx: 1,
       longTermSeq: 2,
       nextPostcardAt: DateTime.utc(2026, 7, 4, 9),
+      nextTravelNoteAt: DateTime.utc(2026, 7, 12, 9),
       state: JourneyState.active,
     ),
   );
@@ -378,6 +430,15 @@ GameSession _richSession() {
       date: DateTime.utc(2026, 7, 3, 20),
     ),
   ]);
+  session.yardMemories.add(
+    YardMemoryEntry(
+      id: 'memory-1',
+      type: 'growth',
+      text: '阿橘开始认得你的脚步声。',
+      createdAt: DateTime.utc(2026, 7, 3, 7),
+      petId: 'pet-current',
+    ),
+  );
   session.activeVisitor = ActiveVisitor(
     visitorId: 'vis_fox',
     arrivedAt: DateTime.utc(2099, 7, 3, 20),
@@ -496,6 +557,7 @@ void _expectSessionEquals(GameSession actual, GameSession expected) {
   expect(actual.generatedDays, unorderedEquals(expected.generatedDays));
   expect(actual.firedSpecials, unorderedEquals(expected.firedSpecials));
   _expectVisitorLogListEquals(actual.visitorLog, expected.visitorLog);
+  _expectYardMemoryListEquals(actual.yardMemories, expected.yardMemories);
   _expectNullableActiveVisitorEquals(
     actual.activeVisitor,
     expected.activeVisitor,
@@ -623,11 +685,28 @@ void _expectJourneyListEquals(List<Journey> actual, List<Journey> expected) {
     expect(actual[i].petId, expected[i].petId);
     expect(actual[i].stops, expected[i].stops);
     expect(actual[i].wanderStops, expected[i].wanderStops);
+    expect(actual[i].routeTheme, expected[i].routeTheme);
     expect(actual[i].currentIdx, expected[i].currentIdx);
     expect(actual[i].wanderIdx, expected[i].wanderIdx);
     expect(actual[i].longTermSeq, expected[i].longTermSeq);
     expect(actual[i].nextPostcardAt, expected[i].nextPostcardAt);
+    expect(actual[i].nextTravelNoteAt, expected[i].nextTravelNoteAt);
     expect(actual[i].state, expected[i].state);
+  }
+}
+
+void _expectYardMemoryListEquals(
+  List<YardMemoryEntry> actual,
+  List<YardMemoryEntry> expected,
+) {
+  expect(actual, hasLength(expected.length));
+  for (var i = 0; i < expected.length; i++) {
+    expect(actual[i].id, expected[i].id);
+    expect(actual[i].type, expected[i].type);
+    expect(actual[i].text, expected[i].text);
+    expect(actual[i].createdAt, expected[i].createdAt);
+    expect(actual[i].petId, expected[i].petId);
+    expect(actual[i].visitorId, expected[i].visitorId);
   }
 }
 

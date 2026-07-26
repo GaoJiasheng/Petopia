@@ -24,7 +24,7 @@ void main() {
               widget is Image &&
               widget.image is AssetImage &&
               (widget.image as AssetImage).assetName ==
-                  'assets/runtime/pets/cat/pet_cat_var05_stageA.png',
+                  'assets/runtime/pets/cat/pet_cat_var05_stageA.webp',
         ),
         findsWidgets,
       );
@@ -48,7 +48,7 @@ void main() {
         cue: null,
         variantId: 'pet_cat_v1',
         stage: PetStage.c,
-        assetPath: 'assets/runtime/pets/cat/pet_cat_var01_stageC.png',
+        assetPath: 'assets/runtime/pets/cat/pet_cat_var01_stageC.webp',
       ),
     );
     await tester.pumpWidget(
@@ -56,7 +56,7 @@ void main() {
         cue: const PetActionCue('eat', 1),
         variantId: 'pet_cat_v1',
         stage: PetStage.c,
-        assetPath: 'assets/runtime/pets/cat/pet_cat_var01_stageC.png',
+        assetPath: 'assets/runtime/pets/cat/pet_cat_var01_stageC.webp',
       ),
     );
 
@@ -70,6 +70,7 @@ void main() {
     expect(player.duration, const Duration(seconds: 5));
     expect(player.cycles, 2);
     expect(player.holdTailFraction, 0.16);
+    expect(player.evictOnDispose, isFalse);
 
     await tester.pumpWidget(const SizedBox.shrink());
   });
@@ -91,6 +92,54 @@ void main() {
 
     await tester.pumpWidget(const SizedBox.shrink());
   });
+
+  testWidgets('Reduce Motion never launches floating heart particles', (
+    tester,
+  ) async {
+    await tester.pumpWidget(_app(cue: null, reduceMotion: true));
+    await tester.pumpWidget(
+      _app(cue: const PetActionCue('pat', 1), reduceMotion: true),
+    );
+
+    expect(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget.key is ValueKey<String> &&
+            (widget.key! as ValueKey<String>).value.startsWith('pet_heart_'),
+      ),
+      findsNothing,
+    );
+
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
+
+  testWidgets('constrained rendering avoids decoding the large frame strip', (
+    tester,
+  ) async {
+    await tester.pumpWidget(
+      _app(
+        cue: null,
+        variantId: 'pet_cat_v1',
+        stage: PetStage.c,
+        assetPath: 'assets/runtime/pets/cat/pet_cat_var01_stageC.webp',
+        reduceEffects: true,
+      ),
+    );
+    await tester.pumpWidget(
+      _app(
+        cue: const PetActionCue('play', 1),
+        variantId: 'pet_cat_v1',
+        stage: PetStage.c,
+        assetPath: 'assets/runtime/pets/cat/pet_cat_var01_stageC.webp',
+        reduceEffects: true,
+      ),
+    );
+
+    expect(find.byType(SpriteSheetPlayer), findsNothing);
+    expect(find.byKey(const ValueKey<String>('pose_1')), findsOneWidget);
+
+    await tester.pumpWidget(const SizedBox.shrink());
+  });
 }
 
 Widget _app({
@@ -98,7 +147,8 @@ Widget _app({
   bool reduceMotion = false,
   String variantId = 'pet_cat_v5',
   PetStage stage = PetStage.a,
-  String assetPath = 'assets/runtime/pets/cat/pet_cat_var05_stageA.png',
+  String assetPath = 'assets/runtime/pets/cat/pet_cat_var05_stageA.webp',
+  bool reduceEffects = false,
 }) {
   return MaterialApp(
     home: MediaQuery(
@@ -109,6 +159,7 @@ Widget _app({
           speciesId: 'pet_cat',
           variantId: variantId,
           stage: stage,
+          reduceEffects: reduceEffects,
           cue: cue,
         ),
       ),

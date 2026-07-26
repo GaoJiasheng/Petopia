@@ -32,4 +32,28 @@
 - 不出现 TestFlight 标记、调试横幅、加载占位、资源缺失图标或溢出警告。
 - 第一张必须让宠物与水彩小院成为第一视觉，不用大段营销文字盖住画面。
 - 同一设备组保持一致的亮度、主题和视觉安全区。
+- 导出后执行
+  `python3 tools/check_app_store_screenshots.py --require-release-set <截图目录>`；
+  只有尺寸正确、无 alpha 通道、无方向缓冲黑边的 RGB PNG/JPEG 才可上传。
 
+## 自动化方向门禁
+
+使用院子视觉集成测试拍摄 iPad 13 英寸时，同时声明期望像素尺寸。截图缓冲区
+方向不一致会直接让测试失败，不允许在后期拉伸补救：
+
+```bash
+# 竖屏 2064 × 2752
+flutter drive -d <ipad-simulator> \
+  --target=integration_test/yard_home_visual_test.dart \
+  --driver=test_driver/integration_test.dart \
+  --dart-define=PETOPIA_VISUAL_EXPECTED_WIDTH=2064 \
+  --dart-define=PETOPIA_VISUAL_EXPECTED_HEIGHT=2752
+
+# 横屏 2752 × 2064；拍摄前先把模拟器旋转到横屏
+flutter drive -d <ipad-simulator> \
+  --target=integration_test/yard_home_visual_test.dart \
+  --driver=test_driver/integration_test.dart \
+  --dart-define=PETOPIA_VISUAL_LANDSCAPE=true \
+  --dart-define=PETOPIA_VISUAL_EXPECTED_WIDTH=2752 \
+  --dart-define=PETOPIA_VISUAL_EXPECTED_HEIGHT=2064
+```

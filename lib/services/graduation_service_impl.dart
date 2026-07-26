@@ -31,15 +31,16 @@ class GraduationServiceImpl implements GraduationService {
   );
 
   @override
-  Future<String> graduate(Pet pet) async {
+  Future<String> graduate(Pet pet, {String? routeTheme}) async {
     _economy.settleGraduation(pet); // 稳定 ref grad:<petId>
 
-    final route = _pickRoute(pet);
+    final route = _pickRoute(pet, routeTheme: routeTheme);
     final journey = Journey(
       id: _idGen(),
       petId: pet.id,
       stops: route.stops,
       wanderStops: route.wanderStops,
+      routeTheme: routeTheme,
       nextPostcardAt: _now().add(const Duration(days: 1)),
       state: JourneyState.active,
     );
@@ -66,7 +67,10 @@ class GraduationServiceImpl implements GraduationService {
   }
 
   /// 选 25 张主旅程 + 其余地点补完，按性格加权随机、不放回抽取。
-  ({List<String> stops, List<String> wanderStops}) _pickRoute(Pet pet) {
+  ({List<String> stops, List<String> wanderStops}) _pickRoute(
+    Pet pet, {
+    String? routeTheme,
+  }) {
     final count = _journeyStopCount();
     final candidates = <Location>[];
     final seen = <String>{};
@@ -76,8 +80,22 @@ class GraduationServiceImpl implements GraduationService {
     }
 
     final stops = <String>[];
+    if (routeTheme != null) {
+      final themed = candidates
+          .where((location) => location.category == routeTheme)
+          .toList(growable: false);
+      if (themed.isNotEmpty) {
+        final selected = themed[_drawWeightedIndex(themed, pet)];
+        candidates.removeWhere((location) => location.id == selected.id);
+        stops.add(selected.id);
+      }
+    }
     while (stops.length < count && candidates.isNotEmpty) {
-      final index = _drawWeightedIndex(candidates, pet);
+      final index = _drawWeightedIndex(
+        candidates,
+        pet,
+        preferredCategory: stops.length < 3 ? routeTheme : null,
+      );
       final selected = candidates.removeAt(index);
       stops.add(selected.id);
     }
@@ -106,10 +124,16 @@ class GraduationServiceImpl implements GraduationService {
     return w;
   }
 
-  int _drawWeightedIndex(List<Location> candidates, Pet pet) {
+  int _drawWeightedIndex(
+    List<Location> candidates,
+    Pet pet, {
+    String? preferredCategory,
+  }) {
     var total = 0.0;
     for (final location in candidates) {
-      final weight = _weight(location, pet);
+      final weight =
+          _weight(location, pet) *
+          (location.category == preferredCategory ? 5.0 : 1.0);
       if (weight.isFinite && weight > 0) {
         total += weight;
       }
@@ -125,7 +149,10 @@ class GraduationServiceImpl implements GraduationService {
     final target = _rng() * total;
     var cursor = 0.0;
     for (var i = 0; i < candidates.length; i++) {
-      final weight = _weight(candidates[i], pet);
+      final location = candidates[i];
+      final weight =
+          _weight(location, pet) *
+          (location.category == preferredCategory ? 5.0 : 1.0);
       if (!weight.isFinite || weight <= 0) continue;
       cursor += weight;
       if (target < cursor) return i;

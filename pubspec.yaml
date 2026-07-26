@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+16
+version: 1.0.0+17
 
 environment:
   sdk: ^3.12.2
@@ -33,10 +33,6 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.8
-  flame: ^1.37.0
   path: ^1.9.1
   path_provider: ^2.1.6
   sqflite: ^2.4.3
@@ -124,131 +120,23 @@ flutter:
     - assets/art/ui/ui_icon_src_visitor.png
     - assets/art/ui/ui_icon_gift.png
     - assets/art/ui/ui_icon_warmfluff.png
-    - assets/art/postcards/backgrounds/pc_bg_apple_farm.jpg
-    - assets/art/postcards/backgrounds/pc_bg_aurora_village.jpg
-    - assets/art/postcards/backgrounds/pc_bg_balloon_camp.jpg
-    - assets/art/postcards/backgrounds/pc_bg_blue_spring.jpg
-    - assets/art/postcards/backgrounds/pc_bg_camel_oasis.jpg
-    - assets/art/postcards/backgrounds/pc_bg_canal_town.jpg
-    - assets/art/postcards/backgrounds/pc_bg_catback_reef.jpg
-    - assets/art/postcards/backgrounds/pc_bg_cloud_pass.jpg
-    - assets/art/postcards/backgrounds/pc_bg_cloud_ranch.jpg
-    - assets/art/postcards/backgrounds/pc_bg_echo_canyon.jpg
-    - assets/art/postcards/backgrounds/pc_bg_ferris_wharf.jpg
-    - assets/art/postcards/backgrounds/pc_bg_firefly_paddy.jpg
-    - assets/art/postcards/backgrounds/pc_bg_fog_bridge.jpg
-    - assets/art/postcards/backgrounds/pc_bg_frosting_volcano.jpg
-    - assets/art/postcards/backgrounds/pc_bg_icefloe_lighthouse.jpg
-    - assets/art/postcards/backgrounds/pc_bg_lighthouse_bay.jpg
-    - assets/art/postcards/backgrounds/pc_bg_logger_lodge.jpg
-    - assets/art/postcards/backgrounds/pc_bg_maple_ridge.jpg
-    - assets/art/postcards/backgrounds/pc_bg_midnight_noodles.jpg
-    - assets/art/postcards/backgrounds/pc_bg_monkey_spring.jpg
-    - assets/art/postcards/backgrounds/pc_bg_moon_post.jpg
-    - assets/art/postcards/backgrounds/pc_bg_mushroom_ring.jpg
-    - assets/art/postcards/backgrounds/pc_bg_oak_postbox.jpg
-    - assets/art/postcards/backgrounds/pc_bg_oldbook_alley.jpg
-    - assets/art/postcards/backgrounds/pc_bg_painted_bazaar.jpg
-    - assets/art/postcards/backgrounds/pc_bg_pinecone_market.jpg
-    - assets/art/postcards/backgrounds/pc_bg_rooftop_city.jpg
-    - assets/art/postcards/backgrounds/pc_bg_salt_lake.jpg
-    - assets/art/postcards/backgrounds/pc_bg_seafog_pier.jpg
-    - assets/art/postcards/backgrounds/pc_bg_shell_town.jpg
-    - assets/art/postcards/backgrounds/pc_bg_snowline_cabin.jpg
-    - assets/art/postcards/backgrounds/pc_bg_star_repair.jpg
-    - assets/art/postcards/backgrounds/pc_bg_steamboat_pier.jpg
-    - assets/art/postcards/backgrounds/pc_bg_sunflower_station.jpg
-    - assets/art/postcards/backgrounds/pc_bg_tide_flat.jpg
-    - assets/art/postcards/backgrounds/pc_bg_tram_street.jpg
-    - assets/art/postcards/backgrounds/pc_bg_walking_island.jpg
-    - assets/art/postcards/backgrounds/pc_bg_wheat_post.jpg
-    - assets/art/postcards/backgrounds/pc_bg_wind_rocks.jpg
-    - assets/art/postcards/backgrounds/pc_bg_windmill_pond.jpg
-    - assets/art/postcards/poses/
+    - assets/runtime/postcards/backgrounds/
+    - assets/runtime/postcards/poses/
     - assets/art/postcards/stamps/
-    - assets/art/postcards/stickers/pc_sticker_heart_postmark.png
-    - assets/art/postcards/stickers/pc_sticker_straw_hat.png
-    - assets/art/postcards/stickers/pc_sticker_creased_map.png
-    - assets/art/postcards/stickers/pc_sticker_drift_bottle.png
-    - assets/art/postcards/stickers/pc_sticker_leaf_spring.png
-    - assets/art/postcards/stickers/pc_sticker_wish_star.png
-    - assets/art/postcards/stickers/pc_sticker_cloud_gap.png
-    - assets/art/postcards/stickers/pc_sticker_gold_beam.png
-    - assets/art/postcards/stickers/pc_sticker_warm_kettle.png
-    - assets/art/postcards/stickers/pc_sticker_signed_leaf.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_boo_var01_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_boo_var02_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_boo_var03_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_boo_var04_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_boo_var05_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_cat_var01_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_cat_var02_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_cat_var03_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_cat_var04_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_cat_var05_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_chameleon_var01_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_chameleon_var02_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_chameleon_var03_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_chameleon_var04_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_chameleon_var05_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_ember_var01_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_ember_var02_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_ember_var03_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_ember_var04_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_ember_var05_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_hamster_var01_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_hamster_var02_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_hamster_var03_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_hamster_var04_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_hamster_var05_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_parrot_var01_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_parrot_var02_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_parrot_var03_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_parrot_var04_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_parrot_var05_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_rabbit_var01_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_rabbit_var02_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_rabbit_var03_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_rabbit_var04_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_rabbit_var05_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_shiba_var01_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_shiba_var02_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_shiba_var03_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_shiba_var04_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_shiba_var05_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_snake_var01_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_snake_var02_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_snake_var03_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_snake_var04_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_snake_var05_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_starbug_var01_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_starbug_var02_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_starbug_var03_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_starbug_var04_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_starbug_var05_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_turtle_var01_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_turtle_var02_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_turtle_var03_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_turtle_var04_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_turtle_var05_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_uni_var01_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_uni_var02_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_uni_var03_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_uni_var04_back.png
-    - assets/art/postcards/stickers/pc_sticker_traveler_uni_var05_back.png
-    - assets/art/world/themes/yard_theme_autumnjam_bg.jpg
-    - assets/art/world/themes/yard_theme_bambootea_bg.jpg
-    - assets/art/world/themes/yard_theme_candybake_bg.jpg
-    - assets/art/world/themes/yard_theme_fourseasons_bg.jpg
-    - assets/art/world/themes/yard_theme_meadow_bg.jpg
-    - assets/art/world/themes/yard_theme_moongreen_bg.jpg
-    - assets/art/world/themes/yard_theme_mossrain_bg.jpg
-    - assets/art/world/themes/yard_theme_sakura_bg.jpg
-    - assets/art/world/themes/yard_theme_seaside_bg.jpg
-    - assets/art/world/themes/yard_theme_snowhut_bg.jpg
-    - assets/art/world/themes/yard_theme_starcamp_bg.jpg
-    - assets/art/world/themes/yard_theme_wheatkite_bg.jpg
-    - assets/art/world/themes/wide/
+    - assets/runtime/postcards/stickers/
+    - assets/art/world/themes/yard_theme_autumnjam_bg.webp
+    - assets/art/world/themes/yard_theme_bambootea_bg.webp
+    - assets/art/world/themes/yard_theme_candybake_bg.webp
+    - assets/art/world/themes/yard_theme_fourseasons_bg.webp
+    - assets/art/world/themes/yard_theme_meadow_bg.webp
+    - assets/art/world/themes/yard_theme_moongreen_bg.webp
+    - assets/art/world/themes/yard_theme_mossrain_bg.webp
+    - assets/art/world/themes/yard_theme_sakura_bg.webp
+    - assets/art/world/themes/yard_theme_seaside_bg.webp
+    - assets/art/world/themes/yard_theme_snowhut_bg.webp
+    - assets/art/world/themes/yard_theme_starcamp_bg.webp
+    - assets/art/world/themes/yard_theme_wheatkite_bg.webp
+    - assets/runtime/yard/themes/wide/
     - assets/art/world/layouts/yard_luxury02_delta.webp
     - assets/art/world/layouts/yard_luxury03_delta.webp
     - assets/art/world/layouts/yard_luxury04_delta.webp
@@ -319,290 +207,290 @@ flutter:
     - assets/art/world/visitors/visitor_tanuki_portrait.png
     - assets/art/world/visitors/visitor_tanuki_yard.png
     - assets/art/pets/portraits/
-    - assets/runtime/pets/cat/pet_cat_var01_stageA.png
-    - assets/runtime/pets/cat/pet_cat_var01_stageB.png
-    - assets/runtime/pets/cat/pet_cat_var01_stageC.png
-    - assets/runtime/pets/cat/pet_cat_var01_stageD.png
-    - assets/runtime/pets/cat/pet_cat_var02_stageA.png
-    - assets/runtime/pets/cat/pet_cat_var02_stageB.png
-    - assets/runtime/pets/cat/pet_cat_var02_stageC.png
-    - assets/runtime/pets/cat/pet_cat_var02_stageD.png
-    - assets/runtime/pets/cat/pet_cat_var03_stageA.png
-    - assets/runtime/pets/cat/pet_cat_var03_stageB.png
-    - assets/runtime/pets/cat/pet_cat_var03_stageC.png
-    - assets/runtime/pets/cat/pet_cat_var03_stageD.png
-    - assets/runtime/pets/cat/pet_cat_var04_stageA.png
-    - assets/runtime/pets/cat/pet_cat_var04_stageB.png
-    - assets/runtime/pets/cat/pet_cat_var04_stageC.png
-    - assets/runtime/pets/cat/pet_cat_var04_stageD.png
-    - assets/runtime/pets/cat/pet_cat_var05_stageA.png
-    - assets/runtime/pets/cat/pet_cat_var05_stageB.png
-    - assets/runtime/pets/cat/pet_cat_var05_stageC.png
-    - assets/runtime/pets/cat/pet_cat_var05_stageD.png
+    - assets/runtime/pets/cat/pet_cat_var01_stageA.webp
+    - assets/runtime/pets/cat/pet_cat_var01_stageB.webp
+    - assets/runtime/pets/cat/pet_cat_var01_stageC.webp
+    - assets/runtime/pets/cat/pet_cat_var01_stageD.webp
+    - assets/runtime/pets/cat/pet_cat_var02_stageA.webp
+    - assets/runtime/pets/cat/pet_cat_var02_stageB.webp
+    - assets/runtime/pets/cat/pet_cat_var02_stageC.webp
+    - assets/runtime/pets/cat/pet_cat_var02_stageD.webp
+    - assets/runtime/pets/cat/pet_cat_var03_stageA.webp
+    - assets/runtime/pets/cat/pet_cat_var03_stageB.webp
+    - assets/runtime/pets/cat/pet_cat_var03_stageC.webp
+    - assets/runtime/pets/cat/pet_cat_var03_stageD.webp
+    - assets/runtime/pets/cat/pet_cat_var04_stageA.webp
+    - assets/runtime/pets/cat/pet_cat_var04_stageB.webp
+    - assets/runtime/pets/cat/pet_cat_var04_stageC.webp
+    - assets/runtime/pets/cat/pet_cat_var04_stageD.webp
+    - assets/runtime/pets/cat/pet_cat_var05_stageA.webp
+    - assets/runtime/pets/cat/pet_cat_var05_stageB.webp
+    - assets/runtime/pets/cat/pet_cat_var05_stageC.webp
+    - assets/runtime/pets/cat/pet_cat_var05_stageD.webp
     - assets/runtime/pets/cat/actions/pet_cat_var01_stageC_eat.webp
     - assets/runtime/pets/cat/actions/pet_cat_var01_stageC_pat.webp
     - assets/runtime/pets/cat/actions/pet_cat_var01_stageC_play.webp
     - assets/runtime/pets/cat/actions/pet_cat_var01_stageC_bath.webp
-    - assets/runtime/pets/boo/pet_boo_var01_stageA.png
-    - assets/runtime/pets/boo/pet_boo_var01_stageB.png
-    - assets/runtime/pets/boo/pet_boo_var01_stageC.png
-    - assets/runtime/pets/boo/pet_boo_var01_stageD.png
-    - assets/runtime/pets/boo/pet_boo_var02_stageA.png
-    - assets/runtime/pets/boo/pet_boo_var02_stageB.png
-    - assets/runtime/pets/boo/pet_boo_var02_stageC.png
-    - assets/runtime/pets/boo/pet_boo_var02_stageD.png
-    - assets/runtime/pets/boo/pet_boo_var03_stageA.png
-    - assets/runtime/pets/boo/pet_boo_var03_stageB.png
-    - assets/runtime/pets/boo/pet_boo_var03_stageC.png
-    - assets/runtime/pets/boo/pet_boo_var03_stageD.png
-    - assets/runtime/pets/boo/pet_boo_var04_stageA.png
-    - assets/runtime/pets/boo/pet_boo_var04_stageB.png
-    - assets/runtime/pets/boo/pet_boo_var04_stageC.png
-    - assets/runtime/pets/boo/pet_boo_var04_stageD.png
-    - assets/runtime/pets/boo/pet_boo_var05_stageA.png
-    - assets/runtime/pets/boo/pet_boo_var05_stageB.png
-    - assets/runtime/pets/boo/pet_boo_var05_stageC.png
-    - assets/runtime/pets/boo/pet_boo_var05_stageD.png
+    - assets/runtime/pets/boo/pet_boo_var01_stageA.webp
+    - assets/runtime/pets/boo/pet_boo_var01_stageB.webp
+    - assets/runtime/pets/boo/pet_boo_var01_stageC.webp
+    - assets/runtime/pets/boo/pet_boo_var01_stageD.webp
+    - assets/runtime/pets/boo/pet_boo_var02_stageA.webp
+    - assets/runtime/pets/boo/pet_boo_var02_stageB.webp
+    - assets/runtime/pets/boo/pet_boo_var02_stageC.webp
+    - assets/runtime/pets/boo/pet_boo_var02_stageD.webp
+    - assets/runtime/pets/boo/pet_boo_var03_stageA.webp
+    - assets/runtime/pets/boo/pet_boo_var03_stageB.webp
+    - assets/runtime/pets/boo/pet_boo_var03_stageC.webp
+    - assets/runtime/pets/boo/pet_boo_var03_stageD.webp
+    - assets/runtime/pets/boo/pet_boo_var04_stageA.webp
+    - assets/runtime/pets/boo/pet_boo_var04_stageB.webp
+    - assets/runtime/pets/boo/pet_boo_var04_stageC.webp
+    - assets/runtime/pets/boo/pet_boo_var04_stageD.webp
+    - assets/runtime/pets/boo/pet_boo_var05_stageA.webp
+    - assets/runtime/pets/boo/pet_boo_var05_stageB.webp
+    - assets/runtime/pets/boo/pet_boo_var05_stageC.webp
+    - assets/runtime/pets/boo/pet_boo_var05_stageD.webp
     - assets/runtime/pets/boo/actions/pet_boo_var01_stageC_eat.webp
     - assets/runtime/pets/boo/actions/pet_boo_var01_stageC_pat.webp
     - assets/runtime/pets/boo/actions/pet_boo_var01_stageC_play.webp
     - assets/runtime/pets/boo/actions/pet_boo_var01_stageC_bath.webp
-    - assets/runtime/pets/chameleon/pet_chameleon_var01_stageA.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var01_stageB.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var01_stageC.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var01_stageD.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var02_stageA.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var02_stageB.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var02_stageC.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var02_stageD.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var03_stageA.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var03_stageB.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var03_stageC.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var03_stageD.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var04_stageA.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var04_stageB.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var04_stageC.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var04_stageD.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var05_stageA.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var05_stageB.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var05_stageC.png
-    - assets/runtime/pets/chameleon/pet_chameleon_var05_stageD.png
+    - assets/runtime/pets/chameleon/pet_chameleon_var01_stageA.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var01_stageB.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var01_stageC.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var01_stageD.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var02_stageA.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var02_stageB.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var02_stageC.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var02_stageD.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var03_stageA.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var03_stageB.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var03_stageC.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var03_stageD.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var04_stageA.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var04_stageB.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var04_stageC.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var04_stageD.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var05_stageA.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var05_stageB.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var05_stageC.webp
+    - assets/runtime/pets/chameleon/pet_chameleon_var05_stageD.webp
     - assets/runtime/pets/chameleon/actions/pet_chameleon_var01_stageC_eat.webp
     - assets/runtime/pets/chameleon/actions/pet_chameleon_var01_stageC_pat.webp
     - assets/runtime/pets/chameleon/actions/pet_chameleon_var01_stageC_play.webp
     - assets/runtime/pets/chameleon/actions/pet_chameleon_var01_stageC_bath.webp
-    - assets/runtime/pets/ember/pet_ember_var01_stageA.png
-    - assets/runtime/pets/ember/pet_ember_var01_stageB.png
-    - assets/runtime/pets/ember/pet_ember_var01_stageC.png
-    - assets/runtime/pets/ember/pet_ember_var01_stageD.png
-    - assets/runtime/pets/ember/pet_ember_var02_stageA.png
-    - assets/runtime/pets/ember/pet_ember_var02_stageB.png
-    - assets/runtime/pets/ember/pet_ember_var02_stageC.png
-    - assets/runtime/pets/ember/pet_ember_var02_stageD.png
-    - assets/runtime/pets/ember/pet_ember_var03_stageA.png
-    - assets/runtime/pets/ember/pet_ember_var03_stageB.png
-    - assets/runtime/pets/ember/pet_ember_var03_stageC.png
-    - assets/runtime/pets/ember/pet_ember_var03_stageD.png
-    - assets/runtime/pets/ember/pet_ember_var04_stageA.png
-    - assets/runtime/pets/ember/pet_ember_var04_stageB.png
-    - assets/runtime/pets/ember/pet_ember_var04_stageC.png
-    - assets/runtime/pets/ember/pet_ember_var04_stageD.png
-    - assets/runtime/pets/ember/pet_ember_var05_stageA.png
-    - assets/runtime/pets/ember/pet_ember_var05_stageB.png
-    - assets/runtime/pets/ember/pet_ember_var05_stageC.png
-    - assets/runtime/pets/ember/pet_ember_var05_stageD.png
+    - assets/runtime/pets/ember/pet_ember_var01_stageA.webp
+    - assets/runtime/pets/ember/pet_ember_var01_stageB.webp
+    - assets/runtime/pets/ember/pet_ember_var01_stageC.webp
+    - assets/runtime/pets/ember/pet_ember_var01_stageD.webp
+    - assets/runtime/pets/ember/pet_ember_var02_stageA.webp
+    - assets/runtime/pets/ember/pet_ember_var02_stageB.webp
+    - assets/runtime/pets/ember/pet_ember_var02_stageC.webp
+    - assets/runtime/pets/ember/pet_ember_var02_stageD.webp
+    - assets/runtime/pets/ember/pet_ember_var03_stageA.webp
+    - assets/runtime/pets/ember/pet_ember_var03_stageB.webp
+    - assets/runtime/pets/ember/pet_ember_var03_stageC.webp
+    - assets/runtime/pets/ember/pet_ember_var03_stageD.webp
+    - assets/runtime/pets/ember/pet_ember_var04_stageA.webp
+    - assets/runtime/pets/ember/pet_ember_var04_stageB.webp
+    - assets/runtime/pets/ember/pet_ember_var04_stageC.webp
+    - assets/runtime/pets/ember/pet_ember_var04_stageD.webp
+    - assets/runtime/pets/ember/pet_ember_var05_stageA.webp
+    - assets/runtime/pets/ember/pet_ember_var05_stageB.webp
+    - assets/runtime/pets/ember/pet_ember_var05_stageC.webp
+    - assets/runtime/pets/ember/pet_ember_var05_stageD.webp
     - assets/runtime/pets/ember/actions/pet_ember_var01_stageC_eat.webp
     - assets/runtime/pets/ember/actions/pet_ember_var01_stageC_pat.webp
     - assets/runtime/pets/ember/actions/pet_ember_var01_stageC_play.webp
     - assets/runtime/pets/ember/actions/pet_ember_var01_stageC_bath.webp
-    - assets/runtime/pets/hamster/pet_hamster_var01_stageA.png
-    - assets/runtime/pets/hamster/pet_hamster_var01_stageB.png
-    - assets/runtime/pets/hamster/pet_hamster_var01_stageC.png
-    - assets/runtime/pets/hamster/pet_hamster_var01_stageD.png
-    - assets/runtime/pets/hamster/pet_hamster_var02_stageA.png
-    - assets/runtime/pets/hamster/pet_hamster_var02_stageB.png
-    - assets/runtime/pets/hamster/pet_hamster_var02_stageC.png
-    - assets/runtime/pets/hamster/pet_hamster_var02_stageD.png
-    - assets/runtime/pets/hamster/pet_hamster_var03_stageA.png
-    - assets/runtime/pets/hamster/pet_hamster_var03_stageB.png
-    - assets/runtime/pets/hamster/pet_hamster_var03_stageC.png
-    - assets/runtime/pets/hamster/pet_hamster_var03_stageD.png
-    - assets/runtime/pets/hamster/pet_hamster_var04_stageA.png
-    - assets/runtime/pets/hamster/pet_hamster_var04_stageB.png
-    - assets/runtime/pets/hamster/pet_hamster_var04_stageC.png
-    - assets/runtime/pets/hamster/pet_hamster_var04_stageD.png
-    - assets/runtime/pets/hamster/pet_hamster_var05_stageA.png
-    - assets/runtime/pets/hamster/pet_hamster_var05_stageB.png
-    - assets/runtime/pets/hamster/pet_hamster_var05_stageC.png
-    - assets/runtime/pets/hamster/pet_hamster_var05_stageD.png
+    - assets/runtime/pets/hamster/pet_hamster_var01_stageA.webp
+    - assets/runtime/pets/hamster/pet_hamster_var01_stageB.webp
+    - assets/runtime/pets/hamster/pet_hamster_var01_stageC.webp
+    - assets/runtime/pets/hamster/pet_hamster_var01_stageD.webp
+    - assets/runtime/pets/hamster/pet_hamster_var02_stageA.webp
+    - assets/runtime/pets/hamster/pet_hamster_var02_stageB.webp
+    - assets/runtime/pets/hamster/pet_hamster_var02_stageC.webp
+    - assets/runtime/pets/hamster/pet_hamster_var02_stageD.webp
+    - assets/runtime/pets/hamster/pet_hamster_var03_stageA.webp
+    - assets/runtime/pets/hamster/pet_hamster_var03_stageB.webp
+    - assets/runtime/pets/hamster/pet_hamster_var03_stageC.webp
+    - assets/runtime/pets/hamster/pet_hamster_var03_stageD.webp
+    - assets/runtime/pets/hamster/pet_hamster_var04_stageA.webp
+    - assets/runtime/pets/hamster/pet_hamster_var04_stageB.webp
+    - assets/runtime/pets/hamster/pet_hamster_var04_stageC.webp
+    - assets/runtime/pets/hamster/pet_hamster_var04_stageD.webp
+    - assets/runtime/pets/hamster/pet_hamster_var05_stageA.webp
+    - assets/runtime/pets/hamster/pet_hamster_var05_stageB.webp
+    - assets/runtime/pets/hamster/pet_hamster_var05_stageC.webp
+    - assets/runtime/pets/hamster/pet_hamster_var05_stageD.webp
     - assets/runtime/pets/hamster/actions/pet_hamster_var01_stageC_eat.webp
     - assets/runtime/pets/hamster/actions/pet_hamster_var01_stageC_pat.webp
     - assets/runtime/pets/hamster/actions/pet_hamster_var01_stageC_play.webp
     - assets/runtime/pets/hamster/actions/pet_hamster_var01_stageC_bath.webp
-    - assets/runtime/pets/parrot/pet_parrot_var01_stageA.png
-    - assets/runtime/pets/parrot/pet_parrot_var01_stageB.png
-    - assets/runtime/pets/parrot/pet_parrot_var01_stageC.png
-    - assets/runtime/pets/parrot/pet_parrot_var01_stageD.png
-    - assets/runtime/pets/parrot/pet_parrot_var02_stageA.png
-    - assets/runtime/pets/parrot/pet_parrot_var02_stageB.png
-    - assets/runtime/pets/parrot/pet_parrot_var02_stageC.png
-    - assets/runtime/pets/parrot/pet_parrot_var02_stageD.png
-    - assets/runtime/pets/parrot/pet_parrot_var03_stageA.png
-    - assets/runtime/pets/parrot/pet_parrot_var03_stageB.png
-    - assets/runtime/pets/parrot/pet_parrot_var03_stageC.png
-    - assets/runtime/pets/parrot/pet_parrot_var03_stageD.png
-    - assets/runtime/pets/parrot/pet_parrot_var04_stageA.png
-    - assets/runtime/pets/parrot/pet_parrot_var04_stageB.png
-    - assets/runtime/pets/parrot/pet_parrot_var04_stageC.png
-    - assets/runtime/pets/parrot/pet_parrot_var04_stageD.png
-    - assets/runtime/pets/parrot/pet_parrot_var05_stageA.png
-    - assets/runtime/pets/parrot/pet_parrot_var05_stageB.png
-    - assets/runtime/pets/parrot/pet_parrot_var05_stageC.png
-    - assets/runtime/pets/parrot/pet_parrot_var05_stageD.png
+    - assets/runtime/pets/parrot/pet_parrot_var01_stageA.webp
+    - assets/runtime/pets/parrot/pet_parrot_var01_stageB.webp
+    - assets/runtime/pets/parrot/pet_parrot_var01_stageC.webp
+    - assets/runtime/pets/parrot/pet_parrot_var01_stageD.webp
+    - assets/runtime/pets/parrot/pet_parrot_var02_stageA.webp
+    - assets/runtime/pets/parrot/pet_parrot_var02_stageB.webp
+    - assets/runtime/pets/parrot/pet_parrot_var02_stageC.webp
+    - assets/runtime/pets/parrot/pet_parrot_var02_stageD.webp
+    - assets/runtime/pets/parrot/pet_parrot_var03_stageA.webp
+    - assets/runtime/pets/parrot/pet_parrot_var03_stageB.webp
+    - assets/runtime/pets/parrot/pet_parrot_var03_stageC.webp
+    - assets/runtime/pets/parrot/pet_parrot_var03_stageD.webp
+    - assets/runtime/pets/parrot/pet_parrot_var04_stageA.webp
+    - assets/runtime/pets/parrot/pet_parrot_var04_stageB.webp
+    - assets/runtime/pets/parrot/pet_parrot_var04_stageC.webp
+    - assets/runtime/pets/parrot/pet_parrot_var04_stageD.webp
+    - assets/runtime/pets/parrot/pet_parrot_var05_stageA.webp
+    - assets/runtime/pets/parrot/pet_parrot_var05_stageB.webp
+    - assets/runtime/pets/parrot/pet_parrot_var05_stageC.webp
+    - assets/runtime/pets/parrot/pet_parrot_var05_stageD.webp
     - assets/runtime/pets/parrot/actions/pet_parrot_var01_stageC_eat.webp
     - assets/runtime/pets/parrot/actions/pet_parrot_var01_stageC_pat.webp
     - assets/runtime/pets/parrot/actions/pet_parrot_var01_stageC_play.webp
     - assets/runtime/pets/parrot/actions/pet_parrot_var01_stageC_bath.webp
-    - assets/runtime/pets/rabbit/pet_rabbit_var01_stageA.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var01_stageB.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var01_stageC.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var01_stageD.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var02_stageA.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var02_stageB.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var02_stageC.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var02_stageD.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var03_stageA.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var03_stageB.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var03_stageC.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var03_stageD.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var04_stageA.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var04_stageB.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var04_stageC.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var04_stageD.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var05_stageA.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var05_stageB.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var05_stageC.png
-    - assets/runtime/pets/rabbit/pet_rabbit_var05_stageD.png
+    - assets/runtime/pets/rabbit/pet_rabbit_var01_stageA.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var01_stageB.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var01_stageC.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var01_stageD.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var02_stageA.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var02_stageB.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var02_stageC.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var02_stageD.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var03_stageA.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var03_stageB.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var03_stageC.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var03_stageD.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var04_stageA.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var04_stageB.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var04_stageC.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var04_stageD.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var05_stageA.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var05_stageB.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var05_stageC.webp
+    - assets/runtime/pets/rabbit/pet_rabbit_var05_stageD.webp
     - assets/runtime/pets/rabbit/actions/pet_rabbit_var01_stageC_eat.webp
     - assets/runtime/pets/rabbit/actions/pet_rabbit_var01_stageC_pat.webp
     - assets/runtime/pets/rabbit/actions/pet_rabbit_var01_stageC_play.webp
     - assets/runtime/pets/rabbit/actions/pet_rabbit_var01_stageC_bath.webp
-    - assets/runtime/pets/shiba/pet_shiba_var01_stageA.png
-    - assets/runtime/pets/shiba/pet_shiba_var01_stageB.png
-    - assets/runtime/pets/shiba/pet_shiba_var01_stageC.png
-    - assets/runtime/pets/shiba/pet_shiba_var01_stageD.png
-    - assets/runtime/pets/shiba/pet_shiba_var02_stageA.png
-    - assets/runtime/pets/shiba/pet_shiba_var02_stageB.png
-    - assets/runtime/pets/shiba/pet_shiba_var02_stageC.png
-    - assets/runtime/pets/shiba/pet_shiba_var02_stageD.png
-    - assets/runtime/pets/shiba/pet_shiba_var03_stageA.png
-    - assets/runtime/pets/shiba/pet_shiba_var03_stageB.png
-    - assets/runtime/pets/shiba/pet_shiba_var03_stageC.png
-    - assets/runtime/pets/shiba/pet_shiba_var03_stageD.png
-    - assets/runtime/pets/shiba/pet_shiba_var04_stageA.png
-    - assets/runtime/pets/shiba/pet_shiba_var04_stageB.png
-    - assets/runtime/pets/shiba/pet_shiba_var04_stageC.png
-    - assets/runtime/pets/shiba/pet_shiba_var04_stageD.png
-    - assets/runtime/pets/shiba/pet_shiba_var05_stageA.png
-    - assets/runtime/pets/shiba/pet_shiba_var05_stageB.png
-    - assets/runtime/pets/shiba/pet_shiba_var05_stageC.png
-    - assets/runtime/pets/shiba/pet_shiba_var05_stageD.png
+    - assets/runtime/pets/shiba/pet_shiba_var01_stageA.webp
+    - assets/runtime/pets/shiba/pet_shiba_var01_stageB.webp
+    - assets/runtime/pets/shiba/pet_shiba_var01_stageC.webp
+    - assets/runtime/pets/shiba/pet_shiba_var01_stageD.webp
+    - assets/runtime/pets/shiba/pet_shiba_var02_stageA.webp
+    - assets/runtime/pets/shiba/pet_shiba_var02_stageB.webp
+    - assets/runtime/pets/shiba/pet_shiba_var02_stageC.webp
+    - assets/runtime/pets/shiba/pet_shiba_var02_stageD.webp
+    - assets/runtime/pets/shiba/pet_shiba_var03_stageA.webp
+    - assets/runtime/pets/shiba/pet_shiba_var03_stageB.webp
+    - assets/runtime/pets/shiba/pet_shiba_var03_stageC.webp
+    - assets/runtime/pets/shiba/pet_shiba_var03_stageD.webp
+    - assets/runtime/pets/shiba/pet_shiba_var04_stageA.webp
+    - assets/runtime/pets/shiba/pet_shiba_var04_stageB.webp
+    - assets/runtime/pets/shiba/pet_shiba_var04_stageC.webp
+    - assets/runtime/pets/shiba/pet_shiba_var04_stageD.webp
+    - assets/runtime/pets/shiba/pet_shiba_var05_stageA.webp
+    - assets/runtime/pets/shiba/pet_shiba_var05_stageB.webp
+    - assets/runtime/pets/shiba/pet_shiba_var05_stageC.webp
+    - assets/runtime/pets/shiba/pet_shiba_var05_stageD.webp
     - assets/runtime/pets/shiba/actions/pet_shiba_var01_stageC_eat.webp
     - assets/runtime/pets/shiba/actions/pet_shiba_var01_stageC_pat.webp
     - assets/runtime/pets/shiba/actions/pet_shiba_var01_stageC_play.webp
     - assets/runtime/pets/shiba/actions/pet_shiba_var01_stageC_bath.webp
-    - assets/runtime/pets/snake/pet_snake_var01_stageA.png
-    - assets/runtime/pets/snake/pet_snake_var01_stageB.png
-    - assets/runtime/pets/snake/pet_snake_var01_stageC.png
-    - assets/runtime/pets/snake/pet_snake_var01_stageD.png
-    - assets/runtime/pets/snake/pet_snake_var02_stageA.png
-    - assets/runtime/pets/snake/pet_snake_var02_stageB.png
-    - assets/runtime/pets/snake/pet_snake_var02_stageC.png
-    - assets/runtime/pets/snake/pet_snake_var02_stageD.png
-    - assets/runtime/pets/snake/pet_snake_var03_stageA.png
-    - assets/runtime/pets/snake/pet_snake_var03_stageB.png
-    - assets/runtime/pets/snake/pet_snake_var03_stageC.png
-    - assets/runtime/pets/snake/pet_snake_var03_stageD.png
-    - assets/runtime/pets/snake/pet_snake_var04_stageA.png
-    - assets/runtime/pets/snake/pet_snake_var04_stageB.png
-    - assets/runtime/pets/snake/pet_snake_var04_stageC.png
-    - assets/runtime/pets/snake/pet_snake_var04_stageD.png
-    - assets/runtime/pets/snake/pet_snake_var05_stageA.png
-    - assets/runtime/pets/snake/pet_snake_var05_stageB.png
-    - assets/runtime/pets/snake/pet_snake_var05_stageC.png
-    - assets/runtime/pets/snake/pet_snake_var05_stageD.png
+    - assets/runtime/pets/snake/pet_snake_var01_stageA.webp
+    - assets/runtime/pets/snake/pet_snake_var01_stageB.webp
+    - assets/runtime/pets/snake/pet_snake_var01_stageC.webp
+    - assets/runtime/pets/snake/pet_snake_var01_stageD.webp
+    - assets/runtime/pets/snake/pet_snake_var02_stageA.webp
+    - assets/runtime/pets/snake/pet_snake_var02_stageB.webp
+    - assets/runtime/pets/snake/pet_snake_var02_stageC.webp
+    - assets/runtime/pets/snake/pet_snake_var02_stageD.webp
+    - assets/runtime/pets/snake/pet_snake_var03_stageA.webp
+    - assets/runtime/pets/snake/pet_snake_var03_stageB.webp
+    - assets/runtime/pets/snake/pet_snake_var03_stageC.webp
+    - assets/runtime/pets/snake/pet_snake_var03_stageD.webp
+    - assets/runtime/pets/snake/pet_snake_var04_stageA.webp
+    - assets/runtime/pets/snake/pet_snake_var04_stageB.webp
+    - assets/runtime/pets/snake/pet_snake_var04_stageC.webp
+    - assets/runtime/pets/snake/pet_snake_var04_stageD.webp
+    - assets/runtime/pets/snake/pet_snake_var05_stageA.webp
+    - assets/runtime/pets/snake/pet_snake_var05_stageB.webp
+    - assets/runtime/pets/snake/pet_snake_var05_stageC.webp
+    - assets/runtime/pets/snake/pet_snake_var05_stageD.webp
     - assets/runtime/pets/snake/actions/pet_snake_var01_stageC_eat.webp
     - assets/runtime/pets/snake/actions/pet_snake_var01_stageC_pat.webp
     - assets/runtime/pets/snake/actions/pet_snake_var01_stageC_play.webp
     - assets/runtime/pets/snake/actions/pet_snake_var01_stageC_bath.webp
-    - assets/runtime/pets/starbug/pet_starbug_var01_stageA.png
-    - assets/runtime/pets/starbug/pet_starbug_var01_stageB.png
-    - assets/runtime/pets/starbug/pet_starbug_var01_stageC.png
-    - assets/runtime/pets/starbug/pet_starbug_var01_stageD.png
-    - assets/runtime/pets/starbug/pet_starbug_var02_stageA.png
-    - assets/runtime/pets/starbug/pet_starbug_var02_stageB.png
-    - assets/runtime/pets/starbug/pet_starbug_var02_stageC.png
-    - assets/runtime/pets/starbug/pet_starbug_var02_stageD.png
-    - assets/runtime/pets/starbug/pet_starbug_var03_stageA.png
-    - assets/runtime/pets/starbug/pet_starbug_var03_stageB.png
-    - assets/runtime/pets/starbug/pet_starbug_var03_stageC.png
-    - assets/runtime/pets/starbug/pet_starbug_var03_stageD.png
-    - assets/runtime/pets/starbug/pet_starbug_var04_stageA.png
-    - assets/runtime/pets/starbug/pet_starbug_var04_stageB.png
-    - assets/runtime/pets/starbug/pet_starbug_var04_stageC.png
-    - assets/runtime/pets/starbug/pet_starbug_var04_stageD.png
-    - assets/runtime/pets/starbug/pet_starbug_var05_stageA.png
-    - assets/runtime/pets/starbug/pet_starbug_var05_stageB.png
-    - assets/runtime/pets/starbug/pet_starbug_var05_stageC.png
-    - assets/runtime/pets/starbug/pet_starbug_var05_stageD.png
+    - assets/runtime/pets/starbug/pet_starbug_var01_stageA.webp
+    - assets/runtime/pets/starbug/pet_starbug_var01_stageB.webp
+    - assets/runtime/pets/starbug/pet_starbug_var01_stageC.webp
+    - assets/runtime/pets/starbug/pet_starbug_var01_stageD.webp
+    - assets/runtime/pets/starbug/pet_starbug_var02_stageA.webp
+    - assets/runtime/pets/starbug/pet_starbug_var02_stageB.webp
+    - assets/runtime/pets/starbug/pet_starbug_var02_stageC.webp
+    - assets/runtime/pets/starbug/pet_starbug_var02_stageD.webp
+    - assets/runtime/pets/starbug/pet_starbug_var03_stageA.webp
+    - assets/runtime/pets/starbug/pet_starbug_var03_stageB.webp
+    - assets/runtime/pets/starbug/pet_starbug_var03_stageC.webp
+    - assets/runtime/pets/starbug/pet_starbug_var03_stageD.webp
+    - assets/runtime/pets/starbug/pet_starbug_var04_stageA.webp
+    - assets/runtime/pets/starbug/pet_starbug_var04_stageB.webp
+    - assets/runtime/pets/starbug/pet_starbug_var04_stageC.webp
+    - assets/runtime/pets/starbug/pet_starbug_var04_stageD.webp
+    - assets/runtime/pets/starbug/pet_starbug_var05_stageA.webp
+    - assets/runtime/pets/starbug/pet_starbug_var05_stageB.webp
+    - assets/runtime/pets/starbug/pet_starbug_var05_stageC.webp
+    - assets/runtime/pets/starbug/pet_starbug_var05_stageD.webp
     - assets/runtime/pets/starbug/actions/pet_starbug_var01_stageC_eat.webp
     - assets/runtime/pets/starbug/actions/pet_starbug_var01_stageC_pat.webp
     - assets/runtime/pets/starbug/actions/pet_starbug_var01_stageC_play.webp
     - assets/runtime/pets/starbug/actions/pet_starbug_var01_stageC_bath.webp
-    - assets/runtime/pets/turtle/pet_turtle_var01_stageA.png
-    - assets/runtime/pets/turtle/pet_turtle_var01_stageB.png
-    - assets/runtime/pets/turtle/pet_turtle_var01_stageC.png
-    - assets/runtime/pets/turtle/pet_turtle_var01_stageD.png
-    - assets/runtime/pets/turtle/pet_turtle_var02_stageA.png
-    - assets/runtime/pets/turtle/pet_turtle_var02_stageB.png
-    - assets/runtime/pets/turtle/pet_turtle_var02_stageC.png
-    - assets/runtime/pets/turtle/pet_turtle_var02_stageD.png
-    - assets/runtime/pets/turtle/pet_turtle_var03_stageA.png
-    - assets/runtime/pets/turtle/pet_turtle_var03_stageB.png
-    - assets/runtime/pets/turtle/pet_turtle_var03_stageC.png
-    - assets/runtime/pets/turtle/pet_turtle_var03_stageD.png
-    - assets/runtime/pets/turtle/pet_turtle_var04_stageA.png
-    - assets/runtime/pets/turtle/pet_turtle_var04_stageB.png
-    - assets/runtime/pets/turtle/pet_turtle_var04_stageC.png
-    - assets/runtime/pets/turtle/pet_turtle_var04_stageD.png
-    - assets/runtime/pets/turtle/pet_turtle_var05_stageA.png
-    - assets/runtime/pets/turtle/pet_turtle_var05_stageB.png
-    - assets/runtime/pets/turtle/pet_turtle_var05_stageC.png
-    - assets/runtime/pets/turtle/pet_turtle_var05_stageD.png
+    - assets/runtime/pets/turtle/pet_turtle_var01_stageA.webp
+    - assets/runtime/pets/turtle/pet_turtle_var01_stageB.webp
+    - assets/runtime/pets/turtle/pet_turtle_var01_stageC.webp
+    - assets/runtime/pets/turtle/pet_turtle_var01_stageD.webp
+    - assets/runtime/pets/turtle/pet_turtle_var02_stageA.webp
+    - assets/runtime/pets/turtle/pet_turtle_var02_stageB.webp
+    - assets/runtime/pets/turtle/pet_turtle_var02_stageC.webp
+    - assets/runtime/pets/turtle/pet_turtle_var02_stageD.webp
+    - assets/runtime/pets/turtle/pet_turtle_var03_stageA.webp
+    - assets/runtime/pets/turtle/pet_turtle_var03_stageB.webp
+    - assets/runtime/pets/turtle/pet_turtle_var03_stageC.webp
+    - assets/runtime/pets/turtle/pet_turtle_var03_stageD.webp
+    - assets/runtime/pets/turtle/pet_turtle_var04_stageA.webp
+    - assets/runtime/pets/turtle/pet_turtle_var04_stageB.webp
+    - assets/runtime/pets/turtle/pet_turtle_var04_stageC.webp
+    - assets/runtime/pets/turtle/pet_turtle_var04_stageD.webp
+    - assets/runtime/pets/turtle/pet_turtle_var05_stageA.webp
+    - assets/runtime/pets/turtle/pet_turtle_var05_stageB.webp
+    - assets/runtime/pets/turtle/pet_turtle_var05_stageC.webp
+    - assets/runtime/pets/turtle/pet_turtle_var05_stageD.webp
     - assets/runtime/pets/turtle/actions/pet_turtle_var01_stageC_eat.webp
     - assets/runtime/pets/turtle/actions/pet_turtle_var01_stageC_pat.webp
     - assets/runtime/pets/turtle/actions/pet_turtle_var01_stageC_play.webp
     - assets/runtime/pets/turtle/actions/pet_turtle_var01_stageC_bath.webp
-    - assets/runtime/pets/uni/pet_uni_var01_stageA.png
-    - assets/runtime/pets/uni/pet_uni_var01_stageB.png
-    - assets/runtime/pets/uni/pet_uni_var01_stageC.png
-    - assets/runtime/pets/uni/pet_uni_var01_stageD.png
-    - assets/runtime/pets/uni/pet_uni_var02_stageA.png
-    - assets/runtime/pets/uni/pet_uni_var02_stageB.png
-    - assets/runtime/pets/uni/pet_uni_var02_stageC.png
-    - assets/runtime/pets/uni/pet_uni_var02_stageD.png
-    - assets/runtime/pets/uni/pet_uni_var03_stageA.png
-    - assets/runtime/pets/uni/pet_uni_var03_stageB.png
-    - assets/runtime/pets/uni/pet_uni_var03_stageC.png
-    - assets/runtime/pets/uni/pet_uni_var03_stageD.png
-    - assets/runtime/pets/uni/pet_uni_var04_stageA.png
-    - assets/runtime/pets/uni/pet_uni_var04_stageB.png
-    - assets/runtime/pets/uni/pet_uni_var04_stageC.png
-    - assets/runtime/pets/uni/pet_uni_var04_stageD.png
-    - assets/runtime/pets/uni/pet_uni_var05_stageA.png
-    - assets/runtime/pets/uni/pet_uni_var05_stageB.png
-    - assets/runtime/pets/uni/pet_uni_var05_stageC.png
-    - assets/runtime/pets/uni/pet_uni_var05_stageD.png
+    - assets/runtime/pets/uni/pet_uni_var01_stageA.webp
+    - assets/runtime/pets/uni/pet_uni_var01_stageB.webp
+    - assets/runtime/pets/uni/pet_uni_var01_stageC.webp
+    - assets/runtime/pets/uni/pet_uni_var01_stageD.webp
+    - assets/runtime/pets/uni/pet_uni_var02_stageA.webp
+    - assets/runtime/pets/uni/pet_uni_var02_stageB.webp
+    - assets/runtime/pets/uni/pet_uni_var02_stageC.webp
+    - assets/runtime/pets/uni/pet_uni_var02_stageD.webp
+    - assets/runtime/pets/uni/pet_uni_var03_stageA.webp
+    - assets/runtime/pets/uni/pet_uni_var03_stageB.webp
+    - assets/runtime/pets/uni/pet_uni_var03_stageC.webp
+    - assets/runtime/pets/uni/pet_uni_var03_stageD.webp
+    - assets/runtime/pets/uni/pet_uni_var04_stageA.webp
+    - assets/runtime/pets/uni/pet_uni_var04_stageB.webp
+    - assets/runtime/pets/uni/pet_uni_var04_stageC.webp
+    - assets/runtime/pets/uni/pet_uni_var04_stageD.webp
+    - assets/runtime/pets/uni/pet_uni_var05_stageA.webp
+    - assets/runtime/pets/uni/pet_uni_var05_stageB.webp
+    - assets/runtime/pets/uni/pet_uni_var05_stageC.webp
+    - assets/runtime/pets/uni/pet_uni_var05_stageD.webp
     - assets/runtime/pets/uni/actions/pet_uni_var01_stageC_eat.webp
     - assets/runtime/pets/uni/actions/pet_uni_var01_stageC_pat.webp
     - assets/runtime/pets/uni/actions/pet_uni_var01_stageC_play.webp

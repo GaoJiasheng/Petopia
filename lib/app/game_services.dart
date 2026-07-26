@@ -338,10 +338,10 @@ class GameServices {
 
   /// 毕业当前在养宠：暖绒结算 + 生成旅程 → 转漫游、清空在养位。
   /// 返回旅程站点数（供典礼展示）；无在养宠或经验未达标返回 null。
-  Future<int?> graduateCurrent() async {
+  Future<int?> graduateCurrent({String? routeTheme}) async {
     final pet = _session.current;
     if (pet == null || pet.exp < GameConfig.graduationExp) return null;
-    final journeyId = await graduation.graduate(pet);
+    final journeyId = await graduation.graduate(pet, routeTheme: routeTheme);
     _session.roaming.add(pet);
     _session.current = null;
     revisit.scheduleNextRevisit(pet); // 漫游开始即排下次回访
@@ -569,7 +569,7 @@ class GameServices {
   int _actionAchievementValue(Map<String, dynamic> params) {
     final actions = params['actions'];
     if (actions is List) {
-      if (params['dailyMax'] == true) {
+      if (params['dailyMax'] == true || params['eachActionCount'] == 1) {
         return _session.achievementSignals['custom:daily_fullcare'] ?? 0;
       }
       return actions.whereType<String>().where((action) {
@@ -774,6 +774,62 @@ class GameServices {
         1;
   }
 
+  void recordGrowthMemories(Pet pet, int beforeLevel, int afterLevel) {
+    if (afterLevel <= beforeLevel) return;
+    final recordedAt = clock.now();
+    var order = 0;
+    for (final level in const <int>[2, 3, 4, 6, 7, 9]) {
+      if (beforeLevel >= level || afterLevel < level) continue;
+      final text = switch (level) {
+        2 => '${pet.name}开始分得清你的脚步声了。',
+        3 => '${pet.name}在院子里选定了最喜欢发呆的角落。',
+        4 => '每次听见自己的名字，${pet.name}都会先抬头找你。',
+        6 => _personalityGrowthMemory(pet),
+        7 => '${pet.name}开始把院子里的花、风和来客都当成自己的朋友。',
+        9 => '${pet.name}最近常望向院门外，也悄悄整理起自己的小行囊。',
+        _ => '',
+      };
+      _addYardMemory(
+        YardMemoryEntry(
+          id: 'growth:${pet.id}:lv$level',
+          type: 'growth',
+          text: text,
+          createdAt: recordedAt.add(Duration(microseconds: order++)),
+          petId: pet.id,
+        ),
+      );
+    }
+  }
+
+  String _personalityGrowthMemory(Pet pet) {
+    final habit = switch (pet.personality.firstOrNull) {
+      'p_glutton' => '会把最好吃的那一口留到最后，再认真看你一眼',
+      'p_energetic' => '每天跑完一圈后，都会回到你身边轻轻碰一下',
+      'p_lazy' => '已经学会在你最常停留的地方安心打盹',
+      'p_curious' => '遇见新东西时，总要先回头确认你也看见了',
+      'p_clingy' => '听见门响时，总会第一个跑过去等你',
+      'p_aloof' => '还是假装不在意，却总把休息的位置挪得离你更近',
+      'p_mischievous' || 'p_naughty' => '每次闯完小祸，都会若无其事地坐到你身边',
+      'p_gentle' => '会安静照看院子里比自己更小的来客',
+      'p_dreamy' => '睡醒后总像记得一个很长、很柔软的梦',
+      _ => '已经有了一个只有你最熟悉的小习惯',
+    };
+    return '${pet.name}$habit。';
+  }
+
+  void _addYardMemory(YardMemoryEntry memory) {
+    if (_session.yardMemories.any((item) => item.id == memory.id)) return;
+    _session.yardMemories.add(memory);
+    _session.yardMemories.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+    const maxMemories = 480;
+    while (_session.yardMemories.length > maxMemories) {
+      final oldestDaily = _session.yardMemories.indexWhere(
+        (item) => item.type != 'growth',
+      );
+      _session.yardMemories.removeAt(oldestDaily < 0 ? 0 : oldestDaily);
+    }
+  }
+
   void _recordResolvedEventFacts(
     PendingGameEvent pending,
     Pet? pet, {
@@ -786,6 +842,14 @@ class GameServices {
           1;
       if (pending.eventId == 'ev_s03') pet.wishId = 'ev_s03';
     }
+    final clueId = switch (pending.eventId) {
+      'ev_s08' => 'clue_ember',
+      'ev_s09' => 'clue_uni',
+      'ev_s17' => 'clue_starbug',
+      'ev_s18' => 'clue_boo',
+      _ => null,
+    };
+    if (clueId != null) unlock.bumpClue(clueId);
     final companionBranch =
         pending.eventId == 'ev_s05' ||
         (pending.eventId == 'ev_d16' &&
@@ -813,6 +877,7 @@ class GameServices {
       if (completeLocationCount > 0 &&
           visitedLocations.length >= completeLocationCount) {
         _recordUniqueSignal('action:journey_complete', journey.id);
+        _processTravelNote(pet, journey, now);
       }
     }
     // 回访：在院子驻留 1–2 天；到期后再安排下一次。
@@ -843,6 +908,41 @@ class GameServices {
       _session.revisitorArrivalSeen = false;
       _session.revisitorInteracted = false;
     }
+  }
+
+  void _processTravelNote(Pet pet, Journey journey, DateTime now) {
+    final next = journey.nextTravelNoteAt;
+    if (next == null) {
+      journey.nextTravelNoteAt = now.add(
+        Duration(days: 7 + (_rng() * 4).floor()),
+      );
+      return;
+    }
+    if (now.isBefore(next)) return;
+    final detail = switch (pet.personality.firstOrNull) {
+      'p_glutton' => '说最近学会了分辨每座城市点心出炉的时间',
+      'p_energetic' => '说自己又找到一条能迎着风跑很久的小路',
+      'p_lazy' => '说远方也有一块晒起来刚刚好的石头',
+      'p_curious' => '说一路记下的问题已经装满了半本小册子',
+      'p_clingy' => '说每到一个新地方，还是会先想起院子的门',
+      'p_aloof' => '只写了一句“一切都好”，却在信封里夹了片叶子',
+      'p_mischievous' || 'p_naughty' => '说这次真的没有惹麻烦，至少没有很大的麻烦',
+      'p_gentle' => '说沿途遇见的小伙伴都被好好照顾着',
+      'p_dreamy' => '说昨晚梦见院子里的灯一直为它亮着',
+      _ => '说它仍在慢慢看世界，也一直记得回院子的路',
+    };
+    _addYardMemory(
+      YardMemoryEntry(
+        id: 'travel:${journey.id}:${next.microsecondsSinceEpoch}',
+        type: 'travel',
+        text: '远方近况：${pet.name}$detail。',
+        createdAt: now,
+        petId: pet.id,
+      ),
+    );
+    journey.nextTravelNoteAt = now.add(
+      Duration(days: 7 + (_rng() * 4).floor()),
+    );
   }
 
   RevisitInteractionOutcome? interactRevisitor(String petId) {
@@ -883,7 +983,7 @@ class GameServices {
   Future<void> _dispatch(ScheduledJob job) async {
     final pet = _session.current;
     final now = clock.now();
-    _clearExpiredActiveVisitor(now);
+    clearExpiredActiveVisitor(now);
     switch (job.type) {
       case JobType.visitorCheck:
         if (_session.activeVisitor != null) break;
@@ -1007,6 +1107,7 @@ class GameServices {
     final season = LocalCalendar.season(now);
     final time = LocalCalendar.timeOfDay(now);
     final weather = weatherAt(now);
+    final recentMoods = _recentEventMoods(pet.id, now);
     final weighted = <MapEntry<Event, double>>[];
     var total = 0.0;
     for (final event in events) {
@@ -1017,6 +1118,7 @@ class GameServices {
       weight *= event.weights.weather[weather] ?? 1.0;
       weight *= event.weights.timeOfDay[time] ?? 1.0;
       weight *= event.weights.season[season] ?? 1.0;
+      if (recentMoods.contains(_eventMood(event))) weight *= 0.08;
       if (weight <= 0) continue;
       total += weight;
       weighted.add(MapEntry(event, weight));
@@ -1029,6 +1131,34 @@ class GameServices {
       if (roll < cursor) return entry.key;
     }
     return weighted.last.key;
+  }
+
+  Set<String> _recentEventMoods(String petId, DateTime now) {
+    final moods = <String>{};
+    for (final event in _content.events) {
+      final firedAt = _session.eventLastFiredAt['$petId:${event.id}'];
+      if (firedAt == null) continue;
+      if (now.difference(firedAt).inDays > 4) continue;
+      moods.add(_eventMood(event));
+    }
+    return moods;
+  }
+
+  String _eventMood(Event event) {
+    if (event.weights.requiresVisitor != null) return 'visitor';
+    if (event.weights.requiredWeather.isNotEmpty ||
+        event.weights.weather.isNotEmpty) {
+      return 'weather';
+    }
+    final personality = event.weights.personality.keys.firstOrNull;
+    return switch (personality) {
+      'p_energetic' || 'p_mischievous' || 'p_naughty' => 'playful',
+      'p_lazy' || 'p_dreamy' => 'quiet',
+      'p_curious' => 'explore',
+      'p_glutton' => 'food',
+      'p_clingy' || 'p_gentle' || 'p_aloof' || 'p_timid' => 'bond',
+      _ => event.type == EventType.special ? 'special' : 'everyday',
+    };
   }
 
   void _queueEvent(Event event, Pet pet, DateTime now) {
@@ -1231,11 +1361,31 @@ class GameServices {
     };
   }
 
-  void _clearExpiredActiveVisitor(DateTime now) {
+  bool clearExpiredActiveVisitor(DateTime now) {
     final active = _session.activeVisitor;
-    if (active != null && !active.leavesAt.isAfter(now)) {
-      _session.activeVisitor = null;
-    }
+    if (active == null || active.leavesAt.isAfter(now)) return false;
+    final visitorName = _content.visitorById(active.visitorId)?.name ?? '今天的来客';
+    final petName = _session.allPets
+        .where((pet) => pet.id == active.withPetId)
+        .map((pet) => pet.name)
+        .firstOrNull;
+    final text = active.interacted
+        ? petName == null
+              ? '$visitorName离开前在院子里停了很久，像是在认真记住回来的路。'
+              : '$visitorName离开前又回头看了看$petName，院子里留下了一段安静的脚印。'
+        : '$visitorName轻轻来过，没有打扰谁，只在院子边留下一点到访的痕迹。';
+    _addYardMemory(
+      YardMemoryEntry(
+        id: 'visitor:${active.visitorId}:${active.arrivedAt.microsecondsSinceEpoch}',
+        type: 'visitor',
+        text: text,
+        createdAt: active.leavesAt,
+        petId: active.withPetId,
+        visitorId: active.visitorId,
+      ),
+    );
+    _session.activeVisitor = null;
+    return true;
   }
 
   void _consumeVisitorFood() {

@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
+import '../audio/route_audio.dart';
 import '../domain/enums.dart';
 import 'adaptive_layout.dart';
 import 'pet_art.dart';
+import 'petopia_theme.dart';
 import 'yard_art.dart';
 import 'widgets/pet_sprite.dart';
 
@@ -28,24 +30,25 @@ class GraduationCeremonyScreen extends ConsumerStatefulWidget {
 }
 
 class _GraduationCeremonyScreenState
-    extends ConsumerState<GraduationCeremonyScreen> {
-  static const _ink = Color(0xFF6B5445);
-  static const _muted = Color(0xFF8A7A6A);
-  static const _accent = Color(0xFFE8A15C);
+    extends ConsumerState<GraduationCeremonyScreen>
+    with RouteAudio<GraduationCeremonyScreen> {
+  static const _ink = PetopiaColors.ink;
+  static const _muted = PetopiaColors.mutedText;
+  static const _accent = PetopiaColors.actionAccent;
 
   bool _sending = false;
   bool _sent = false;
   int? _stops;
+  String _routeTheme = '海滨';
 
   @override
-  void initState() {
-    super.initState();
-    ref.read(audioServiceProvider).playBgm(Bgm.graduation);
-  }
+  Bgm get routeBgm => Bgm.graduation;
 
   Future<void> _sendOff() async {
     setState(() => _sending = true);
-    final stops = await ref.read(gameControllerProvider.notifier).graduate();
+    final stops = await ref
+        .read(gameControllerProvider.notifier)
+        .graduate(routeTheme: _routeTheme);
     if (!mounted) return;
     setState(() {
       _sending = false;
@@ -85,7 +88,10 @@ class _GraduationCeremonyScreenState
                     child: ConstrainedBox(
                       constraints: BoxConstraints(maxWidth: wide ? 940 : 620),
                       child: AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 500),
+                        duration: PetopiaMotion.duration(
+                          context,
+                          const Duration(milliseconds: 500),
+                        ),
                         child: _sent
                             ? _sentView(context)
                             : _farewellView(context, petWidth, wide: wide),
@@ -132,6 +138,8 @@ class _GraduationCeremonyScreenState
           style: const TextStyle(fontSize: 15, color: _muted, height: 1.5),
         ),
         const SizedBox(height: 24),
+        _routePicker(),
+        const SizedBox(height: 18),
         _PrimaryButton(
           label: _sending ? '正在收拾行囊…' : '送它去旅行  🎒',
           onTap: _sending ? null : _sendOff,
@@ -184,6 +192,8 @@ class _GraduationCeremonyScreenState
                   const SizedBox(height: 20),
                   pet,
                   const SizedBox(height: 24),
+                  _routePicker(),
+                  const SizedBox(height: 18),
                   _PrimaryButton(
                     label: _sending ? '正在收拾行囊…' : '送它去旅行  🎒',
                     onTap: _sending ? null : _sendOff,
@@ -200,6 +210,63 @@ class _GraduationCeremonyScreenState
                 ],
               ),
       ),
+    );
+  }
+
+  Widget _routePicker() {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const Text(
+          '第一程，想让它往哪里走？',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: _muted,
+            fontSize: 13,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        const SizedBox(height: 9),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: SegmentedButton<String>(
+            segments: const [
+              ButtonSegment(
+                value: '海滨',
+                icon: Icon(Icons.waves_rounded, size: 18),
+                label: Text('海边'),
+              ),
+              ButtonSegment(
+                value: '森林',
+                icon: Icon(Icons.forest_rounded, size: 18),
+                label: Text('森林'),
+              ),
+              ButtonSegment(
+                value: '城市',
+                icon: Icon(Icons.location_city_rounded, size: 18),
+                label: Text('城市'),
+              ),
+            ],
+            selected: <String>{_routeTheme},
+            showSelectedIcon: false,
+            style: ButtonStyle(
+              visualDensity: VisualDensity.compact,
+              foregroundColor: WidgetStateProperty.resolveWith(
+                (states) =>
+                    states.contains(WidgetState.selected) ? _ink : _muted,
+              ),
+              backgroundColor: WidgetStateProperty.resolveWith(
+                (states) => states.contains(WidgetState.selected)
+                    ? const Color(0xFFFFE8C7)
+                    : const Color(0xFFFFFDF7),
+              ),
+            ),
+            onSelectionChanged: _sending
+                ? null
+                : (selected) => setState(() => _routeTheme = selected.first),
+          ),
+        ),
+      ],
     );
   }
 
@@ -227,7 +294,7 @@ class _GraduationCeremonyScreenState
             Text(
               stops == null
                   ? '它会一路旅行，常寄明信片回来。\n院子空出来了，去迎接下一位小伙伴吧。'
-                  : '它的旅途大约会经过 $stops 个地方，\n每隔些日子就会寄一张明信片回来 💌\n院子空出来了，去迎接下一位小伙伴吧。',
+                  : '它会先往${_routeLabel(_routeTheme)}走，旅途大约经过 $stops 个地方。\n每隔些日子就会寄一张明信片回来 💌\n院子空出来了，去迎接下一位小伙伴吧。',
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 15, color: _muted, height: 1.6),
             ),
@@ -247,6 +314,13 @@ class _GraduationCeremonyScreenState
     borderRadius: BorderRadius.circular(26),
     boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 16)],
   );
+
+  static String _routeLabel(String routeTheme) => switch (routeTheme) {
+    '海滨' => '有海风的地方',
+    '森林' => '树影深处',
+    '城市' => '热闹的街灯',
+    _ => '远方',
+  };
 }
 
 class _PrimaryButton extends StatelessWidget {
@@ -256,25 +330,21 @@ class _PrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
+    return FilledButton(
+      onPressed: onTap,
+      style: FilledButton.styleFrom(
+        backgroundColor: _GraduationCeremonyScreenState._accent,
+        foregroundColor: Colors.white,
+        disabledBackgroundColor: const Color(0xFFE6DFD0),
+        disabledForegroundColor: _GraduationCeremonyScreenState._muted,
+        minimumSize: const Size(0, 52),
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14),
-        decoration: BoxDecoration(
-          color: onTap == null
-              ? const Color(0xFFE6DFD0)
-              : _GraduationCeremonyScreenState._accent,
-          borderRadius: BorderRadius.circular(26),
-          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 8)],
-        ),
-        child: Text(
-          label,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(26)),
+      ),
+      child: Text(
+        label,
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
       ),
     );
   }

@@ -22,23 +22,33 @@ class FakeLogPort implements AuditLogPort {
 }
 
 Pet _pet(String id, int exp) => Pet(
-      id: id,
-      speciesId: 'pet_cat',
-      variantId: 'v1',
-      name: 'x',
-      personality: const ['p_curious', 'p_gentle'],
-      bornAt: DateTime.utc(2026, 7, 2),
-      lastOnlineAt: DateTime.utc(2026, 7, 2),
-      offlineDayKey: '2026-07-02',
-    )..exp = exp;
+  id: id,
+  speciesId: 'pet_cat',
+  variantId: 'v1',
+  name: 'x',
+  personality: const ['p_curious', 'p_gentle'],
+  bornAt: DateTime.utc(2026, 7, 2),
+  lastOnlineAt: DateTime.utc(2026, 7, 2),
+  offlineDayKey: '2026-07-02',
+)..exp = exp;
 
 ExpLogEntry _exp(String petId, int delta) => ExpLogEntry(
-      id: 'e', petId: petId, timestamp: DateTime.utc(2026, 7, 2),
-      sourceType: ExpSource.feed, delta: delta, levelAt: 1, expAfter: delta);
+  id: 'e',
+  petId: petId,
+  timestamp: DateTime.utc(2026, 7, 2),
+  sourceType: ExpSource.feed,
+  delta: delta,
+  levelAt: 1,
+  expAfter: delta,
+);
 
 CurrencyLog _cur(int delta) => CurrencyLog(
-      id: 'c', timestamp: DateTime.utc(2026, 7, 2), delta: delta,
-      reason: CurrencyReason.graduation, balanceAfter: delta);
+  id: 'c',
+  timestamp: DateTime.utc(2026, 7, 2),
+  delta: delta,
+  reason: CurrencyReason.graduation,
+  balanceAfter: delta,
+);
 
 void main() {
   test('一致时 ok=true，不改动', () async {

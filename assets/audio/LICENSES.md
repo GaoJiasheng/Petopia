@@ -13,7 +13,10 @@ This folder contains Petopia-specific music assets generated for this project.
 - Ambience/visitor voice batch: see
   `assets/audio/provenance/ambient_voc_provenance_manifest.json`.
 - Runtime `.m4a` files are platform-compatible transcodes of the declared WAV masters and inherit the same provenance.
-- These audio assets are not automatically covered by the repository root Apache License 2.0 unless the project owner explicitly adds them to that license.
+- The distribution license is the repository root `ASSET_LICENSE`; the root
+  Apache License 2.0 applies to source code, not these recordings.
+- The exact bundled inventory and hashes are recorded in
+  `assets/provenance/release_asset_manifest.json`.
 
 ## Source Declaration
 

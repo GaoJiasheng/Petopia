@@ -19,6 +19,7 @@ class PetSprite extends StatefulWidget {
   final PetStage? stage;
   final PetActionCue? cue; // 外部动作触发（喂/摸/玩/洗）
   final String? semanticLabel;
+  final bool reduceEffects;
   const PetSprite({
     super.key,
     required this.assetPath,
@@ -29,6 +30,7 @@ class PetSprite extends StatefulWidget {
     this.stage,
     this.cue,
     this.semanticLabel,
+    this.reduceEffects = false,
   });
 
   @override
@@ -76,7 +78,11 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    if (reduceMotion && !_reduceMotion) {
+      _hearts.clear();
+    }
+    _reduceMotion = reduceMotion;
     if (_reduceMotion) {
       _fidgetTimer?.cancel();
       _fidget.stop();
@@ -100,7 +106,7 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
       setState(() => _playing = cue.action);
       _actionTimer?.cancel();
       _actionTimer = Timer(_actionDuration, () => _finishAction(cue.seq));
-      if (cue.action == 'pat') _spawnHeart();
+      if (cue.action == 'pat' && !_reduceMotion) _spawnHeart();
     }
   }
 
@@ -160,8 +166,10 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
     _fidgetTimer?.cancel();
     _fidget.stop();
     _fidget.value = 0;
-    _bounce.forward(from: 0);
-    _spawnHeart();
+    if (!_reduceMotion) {
+      _bounce.forward(from: 0);
+      _spawnHeart();
+    }
     widget.onTap?.call();
     _scheduleFidget();
   }
@@ -169,7 +177,9 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
   Widget _staticSprite() {
     // 换模演出：档位立绘切换时旧→新水彩晕染交叉淡入。
     return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 720),
+      duration: _reduceMotion
+          ? Duration.zero
+          : const Duration(milliseconds: 720),
       switchInCurve: Curves.easeOut,
       switchOutCurve: Curves.easeIn,
       transitionBuilder: (child, anim) => FadeTransition(
@@ -273,6 +283,7 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
       );
       final useSheet =
           !reduceMotion &&
+          !widget.reduceEffects &&
           PetArt.hasExactAction(
             variantId: widget.variantId,
             stage: widget.stage,
@@ -287,7 +298,6 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
                 duration: _actionDuration,
                 cycles: 2,
                 holdTailFraction: 0.16,
-                evictOnDispose: true,
                 onComplete: onComplete,
                 fallback: choreography,
               )
@@ -298,24 +308,33 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
     } else {
       body = _breathingStatic();
     }
-    final content = GestureDetector(
-      onTap: _onTap,
-      behavior: HitTestBehavior.opaque,
-      child: SizedBox(
-        width: widget.width,
-        height: widget.width,
-        child: Stack(
-          alignment: Alignment.center,
-          clipBehavior: Clip.none,
-          children: [
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 260),
-              switchInCurve: Curves.easeOutCubic,
-              switchOutCurve: Curves.easeInOut,
-              child: body,
-            ),
-            for (final id in _hearts) _FloatingHeart(key: ValueKey(id)),
-          ],
+    final content = Material(
+      type: MaterialType.transparency,
+      child: InkResponse(
+        onTap: widget.onTap == null ? null : _onTap,
+        radius: widget.width * 0.48,
+        splashColor: const Color(0xFFF0B56F).withValues(alpha: 0.10),
+        hoverColor: const Color(0xFFF0B56F).withValues(alpha: 0.06),
+        focusColor: const Color(0xFFF0B56F).withValues(alpha: 0.09),
+        child: SizedBox(
+          width: widget.width,
+          height: widget.width,
+          child: Stack(
+            alignment: Alignment.center,
+            clipBehavior: Clip.none,
+            children: [
+              AnimatedSwitcher(
+                duration: reduceMotion
+                    ? Duration.zero
+                    : const Duration(milliseconds: 260),
+                switchInCurve: Curves.easeOutCubic,
+                switchOutCurve: Curves.easeInOut,
+                child: body,
+              ),
+              for (final id in _hearts)
+                _FloatingHeart(key: ValueKey<String>('pet_heart_$id')),
+            ],
+          ),
         ),
       ),
     );
@@ -577,7 +596,7 @@ _PetActionFrame _petActionFrame({
     PetStage.c => 1.0,
     PetStage.d => 0.92,
   };
-  final reduced = reduceMotion ? 0.28 : 1.0;
+  final reduced = reduceMotion ? 0.0 : 1.0;
   final strength = stageWeight * reduced;
   final edge = math
       .min(1.0, math.min(t / 0.10, (1 - t) / 0.10))

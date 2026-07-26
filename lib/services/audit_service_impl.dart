@@ -31,7 +31,8 @@ class AuditServiceImpl implements AuditService {
       final expected = await _port.sumExp(pet.id);
       if (pet.exp != expected) {
         discrepancies.add(
-            'pet ${pet.id}: exp=${pet.exp} 但流水和=$expected → 回正为 $expected');
+          'pet ${pet.id}: exp=${pet.exp} 但流水和=$expected → 回正为 $expected',
+        );
         // 以流水为真相源回正，并重算派生等级/档位。
         pet.exp = expected;
         pet.level = deriveLevel(expected);
@@ -43,7 +44,8 @@ class AuditServiceImpl implements AuditService {
     final expectedBalance = await _port.sumCurrency();
     if (wallet.balance != expectedBalance) {
       discrepancies.add(
-          'wallet: balance=${wallet.balance} 但流水和=$expectedBalance → 回正为 $expectedBalance');
+        'wallet: balance=${wallet.balance} 但流水和=$expectedBalance → 回正为 $expectedBalance',
+      );
       wallet.balance = expectedBalance;
     }
 

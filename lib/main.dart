@@ -3,16 +3,21 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app_error_log.dart';
+import 'app/startup_metrics.dart';
+import 'audio/route_audio.dart';
+import 'ui/petopia_theme.dart';
 import 'ui/yard_home_screen.dart';
 
 void main() {
   runZonedGuarded(
     () {
       WidgetsFlutterBinding.ensureInitialized();
+      StartupMetrics.start();
       PaintingBinding.instance.imageCache
         ..maximumSize = 320
         ..maximumSizeBytes = 96 << 20;
@@ -56,22 +61,36 @@ class PetopiaApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      builder: (context, child) => AnnotatedRegion<SystemUiOverlayStyle>(
+        value: PetopiaSystemUi.lightSurface(),
+        child: child ?? const SizedBox.shrink(),
+      ),
+      navigatorObservers: <NavigatorObserver>[petopiaRouteObserver],
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFE8A15C),
+          seedColor: PetopiaColors.actionAccent,
           brightness: Brightness.light,
-          surface: const Color(0xFFFFFDF7),
+          surface: PetopiaColors.paper,
         ),
-        scaffoldBackgroundColor: const Color(0xFFFAF3E3),
+        scaffoldBackgroundColor: PetopiaColors.background,
         fontFamily: null,
         visualDensity: VisualDensity.standard,
         filledButtonTheme: FilledButtonThemeData(
           style: FilledButton.styleFrom(
-            backgroundColor: const Color(0xFFE8A15C),
+            backgroundColor: PetopiaColors.actionAccent,
             foregroundColor: Colors.white,
             minimumSize: const Size(48, 48),
           ),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: PetopiaColors.actionAccent,
+            minimumSize: const Size(48, 48),
+          ),
+        ),
+        iconButtonTheme: IconButtonThemeData(
+          style: IconButton.styleFrom(minimumSize: const Size(48, 48)),
         ),
       ),
       home: const YardHomeScreen(),

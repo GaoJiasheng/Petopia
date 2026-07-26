@@ -143,7 +143,7 @@ class VisitorPetInteraction {
   final String script;
   final String animRef;
   final int expReward; // 3..6
-  final String? unlockClue; // clueId+1
+  final String? unlockClue; // 解析后统一为稳定 clueId
 
   const VisitorPetInteraction({
     required this.id,

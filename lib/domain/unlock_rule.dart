@@ -47,7 +47,8 @@ class HiddenClueUnlock extends UnlockRule {
 class HiddenStep {
   final String stepId;
   final AchievementCondType condType; // 复用条件类型枚举
-  final Map<String, dynamic> params; // 如 {timeWindow:"23:00-02:00", requireEmptyFood:true, count:5}
+  final Map<String, dynamic>
+  params; // 如 {timeWindow:"23:00-02:00", requireEmptyFood:true, count:5}
 
   const HiddenStep({
     required this.stepId,

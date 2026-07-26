@@ -1402,7 +1402,8 @@
             "play",
             "bath"
           ],
-          "dailyMax": true
+          "dailyMax": false,
+          "eachActionCount": 1
         }
       },
       "reward": {

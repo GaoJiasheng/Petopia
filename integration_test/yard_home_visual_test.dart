@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'dart:math' as math;
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,6 +13,7 @@ import 'package:petopia/app/game_controller.dart';
 import 'package:petopia/app/game_services.dart';
 import 'package:petopia/audio/audio_service.dart';
 import 'package:petopia/domain/enums.dart';
+import 'package:petopia/ui/petopia_theme.dart';
 import 'package:petopia/ui/yard_home_screen.dart';
 
 class _SilentAudio implements AudioService {
@@ -54,9 +58,10 @@ class _SilentAudio implements AudioService {
 }
 
 class _VisualGameController extends GameController {
-  _VisualGameController(this.fixture);
+  _VisualGameController(this.fixture, this._careFeedback);
 
   final GameView fixture;
+  CareFeedbackView? _careFeedback;
 
   @override
   Future<GameView> build() async => fixture;
@@ -68,19 +73,32 @@ class _VisualGameController extends GameController {
   void refreshView() {}
 
   @override
-  Future<bool> feed() async => false;
+  Future<bool> feed() async => _careFeedback != null;
 
   @override
-  Future<bool> pat() async => false;
+  Future<bool> pat() async => true;
 
   @override
-  Future<bool> toy() async => false;
+  Future<bool> toy() async => true;
 
   @override
-  Future<bool> bath() async => false;
+  Future<bool> bath() async => true;
+
+  @override
+  CareFeedbackView? takeCareFeedback() {
+    final feedback = _careFeedback;
+    _careFeedback = null;
+    return feedback;
+  }
 
   @override
   void completeCareTutorial() {}
+
+  @override
+  Future<void> onAppResumed() async {}
+
+  @override
+  Future<void> onAppPaused() async {}
 
   @override
   EventResolution? resolveEvent(String id, {int? choiceIndex}) => null;
@@ -91,31 +109,34 @@ class _VisualApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      locale: const Locale('zh', 'CN'),
-      supportedLocales: const [Locale('zh', 'CN')],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFFE8A15C),
-          surface: const Color(0xFFFFFDF7),
-        ),
-        scaffoldBackgroundColor: const Color(0xFFFAF3E3),
-        filledButtonTheme: FilledButtonThemeData(
-          style: FilledButton.styleFrom(
-            backgroundColor: const Color(0xFFE8A15C),
-            foregroundColor: Colors.white,
-            minimumSize: const Size(48, 48),
+    return RepaintBoundary(
+      key: const ValueKey<String>('visual_capture_boundary'),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        locale: const Locale('zh', 'CN'),
+        supportedLocales: const [Locale('zh', 'CN')],
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: PetopiaColors.actionAccent,
+            surface: PetopiaColors.paper,
+          ),
+          scaffoldBackgroundColor: PetopiaColors.background,
+          filledButtonTheme: FilledButtonThemeData(
+            style: FilledButton.styleFrom(
+              backgroundColor: PetopiaColors.actionAccent,
+              foregroundColor: Colors.white,
+              minimumSize: const Size(48, 48),
+            ),
           ),
         ),
+        home: const YardHomeScreen(enableCooldownRefresh: false),
       ),
-      home: const YardHomeScreen(enableCooldownRefresh: false),
     );
   }
 }
@@ -180,6 +201,9 @@ GameView _view({
   VisitorPresenceView? visitor,
   EventPresentationView? pendingEvent,
   int careTutorialStep = 3,
+  CareAction? preferredAction,
+  bool careContented = false,
+  List<YardMemoryView> recentMemories = const <YardMemoryView>[],
 }) {
   return GameView(
     pet: emptyYard ? null : (pet ?? _pet()),
@@ -197,6 +221,9 @@ GameView _view({
     needsFirstCare: false,
     careTutorialStep: careTutorialStep,
     todayYard: careTutorialStep >= 3 ? _today : null,
+    preferredCareAction: preferredAction,
+    careContented: careContented,
+    recentMemories: recentMemories,
   );
 }
 
@@ -207,14 +234,27 @@ const _prefix = String.fromEnvironment(
 const _landscape = bool.fromEnvironment('PETOPIA_VISUAL_LANDSCAPE');
 const _allThemes = bool.fromEnvironment('PETOPIA_VISUAL_ALL_THEMES');
 const _allLuxury = bool.fromEnvironment('PETOPIA_VISUAL_ALL_LUXURY');
+const _capturePerformance = bool.fromEnvironment('PETOPIA_CAPTURE_PERFORMANCE');
+const _expectedScreenshotWidth = int.fromEnvironment(
+  'PETOPIA_VISUAL_EXPECTED_WIDTH',
+);
+const _expectedScreenshotHeight = int.fromEnvironment(
+  'PETOPIA_VISUAL_EXPECTED_HEIGHT',
+);
 
-Future<void> _pumpScenario(WidgetTester tester, GameView view) async {
+Future<void> _pumpScenario(
+  WidgetTester tester,
+  GameView view, {
+  CareFeedbackView? careFeedback,
+}) async {
   await tester.pumpWidget(
     ProviderScope(
       key: UniqueKey(),
       overrides: [
         audioServiceProvider.overrideWithValue(_SilentAudio()),
-        gameControllerProvider.overrideWith(() => _VisualGameController(view)),
+        gameControllerProvider.overrideWith(
+          () => _VisualGameController(view, careFeedback),
+        ),
       ],
       child: const _VisualApp(),
     ),
@@ -227,34 +267,194 @@ Future<void> _pumpScenario(WidgetTester tester, GameView view) async {
   await tester.pump();
 }
 
-Future<void> _capture(
-  WidgetTester tester,
-  IntegrationTestWidgetsFlutterBinding binding,
-  String name,
-) async {
+final class _VisualFingerprint {
+  const _VisualFingerprint({
+    required this.signature,
+    required this.luminanceDeviation,
+  });
+
+  final String signature;
+  final double luminanceDeviation;
+}
+
+Future<_VisualFingerprint> _capture(WidgetTester tester, String name) async {
   await tester.pump(const Duration(milliseconds: 120));
-  final bytes = await binding.takeScreenshot('$_prefix-$name');
+  final captureBoundary = find.byKey(
+    const ValueKey<String>('visual_capture_boundary'),
+  );
+  expect(captureBoundary, findsOneWidget);
+  final boundary = tester.renderObject<RenderRepaintBoundary>(captureBoundary);
+  final pixelRatio = View.of(tester.element(captureBoundary)).devicePixelRatio;
+  final image = await boundary.toImage(pixelRatio: pixelRatio);
+  expect(
+    await _hasSolidDarkBottomBand(image),
+    isFalse,
+    reason:
+        'The iOS screenshot surface contains a solid black lower band. '
+        'Use the widget capture path instead of a rotated screen buffer.',
+  );
+  final fingerprint = await _analyzeVisual(image, name);
+  final data = await image.toByteData(format: ui.ImageByteFormat.png);
+  image.dispose();
+  final bytes = data!.buffer.asUint8List(
+    data.offsetInBytes,
+    data.lengthInBytes,
+  );
   final directory = Directory('/tmp/petopia-yard-visual')
     ..createSync(recursive: true);
-  File('${directory.path}/$_prefix-$name.png').writeAsBytesSync(bytes);
+  final output = File('${directory.path}/$_prefix-$name.png')
+    ..writeAsBytesSync(bytes);
+  if (_expectedScreenshotWidth > 0 && _expectedScreenshotHeight > 0) {
+    final width = _pngDimension(bytes, 16);
+    final height = _pngDimension(bytes, 20);
+    expect(
+      (width, height),
+      (_expectedScreenshotWidth, _expectedScreenshotHeight),
+      reason:
+          '${output.path} has a mismatched orientation buffer. '
+          'Rotate the simulator before capture.',
+    );
+  }
+  return fingerprint;
+}
+
+int _pngDimension(List<int> bytes, int offset) =>
+    (bytes[offset] << 24) |
+    (bytes[offset + 1] << 16) |
+    (bytes[offset + 2] << 8) |
+    bytes[offset + 3];
+
+Future<bool> _hasSolidDarkBottomBand(ui.Image image) async {
+  final data = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+  if (data == null) return true;
+  final bandHeight = math.max(8, image.height ~/ 50);
+  var dark = 0;
+  var sampled = 0;
+  for (var y = image.height - bandHeight; y < image.height; y += 4) {
+    for (var x = 0; x < image.width; x += 8) {
+      final offset = (y * image.width + x) * 4;
+      final red = data.getUint8(offset);
+      final green = data.getUint8(offset + 1);
+      final blue = data.getUint8(offset + 2);
+      if (red < 8 && green < 8 && blue < 8) dark++;
+      sampled++;
+    }
+  }
+  return sampled > 0 && dark / sampled > 0.98;
+}
+
+Future<_VisualFingerprint> _analyzeVisual(ui.Image image, String name) async {
+  final data = await image.toByteData(format: ui.ImageByteFormat.rawRgba);
+  expect(data, isNotNull, reason: '$name did not expose RGBA pixels');
+  final pixels = data!;
+  final stepX = math.max(1, image.width ~/ 180);
+  final stepY = math.max(1, image.height ~/ 220);
+  var sampled = 0;
+  var opaque = 0;
+  var nearBlack = 0;
+  var luminanceSum = 0.0;
+  var luminanceSquares = 0.0;
+  final colorBuckets = <int>{};
+  for (var y = 0; y < image.height; y += stepY) {
+    for (var x = 0; x < image.width; x += stepX) {
+      final offset = (y * image.width + x) * 4;
+      final red = pixels.getUint8(offset);
+      final green = pixels.getUint8(offset + 1);
+      final blue = pixels.getUint8(offset + 2);
+      final alpha = pixels.getUint8(offset + 3);
+      final luminance = red * 0.2126 + green * 0.7152 + blue * 0.0722;
+      luminanceSum += luminance;
+      luminanceSquares += luminance * luminance;
+      if (alpha >= 250) opaque++;
+      if (red < 8 && green < 8 && blue < 8) nearBlack++;
+      colorBuckets.add(((red >> 5) << 6) | ((green >> 5) << 3) | (blue >> 5));
+      sampled++;
+    }
+  }
+  final mean = luminanceSum / sampled;
+  final deviation = math.sqrt(
+    math.max(0, luminanceSquares / sampled - mean * mean),
+  );
+  expect(
+    opaque / sampled,
+    greaterThan(0.999),
+    reason: '$name contains unintended transparent output',
+  );
+  expect(
+    nearBlack / sampled,
+    lessThan(0.12),
+    reason: '$name contains an excessive black fallback surface',
+  );
+  expect(
+    deviation,
+    greaterThan(18),
+    reason: '$name is visually flat or failed to render its art',
+  );
+  expect(
+    colorBuckets.length,
+    greaterThan(24),
+    reason: '$name does not contain enough rendered color detail',
+  );
+
+  final signature = StringBuffer();
+  for (var row = 0; row < 12; row++) {
+    final y = ((row + 0.5) * image.height / 12).floor();
+    for (var column = 0; column < 16; column++) {
+      final x = ((column + 0.5) * image.width / 16).floor();
+      final offset = (y * image.width + x) * 4;
+      final packed =
+          ((pixels.getUint8(offset) >> 5) << 6) |
+          ((pixels.getUint8(offset + 1) >> 5) << 3) |
+          (pixels.getUint8(offset + 2) >> 5);
+      signature.write(packed.toRadixString(16).padLeft(3, '0'));
+    }
+  }
+  return _VisualFingerprint(
+    signature: signature.toString(),
+    luminanceDeviation: deviation,
+  );
 }
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('render every yard home state for visual review', (tester) async {
-    if (_landscape) {
+    if (_expectedScreenshotWidth > 0 && _expectedScreenshotHeight > 0) {
+      final pixelRatio = tester.view.devicePixelRatio;
+      await tester.binding.setSurfaceSize(
+        Size(
+          _expectedScreenshotWidth / pixelRatio,
+          _expectedScreenshotHeight / pixelRatio,
+        ),
+      );
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+    } else if (_landscape) {
       await SystemChrome.setPreferredOrientations(const [
         DeviceOrientation.landscapeLeft,
       ]);
-    } else {
-      await SystemChrome.setPreferredOrientations(const [
-        DeviceOrientation.portraitUp,
-      ]);
     }
     await tester.pump(const Duration(milliseconds: 800));
+    if (_capturePerformance) {
+      await _pumpScenario(
+        tester,
+        _view(
+          pet: _pet(stage: PetStage.c),
+          preferredAction: CareAction.feed,
+        ),
+      );
+      // The production yard waits for its first composition to settle, then
+      // decodes the highest-priority sheets within its current cache budget.
+      await tester.pump(const Duration(seconds: 3));
+      await binding.watchPerformance(
+        () => _playAllAuthoredInteractions(tester),
+        reportKey: 'authored_care_interactions',
+      );
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump(const Duration(milliseconds: 300));
+      return;
+    }
     final standardScenarios = <({String name, GameView view})>[
-      (name: 'standard', view: _view()),
+      (name: 'standard', view: _view(preferredAction: CareAction.feed)),
       (
         name: 'cooldown',
         view: _view(
@@ -266,7 +466,28 @@ void main() {
           },
         ),
       ),
-      (name: 'visitor', view: _view(visitor: _visitor())),
+      (
+        name: 'visitor',
+        view: _view(
+          visitor: _visitor(),
+          preferredAction: CareAction.feed,
+          careContented: true,
+          recentMemories: <YardMemoryView>[
+            YardMemoryView(
+              id: 'growth:pet-current:lv6',
+              type: 'growth',
+              text: '橘团会把最好吃的那一口留到最后，再认真看你一眼。',
+              createdAt: DateTime.utc(2026, 7, 22),
+            ),
+            YardMemoryView(
+              id: 'visitor:visitor_calico:1',
+              type: 'visitor',
+              text: '流浪三花猫离开前又回头看了看橘团，院子里留下了一段安静的脚印。',
+              createdAt: DateTime.utc(2026, 7, 23),
+            ),
+          ],
+        ),
+      ),
       (
         name: 'special-event',
         view: _view(
@@ -321,25 +542,114 @@ void main() {
         ? luxuryScenarios
         : standardScenarios;
 
+    final fingerprints = <String, String>{};
     for (final scenario in scenarios) {
       await _pumpScenario(tester, scenario.view);
       expect(tester.takeException(), isNull, reason: scenario.name);
-      await _capture(tester, binding, scenario.name);
+      final fingerprint = await _capture(tester, scenario.name);
+      expect(
+        fingerprint.luminanceDeviation,
+        greaterThan(18),
+        reason: scenario.name,
+      );
+      if (_allThemes) {
+        expect(
+          fingerprints.values,
+          isNot(contains(fingerprint.signature)),
+          reason:
+              '${scenario.name} rendered the same coarse visual fingerprint '
+              'as another theme, which usually means a background fallback.',
+        );
+        fingerprints[scenario.name] = fingerprint.signature;
+      }
     }
 
     if (!_allThemes && !_allLuxury) {
-      await _pumpScenario(tester, _view(visitor: _visitor()));
-      await tester.tap(find.byKey(const ValueKey<String>('home_menu')));
+      await _pumpScenario(
+        tester,
+        _view(preferredAction: CareAction.feed),
+        careFeedback: const CareFeedbackView(
+          message: '三种陪伴都收到了，橘团今天已经很满足。',
+          expApplied: 5,
+          preferred: true,
+          contented: true,
+        ),
+      );
+      final feedButton = find.byKey(const ValueKey<String>('care_action_feed'));
+      final feedInkWell = find.descendant(
+        of: feedButton,
+        matching: find.byType(InkWell),
+      );
+      tester.widget<InkWell>(feedInkWell).onTap!.call();
+      await tester.pump(const Duration(milliseconds: 240));
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(tester.takeException(), isNull);
+      await _capture(tester, 'care-feedback');
+
+      await _pumpScenario(
+        tester,
+        _view(
+          visitor: _visitor(),
+          recentMemories: <YardMemoryView>[
+            YardMemoryView(
+              id: 'growth:pet-current:lv6',
+              type: 'growth',
+              text: '橘团会把最好吃的那一口留到最后，再认真看你一眼。',
+              createdAt: DateTime.utc(2026, 7, 22),
+            ),
+            YardMemoryView(
+              id: 'visitor:visitor_calico:1',
+              type: 'visitor',
+              text: '流浪三花猫离开前又回头看了看橘团，院子里留下了一段安静的脚印。',
+              createdAt: DateTime.utc(2026, 7, 23),
+            ),
+          ],
+        ),
+      );
+      final menuButton = tester.widget<IconButton>(
+        find.byKey(const ValueKey<String>('home_menu')),
+      );
+      expect(menuButton.onPressed, isNotNull);
+      menuButton.onPressed!.call();
       await tester.pump(const Duration(milliseconds: 380));
       expect(
         find.byKey(const ValueKey<String>('home_notebook_panel')),
         findsOneWidget,
       );
       expect(tester.takeException(), isNull);
-      await _capture(tester, binding, 'notebook');
+      await _capture(tester, 'notebook');
     }
 
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump(const Duration(milliseconds: 300));
   });
+}
+
+Future<void> _playAllAuthoredInteractions(WidgetTester tester) async {
+  for (final interaction in const <(String, String)>[
+    ('feed', 'eat'),
+    ('pat', 'pat'),
+    ('toy', 'play'),
+    ('bath', 'bath'),
+  ]) {
+    final button = find.byKey(
+      ValueKey<String>('care_action_${interaction.$1}'),
+    );
+    final animation = find.byKey(
+      ValueKey<String>('pet_action_${interaction.$2}'),
+    );
+    expect(button, findsOneWidget);
+    await tester.tap(button);
+    await tester.pump();
+    expect(animation, findsOneWidget);
+    for (
+      var frame = 0;
+      frame < 80 && animation.evaluate().isNotEmpty;
+      frame++
+    ) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(animation, findsNothing);
+    expect(tester.takeException(), isNull);
+  }
 }

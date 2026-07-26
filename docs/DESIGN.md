@@ -286,6 +286,13 @@
 | 回访宠互动 | +5 | — | — | 见 §7 |
 | 特殊猫粮/玩具（暖绒兑换） | 额外加成 | 同类动作冷却 | 见 §4.3 | 平衡说明见 §4.4 |
 
+**照料闭环（v0.4）**：
+
+- 同一自然日完成任意 3 种不同照料后，宠物进入「心满意足」状态，并在第 3 种动作结算时额外获得 +2 经验；这是低压力的多样性奖励，不要求刷满每日次数。
+- 宠物主性格会映射一个偏爱动作。偏爱只通过动作按钮的轻量心形提示和动作后的个性化反馈表达，不设置惩罚、饥饿值或强制任务。
+- 隐藏成就「被好好爱过的一天」以喂食/摸头/玩具/洗澡各完成 1 次为准，不再要求达到四项每日上限。
+- 动作完成后的反馈只短暂显示实际经验、偏好回应或「心满意足」，主页不增加常驻数值模块。
+
 ## 3.2 离线经验规则（renew 机制）
 
 **文字规则**：离线每满 1 小时 +1 经验，单次结算封顶 12 点；**每次上线即结算并重置计时**——即离线收益按「上次在线时刻 → 本次上线时刻」的时长计算并封顶，然后从本次上线重新计时。一天内多次上线，各段分别结算，但受「自然日累计 12 点」总上限约束。
@@ -359,6 +366,7 @@ ExpLogEntry {
 
 - 顶部提供来源类型筛选 chips 与「每日/每周小结」饼图（水彩风）。
 - 升级瞬间在该条目上加「🎉 升级」徽章。日志保留全生命周期，毕业后归档进旅行相册可回看。
+- Lv2/3/4/6/7/9 各写入一条去重的成长记忆；手账显示最近片段，跨设备尺寸均不把它放回院子主页。
 
 ## 3.5 养育期状态机
 
@@ -474,9 +482,11 @@ ExpLogEntry {
 
 ```
 毕业 → 生成旅程 Journey（从 40 个目的地中按性格加权抽 25 张主旅程，去重；剩余 15 张入补完队列）
+     → 玩家可选择第一程偏向「海滨 / 森林 / 城市」；首站保证命中，前三站提高该类别权重，不锁死完整路线
      → 毕业后 1 天寄首张；主旅程每 3–5 天（随机）寄回 1 张明信片（本地通知：「邮箱里有新明信片！」）
      → 主旅程结束 → 进入「世界漫游」状态（回访期，§7；补完剩余 15 张：每 10–15 天 1 张）
      → 40 张完成后 → 约每 20 天从 40 张中随机寄回 1 张
+     → 全图鉴完成后，每 7–10 天低概率写入一条不推送的「旅途近况」手账记忆
 ```
 
 ## 6.2 目的地库（约 40 个，按类别）
@@ -673,6 +683,8 @@ VisitorPetInteraction {
 
 访客首次到访自动收录：水彩肖像 + 到访次数 + 首次到访日期 + 已解锁互动小故事列表。未收录条目显示剪影 + 触发提示（常见/不常见写明条件，如「雨天更容易遇到」；传说显示模糊线索，与 §1.2 一致）。
 
+来客驻留结束时写入一条去重的「院子记忆」：已互动时记录它与当前宠物的告别，未互动时只记录轻轻来过。该记录进入手账，不弹窗、不占用主页空间。传说访客互动与对应特殊事件都必须递增同一个规范 clue id；图鉴线索按未见过、初步、过半、只差一步逐级变清晰。
+
 ---
 
 # 9. 随机事件库
@@ -699,6 +711,8 @@ Event {
 调度：每日生成 1–3 个 DAILY（上线时演出）；SPECIAL 由条件触发，日上限 1。
 经验发放一律写入 ExpLogEntry（source = EVENT_DAILY / EVENT_SPECIAL，sourceRef = event.id）。
 ```
+
+同一只宠物最近 4 天已出现过的叙事情绪类别（天气、玩闹、安静、探索、食物、陪伴、访客等）权重降至 8%，但不做绝对禁用，避免长期随机池被小概率边界卡死。
 
 ## 9.2 日常事件（**目标 ~100 条**，以下 24 条种子示例）
 
@@ -763,11 +777,13 @@ CurrencyWallet  { balance }               // 暖绒
 CurrencyLog     { id, timestamp, delta, reason, ref? }        // 同样可审计
 YardState       { luxuryStage, activeThemeId, ownedThemeIds[], slots[{pos, itemId?}], foodTray{foodType?, placedAt} }
 ShopItem        { id, category, price, effect{type, params}, artRef }
-Journey         { id, petId, stops[locationId × 25], wanderStops[remaining locationId], currentIdx, wanderIdx, longTermSeq, nextPostcardAt, state }
+Journey         { id, petId, stops[locationId × 25], wanderStops[remaining locationId], routeTheme?,
+                  currentIdx, wanderIdx, longTermSeq, nextPostcardAt, nextTravelNoteAt?, state }
 Location        { id, name, category, climate, vibeTags[], photoStyle, encounterPool[] }
 Postcard        { …见 §6.3 }
 Visitor         { id, name, rarity, activeTime, weatherPref, foodPref, seasonPref, artRef, clueRole? }
 VisitorLogEntry { id, visitorId, date, interactionId?, withPetId }         // 来客图鉴数据源
+YardMemoryEntry { id, type(GROWTH|VISITOR|TRAVEL), text, createdAt, petId?, visitorId? }
 VisitorPetInteraction { …见 §8.4 }
 Event           { …见 §9.1 }
 EventLogEntry   { id, eventId, petId, date, choiceIdx?, expGranted }

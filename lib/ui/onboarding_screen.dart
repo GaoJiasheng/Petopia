@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import '../audio/audio_service.dart';
+import '../audio/route_audio.dart';
 import '../domain/enums.dart';
 import 'adopt_screen.dart';
 import 'pet_art.dart';
+import 'petopia_theme.dart';
 import 'yard_art.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
@@ -16,13 +19,14 @@ class OnboardingScreen extends ConsumerStatefulWidget {
   ConsumerState<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
+class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
+    with RouteAudio<OnboardingScreen> {
   final _pageController = PageController();
   int _page = 0;
   bool _finishing = false;
 
   static const _ink = Color(0xFF5F493B);
-  static const _accent = Color(0xFFE99C55);
+  static const _accent = PetopiaColors.actionAccent;
   static const _pages = <_OnboardingPageData>[
     _OnboardingPageData(
       title: '院子醒来了',
@@ -43,6 +47,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
       semantics: '准备旅行的奶油橘色小猫',
     ),
   ];
+
+  @override
+  Bgm get routeBgm => Bgm.opening;
 
   @override
   void dispose() {
@@ -144,8 +151,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                                     index++
                                   )
                                     AnimatedContainer(
-                                      duration: const Duration(
-                                        milliseconds: 180,
+                                      duration: PetopiaMotion.duration(
+                                        context,
+                                        const Duration(milliseconds: 180),
                                       ),
                                       width: index == _page ? 24 : 8,
                                       height: 8,

@@ -6,8 +6,12 @@ void main() {
   test('stage art keeps the adopted variant and growth stage', () {
     expect(
       PetArt.stage('pet_cat', PetStage.d, variantId: 'pet_cat_v4'),
-      'assets/runtime/pets/cat/pet_cat_var04_stageD.png',
+      'assets/runtime/pets/cat/pet_cat_var04_stageD.webp',
     );
+  });
+
+  test('lists the four authored interaction sheets', () {
+    expect(PetArt.interactionNames, <String>['eat', 'pat', 'play', 'bath']);
   });
 
   test('action sheets are only exact for the delivered anchor identity', () {

@@ -140,6 +140,7 @@ void main() {
       ),
     );
     s.bumpClue('clue_ember');
+    expect(clues['clue_ember']!.visitorSeen, isTrue);
     s.bumpClue('clue_ember');
     expect(s.dexStateOf(ember), DexState.lockedHidden); // 2<3
     s.bumpClue('clue_ember');

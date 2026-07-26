@@ -22,9 +22,11 @@ class YardArt {
   /// iPad 横屏使用单独重绘的 4:3 母图，避免把竖屏背景裁切或拉伸。
   static String themeBg(String themeId, {bool wide = false}) {
     final slug = _themeSlug[themeId] ?? 'meadow';
-    final suffix = wide ? '_bg_wide.jpg' : '_bg.jpg';
-    return 'assets/art/world/themes${wide ? '/wide' : ''}/'
-        'yard_theme_$slug$suffix';
+    if (wide) {
+      return 'assets/runtime/yard/themes/wide/'
+          'yard_theme_${slug}_bg_wide.webp';
+    }
+    return 'assets/art/world/themes/yard_theme_${slug}_bg.webp';
   }
 
   static String? luxuryDelta(int stage) {

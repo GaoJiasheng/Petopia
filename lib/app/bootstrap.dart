@@ -21,13 +21,15 @@ import 'game_state.dart';
 /// 启动编排：加载存档 → 开库 → 加载内容 → 装配服务 → 首日调度。
 /// 首次启动保持空宠位，由院子 CTA 进入正式领养和命名流程。
 Future<GameServices> bootstrapGame() async {
-  final store = await SessionStore.create();
   final content = AssetContentRepository();
-  final restoredFuture = store.load();
+  final storeFuture = SessionStore.create();
   final contentFuture = content.loadAll();
+  final daoFuture = PetopiaSqliteDao.open();
+  final store = await storeFuture;
+  final restoredFuture = store.load();
   final restored = await restoredFuture;
   await contentFuture;
-  final dao = await PetopiaSqliteDao.open();
+  final dao = await daoFuture;
 
   var session = restored ?? GameSession();
   String? startupRecoveryReason =
@@ -135,6 +137,7 @@ Future<GameServices> bootstrapGame() async {
     );
     final before = current.level;
     final offline = svc.exp.grantOffline(pet: current, elapsed: elapsed);
+    svc.recordGrowthMemories(current, before, current.level);
     svc.startupOfflineElapsed = elapsed;
     svc.startupOfflineExp = offline.deltaApplied;
     for (var level = before + 1; level <= current.level; level++) {

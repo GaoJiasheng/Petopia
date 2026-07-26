@@ -12,8 +12,11 @@ abstract interface class RevisitService {
   bool isDue(Pet pet, DateTime today);
 
   /// 从到期漫游宠中选一个回访者；已有在访则返回 null（INV-2）。
-  Pet? pickRevisitor(List<Pet> roaming, DateTime today,
-      {bool hasCurrentRevisitor});
+  Pet? pickRevisitor(
+    List<Pet> roaming,
+    DateTime today, {
+    bool hasCurrentRevisitor,
+  });
 
   /// 回访者与在养宠互动：在养宠获 REVISIT 经验(+5)。返回是否带了旅伴（20%）。
   bool onRevisitInteract(Pet revisitor, Pet? current);

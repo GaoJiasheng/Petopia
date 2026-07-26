@@ -62,10 +62,14 @@ Pet _pet(String id) => Pet(
   level: 10,
 );
 
-Location _loc(String id, {Map<String, double> w = const {}}) => Location(
+Location _loc(
+  String id, {
+  String category = 'x',
+  Map<String, double> w = const {},
+}) => Location(
   id: id,
   name: id,
-  category: 'x',
+  category: category,
   climate: 'x',
   vibeTags: const [],
   photoStyle: 'x',
@@ -189,6 +193,36 @@ void main() {
       expect(saved!.stops, hasLength(3));
       expect(saved!.stops.toSet(), {'loc_a', 'loc_b', 'loc_c'});
       expect(saved!.wanderStops, isEmpty);
+    });
+
+    test('毕业方向会锁定第一站，并优先影响前三站', () async {
+      final eco = FakeEconomy();
+      final yard = YardState();
+      Journey? saved;
+      final locs = <Location>[
+        for (var i = 0; i < 5; i++) _loc('coast_$i', category: '海滨'),
+        for (var i = 0; i < 35; i++) _loc('other_$i', category: '城市'),
+      ];
+      final svc = GraduationServiceImpl(
+        eco,
+        locs,
+        yard,
+        () => 'j-coast',
+        () => now,
+        () => 0.0,
+        (journey) => saved = journey,
+      );
+
+      await svc.graduate(_pet('pet-coast'), routeTheme: '海滨');
+
+      expect(saved, isNotNull);
+      expect(saved!.routeTheme, '海滨');
+      expect(saved!.stops.first, startsWith('coast_'));
+      expect(
+        saved!.stops.take(3).where((id) => id.startsWith('coast_')).length,
+        greaterThanOrEqualTo(2),
+      );
+      expect({...saved!.stops, ...saved!.wanderStops}, hasLength(40));
     });
 
     test('luxuryStageFor 阈值', () {
