@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../config/game_config.dart';
 import '../domain/enums.dart';
+import '../l10n/petopia_localizations.dart';
+import '../l10n/petopia_text.dart';
 import 'adaptive_layout.dart';
 import 'growth_journal_screen.dart';
 import 'pet_art.dart';
@@ -32,7 +34,9 @@ class PetDetailScreen extends ConsumerWidget {
     );
     final hero = Semantics(
       image: true,
-      label: '${pet.name}，${pet.speciesName}，${_stageName(pet.stage)}',
+      label:
+          '${context.tr(pet.name)}, ${context.tr(pet.speciesName)}, '
+          '${context.tr(_stageName(pet.stage))}',
       child: Image.asset(
         PetArt.stage(pet.speciesId, pet.stage, variantId: pet.variantId),
         fit: BoxFit.contain,
@@ -48,7 +52,7 @@ class PetDetailScreen extends ConsumerWidget {
         foregroundColor: _ink,
         elevation: 0,
         centerTitle: true,
-        title: Text(
+        title: AppText(
           pet.name,
           style: const TextStyle(fontWeight: FontWeight.w900),
         ),
@@ -156,7 +160,7 @@ class _PetDetails extends StatelessWidget {
           runSpacing: 8,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            Text(
+            AppText(
               '${pet.speciesName} · Lv ${pet.level}',
               style: const TextStyle(
                 color: PetDetailScreen._ink,
@@ -168,7 +172,7 @@ class _PetDetails extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 8),
-        Text(
+        AppText(
           '${PetDetailScreen._variantName(pet.variantId)} · ${PetDetailScreen._daysTogether(pet.bornAt)}',
           style: const TextStyle(
             color: PetDetailScreen._muted,
@@ -188,7 +192,7 @@ class _PetDetails extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 8),
-        Text(
+        AppText(
           pet.exp >= GameConfig.graduationExp
               ? '已经准备好背起行囊'
               : '经验 ${pet.exp} / ${GameConfig.graduationExp}',
@@ -198,7 +202,7 @@ class _PetDetails extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 26),
-        const Text(
+        const AppText(
           '它的性格',
           style: TextStyle(
             color: PetDetailScreen._ink,
@@ -233,7 +237,7 @@ class _PetDetails extends StatelessWidget {
               ),
             ),
             icon: const Icon(Icons.auto_stories_rounded),
-            label: const Text('翻开成长手账'),
+            label: const AppText('翻开成长手账'),
           ),
         ),
       ],
@@ -254,7 +258,7 @@ class _StageBadge extends StatelessWidget {
         color: const Color(0xFFFFE7C8),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Text(
+      child: AppText(
         label,
         style: const TextStyle(
           color: PetDetailScreen._ink,
@@ -278,7 +282,7 @@ class _TraitChip extends StatelessWidget {
         color: const Color(0xFFE8F1E3),
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Text(
+      child: AppText(
         label,
         style: const TextStyle(
           color: PetDetailScreen._ink,

@@ -45,6 +45,12 @@ def declared_assets() -> list[Path]:
 def source_for(path: Path) -> Path | None:
     relative = path.relative_to(ROOT)
     parts = relative.parts
+    if parts[:3] == ("assets", "runtime", "support"):
+        return (
+            ROOT
+            / "assets/art/support"
+            / path.with_suffix(".png").name
+        )
     if parts[:3] == ("assets", "runtime", "pets"):
         return path.with_suffix(".png")
     if parts[:4] == ("assets", "runtime", "postcards", "backgrounds"):

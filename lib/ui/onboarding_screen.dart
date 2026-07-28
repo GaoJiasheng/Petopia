@@ -5,6 +5,8 @@ import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
 import '../audio/route_audio.dart';
 import '../domain/enums.dart';
+import '../l10n/petopia_localizations.dart';
+import '../l10n/petopia_text.dart';
 import 'adopt_screen.dart';
 import 'pet_art.dart';
 import 'petopia_theme.dart';
@@ -115,7 +117,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                           padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
                           child: TextButton(
                             onPressed: _finishing ? null : _finish,
-                            child: const Text(
+                            child: const AppText(
                               '跳过',
                               style: TextStyle(
                                 color: _ink,
@@ -141,7 +143,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Semantics(
-                              label: '第 ${_page + 1} 页，共 ${_pages.length} 页',
+                              label: context.tr(
+                                '第 ${_page + 1} 页，共 ${_pages.length} 页',
+                              ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
@@ -194,7 +198,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
                                           color: Colors.white,
                                         ),
                                       )
-                                    : Text(
+                                    : AppText(
                                         _page == _pages.length - 1
                                             ? '去迎接第一位伙伴'
                                             : '继续',
@@ -228,7 +232,7 @@ class _OnboardingPage extends StatelessWidget {
     final wide = size.width >= 900 && size.width > size.height;
     final art = Semantics(
       image: true,
-      label: data.semantics,
+      label: context.tr(data.semantics),
       child: Image.asset(
         PetArt.stage('pet_cat', data.stage),
         width: imageSize,
@@ -243,7 +247,7 @@ class _OnboardingPage extends StatelessWidget {
           ? CrossAxisAlignment.start
           : CrossAxisAlignment.center,
       children: [
-        Text(
+        AppText(
           data.title,
           textAlign: wide ? TextAlign.start : TextAlign.center,
           style: const TextStyle(
@@ -256,7 +260,7 @@ class _OnboardingPage extends StatelessWidget {
         const SizedBox(height: 12),
         ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 520),
-          child: Text(
+          child: AppText(
             data.body,
             textAlign: wide ? TextAlign.start : TextAlign.center,
             style: TextStyle(

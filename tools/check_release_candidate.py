@@ -42,6 +42,12 @@ WIDE_LUXURY_DECOR_FILES = (
     "deco_mailbox_red.png",
 )
 POSTCARD_BACKGROUND_COUNT = 40
+SUPPORT_PRODUCTS = {
+    "com.petopia.petopia.support.treat": ("Consumable", "0.99"),
+    "com.petopia.petopia.support.lantern": ("Consumable", "2.99"),
+    "com.petopia.petopia.support.bouquet": ("Consumable", "4.99"),
+    "com.petopia.petopia.support.guardian": ("NonConsumable", "6.99"),
+}
 DECLARED_ASSET_BUDGET_BYTES = 138 * 1024 * 1024
 IOS_APP_BUDGET_BYTES = 166 * 1024 * 1024
 IOS_FLUTTER_ASSET_BUDGET_BYTES = 139 * 1024 * 1024
@@ -132,6 +138,51 @@ def static_checks() -> None:
     require(
         "showLicensePage" in settings and "开源许可" in settings,
         "open-source dependency licenses are not reachable in the app",
+    )
+    require(
+        "SupportYardScreen" in settings and "支持小院" in settings,
+        "the voluntary support entry is not reachable from settings",
+    )
+
+    support_config_path = ROOT / "ios/Runner/PetopiaSupport.storekit"
+    scheme_path = (
+        ROOT
+        / "ios/Runner.xcodeproj/xcshareddata/xcschemes/Runner.xcscheme"
+    )
+    require(support_config_path.exists(), "missing local StoreKit configuration")
+    require(scheme_path.exists(), "missing shared Runner scheme")
+    if support_config_path.exists():
+        support_config = json.loads(support_config_path.read_text())
+        products = {
+            item.get("productID"): (item.get("type"), item.get("displayPrice"))
+            for item in support_config.get("products", [])
+            if isinstance(item, dict)
+        }
+        require(
+            products == SUPPORT_PRODUCTS,
+            "StoreKit products, types, or prices do not match the release catalog",
+        )
+        for item in support_config.get("products", []):
+            localizations = item.get("localizations", [])
+            locales = {
+                localization.get("locale")
+                for localization in localizations
+                if isinstance(localization, dict)
+            }
+            require(
+                {"en_US", "zh_CN"} <= locales,
+                f"missing StoreKit localization for {item.get('productID')}",
+            )
+    if scheme_path.exists():
+        scheme = scheme_path.read_text()
+        require(
+            "../Runner/PetopiaSupport.storekit" in scheme,
+            "Runner Debug scheme does not reference PetopiaSupport.storekit",
+        )
+    review_notes = (ROOT / "docs/app-store/review-notes-zh-Hans.md").read_text()
+    require(
+        "无应用内购买" not in review_notes,
+        "App Review notes incorrectly claim there are no in-app purchases",
     )
 
     app_info = (ROOT / "lib/app/app_info.dart").read_text()
@@ -322,6 +373,51 @@ def asset_checks() -> None:
                 f"{runtime_path.name}",
             )
 
+    support_dir = ROOT / "assets/runtime/support"
+    support_assets = sorted(support_dir.glob("*.webp"))
+    require(len(support_assets) == 5, "expected 5 support runtime artworks")
+    for runtime_path in support_assets:
+        source_path = ROOT / "assets/art/support" / f"{runtime_path.stem}.png"
+        require(
+            source_path.exists(),
+            f"missing support art master for {runtime_path.relative_to(ROOT)}",
+        )
+        if not source_path.exists():
+            continue
+        expected_size = (
+            (1200, 800)
+            if runtime_path.name == "support_guardian_postcard.webp"
+            else (768, 768)
+        )
+        with Image.open(runtime_path) as runtime:
+            require(
+                runtime.size == expected_size,
+                f"{runtime_path.relative_to(ROOT)} is {runtime.size}, "
+                f"expected {expected_size}",
+            )
+            has_alpha = (
+                "A" in runtime.getbands() or "transparency" in runtime.info
+            )
+            require(
+                has_alpha == (runtime_path.name != "support_guardian_postcard.webp"),
+                f"support art alpha policy mismatch: {runtime_path.name}",
+            )
+            if has_alpha:
+                bounds = runtime.convert("RGBA").getchannel("A").getbbox()
+                require(bounds is not None, f"support art is empty: {runtime_path.name}")
+                if bounds is not None:
+                    left, top, right, bottom = bounds
+                    require(
+                        min(
+                            left,
+                            top,
+                            runtime.width - right,
+                            runtime.height - bottom,
+                        )
+                        >= 24,
+                        f"support art touches its safe area: {runtime_path.name}",
+                    )
+
     lossless_runtime_assets = [
         *ROOT.glob("assets/runtime/pets/*/pet_*_stage?.webp"),
         *ROOT.glob("assets/runtime/pets/*/actions/*.webp"),
@@ -489,6 +585,7 @@ def main() -> int:
     if args.require_ios_build:
         ios_build_checks()
     run("plist validation", ["plutil", "-lint", "ios/Runner/Info.plist", "ios/Runner/PrivacyInfo.xcprivacy"])
+    run("source pet art audit", [sys.executable, "tools/check_pet_art.py"])
     run("runtime raster audit", [sys.executable, "tools/audit_runtime_art.py"])
     run(
         "release asset manifest",

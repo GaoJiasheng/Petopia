@@ -10,17 +10,24 @@
 - [ ] 确认 build `17` 尚未被 App Store Connect 使用；若已使用，提交前继续提升
       `pubspec.yaml` build number。
 - [ ] 确认 Apple Developer Program 协议、税务与银行资料没有待处理项目。
+- [ ] 在 App Store Connect 接受 Paid Applications Agreement，并确认税务与
+      收款账户状态允许提交应用内购买。
 - [ ] 最终确认生成式美术、原创程序化音效、字体和所有第三方依赖均拥有商业发行权。
 - [ ] 确认 `Petopia：小院来信` 的产品名、商标与目标地区不存在不可接受的冲突。
 
 ## 商店资料
 
 - [ ] 按 `metadata-zh-Hans.md` 填写名称、副标题、描述、关键词、分类和促销文本。
+- [ ] 将 2026-07-27 版 `privacy-policy-zh-Hans.md` 同步到
+      `https://blog.gavingao.cn/petopia/privacy.html`，确认公开页已说明
+      StoreKit、自愿支持本地记录和永久权益恢复。
 - [ ] 填写版权主体、App Review 联系人姓名、邮箱和可接听电话。
 - [ ] 上传 iPhone 6.9 英寸与 iPad 13 英寸最终截图；逐张确认无 TestFlight
       标记、调试信息、占位图、裁切、alpha 透明通道或过期文案，并执行
       `python3 tools/check_app_store_screenshots.py --require-release-set <截图目录>`。
 - [ ] 选择首发国家/地区、免费价格档和手动发布或分阶段发布策略。
+- [ ] 按 `support-iap.md` 创建 4 个应用内购买商品，补齐英文和简体中文本地化，
+      上传审核截图，并把 4 个商品随首个 App 版本一起提交审核。
 
 ## 合规问卷
 
@@ -44,6 +51,8 @@
       确认 schema 2 → 3 后宠物、货币、旅程、明信片、来客、成就和设置均保留。
 - [ ] 在至少一台真实 iPhone 和一台真实 iPad 上走完：首次领养、四种互动、
       后台恢复、来客、明信片、存档导出与导入、横竖屏旋转。
+- [ ] 使用 Sandbox Apple Account 分别验证 3 个消耗型支持、取消购买、弱网重试、
+      “小院守护者”首次购买，以及卸载重装后的恢复购买。
 - [ ] 按 `performance-budget.md` 在物理设备执行四互动 Profile 帧时序门禁，
       再用 Instruments 复核冷启动、院子待机、首次动作、事件弹框和旋转时的
       峰值内存与温度。

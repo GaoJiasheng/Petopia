@@ -6,6 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
 import '../audio/route_audio.dart';
+import '../l10n/petopia_localizations.dart';
+import '../l10n/petopia_text.dart';
 import 'adaptive_layout.dart';
 import 'petopia_theme.dart';
 
@@ -43,7 +45,7 @@ class _PostcardViewerScreenState extends ConsumerState<PostcardViewerScreen>
     return Scaffold(
       backgroundColor: const Color(0xFFF3E9D6),
       appBar: AppBar(
-        title: Text(
+        title: AppText(
           card.locationName,
           style: const TextStyle(
             color: PostcardViewerScreen._ink,
@@ -77,10 +79,7 @@ Future<void> showPostcardArrivalDialog(
     barrierDismissible: true,
     barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
     barrierColor: Colors.transparent,
-    transitionDuration: PetopiaMotion.duration(
-      context,
-      const Duration(milliseconds: 360),
-    ),
+    transitionDuration: PetopiaMotion.duration(context, PetopiaMotion.modal),
     pageBuilder: (context, _, _) {
       return Material(
         type: MaterialType.transparency,
@@ -110,7 +109,7 @@ Future<void> showPostcardArrivalDialog(
                   child: Semantics(
                     scopesRoute: true,
                     namesRoute: true,
-                    label: '收到${card.petName}从远方寄来的明信片',
+                    label: context.tr('收到${card.petName}从远方寄来的明信片'),
                     explicitChildNodes: true,
                     child: PostcardDisplayCard(
                       card: card,
@@ -255,7 +254,7 @@ class _PostcardTextPanel extends StatelessWidget {
         const Icon(Icons.pets_rounded, size: 14, color: _muted),
         const SizedBox(width: 5),
         Flexible(
-          child: Text(
+          child: AppText(
             card.petName,
             style: const TextStyle(
               fontSize: 11.5,
@@ -266,7 +265,7 @@ class _PostcardTextPanel extends StatelessWidget {
         ),
       ],
     );
-    final journeyMeta = Text(
+    final journeyMeta = AppText(
       '第 ${card.seq + 1} 站 · ${PostcardDisplayCard._date(card.sentAt)}',
       style: const TextStyle(fontSize: 11, color: _muted),
     );
@@ -280,7 +279,7 @@ class _PostcardTextPanel extends StatelessWidget {
             wideLayout ? 0 : 18,
             5,
           ),
-          child: Text(
+          child: AppText(
             card.bodyText,
             style: TextStyle(
               fontSize: bodyFont,
@@ -337,7 +336,7 @@ class _PostcardTextPanel extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 10),
                 ),
                 onPressed: onClose,
-                child: const Text(
+                child: const AppText(
                   '收进相册',
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.w800),
                 ),
@@ -375,7 +374,7 @@ class _ArrivalHeader extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                AppText(
                   arrivalCount > 1
                       ? '${card.petName} 从远方寄来 $arrivalCount 张明信片'
                       : '${card.petName} 从远方寄来一张明信片',
@@ -388,7 +387,7 @@ class _ArrivalHeader extends StatelessWidget {
                   ),
                 ),
                 if (arrivalCount > 1)
-                  Text(
+                  AppText(
                     '先拆开最新一张，其余已经收进相册',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -402,7 +401,7 @@ class _ArrivalHeader extends StatelessWidget {
             ),
           ),
           IconButton(
-            tooltip: '关闭',
+            tooltip: context.tr('关闭'),
             onPressed: onClose,
             icon: const Icon(
               Icons.close_rounded,
@@ -440,7 +439,7 @@ class _PostcardPhoto extends StatelessWidget {
                 child: Image.asset(
                   'assets/runtime/postcards/backgrounds/${card.photoBg}.webp',
                   fit: BoxFit.cover,
-                  semanticLabel: '${card.locationName}的旅行风景',
+                  semanticLabel: context.tr('${card.locationName}的旅行风景'),
                   errorBuilder: (_, _, _) => Container(
                     color: const Color(0xFFDCEAD8),
                     alignment: Alignment.center,

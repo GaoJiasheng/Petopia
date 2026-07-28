@@ -18,6 +18,12 @@ abstract final class PetopiaColors {
 }
 
 abstract final class PetopiaMotion {
+  static const micro = Duration(milliseconds: 180);
+  static const quick = Duration(milliseconds: 260);
+  static const standard = Duration(milliseconds: 320);
+  static const modal = Duration(milliseconds: 360);
+  static const reveal = Duration(milliseconds: 720);
+
   static Duration duration(BuildContext context, Duration duration) =>
       MediaQuery.disableAnimationsOf(context) ? Duration.zero : duration;
 }

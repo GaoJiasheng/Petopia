@@ -13,7 +13,27 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 ALPHA_THRESHOLD = 48
+SOFT_ALPHA_THRESHOLD = 8
 FAILURES: list[str] = []
+
+
+def _profile_for(label: str) -> tuple[float, float, float, float]:
+    """Returns min fill, max fill, hard margin, soft bottom margin."""
+    if "/actions/" in label:
+        return (0.74, 0.82, 0.08, 0.08)
+    if "assets/runtime/pets/" in label:
+        return (0.68, 0.82, 0.08, 0.08)
+    if "assets/runtime/postcards/poses/" in label:
+        return (0.62, 0.75, 0.10, 0.10)
+    if label.endswith("_yard.png") or "_yard.png#" in label:
+        return (0.56, 0.78, 0.10, 0.04)
+    if label.endswith("_portrait.png"):
+        return (0.60, 0.74, 0.12, 0.10)
+    return (0.0, 1.0, 0.0, 0.0)
+
+
+def _threshold_bbox(alpha: Image.Image, threshold: int) -> tuple[int, int, int, int] | None:
+    return alpha.point(lambda value: 255 if value >= threshold else 0).getbbox()
 
 
 def _longest_run(values: Iterable[int]) -> int:
@@ -30,12 +50,33 @@ def _longest_run(values: Iterable[int]) -> int:
 def _frame_failures(image: Image.Image, label: str) -> None:
     rgba = image.convert("RGBA")
     alpha = rgba.getchannel("A")
-    bbox = alpha.getbbox()
+    bbox = _threshold_bbox(alpha, ALPHA_THRESHOLD)
     if bbox is None:
         FAILURES.append(f"{label}: empty transparent frame")
         return
 
     width, height = rgba.size
+    min_fill, max_fill, min_margin, min_soft_bottom = _profile_for(label)
+    fill = max(bbox[2] - bbox[0], bbox[3] - bbox[1]) / max(width, height)
+    hard_margin = min(bbox[0], bbox[1], width - bbox[2]) / min(width, height)
+    if not min_fill <= fill <= max_fill:
+        FAILURES.append(
+            f"{label}: subject fill {fill:.3f} outside "
+            f"{min_fill:.2f}-{max_fill:.2f}"
+        )
+    if hard_margin < min_margin:
+        FAILURES.append(
+            f"{label}: top/side margin {hard_margin:.3f} below {min_margin:.2f}"
+        )
+    soft_bbox = _threshold_bbox(alpha, SOFT_ALPHA_THRESHOLD)
+    if soft_bbox is not None:
+        soft_bottom = (height - soft_bbox[3]) / height
+        if soft_bottom < min_soft_bottom:
+            FAILURES.append(
+                f"{label}: soft shadow bottom margin {soft_bottom:.3f} "
+                f"below {min_soft_bottom:.2f}"
+            )
+
     pixels = alpha.load()
     threshold = max(8, int(min(width, height) * 0.015))
     edges = {

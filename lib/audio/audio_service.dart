@@ -1,6 +1,23 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+abstract final class AudioMixProfile {
+  static const bgmVolume = 0.55;
+  static const ambienceVolume = 0.20;
+  static const bgmFadeOutSteps = 4;
+  static const bgmFadeInSteps = 6;
+  static const bgmFadeOutStep = Duration(milliseconds: 70);
+  static const bgmFadeInStep = Duration(milliseconds: 75);
+  static const ambienceFadeOutSteps = 3;
+  static const ambienceFadeInSteps = 5;
+  static const ambienceFadeStep = Duration(milliseconds: 80);
+
+  static double easedLevel(int step, int steps) {
+    final progress = (step / steps).clamp(0.0, 1.0);
+    return progress * progress * (3 - 2 * progress);
+  }
+}
+
 /// 情境 BGM（对应 assets/audio/bgm/mix/m4a/bgm_*.m4a）。
 enum Bgm {
   opening('bgm_opening'),
@@ -178,10 +195,20 @@ class AudioplayersAudioService implements AudioService {
     final request = ++_bgmRequest;
     try {
       if (previous != null) {
-        for (var step = 3; step >= 0; step--) {
+        for (
+          var step = AudioMixProfile.bgmFadeOutSteps - 1;
+          step >= 0;
+          step--
+        ) {
           if (request != _bgmRequest) return;
-          await _bgm.setVolume(0.55 * step / 4);
-          await Future<void>.delayed(const Duration(milliseconds: 45));
+          await _bgm.setVolume(
+            AudioMixProfile.bgmVolume *
+                AudioMixProfile.easedLevel(
+                  step,
+                  AudioMixProfile.bgmFadeOutSteps,
+                ),
+          );
+          await Future<void>.delayed(AudioMixProfile.bgmFadeOutStep);
         }
       }
       await _bgm.stop();
@@ -190,10 +217,13 @@ class AudioplayersAudioService implements AudioService {
         volume: 0,
       );
       _loaded = bgm;
-      for (var step = 1; step <= 5; step++) {
+      for (var step = 1; step <= AudioMixProfile.bgmFadeInSteps; step++) {
         if (request != _bgmRequest || !_musicEnabled) return;
-        await _bgm.setVolume(0.55 * step / 5);
-        await Future<void>.delayed(const Duration(milliseconds: 55));
+        await _bgm.setVolume(
+          AudioMixProfile.bgmVolume *
+              AudioMixProfile.easedLevel(step, AudioMixProfile.bgmFadeInSteps),
+        );
+        await Future<void>.delayed(AudioMixProfile.bgmFadeInStep);
       }
       if (yardContext &&
           _effectsEnabled &&
@@ -227,15 +257,25 @@ class AudioplayersAudioService implements AudioService {
     final request = ++_ambienceRequest;
     try {
       if (_loadedAmbience == ambience) {
-        await _ambience.setVolume(0.20);
+        await _ambience.setVolume(AudioMixProfile.ambienceVolume);
         await _ambience.resume();
         return;
       }
       if (_loadedAmbience != null) {
-        for (var step = 3; step >= 0; step--) {
+        for (
+          var step = AudioMixProfile.ambienceFadeOutSteps - 1;
+          step >= 0;
+          step--
+        ) {
           if (request != _ambienceRequest) return;
-          await _ambience.setVolume(0.20 * step / 3);
-          await Future<void>.delayed(const Duration(milliseconds: 55));
+          await _ambience.setVolume(
+            AudioMixProfile.ambienceVolume *
+                AudioMixProfile.easedLevel(
+                  step,
+                  AudioMixProfile.ambienceFadeOutSteps,
+                ),
+          );
+          await Future<void>.delayed(AudioMixProfile.ambienceFadeStep);
         }
       }
       await _ambience.stop();
@@ -244,12 +284,18 @@ class AudioplayersAudioService implements AudioService {
         volume: 0,
       );
       _loadedAmbience = ambience;
-      for (var step = 1; step <= 5; step++) {
+      for (var step = 1; step <= AudioMixProfile.ambienceFadeInSteps; step++) {
         if (request != _ambienceRequest || !_effectsEnabled || _interrupted) {
           return;
         }
-        await _ambience.setVolume(0.20 * step / 5);
-        await Future<void>.delayed(const Duration(milliseconds: 65));
+        await _ambience.setVolume(
+          AudioMixProfile.ambienceVolume *
+              AudioMixProfile.easedLevel(
+                step,
+                AudioMixProfile.ambienceFadeInSteps,
+              ),
+        );
+        await Future<void>.delayed(AudioMixProfile.ambienceFadeStep);
       }
     } catch (_) {
       /* 无声降级 */
@@ -310,7 +356,7 @@ class AudioplayersAudioService implements AudioService {
         await _bgm.pause();
       } else if (!_interrupted && _current != null) {
         if (_loaded == _current) {
-          await _bgm.setVolume(0.55);
+          await _bgm.setVolume(AudioMixProfile.bgmVolume);
           await _bgm.resume();
         } else {
           final target = _current!;
@@ -372,7 +418,7 @@ class AudioplayersAudioService implements AudioService {
     try {
       if (_musicEnabled) {
         if (_loaded == target) {
-          await _bgm.setVolume(0.55);
+          await _bgm.setVolume(AudioMixProfile.bgmVolume);
           await _bgm.resume();
         } else {
           _current = null;

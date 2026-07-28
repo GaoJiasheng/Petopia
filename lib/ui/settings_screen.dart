@@ -10,11 +10,14 @@ import 'package:url_launcher/url_launcher.dart';
 import '../app/app_info.dart';
 import '../app/game_controller.dart';
 import '../domain/enums.dart';
+import '../l10n/petopia_localizations.dart';
+import '../l10n/petopia_text.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
 import 'petopia_theme.dart';
 import 'privacy_screen.dart';
+import 'support_yard_screen.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -68,6 +71,18 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     _StatusStrip(message: _status!),
                     const SizedBox(height: 14),
                   ],
+                  const _SectionTitle(
+                    iconName: 'set_about',
+                    fallbackIcon: Icons.language_rounded,
+                    title: '语言',
+                    subtitle: '跟随设备语言，也可以在应用内固定选择。',
+                  ),
+                  const SizedBox(height: 10),
+                  _LanguageCard(
+                    value: view.appLanguage,
+                    onChanged: ctrl.setAppLanguage,
+                  ),
+                  const SizedBox(height: 24),
                   const _SectionTitle(
                     iconName: 'set_music',
                     fallbackIcon: Icons.tune_rounded,
@@ -183,8 +198,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       context: context,
                       applicationName: 'Petopia',
                       applicationVersion: appInfo?.displayVersion ?? '',
-                      applicationLegalese:
-                          '源代码使用 Apache-2.0；美术与音频为 Petopia 专有素材。',
+                      applicationLegalese: context.tr(
+                        '源代码使用 Apache-2.0；美术与音频为 Petopia 专有素材。',
+                      ),
                     ),
                   ),
                   const SizedBox(height: 12),
@@ -202,6 +218,25 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     onTap: () => _shareDiagnostics(
                       ctrl,
                       appInfo?.displayVersion ?? 'unknown',
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  const _SectionTitle(
+                    iconName: 'gift',
+                    fallbackIcon: Icons.favorite_outline_rounded,
+                    title: '小院的灯',
+                    subtitle: '一个不影响成长与收集的安静角落。',
+                  ),
+                  const SizedBox(height: 10),
+                  _CommandCard(
+                    icon: Icons.favorite_outline_rounded,
+                    iconName: 'gift',
+                    title: '支持小院',
+                    subtitle: '留下一份自愿支持，也收下院子准备的小小回礼。',
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => SupportYardScreen(pet: view.pet),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -233,8 +268,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             XFile(file.path, mimeType: 'application/octet-stream'),
           ],
           fileNameOverrides: <String>[p.basename(file.path)],
-          subject: 'Petopia 存档备份',
-          text: '这是一份 Petopia 院子存档备份。',
+          subject: context.tr('Petopia 存档备份'),
+          text: context.tr('这是一份 Petopia 院子存档备份。'),
           sharePositionOrigin: origin,
         ),
       );
@@ -262,7 +297,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           : box.localToGlobal(Offset.zero) & box.size;
       await SharePlus.instance.share(
         ShareParams(
-          subject: 'Petopia 诊断信息',
+          subject: context.tr('Petopia 诊断信息'),
           text: ctrl.diagnosticReport(
             appVersion: appVersion,
             platform: Platform.operatingSystem,
@@ -278,29 +313,27 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   Future<void> _importSave(GameController ctrl) async {
-    const type = XTypeGroup(
-      label: 'Petopia 存档',
+    final type = XTypeGroup(
+      label: context.tr('Petopia 存档'),
       extensions: <String>['petopia-save'],
       uniformTypeIdentifiers: <String>['public.data'],
     );
-    final selected = await openFile(
-      acceptedTypeGroups: const <XTypeGroup>[type],
-    );
+    final selected = await openFile(acceptedTypeGroups: <XTypeGroup>[type]);
     if (selected == null || !mounted) return;
 
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('导入这份院子存档？'),
-        content: const Text('导入会替换当前进度。文件会先完整校验；任何一步失败都会保留现在的院子。'),
+        title: const AppText('导入这份院子存档？'),
+        content: const AppText('导入会替换当前进度。文件会先完整校验；任何一步失败都会保留现在的院子。'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('取消'),
+            child: const AppText('取消'),
           ),
           FilledButton(
             onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('校验并导入'),
+            child: const AppText('校验并导入'),
           ),
         ],
       ),
@@ -346,7 +379,10 @@ class _WarmFrame extends StatelessWidget {
         backgroundColor: _SettingsScreenState._bg,
         foregroundColor: _SettingsScreenState._ink,
         elevation: 0,
-        title: const Text('设置', style: TextStyle(fontWeight: FontWeight.w800)),
+        title: const AppText(
+          '设置',
+          style: TextStyle(fontWeight: FontWeight.w800),
+        ),
       ),
       body: child,
     );
@@ -377,7 +413,7 @@ class _SectionTitle extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              AppText(
                 title,
                 style: const TextStyle(
                   color: _SettingsScreenState._ink,
@@ -386,7 +422,7 @@ class _SectionTitle extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 3),
-              Text(
+              AppText(
                 subtitle,
                 style: const TextStyle(
                   color: _SettingsScreenState._muted,
@@ -426,7 +462,7 @@ class _SwitchCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          AppText(
             title,
             style: const TextStyle(
               color: _SettingsScreenState._ink,
@@ -435,7 +471,7 @@ class _SwitchCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
-          Text(
+          AppText(
             subtitle,
             style: const TextStyle(
               color: _SettingsScreenState._muted,
@@ -452,7 +488,7 @@ class _SwitchCard extends StatelessWidget {
     return MergeSemantics(
       child: Semantics(
         toggled: value,
-        label: title,
+        label: context.tr(title),
         child: Container(
           padding: const EdgeInsets.all(16),
           decoration: _cardDecoration(),
@@ -523,6 +559,84 @@ class _SettingIcon extends StatelessWidget {
   }
 }
 
+class _LanguageCard extends StatelessWidget {
+  const _LanguageCard({required this.value, required this.onChanged});
+
+  final AppLanguage value;
+  final ValueChanged<AppLanguage> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final activeLabel = switch (value) {
+      AppLanguage.system => '跟随系统',
+      AppLanguage.zhHans => '简体中文',
+      AppLanguage.en => 'English',
+    };
+    return Semantics(
+      label: context.tr('语言'),
+      value: context.tr(activeLabel),
+      child: Container(
+        padding: const EdgeInsets.all(14),
+        decoration: _cardDecoration(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SegmentedButton<AppLanguage>(
+              showSelectedIcon: false,
+              segments: const <ButtonSegment<AppLanguage>>[
+                ButtonSegment(
+                  value: AppLanguage.system,
+                  icon: Icon(Icons.phone_iphone_rounded),
+                  label: AppText('系统'),
+                ),
+                ButtonSegment(
+                  value: AppLanguage.zhHans,
+                  icon: Icon(Icons.translate_rounded),
+                  label: AppText('简中'),
+                ),
+                ButtonSegment(
+                  value: AppLanguage.en,
+                  icon: Icon(Icons.language_rounded),
+                  label: AppText('EN'),
+                ),
+              ],
+              selected: <AppLanguage>{value},
+              onSelectionChanged: (selected) => onChanged(selected.first),
+              style: ButtonStyle(
+                foregroundColor: WidgetStateProperty.resolveWith(
+                  (states) => states.contains(WidgetState.selected)
+                      ? _SettingsScreenState._ink
+                      : _SettingsScreenState._muted,
+                ),
+                backgroundColor: WidgetStateProperty.resolveWith(
+                  (states) => states.contains(WidgetState.selected)
+                      ? const Color(0xFFFFE4BC)
+                      : Colors.transparent,
+                ),
+                visualDensity: VisualDensity.compact,
+              ),
+            ),
+            const SizedBox(height: 10),
+            AppText(
+              switch (value) {
+                AppLanguage.system => '使用设备语言；暂不支持的语言会显示英语。',
+                AppLanguage.zhHans => '固定使用简体中文。',
+                AppLanguage.en => 'Use English throughout the app.',
+              },
+              style: const TextStyle(
+                color: _SettingsScreenState._muted,
+                fontSize: 12,
+                height: 1.4,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class _RenderQualityCard extends StatelessWidget {
   const _RenderQualityCard({required this.value, required this.onChanged});
 
@@ -532,12 +646,12 @@ class _RenderQualityCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: '画面质量',
-      value: switch (value) {
+      label: context.tr('画面质量'),
+      value: context.tr(switch (value) {
         RenderQuality.auto => '自动',
         RenderQuality.high => '精致',
         RenderQuality.low => '省电',
-      },
+      }),
       child: Container(
         padding: const EdgeInsets.all(14),
         decoration: _cardDecoration(),
@@ -550,17 +664,17 @@ class _RenderQualityCard extends StatelessWidget {
                 ButtonSegment(
                   value: RenderQuality.auto,
                   icon: Icon(Icons.auto_awesome_rounded),
-                  label: Text('自动'),
+                  label: AppText('自动'),
                 ),
                 ButtonSegment(
                   value: RenderQuality.high,
                   icon: Icon(Icons.high_quality_rounded),
-                  label: Text('精致'),
+                  label: AppText('精致'),
                 ),
                 ButtonSegment(
                   value: RenderQuality.low,
                   icon: Icon(Icons.battery_saver_rounded),
-                  label: Text('省电'),
+                  label: AppText('省电'),
                 ),
               ],
               selected: <RenderQuality>{value},
@@ -580,7 +694,7 @@ class _RenderQualityCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
+            AppText(
               switch (value) {
                 RenderQuality.auto => '推荐。优先预热常用互动，系统有压力时自动保护。',
                 RenderQuality.high => '优先预热全部互动；内存紧张时仍会暂时降低负载。',
@@ -650,11 +764,11 @@ class _MiniToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return MergeSemantics(
       child: Semantics(
-        label: label,
+        label: context.tr(label),
         toggled: value,
         child: ListTile(
           contentPadding: EdgeInsets.zero,
-          title: Text(
+          title: AppText(
             label,
             style: const TextStyle(
               color: _SettingsScreenState._ink,
@@ -678,9 +792,11 @@ class _CommandCard extends StatelessWidget {
     required this.subtitle,
     required this.onTap,
     this.enabled = true,
+    this.iconName,
   });
 
   final IconData icon;
+  final String? iconName;
   final String title;
   final String subtitle;
   final VoidCallback onTap;
@@ -698,13 +814,16 @@ class _CommandCard extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: Row(
             children: [
-              Icon(icon, color: _SettingsScreenState._accent, size: 26),
+              if (iconName case final name?)
+                AppIcon(name, size: 32, fallback: icon)
+              else
+                Icon(icon, color: _SettingsScreenState._accent, size: 26),
               const SizedBox(width: 14),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    AppText(
                       title,
                       style: const TextStyle(
                         color: _SettingsScreenState._ink,
@@ -713,7 +832,7 @@ class _CommandCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text(
+                    AppText(
                       subtitle,
                       style: const TextStyle(
                         color: _SettingsScreenState._muted,
@@ -764,7 +883,7 @@ class _AboutCard extends StatelessWidget {
                 fallback: Icons.info_outline_rounded,
               ),
               SizedBox(width: 10),
-              Text(
+              AppText(
                 '关于',
                 style: TextStyle(
                   color: _SettingsScreenState._ink,
@@ -801,7 +920,7 @@ class _InfoLine extends StatelessWidget {
       children: [
         SizedBox(
           width: 54,
-          child: Text(
+          child: AppText(
             label,
             style: const TextStyle(
               color: _SettingsScreenState._muted,
@@ -810,7 +929,7 @@ class _InfoLine extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: Text(
+          child: AppText(
             value,
             style: const TextStyle(
               color: _SettingsScreenState._ink,
@@ -838,7 +957,7 @@ class _StatusStrip extends StatelessWidget {
           color: const Color(0xFFA7C4A0).withValues(alpha: 0.18),
           borderRadius: BorderRadius.circular(14),
         ),
-        child: Text(
+        child: AppText(
           message,
           style: const TextStyle(
             color: _SettingsScreenState._ink,

@@ -669,7 +669,10 @@ void main() {
       ('ipad_mini_landscape', Size(1133, 744)),
       ('split_view_one_third', Size(390, 1024)),
       ('split_view_half', Size(683, 1024)),
+      ('before_expanded_breakpoint', Size(819, 700)),
       ('stage_manager_medium', Size(820, 700)),
+      ('before_side_panel_breakpoint', Size(899, 700)),
+      ('side_panel_breakpoint', Size(900, 700)),
       ('stage_manager_wide', Size(1100, 760)),
     ];
     for (final (name, size) in sizes) {

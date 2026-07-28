@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 
 import '../../domain/enums.dart';
+import '../../l10n/petopia_localizations.dart';
 import '../app_icons.dart';
 import '../pet_action_cue.dart';
 import '../pet_art.dart';
@@ -340,7 +341,7 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
     );
     return Semantics(
       button: true,
-      label: widget.semanticLabel ?? '摸摸宠物',
+      label: context.tr(widget.semanticLabel ?? '摸摸宠物'),
       onTap: widget.onTap == null ? null : _onTap,
       child: ExcludeSemantics(child: content),
     );

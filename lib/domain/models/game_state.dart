@@ -238,6 +238,7 @@ class Settings {
   bool sound;
   bool haptics;
   RenderQuality renderQuality;
+  AppLanguage appLanguage;
   bool onboardingComplete;
   int careTutorialStep; // 0=摸头，1=喂食，2=邮箱提示，3=完成
   int schemaVersion; // 迁移用
@@ -259,6 +260,7 @@ class Settings {
     this.sound = true,
     this.haptics = true,
     this.renderQuality = RenderQuality.auto,
+    this.appLanguage = AppLanguage.system,
     this.onboardingComplete = false,
     this.careTutorialStep = 0,
     this.schemaVersion = 3,

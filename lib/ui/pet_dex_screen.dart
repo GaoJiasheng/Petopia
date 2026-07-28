@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../domain/enums.dart';
+import '../l10n/petopia_localizations.dart';
+import '../l10n/petopia_text.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
@@ -59,7 +61,7 @@ class _WarmFrame extends StatelessWidget {
         backgroundColor: PetDexScreen._bg,
         foregroundColor: PetDexScreen._ink,
         elevation: 0,
-        title: const Text(
+        title: const AppText(
           '宠物图鉴',
           style: TextStyle(fontWeight: FontWeight.w800),
         ),
@@ -99,7 +101,7 @@ class _DexGrid extends StatelessWidget {
                 : PetopiaAdaptive.postcardGridColumns(width);
             final tileHeight = largeText
                 ? 520.0
-                : (width >= 820 ? 250.0 : (width >= 600 ? 278.0 : 300.0));
+                : (width >= 1100 ? 264.0 : (width >= 600 ? 278.0 : 300.0));
             final margin = PetopiaAdaptive.sideMargin(context);
             return CustomScrollView(
               slivers: [
@@ -165,7 +167,7 @@ class _DexSummary extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                const AppText(
                   '贴纸册正在慢慢填满',
                   style: TextStyle(
                     color: PetDexScreen._ink,
@@ -174,7 +176,7 @@ class _DexSummary extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 6),
-                Text(
+                AppText(
                   '已养过 $owned / $total    可领养 $available',
                   style: const TextStyle(
                     color: PetDexScreen._muted,
@@ -204,14 +206,14 @@ class _DexCard extends StatelessWidget {
     final colored =
         state == DexState.ownedBefore || state == DexState.available;
     final accent = colored ? _accentFor(entry) : const Color(0xFFB8B0A6);
-    final largeText = MediaQuery.textScalerOf(context).scale(14) >= 28;
     final description = _descriptionFor(entry);
 
     return Semantics(
       container: true,
       label:
-          '${lockedHidden ? '未知宠物' : entry.name}，'
-          '${_StateBadge.labelFor(state)}，$description',
+          '${context.tr(lockedHidden ? '未知宠物' : entry.name)}, '
+          '${context.tr(_StateBadge.labelFor(state))}, '
+          '${context.tr(description)}',
       child: ExcludeSemantics(
         child: Container(
           padding: const EdgeInsets.all(14),
@@ -233,9 +235,9 @@ class _DexCard extends StatelessWidget {
                 ),
               ),
               const Spacer(),
-              Text(
+              AppText(
                 lockedHidden ? '？？？' : entry.name,
-                maxLines: largeText ? 2 : 1,
+                maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: PetDexScreen._ink,
@@ -244,9 +246,11 @@ class _DexCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 6),
-              Text(
+              AppText(
                 description,
-                maxLines: largeText ? 4 : 2,
+                maxLines: MediaQuery.textScalerOf(context).scale(14) >= 28
+                    ? 4
+                    : 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: PetDexScreen._muted,
@@ -409,7 +413,7 @@ class _StateBadge extends StatelessWidget {
         color: color.withValues(alpha: 0.18),
         borderRadius: BorderRadius.circular(999),
       ),
-      child: Text(
+      child: AppText(
         labelFor(state),
         style: TextStyle(
           color: color,
@@ -450,7 +454,7 @@ class _EmptyState extends StatelessWidget {
                 fallback: Icons.menu_book_outlined,
               ),
               SizedBox(height: 14),
-              Text(
+              AppText(
                 '图鉴还是空白页',
                 style: TextStyle(
                   color: PetDexScreen._ink,
@@ -459,7 +463,7 @@ class _EmptyState extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8),
-              Text(
+              AppText(
                 '等第一位朋友入住后，这里会贴上新的小标签。',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: PetDexScreen._muted),

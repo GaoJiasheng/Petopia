@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import '../l10n/petopia_localizations.dart';
+import '../l10n/petopia_text.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
@@ -57,7 +59,10 @@ class _WarmFrame extends StatelessWidget {
         backgroundColor: AchievementsScreen._bg,
         foregroundColor: AchievementsScreen._ink,
         elevation: 0,
-        title: const Text('成就', style: TextStyle(fontWeight: FontWeight.w800)),
+        title: const AppText(
+          '成就',
+          style: TextStyle(fontWeight: FontWeight.w800),
+        ),
       ),
       body: child,
     );
@@ -199,7 +204,7 @@ class _SectionHeader extends StatelessWidget {
       runSpacing: 6,
       crossAxisAlignment: WrapCrossAlignment.center,
       children: [
-        Text(
+        AppText(
           title,
           style: const TextStyle(
             color: AchievementsScreen._ink,
@@ -213,7 +218,7 @@ class _SectionHeader extends StatelessWidget {
             color: AchievementsScreen._accent.withValues(alpha: 0.16),
             borderRadius: BorderRadius.circular(999),
           ),
-          child: Text(
+          child: AppText(
             subtitle,
             style: const TextStyle(
               color: AchievementsScreen._accent,
@@ -248,7 +253,7 @@ class _AchievementCard extends StatelessWidget {
                   _AchievementIcon(entry: entry, veiled: veiled),
                   const SizedBox(width: 12),
                   Expanded(
-                    child: Text(
+                    child: AppText(
                       entry.name,
                       style: const TextStyle(
                         color: AchievementsScreen._ink,
@@ -260,7 +265,7 @@ class _AchievementCard extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Text(
+              AppText(
                 subtitle,
                 style: const TextStyle(
                   color: AchievementsScreen._muted,
@@ -281,7 +286,7 @@ class _AchievementCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    AppText(
                       entry.name,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -292,7 +297,7 @@ class _AchievementCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 6),
-                    Text(
+                    AppText(
                       subtitle,
                       style: const TextStyle(
                         color: AchievementsScreen._muted,
@@ -311,9 +316,11 @@ class _AchievementCard extends StatelessWidget {
     return Semantics(
       container: true,
       label: veiled
-          ? '${entry.name}，$status，$subtitle'
-          : '${entry.name}，$status，$subtitle，'
-                '进度 ${entry.progress} / ${entry.target}，奖励 ${entry.rewardSummary}',
+          ? '${context.tr(entry.name)}, ${context.tr(status)}, '
+                '${context.tr(subtitle)}'
+          : '${context.tr(entry.name)}, ${context.tr(status)}, '
+                '${context.tr(subtitle)}, '
+                '${context.tr('进度 ${entry.progress} / ${entry.target}，奖励 ${entry.rewardSummary}')}',
       child: ExcludeSemantics(
         child: Container(
           padding: const EdgeInsets.all(16),
@@ -400,7 +407,7 @@ class _StatusBadge extends StatelessWidget {
         color: color.withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(999),
       ),
-      child: Text(
+      child: AppText(
         _label,
         style: TextStyle(
           color: color,
@@ -446,7 +453,7 @@ class _ProgressLine extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 6),
-        Text(
+        AppText(
           '$shown / ${entry.target}',
           style: const TextStyle(
             color: AchievementsScreen._muted,
@@ -482,7 +489,7 @@ class _RewardLine extends StatelessWidget {
           ),
           const SizedBox(width: 6),
           Expanded(
-            child: Text(
+            child: AppText(
               claimed ? '已收下 · $summary' : summary,
               style: const TextStyle(
                 color: AchievementsScreen._ink,
@@ -507,7 +514,7 @@ class _SectionEmpty extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: _cardDecoration(),
-      child: Text(
+      child: AppText(
         text,
         style: const TextStyle(color: AchievementsScreen._muted),
       ),
@@ -535,7 +542,7 @@ class _EmptyState extends StatelessWidget {
                 fallback: Icons.emoji_events_outlined,
               ),
               SizedBox(height: 14),
-              Text(
+              AppText(
                 '成就册还没有页签',
                 style: TextStyle(
                   color: AchievementsScreen._ink,
@@ -544,7 +551,7 @@ class _EmptyState extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8),
-              Text(
+              AppText(
                 '等小院发生更多故事，这里会贴上新的印章。',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: AchievementsScreen._muted),

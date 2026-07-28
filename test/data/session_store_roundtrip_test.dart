@@ -289,6 +289,7 @@ GameSession _richSession() {
       sound: false,
       haptics: false,
       renderQuality: RenderQuality.low,
+      appLanguage: AppLanguage.en,
       onboardingComplete: true,
       careTutorialStep: 3,
       schemaVersion: 3,
@@ -641,6 +642,7 @@ void _expectSettingsEquals(Settings actual, Settings expected) {
   expect(actual.sound, expected.sound);
   expect(actual.haptics, expected.haptics);
   expect(actual.renderQuality, expected.renderQuality);
+  expect(actual.appLanguage, expected.appLanguage);
   expect(actual.onboardingComplete, expected.onboardingComplete);
   expect(actual.careTutorialStep, expected.careTutorialStep);
   expect(actual.schemaVersion, expected.schemaVersion);

@@ -8,9 +8,10 @@ import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
 import 'petopia_theme.dart';
+import "../l10n/petopia_text.dart";
 
 /// 成长手账：按天回看当前宠物的经验流水。
-class GrowthJournalScreen extends ConsumerWidget {
+class GrowthJournalScreen extends ConsumerStatefulWidget {
   const GrowthJournalScreen({super.key});
 
   static const _bg = PetopiaColors.background;
@@ -22,12 +23,23 @@ class GrowthJournalScreen extends ConsumerWidget {
   static const _line = PetopiaColors.line;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<GrowthJournalScreen> createState() =>
+      _GrowthJournalScreenState();
+}
+
+class _GrowthJournalScreenState extends ConsumerState<GrowthJournalScreen> {
+  Future<List<ExpLogEntry>>? _entriesFuture;
+  GameController? _entriesController;
+
+  @override
+  Widget build(BuildContext context) {
     final async = ref.watch(gameControllerProvider);
     return async.when(
       loading: () => const _WarmFrame(
         title: '成长手账',
-        child: Center(child: CircularProgressIndicator(color: _accent)),
+        child: Center(
+          child: CircularProgressIndicator(color: GrowthJournalScreen._accent),
+        ),
       ),
       error: (error, stackTrace) {
         logUiError('growth journal', error, stackTrace);
@@ -41,14 +53,20 @@ class GrowthJournalScreen extends ConsumerWidget {
       },
       data: (_) {
         final ctrl = ref.read(gameControllerProvider.notifier);
+        if (!identical(_entriesController, ctrl)) {
+          _entriesController = ctrl;
+          _entriesFuture = ctrl.growthJournal();
+        }
         return _WarmFrame(
           title: '成长手账',
           child: FutureBuilder<List<ExpLogEntry>>(
-            future: ctrl.growthJournal(),
+            future: _entriesFuture,
             builder: (context, snapshot) {
               if (snapshot.connectionState != ConnectionState.done) {
                 return const Center(
-                  child: CircularProgressIndicator(color: _accent),
+                  child: CircularProgressIndicator(
+                    color: GrowthJournalScreen._accent,
+                  ),
                 );
               }
               if (snapshot.hasError) {
@@ -59,7 +77,11 @@ class GrowthJournalScreen extends ConsumerWidget {
                 );
                 return AppLoadError(
                   title: '成长记录暂时没有翻开',
-                  onRetry: () => ref.invalidate(gameControllerProvider),
+                  onRetry: () {
+                    setState(() {
+                      _entriesFuture = ctrl.growthJournal();
+                    });
+                  },
                 );
               }
               return _JournalContent(
@@ -88,7 +110,10 @@ class _WarmFrame extends StatelessWidget {
         backgroundColor: GrowthJournalScreen._bg,
         foregroundColor: GrowthJournalScreen._ink,
         elevation: 0,
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.w800)),
+        title: AppText(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.w800),
+        ),
       ),
       body: child,
     );
@@ -169,7 +194,7 @@ class _GrowthMoments extends StatelessWidget {
             children: [
               Icon(Icons.spa_rounded, color: GrowthJournalScreen._green),
               SizedBox(width: 8),
-              Text(
+              AppText(
                 '慢慢长大的时刻',
                 style: TextStyle(
                   color: GrowthJournalScreen._ink,
@@ -196,7 +221,7 @@ class _GrowthMoments extends StatelessWidget {
                   ),
                   const SizedBox(width: 9),
                   Expanded(
-                    child: Text(
+                    child: AppText(
                       memory.text,
                       style: const TextStyle(
                         color: GrowthJournalScreen._muted,
@@ -287,7 +312,7 @@ class _StatPill extends StatelessWidget {
             AppIcon(iconName!, size: 22, fallback: icon),
           const SizedBox(width: 10),
           Expanded(
-            child: Text(
+            child: AppText(
               label,
               style: const TextStyle(
                 color: GrowthJournalScreen._muted,
@@ -295,7 +320,7 @@ class _StatPill extends StatelessWidget {
               ),
             ),
           ),
-          Text(
+          AppText(
             value,
             style: const TextStyle(
               color: GrowthJournalScreen._ink,
@@ -325,7 +350,7 @@ class _DaySection extends StatelessWidget {
           padding: const EdgeInsets.only(left: 4, bottom: 8),
           child: Row(
             children: [
-              Text(
+              AppText(
                 _dayLabel(day),
                 style: const TextStyle(
                   color: GrowthJournalScreen._ink,
@@ -343,7 +368,7 @@ class _DaySection extends StatelessWidget {
                   color: GrowthJournalScreen._accent.withValues(alpha: 0.16),
                   borderRadius: BorderRadius.circular(999),
                 ),
-                child: Text(
+                child: AppText(
                   '+$dayGain',
                   style: const TextStyle(
                     color: GrowthJournalScreen._accent,
@@ -416,7 +441,7 @@ class _LogTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Expanded(
-                        child: Text(
+                        child: AppText(
                           note,
                           style: const TextStyle(
                             color: GrowthJournalScreen._ink,
@@ -426,7 +451,7 @@ class _LogTile extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 10),
-                      Text(
+                      AppText(
                         '+${entry.delta}',
                         style: const TextStyle(
                           color: GrowthJournalScreen._accent,
@@ -495,7 +520,7 @@ class _TinyTag extends StatelessWidget {
         children: [
           Icon(icon, size: 14, color: GrowthJournalScreen._muted),
           const SizedBox(width: 4),
-          Text(
+          AppText(
             label,
             style: const TextStyle(
               color: GrowthJournalScreen._muted,
@@ -521,7 +546,7 @@ class _EmptyState extends StatelessWidget {
         children: [
           AppIcon('nav_menu', size: 44, fallback: Icons.auto_stories_outlined),
           SizedBox(height: 14),
-          Text(
+          AppText(
             '还没有写下成长脚印',
             style: TextStyle(
               color: GrowthJournalScreen._ink,
@@ -530,7 +555,7 @@ class _EmptyState extends StatelessWidget {
             ),
           ),
           SizedBox(height: 8),
-          Text(
+          AppText(
             '陪 TA 吃点东西、摸摸头，手账就会慢慢热闹起来。',
             textAlign: TextAlign.center,
             style: TextStyle(color: GrowthJournalScreen._muted),

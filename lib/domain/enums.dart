@@ -97,3 +97,7 @@ enum JourneyState { active, wandering, done }
 /// effects after an OS memory-pressure signal without changing the saved
 /// preference.
 enum RenderQuality { auto, high, low }
+
+/// App display language. `system` follows the device language and falls back
+/// to English when the device locale is unsupported.
+enum AppLanguage { system, zhHans, en }

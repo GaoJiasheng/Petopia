@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../app/app_error_log.dart';
 import 'petopia_theme.dart';
+import "../l10n/petopia_text.dart";
 
 void logUiError(String surface, Object error, StackTrace stackTrace) {
   AppErrorLog.instance.record(error, stackTrace, source: 'ui:$surface');
@@ -52,7 +53,7 @@ class AppLoadError extends StatelessWidget {
                       color: Color(0xFFE8A15C),
                     ),
                     const SizedBox(height: 12),
-                    Text(
+                    AppText(
                       title,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
@@ -62,7 +63,7 @@ class AppLoadError extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 7),
-                    Text(
+                    AppText(
                       message,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
@@ -76,7 +77,7 @@ class AppLoadError extends StatelessWidget {
                       FilledButton.icon(
                         onPressed: onRetry,
                         icon: const Icon(Icons.refresh_rounded),
-                        label: const Text('再试一次'),
+                        label: const AppText('再试一次'),
                       ),
                     ],
                   ],

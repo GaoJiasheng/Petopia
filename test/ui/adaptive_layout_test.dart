@@ -6,9 +6,14 @@ void main() {
   group('PetopiaAdaptive', () {
     test('size classes match iPad adaptive breakpoints', () {
       expect(PetopiaAdaptive.sizeClassFor(390), PetopiaSizeClass.compact);
+      expect(PetopiaAdaptive.sizeClassFor(599.9), PetopiaSizeClass.compact);
       expect(PetopiaAdaptive.sizeClassFor(600), PetopiaSizeClass.medium);
+      expect(PetopiaAdaptive.sizeClassFor(819.9), PetopiaSizeClass.medium);
+      expect(PetopiaAdaptive.sizeClassFor(820), PetopiaSizeClass.expanded);
       expect(PetopiaAdaptive.sizeClassFor(834), PetopiaSizeClass.expanded);
       expect(PetopiaAdaptive.sizeClassFor(840), PetopiaSizeClass.expanded);
+      expect(PetopiaAdaptive.sizeClassFor(1179.9), PetopiaSizeClass.expanded);
+      expect(PetopiaAdaptive.sizeClassFor(1180), PetopiaSizeClass.wide);
       expect(PetopiaAdaptive.sizeClassFor(1194), PetopiaSizeClass.wide);
       expect(PetopiaAdaptive.sizeClassFor(1200), PetopiaSizeClass.wide);
     });
@@ -41,6 +46,10 @@ void main() {
         Size(393, 852),
         Size(430, 932),
         Size(768, 1024),
+        Size(819, 700),
+        Size(820, 700),
+        Size(899, 700),
+        Size(900, 700),
         Size(834, 1194),
         Size(1194, 834),
         Size(1024, 1366),
@@ -87,6 +96,13 @@ void main() {
         isFalse,
       );
       expect(PetopiaAdaptive.useYardSidePanels(const Size(1366, 1024)), isTrue);
+    });
+
+    test('yard side panels switch only after both width conditions pass', () {
+      expect(PetopiaAdaptive.useYardSidePanels(const Size(899, 700)), isFalse);
+      expect(PetopiaAdaptive.useYardSidePanels(const Size(900, 900)), isFalse);
+      expect(PetopiaAdaptive.useYardSidePanels(const Size(900, 858)), isFalse);
+      expect(PetopiaAdaptive.useYardSidePanels(const Size(900, 857)), isTrue);
     });
 
     test('opposite yard side lanes keep two visitors separated', () {

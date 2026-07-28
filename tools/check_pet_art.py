@@ -16,6 +16,7 @@ STAGES = 'ABCD'
 SOLID = 200
 EDGE_RUN = 22          # 边缘连续实心>=此值 = 截断
 MARGIN_MIN = 0.08      # 主体四周最小透明边距（顶/左/右）
+BOTTOM_MARGIN_MIN = 0.08  # 脚底/柔和阴影也必须完整收在画布内
 FILL_LO, FILL_HI = 0.68, 0.86   # 主体长边占比允许区间（统一饱满）
 FRAME_SCALE_TOL = 0.12  # 动作8帧间主体尺寸波动上限（防脉动）
 FRAME_BASE_TOL = 0.06   # 动作8帧间贴地基线波动上限（防上下跳）
@@ -48,6 +49,12 @@ def check_complete(img, tag, canvas=512, check_fill=True):
     m = min(bb[0], bb[1], w - bb[2]) / canvas  # 顶/左/右最小边距
     if m < MARGIN_MIN:
         fail(f'{tag}: 安全边距不足（{m*100:.0f}%<{MARGIN_MIN*100:.0f}%）')
+    bottom = (h - bb[3]) / canvas
+    if bottom < BOTTOM_MARGIN_MIN:
+        fail(
+            f'{tag}: 底部/阴影安全边距不足'
+            f'（{bottom*100:.0f}%<{BOTTOM_MARGIN_MIN*100:.0f}%）'
+        )
     if check_fill:  # 问号渍(mystery)是氛围渍、非实体主体，不核占比
         fill = max(bb[2]-bb[0], bb[3]-bb[1]) / canvas
         if not (FILL_LO <= fill <= FILL_HI):
@@ -139,11 +146,23 @@ def check_static_action_match():
             im = Image.open(p).convert('RGBA')
             if im.size != (4096, 512):
                 continue
-            fl, bs = _fill_base(im.crop((0, 0, 512, 512)))
-            if fl and abs(fl - ref_fill) > MATCH_TOL:
-                fail(f'{sp}/{act}: 动作占比({fl*100:.0f}%) 与静态({ref_fill*100:.0f}%) 差异>{int(MATCH_TOL*100)}% → 播动作突兀')
-            if bs and abs(bs - ref_base) > FRAME_BASE_TOL:
-                fail(f'{sp}/{act}: 动作基线与静态不一致 → 播动作位置跳')
+            for frame_index in range(8):
+                frame = im.crop(
+                    (frame_index * 512, 0, (frame_index + 1) * 512, 512)
+                )
+                fl, bs = _fill_base(frame)
+                if fl and abs(fl - ref_fill) > MATCH_TOL:
+                    fail(
+                        f'{sp}/{act}#帧{frame_index}: '
+                        f'动作占比({fl*100:.0f}%) 与静态'
+                        f'({ref_fill*100:.0f}%) 差异>{int(MATCH_TOL*100)}%'
+                        ' → 播动作突兀'
+                    )
+                if bs and abs(bs - ref_base) > FRAME_BASE_TOL:
+                    fail(
+                        f'{sp}/{act}#帧{frame_index}: '
+                        '动作基线与静态不一致 → 播动作位置跳'
+                    )
 
 def check_id_dir_match():
     """species.json 的 id 必须与美术目录/文件命名一致（防 cham≠pet_chameleon 这类空白）。"""

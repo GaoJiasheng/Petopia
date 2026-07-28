@@ -1,0 +1,157 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:path/path.dart' as p;
+import 'package:path_provider/path_provider.dart';
+
+import 'support_catalog.dart';
+
+class SupportBenefits {
+  const SupportBenefits({
+    this.guardian = false,
+    this.treatUntil,
+    this.lanternUntil,
+    this.bouquetUntil,
+    this.processedTransactions = const <String>[],
+    this.lastProductId,
+    this.lastSupportedAt,
+  });
+
+  final bool guardian;
+  final DateTime? treatUntil;
+  final DateTime? lanternUntil;
+  final DateTime? bouquetUntil;
+  final List<String> processedTransactions;
+  final String? lastProductId;
+  final DateTime? lastSupportedAt;
+
+  bool treatActive(DateTime now) => treatUntil?.isAfter(now) ?? false;
+
+  bool lanternActive(DateTime now) =>
+      guardian || (lanternUntil?.isAfter(now) ?? false);
+
+  bool bouquetActive(DateTime now) => bouquetUntil?.isAfter(now) ?? false;
+
+  bool get hasSupported => lastSupportedAt != null || guardian;
+
+  SupportBenefits apply({
+    required SupportProductSpec product,
+    required String transactionKey,
+    required DateTime now,
+  }) {
+    if (processedTransactions.contains(transactionKey)) return this;
+
+    DateTime? extend(DateTime? current) {
+      final duration = product.duration;
+      if (duration == null) return current;
+      final anchor = current != null && current.isAfter(now) ? current : now;
+      return anchor.add(duration);
+    }
+
+    final processed = <String>[...processedTransactions, transactionKey];
+    final retained = processed.length <= 64
+        ? processed
+        : processed.sublist(processed.length - 64);
+    return SupportBenefits(
+      guardian: guardian || product.kind == SupportProductKind.guardian,
+      treatUntil: product.kind == SupportProductKind.treat
+          ? extend(treatUntil)
+          : treatUntil,
+      lanternUntil: product.kind == SupportProductKind.lantern
+          ? extend(lanternUntil)
+          : lanternUntil,
+      bouquetUntil: product.kind == SupportProductKind.bouquet
+          ? extend(bouquetUntil)
+          : bouquetUntil,
+      processedTransactions: retained,
+      lastProductId: product.id,
+      lastSupportedAt: now,
+    );
+  }
+
+  Map<String, Object?> toJson() => <String, Object?>{
+    'version': 1,
+    'guardian': guardian,
+    'treatUntil': treatUntil?.toUtc().toIso8601String(),
+    'lanternUntil': lanternUntil?.toUtc().toIso8601String(),
+    'bouquetUntil': bouquetUntil?.toUtc().toIso8601String(),
+    'processedTransactions': processedTransactions,
+    'lastProductId': lastProductId,
+    'lastSupportedAt': lastSupportedAt?.toUtc().toIso8601String(),
+  };
+
+  static SupportBenefits fromJson(Map<String, Object?> json) {
+    DateTime? date(Object? value) =>
+        value is String ? DateTime.tryParse(value)?.toUtc() : null;
+
+    final processed = json['processedTransactions'];
+    return SupportBenefits(
+      guardian: json['guardian'] == true,
+      treatUntil: date(json['treatUntil']),
+      lanternUntil: date(json['lanternUntil']),
+      bouquetUntil: date(json['bouquetUntil']),
+      processedTransactions: processed is List<Object?>
+          ? processed.whereType<String>().take(64).toList(growable: false)
+          : const <String>[],
+      lastProductId: json['lastProductId'] is String
+          ? json['lastProductId']! as String
+          : null,
+      lastSupportedAt: date(json['lastSupportedAt']),
+    );
+  }
+}
+
+abstract interface class SupportBenefitsStore {
+  Future<SupportBenefits> load();
+
+  Future<void> save(SupportBenefits benefits);
+}
+
+class FileSupportBenefitsStore implements SupportBenefitsStore {
+  FileSupportBenefitsStore({Future<Directory> Function()? supportDirectory})
+    : _supportDirectory = supportDirectory ?? getApplicationSupportDirectory;
+
+  final Future<Directory> Function() _supportDirectory;
+  Future<void> _saveTail = Future<void>.value();
+
+  Future<File> _file() async {
+    final root = await _supportDirectory();
+    final directory = Directory(p.join(root.path, 'petopia', 'support'));
+    await directory.create(recursive: true);
+    return File(p.join(directory.path, 'support-benefits.json'));
+  }
+
+  @override
+  Future<SupportBenefits> load() async {
+    try {
+      final file = await _file();
+      if (!await file.exists()) return const SupportBenefits();
+      final decoded = jsonDecode(await file.readAsString());
+      if (decoded is! Map<String, Object?>) {
+        return const SupportBenefits();
+      }
+      return SupportBenefits.fromJson(decoded);
+    } on Object {
+      return const SupportBenefits();
+    }
+  }
+
+  @override
+  Future<void> save(SupportBenefits benefits) {
+    final next = _saveTail
+        .catchError((Object _, StackTrace _) {})
+        .then((_) => _write(benefits));
+    _saveTail = next.catchError((Object _, StackTrace _) {});
+    return next;
+  }
+
+  Future<void> _write(SupportBenefits benefits) async {
+    final file = await _file();
+    final temporary = File('${file.path}.tmp');
+    await temporary.writeAsString(
+      const JsonEncoder.withIndent('  ').convert(benefits.toJson()),
+      flush: true,
+    );
+    await temporary.rename(file.path);
+  }
+}

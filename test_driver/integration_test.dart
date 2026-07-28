@@ -1,3 +1,10 @@
-import 'package:integration_test/integration_test_driver.dart';
+import 'dart:io';
 
-Future<void> main() => integrationDriver();
+import 'package:integration_test/integration_test_driver_extended.dart';
+
+Future<void> main() => integrationDriver(
+  onScreenshot: (name, bytes, [args]) async {
+    await File('/tmp/$name.png').writeAsBytes(bytes, flush: true);
+    return true;
+  },
+);

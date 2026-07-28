@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:petopia/app/app_info.dart';
@@ -6,6 +7,7 @@ import 'package:petopia/app/game_controller.dart';
 import 'package:petopia/audio/audio_service.dart';
 import 'package:petopia/domain/enums.dart';
 import 'package:petopia/domain/models/logs.dart';
+import 'package:petopia/l10n/petopia_localizations.dart';
 import 'package:petopia/ui/achievements_screen.dart';
 import 'package:petopia/ui/adopt_screen.dart';
 import 'package:petopia/ui/album_screen.dart';
@@ -260,10 +262,12 @@ Future<void> _pump(
   WidgetTester tester, {
   required Size size,
   required Widget screen,
+  Locale locale = const Locale('zh', 'CN'),
+  double textScaleFactor = 3.2,
 }) async {
   await tester.binding.setSurfaceSize(size);
   addTearDown(() => tester.binding.setSurfaceSize(null));
-  tester.platformDispatcher.textScaleFactorTestValue = 3.2;
+  tester.platformDispatcher.textScaleFactorTestValue = textScaleFactor;
   addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
   await tester.pumpWidget(
     ProviderScope(
@@ -274,7 +278,17 @@ Future<void> _pump(
           (ref) async => const AppInfo(version: '1.0.0', buildNumber: '15'),
         ),
       ],
-      child: MaterialApp(home: screen),
+      child: MaterialApp(
+        locale: locale,
+        supportedLocales: PetopiaLocalizations.supportedLocales,
+        localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+          PetopiaLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        home: screen,
+      ),
     ),
   );
   await tester.pump(const Duration(milliseconds: 300));
@@ -347,6 +361,47 @@ void main() {
       );
     }
     semantics.dispose();
+  });
+
+  testWidgets('English core screens fit iPhone and both iPad classes', (
+    tester,
+  ) async {
+    const englishSizes = <Size>[
+      Size(393, 852),
+      Size(834, 1194),
+      Size(1024, 1366),
+      Size(1194, 834),
+      Size(1366, 1024),
+    ];
+    final englishScreens = <(String, Widget)>[
+      ('album', const AlbumScreen()),
+      ('pet dex', const PetDexScreen()),
+      ('visitor dex', const VisitorDexScreen()),
+      ('achievements', const AchievementsScreen()),
+      ('shop', const ShopScreen()),
+      ('settings', const SettingsScreen()),
+      ('adoption', const AdoptScreen()),
+      ('pet detail', PetDetailScreen(initialPet: _FixtureController.pet)),
+      ('growth journal', const GrowthJournalScreen()),
+      ('privacy', const PrivacyScreen()),
+    ];
+
+    for (final size in englishSizes) {
+      for (final (name, screen) in englishScreens) {
+        await _pump(
+          tester,
+          size: size,
+          screen: screen,
+          locale: const Locale('en'),
+          textScaleFactor: 1.25,
+        );
+        expect(
+          tester.takeException(),
+          isNull,
+          reason: '$name overflowed in English at $size',
+        );
+      }
+    }
   });
 
   testWidgets('settings keeps support diagnostics reachable at large text', (

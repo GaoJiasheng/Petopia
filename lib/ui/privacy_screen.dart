@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../app/app_info.dart';
 import 'petopia_theme.dart';
+import "../l10n/petopia_text.dart";
 
 class PrivacyScreen extends StatelessWidget {
   const PrivacyScreen({super.key});
@@ -15,7 +16,7 @@ class PrivacyScreen extends StatelessWidget {
         backgroundColor: const Color(0xFFFAF3E3),
         foregroundColor: const Color(0xFF6B5445),
         elevation: 0,
-        title: const Text(
+        title: const AppText(
           '隐私说明',
           style: TextStyle(fontWeight: FontWeight.w800),
         ),
@@ -44,16 +45,22 @@ class PrivacyScreen extends StatelessWidget {
                 const _PolicySection(
                   title: '第三方服务',
                   body:
-                      '当前版本不包含广告、第三方分析、跨 App 追踪、社交登录或联网内容服务。系统分享面板和文件选择器仅在你主动操作时打开。',
+                      '当前版本不包含广告、第三方分析、跨 App 追踪、社交登录或联网内容服务。只有在你主动支持小院时，购买和恢复购买会由 Apple App Store 处理；Petopia 不会接触支付卡或 Apple ID。',
+                ),
+                const _PolicySection(
+                  title: '支持小院的本地记录',
+                  body:
+                      'App 只在设备上保存回礼类型、交易幂等键和有效期，用于防止重复发放并展示装饰。普通支持不会写入可导出的游戏存档，也不会改变经验、暖绒、冷却或概率。',
                 ),
                 const _PolicySection(
                   title: '删除数据',
-                  body: '卸载 App 会删除保存在本机的游戏数据。建议在卸载或换机前，从设置页导出一份存档备份。',
+                  body:
+                      '卸载 App 会删除本机游戏数据和限时回礼记录。建议卸载或换机前导出存档；重新安装后，可从支持页恢复一次性永久的“小院守护者”。',
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 10),
-                  child: Text(
-                    '生效日期：2026 年 7 月 14 日',
+                  child: AppText(
+                    '生效日期：2026 年 7 月 27 日',
                     style: TextStyle(
                       color: PetopiaColors.mutedText,
                       fontSize: 13,
@@ -104,11 +111,11 @@ class _PolicyLink extends StatelessWidget {
         if (!opened && context.mounted) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(const SnackBar(content: Text('暂时无法打开网页，请稍后再试。')));
+          ).showSnackBar(const SnackBar(content: AppText('暂时无法打开网页，请稍后再试。')));
         }
       },
       icon: Icon(icon),
-      label: Text(label),
+      label: AppText(label),
       style: OutlinedButton.styleFrom(
         foregroundColor: const Color(0xFF6B5445),
         minimumSize: const Size.fromHeight(50),
@@ -131,7 +138,7 @@ class _PolicySection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          AppText(
             title,
             style: const TextStyle(
               color: Color(0xFF6B5445),
@@ -140,7 +147,7 @@ class _PolicySection extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Text(
+          AppText(
             body,
             style: const TextStyle(
               color: Color(0xFF6B5445),

@@ -302,6 +302,7 @@ class GameView {
   final bool careContented;
   final List<YardMemoryView> recentMemories;
   final RenderQuality renderQuality;
+  final AppLanguage appLanguage;
 
   const GameView({
     required this.pet,
@@ -328,6 +329,7 @@ class GameView {
     this.careContented = false,
     this.recentMemories = const <YardMemoryView>[],
     this.renderQuality = RenderQuality.auto,
+    this.appLanguage = AppLanguage.system,
   });
 }
 
@@ -917,6 +919,7 @@ class GameController extends AsyncNotifier<GameView> {
   bool get effectsOn => _svc.session.settings.sound;
   bool get hapticsOn => _svc.session.settings.haptics;
   RenderQuality get renderQuality => _svc.session.settings.renderQuality;
+  AppLanguage get appLanguage => _svc.session.settings.appLanguage;
 
   Future<bool> toggleNotifications() async {
     final next = !_svc.session.settings.notifications;
@@ -981,6 +984,14 @@ class GameController extends AsyncNotifier<GameView> {
     _svc.session.settings.renderQuality = quality;
     state = AsyncData(_snapshot());
     _persist();
+  }
+
+  void setAppLanguage(AppLanguage language) {
+    if (_svc.session.settings.appLanguage == language) return;
+    _svc.session.settings.appLanguage = language;
+    state = AsyncData(_snapshot());
+    _persist();
+    unawaited(_syncNotifications());
   }
 
   void _hapticLight() {
@@ -1198,10 +1209,15 @@ class GameController extends AsyncNotifier<GameView> {
 
   Future<bool?> _syncNotifications({bool requestPermission = false}) {
     final settings = _svc.session.settings;
+    final english = switch (settings.appLanguage) {
+      AppLanguage.en => true,
+      AppLanguage.zhHans => false,
+      AppLanguage.system => Platform.localeName.toLowerCase().startsWith('en'),
+    };
     return ref
         .read(notificationServiceProvider)
         .sync(
-          candidates: _notificationCandidates(),
+          candidates: _notificationCandidates(english: english),
           preferences: PetopiaNotificationPreferences(
             enabled: settings.notifications,
             postcards: settings.notifyPostcards,
@@ -1212,7 +1228,9 @@ class GameController extends AsyncNotifier<GameView> {
         );
   }
 
-  List<PetopiaNotificationCandidate> _notificationCandidates() {
+  List<PetopiaNotificationCandidate> _notificationCandidates({
+    required bool english,
+  }) {
     final now = _svc.clock.now();
     final pets = <String, Pet>{
       for (final pet in _svc.session.allPets) pet.id: pet,
@@ -1225,8 +1243,18 @@ class GameController extends AsyncNotifier<GameView> {
           key: 'event:${event.id}',
           kind: PetopiaNotificationKind.event,
           at: now.add(const Duration(minutes: 5)),
-          title: event.type == EventType.special ? '院子里发生了一件特别的事' : '手账多了一页新故事',
-          body: event.title,
+          title: event.type == EventType.special
+              ? _notificationCopy(
+                  english,
+                  '院子里发生了一件特别的事',
+                  'Something special happened in the garden',
+                )
+              : _notificationCopy(
+                  english,
+                  '手账多了一页新故事',
+                  'A new story is waiting in your journal',
+                ),
+          body: english ? 'Open Petopia to see what happened.' : event.title,
         ),
       );
     }
@@ -1243,8 +1271,16 @@ class GameController extends AsyncNotifier<GameView> {
           key: 'postcard:${journey.id}',
           kind: PetopiaNotificationKind.postcard,
           at: journey.nextPostcardAt,
-          title: '远方寄来一张明信片',
-          body: '${pet.name}从旅途中寄来一封信，邮箱轻轻亮起来了。',
+          title: _notificationCopy(
+            english,
+            '远方寄来一张明信片',
+            'A postcard arrived from afar',
+          ),
+          body: _notificationCopy(
+            english,
+            '${pet.name}从旅途中寄来一封信，邮箱轻轻亮起来了。',
+            '${pet.name} sent a letter from the road. The mailbox is glowing.',
+          ),
         ),
       );
     }
@@ -1257,8 +1293,16 @@ class GameController extends AsyncNotifier<GameView> {
             key: 'revisit:${pet.id}',
             kind: PetopiaNotificationKind.revisit,
             at: revisitAt,
-            title: '好像听见了熟悉的铃铛',
-            body: '${pet.name}今天会回小院看看。',
+            title: _notificationCopy(
+              english,
+              '好像听见了熟悉的铃铛',
+              'A familiar bell is ringing',
+            ),
+            body: _notificationCopy(
+              english,
+              '${pet.name}今天会回小院看看。',
+              '${pet.name} is coming home for a visit today.',
+            ),
           ),
         );
       }
@@ -1269,13 +1313,24 @@ class GameController extends AsyncNotifier<GameView> {
           key: 'anniversary:${pet.id}:${anniversary.year}',
           kind: PetopiaNotificationKind.anniversary,
           at: anniversary,
-          title: '今天是一个温柔的纪念日',
-          body: '${pet.name}来到小院，又多了一年回忆。',
+          title: _notificationCopy(
+            english,
+            '今天是一个温柔的纪念日',
+            'Today is a gentle anniversary',
+          ),
+          body: _notificationCopy(
+            english,
+            '${pet.name}来到小院，又多了一年回忆。',
+            'Another year of garden memories with ${pet.name}.',
+          ),
         ),
       );
     }
     return candidates;
   }
+
+  static String _notificationCopy(bool english, String zhHans, String en) =>
+      english ? en : zhHans;
 
   static DateTime _nextAnniversary(DateTime adoptedAt, DateTime now) {
     final localAdopted = LocalCalendar.local(adoptedAt);
@@ -1458,6 +1513,7 @@ class GameController extends AsyncNotifier<GameView> {
           CareExperiencePolicy.isContented(_svc.session.careLedger.counts),
       recentMemories: _recentYardMemories(),
       renderQuality: _svc.session.settings.renderQuality,
+      appLanguage: _svc.session.settings.appLanguage,
     );
   }
 

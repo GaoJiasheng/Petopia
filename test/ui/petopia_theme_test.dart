@@ -49,6 +49,13 @@ void main() {
     expect(resolved, Duration.zero);
   });
 
+  test('shared motion tiers stay ordered and restrained', () {
+    expect(PetopiaMotion.micro, lessThan(PetopiaMotion.quick));
+    expect(PetopiaMotion.quick, lessThan(PetopiaMotion.standard));
+    expect(PetopiaMotion.standard, lessThan(PetopiaMotion.modal));
+    expect(PetopiaMotion.reveal, lessThan(const Duration(seconds: 1)));
+  });
+
   test('night yard uses light system chrome and day yard uses dark chrome', () {
     expect(
       PetopiaSystemUi.yard(hour: 23).statusBarIconBrightness,

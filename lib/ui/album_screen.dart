@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
 import '../audio/route_audio.dart';
+import '../l10n/petopia_localizations.dart';
+import '../l10n/petopia_text.dart';
 import 'adaptive_layout.dart';
 import 'pet_art.dart';
 import 'petopia_theme.dart';
@@ -46,7 +48,7 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen>
       child: Scaffold(
         backgroundColor: background,
         appBar: AppBar(
-          title: const Text(
+          title: const AppText(
             '相册',
             style: TextStyle(
               color: AlbumScreen._ink,
@@ -59,20 +61,20 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen>
           iconTheme: const IconThemeData(color: AlbumScreen._ink),
           actions: [
             IconButton(
-              tooltip: '相册装帧',
+              tooltip: context.tr('相册装帧'),
               onPressed: () => _openSkinPicker(ctrl),
               icon: const Icon(Icons.palette_outlined),
             ),
             const SizedBox(width: 6),
           ],
-          bottom: const TabBar(
+          bottom: TabBar(
             labelColor: AlbumScreen._accent,
             unselectedLabelColor: AlbumScreen._muted,
             indicatorColor: AlbumScreen._accent,
-            labelStyle: TextStyle(fontWeight: FontWeight.bold),
+            labelStyle: const TextStyle(fontWeight: FontWeight.bold),
             tabs: [
-              Tab(text: '明信片'),
-              Tab(text: '旅行伙伴'),
+              Tab(text: context.tr('明信片')),
+              Tab(text: context.tr('旅行伙伴')),
             ],
           ),
         ),
@@ -104,7 +106,7 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen>
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
+                  const AppText(
                     '相册装帧',
                     style: TextStyle(
                       color: AlbumScreen._ink,
@@ -132,7 +134,7 @@ class _AlbumScreenState extends ConsumerState<AlbumScreen>
                           color: AlbumScreen._ink,
                         ),
                       ),
-                      title: Text(
+                      title: AppText(
                         skin.name,
                         style: const TextStyle(
                           color: AlbumScreen._ink,
@@ -293,7 +295,7 @@ class _JourneyPreviewEmpty extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 18),
-              const Text(
+              const AppText(
                 '这里会收好旅途中寄回的每一封信。',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -303,7 +305,7 @@ class _JourneyPreviewEmpty extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 7),
-              const Text(
+              const AppText(
                 '伙伴毕业后会背上行囊，慢慢走过不同地方。先翻开一张旅行样片看看。',
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -320,7 +322,7 @@ class _JourneyPreviewEmpty extends StatelessWidget {
                   ),
                 ),
                 icon: const Icon(Icons.auto_stories_rounded),
-                label: const Text('预览旅行明信片'),
+                label: const AppText('预览旅行明信片'),
               ),
             ],
           ),
@@ -397,7 +399,7 @@ class _AlbumFilters extends StatelessWidget {
                 if (filtered) ...[
                   const SizedBox(width: 4),
                   IconButton(
-                    tooltip: '清除筛选',
+                    tooltip: context.tr('清除筛选'),
                     onPressed: onClear,
                     icon: const Icon(Icons.filter_alt_off_rounded),
                     color: AlbumScreen._muted,
@@ -408,7 +410,7 @@ class _AlbumFilters extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 8),
-        Text(
+        AppText(
           filtered ? '$visible / $total' : '$total 张',
           style: const TextStyle(
             color: AlbumScreen._muted,
@@ -437,12 +439,12 @@ class _AlbumFilterMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<String>(
-      tooltip: label,
+      tooltip: context.tr(label),
       onSelected: (value) => onChanged(value.isEmpty ? null : value),
       itemBuilder: (context) => [
-        const PopupMenuItem(value: '', child: Text('全部')),
+        const PopupMenuItem(value: '', child: AppText('全部')),
         for (final value in values)
-          PopupMenuItem(value: value, child: Text(value)),
+          PopupMenuItem(value: value, child: AppText(value)),
       ],
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
@@ -458,7 +460,7 @@ class _AlbumFilterMenu extends StatelessWidget {
             const SizedBox(width: 6),
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 140),
-              child: Text(
+              child: AppText(
                 label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -490,7 +492,9 @@ class _PostcardThumb extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: '打开${card.petName}从${card.locationName}寄来的第 ${card.seq + 1} 张明信片',
+      label: context.tr(
+        '打开${card.petName}从${card.locationName}寄来的第 ${card.seq + 1} 张明信片',
+      ),
       child: ExcludeSemantics(
         child: Material(
           color: Colors.transparent,
@@ -536,7 +540,7 @@ class _PostcardThumb extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        AppText(
                           card.locationName,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -546,7 +550,7 @@ class _PostcardThumb extends StatelessWidget {
                             color: AlbumScreen._ink,
                           ),
                         ),
-                        Text(
+                        AppText(
                           '${card.petName} · 第 ${card.seq + 1} 站',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -652,9 +656,10 @@ class _TravelPetCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label:
-          '${pet.name}的旅程，已走过 ${pet.completedStops} / ${pet.stops} 站，'
-          '已寄回 ${pet.postcardCount} 张明信片',
+      label: context.tr(
+        '${pet.name}的旅程，已走过 ${pet.completedStops} / ${pet.stops} 站，'
+        '已寄回 ${pet.postcardCount} 张明信片',
+      ),
       child: ExcludeSemantics(
         child: Material(
           color: const Color(0xFFFFFDF7),
@@ -675,7 +680,7 @@ class _TravelPetCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        AppText(
                           pet.name,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -686,7 +691,7 @@ class _TravelPetCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 4),
-                        Text(
+                        AppText(
                           '已走过 ${pet.completedStops} / ${pet.stops} 站 · 已寄回 ${pet.postcardCount} 张',
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
@@ -696,7 +701,7 @@ class _TravelPetCard extends StatelessWidget {
                           ),
                         ),
                         if (pet.graduatedAt != null)
-                          Text(
+                          AppText(
                             '毕业于 ${_TravelList._date(pet.graduatedAt!)}',
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -879,7 +884,7 @@ class _TravelJourneyHeader extends StatelessWidget {
   }
 
   Widget _title() {
-    return Text(
+    return AppText(
       '${pet.name}的旅程',
       maxLines: 2,
       overflow: TextOverflow.ellipsis,
@@ -893,7 +898,7 @@ class _TravelJourneyHeader extends StatelessWidget {
 
   List<Widget> _summary() {
     return [
-      Text(
+      AppText(
         '${pet.completedStops} / ${pet.stops} 站 · 已寄回 ${pet.postcardCount} 张',
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
@@ -905,7 +910,7 @@ class _TravelJourneyHeader extends StatelessWidget {
       ),
       if (pet.routeTheme != null) ...[
         const SizedBox(height: 3),
-        Text(
+        AppText(
           '第一程：${_routeLabel(pet.routeTheme!)} · ${_letterHint(pet.nextPostcardAt)}',
           maxLines: 3,
           overflow: TextOverflow.ellipsis,
@@ -931,7 +936,7 @@ class _TravelJourneyHeader extends StatelessWidget {
 
   Widget _closeButton(BuildContext context) {
     return IconButton(
-      tooltip: '关闭',
+      tooltip: context.tr('关闭'),
       onPressed: () => Navigator.of(context).pop(),
       icon: const Icon(Icons.close_rounded),
       color: AlbumScreen._muted,
@@ -1043,7 +1048,7 @@ class _Empty extends StatelessWidget {
           children: [
             Icon(icon, size: 56, color: const Color(0xFFCBBEA8)),
             const SizedBox(height: 16),
-            Text(
+            AppText(
               text,
               textAlign: TextAlign.center,
               style: const TextStyle(

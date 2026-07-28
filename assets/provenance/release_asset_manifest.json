@@ -1,15 +1,15 @@
 {
   "bytesByCategory": {
-    "art": 37053162,
+    "art": 37050175,
     "audio": 23888482,
     "content-data": 399851,
-    "runtime-art": 78944652
+    "runtime-art": 80907580
   },
   "counts": {
     "art": 197,
     "audio": 59,
     "content-data": 10,
-    "runtime-art": 422
+    "runtime-art": 427
   },
   "declarations": {
     "generatedForPetopia": true,
@@ -169,9 +169,9 @@
     },
     {
       "asset": "assets/art/pets/dex/pet_uni_dex_color.png",
-      "bytes": 164848,
+      "bytes": 161861,
       "category": "art",
-      "sha256": "e67eedc3c3f9462db28c5b848bf7553bb9eda899bc36fbebbf73f533e7ce1451"
+      "sha256": "8564a2bbfa27180683f57586d14873256390335f5482d01eb0d69872e928a10d"
     },
     {
       "asset": "assets/art/pets/dex/pet_uni_dex_mystery.png",
@@ -3659,11 +3659,11 @@
     },
     {
       "asset": "assets/runtime/pets/turtle/pet_turtle_var02_stageC.webp",
-      "bytes": 41218,
+      "bytes": 109836,
       "category": "runtime-art",
-      "sha256": "d9b36895502c5983465d30008186d08fde5e11ef28c3e289869eecbdf00834c9",
+      "sha256": "66e1edec67707c5d1df973f7a84ed6f8fd0617fa593549bee852e2ca1fd3d737",
       "source": "assets/runtime/pets/turtle/pet_turtle_var02_stageC.png",
-      "sourceSha256": "91d0b11ba572d76af7416cf91c578489905682c457addd7563b5d22f6603625c"
+      "sourceSha256": "153acad3837c5e87c92cbed94b91f3ee46d6437dfa4bf122f8b7ff344b7eea93"
     },
     {
       "asset": "assets/runtime/pets/turtle/pet_turtle_var02_stageD.webp",
@@ -3691,11 +3691,11 @@
     },
     {
       "asset": "assets/runtime/pets/turtle/pet_turtle_var03_stageC.webp",
-      "bytes": 34896,
+      "bytes": 108568,
       "category": "runtime-art",
-      "sha256": "60ee00bc965cdcd7d8f4f569fe9a082128e025ce6ca9fc0f57d768233df127e6",
+      "sha256": "0207a598e661aa1f75dd264733d1746801d27a5903477a71f543fb8eec2c0517",
       "source": "assets/runtime/pets/turtle/pet_turtle_var03_stageC.png",
-      "sourceSha256": "5cc0e6ce046ffb502160106bd8bc7b4dee6c5885ac034464a6953ccc183aaedf"
+      "sourceSha256": "967b0d0de80d35551a07339d3f3ff0ccf6aac694d77b983f0b3d9b8ac6262a84"
     },
     {
       "asset": "assets/runtime/pets/turtle/pet_turtle_var03_stageD.webp",
@@ -3723,11 +3723,11 @@
     },
     {
       "asset": "assets/runtime/pets/turtle/pet_turtle_var04_stageC.webp",
-      "bytes": 38634,
+      "bytes": 114290,
       "category": "runtime-art",
-      "sha256": "503009bc7b2ffa4430b643ab1e928a3024a3cfc4752fdc33f2b2132af9362737",
+      "sha256": "5edbdde591029c5d89f691b55aee5d5fe33fc9d73f367fe0aee102526969b118",
       "source": "assets/runtime/pets/turtle/pet_turtle_var04_stageC.png",
-      "sourceSha256": "d9db0483aba28877882471e563342393f205b6281cb9fdf7c92ff4df09da9609"
+      "sourceSha256": "faf22ec49d8744eef684a210ea1e750824283f1fabc4ece8e926c5e568446e45"
     },
     {
       "asset": "assets/runtime/pets/turtle/pet_turtle_var04_stageD.webp",
@@ -4936,6 +4936,46 @@
       "sha256": "bb6027700d19092956c42d6c173af5b2fc2f95d59cd95d6d3da3e2d48215f971",
       "source": "assets/art/postcards/stickers/pc_sticker_wish_star.png",
       "sourceSha256": "d6c2d70ac3eb617e6704729b7088ce2896abbdb68c748078a3234f945abac62c"
+    },
+    {
+      "asset": "assets/runtime/support/support_bouquet.webp",
+      "bytes": 475922,
+      "category": "runtime-art",
+      "sha256": "4ca4d74bef0448bb0ea71e9b94d6ae509ff3e6d68bd10ba56f36dfcd1543e98b",
+      "source": "assets/art/support/support_bouquet.png",
+      "sourceSha256": "edaefa1d95ab7c2624a679ae1544bbe8de748f92bc4769ec0bd2b1d5599fc208"
+    },
+    {
+      "asset": "assets/runtime/support/support_guardian_badge.webp",
+      "bytes": 331120,
+      "category": "runtime-art",
+      "sha256": "6c6e685b22d1af520374114c909de0da47e830ffe9c2f0e12fe6c607bf9458ce",
+      "source": "assets/art/support/support_guardian_badge.png",
+      "sourceSha256": "0b98ebbfd82954ef0fc05a82558940997e664f83f0e3086e741b6141ea3921a7"
+    },
+    {
+      "asset": "assets/runtime/support/support_guardian_postcard.webp",
+      "bytes": 314008,
+      "category": "runtime-art",
+      "sha256": "88c2df0b2b181c6cc990d321e1db9ee7ce222eda34f434ea2c9155eff0d73461",
+      "source": "assets/art/support/support_guardian_postcard.png",
+      "sourceSha256": "83bf6dae3c1656db05eae76272bbe1bbe02c86a0e89279fdc8b228c7984e4168"
+    },
+    {
+      "asset": "assets/runtime/support/support_lantern.webp",
+      "bytes": 267380,
+      "category": "runtime-art",
+      "sha256": "94479035a8c56de39eeef6b1e364159c4fcc3cf7b710f9826936e2995d3e1941",
+      "source": "assets/art/support/support_lantern.png",
+      "sourceSha256": "7b9737a568a56c3ccc5afb029dec24a2a67bef173fd1549a138f77f184268225"
+    },
+    {
+      "asset": "assets/runtime/support/support_treat.webp",
+      "bytes": 356552,
+      "category": "runtime-art",
+      "sha256": "ef63d2f3b4f415a7b524f6d3dc8d0ee11abccdbe321107e8dbc41092f67f43d7",
+      "source": "assets/art/support/support_treat.png",
+      "sourceSha256": "03a3a30e4e601f737a3e6df79d0e04ed5c272f24ca028adf158329ced3a60ca2"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_autumnjam_bg_wide.webp",

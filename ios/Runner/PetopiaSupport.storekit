@@ -1,0 +1,104 @@
+{
+  "identifier" : "7B2E4451-6A3B-4F51-8A8A-57184C1E97E1",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "002C7EBB-64B6-46D6-92C1-B59BDCC6A578",
+      "localizations" : [
+        {
+          "description" : "A tiny thank-you treat for the yard.",
+          "displayName" : "A Little Treat",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "给小动物留下一份感谢点心。",
+          "displayName" : "一份小点心",
+          "locale" : "zh_CN"
+        }
+      ],
+      "productID" : "com.petopia.petopia.support.treat",
+      "referenceName" : "Petopia Support - Treat",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "97A74C4E-BDEE-4497-B880-C3F036C8C161",
+      "localizations" : [
+        {
+          "description" : "Keeps the garden lantern glowing until tomorrow.",
+          "displayName" : "A Warm Lantern",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "让小院的守护灯温暖地亮到明天。",
+          "displayName" : "点亮一盏暖灯",
+          "locale" : "zh_CN"
+        }
+      ],
+      "productID" : "com.petopia.petopia.support.lantern",
+      "referenceName" : "Petopia Support - Lantern",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "4.99",
+      "familyShareable" : false,
+      "internalID" : "76738FEC-34F1-4C49-AA99-1707C3891D79",
+      "localizations" : [
+        {
+          "description" : "Flowers bloom in the yard for seven days.",
+          "displayName" : "Garden Bouquet",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "让一篮鲜花在院子里盛开七天。",
+          "displayName" : "送来一篮花",
+          "locale" : "zh_CN"
+        }
+      ],
+      "productID" : "com.petopia.petopia.support.bouquet",
+      "referenceName" : "Petopia Support - Bouquet",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "6.99",
+      "familyShareable" : false,
+      "internalID" : "949676BA-DAE5-4D43-9D59-1A453EC6ABF6",
+      "localizations" : [
+        {
+          "description" : "A permanent badge, lantern, and thank-you letter.",
+          "displayName" : "Yard Guardian",
+          "locale" : "en_US"
+        },
+        {
+          "description" : "永久点亮守护灯，收下徽章和特别来信。",
+          "displayName" : "小院守护者",
+          "locale" : "zh_CN"
+        }
+      ],
+      "productID" : "com.petopia.petopia.support.guardian",
+      "referenceName" : "Petopia Support - Yard Guardian",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_developerTeamID" : "",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 0,
+    "_locale" : "en_US",
+    "_renewalBillingIssuesEnabled" : false,
+    "_storefront" : "USA",
+    "_timeRate" : 0
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}

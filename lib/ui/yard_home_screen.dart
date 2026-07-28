@@ -14,6 +14,11 @@ import '../audio/audio_service.dart';
 import '../audio/route_audio.dart';
 import '../config/game_config.dart';
 import '../domain/enums.dart';
+import '../l10n/petopia_localizations.dart';
+import '../l10n/petopia_text.dart';
+import '../purchases/support_benefits.dart';
+import '../purchases/support_catalog.dart';
+import '../purchases/support_purchase_controller.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
 import 'adaptive_layout.dart';
@@ -35,6 +40,7 @@ import 'pet_detail_screen.dart';
 import 'postcard_viewer_screen.dart';
 import 'settings_screen.dart';
 import 'shop_screen.dart';
+import 'support_yard_screen.dart';
 import 'visitor_dex_screen.dart';
 
 /// 触发一次宠物动作动画（自增 seq 以便重复播同一动作）。
@@ -93,7 +99,7 @@ void _showCareFeedback(BuildContext context, CareFeedbackView? feedback) {
             ),
             const SizedBox(width: 9),
             Expanded(
-              child: Text(
+              child: AppText(
                 feedback.message,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -105,7 +111,7 @@ void _showCareFeedback(BuildContext context, CareFeedbackView? feedback) {
               ),
             ),
             const SizedBox(width: 8),
-            Text(
+            AppText(
               '+${feedback.expApplied}',
               style: const TextStyle(
                 color: PetopiaColors.actionAccent,
@@ -224,7 +230,10 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
     _precacheGeneration += 1;
     _precacheKey = null;
     _memoryRecoveryTimer?.cancel();
-    PaintingBinding.instance.imageCache.clear();
+    final imageCache = PaintingBinding.instance.imageCache;
+    imageCache
+      ..clear()
+      ..clearLiveImages();
     if (mounted && !_memoryPressureConstrained) {
       setState(() => _memoryPressureConstrained = true);
     }
@@ -247,6 +256,10 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
 
   @override
   Widget build(BuildContext context) {
+    final supportState = ref
+        .watch(supportPurchaseControllerProvider)
+        .valueOrNull;
+    final supportBenefits = supportState?.benefits ?? const SupportBenefits();
     ref.listen<AchievementUnlockCue?>(achievementUnlockCueProvider, (
       previous,
       next,
@@ -291,7 +304,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                   ),
                   const SizedBox(width: 10),
                   Expanded(
-                    child: Text(
+                    child: AppText(
                       recovered ? '小院记录已经安全补上。' : '暂时无法写入记录，稍后会自动重试。',
                       style: const TextStyle(
                         color: PetopiaColors.ink,
@@ -424,6 +437,22 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                         .ceil(),
                   ),
                 );
+                final supportNow = DateTime.now().toUtc();
+                final treatActive = supportBenefits.treatActive(supportNow);
+                final lanternActive = supportBenefits.lanternActive(supportNow);
+                final bouquetActive = supportBenefits.bouquetActive(supportNow);
+                final visibleDecor =
+                    _visibleDecor(
+                      view.decorSlots,
+                      view.luxuryStage,
+                      wideLayout: wideLayout,
+                    ).where(
+                      (decor) =>
+                          !(treatActive && decor.decorId == 'food_bowl_full') &&
+                          !(lanternActive && decor.decorId == 'night_light') &&
+                          !(bouquetActive &&
+                              decor.decorId == 'flowerbed_small'),
+                    );
                 return Stack(
                   fit: StackFit.expand,
                   children: [
@@ -451,11 +480,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                           ),
                         ),
                     // 摆件中景层（渲染在宠物之下）：自定义 slots 为空时使用默认布置。
-                    for (final decor in _visibleDecor(
-                      view.decorSlots,
-                      view.luxuryStage,
-                      wideLayout: wideLayout,
-                    ))
+                    for (final decor in visibleDecor)
                       _YardDecor(
                         imageKey: ValueKey<String>(
                           'yard_decor_${view.luxuryStage}_${decor.decorId}',
@@ -463,6 +488,27 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                         align: decor.anchor.align,
                         decorId: decor.decorId,
                         width: decor.anchor.width * sceneScale,
+                      ),
+                    if (lanternActive)
+                      _SupportYardDecor(
+                        key: const ValueKey<String>('support_yard_lantern'),
+                        assetPath: SupportCatalog.lantern.assetPath,
+                        alignment: const Alignment(-0.50, 0.36),
+                        width: 104 * sceneScale,
+                      ),
+                    if (bouquetActive)
+                      _SupportYardDecor(
+                        key: const ValueKey<String>('support_yard_bouquet'),
+                        assetPath: SupportCatalog.bouquet.assetPath,
+                        alignment: const Alignment(0.76, 0.34),
+                        width: 116 * sceneScale,
+                      ),
+                    if (treatActive)
+                      _SupportYardDecor(
+                        key: const ValueKey<String>('support_yard_treat'),
+                        assetPath: SupportCatalog.treat.assetPath,
+                        alignment: const Alignment(0.42, 0.66),
+                        width: 92 * sceneScale,
                       ),
                     if (view.activeVisitor != null)
                       Builder(
@@ -506,7 +552,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                           stage: pet.stage,
                           reduceEffects: conserveMemory,
                           cue: ref.watch(petActionCueProvider),
-                          semanticLabel: '摸摸${pet.name}',
+                          semanticLabel: context.tr('摸摸${pet.name}'),
                           onTap: () async {
                             if (await ctrl.pat()) {
                               _fireCue(ref, 'pat');
@@ -546,7 +592,9 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                             child: Semantics(
                               key: const ValueKey<String>('active_revisitor'),
                               button: true,
-                              label: '回访伙伴 ${revisitor.name}，点按查看近况',
+                              label: context.tr(
+                                '回访伙伴 ${revisitor.name}，点按查看近况',
+                              ),
                               child: Material(
                                 type: MaterialType.transparency,
                                 child: InkResponse(
@@ -611,7 +659,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
             ),
             const SizedBox(width: 10),
             Expanded(
-              child: Text(
+              child: AppText(
                 '达成成就：$title',
                 style: const TextStyle(fontWeight: FontWeight.w700),
               ),
@@ -846,10 +894,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
       barrierDismissible: true,
       barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
       barrierColor: Colors.black.withValues(alpha: 0.18),
-      transitionDuration: PetopiaMotion.duration(
-        context,
-        const Duration(milliseconds: 360),
-      ),
+      transitionDuration: PetopiaMotion.duration(context, PetopiaMotion.modal),
       pageBuilder: (context, _, _) => Material(
         type: MaterialType.transparency,
         child: SafeArea(
@@ -890,10 +935,10 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
           size: 42,
           fallback: Icons.shield_outlined,
         ),
-        title: const Text('小院已安全恢复'),
+        title: const AppText('小院已安全恢复'),
         content: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 420),
-          child: Text(
+          child: AppText(
             recovery.message,
             textAlign: TextAlign.center,
             style: const TextStyle(height: 1.55),
@@ -904,7 +949,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
           FilledButton(
             autofocus: true,
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text('回到小院'),
+            child: const AppText('回到小院'),
           ),
         ],
       ),
@@ -967,7 +1012,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
       barrierColor: Colors.black.withValues(alpha: 0.22),
       transitionDuration: PetopiaMotion.duration(
         context,
-        const Duration(milliseconds: 320),
+        PetopiaMotion.standard,
       ),
       pageBuilder: (context, _, _) {
         return Material(
@@ -979,7 +1024,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                 child: Semantics(
                   scopesRoute: true,
                   namesRoute: true,
-                  label: '${visitor.name}来到院子',
+                  label: context.tr('${visitor.name}来到院子'),
                   explicitChildNodes: true,
                   child: _VisitorArrivalCard(
                     visitor: visitor,
@@ -1092,7 +1137,7 @@ class _AppLaunchSurface extends StatelessWidget {
         backgroundColor: PetopiaColors.background,
         body: Semantics(
           liveRegion: true,
-          label: '小院正在醒来',
+          label: context.tr('小院正在醒来'),
           child: ExcludeSemantics(
             child: Center(
               child: Column(
@@ -1165,7 +1210,7 @@ class _OfflineWelcomeCard extends StatelessWidget {
             final horizontal = constraints.maxWidth >= 480;
             final art = Semantics(
               image: true,
-              label: '${welcome.petName}睡饱后回到你身边',
+              label: context.tr('${welcome.petName}睡饱后回到你身边'),
               child: Image.asset(
                 PetArt.stage(
                   welcome.speciesId,
@@ -1184,7 +1229,7 @@ class _OfflineWelcomeCard extends StatelessWidget {
                   ? CrossAxisAlignment.start
                   : CrossAxisAlignment.center,
               children: [
-                Text(
+                AppText(
                   welcome.expGained > 0
                       ? '${welcome.petName}睡饱了，蹭蹭你 +${welcome.expGained}'
                       : '${welcome.petName}睡饱了，又来蹭蹭你',
@@ -1197,7 +1242,7 @@ class _OfflineWelcomeCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 12),
-                Text(
+                AppText(
                   welcome.story,
                   textAlign: horizontal ? TextAlign.start : TextAlign.center,
                   style: const TextStyle(
@@ -1213,7 +1258,7 @@ class _OfflineWelcomeCard extends StatelessWidget {
                   child: FilledButton.icon(
                     onPressed: () => Navigator.of(context).pop(),
                     icon: const Icon(Icons.favorite_rounded, size: 18),
-                    label: const Text('抱抱它'),
+                    label: const AppText('抱抱它'),
                   ),
                 ),
               ],
@@ -1392,7 +1437,7 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
               ),
               const SizedBox(width: 9),
               const Expanded(
-                child: Text(
+                child: AppText(
                   '院子里来了新朋友',
                   style: TextStyle(
                     color: Color(0xFF6B5445),
@@ -1402,7 +1447,7 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
                 ),
               ),
               IconButton(
-                tooltip: '关闭',
+                tooltip: context.tr('关闭'),
                 onPressed: () => Navigator.of(context).pop(),
                 icon: const Icon(
                   Icons.close_rounded,
@@ -1431,7 +1476,7 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
             ),
           ),
           const SizedBox(height: 14),
-          Text(
+          AppText(
             visitor.name,
             textAlign: TextAlign.center,
             style: const TextStyle(
@@ -1441,7 +1486,7 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
             ),
           ),
           const SizedBox(height: 6),
-          Text(
+          AppText(
             _visitorRarityLabel(visitor.rarity),
             style: const TextStyle(
               color: PetopiaColors.actionAccent,
@@ -1450,7 +1495,7 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
             ),
           ),
           const SizedBox(height: 14),
-          Text(
+          AppText(
             _outcome?.message ?? visitor.message,
             textAlign: TextAlign.center,
             style: const TextStyle(
@@ -1467,7 +1512,7 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
               color: const Color(0xFFA7C4A0).withValues(alpha: 0.16),
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Text(
+            child: AppText(
               interacted
                   ? [
                       '这段相遇已经收进来客图鉴。',
@@ -1512,7 +1557,7 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
                         _working = false;
                       });
                     },
-              child: Text(
+              child: AppText(
                 interacted ? '收进来客图鉴' : '和它打个招呼',
                 style: const TextStyle(
                   fontSize: 16,
@@ -1548,7 +1593,7 @@ class _RevisitorDialogState extends State<_RevisitorDialog> {
     return AlertDialog(
       backgroundColor: const Color(0xFFFFFDF7),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
-      title: Text(
+      title: AppText(
         '${revisitor.name} 回家看看了',
         style: const TextStyle(
           color: Color(0xFF6B5445),
@@ -1569,7 +1614,7 @@ class _RevisitorDialogState extends State<_RevisitorDialog> {
             fit: BoxFit.contain,
           ),
           const SizedBox(height: 12),
-          Text(
+          AppText(
             _outcome == null
                 ? (interacted
                       ? '它会在院子里歇一歇，接下来约 $days 天都能看见这个熟悉的身影。'
@@ -1601,7 +1646,7 @@ class _RevisitorDialogState extends State<_RevisitorDialog> {
             if (!mounted) return;
             setState(() => _outcome = outcome);
           },
-          child: Text(interacted ? '在院子里好好休息' : '欢迎回家'),
+          child: AppText(interacted ? '在院子里好好休息' : '欢迎回家'),
         ),
       ],
     );
@@ -1674,7 +1719,7 @@ class _EventDialogState extends State<_EventDialog> {
                             ),
                             const SizedBox(width: 9),
                             Flexible(
-                              child: Text(
+                              child: AppText(
                                 event.title,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
@@ -1693,7 +1738,7 @@ class _EventDialogState extends State<_EventDialog> {
                             context,
                             const Duration(milliseconds: 260),
                           ),
-                          child: Text(
+                          child: AppText(
                             selected?.resultScript ?? event.script,
                             key: ValueKey(_selectedChoice),
                             textAlign: TextAlign.center,
@@ -1727,7 +1772,7 @@ class _EventDialogState extends State<_EventDialog> {
                                     vertical: 13,
                                   ),
                                 ),
-                                child: Text(
+                                child: AppText(
                                   event.choices[index].text,
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
@@ -1743,8 +1788,8 @@ class _EventDialogState extends State<_EventDialog> {
                         if (!hasChoices || selected != null) ...[
                           const SizedBox(height: 14),
                           Semantics(
-                            label: '本次收获',
-                            child: Text(
+                            label: context.tr('本次收获'),
+                            child: AppText(
                               [
                                 if (event.expReward +
                                         (selected?.expDelta ?? 0) >
@@ -1766,7 +1811,7 @@ class _EventDialogState extends State<_EventDialog> {
                               onPressed: () => Navigator.of(
                                 context,
                               ).pop(_selectedChoice ?? -1),
-                              child: const Text('记进手账'),
+                              child: const AppText('记进手账'),
                             ),
                           ),
                         ],
@@ -1802,7 +1847,7 @@ class _EventMoment extends StatelessWidget {
     final profile = _eventArtProfile(event.eventId, activeThemeId, weather);
     return Semantics(
       image: true,
-      label: '${event.title}的水彩小景',
+      label: context.tr('${event.title}的水彩小景'),
       child: ExcludeSemantics(
         child: AspectRatio(
           aspectRatio: 16 / 9,
@@ -2091,6 +2136,37 @@ class _YardDecor extends StatelessWidget {
   }
 }
 
+class _SupportYardDecor extends StatelessWidget {
+  const _SupportYardDecor({
+    super.key,
+    required this.assetPath,
+    required this.alignment,
+    required this.width,
+  });
+
+  final String assetPath;
+  final Alignment alignment;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return IgnorePointer(
+      child: ExcludeSemantics(
+        child: Align(
+          alignment: alignment,
+          child: Image.asset(
+            assetPath,
+            width: width,
+            fit: BoxFit.contain,
+            cacheWidth: 512,
+            errorBuilder: (_, _, _) => const SizedBox.shrink(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 typedef _VisitorMotionProfile = ({
   Duration frameDuration,
   Duration driftDuration,
@@ -2269,7 +2345,7 @@ class _YardVisitorState extends State<_YardVisitor>
     return Semantics(
       key: const ValueKey<String>('active_visitor'),
       button: true,
-      label: '来客 ${visitor.name}，点按查看互动',
+      label: context.tr('来客 ${visitor.name}，点按查看互动'),
       child: Material(
         type: MaterialType.transparency,
         child: InkResponse(
@@ -2380,7 +2456,7 @@ class _TodayYardRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       checked: item.completed,
-      label: item.label,
+      label: context.tr(item.label),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Row(
@@ -2408,7 +2484,7 @@ class _TodayYardRow extends StatelessWidget {
             ),
             const SizedBox(width: 10),
             Expanded(
-              child: Text(
+              child: AppText(
                 item.label,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -2580,7 +2656,7 @@ class _GraduateBanner extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 Expanded(
-                  child: Text(
+                  child: AppText(
                     '准备启程 · 举行毕业典礼',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -2635,7 +2711,7 @@ class _AdoptCta extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  AppText(
                     '院子在等新朋友',
                     style: TextStyle(
                       fontSize: 16,
@@ -2644,7 +2720,7 @@ class _AdoptCta extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 3),
-                  Text(
+                  AppText(
                     '开启下一段安静的陪伴',
                     style: TextStyle(
                       fontSize: 12,
@@ -2660,7 +2736,7 @@ class _AdoptCta extends StatelessWidget {
                 MaterialPageRoute<void>(builder: (_) => const AdoptScreen()),
               ),
               icon: const Icon(Icons.add_rounded, size: 18),
-              label: const Text('领养'),
+              label: const AppText('领养'),
               style: FilledButton.styleFrom(
                 minimumSize: const Size(88, 48),
                 padding: const EdgeInsets.symmetric(horizontal: 14),
@@ -2698,7 +2774,7 @@ class _InfoCard extends StatelessWidget {
     final levelProgress = pet.level >= GameConfig.maxLevel
         ? 1.0
         : ((pet.exp - levelStart) / levelSpan).clamp(0.0, 1.0);
-    final title = Text(
+    final title = AppText(
       '${pet.name}  ·  Lv ${pet.level}',
       maxLines: largeText ? 2 : 1,
       overflow: TextOverflow.ellipsis,
@@ -2711,7 +2787,7 @@ class _InfoCard extends StatelessWidget {
     return Semantics(
       key: const ValueKey<String>('pet_info_card'),
       button: true,
-      label: '查看${pet.name}的详情',
+      label: context.tr('查看${pet.name}的详情'),
       child: DecoratedBox(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -2747,9 +2823,11 @@ class _InfoCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Semantics(
-                        label: pet.level >= GameConfig.maxLevel
-                            ? '已达到最高等级'
-                            : '当前等级进度 ${(levelProgress * 100).round()}%',
+                        label: context.tr(
+                          pet.level >= GameConfig.maxLevel
+                              ? '已达到最高等级'
+                              : '当前等级进度 ${(levelProgress * 100).round()}%',
+                        ),
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(3),
                           child: LinearProgressIndicator(
@@ -2802,7 +2880,7 @@ class _WalletButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: '绒光 $wallet，打开商店',
+      label: context.tr('绒光 $wallet，打开商店'),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -2817,7 +2895,7 @@ class _WalletButton extends StatelessWidget {
                 children: [
                   const WarmfluffIcon(size: 18),
                   const SizedBox(width: 3),
-                  Text(
+                  AppText(
                     '$wallet',
                     style: const TextStyle(
                       fontSize: 14,
@@ -2844,9 +2922,10 @@ enum _HomeMenuTarget {
   decorate,
   settings,
   visitorDex,
+  support,
 }
 
-Widget _homeScreenFor(_HomeMenuTarget target) => switch (target) {
+Widget _homeScreenFor(_HomeMenuTarget target, PetView? pet) => switch (target) {
   _HomeMenuTarget.journal => const GrowthJournalScreen(),
   _HomeMenuTarget.album => const AlbumScreen(),
   _HomeMenuTarget.dex => const PetDexScreen(),
@@ -2855,12 +2934,17 @@ Widget _homeScreenFor(_HomeMenuTarget target) => switch (target) {
   _HomeMenuTarget.decorate => const _YardDecorLayoutScreen(),
   _HomeMenuTarget.settings => const SettingsScreen(),
   _HomeMenuTarget.visitorDex => const VisitorDexScreen(),
+  _HomeMenuTarget.support => SupportYardScreen(pet: pet),
 };
 
-void _openHomeTarget(BuildContext context, _HomeMenuTarget target) {
+void _openHomeTarget(
+  BuildContext context,
+  _HomeMenuTarget target, {
+  PetView? pet,
+}) {
   Navigator.of(
     context,
-  ).push(MaterialPageRoute<void>(builder: (_) => _homeScreenFor(target)));
+  ).push(MaterialPageRoute<void>(builder: (_) => _homeScreenFor(target, pet)));
 }
 
 const _homeMenuItems =
@@ -2930,7 +3014,7 @@ class _HomeMenuButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return IconButton(
       key: const ValueKey<String>('home_menu'),
-      tooltip: '打开手账',
+      tooltip: context.tr('打开手账'),
       style: IconButton.styleFrom(
         fixedSize: const Size(48, 48),
         padding: EdgeInsets.zero,
@@ -2944,27 +3028,30 @@ class _HomeMenuButton extends ConsumerWidget {
       ),
       onPressed: () async {
         unawaited(ref.read(audioServiceProvider).sfx(Sfx.paperOpen));
-        final target = await _showAdaptiveNotebook(context);
+        final benefits =
+            ref.read(supportPurchaseControllerProvider).valueOrNull?.benefits ??
+            const SupportBenefits();
+        final target = await _showAdaptiveNotebook(context, benefits);
         if (target != null && context.mounted) {
-          _openHomeTarget(context, target);
+          _openHomeTarget(context, target, pet: view.pet);
         }
       },
     );
   }
 
-  Future<_HomeMenuTarget?> _showAdaptiveNotebook(BuildContext context) {
+  Future<_HomeMenuTarget?> _showAdaptiveNotebook(
+    BuildContext context,
+    SupportBenefits benefits,
+  ) {
     return showGeneralDialog<_HomeMenuTarget>(
       context: context,
       requestFocus: true,
       barrierDismissible: true,
       barrierLabel: '关闭手账',
       barrierColor: Colors.black.withValues(alpha: 0.22),
-      transitionDuration: PetopiaMotion.duration(
-        context,
-        const Duration(milliseconds: 260),
-      ),
+      transitionDuration: PetopiaMotion.duration(context, PetopiaMotion.quick),
       pageBuilder: (context, animation, secondaryAnimation) =>
-          _AdaptiveNotebookDialog(view: view),
+          _AdaptiveNotebookDialog(view: view, supportBenefits: benefits),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         final eased = CurvedAnimation(
           parent: animation,
@@ -2988,7 +3075,11 @@ class _HomeMenuButton extends ConsumerWidget {
 
 class _AdaptiveNotebookDialog extends StatelessWidget {
   final GameView view;
-  const _AdaptiveNotebookDialog({required this.view});
+  final SupportBenefits supportBenefits;
+  const _AdaptiveNotebookDialog({
+    required this.view,
+    required this.supportBenefits,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -3013,9 +3104,16 @@ class _AdaptiveNotebookDialog extends StatelessWidget {
               ),
               child: sidePanel
                   ? SizedBox.expand(
-                      child: _HomeMenuSheet(view: view, sidePanel: true),
+                      child: _HomeMenuSheet(
+                        view: view,
+                        supportBenefits: supportBenefits,
+                        sidePanel: true,
+                      ),
                     )
-                  : _HomeMenuSheet(view: view),
+                  : _HomeMenuSheet(
+                      view: view,
+                      supportBenefits: supportBenefits,
+                    ),
             ),
           );
         },
@@ -3026,8 +3124,13 @@ class _AdaptiveNotebookDialog extends StatelessWidget {
 
 class _HomeMenuSheet extends StatelessWidget {
   final GameView view;
+  final SupportBenefits supportBenefits;
   final bool sidePanel;
-  const _HomeMenuSheet({required this.view, this.sidePanel = false});
+  const _HomeMenuSheet({
+    required this.view,
+    required this.supportBenefits,
+    this.sidePanel = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -3053,7 +3156,7 @@ class _HomeMenuSheet extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      AppText(
                         '手账',
                         style: TextStyle(
                           color: Color(0xFF5F4B3E),
@@ -3061,7 +3164,7 @@ class _HomeMenuSheet extends StatelessWidget {
                           fontWeight: FontWeight.w900,
                         ),
                       ),
-                      Text(
+                      AppText(
                         '今天也慢慢来。',
                         style: TextStyle(
                           color: Color(0xFF978575),
@@ -3073,7 +3176,7 @@ class _HomeMenuSheet extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  tooltip: '关闭',
+                  tooltip: context.tr('关闭'),
                   onPressed: () => Navigator.of(context).pop(),
                   icon: const Icon(Icons.close_rounded),
                   color: const Color(0xFF806E60),
@@ -3106,7 +3209,11 @@ class _HomeMenuSheet extends StatelessWidget {
                     _NotebookMemoryCard(memories: view.recentMemories),
                     const SizedBox(height: 16),
                   ],
-                  const Text(
+                  if (supportBenefits.hasSupported) ...[
+                    _NotebookSupportMemoryCard(benefits: supportBenefits),
+                    const SizedBox(height: 16),
+                  ],
+                  const AppText(
                     '收藏与设置',
                     style: TextStyle(
                       color: Color(0xFF8A786A),
@@ -3180,7 +3287,7 @@ class _NotebookTodayCard extends StatelessWidget {
               SizedBox(width: 8),
               Expanded(
                 flex: 3,
-                child: Text(
+                child: AppText(
                   '今日院子',
                   maxLines: 2,
                   style: TextStyle(
@@ -3192,7 +3299,7 @@ class _NotebookTodayCard extends StatelessWidget {
               SizedBox(width: 6),
               Flexible(
                 flex: 2,
-                child: Text(
+                child: AppText(
                   '随心完成',
                   maxLines: 2,
                   textAlign: TextAlign.end,
@@ -3251,7 +3358,7 @@ class _NotebookVisitorCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    const AppText(
                       '今天的来客',
                       style: TextStyle(
                         color: Color(0xFF8B7B6D),
@@ -3260,7 +3367,7 @@ class _NotebookVisitorCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 2),
-                    Text(
+                    AppText(
                       visitor.interacted
                           ? '${visitor.name}正在院子里歇脚'
                           : '${visitor.name}正等你打个招呼',
@@ -3307,7 +3414,7 @@ class _NotebookMemoryCard extends StatelessWidget {
                 color: Color(0xFF9B846F),
               ),
               SizedBox(width: 7),
-              Text(
+              AppText(
                 '院子记住的事',
                 style: TextStyle(
                   color: Color(0xFF604B3E),
@@ -3336,7 +3443,7 @@ class _NotebookMemoryCard extends StatelessWidget {
                   ),
                   const SizedBox(width: 7),
                   Expanded(
-                    child: Text(
+                    child: AppText(
                       memory.text,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
@@ -3357,6 +3464,83 @@ class _NotebookMemoryCard extends StatelessWidget {
   }
 }
 
+class _NotebookSupportMemoryCard extends StatelessWidget {
+  const _NotebookSupportMemoryCard({required this.benefits});
+
+  final SupportBenefits benefits;
+
+  @override
+  Widget build(BuildContext context) {
+    final product =
+        SupportCatalog.byId(benefits.lastProductId ?? '') ??
+        SupportCatalog.guardian;
+    return Semantics(
+      button: true,
+      label: context.tr('打开支持小院，${product.thankYou}'),
+      child: Material(
+        color: const Color(0xFFFFFAEF),
+        borderRadius: BorderRadius.circular(8),
+        child: InkWell(
+          key: const ValueKey<String>('notebook_support_memory'),
+          borderRadius: BorderRadius.circular(8),
+          onTap: () => Navigator.of(context).pop(_HomeMenuTarget.support),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: const Color(0xFFE8D8BC)),
+            ),
+            child: Row(
+              children: [
+                Image.asset(
+                  product.assetPath,
+                  width: 48,
+                  height: 48,
+                  fit: BoxFit.contain,
+                  cacheWidth: 144,
+                ),
+                const SizedBox(width: 11),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const AppText(
+                        '小院记住的心意',
+                        style: TextStyle(
+                          color: Color(0xFF604B3E),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      const SizedBox(height: 3),
+                      AppText(
+                        product.thankYou,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          color: Color(0xFF817063),
+                          fontSize: 12,
+                          height: 1.35,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 6),
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: Color(0xFFA68E77),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class _HomeFeatureTile extends StatelessWidget {
   final ({
     _HomeMenuTarget target,
@@ -3371,7 +3555,7 @@ class _HomeFeatureTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: item.label,
+      label: context.tr(item.label),
       child: Material(
         color: const Color(0xFFFFFDF9),
         borderRadius: BorderRadius.circular(8),
@@ -3390,7 +3574,7 @@ class _HomeFeatureTile extends StatelessWidget {
                 AppIcon(item.iconName, size: 27, fallback: item.fallback),
                 const SizedBox(width: 9),
                 Expanded(
-                  child: Text(
+                  child: AppText(
                     item.label,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -3425,7 +3609,7 @@ class _YardDecorLayoutScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: _bg,
       appBar: AppBar(
-        title: const Text(
+        title: const AppText(
           '院子布置',
           style: TextStyle(color: _ink, fontWeight: FontWeight.bold),
         ),
@@ -3465,7 +3649,7 @@ class _YardDecorLayoutScreen extends ConsumerWidget {
                         BoxShadow(color: Colors.black12, blurRadius: 8),
                       ],
                     ),
-                    child: Text(
+                    child: AppText(
                       inventory.isEmpty
                           ? '还没有可摆放的小物。去商店买到装饰后，就能指定到院子的固定位置。'
                           : '选择一个槽位，再点已拥有的小物；同一个小物只会出现在一个位置。',
@@ -3491,7 +3675,7 @@ class _YardDecorLayoutScreen extends ConsumerWidget {
                           size: 22,
                           fallback: Icons.storefront_rounded,
                         ),
-                        label: const Text('去商店看看'),
+                        label: const AppText('去商店看看'),
                       ),
                     ),
                   for (var pos = 0; pos < ctrl.decorSlotCount; pos++)
@@ -3545,7 +3729,7 @@ class _DecorSlotEditor extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text(
+              AppText(
                 '位置 ${pos + 1}',
                 style: const TextStyle(
                   color: Color(0xFF6B5445),
@@ -3556,7 +3740,7 @@ class _DecorSlotEditor extends StatelessWidget {
               if (current != null)
                 TextButton(
                   onPressed: () => onSelect(null),
-                  child: const Text('清空'),
+                  child: const AppText('清空'),
                 ),
             ],
           ),
@@ -3595,7 +3779,7 @@ class _DecorChoiceButton extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
-      label: item.name,
+      label: context.tr(item.name),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -3635,7 +3819,7 @@ class _DecorChoiceButton extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 4),
-                Text(
+                AppText(
                   item.name,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -3865,7 +4049,7 @@ class _MailboxTutorialRow extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         const Expanded(
-          child: Text(
+          child: AppText(
             '以后会在邮箱收到它从远方寄来的信',
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
@@ -3882,7 +4066,7 @@ class _MailboxTutorialRow extends StatelessWidget {
             minimumSize: const Size(64, 48),
             padding: const EdgeInsets.symmetric(horizontal: 8),
           ),
-          child: const Text('记住啦'),
+          child: const AppText('记住啦'),
         ),
       ],
     );
@@ -3922,15 +4106,17 @@ class _ActionButton extends StatelessWidget {
     return Semantics(
       button: true,
       enabled: !disabled,
-      label: dailyMaxed
-          ? '$label，今日次数已完成'
-          : onCd
-          ? '$label，${_formatCooldown(cooldownSec)}后可用'
-          : preferred
-          ? '$label，今天更合它心意，增加$exp点经验'
-          : contented
-          ? '$label，今天已经满足，仍可继续陪伴'
-          : '$label，增加$exp点经验',
+      label: context.tr(
+        dailyMaxed
+            ? '$label，今日次数已完成'
+            : onCd
+            ? '$label，${_formatCooldown(cooldownSec)}后可用'
+            : preferred
+            ? '$label，今天更合它心意，增加$exp点经验'
+            : contented
+            ? '$label，今天已经满足，仍可继续陪伴'
+            : '$label，增加$exp点经验',
+      ),
       child: ExcludeSemantics(
         child: Material(
           color: Colors.transparent,
@@ -3948,7 +4134,7 @@ class _ActionButton extends StatelessWidget {
                       AnimatedContainer(
                         duration: PetopiaMotion.duration(
                           context,
-                          const Duration(milliseconds: 180),
+                          PetopiaMotion.micro,
                         ),
                         width: 46,
                         height: 46,
@@ -4027,7 +4213,7 @@ class _ActionButton extends StatelessWidget {
                   ConstrainedBox(
                     constraints: const BoxConstraints(minHeight: 20),
                     child: Center(
-                      child: Text(
+                      child: AppText(
                         dailyMaxed
                             ? '今日已完成'
                             : onCd

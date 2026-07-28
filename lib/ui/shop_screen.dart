@@ -5,6 +5,8 @@ import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
 import '../audio/route_audio.dart';
 import '../domain/enums.dart';
+import '../l10n/petopia_localizations.dart';
+import '../l10n/petopia_text.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
@@ -118,7 +120,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen>
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(
-          content: Text(message),
+          content: AppText(message),
           backgroundColor: ShopScreen._ink,
           behavior: SnackBarBehavior.floating,
         ),
@@ -139,7 +141,7 @@ class _WarmFrame extends StatelessWidget {
         backgroundColor: ShopScreen._bg,
         foregroundColor: ShopScreen._ink,
         elevation: 0,
-        title: const Text(
+        title: const AppText(
           '暖绒商店',
           style: TextStyle(fontWeight: FontWeight.w800),
         ),
@@ -304,7 +306,10 @@ class _ShopItemWrap extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final columns = constraints.maxWidth >= 820 ? 3 : 2;
+        final minimumCardWidth = context.l10n.isEnglish ? 340.0 : 300.0;
+        final columns = ((constraints.maxWidth + 12) / (minimumCardWidth + 12))
+            .floor()
+            .clamp(1, 3);
         final cardWidth = (constraints.maxWidth - 12 * (columns - 1)) / columns;
         return Wrap(
           spacing: 12,
@@ -341,7 +346,7 @@ class _CompactWalletCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          const AppText(
             '暖绒余额',
             style: TextStyle(
               color: ShopScreen._muted,
@@ -355,7 +360,7 @@ class _CompactWalletCard extends StatelessWidget {
               const WarmfluffIcon(size: 22),
               const SizedBox(width: 7),
               Flexible(
-                child: Text(
+                child: AppText(
                   '$wallet',
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -407,7 +412,7 @@ class _CategoryButton extends StatelessWidget {
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: Text(
+                child: AppText(
                   category,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -418,7 +423,7 @@ class _CategoryButton extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(
+              AppText(
                 '$count',
                 style: const TextStyle(
                   color: ShopScreen._muted,
@@ -463,7 +468,7 @@ class _WalletCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                AppText(
                   '今天的暖绒余额',
                   style: TextStyle(
                     color: ShopScreen._ink,
@@ -472,7 +477,7 @@ class _WalletCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 4),
-                Text(
+                AppText(
                   '换一点小院会喜欢的东西。',
                   style: TextStyle(
                     color: ShopScreen._muted,
@@ -489,7 +494,7 @@ class _WalletCard extends StatelessWidget {
             children: [
               const WarmfluffIcon(size: 18),
               const SizedBox(width: 4),
-              Text(
+              AppText(
                 '$wallet',
                 style: const TextStyle(
                   color: ShopScreen._accent,
@@ -524,7 +529,7 @@ class _SectionHeader extends StatelessWidget {
       children: [
         AppIcon(iconName, size: 20, fallback: fallbackIcon),
         const SizedBox(width: 8),
-        Text(
+        AppText(
           title,
           style: const TextStyle(
             color: ShopScreen._ink,
@@ -539,7 +544,7 @@ class _SectionHeader extends StatelessWidget {
             color: ShopScreen._accent.withValues(alpha: 0.16),
             borderRadius: BorderRadius.circular(999),
           ),
-          child: Text(
+          child: AppText(
             subtitle,
             style: const TextStyle(
               color: ShopScreen._accent,
@@ -603,7 +608,7 @@ class _ShopItemCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                          child: Text(
+                          child: AppText(
                             item.name,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
@@ -647,7 +652,7 @@ class _ShopItemCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 9),
-                    Text(
+                    AppText(
                       item.effectSummary,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -678,7 +683,7 @@ class _ShopItemCard extends StatelessWidget {
                       ),
                     )
                   : Icon(_buttonIcon),
-              label: Text(_buttonLabel),
+              label: AppText(_buttonLabel),
               style: FilledButton.styleFrom(
                 backgroundColor: ShopScreen._accent,
                 disabledBackgroundColor: ShopScreen._line,
@@ -834,7 +839,7 @@ class _StatusBadge extends StatelessWidget {
         color: color.withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(999),
       ),
-      child: Text(
+      child: AppText(
         _label,
         style: TextStyle(
           color: color,
@@ -881,12 +886,16 @@ class _TinyTag extends StatelessWidget {
           else
             Icon(icon, size: 14, color: color),
           const SizedBox(width: 4),
-          Text(
-            label,
-            style: TextStyle(
-              color: color,
-              fontSize: 12,
-              fontWeight: FontWeight.w800,
+          Flexible(
+            child: AppText(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: color,
+                fontSize: 12,
+                fontWeight: FontWeight.w800,
+              ),
             ),
           ),
         ],
@@ -915,7 +924,7 @@ class _EmptyState extends StatelessWidget {
                 fallback: Icons.storefront_outlined,
               ),
               SizedBox(height: 14),
-              Text(
+              AppText(
                 '商店货架还在整理',
                 style: TextStyle(
                   color: ShopScreen._ink,
@@ -924,7 +933,7 @@ class _EmptyState extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8),
-              Text(
+              AppText(
                 '等新商品上架后，这里会变得热闹起来。',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: ShopScreen._muted),

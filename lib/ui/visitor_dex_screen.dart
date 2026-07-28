@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
 import '../domain/enums.dart';
+import '../l10n/petopia_localizations.dart';
+import '../l10n/petopia_text.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
@@ -57,7 +59,7 @@ class _WarmFrame extends StatelessWidget {
         backgroundColor: VisitorDexScreen._bg,
         foregroundColor: VisitorDexScreen._ink,
         elevation: 0,
-        title: const Text(
+        title: const AppText(
           '来客图鉴',
           style: TextStyle(fontWeight: FontWeight.w800),
         ),
@@ -94,7 +96,14 @@ class _VisitorDexGrid extends StatelessWidget {
             final columns = largeText
                 ? (width >= 900 ? 2 : 1)
                 : (width >= 900 ? 4 : (width >= 600 ? 3 : 2));
-            final ratio = width >= 900 ? 0.88 : (width >= 600 ? 0.74 : 0.62);
+            final english = context.l10n.isEnglish;
+            final ratio = width >= 900
+                ? (english ? 0.80 : 0.88)
+                : width >= 600
+                ? (english ? 0.68 : 0.74)
+                : english
+                ? 0.52
+                : 0.62;
             final margin = PetopiaAdaptive.sideMargin(context);
             return CustomScrollView(
               slivers: [
@@ -186,7 +195,7 @@ class _SummaryCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                    const AppText(
                       '院子来客贴纸册',
                       style: TextStyle(
                         color: VisitorDexScreen._ink,
@@ -195,7 +204,7 @@ class _SummaryCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 5),
-                    Text(
+                    AppText(
                       '已收录 $collected / $total',
                       style: const TextStyle(
                         color: VisitorDexScreen._muted,
@@ -252,7 +261,7 @@ class _RarityHeader extends StatelessWidget {
               decoration: BoxDecoration(color: color, shape: BoxShape.circle),
             ),
             const SizedBox(width: 8),
-            Text(
+            AppText(
               _rarityLabel(rarity),
               style: const TextStyle(
                 color: VisitorDexScreen._ink,
@@ -268,7 +277,7 @@ class _RarityHeader extends StatelessWidget {
             color: color.withValues(alpha: 0.16),
             borderRadius: BorderRadius.circular(999),
           ),
-          child: Text(
+          child: AppText(
             '$collected / $total',
             style: TextStyle(
               color: color,
@@ -294,7 +303,7 @@ class _VisitorCard extends StatelessWidget {
         : const Color(0xFFB8B0A6);
     return Semantics(
       button: entry.collected,
-      label: entry.collected ? '${entry.name}，查看来客回忆' : '尚未收录的来客',
+      label: context.tr(entry.collected ? '${entry.name}，查看来客回忆' : '尚未收录的来客'),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -324,7 +333,7 @@ class _VisitorCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                Text(
+                AppText(
                   entry.collected ? entry.name : '？',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -357,7 +366,7 @@ class _VisitorCard extends StatelessWidget {
                       ),
                       SizedBox(width: 4),
                       Flexible(
-                        child: Text(
+                        child: AppText(
                           '翻看相遇回忆',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -455,7 +464,7 @@ class _VisitorMemoryPanel extends StatelessWidget {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(
+                    child: AppText(
                       '${entry.name}的来访手账',
                       style: const TextStyle(
                         color: VisitorDexScreen._ink,
@@ -465,7 +474,7 @@ class _VisitorMemoryPanel extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                    tooltip: '关闭',
+                    tooltip: context.tr('关闭'),
                     onPressed: () => Navigator.of(context).pop(),
                     icon: const Icon(Icons.close_rounded),
                     color: VisitorDexScreen._muted,
@@ -502,7 +511,7 @@ class _VisitorMemoryPanel extends StatelessWidget {
                           color: _rarityColor(entry.rarity),
                         ),
                         const SizedBox(height: 8),
-                        Text(
+                        AppText(
                           '到访 ${entry.count} 次',
                           style: const TextStyle(
                             color: VisitorDexScreen._ink,
@@ -511,7 +520,7 @@ class _VisitorMemoryPanel extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 4),
-                        Text(
+                        AppText(
                           '第一次见面：${_dateLabel(entry.firstSeen)}',
                           style: const TextStyle(
                             color: VisitorDexScreen._muted,
@@ -529,7 +538,7 @@ class _VisitorMemoryPanel extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(22, 16, 22, 10),
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
+                child: AppText(
                   '相遇回忆',
                   style: TextStyle(
                     color: VisitorDexScreen._ink,
@@ -581,7 +590,7 @@ class _LargeTextVisitorMemoryPanel extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
-                  child: Text(
+                  child: AppText(
                     '${entry.name}的来访手账',
                     style: const TextStyle(
                       color: VisitorDexScreen._ink,
@@ -591,7 +600,7 @@ class _LargeTextVisitorMemoryPanel extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  tooltip: '关闭',
+                  tooltip: context.tr('关闭'),
                   onPressed: () => Navigator.of(context).pop(),
                   icon: const Icon(Icons.close_rounded),
                   color: VisitorDexScreen._muted,
@@ -607,7 +616,7 @@ class _LargeTextVisitorMemoryPanel extends StatelessWidget {
                   'assets/art/world/visitors/${entry.id}_yard_base.png',
                   fit: BoxFit.contain,
                   cacheWidth: 420,
-                  semanticLabel: entry.name,
+                  semanticLabel: context.tr(entry.name),
                   errorBuilder: (_, _, _) => _VisitorMark(
                     id: entry.id,
                     collected: true,
@@ -626,7 +635,7 @@ class _LargeTextVisitorMemoryPanel extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-            Text(
+            AppText(
               '到访 ${entry.count} 次',
               style: const TextStyle(
                 color: VisitorDexScreen._ink,
@@ -635,7 +644,7 @@ class _LargeTextVisitorMemoryPanel extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 6),
-            Text(
+            AppText(
               '第一次见面：${_dateLabel(entry.firstSeen)}',
               style: const TextStyle(
                 color: VisitorDexScreen._muted,
@@ -644,7 +653,7 @@ class _LargeTextVisitorMemoryPanel extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-            const Text(
+            const AppText(
               '相遇回忆',
               style: TextStyle(
                 color: VisitorDexScreen._ink,
@@ -691,7 +700,7 @@ class _VisitorMemoryRow extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
+              AppText(
                 _dateLabel(memory.date),
                 style: const TextStyle(
                   color: VisitorDexScreen._muted,
@@ -700,7 +709,7 @@ class _VisitorMemoryRow extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 5),
-              Text(
+              AppText(
                 memory.script,
                 style: const TextStyle(
                   color: VisitorDexScreen._ink,
@@ -711,7 +720,7 @@ class _VisitorMemoryRow extends StatelessWidget {
               ),
               if (memory.petName != null || memory.expReward > 0) ...[
                 const SizedBox(height: 7),
-                Text(
+                AppText(
                   [
                     if (memory.petName != null) '和 ${memory.petName}',
                     if (memory.expReward > 0) '陪伴经验 +${memory.expReward}',
@@ -801,7 +810,7 @@ class _RarityBadge extends StatelessWidget {
         color: color.withValues(alpha: 0.16),
         borderRadius: BorderRadius.circular(999),
       ),
-      child: Text(
+      child: AppText(
         _rarityLabel(rarity),
         style: TextStyle(
           color: color,
@@ -838,7 +847,7 @@ class _InfoTag extends StatelessWidget {
           Icon(icon, size: 14, color: color),
           const SizedBox(width: 4),
           Flexible(
-            child: Text(
+            child: AppText(
               label,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -870,7 +879,7 @@ class _LockedHint extends StatelessWidget {
         color: color.withValues(alpha: 0.10),
         borderRadius: BorderRadius.circular(14),
       ),
-      child: Text(
+      child: AppText(
         '${_rarityLabel(rarity)}来客，还没留下脚印。',
         maxLines: 2,
         overflow: TextOverflow.ellipsis,
@@ -905,7 +914,7 @@ class _EmptyState extends StatelessWidget {
                 fallback: Icons.people_outline_rounded,
               ),
               SizedBox(height: 14),
-              Text(
+              AppText(
                 '来客册还是空白页',
                 style: TextStyle(
                   color: VisitorDexScreen._ink,
@@ -914,7 +923,7 @@ class _EmptyState extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 8),
-              Text(
+              AppText(
                 '等院子里有访客停留，这里会贴上第一张小贴纸。',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: VisitorDexScreen._muted),

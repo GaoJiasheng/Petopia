@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:petopia/app/game_controller.dart';
 import 'package:petopia/ui/postcard_viewer_screen.dart';
@@ -75,6 +76,35 @@ void main() {
       expect(richText.text.style?.decoration, isNot(TextDecoration.underline));
     }
     expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('postcard arrival owns route semantics and initial focus', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Builder(
+          builder: (context) => TextButton(
+            autofocus: true,
+            onPressed: () => showPostcardArrivalDialog(context, card),
+            child: const Text('打开'),
+          ),
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('打开'));
+    await tester.pumpAndSettle();
+
+    expect(find.bySemanticsLabel('收到阿橘从远方寄来的明信片'), findsOneWidget);
+    expect(Focus.of(tester.element(find.text('收进相册'))).hasFocus, isTrue);
+
+    await tester.sendKeyEvent(LogicalKeyboardKey.enter);
+    await tester.pumpAndSettle();
+    expect(Focus.of(tester.element(find.text('打开'))).hasFocus, isTrue);
+    semantics.dispose();
   });
 
   testWidgets('postcard arrival can use a solid low-cost backdrop', (

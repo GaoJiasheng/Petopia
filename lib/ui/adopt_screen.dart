@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
 import '../audio/route_audio.dart';
+import '../l10n/petopia_localizations.dart';
+import '../l10n/petopia_text.dart';
 import 'adaptive_layout.dart';
 import 'pet_art.dart';
 import 'petopia_theme.dart';
@@ -52,7 +54,7 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen>
     return Scaffold(
       backgroundColor: const Color(0xFFFBF5E9),
       appBar: AppBar(
-        title: const Text(
+        title: const AppText(
           '领养新伙伴',
           style: TextStyle(color: _ink, fontWeight: FontWeight.bold),
         ),
@@ -80,7 +82,7 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen>
                   children: [
                     const Padding(
                       padding: EdgeInsets.fromLTRB(20, 4, 20, 12),
-                      child: Text(
+                      child: AppText(
                         '挑一只想要陪伴的小伙伴，给它取个名字吧',
                         style: TextStyle(color: _muted, fontSize: 14),
                       ),
@@ -158,7 +160,7 @@ class _ChoiceCard extends StatelessWidget {
     return Semantics(
       button: true,
       selected: selected,
-      label: '${choice.name}，${choice.baseTone}',
+      label: '${context.tr(choice.name)}, ${context.tr(choice.baseTone)}',
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -199,7 +201,7 @@ class _ChoiceCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 6),
-                Text(
+                AppText(
                   choice.name,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -210,7 +212,7 @@ class _ChoiceCard extends StatelessWidget {
                     fontSize: 15,
                   ),
                 ),
-                Text(
+                AppText(
                   choice.baseTone,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -253,7 +255,7 @@ class _NameAndConfirm extends StatelessWidget {
         disabledBackgroundColor: const Color(0xFFE6DFD0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
-      child: Text(
+      child: AppText(
         adopting ? '正在迎接…' : '领养',
         style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
       ),
@@ -280,8 +282,8 @@ class _NameAndConfirm extends StatelessWidget {
             textInputAction: TextInputAction.done,
             onSubmitted: enabled ? (_) => onConfirm() : null,
             decoration: InputDecoration(
-              labelText: '伙伴名字',
-              hintText: '给它取个名字',
+              labelText: context.tr('伙伴名字'),
+              hintText: context.tr('给它取个名字'),
               counterText: '',
               filled: true,
               fillColor: const Color(0xFFFBF5E9),

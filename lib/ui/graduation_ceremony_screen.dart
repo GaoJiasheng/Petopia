@@ -10,6 +10,7 @@ import 'pet_art.dart';
 import 'petopia_theme.dart';
 import 'yard_art.dart';
 import 'widgets/pet_sprite.dart';
+import "../l10n/petopia_text.dart";
 
 /// 毕业典礼：Lv10 达标后举行。两幕——送别确认 → 已出发。
 /// 暖绒收尾（结算走 EconomyService.settleGraduation），毕业后宠转漫游、院子空出。
@@ -123,7 +124,7 @@ class _GraduationCeremonyScreenState
     final copy = Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
+        const AppText(
           '🎓 毕业啦',
           style: TextStyle(
             fontSize: 26,
@@ -132,7 +133,7 @@ class _GraduationCeremonyScreenState
           ),
         ),
         const SizedBox(height: 8),
-        Text(
+        AppText(
           '「${widget.petName}」长大了，是时候去看看外面的世界',
           textAlign: TextAlign.center,
           style: const TextStyle(fontSize: 15, color: _muted, height: 1.5),
@@ -148,7 +149,7 @@ class _GraduationCeremonyScreenState
         if (!_sending)
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: const Text(
+            child: const AppText(
               '再陪它一会儿',
               style: TextStyle(color: _muted, fontSize: 14),
             ),
@@ -171,7 +172,7 @@ class _GraduationCeremonyScreenState
             : Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
+                  const AppText(
                     '🎓 毕业啦',
                     style: TextStyle(
                       fontSize: 26,
@@ -180,7 +181,7 @@ class _GraduationCeremonyScreenState
                     ),
                   ),
                   const SizedBox(height: 8),
-                  Text(
+                  AppText(
                     '「${widget.petName}」长大了，是时候去看看外面的世界',
                     textAlign: TextAlign.center,
                     style: const TextStyle(
@@ -202,7 +203,7 @@ class _GraduationCeremonyScreenState
                   if (!_sending)
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text(
+                      child: const AppText(
                         '再陪它一会儿',
                         style: TextStyle(color: _muted, fontSize: 14),
                       ),
@@ -217,7 +218,7 @@ class _GraduationCeremonyScreenState
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
+        const AppText(
           '第一程，想让它往哪里走？',
           textAlign: TextAlign.center,
           style: TextStyle(
@@ -234,17 +235,17 @@ class _GraduationCeremonyScreenState
               ButtonSegment(
                 value: '海滨',
                 icon: Icon(Icons.waves_rounded, size: 18),
-                label: Text('海边'),
+                label: AppText('海边'),
               ),
               ButtonSegment(
                 value: '森林',
                 icon: Icon(Icons.forest_rounded, size: 18),
-                label: Text('森林'),
+                label: AppText('森林'),
               ),
               ButtonSegment(
                 value: '城市',
                 icon: Icon(Icons.location_city_rounded, size: 18),
-                label: Text('城市'),
+                label: AppText('城市'),
               ),
             ],
             selected: <String>{_routeTheme},
@@ -280,9 +281,9 @@ class _GraduationCeremonyScreenState
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('💌', style: TextStyle(fontSize: 56)),
+            const AppText('💌', style: TextStyle(fontSize: 56)),
             const SizedBox(height: 16),
-            Text(
+            AppText(
               '「${widget.petName}」出发了',
               style: const TextStyle(
                 fontSize: 22,
@@ -291,7 +292,7 @@ class _GraduationCeremonyScreenState
               ),
             ),
             const SizedBox(height: 12),
-            Text(
+            AppText(
               stops == null
                   ? '它会一路旅行，常寄明信片回来。\n院子空出来了，去迎接下一位小伙伴吧。'
                   : '它会先往${_routeLabel(_routeTheme)}走，旅途大约经过 $stops 个地方。\n每隔些日子就会寄一张明信片回来 💌\n院子空出来了，去迎接下一位小伙伴吧。',
@@ -342,7 +343,7 @@ class _PrimaryButton extends StatelessWidget {
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(26)),
       ),
-      child: Text(
+      child: AppText(
         label,
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
       ),

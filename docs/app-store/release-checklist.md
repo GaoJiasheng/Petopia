@@ -13,20 +13,23 @@
       无占位符和地点文案错配
 - [x] 参数化/隐藏成就逐条件契约测试，所有条件参数均有显式判定器
 - [x] 检查产物中存在 `PrivacyInfo.xcprivacy`
-- [x] 2026-07-27 build 17 device Release `Runner.app` 为 169.1 MB
-      （文件合计约 161.2 MiB）；本地 ZIP 压缩估算为 144.0 MiB，
+- [x] 2026-07-28 build 19 App Store 签名归档成功，导出 IPA 为
+      158.96 MiB，
       低于当前 200 MiB 首包目标（最终商店下载体积以 App Store Connect
       thinning 报告为准）
 - [ ] 真机安装并完成首次领养、四个互动、后台恢复、存档导入导出
 - [x] iPhone/iPad 竖横屏、3.2 倍自动化字号与 iOS 最大辅助字号无溢出；
       相册、旅行详情、宠物/来客图鉴、来客回忆、成就、商店、设置与到信弹框
       均纳入门禁
-- [x] 340 个运行时透明素材 / 816 帧无触边裁切，380 组无损 WebP 与 PNG
-      母版逐像素一致，19 个 App Icon 均为不透明正确尺寸
-- [x] 688 个实际打包素材已生成 SHA-256 发布清单并追溯母版/provenance；
+- [x] 母版与 340 个运行时透明素材 / 816 帧均通过主体占比、顶部/左右安全区、
+      底部柔和阴影和逐帧基线门槛；380 组无损 WebP 与 PNG 母版逐像素一致，
+      19 个 App Icon 均为不透明正确尺寸
+- [x] 693 个实际打包素材已生成 SHA-256 发布清单并追溯母版/provenance；
       代码 Apache-2.0 与专有美术音频许可边界已分离
-- [x] 声明素材从约 147 MiB 降至 133.79 MiB；宠物、动作、贴纸保持逐像素
+- [x] 声明素材从约 147 MiB 降至 135.66 MiB；宠物、动作、贴纸保持逐像素
       无损，只有不透明场景背景采用质量门禁下的高质量 WebP
+- [x] 图片缓存按逻辑短边分档为手机 72 MiB、iPad 96 MiB；系统内存警告会
+      取消动作预热并清理 live/keep-alive 图片缓存
 - [x] 设置页可导出隐私安全诊断信息，不含昵称、明信片正文或设备标识
 - [x] iPhone、iPad Pro 11/13 英寸关键状态、12 套主题与豪华度 1–6
       已完成模拟器截图复核
@@ -36,6 +39,10 @@
 
 ## App Store Connect
 
+- [ ] 按 `support-iap.md` 创建并提交 4 个 IAP 商品；确认价格、本地化、商品类型、
+      审核截图和 Product ID 与本地 StoreKit 配置完全一致
+- [ ] 使用 Sandbox Apple Account 在真机验证消耗型购买、取消/失败、幂等发放，
+      以及“小院守护者”跨安装恢复
 - [ ] 填写简体中文名称、副标题、描述、关键词与促销文本
 - [ ] 上传 iPhone 6.9 英寸和 iPad 13 英寸截图
 - [ ] 配置主类别“游戏/休闲”与次类别“游戏/模拟”
@@ -54,12 +61,18 @@
 
 ## 发布控制
 
-- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `17`）
+- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `19`）
 - [x] 2026-07-25 创建 `1.0.0 (16)` Release archive，Validate 后上传
       TestFlight；Delivery UUID `407ad891-403b-44a8-ab2b-6e7ec2bf9bbc`，
       Apple 状态为 `VALID` / `APP_STORE_ELIGIBLE`
-- [ ] 使用当前冻结提交创建 `1.0.0 (17)`，并从 TestFlight build 16
-      覆盖安装验证 schema 2 → 3 升级
+- [x] 2026-07-27 创建并上传 `1.0.0 (18)` App Store 签名归档；
+      Delivery UUID `205eaf09-caab-4be9-9da2-f0d727966cc4`，上传过程
+      零 errors、零 warnings，Apple 已接收并进入 `PROCESSING`
+- [x] 2026-07-28 创建并上传 `1.0.0 (19)` App Store 签名归档；
+      Delivery UUID `16298ef6-e96f-4cab-b091-8a5d22723188`，上传过程
+      零 errors、零 warnings，Apple 状态为 `VALID` /
+      `APP_STORE_ELIGIBLE`，并已进入 App Store Connect
+- [ ] 从 TestFlight build 16 覆盖安装 build 18，验证 schema 2 → 3 升级
 - [ ] 完成至少一次 iPhone 与 iPad 外部/内部测试
 - [ ] 检查 TestFlight 崩溃、卡死、资源缺失和通知权限行为
 - [ ] 选择手动发布或 7 天分阶段发布

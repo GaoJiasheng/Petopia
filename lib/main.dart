@@ -8,8 +8,12 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app_error_log.dart';
+import 'app/game_controller.dart';
 import 'app/startup_metrics.dart';
 import 'audio/route_audio.dart';
+import 'domain/enums.dart';
+import 'l10n/petopia_localizations.dart';
+import 'ui/image_cache_policy.dart';
 import 'ui/petopia_theme.dart';
 import 'ui/yard_home_screen.dart';
 
@@ -18,9 +22,14 @@ void main() {
     () {
       WidgetsFlutterBinding.ensureInitialized();
       StartupMetrics.start();
+      final views = PlatformDispatcher.instance.views;
+      final logicalShortestSide = views.isEmpty
+          ? 390.0
+          : views.first.physicalSize.shortestSide /
+                views.first.devicePixelRatio;
       PaintingBinding.instance.imageCache
-        ..maximumSize = 320
-        ..maximumSizeBytes = 96 << 20;
+        ..maximumSize = ImageCachePolicy.maximumEntries(logicalShortestSide)
+        ..maximumSizeBytes = ImageCachePolicy.maximumBytes(logicalShortestSide);
       unawaited(AppErrorLog.instance.initialize());
       FlutterError.onError = (details) {
         FlutterError.presentError(details);
@@ -46,17 +55,28 @@ void main() {
 }
 
 /// Petopia 根组件。
-class PetopiaApp extends StatelessWidget {
+class PetopiaApp extends ConsumerWidget {
   const PetopiaApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final appLanguage = ref.watch(
+      gameControllerProvider.select(
+        (value) => value.valueOrNull?.appLanguage ?? AppLanguage.system,
+      ),
+    );
     return MaterialApp(
       title: 'Petopia',
       debugShowCheckedModeBanner: false,
-      locale: const Locale('zh', 'CN'),
-      supportedLocales: const <Locale>[Locale('zh', 'CN')],
+      locale: PetopiaLocalizations.localeFor(appLanguage),
+      supportedLocales: PetopiaLocalizations.supportedLocales,
+      localeResolutionCallback: (deviceLocale, supportedLocales) =>
+          PetopiaLocalizations.resolveDeviceLocale(
+            deviceLocale,
+            supportedLocales,
+          ),
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+        PetopiaLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
