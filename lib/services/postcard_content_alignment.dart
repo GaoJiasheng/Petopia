@@ -131,16 +131,12 @@ int repairMisalignedPostcards({
     final incident = card.incidentId == null
         ? null
         : incidentsById[card.incidentId];
-    final sourceTemplate = _findSourceTemplate(
-      bodyText: card.bodyText,
+    final sourceTemplate = resolvePostcardSourceTemplate(
+      card: card,
       templates: templates,
       location: location,
       pet: pet,
       ownerName: ownerName,
-      season: card.season,
-      timeOfDay: card.timeOfDay,
-      weather: card.weather,
-      seq: card.seq,
       encounter: encounter,
       incident: incident,
     );
@@ -250,6 +246,7 @@ int repairMisalignedPostcards({
       season: scene.season,
       timeOfDay: scene.timeOfDay,
       weather: scene.weather,
+      templateId: nextTemplate?.id,
       encounterId: nextEncounter?.id,
       incidentId: nextIncident?.id,
       bodyText: bodyText,
@@ -264,7 +261,37 @@ int repairMisalignedPostcards({
   return repairedCount;
 }
 
-PostcardTemplate? _findSourceTemplate({
+PostcardTemplate? resolvePostcardSourceTemplate({
+  required Postcard card,
+  required List<PostcardTemplate> templates,
+  required Location location,
+  required Pet pet,
+  required String ownerName,
+  Encounter? encounter,
+  Incident? incident,
+}) {
+  final storedId = card.templateId;
+  if (storedId != null) {
+    for (final template in templates) {
+      if (template.id == storedId) return template;
+    }
+  }
+  return _findSourceTemplateByBody(
+    bodyText: card.bodyText,
+    templates: templates,
+    location: location,
+    pet: pet,
+    ownerName: ownerName,
+    season: card.season,
+    timeOfDay: card.timeOfDay,
+    weather: card.weather,
+    seq: card.seq,
+    encounter: encounter,
+    incident: incident,
+  );
+}
+
+PostcardTemplate? _findSourceTemplateByBody({
   required String bodyText,
   required List<PostcardTemplate> templates,
   required Location location,

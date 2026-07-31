@@ -59,6 +59,7 @@ class Postcard {
   final Season season;
   final TimeOfDayOfDay timeOfDay;
   final Weather weather;
+  final String? templateId;
   final String? encounterId;
   final String? incidentId;
   final String bodyText;
@@ -81,6 +82,7 @@ class Postcard {
     required this.photoAssetId,
     required this.stampId,
     this.receivedAt,
+    this.templateId,
     this.encounterId,
     this.incidentId,
     this.clueToPet,

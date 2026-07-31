@@ -2,7 +2,7 @@
   "bytesByCategory": {
     "art": 37050175,
     "audio": 23888482,
-    "content-data": 399851,
+    "content-data": 399902,
     "runtime-art": 80907580
   },
   "counts": {
@@ -1611,9 +1611,9 @@
     },
     {
       "asset": "assets/data/events.json",
-      "bytes": 88259,
+      "bytes": 88310,
       "category": "content-data",
-      "sha256": "11455b401571bf4a0ce423fc860e994b241f857174eb3b4b0dc5f6e8cfd6ae23"
+      "sha256": "ba08e8b29d592ca172956eff6bb5a488678b6e621554538d4b901fe7e0727019"
     },
     {
       "asset": "assets/data/locations.json",

@@ -37,11 +37,18 @@ Content IDs are language-neutral and are never translated in saves.
 Species, personalities, locations, visitors, shop items, and other compact
 display names are translated only at presentation time.
 
-Long-form narrative content such as postcard letters, visitor memories, and
-event stories is a separate content-localization layer. Unknown text,
-including player-authored pet names and existing saved postcard bodies,
-must remain unchanged instead of being guessed or machine-translated at
-runtime.
+Long-form narrative content is localized through `EnglishNarrative` using
+stable content IDs. The English layer covers all locations, postcard
+encounters and incidents, personality-specific postcard voices, visitor and
+species interactions, event stories and branches, and persisted growth/travel
+memories.
+
+Chinese narrative snapshots remain in saves so Chinese playback never changes.
+New postcards also persist `templateId`. For older saves, the source template
+is recovered from the rendered Chinese body and its persisted scene slots, then
+English is rebuilt at presentation time. Player-authored pet names are never
+translated. Unknown future content uses a neutral authored fallback instead of
+machine translation.
 
 ## Adding a language
 
@@ -49,7 +56,8 @@ runtime.
 2. Add the locale to `supportedLocales` and the platform declarations.
 3. Add keyed UI copy and content display-name translations.
 4. Add exact and dynamic-copy tests.
-5. Run phone, 11-inch iPad, and 13-inch iPad layout tests in portrait and
+5. Add complete narrative coverage tests keyed by content IDs.
+6. Run phone, 11-inch iPad, and 13-inch iPad layout tests in portrait and
    landscape, including 125% text scaling.
 
 ## Release checks

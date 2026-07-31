@@ -6,6 +6,8 @@
 ## 自动门禁
 
 - [x] `python3 tools/check_release_candidate.py`
+- [x] 英文叙事全集覆盖测试：40 地点、240 明信片模板、60 遭遇、60 碰撞、
+      120 事件及全部分支、244 来客互动均无中文与未解析占位符
 - [x] `flutter build ios --release --no-codesign`
 - [x] 30 / 180 / 365 天固定种子仿真逐日保存并重载，覆盖 12 物种成长、
       毕业、访客、回访、事件、40 地点旅程和成就推进
@@ -43,25 +45,31 @@
       审核截图和 Product ID 与本地 StoreKit 配置完全一致
 - [ ] 使用 Sandbox Apple Account 在真机验证消耗型购买、取消/失败、幂等发放，
       以及“小院守护者”跨安装恢复
-- [ ] 填写简体中文名称、副标题、描述、关键词与促销文本
+- [ ] 按 `metadata-zh-Hans.md` 和 `metadata-en-US.md` 分别填写简体中文与英文名称、
+      副标题、描述、关键词和促销文本
 - [ ] 上传 iPhone 6.9 英寸和 iPad 13 英寸截图
 - [ ] 配置主类别“游戏/休闲”与次类别“游戏/模拟”
 - [x] 填写隐私政策 URL：`https://blog.gavingao.cn/petopia/privacy.html`
 - [x] 填写包含真实联系方式的支持 URL：`https://blog.gavingao.cn/petopia/support.html`
+- [x] 已将 `privacy-policy-en.md`、`support-en.md` 和 `marketing-en.md` 同步到三个公开
+      URL，并验证网页中英文切换、移动端排版和联系方式
 - [ ] 完成 App Privacy 问卷，并与 Xcode Privacy Report 复核
 - [ ] 完成年龄分级问卷
 - [ ] 确认出口合规答案与 `ITSAppUsesNonExemptEncryption=false` 一致
 - [ ] 填写版权主体与 App Review 联系人
-- [ ] 粘贴 `review-notes-zh-Hans.md` 的审核说明
+- [ ] 粘贴 `review-notes-en-US.md` 的英文审核说明；需要中文上下文时附
+      `review-notes-zh-Hans.md`
 - [ ] 完成 EU Digital Services Act trader / non-trader 声明
 - [ ] 按真机验收结果填写 Accessibility Nutrition Labels；未经完整验证的
       VoiceOver、Voice Control 或对比度能力不做超额声明
-- [ ] 最终截图全部扁平化为无 alpha 的 PNG/JPEG，并执行
-      `python3 tools/check_app_store_screenshots.py --require-release-set <截图目录>`
+- [x] `screenshots/release/en-US/` 中 7 张 iPhone 6.9 英寸与 7 张 iPad
+      13 英寸最终截图均为无 alpha PNG，并通过
+      `python3 tools/check_app_store_screenshots.py --require-release-set docs/app-store/screenshots/release/en-US`
 
 ## 发布控制
 
-- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `19`）
+- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `20`）
+- [ ] 完整双语 build 20 待通过本清单门禁后归档、验证并上传 TestFlight
 - [x] 2026-07-25 创建 `1.0.0 (16)` Release archive，Validate 后上传
       TestFlight；Delivery UUID `407ad891-403b-44a8-ab2b-6e7ec2bf9bbc`，
       Apple 状态为 `VALID` / `APP_STORE_ELIGIBLE`

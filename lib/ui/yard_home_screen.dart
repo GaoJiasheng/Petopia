@@ -939,7 +939,12 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
         content: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 420),
           child: AppText(
-            recovery.message,
+            context.l10n.bilingual(
+              zhHans: recovery.message,
+              en: recovery.messageEn.isEmpty
+                  ? recovery.message
+                  : recovery.messageEn,
+            ),
             textAlign: TextAlign.center,
             style: const TextStyle(height: 1.55),
           ),
@@ -1243,7 +1248,12 @@ class _OfflineWelcomeCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 12),
                 AppText(
-                  welcome.story,
+                  context.l10n.bilingual(
+                    zhHans: welcome.story,
+                    en: welcome.storyEn.isEmpty
+                        ? welcome.story
+                        : welcome.storyEn,
+                  ),
                   textAlign: horizontal ? TextAlign.start : TextAlign.center,
                   style: const TextStyle(
                     color: Color(0xFF7E6A5B),
@@ -1496,7 +1506,14 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
           ),
           const SizedBox(height: 14),
           AppText(
-            _outcome?.message ?? visitor.message,
+            context.l10n.bilingual(
+              zhHans: _outcome?.message ?? visitor.message,
+              en: _outcome?.messageEn.isNotEmpty == true
+                  ? _outcome!.messageEn
+                  : visitor.messageEn.isEmpty
+                  ? visitor.message
+                  : visitor.messageEn,
+            ),
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Color(0xFF6B5445),
@@ -1720,7 +1737,12 @@ class _EventDialogState extends State<_EventDialog> {
                             const SizedBox(width: 9),
                             Flexible(
                               child: AppText(
-                                event.title,
+                                context.l10n.bilingual(
+                                  zhHans: event.title,
+                                  en: event.titleEn.isEmpty
+                                      ? event.title
+                                      : event.titleEn,
+                                ),
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   color: Color(0xFF6B5445),
@@ -1739,7 +1761,16 @@ class _EventDialogState extends State<_EventDialog> {
                             const Duration(milliseconds: 260),
                           ),
                           child: AppText(
-                            selected?.resultScript ?? event.script,
+                            context.l10n.bilingual(
+                              zhHans: selected?.resultScript ?? event.script,
+                              en: selected == null
+                                  ? (event.scriptEn.isEmpty
+                                        ? event.script
+                                        : event.scriptEn)
+                                  : (selected.resultScriptEn.isEmpty
+                                        ? selected.resultScript
+                                        : selected.resultScriptEn),
+                            ),
                             key: ValueKey(_selectedChoice),
                             textAlign: TextAlign.center,
                             style: const TextStyle(
@@ -1773,7 +1804,12 @@ class _EventDialogState extends State<_EventDialog> {
                                   ),
                                 ),
                                 child: AppText(
-                                  event.choices[index].text,
+                                  context.l10n.bilingual(
+                                    zhHans: event.choices[index].text,
+                                    en: event.choices[index].textEn.isEmpty
+                                        ? event.choices[index].text
+                                        : event.choices[index].textEn,
+                                  ),
                                   textAlign: TextAlign.center,
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w800,
@@ -1847,7 +1883,10 @@ class _EventMoment extends StatelessWidget {
     final profile = _eventArtProfile(event.eventId, activeThemeId, weather);
     return Semantics(
       image: true,
-      label: context.tr('${event.title}的水彩小景'),
+      label: context.l10n.bilingual(
+        zhHans: '${event.title}的水彩小景',
+        en: '${event.titleEn.isEmpty ? event.title : event.titleEn} watercolor scene',
+      ),
       child: ExcludeSemantics(
         child: AspectRatio(
           aspectRatio: 16 / 9,
@@ -3444,7 +3483,10 @@ class _NotebookMemoryCard extends StatelessWidget {
                   const SizedBox(width: 7),
                   Expanded(
                     child: AppText(
-                      memory.text,
+                      context.l10n.bilingual(
+                        zhHans: memory.text,
+                        en: memory.textEn.isEmpty ? memory.text : memory.textEn,
+                      ),
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(

@@ -50,11 +50,13 @@ class EventResolution {
 
 class VisitorInteractionOutcome {
   final String message;
+  final String messageEn;
   final int expApplied;
   final String animRef;
 
   const VisitorInteractionOutcome({
     required this.message,
+    this.messageEn = '',
     required this.expApplied,
     required this.animRef,
   });

@@ -55,6 +55,14 @@ void main() {
       expect(chinese.text('灯塔湾'), '灯塔湾');
     });
 
+    test('selects explicit bilingual narrative by locale', () {
+      expect(chinese.bilingual(zhHans: '新睡姿', en: 'A New Sleep Pose'), '新睡姿');
+      expect(
+        english.bilingual(zhHans: '新睡姿', en: 'A New Sleep Pose'),
+        'A New Sleep Pose',
+      );
+    });
+
     test('translates polished UI, content names, and dynamic copy', () {
       expect(english.text('设置'), 'Settings');
       expect(english.text('支持小院'), 'Support the Garden');

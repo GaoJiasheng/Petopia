@@ -14,6 +14,7 @@ import 'package:petopia/app/game_controller.dart';
 import 'package:petopia/audio/audio_service.dart';
 import 'package:petopia/domain/enums.dart';
 import 'package:petopia/domain/models/logs.dart';
+import 'package:petopia/l10n/english_narrative.dart';
 import 'package:petopia/l10n/petopia_localizations.dart';
 import 'package:petopia/purchases/support_benefits.dart';
 import 'package:petopia/purchases/support_catalog.dart';
@@ -106,10 +107,27 @@ class _VisualController extends GameController {
     speciesId: 'pet_rabbit',
     variantId: 'pet_rabbit_var01',
     poseHint: 'gaze',
-    locationName: '灯塔海湾',
+    locationName: '灯塔湾',
+    locationNameEn: EnglishNarrative.locationName(
+      'loc_lighthouse_bay',
+      fallback: 'Lighthouse Bay',
+    ),
     bodyText:
-        'The sea breeze softened the clouds today. I rested beside the '
-        'lighthouse and saved a little sunset for you.',
+        '主人，我到灯塔湾了。灯塔守望人让我在塔里住了一晚。'
+        '灯光把海面照成了碎金色。这里很好，我会替你好好记住。——Mochi',
+    bodyTextEn: EnglishNarrative.postcardBody(
+      personalityId: 'p_gentle',
+      templateId: 'tpl_ge_hb_01',
+      locationId: 'loc_lighthouse_bay',
+      locationFallback: 'Lighthouse Bay',
+      encounterId: 'enc_hb_02',
+      incidentId: 'inc_hb_06',
+      petName: 'Mochi',
+      season: Season.summer,
+      timeOfDay: TimeOfDayOfDay.evening,
+      weather: Weather.clear,
+      seq: 6,
+    ),
     photoBg: 'pc_bg_lighthouse_bay',
     stampId: 'pc_stamp_lighthouse_bay',
     stickerIds: const <String>['pc_sticker_drift_bottle'],
@@ -130,7 +148,14 @@ class _VisualController extends GameController {
       id: 'visitor_squirrel',
       name: '松鼠栗栗',
       rarity: VisitorRarity.common,
-      message: 'Chestnut is quietly enjoying the flowers.',
+      message: '松鼠栗栗带来一颗擦得发亮的橡子，Mochi安静地陪它坐了一会儿。',
+      messageEn: EnglishNarrative.visitorInteraction(
+        interactionId: 'vi_squirrel_rabbit',
+        visitorId: 'visitor_squirrel',
+        speciesId: 'pet_rabbit',
+        visitorFallback: 'Chestnut the Squirrel',
+        petName: 'Mochi',
+      ),
       arrivedAt: DateTime.utc(2026, 7, 27),
       leavesAt: DateTime.utc(2026, 7, 28),
       arrivalSeen: true,
@@ -166,8 +191,14 @@ class _VisualController extends GameController {
     recentMemories: <YardMemoryView>[
       YardMemoryView(
         id: 'memory-1',
-        type: 'care',
-        text: 'Mochi leaned closer after a gentle pat.',
+        type: 'growth',
+        text: 'Mochi开始把院子里的花、风和来客都当成自己的朋友。',
+        textEn: EnglishNarrative.growthMemory(
+          memoryId: 'growth:pet-english-visual:lv7',
+          petName: 'Mochi',
+          personalityId: 'p_gentle',
+          fallback: '',
+        ),
         createdAt: DateTime.utc(2026, 7, 27),
       ),
     ],
@@ -306,7 +337,14 @@ class _VisualController extends GameController {
         VisitorMemoryView(
           date: DateTime.utc(2026, 7, 21),
           petName: 'Mochi',
-          script: 'Chestnut shared an acorn and stayed until sunset.',
+          script: '松鼠栗栗带来一颗擦得发亮的橡子，Mochi安静地陪它坐了一会儿。',
+          scriptEn: EnglishNarrative.visitorInteraction(
+            interactionId: 'vi_squirrel_rabbit',
+            visitorId: 'visitor_squirrel',
+            speciesId: 'pet_rabbit',
+            visitorFallback: 'Chestnut the Squirrel',
+            petName: 'Mochi',
+          ),
           expReward: 2,
         ),
       ],
@@ -351,8 +389,24 @@ class _VisualController extends GameController {
       variantId: 'pet_cat_var01',
       poseHint: 'photo',
       locationName: '旧书坊巷',
-      bodyText:
-          'I found a sunlit reading nook and thought you would like it here.',
+      locationNameEn: EnglishNarrative.locationName(
+        'loc_oldbook_alley',
+        fallback: 'Old Bookshop Alley',
+      ),
+      bodyText: '我在旧书坊巷找到一个被阳光照亮的阅读角，觉得你也会喜欢这里。',
+      bodyTextEn: EnglishNarrative.postcardBody(
+        personalityId: 'p_curious',
+        templateId: 'tpl_cu_cs_02',
+        locationId: 'loc_oldbook_alley',
+        locationFallback: 'Old Bookshop Alley',
+        encounterId: 'enc_cs_03',
+        incidentId: 'inc_cs_04',
+        petName: 'Tangerine',
+        season: Season.autumn,
+        timeOfDay: TimeOfDayOfDay.afternoon,
+        weather: Weather.clear,
+        seq: 3,
+      ),
       photoBg: 'pc_bg_oldbook_alley',
       stampId: 'pc_stamp_oldbook_alley',
       stickerIds: const <String>[],
@@ -451,8 +505,14 @@ class _VisualController extends GameController {
   List<YardMemoryView> growthMemories() => <YardMemoryView>[
     YardMemoryView(
       id: 'growth-memory-1',
-      type: 'care',
-      text: 'Mochi discovered the sunny corner by the fence.',
+      type: 'growth',
+      text: 'Mochi在院子里选定了最喜欢发呆的角落。',
+      textEn: EnglishNarrative.growthMemory(
+        memoryId: 'growth:pet-english-visual:lv3',
+        petName: 'Mochi',
+        personalityId: 'p_gentle',
+        fallback: '',
+      ),
       createdAt: DateTime.utc(2026, 7, 21),
     ),
   ];
@@ -480,6 +540,68 @@ class _VisualController extends GameController {
 
   @override
   void trackPostcardRead(String postcardId) {}
+}
+
+class _EnglishEventController extends _VisualController {
+  static const _eventId = 'ev_d12';
+
+  static final fixture = GameView(
+    pet: _VisualController.fixture.pet,
+    wallet: _VisualController.fixture.wallet,
+    luxuryStage: _VisualController.fixture.luxuryStage,
+    cooldownSec: _VisualController.fixture.cooldownSec,
+    dailyMaxed: _VisualController.fixture.dailyMaxed,
+    canGraduate: _VisualController.fixture.canGraduate,
+    activeThemeId: _VisualController.fixture.activeThemeId,
+    decorSlots: _VisualController.fixture.decorSlots,
+    activeVisitor: _VisualController.fixture.activeVisitor,
+    pendingEvent: EventPresentationView(
+      id: 'event-english-visual',
+      eventId: _eventId,
+      title: '安静时刻',
+      titleEn: EnglishNarrative.eventTitle(_eventId, fallback: ''),
+      script: '在院子里找到一块舒服的草地，坐得一动不动，认真听风穿过花叶。',
+      scriptEn: EnglishNarrative.eventScript(_eventId, fallback: ''),
+      type: EventType.daily,
+      expReward: 5,
+      currencyReward: 0,
+      choices: <EventChoiceView>[
+        EventChoiceView(
+          text: '拍照留念',
+          textEn: EnglishNarrative.eventChoiceText(_eventId, 0, fallback: ''),
+          resultScript: '你掏出手机，它很配合地坐得更端正。快门按下，这一刻被永远收藏。',
+          resultScriptEn: EnglishNarrative.eventChoiceResult(
+            _eventId,
+            0,
+            fallback: '',
+          ),
+          expDelta: 1,
+        ),
+        EventChoiceView(
+          text: '坐到它旁边',
+          textEn: EnglishNarrative.eventChoiceText(_eventId, 1, fallback: ''),
+          resultScript: '你在它旁边坐下。谁都没有说话，风把花香慢慢送了过来。',
+          resultScriptEn: EnglishNarrative.eventChoiceResult(
+            _eventId,
+            1,
+            fallback: '',
+          ),
+          expDelta: 1,
+        ),
+      ],
+    ),
+    weather: _VisualController.fixture.weather,
+    onboardingComplete: true,
+    needsFirstCare: false,
+    careTutorialStep: 3,
+    todayYard: _VisualController.fixture.todayYard,
+    preferredCareAction: _VisualController.fixture.preferredCareAction,
+    recentMemories: _VisualController.fixture.recentMemories,
+    appLanguage: AppLanguage.en,
+  );
+
+  @override
+  Future<GameView> build() async => fixture;
 }
 
 class _VisualBenefitsStore implements SupportBenefitsStore {
@@ -590,15 +712,18 @@ void main() {
       Widget screen, {
       Duration settle = const Duration(milliseconds: 700),
       Duration wallSettle = const Duration(milliseconds: 250),
+      GameController Function()? controllerFactory,
     }) async {
       await tester.pumpWidget(
         ProviderScope(
           key: UniqueKey(),
           overrides: <Override>[
-            gameControllerProvider.overrideWith(_VisualController.new),
+            gameControllerProvider.overrideWith(
+              controllerFactory ?? _VisualController.new,
+            ),
             audioServiceProvider.overrideWithValue(_SilentAudio()),
             appInfoProvider.overrideWith(
-              (ref) async => const AppInfo(version: '1.0.0', buildNumber: '18'),
+              (ref) async => const AppInfo(version: '1.0.0', buildNumber: '20'),
             ),
             supportStorefrontProvider.overrideWithValue(storefront),
             supportBenefitsStoreProvider.overrideWithValue(
@@ -621,6 +746,13 @@ void main() {
     }
 
     await show('yard', const YardHomeScreen(enableCooldownRefresh: false));
+    await show(
+      'event-dialog',
+      const YardHomeScreen(enableCooldownRefresh: false),
+      settle: const Duration(milliseconds: 1200),
+      wallSettle: const Duration(milliseconds: 500),
+      controllerFactory: _EnglishEventController.new,
+    );
 
     await show('onboarding-1', const OnboardingScreen(needsAdoption: true));
     await tester.tap(find.text('Continue'));

@@ -38,6 +38,10 @@ class PetopiaLocalizations {
     return isEnglish ? en : zhHans;
   }
 
+  String bilingual({required String zhHans, required String en}) {
+    return isEnglish ? en : zhHans;
+  }
+
   static Locale? localeFor(AppLanguage language) {
     return switch (language) {
       AppLanguage.system => null,

@@ -287,8 +287,8 @@
     {
       "id": "ev_d12",
       "type": "daily",
-      "title": "新睡姿",
-      "script": "学会了新睡姿：四脚朝天式。",
+      "title": "安静时刻",
+      "script": "在院子里找到一块舒服的草地，坐得一动不动，认真听风穿过花叶。",
       "animRef": null,
       "illustrationRef": null,
       "expReward": 5,
@@ -308,12 +308,12 @@
       "choices": [
         {
           "text": "拍照留念",
-          "resultScript": "你掏出手机，它很配合地露出了肚皮。快门按下，这一刻被永远收藏。",
+          "resultScript": "你掏出手机，它很配合地坐得更端正。快门按下，这一刻被永远收藏。",
           "expDelta": 1
         },
         {
-          "text": "轻轻帮它翻回来",
-          "resultScript": "你轻轻帮它翻成侧卧，它咂咂嘴，好像在梦里点了点头。",
+          "text": "坐到它旁边",
+          "resultScript": "你在它旁边坐下。谁都没有说话，风把花香慢慢送了过来。",
           "expDelta": 1
         }
       ]

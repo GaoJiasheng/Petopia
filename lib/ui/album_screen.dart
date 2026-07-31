@@ -341,7 +341,10 @@ PostcardView _previewPostcard(PetView? pet) {
     variantId: pet?.variantId ?? 'pet_cat_v1',
     poseHint: 'gaze',
     locationName: '灯塔湾',
+    locationNameEn: 'Lighthouse Bay',
     bodyText: '海风把草坡吹得软软的。我在灯塔下面坐了很久，替你看了一场很亮的日落。等真正出发以后，也会把沿途的小事一封封寄回来。',
+    bodyTextEn:
+        'The sea breeze made the hillside feel soft today. I sat beneath the lighthouse and watched a bright sunset for you. Once my real journey begins, I will send every small memory home, one letter at a time.',
     photoBg: 'pc_bg_lighthouse_bay',
     stampId: 'pc_stamp_lighthouse_bay',
     stickerIds: const <String>['pc_sticker_straw_hat'],
@@ -492,8 +495,10 @@ class _PostcardThumb extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: context.tr(
-        '打开${card.petName}从${card.locationName}寄来的第 ${card.seq + 1} 张明信片',
+      label: context.l10n.bilingual(
+        zhHans:
+            '打开${card.petName}从${card.locationName}寄来的第 ${card.seq + 1} 张明信片',
+        en: 'Open postcard ${card.seq + 1} from ${card.petName} in ${card.locationNameEn.isEmpty ? card.locationName : card.locationNameEn}',
       ),
       child: ExcludeSemantics(
         child: Material(
@@ -541,7 +546,12 @@ class _PostcardThumb extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         AppText(
-                          card.locationName,
+                          context.l10n.bilingual(
+                            zhHans: card.locationName,
+                            en: card.locationNameEn.isEmpty
+                                ? card.locationName
+                                : card.locationNameEn,
+                          ),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(

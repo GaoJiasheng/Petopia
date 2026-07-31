@@ -46,7 +46,12 @@ class _PostcardViewerScreenState extends ConsumerState<PostcardViewerScreen>
       backgroundColor: const Color(0xFFF3E9D6),
       appBar: AppBar(
         title: AppText(
-          card.locationName,
+          context.l10n.bilingual(
+            zhHans: card.locationName,
+            en: card.locationNameEn.isEmpty
+                ? card.locationName
+                : card.locationNameEn,
+          ),
           style: const TextStyle(
             color: PostcardViewerScreen._ink,
             fontWeight: FontWeight.bold,
@@ -280,7 +285,10 @@ class _PostcardTextPanel extends StatelessWidget {
             5,
           ),
           child: AppText(
-            card.bodyText,
+            context.l10n.bilingual(
+              zhHans: card.bodyText,
+              en: card.bodyTextEn.isEmpty ? card.bodyText : card.bodyTextEn,
+            ),
             style: TextStyle(
               fontSize: bodyFont,
               height: wideLayout ? 1.48 : (arrivalMode ? 1.43 : 1.52),
@@ -439,7 +447,10 @@ class _PostcardPhoto extends StatelessWidget {
                 child: Image.asset(
                   'assets/runtime/postcards/backgrounds/${card.photoBg}.webp',
                   fit: BoxFit.cover,
-                  semanticLabel: context.tr('${card.locationName}的旅行风景'),
+                  semanticLabel: context.l10n.bilingual(
+                    zhHans: '${card.locationName}的旅行风景',
+                    en: 'Travel scenery from ${card.locationNameEn.isEmpty ? card.locationName : card.locationNameEn}',
+                  ),
                   errorBuilder: (_, _, _) => Container(
                     color: const Color(0xFFDCEAD8),
                     alignment: Alignment.center,

@@ -710,7 +710,10 @@ class _VisitorMemoryRow extends StatelessWidget {
               ),
               const SizedBox(height: 5),
               AppText(
-                memory.script,
+                context.l10n.bilingual(
+                  zhHans: memory.script,
+                  en: memory.scriptEn.isEmpty ? memory.script : memory.scriptEn,
+                ),
                 style: const TextStyle(
                   color: VisitorDexScreen._ink,
                   fontSize: 13.5,

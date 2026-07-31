@@ -772,6 +772,7 @@ void _expectPostcardListEquals(List<Postcard> actual, List<Postcard> expected) {
     expect(actual[i].season, expected[i].season);
     expect(actual[i].timeOfDay, expected[i].timeOfDay);
     expect(actual[i].weather, expected[i].weather);
+    expect(actual[i].templateId, expected[i].templateId);
     expect(actual[i].encounterId, expected[i].encounterId);
     expect(actual[i].incidentId, expected[i].incidentId);
     expect(actual[i].bodyText, expected[i].bodyText);

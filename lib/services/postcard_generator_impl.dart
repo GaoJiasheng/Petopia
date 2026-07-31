@@ -99,8 +99,9 @@ class PostcardGeneratorImpl implements PostcardGenerator {
       pet.personality,
     );
 
+    final template = _pickTemplate(mainP, loc);
     final body = _render(
-      _pickTemplate(mainP, loc),
+      template,
       loc,
       enc,
       inc,
@@ -123,6 +124,7 @@ class PostcardGeneratorImpl implements PostcardGenerator {
       season: season,
       timeOfDay: timeOfDay,
       weather: weather,
+      templateId: template?.id,
       encounterId: enc?.id,
       incidentId: inc?.id,
       bodyText: body,

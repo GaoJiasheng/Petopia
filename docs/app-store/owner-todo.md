@@ -7,8 +7,8 @@
 
 - [ ] 在 App Store Connect 确认 `com.petopia.petopia` 对应的 App 记录、SKU、
       主语言和开发者显示名称均正确。
-- [ ] 确认 build `17` 尚未被 App Store Connect 使用；若已使用，提交前继续提升
-      `pubspec.yaml` build number。
+- [x] build `19` 已上传 App Store Connect；完整双语构建已提升为新的未使用
+      build number `20`，待工程门禁通过后上传 TestFlight。
 - [ ] 确认 Apple Developer Program 协议、税务与银行资料没有待处理项目。
 - [ ] 在 App Store Connect 接受 Paid Applications Agreement，并确认税务与
       收款账户状态允许提交应用内购买。
@@ -18,13 +18,17 @@
 ## 商店资料
 
 - [ ] 按 `metadata-zh-Hans.md` 填写名称、副标题、描述、关键词、分类和促销文本。
-- [ ] 将 2026-07-27 版 `privacy-policy-zh-Hans.md` 同步到
+- [ ] 为英语地区按 `metadata-en-US.md` 填写独立的英文名称、副标题、描述、关键词
+      和促销文本；不要依赖 App Store 自动翻译。
+- [x] 已将 2026-07-27 版 `privacy-policy-zh-Hans.md` 同步到
       `https://blog.gavingao.cn/petopia/privacy.html`，确认公开页已说明
       StoreKit、自愿支持本地记录和永久权益恢复。
+- [x] 已将 `privacy-policy-en.md`、`support-en.md` 与 `marketing-en.md` 的英文内容同步
+      到隐私、支持和产品公开页，并在每页提供明确的中英文切换入口。
 - [ ] 填写版权主体、App Review 联系人姓名、邮箱和可接听电话。
-- [ ] 上传 iPhone 6.9 英寸与 iPad 13 英寸最终截图；逐张确认无 TestFlight
-      标记、调试信息、占位图、裁切、alpha 透明通道或过期文案，并执行
-      `python3 tools/check_app_store_screenshots.py --require-release-set <截图目录>`。
+- [ ] 将 `screenshots/release/en-US/` 中已通过门禁的 iPhone 6.9 英寸与
+      iPad 13 英寸最终截图上传到 App Store Connect。14 张成品已逐张确认无
+      TestFlight 标记、调试信息、占位图、裁切、alpha 透明通道或过期文案。
 - [ ] 选择首发国家/地区、免费价格档和手动发布或分阶段发布策略。
 - [ ] 按 `support-iap.md` 创建 4 个应用内购买商品，补齐英文和简体中文本地化，
       上传审核截图，并把 4 个商品随首个 App 版本一起提交审核。
@@ -47,7 +51,7 @@
 
 - [ ] 使用 Distribution 签名创建 Archive，先运行 Validate App，再上传
       TestFlight。
-- [ ] 在保留进度的设备上先安装 TestFlight build 16，再覆盖安装 build 17，
+- [ ] 在保留进度的设备上先安装 TestFlight build 18 或 19，再覆盖安装下一构建，
       确认 schema 2 → 3 后宠物、货币、旅程、明信片、来客、成就和设置均保留。
 - [ ] 在至少一台真实 iPhone 和一台真实 iPad 上走完：首次领养、四种互动、
       后台恢复、来客、明信片、存档导出与导入、横竖屏旋转。
@@ -58,7 +62,8 @@
       峰值内存与温度。
 - [ ] TestFlight 连续使用至少 24 小时，检查崩溃、卡死、音频中断、通知权限、
       真实时间事件和资源缺失。
-- [ ] 提交审核时粘贴 `review-notes-zh-Hans.md`，并确认隐私、支持、营销三个
+- [ ] 提交审核时为英文审核上下文粘贴 `review-notes-en-US.md`（中文团队可同时保留
+      `review-notes-zh-Hans.md`），并确认隐私、支持、营销三个
       URL 仍可公开访问。
 - [ ] 提交后监控 App Store Connect 崩溃报告与支持邮箱，准备首个修复版本的
       build number。

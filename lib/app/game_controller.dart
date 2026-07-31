@@ -10,11 +10,14 @@ import '../config/game_config.dart';
 import '../domain/enums.dart';
 import '../domain/unlock_rule.dart';
 import '../domain/models/content_entities.dart';
+import '../domain/models/game_state.dart';
 import '../domain/models/logs.dart';
 import '../domain/models/pet.dart';
 import '../domain/models/yard.dart';
+import '../l10n/english_narrative.dart';
 import '../services/save_service.dart';
 import '../services/local_calendar.dart';
+import '../services/postcard_content_alignment.dart';
 import 'bootstrap.dart';
 import 'diagnostic_report.dart';
 import 'app_error_log.dart';
@@ -101,7 +104,9 @@ class EventPresentationView {
   final String id;
   final String eventId;
   final String title;
+  final String titleEn;
   final String script;
+  final String scriptEn;
   final EventType type;
   final int expReward;
   final int currencyReward;
@@ -113,7 +118,9 @@ class EventPresentationView {
     required this.id,
     required this.eventId,
     required this.title,
+    this.titleEn = '',
     required this.script,
+    this.scriptEn = '',
     required this.type,
     required this.expReward,
     required this.currencyReward,
@@ -125,12 +132,16 @@ class EventPresentationView {
 
 class EventChoiceView {
   final String text;
+  final String textEn;
   final String resultScript;
+  final String resultScriptEn;
   final int expDelta;
 
   const EventChoiceView({
     required this.text,
+    this.textEn = '',
     required this.resultScript,
+    this.resultScriptEn = '',
     required this.expDelta,
   });
 }
@@ -163,6 +174,7 @@ class VisitorPresenceView {
   final String name;
   final VisitorRarity rarity;
   final String message;
+  final String messageEn;
   final DateTime arrivedAt;
   final DateTime leavesAt;
   final bool arrivalSeen;
@@ -175,6 +187,7 @@ class VisitorPresenceView {
     required this.name,
     required this.rarity,
     required this.message,
+    this.messageEn = '',
     required this.arrivedAt,
     required this.leavesAt,
     required this.arrivalSeen,
@@ -192,6 +205,7 @@ class OfflineWelcomeView {
   final PetStage stage;
   final int expGained;
   final String story;
+  final String storyEn;
 
   const OfflineWelcomeView({
     required this.seq,
@@ -201,13 +215,15 @@ class OfflineWelcomeView {
     required this.stage,
     required this.expGained,
     required this.story,
+    this.storyEn = '',
   });
 }
 
 class SaveRecoveryView {
   final String message;
+  final String messageEn;
 
-  const SaveRecoveryView(this.message);
+  const SaveRecoveryView(this.message, {this.messageEn = ''});
 }
 
 class CareFeedbackView {
@@ -228,12 +244,14 @@ class YardMemoryView {
   final String id;
   final String type;
   final String text;
+  final String textEn;
   final DateTime createdAt;
 
   const YardMemoryView({
     required this.id,
     required this.type,
     required this.text,
+    this.textEn = '',
     required this.createdAt,
   });
 }
@@ -356,7 +374,10 @@ class GameController extends AsyncNotifier<GameView> {
     _lifecycleTargetActive ??= true;
     final recoveryReason = _svc.startupRecoveryReason;
     if (recoveryReason != null) {
-      _saveRecovery = SaveRecoveryView(recoveryReason);
+      _saveRecovery = SaveRecoveryView(
+        recoveryReason,
+        messageEn: _saveRecoveryMessageEn(recoveryReason),
+      );
     }
     ref.onDispose(() {
       _disposed = true;
@@ -752,6 +773,71 @@ class GameController extends AsyncNotifier<GameView> {
     return _svc.readExpLog(pet.id);
   }
 
+  String growthJournalNoteEn(ExpLogEntry entry) {
+    final raw = entry.note?.trim() ?? '';
+    if (entry.sourceType == ExpSource.eventDaily ||
+        entry.sourceType == ExpSource.eventSpecial) {
+      final eventId = entry.sourceRef;
+      final event = eventId == null ? null : _svc.content.eventById(eventId);
+      if (event == null) return '';
+      final choices = event.choices ?? const <EventChoice>[];
+      for (var index = 0; index < choices.length; index++) {
+        if (choices[index].resultScript == raw) {
+          return EnglishNarrative.eventChoiceResult(
+            event.id,
+            index,
+            fallback: '',
+          );
+        }
+      }
+      return EnglishNarrative.eventScript(event.id, fallback: '');
+    }
+
+    if (entry.sourceType == ExpSource.visitor) {
+      final visitorId = entry.sourceRef;
+      final visitor = visitorId == null
+          ? null
+          : _svc.content.visitorById(visitorId);
+      if (visitor == null) return '';
+      final pet = _svc.session.allPets
+          .where((candidate) => candidate.id == entry.petId)
+          .firstOrNull;
+      final matching = _svc.content.visitorInteractions
+          .where(
+            (interaction) =>
+                interaction.visitorId == visitor.id &&
+                interaction.script == raw,
+          )
+          .firstOrNull;
+      final compatible =
+          matching ??
+          _svc.content.visitorInteractions
+              .where(
+                (interaction) =>
+                    interaction.visitorId == visitor.id &&
+                    (interaction.petSpeciesId == pet?.speciesId ||
+                        interaction.petSpeciesId == '*'),
+              )
+              .firstOrNull;
+      if (compatible == null) {
+        return EnglishNarrative.visitorResting(
+          visitorId: visitor.id,
+          visitorFallback: visitor.name,
+        );
+      }
+      return EnglishNarrative.visitorInteraction(
+        interactionId: compatible.id,
+        visitorId: visitor.id,
+        speciesId: compatible.petSpeciesId == '*'
+            ? (pet?.speciesId ?? 'pet_cat')
+            : compatible.petSpeciesId,
+        visitorFallback: visitor.name,
+        petName: pet?.name,
+      );
+    }
+    return '';
+  }
+
   List<YardMemoryView> growthMemories() {
     final pet = _svc.session.current;
     if (pet == null) return const <YardMemoryView>[];
@@ -768,6 +854,7 @@ class GameController extends AsyncNotifier<GameView> {
             id: memory.id,
             type: memory.type,
             text: memory.text,
+            textEn: _yardMemoryEnglish(memory),
             createdAt: memory.createdAt,
           ),
         )
@@ -862,10 +949,26 @@ class GameController extends AsyncNotifier<GameView> {
         memories: visits
             .map((visit) {
               final interaction = interactions[visit.interactionId];
+              final pet = pets[visit.withPetId];
+              final speciesId = interaction?.petSpeciesId == '*'
+                  ? (pet?.speciesId ?? 'pet_cat')
+                  : (interaction?.petSpeciesId ?? pet?.speciesId ?? 'pet_cat');
               return VisitorMemoryView(
                 date: visit.date,
-                petName: pets[visit.withPetId]?.name,
+                petName: pet?.name,
                 script: interaction?.script ?? '${v.name}在院子里安静地停留了一会儿。',
+                scriptEn: interaction == null
+                    ? EnglishNarrative.visitorResting(
+                        visitorId: v.id,
+                        visitorFallback: v.name,
+                      )
+                    : EnglishNarrative.visitorInteraction(
+                        interactionId: interaction.id,
+                        visitorId: v.id,
+                        speciesId: speciesId,
+                        visitorFallback: v.name,
+                        petName: pet?.name,
+                      ),
                 expReward: interaction?.expReward ?? 0,
               );
             })
@@ -1426,7 +1529,12 @@ class GameController extends AsyncNotifier<GameView> {
     if (outcome == null) return null;
     state = AsyncData(_snapshot());
     unawaited(_afterGameAction());
-    return outcome;
+    return VisitorInteractionOutcome(
+      message: outcome.message,
+      messageEn: _activeVisitorView()?.messageEn ?? '',
+      expApplied: outcome.expApplied,
+      animRef: outcome.animRef,
+    );
   }
 
   void dismissOfflineWelcome(int seq) {
@@ -1527,10 +1635,40 @@ class GameController extends AsyncNotifier<GameView> {
             id: memory.id,
             type: memory.type,
             text: memory.text,
+            textEn: _yardMemoryEnglish(memory),
             createdAt: memory.createdAt,
           ),
         )
         .toList(growable: false);
+  }
+
+  String _yardMemoryEnglish(YardMemoryEntry memory) {
+    final pet = _svc.session.allPets
+        .where((candidate) => candidate.id == memory.petId)
+        .firstOrNull;
+    final petName = pet?.name ?? 'Your little friend';
+    final personalityId = pet?.personality.firstOrNull ?? '';
+
+    return switch (memory.type) {
+      'growth' => EnglishNarrative.growthMemory(
+        memoryId: memory.id,
+        petName: petName,
+        personalityId: personalityId,
+        fallback: '$petName has left another gentle memory in the garden.',
+      ),
+      'travel' => EnglishNarrative.travelMemory(
+        petName: petName,
+        personalityId: personalityId,
+      ),
+      'visitor' => EnglishNarrative.visitorDeparture(
+        visitorId: memory.visitorId ?? '',
+        visitorFallback: 'A garden visitor',
+        hadPet: pet != null,
+        interacted: !memory.text.contains('轻轻来过'),
+        petName: pet?.name,
+      ),
+      _ => 'A quiet memory was tucked into the garden journal.',
+    };
   }
 
   TodayYardView _todayYardView(Pet pet) {
@@ -1647,8 +1785,44 @@ class GameController extends AsyncNotifier<GameView> {
       stage: pet.stage,
       expGained: expGained,
       story: story,
+      storyEn: _offlineWelcomeStoryEn(pet),
     );
   }
+
+  static String _offlineWelcomeStoryEn(Pet pet) {
+    return switch (pet.personality.firstOrNull) {
+      'p_clingy' =>
+        'While you were away, they quietly moved their bed closer to the gate.',
+      'p_aloof' =>
+        'They were not watching the gate the whole time. They merely happened to pass it rather often.',
+      'p_lazy' =>
+        'They worked very hard on one important task: finishing the same long nap.',
+      'p_glutton' =>
+        'They inspected the food bowl carefully and saved you one imaginary bite of a favorite treat.',
+      'p_curious' =>
+        'They examined every breeze that crossed the garden and have been waiting to tell you about each one.',
+      'p_energetic' =>
+        'They ran several laps alone and are now perfectly happy to rest beside you.',
+      'p_naughty' =>
+        'A few leaves seem to have changed places, but they have decided explanations can wait.',
+      'p_gentle' =>
+        'They watched over the flowers and visitors for you. The garden stayed safe and quiet.',
+      'p_dreamy' =>
+        'They dreamed that a cloud settled in the garden and still remember its shape after waking.',
+      _ =>
+        'They slept well and kept gentle watch over the garden until you came home.',
+    };
+  }
+
+  static String _saveRecoveryMessageEn(String message) => switch (message) {
+    '主存档无法读取，已从本地安全备份恢复。' =>
+      'The primary save could not be read, so the garden was restored from its safe local backup.',
+    '存档校验发现异常，已从最近的完整快照恢复。' =>
+      'Save verification found an inconsistency, so the garden was restored from the latest complete snapshot.',
+    '主存档缺失，已从最近的完整快照恢复。' =>
+      'The primary save was missing, so the garden was restored from the latest complete snapshot.',
+    _ => 'The garden was restored from the latest safe local backup.',
+  };
 
   static Sting? _eventSting(String? eventId) => switch (eventId) {
     'ev_s01' => Sting.firstSnow,
@@ -1686,21 +1860,38 @@ class GameController extends AsyncNotifier<GameView> {
       id: event.id,
       eventId: event.eventId,
       title: event.title,
+      titleEn: EnglishNarrative.eventTitle(
+        event.eventId,
+        fallback: event.title,
+      ),
       script: event.script,
+      scriptEn: EnglishNarrative.eventScript(
+        event.eventId,
+        fallback: event.script,
+      ),
       type: event.type,
       expReward: event.expReward,
       currencyReward: event.currencyReward,
       animRef: event.animRef,
       illustrationRef: event.illustrationRef,
-      choices: event.choices
-          .map(
-            (choice) => EventChoiceView(
-              text: choice.text,
-              resultScript: choice.resultScript,
-              expDelta: choice.expDelta,
+      choices: <EventChoiceView>[
+        for (var index = 0; index < event.choices.length; index++)
+          EventChoiceView(
+            text: event.choices[index].text,
+            textEn: EnglishNarrative.eventChoiceText(
+              event.eventId,
+              index,
+              fallback: event.choices[index].text,
             ),
-          )
-          .toList(growable: false),
+            resultScript: event.choices[index].resultScript,
+            resultScriptEn: EnglishNarrative.eventChoiceResult(
+              event.eventId,
+              index,
+              fallback: event.choices[index].resultScript,
+            ),
+            expDelta: event.choices[index].expDelta,
+          ),
+      ],
     );
   }
 
@@ -1710,6 +1901,29 @@ class GameController extends AsyncNotifier<GameView> {
     final visitor = _svc.content.visitorById(active.visitorId);
     if (visitor == null) return null;
     final interaction = _visitorInteractionById(active.interactionId);
+    final pet = _svc.session.allPets
+        .where((candidate) => candidate.id == active.withPetId)
+        .firstOrNull;
+    final speciesId = interaction?.petSpeciesId == '*'
+        ? (pet?.speciesId ?? 'pet_cat')
+        : (interaction?.petSpeciesId ?? pet?.speciesId ?? 'pet_cat');
+    final messageEn = active.interacted
+        ? interaction == null
+              ? EnglishNarrative.visitorResting(
+                  visitorId: visitor.id,
+                  visitorFallback: visitor.name,
+                )
+              : EnglishNarrative.visitorInteraction(
+                  interactionId: interaction.id,
+                  visitorId: visitor.id,
+                  speciesId: speciesId,
+                  visitorFallback: visitor.name,
+                  petName: pet?.name,
+                )
+        : EnglishNarrative.visitorWaiting(
+            visitorId: visitor.id,
+            visitorFallback: visitor.name,
+          );
     return VisitorPresenceView(
       id: visitor.id,
       name: visitor.name,
@@ -1717,6 +1931,7 @@ class GameController extends AsyncNotifier<GameView> {
       message: active.interacted
           ? (interaction?.script ?? '${visitor.name}正在院子里慢慢逛。')
           : '${visitor.name}刚到院子，正等着和你们打个招呼。',
+      messageEn: messageEn,
       arrivedAt: active.arrivedAt,
       leavesAt: active.leavesAt,
       arrivalSeen: active.arrivalSeen,
@@ -1892,20 +2107,55 @@ class GameController extends AsyncNotifier<GameView> {
   List<PostcardView> postcards() {
     final pets = {for (final p in _svc.session.allPets) p.id: p};
     final incidents = {for (final i in _svc.content.incidents) i.id: i};
+    final encounters = {for (final e in _svc.content.encounters) e.id: e};
+    final templates = _svc.content.postcardTemplates;
     return _svc.session.postcards.reversed.map((pc) {
       final loc = _svc.content.locationById(pc.locationId);
       final pet = pets[pc.petId];
       final incident = pc.incidentId == null ? null : incidents[pc.incidentId];
+      final encounter = pc.encounterId == null
+          ? null
+          : encounters[pc.encounterId];
+      final sourceTemplate = loc == null || pet == null
+          ? null
+          : resolvePostcardSourceTemplate(
+              card: pc,
+              templates: templates,
+              location: loc,
+              pet: pet,
+              ownerName: '主人',
+              encounter: encounter,
+              incident: incident,
+            );
+      final petName = pet?.name ?? '旅行者';
+      final locationName = loc?.name ?? pc.locationId;
       return PostcardView(
         id: pc.id,
         petId: pc.petId,
         journeyId: pc.journeyId,
-        petName: pet?.name ?? '旅行者',
+        petName: petName,
         speciesId: pet?.speciesId ?? 'pet_cat',
         variantId: pet?.variantId ?? '',
         poseHint: incident?.poseHint ?? 'gaze',
-        locationName: loc?.name ?? pc.locationId,
+        locationName: locationName,
+        locationNameEn: EnglishNarrative.locationName(
+          pc.locationId,
+          fallback: 'A Faraway Place',
+        ),
         bodyText: pc.bodyText,
+        bodyTextEn: EnglishNarrative.postcardBody(
+          personalityId: pet?.personality.firstOrNull ?? '',
+          templateId: pc.templateId ?? sourceTemplate?.id,
+          locationId: pc.locationId,
+          locationFallback: locationName,
+          encounterId: pc.encounterId,
+          incidentId: pc.incidentId,
+          petName: petName,
+          season: pc.season,
+          timeOfDay: pc.timeOfDay,
+          weather: pc.weather,
+          seq: pc.seq,
+        ),
         photoBg: loc?.photoStyle ?? '',
         stampId: pc.stampId,
         stickerIds: _postcardStickerIds(pc),
@@ -1978,7 +2228,9 @@ class PostcardView {
   final String variantId;
   final String poseHint;
   final String locationName;
+  final String locationNameEn;
   final String bodyText;
+  final String bodyTextEn;
   final String photoBg; // 地点背景美术引用（pc_bg_*）
   final String stampId;
   final List<String> stickerIds;
@@ -1993,7 +2245,9 @@ class PostcardView {
     required this.variantId,
     required this.poseHint,
     required this.locationName,
+    this.locationNameEn = '',
     required this.bodyText,
+    this.bodyTextEn = '',
     required this.photoBg,
     required this.stampId,
     required this.stickerIds,
@@ -2178,12 +2432,14 @@ class VisitorMemoryView {
   final DateTime date;
   final String? petName;
   final String script;
+  final String scriptEn;
   final int expReward;
 
   const VisitorMemoryView({
     required this.date,
     required this.petName,
     required this.script,
+    this.scriptEn = '',
     required this.expReward,
   });
 }

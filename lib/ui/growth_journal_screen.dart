@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../domain/enums.dart';
 import '../domain/models/logs.dart';
+import '../l10n/petopia_localizations.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
@@ -87,6 +88,7 @@ class _GrowthJournalScreenState extends ConsumerState<GrowthJournalScreen> {
               return _JournalContent(
                 entries: snapshot.data ?? const [],
                 milestones: ctrl.growthMemories(),
+                noteEn: ctrl.growthJournalNoteEn,
               );
             },
           ),
@@ -123,8 +125,13 @@ class _WarmFrame extends StatelessWidget {
 class _JournalContent extends StatelessWidget {
   final List<ExpLogEntry> entries;
   final List<YardMemoryView> milestones;
+  final String Function(ExpLogEntry entry) noteEn;
 
-  const _JournalContent({required this.entries, required this.milestones});
+  const _JournalContent({
+    required this.entries,
+    required this.milestones,
+    required this.noteEn,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +171,11 @@ class _JournalContent extends StatelessWidget {
               const _EmptyState()
             else
               for (final group in grouped.entries) ...[
-                _DaySection(day: group.key, entries: group.value),
+                _DaySection(
+                  day: group.key,
+                  entries: group.value,
+                  noteEn: noteEn,
+                ),
                 const SizedBox(height: 14),
               ],
           ],
@@ -222,7 +233,10 @@ class _GrowthMoments extends StatelessWidget {
                   const SizedBox(width: 9),
                   Expanded(
                     child: AppText(
-                      memory.text,
+                      context.l10n.bilingual(
+                        zhHans: memory.text,
+                        en: memory.textEn.isEmpty ? memory.text : memory.textEn,
+                      ),
                       style: const TextStyle(
                         color: GrowthJournalScreen._muted,
                         fontSize: 13.5,
@@ -337,8 +351,13 @@ class _StatPill extends StatelessWidget {
 class _DaySection extends StatelessWidget {
   final DateTime day;
   final List<ExpLogEntry> entries;
+  final String Function(ExpLogEntry entry) noteEn;
 
-  const _DaySection({required this.day, required this.entries});
+  const _DaySection({
+    required this.day,
+    required this.entries,
+    required this.noteEn,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -379,7 +398,8 @@ class _DaySection extends StatelessWidget {
             ],
           ),
         ),
-        for (final entry in entries) _LogTile(entry: entry),
+        for (final entry in entries)
+          _LogTile(entry: entry, noteEn: noteEn(entry)),
       ],
     );
   }
@@ -397,13 +417,17 @@ class _DaySection extends StatelessWidget {
 
 class _LogTile extends StatelessWidget {
   final ExpLogEntry entry;
+  final String noteEn;
 
-  const _LogTile({required this.entry});
+  const _LogTile({required this.entry, required this.noteEn});
 
   @override
   Widget build(BuildContext context) {
     final local = entry.timestamp.toLocal();
     final note = _noteFor(entry);
+    final displayNote = context.l10n.isEnglish && noteEn.isNotEmpty
+        ? noteEn
+        : note;
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
@@ -442,7 +466,7 @@ class _LogTile extends StatelessWidget {
                     children: [
                       Expanded(
                         child: AppText(
-                          note,
+                          displayNote,
                           style: const TextStyle(
                             color: GrowthJournalScreen._ink,
                             fontSize: 15,
