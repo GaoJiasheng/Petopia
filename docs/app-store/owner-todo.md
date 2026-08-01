@@ -9,7 +9,8 @@
       主语言和开发者显示名称均正确。
 - [x] 完整双语 build `20` 已上传 App Store Connect，Apple 状态为 `VALID` /
       `APP_STORE_ELIGIBLE`；Delivery UUID
-      `20a4bf3d-b830-45fe-b75f-13e205638a12`。
+      `20a4bf3d-b830-45fe-b75f-13e205638a12`。build 21 为带 `+1` 的内部
+      TestFlight 工具包，最终送审只能选择不含内测入口的 build 22 或更高版本。
 - [ ] 确认 Apple Developer Program 协议、税务与银行资料没有待处理项目。
 - [ ] 在 App Store Connect 接受 Paid Applications Agreement，并确认税务与
       收款账户状态允许提交应用内购买。

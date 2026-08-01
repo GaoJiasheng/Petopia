@@ -10,6 +10,7 @@ import '../app/game_services.dart';
 import '../app/home_moment_queue.dart';
 import '../app/notification_service.dart';
 import '../app/startup_metrics.dart';
+import '../app/distribution_environment.dart';
 import '../audio/audio_service.dart';
 import '../audio/route_audio.dart';
 import '../config/game_config.dart';
@@ -1317,6 +1318,9 @@ class _YardOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pet = view.pet;
+    final showTestFlightControl =
+        testFlightToolsCompiled &&
+        (ref.watch(isTestFlightProvider).valueOrNull ?? false);
     return SafeArea(
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -1331,9 +1335,13 @@ class _YardOverlay extends StatelessWidget {
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 720),
                     child: pet == null
-                        ? _TopMenuOnly(view: view)
+                        ? _TopMenuOnly(
+                            view: view,
+                            showTestFlightControl: showTestFlightControl,
+                          )
                         : _InfoCard(
                             view: view,
+                            showTestFlightControl: showTestFlightControl,
                             onTap: () => _openPetDetail(context, pet),
                           ),
                   ),
@@ -2794,7 +2802,12 @@ class _AdoptCta extends StatelessWidget {
 class _InfoCard extends StatelessWidget {
   final GameView view;
   final VoidCallback onTap;
-  const _InfoCard({required this.view, required this.onTap});
+  final bool showTestFlightControl;
+  const _InfoCard({
+    required this.view,
+    required this.onTap,
+    required this.showTestFlightControl,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -2858,6 +2871,10 @@ class _InfoCard extends StatelessWidget {
                           _WalletButton(wallet: view.wallet),
                           const SizedBox(width: 2),
                           _HomeMenuButton(view: view),
+                          if (showTestFlightControl) ...[
+                            const SizedBox(width: 2),
+                            const _TestFlightDayButton(),
+                          ],
                         ],
                       ),
                       const SizedBox(height: 6),
@@ -2893,7 +2910,8 @@ class _InfoCard extends StatelessWidget {
 
 class _TopMenuOnly extends StatelessWidget {
   final GameView view;
-  const _TopMenuOnly({required this.view});
+  final bool showTestFlightControl;
+  const _TopMenuOnly({required this.view, required this.showTestFlightControl});
 
   @override
   Widget build(BuildContext context) {
@@ -2905,9 +2923,84 @@ class _TopMenuOnly extends StatelessWidget {
           _WalletButton(wallet: view.wallet),
           const SizedBox(width: 4),
           _HomeMenuButton(view: view),
+          if (showTestFlightControl) ...[
+            const SizedBox(width: 4),
+            const _TestFlightDayButton(),
+          ],
         ],
       ),
     );
+  }
+}
+
+class _TestFlightDayButton extends ConsumerStatefulWidget {
+  const _TestFlightDayButton();
+
+  @override
+  ConsumerState<_TestFlightDayButton> createState() =>
+      _TestFlightDayButtonState();
+}
+
+class _TestFlightDayButtonState extends ConsumerState<_TestFlightDayButton> {
+  bool _working = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final label = context.tr(_working ? '正在推进内测时间' : '测试：推进一天');
+    return Tooltip(
+      message: label,
+      child: Semantics(
+        button: true,
+        label: label,
+        child: SizedBox(
+          width: 42,
+          height: 42,
+          child: OutlinedButton(
+            key: const ValueKey<String>('testflight_advance_day'),
+            onPressed: _working ? null : _advance,
+            style: OutlinedButton.styleFrom(
+              padding: EdgeInsets.zero,
+              foregroundColor: const Color(0xFF8A6F5D),
+              backgroundColor: const Color(0xFFFFFBF2).withValues(alpha: 0.84),
+              disabledForegroundColor: const Color(0xFFB8AA9E),
+              side: const BorderSide(color: Color(0xFFE3D5C1)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            ),
+            child: _working
+                ? const SizedBox.square(
+                    dimension: 15,
+                    child: CircularProgressIndicator(strokeWidth: 1.8),
+                  )
+                : const AppText(
+                    '+1',
+                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w900),
+                  ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> _advance() async {
+    setState(() => _working = true);
+    final advanced = await ref
+        .read(gameControllerProvider.notifier)
+        .advanceOneDayForTesting();
+    if (!mounted) return;
+    setState(() => _working = false);
+    if (!advanced) return;
+    final messenger = ScaffoldMessenger.of(context);
+    messenger
+      ..clearSnackBars()
+      ..showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          duration: const Duration(milliseconds: 1600),
+          content: AppText(context.tr('内测时间已推进 1 天')),
+        ),
+      );
   }
 }
 
@@ -3518,7 +3611,7 @@ class _NotebookSupportMemoryCard extends StatelessWidget {
         SupportCatalog.guardian;
     return Semantics(
       button: true,
-      label: context.tr('打开支持小院，${product.thankYou}'),
+      label: context.tr('打开支持小院，${product.title}'),
       child: Material(
         color: const Color(0xFFFFFAEF),
         borderRadius: BorderRadius.circular(8),
@@ -3547,7 +3640,7 @@ class _NotebookSupportMemoryCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const AppText(
-                        '小院记住的心意',
+                        '支持与回礼',
                         style: TextStyle(
                           color: Color(0xFF604B3E),
                           fontSize: 13,
@@ -4108,7 +4201,7 @@ class _MailboxTutorialRow extends StatelessWidget {
             minimumSize: const Size(64, 48),
             padding: const EdgeInsets.symmetric(horizontal: 8),
           ),
-          child: const AppText('记住啦'),
+          child: const AppText('知道了'),
         ),
       ],
     );

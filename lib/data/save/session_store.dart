@@ -327,7 +327,7 @@ Pet _petFromJson(Map<String, Object?> json, DateTime now) {
     id: _readString(json['id'], ''),
     speciesId: _readString(json['speciesId'], ''),
     variantId: _readString(json['variantId'], ''),
-    name: _readString(json['name'], '宝贝'),
+    name: _readString(json['name'], '伙伴'),
     personality: _stringListFromJson(json['personality']),
     bornAt: bornAt,
     lastOnlineAt: lastOnlineAt,

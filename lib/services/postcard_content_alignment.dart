@@ -408,14 +408,14 @@ const Map<String, String> _fallbackSkeletons = {
       '我平安到{location}了。{encounter}。{incident}。'
       '一开始有一点紧张，不过现在已经敢慢慢往前走了。——{petName}',
   'p_energetic':
-      '我到{location}啦！！{encounter}！{incident}！'
-      '这里还有好多地方没跑到，我现在就继续出发！！——{petName}',
+      '我到{location}了！{encounter}。{incident}。'
+      '这里还有好多路没跑过，我已经继续出发。——{petName}',
   'p_clingy':
       '{ownerName}，我到{location}了。{encounter}。{incident}。'
       '风景很好，可我第一件事还是想写信给你。——{petName}',
   'p_aloof':
       '{location}。到了。{encounter}。{incident}。'
-      '景色还行。想起你只是顺便，别多想。——{petName}',
+      '景色比预想好一点。写到这里时刚好想起院子。就这样。——{petName}',
   'p_naughty':
       '先声明，{location}今天发生的事不全是我干的。'
       '{encounter}。{incident}。细节等回去再交代。——{petName}',

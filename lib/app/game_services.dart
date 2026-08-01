@@ -143,6 +143,92 @@ class GameServices {
 
   Future<void> dispose() async => _dispose?.call();
 
+  /// Ages only the mutable gameplay clocks by one day. The caller must enforce
+  /// TestFlight access before invoking this test helper.
+  void prepareOneDayAdvanceForTesting(DateTime now) {
+    const step = Duration(days: 1);
+    DateTime shifted(DateTime value) => value.subtract(step);
+    String shiftedDayKey(String value) {
+      final parsed = DateTime.tryParse(value);
+      return parsed == null ? value : LocalCalendar.dayKey(shifted(parsed));
+    }
+
+    for (final pet in _session.allPets) {
+      pet.bornAt = shifted(pet.bornAt);
+      pet.lastOnlineAt = shifted(pet.lastOnlineAt);
+      pet.offlineDayKey = shiftedDayKey(pet.offlineDayKey);
+      if (pet.graduatedAt case final graduatedAt?) {
+        pet.graduatedAt = shifted(graduatedAt);
+      }
+      if (pet.nextRevisitAt case final nextRevisitAt?) {
+        pet.nextRevisitAt = shifted(nextRevisitAt);
+      }
+    }
+    for (final journey in _session.journeys) {
+      journey.nextPostcardAt = shifted(journey.nextPostcardAt);
+      if (journey.nextTravelNoteAt case final nextTravelNoteAt?) {
+        journey.nextTravelNoteAt = shifted(nextTravelNoteAt);
+      }
+    }
+    for (final job in _session.jobs) {
+      if (!job.consumed) job.dueAt = shifted(job.dueAt);
+    }
+    for (final entry in _session.eventLastFiredAt.entries.toList()) {
+      _session.eventLastFiredAt[entry.key] = shifted(entry.value);
+    }
+    for (final entry in _session.careLedger.lastAt.entries.toList()) {
+      _session.careLedger.lastAt[entry.key] = shifted(entry.value);
+    }
+    _session.careLedger.dayKey = shiftedDayKey(_session.careLedger.dayKey);
+
+    final shiftedGeneratedDays = _session.generatedDays
+        .map(shiftedDayKey)
+        .toSet();
+    _session.generatedDays
+      ..clear()
+      ..addAll(shiftedGeneratedDays);
+
+    final dateToken = RegExp(r'\d{4}-\d{2}-\d{2}');
+    final shiftedSignals = <String, int>{};
+    for (final entry in _session.achievementSignals.entries) {
+      final key = entry.key.replaceAllMapped(
+        dateToken,
+        (match) => shiftedDayKey(match.group(0)!),
+      );
+      final previous = shiftedSignals[key];
+      if (previous == null || entry.value > previous) {
+        shiftedSignals[key] = entry.value;
+      }
+    }
+    _session.achievementSignals
+      ..clear()
+      ..addAll(shiftedSignals);
+
+    final activeVisitor = _session.activeVisitor;
+    if (activeVisitor != null) {
+      activeVisitor.arrivedAt = shifted(activeVisitor.arrivedAt);
+      activeVisitor.leavesAt = shifted(activeVisitor.leavesAt);
+    }
+    if (_session.revisitorArrivedAt case final arrivedAt?) {
+      _session.revisitorArrivedAt = shifted(arrivedAt);
+    }
+    if (_session.revisitorLeavesAt case final leavesAt?) {
+      _session.revisitorLeavesAt = shifted(leavesAt);
+    }
+    if (_session.yard.foodTray.placedAt case final placedAt?) {
+      _session.yard.foodTray.placedAt = shifted(placedAt);
+    }
+
+    final settings = _session.settings;
+    settings.lastLoginDay = LocalCalendar.dayKey(now);
+    settings.loginStreakCurrent = settings.loginStreakCurrent <= 0
+        ? 1
+        : settings.loginStreakCurrent + 1;
+    if (settings.loginStreakCurrent > settings.loginStreakMax) {
+      settings.loginStreakMax = settings.loginStreakCurrent;
+    }
+  }
+
   factory GameServices.wire({
     required GameSession session,
     required AuditLogPort port,
@@ -321,7 +407,7 @@ class GameServices {
       id: _idGen(),
       speciesId: speciesId,
       variantId: variantId,
-      name: trimmed.isEmpty ? (sp?.name ?? '宝贝') : trimmed,
+      name: trimmed.isEmpty ? (sp?.name ?? '伙伴') : trimmed,
       personality: _pickTwoPersonalities(),
       bornAt: now,
       lastOnlineAt: now,
@@ -809,11 +895,11 @@ class GameServices {
       'p_energetic' => '每天跑完一圈后，都会回到你身边轻轻碰一下',
       'p_lazy' => '已经学会在你最常停留的地方安心打盹',
       'p_curious' => '遇见新东西时，总要先回头确认你也看见了',
-      'p_clingy' => '听见门响时，总会第一个跑过去等你',
+      'p_clingy' => '听见门响时，总会第一个过去看看',
       'p_aloof' => '还是假装不在意，却总把休息的位置挪得离你更近',
       'p_mischievous' || 'p_naughty' => '每次闯完小祸，都会若无其事地坐到你身边',
       'p_gentle' => '会安静照看院子里比自己更小的来客',
-      'p_dreamy' => '睡醒后总像记得一个很长、很柔软的梦',
+      'p_dreamy' => '睡醒后总像还记得一个清晰而温暖的梦',
       _ => '已经有了一个只有你最熟悉的小习惯',
     };
     return '${pet.name}$habit。';
@@ -930,7 +1016,7 @@ class GameServices {
       'p_aloof' => '只写了一句“一切都好”，却在信封里夹了片叶子',
       'p_mischievous' || 'p_naughty' => '说这次真的没有惹麻烦，至少没有很大的麻烦',
       'p_gentle' => '说沿途遇见的小伙伴都被好好照顾着',
-      'p_dreamy' => '说昨晚梦见院子里的灯一直为它亮着',
+      'p_dreamy' => '说昨晚梦见在很远的地方也能看见院子的灯',
       _ => '说它仍在慢慢看世界，也一直记得回院子的路',
     };
     _addYardMemory(

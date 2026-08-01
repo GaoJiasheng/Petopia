@@ -23,8 +23,8 @@ from being granted twice and allow its decoration to be displayed. Petopia does
 not store payment card details, Apple IDs, order amounts, or store account data.
 
 Uninstalling the app or clearing app data may remove local records. The
-permanent Yard Guardian purchase can be restored through the Apple App Store.
-Consumable support purchases and their time-limited thank-you gifts cannot be
+permanent Garden Keeper purchase can be restored through the Apple App Store.
+Consumable support purchases and their fixed-duration thank-you decorations cannot be
 restored.
 
 ## Local Notifications
@@ -62,7 +62,7 @@ channel through which personal information can be disclosed to other players.
 
 You can delete local Petopia game data and time-limited gift records by
 uninstalling the app. You may first export a save from Settings. Support
-entitlements are not included in exported saves. A permanent Yard Guardian
+entitlements are not included in exported saves. A permanent Garden Keeper
 purchase remains in your Apple purchase history and can be restored after
 reinstallation. If cloud features are added in the future, this policy will be
 updated before launch and will describe the relevant data controls.

@@ -12,10 +12,10 @@
 
 | Product ID | 类型 | 美国基准价 | 英文名称 | 简体中文名称 |
 | --- | --- | ---: | --- | --- |
-| `com.petopia.petopia.support.treat` | Consumable | $0.99 | A Little Treat | 一份小点心 |
+| `com.petopia.petopia.support.treat` | Consumable | $0.99 | A Treat | 一份小点心 |
 | `com.petopia.petopia.support.lantern` | Consumable | $2.99 | A Warm Lantern | 点亮一盏暖灯 |
 | `com.petopia.petopia.support.bouquet` | Consumable | $4.99 | Garden Bouquet | 送来一篮花 |
-| `com.petopia.petopia.support.guardian` | Non-Consumable | $6.99 | Yard Guardian | 小院守护者 |
+| `com.petopia.petopia.support.guardian` | Non-Consumable | $6.99 | Garden Keeper | 小院守护者 |
 
 其他国家和地区使用 App Store Connect 的等值价格，不在 App 内硬编码货币或
 换算；界面始终显示 StoreKit 返回的本地价格。
@@ -29,24 +29,24 @@
 | 送来一篮花 | 花篮在院子盛开 7 天 | 本地保存，可重复购买；消耗型商品不可恢复 |
 | 小院守护者 | 永久徽章、永久暖灯、特别感谢明信片 | 永久权益，可通过“恢复‘小院守护者’”恢复 |
 
-重复购买同一种限时回礼时，从当前有效期末尾继续顺延。交易按 App Store
+重复购买同一种固定时长回礼时，从当前有效期末尾继续顺延。交易按 App Store
 transaction ID 幂等处理；本地权益成功落盘后才完成交易，避免付款成功但回礼丢失。
 本地只保存 Product ID、交易幂等键和回礼到期时间，不保存支付卡、Apple ID、
 订单金额或商店账号信息。
 
 ## 商品描述
 
-`A Little Treat`
-: A tiny thank-you treat for the yard.
+`A Treat`
+: A decorative treat that stays in the garden for 24 hours.
 
 `A Warm Lantern`
-: Keeps the garden lantern glowing until tomorrow.
+: Keeps the garden lantern glowing for 24 hours.
 
 `Garden Bouquet`
 : Flowers bloom in the yard for seven days.
 
-`Yard Guardian`
-: A permanent badge, lantern, and thank-you letter.
+`Garden Keeper`
+: A permanent lantern, keepsake badge, and special letter.
 
 简体中文描述已固化在 `ios/Runner/PetopiaSupport.storekit`。商品审核截图应使用
 支持页完整界面，不使用 TestFlight 标记、占位价格或本地调试提示。

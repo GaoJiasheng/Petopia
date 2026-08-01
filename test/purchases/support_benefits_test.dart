@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:petopia/l10n/english_copy.dart';
 import 'package:petopia/purchases/support_benefits.dart';
 import 'package:petopia/purchases/support_catalog.dart';
 
@@ -12,6 +13,36 @@ void main() {
           .every((product) => product.consumable),
       isTrue,
     );
+  });
+
+  test('support copy is factual, bilingual, and never pay-to-progress', () {
+    final pressureLanguage = RegExp(
+      r'错过|限时优惠|最划算|最受欢迎|没有你|离不开你|等你回来|'
+      r'best value|most popular|please come back|need you|without you',
+      caseSensitive: false,
+    );
+
+    expect(SupportCatalog.treat.duration, const Duration(hours: 24));
+    expect(SupportCatalog.lantern.duration, const Duration(hours: 24));
+    expect(SupportCatalog.bouquet.duration, const Duration(days: 7));
+    expect(SupportCatalog.guardian.duration, isNull);
+
+    for (final product in SupportCatalog.all) {
+      for (final value in <String>[
+        product.title,
+        product.subtitle,
+        product.thankYou,
+      ]) {
+        expect(pressureLanguage.hasMatch(value), isFalse, reason: value);
+        final english = EnglishCopy.translate(value);
+        expect(english, isNot(value), reason: 'Missing English copy: $value');
+        expect(
+          RegExp(r'[\u3400-\u9fff]').hasMatch(english),
+          isFalse,
+          reason: english,
+        );
+      }
+    }
   });
 
   test('consumable benefits extend from the active expiry', () {

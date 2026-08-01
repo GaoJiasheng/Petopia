@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:petopia/app/distribution_environment.dart';
 import 'package:petopia/app/game_controller.dart';
 import 'package:petopia/app/game_services.dart';
 import 'package:petopia/app/game_state.dart';
@@ -63,6 +64,19 @@ class _MutableClock implements ClockService {
   @override
   Duration resolveOfflineElapsed({required DateTime lastOnlineAt}) =>
       value.difference(lastOnlineAt);
+}
+
+class _FixedDistributionEnvironment implements DistributionEnvironment {
+  _FixedDistributionEnvironment(this.testFlight);
+
+  final bool testFlight;
+  int checkCount = 0;
+
+  @override
+  Future<bool> isTestFlight() async {
+    checkCount++;
+    return testFlight;
+  }
 }
 
 class _RecordingAudio implements AudioService {
@@ -335,6 +349,81 @@ void main() {
       expect(audio.resumeCount, 1);
     },
   );
+
+  test('production distribution cannot advance the game day', () async {
+    final root = await Directory.systemTemp.createTemp(
+      'petopia_production_day_guard_',
+    );
+    final clock = _MutableClock(DateTime.utc(2026, 7, 26, 10));
+    final services = _services(content: content, saveDir: root, clock: clock);
+    final environment = _FixedDistributionEnvironment(false);
+    final container = _container(
+      services: services,
+      audio: _RecordingAudio(),
+      notifications: _RecordingNotifications(),
+      distribution: environment,
+    );
+    addTearDown(() async {
+      container.dispose();
+      await root.delete(recursive: true);
+    });
+
+    await container.read(gameControllerProvider.future);
+    final bornAt = services.session.current!.bornAt;
+    final advanced = await container
+        .read(gameControllerProvider.notifier)
+        .advanceOneDayForTesting();
+
+    expect(advanced, isFalse);
+    expect(environment.checkCount, testFlightToolsCompiled ? 1 : 0);
+    expect(services.session.current!.bornAt, bornAt);
+    expect(services.session.current!.exp, 0);
+  });
+
+  test(
+    'TestFlight day advance runs a complete persisted daily step',
+    () async {
+      final root = await Directory.systemTemp.createTemp(
+        'petopia_testflight_day_advance_',
+      );
+      final clock = _MutableClock(DateTime.utc(2026, 7, 26, 10));
+      final services = _services(content: content, saveDir: root, clock: clock);
+      services.session.careLedger.counts[CareAction.feed.name] = 1;
+      final environment = _FixedDistributionEnvironment(true);
+      final container = _container(
+        services: services,
+        audio: _RecordingAudio(),
+        notifications: _RecordingNotifications(),
+        distribution: environment,
+      );
+      addTearDown(() async {
+        container.dispose();
+        await root.delete(recursive: true);
+      });
+
+      await container.read(gameControllerProvider.future);
+      final bornAt = services.session.current!.bornAt;
+      final advanced = await container
+          .read(gameControllerProvider.notifier)
+          .advanceOneDayForTesting();
+
+      expect(advanced, isTrue);
+      expect(environment.checkCount, 1);
+      expect(
+        services.session.current!.bornAt,
+        bornAt.subtract(const Duration(days: 1)),
+      );
+      expect(services.session.current!.exp, greaterThan(0));
+      expect(services.session.careLedger.counts, isEmpty);
+      expect(services.session.settings.loginStreakCurrent, 1);
+
+      final restored = await SessionStore(root).load();
+      expect(restored, isNotNull);
+      expect(restored!.current!.bornAt, services.session.current!.bornAt);
+      expect(restored.current!.exp, services.session.current!.exp);
+    },
+    skip: !testFlightToolsCompiled,
+  );
 }
 
 GameServices _services({
@@ -374,12 +463,16 @@ ProviderContainer _container({
   required GameServices services,
   required AudioService audio,
   required NotificationService notifications,
+  DistributionEnvironment? distribution,
 }) {
   return ProviderContainer(
     overrides: <Override>[
       gameBootstrapProvider.overrideWithValue(() async => services),
       audioServiceProvider.overrideWithValue(audio),
       notificationServiceProvider.overrideWithValue(notifications),
+      distributionEnvironmentProvider.overrideWithValue(
+        distribution ?? _FixedDistributionEnvironment(false),
+      ),
     ],
   );
 }

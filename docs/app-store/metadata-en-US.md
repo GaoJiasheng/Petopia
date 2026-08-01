@@ -9,17 +9,17 @@
 - Keywords (100 bytes):
   `pet,cozy,care,raising,postcards,watercolor,offline,collecting,simulation,relaxing`
 - Promotional text:
-  `Share a watercolor garden with one little friend. Help them grow, then open the letters they send home from a long and gentle journey.`
+  `Share a watercolor garden with one friend. Help them grow, then open the letters they send from a journey beyond the garden.`
 
 ## Description
 
-A quiet garden. One little friend at a time.
+A quiet garden. One friend at a time.
 
-Welcome a young pet, share meals, offer a gentle pat, play together, and help
-them enjoy a warm bath. Every small moment settles into a private journal as
-your companion grows from a tiny newcomer into a confident traveler.
+Welcome a young pet. Share meals, offer a pat, play together, and help them
+enjoy a warm bath. Each day becomes a page in your garden journal as your
+companion grows into a confident traveler.
 
-Graduation is not goodbye. When the day comes, your friend packs a little bag
+Graduation is not goodbye. When the day comes, your friend packs for the road
 and sets out. Hand-painted postcards soon arrive from faraway places, each
 carrying a scene, a chance encounter, and a voice shaped by the personality you
 came to know. Old friends may even find their way back to the garden.
@@ -30,7 +30,7 @@ journal become a record of many small relationships.
 
 Petopia is designed to make companionship feel gentle and lasting:
 
-- No hunger deaths and no punishment for time away
+- No hunger penalties and no punishment for time away
 - One pet at a time, so every bond has room to matter
 - 12 pet species, multiple color variants, and four growth stages
 - 40 travel destinations with ongoing postcards
@@ -39,8 +39,8 @@ Petopia is designed to make companionship feel gentle and lasting:
 - Fully playable offline, with no account, ads, analytics, or tracking
 - Designed for both iPhone and iPad
 
-The garden light stays on while your friend grows, and while their next letter
-finds its way home.
+Each friend leaves a page in the garden journal, and every letter adds another
+view from the road.
 
 ## Version Notes
 

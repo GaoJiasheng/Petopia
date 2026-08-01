@@ -338,8 +338,8 @@ abstract final class EnglishCopy {
     match = RegExp(r'^把玩具滚到(.+)身边$').firstMatch(source);
     if (match != null) return 'Roll a toy over to ${_term(match[1]!)}';
 
-    match = RegExp(r'^让(.+)洗得软乎乎$').firstMatch(source);
-    if (match != null) return 'Give ${_term(match[1]!)} a gentle bath';
+    match = RegExp(r'^给(.+)洗个舒服的澡$').firstMatch(source);
+    if (match != null) return 'Give ${_term(match[1]!)} a relaxing bath';
 
     match = RegExp(r'^和(.+)打个招呼$').firstMatch(source);
     if (match != null) return 'Say hello to ${_term(match[1]!)}';
@@ -379,9 +379,9 @@ abstract final class EnglishCopy {
       return '${_term(match[1]!)} chased the toy, then happily came back to you.';
     }
 
-    match = RegExp(r'^(.+)变得软乎乎的，身上还留着暖暖的水汽。$').firstMatch(source);
+    match = RegExp(r'^(.+)洗得干干净净，身上还带着温热的水汽。$').firstMatch(source);
     if (match != null) {
-      return '${_term(match[1]!)} is soft, warm, and freshly bathed.';
+      return '${_term(match[1]!)} is clean, warm, and freshly bathed.';
     }
 
     match = RegExp(
@@ -434,12 +434,12 @@ abstract final class EnglishCopy {
     '软糯、胆小、爱啃': 'Soft · Shy · Loves to Nibble',
     '囤货、腮帮、跑轮': 'Collector · Chubby Cheeks · Wheel Runner',
     '慢悠悠、长情、缩壳': 'Unhurried · Devoted · Shell-Shy',
-    '话痨、学舌、显摆': 'Chatty · Mimic · Little Show-Off',
+    '话痨、学舌、显摆': 'Chatty · Mimic · Show-Off',
     '高冷、蜷缩、蜕皮': 'Aloof · Coiled · Ever-Changing',
     '慢动作、变色、伪装': 'Unhurried · Colorful · Camouflaged',
-    '怕生的小暖炉': 'A shy little warm-heart',
-    '独角兽幼体': 'A baby unicorn rabbit',
-    '害羞的白团子幽灵': 'A shy little puff of a ghost',
+    '怕生的小暖炉': 'A shy, warm-hearted companion',
+    '独角兽幼体': 'A young unicorn rabbit',
+    '害羞的白团子幽灵': 'A shy, cloud-soft ghost',
     '会眨眼的草丛': 'A twinkling friend from the grass',
     '喂食': 'Feed',
     '摸头': 'Pet',
@@ -448,20 +448,20 @@ abstract final class EnglishCopy {
 
     // Achievements and hidden clues.
     '第一次目送': 'First Farewell',
-    '小院常客': 'Garden Regular',
-    '五次拥抱五次目送': 'Five Hugs, Five Farewells',
-    '满园桃李': 'A Garden in Full Bloom',
-    '十二次拥抱': 'Twelve Hugs',
+    '三段相伴': 'Three Shared Journeys',
+    '五段相伴': 'Five Shared Journeys',
+    '八次启程': 'Eight Departures',
+    '十二段相伴': 'Twelve Shared Journeys',
     '第一次长大': 'First Growth Spurt',
-    '亭亭玉立': 'All Grown Up',
+    '初见成年': 'First Grown-Up Form',
     '六十个早安': 'Sixty Good Mornings',
     '图鉴点灯人': 'Compendium Lamplighter',
-    '三代同名册': 'Three Generations',
+    '三次相遇': 'Three Times Together',
     '五色斑斓': 'Every Shade of Friendship',
     '童话住进了院子': 'A Fairytale Moved In',
     '第一位客人': 'First Visitor',
     '好客之家': 'Open-Door Garden',
-    '缘分收藏夹': 'Keepsakes of Chance',
+    '六次难得相遇': 'Six Rare Encounters',
     '稀客常来': 'Rare Guests, Warm Welcome',
     '门庭若市': 'A Garden Full of Friends',
     '远方的第一声问候': 'First Hello from Afar',
@@ -471,28 +471,28 @@ abstract final class EnglishCopy {
     '盖满整个世界': 'Stamps Around the World',
     '八方来信': 'Letters from Every Direction',
     '五段旅程': 'Five Journeys',
-    '常回家看看': 'Come Home Often',
-    '院子永远留着位置': "There's Always a Place for You",
+    '十次归来': 'Ten Returns',
+    '院子永远留着位置': 'A Place to Return To',
     '朋友带朋友': 'Friends Bring Friends',
-    '礼物拆不完': 'Gifts Without End',
-    '摸头狂魔': 'Head-Pat Enthusiast',
-    '手感认证大师': 'Master of Gentle Pats',
-    '干饭监督员': 'Mealtime Supervisor',
+    '远方的二十份心意': 'Twenty Gifts from Afar',
+    '一百次问候': 'One Hundred Hellos',
+    '熟悉的手心': 'A Familiar Touch',
+    '饭点守时人': 'Always on Time for Meals',
     '千顿饭的交情': 'A Thousand Meals Together',
     '泡泡专家': 'Bubble Expert',
     '泡泡浴大师': 'Bubble Bath Master',
-    '玩不腻': 'Playtime Never Gets Old',
-    '院子游乐场场长': 'Garden Play Director',
+    '两百次游戏': 'Two Hundred Games',
+    '院子里的游乐场': 'The Garden Playground',
     '树荫初成': 'First Patch of Shade',
     '满庭花光': 'Garden Aglow',
     '传说中的院子': 'Garden of Legends',
     '换新装': 'A Fresh Look',
     '百变小院': 'Garden of Many Moods',
-    '十二时装衣橱': 'The Garden Wardrobe',
+    '八种院景': 'Eight Garden Views',
     '四季来信': 'Letters Through the Seasons',
-    '晴雨雪都寄了': 'Postcards in Every Weather',
-    '雨天也要好好吃饭': 'Rainy-Day Meals Still Matter',
-    '七日之约': 'Seven-Day Promise',
+    '晴雨雪来信': 'Letters in Every Weather',
+    '雨天的一顿饭': 'A Rainy-Day Meal',
+    '七次日安': 'Seven Good Mornings',
     '三十次日安': 'Thirty Good Mornings',
     '一百个日安': 'One Hundred Good Mornings',
     '故事收集者': 'Story Collector',
@@ -516,27 +516,27 @@ abstract final class EnglishCopy {
     '月亮的常客': 'A Regular Under the Moon',
     '传说的收信人': 'Keeper of Legendary Letters',
     '深夜公开课': 'Midnight Lecture',
-    '完美旅程': 'A Perfect Journey',
+    '一路来信': 'Letters All Along',
     '同学会': 'Reunion',
     '朋友的朋友': 'A Friend of a Friend',
     '四季的目送': 'Farewells Through Four Seasons',
     '向着朝阳出发': 'Setting Out at Sunrise',
-    '宠爱满格': 'Loved to the Fullest',
+    '完整的一天': 'A Complete Day',
     '一岁又一岁': 'Year After Year',
     '会飞的花': 'A Flower in Flight',
-    '等虹的人': 'Waiting for the Rainbow',
+    '雨后的白影': 'White Shadow After Rain',
     '旧手账的读者': 'Reader of Old Journals',
     '夜航信': 'A Letter on the Night Wind',
     '口是心非观察员': 'Mixed-Signals Expert',
     '有人在星星最亮时来过。': 'Someone passed by when the stars were brightest.',
     '雨声也是一种陪伴。': 'Rain can be a kind of company.',
-    '它记得那盏灯。': 'It remembers that little light.',
+    '它记得那盏灯。': 'It remembers that light.',
     '有些告别只是换个方式见面。': 'Some goodbyes simply become another way to meet.',
     '那天院子里挤满了故事。': 'That day, the garden was full of stories.',
     '雨停之后，有人没急着收伞。':
         'After the rain, someone lingered beneath an open umbrella.',
     '院子最安静的时候，也有人陪你。': 'Even at its quietest, the garden keeps you company.',
-    '有一盏灯，是为会眨眼的草丛点的。': 'One little light was left on for the blinking grass.',
+    '有一盏灯，是为会眨眼的草丛点的。': 'One light was left on for the blinking grass.',
     '雪地记得每一串脚印。': 'The snow remembers every trail of footprints.',
     '有些话说给流星听，流星会替你带到。':
         'Tell a wish to a shooting star, and it may carry the words for you.',
@@ -550,44 +550,46 @@ abstract final class EnglishCopy {
     '四个传说，都路过了同一个院子。': 'Four legends all passed through the same garden.',
     '教授的课，只在会眨眼的草丛边开讲。':
         "The professor's class begins only beside the blinking grass.",
-    '每一封信，都被第一时间拆开过。': 'Every letter was opened the moment it arrived.',
+    '每一封信，都在相册里找到了位置。': 'Every letter found its place in the album.',
     '老同学们像是约好了似的。':
         'Old friends returned as though they had planned it together.',
     '它的朋友，也想来看看你的院子。':
         'A friend of your friend would like to visit the garden too.',
     '院子送走过四个季节的背影。': 'The garden has watched a traveler leave in every season.',
     '有一场告别，选在了日出时分。': 'One farewell was saved for sunrise.',
-    '那一天，它被爱得满满当当。': 'That day, your friend was loved in every possible way.',
+    '那一天，每一种陪伴都刚刚好。': 'That day, every kind of care felt just right.',
     '新年的第一声问候，先给了它。': "The year's first hello belonged to your friend.",
     '有一朵会飞的花，找到了最安稳的枝头。': 'A flower in flight found the safest branch.',
-    '不是每场雨都有下文——除非你肯等。':
-        'Not every rainstorm has an ending, unless you wait for it.',
+    '雨停以后，彩虹落下的地方闪过一抹白。':
+        'After the rain, a white shape flashed where the rainbow touched down.',
     '有人常常翻起旧照片。': 'Someone often returns to the old photographs.',
-    '有些信，是写给失眠的人的。': 'Some letters are written for those still awake.',
-    '它说不要的时候，尾巴是诚实的。': 'The words said no, but the tail told the truth.',
+    '夜深时，邮箱里也会亮起一盏小灯。':
+        'Late at night, a light can still appear in the mailbox.',
+    '它说不在意，却总记得回头。':
+        'They pretend not to care, yet always remember to look back.',
 
     // Travel locations.
     '猫背礁': "Cat's Back Reef",
     '灯塔海湾': 'Lighthouse Bay',
-    '贝壳镇': 'Shelltown',
+    '贝壳镇': 'Seashell Town',
     '退潮沙洲': 'Low-Tide Sandbar',
     '海雾码头': 'Sea Mist Pier',
     '云顶垭口': 'Cloudtop Pass',
-    '温泉猴谷': 'Hot Spring Valley',
+    '温泉猴谷': 'Monkey Hot Springs',
     '枫火岭': 'Maplefire Ridge',
     '雪线木屋': 'Snowline Cabin',
     '回声峡谷': 'Echo Canyon',
     '电车老街': 'Old Tram Street',
-    '屋顶水塔城': 'Rooftop Water-Tower City',
+    '屋顶水塔城': 'Rooftop Water Tower City',
     '深夜面馆街': 'Midnight Noodle Street',
-    '旧书坊巷': 'Old Bookshop Lane',
+    '旧书坊巷': 'Old Bookshop Alley',
     '摩天轮码头': 'Ferris Wheel Wharf',
     '麦浪邮局': 'Wheatfield Post Office',
     '向日葵车站': 'Sunflower Station',
     '萤火稻田': 'Firefly Rice Fields',
     '苹果坡农场': 'Apple Hill Farm',
     '风车塘': 'Windmill Pond',
-    '蘑菇环林地': 'Mushroom Ring Woods',
+    '蘑菇环林地': 'Mushroom Ring Grove',
     '千年橡树邮筒': 'Ancient Oak Postbox',
     '松果集市': 'Pinecone Market',
     '雾中吊桥': 'Misty Rope Bridge',
@@ -596,7 +598,7 @@ abstract final class EnglishCopy {
     '驼铃绿洲': 'Camel Bell Oasis',
     '彩绘集市': 'Painted Bazaar',
     '风蚀石林': 'Wind-Carved Stone Forest',
-    '热气球营地': 'Balloon Camp',
+    '热气球营地': 'Hot-Air Balloon Camp',
     '极光渔村': 'Aurora Fishing Village',
     '浮冰灯塔': 'Ice-Floe Lighthouse',
     '蓝洞泉': 'Blue Grotto Spring',
@@ -609,24 +611,24 @@ abstract final class EnglishCopy {
     '星星修理铺': 'Star Repair Shop',
 
     // Visitors.
-    '麻雀啾啾': 'Chirpy Sparrow',
+    '麻雀啾啾': 'Chirpy the Sparrow',
     '流浪三花猫': 'Wandering Calico',
     '蜗牛慢递员': 'Slow-Mail Snail',
     '白粉蝶': 'Cabbage White',
     '小刺猬球球': 'Pip the Hedgehog',
     '鸽子咕咕': 'Coo the Pigeon',
-    '松鼠栗栗': 'Chestnut',
+    '松鼠栗栗': 'Chestnut the Squirrel',
     '乌鸦亮亮': 'Shiny the Crow',
     '青蛙呱太': 'Ribbit the Frog',
-    '萤火虫群': 'Firefly Swarm',
+    '萤火虫群': 'Firefly Parade',
     '橘色狸猫': 'Ginger Tanuki',
     '白鹭先生': 'Mr. Egret',
-    '狐狸小茜': 'Rosie the Fox',
+    '狐狸小茜': 'Sienna the Fox',
     '猫头鹰教授': 'Professor Owl',
     '小鹿': 'Little Fawn',
     '雪兔': 'Snow Hare',
     '篝火夜的火光': 'Campfire Glow',
-    '彩虹边的白影': 'White Shadow by the Rainbow',
+    '彩虹边的白影': 'The Rainbow\'s White Shadow',
     '深夜白团子': 'Midnight Puff',
 
     // Shop.
@@ -724,7 +726,10 @@ abstract final class EnglishCopy {
     '再试一次': 'Try Again',
     '读取中': 'Loading',
     '正在连接': 'Connecting',
-    '设置暂时没有翻开': 'Settings are taking a moment',
+    '测试：推进一天': 'Testing: advance one day',
+    '正在推进内测时间': 'Advancing test time',
+    '内测时间已推进 1 天': 'Test time advanced by 1 day',
+    '设置暂时没有翻开': 'Settings are temporarily unavailable',
     '音乐和互动音效可以分别保留。': 'Choose music and interaction sounds separately.',
     '院子、相册和毕业旅程的情境音乐。': 'Music for the garden, album, and journeys.',
     '保留铃声、升级和点击的柔和声音。': 'Soft chimes for taps, growth, and special moments.',
@@ -788,21 +793,20 @@ abstract final class EnglishCopy {
     '使用中': 'In Use',
     '应用': 'Use',
     '暖绒不够': 'Not Enough Sunfluff',
-    '买不起': 'Not enough',
     '全部': 'All',
     '院子主题': 'Garden Themes',
     '装饰小物': 'Decor',
     '特殊食粮': 'Special Treats',
     '特殊玩具': 'Special Toys',
     '相册装帧': 'Album Covers',
-    '商店暂时没有开门': 'The shop is taking a moment',
+    '商店暂时没有开门': 'The shop is temporarily unavailable',
     '商店货架还在整理': 'The shelves are still being arranged',
-    '等新商品上架后，这里会变得热闹起来。': 'New little finds will appear here soon.',
+    '等新商品上架后，这里会变得热闹起来。': 'New finds will appear here soon.',
     '换一点小院会喜欢的东西。': 'Pick out something lovely for the garden.',
     '暖绒不足，或这件物品已经拥有。': 'You may need more Sunfluff, or already own this item.',
     '这次没有兑换成功，暖绒和物品都没有变化。': 'Nothing changed. Please try again.',
     '成就': 'Achievements',
-    '成就册暂时没有翻开': 'Achievements are taking a moment',
+    '成就册暂时没有翻开': 'Achievements are temporarily unavailable',
     '成就册还没有页签': 'Your achievement book is still blank',
     '等小院发生更多故事，这里会贴上新的印章。':
         'New stamps will appear as your garden story grows.',
@@ -818,16 +822,33 @@ abstract final class EnglishCopy {
     '隐藏': 'Hidden',
     '隐藏成就还没有露出线索。': 'This hidden achievement has not revealed a clue yet.',
     '线索还藏在院子的某一页。': 'The clue is still tucked somewhere in the garden.',
-    '这一页已经贴上亮亮的完成章。': 'A bright completion stamp now marks this page.',
+    '线索几乎完整：那团火光已经记住院子，再相遇一次也许就会留下。':
+        'The clue is nearly complete: the flame remembers this garden and may stay after one more meeting.',
+    '线索几乎完整：雨后的白色身影已经很近了，下一场彩虹里也许会再靠近。':
+        'The clue is nearly complete: the white shape may come closer with the next rainbow.',
+    '线索几乎完整：午夜的空食盘旁，只差最后一次轻轻的脚步。':
+        'The clue is nearly complete: one more midnight visit may leave tracks beside the empty dish.',
+    '线索几乎完整：草丛里的星光正试着认出这座院子。':
+        'The clue is nearly complete: the starlight in the grass is beginning to recognize this garden.',
+    '线索已经很清晰了，也许下一次相遇就会有答案。':
+        'The clue is clear now. The next meeting may bring an answer.',
+    '寒夜里的火光不只是路过，它似乎在寻找一座愿意为来客留灯的院子。':
+        'The flame in the winter night seems to be looking for a garden with a lantern for visitors.',
+    '那道白色身影常在雨停后、彩虹刚出现时靠近。':
+        'The white shape often draws near just after the rain, when a rainbow first appears.',
+    '夜深以后，安静又空着的食盘会让害羞的脚步更靠近。':
+        'Late at night, a quiet, empty dish may draw shy footsteps closer.',
+    '晴朗夜里，温柔的灯和不被打扰的草丛会让星光停得更久。':
+        'On clear nights, a warm lantern and undisturbed grass invite the starlight to linger.',
+    '这一页已经盖上完成章。': 'This page now has its completion stamp.',
     '宠物图鉴': 'Pet Compendium',
-    '宠物图鉴暂时没有翻开': 'The pet compendium is taking a moment',
+    '宠物图鉴暂时没有翻开': 'The pet compendium is temporarily unavailable',
     '图鉴还是空白页': 'The compendium is still blank',
     '已养过': 'Met Before',
     '可领养': 'Available',
     '未遇见': 'Not Met',
-    '第一个伙伴会从这里开始。': 'Your first companion will appear here.',
     '来客图鉴': 'Visitor Compendium',
-    '来客图鉴暂时没有翻开': 'The visitor book is taking a moment',
+    '来客图鉴暂时没有翻开': 'The visitor book is temporarily unavailable',
     '来客册还是空白页': 'The visitor book is still blank',
     '等院子里有访客停留，这里会贴上第一张小贴纸。':
         'Your first visitor sticker will appear after someone stops by.',
@@ -843,17 +864,17 @@ abstract final class EnglishCopy {
     '相遇回忆': 'Shared Memory',
     '翻看相遇回忆': 'Read This Memory',
     '成长手账': 'Growth Journal',
-    '成长手账暂时没有翻开': 'The growth journal is taking a moment',
-    '成长记录暂时没有翻开': 'Growth notes are taking a moment',
+    '成长手账暂时没有翻开': 'The growth journal is temporarily unavailable',
+    '成长记录暂时没有翻开': 'Growth notes are temporarily unavailable',
     '还没有写下成长脚印': 'No growth notes yet',
     '每一天的相处，都会悄悄写进属于你们的手账。':
         'Every day together leaves a quiet note in your shared journal.',
     '成长进度': 'Growth',
-    '慢慢长大的时刻': 'Little Moments of Growing Up',
-    '幼年 A 档': 'Stage A · Little One',
-    '少年 B 档': 'Stage B · Growing Up',
-    '成年 C 档': 'Stage C · Grown',
-    '旅装 D 档': 'Stage D · Ready to Roam',
+    '慢慢长大的时刻': 'Milestones Along the Way',
+    '幼年 A 档': 'Stage A · Young',
+    '少年 B 档': 'Stage B · Growing',
+    '成年 C 档': 'Stage C · Adult',
+    '旅装 D 档': 'Stage D · Travel Ready',
     '已达到最高等级': 'Maximum level reached',
     '已经准备好背起行囊': 'Ready to pack for the journey',
     '翻开成长手账': 'Open Growth Journal',
@@ -887,19 +908,19 @@ abstract final class EnglishCopy {
     '领养新伙伴': 'Welcome a New Friend',
     '伙伴名字': "Friend's Name",
     '给它取个名字': 'Choose a Name',
-    '挑一只想要陪伴的小伙伴，给它取个名字吧': 'Choose a little friend to share the garden with.',
+    '挑一只想要陪伴的小伙伴，给它取个名字吧': 'Choose a friend to share the garden with.',
     '去迎接第一位伙伴': 'Welcome Your First Friend',
     '正在迎接…': 'Welcoming…',
     '开启下一段安静的陪伴': 'Begin a New Chapter Together',
     '院子在等新朋友': 'The garden is waiting for a new friend',
     '这里总会为一位小伙伴，留下一片柔软的草地。':
-        'There will always be a soft patch of grass for one little friend.',
-    '先摸摸头': 'Start with a gentle pat',
-    '再喂点东西': 'Offer a little treat',
-    '陪 TA 吃点东西、摸摸头，手账就会慢慢热闹起来。':
-        'Share a snack and a gentle pat. Your journal will soon fill with moments.',
+        'The garden keeps a welcoming patch of grass for each new friend.',
+    '先摸摸头': 'Start with a pat',
+    '再喂点东西': 'Offer a treat',
+    '陪它吃点东西、摸摸头，手账就会慢慢写下新的故事。':
+        'Share a snack and a pat. Your journal will soon have a new story.',
     '跳过': 'Skip',
-    '记住啦': 'Got It',
+    '知道了': 'Got It',
     '今日院子': "Today's Garden",
     '今天': 'Today',
     '昨天': 'Yesterday',
@@ -913,11 +934,11 @@ abstract final class EnglishCopy {
     '洗澡': 'Bathe',
     '摸摸宠物': 'Pet your friend',
     '在院子里好好休息': 'Rest in the garden',
-    '再陪它一会儿': 'Stay a Little Longer',
+    '再陪它一会儿': 'Stay a While',
     '陪它慢慢长大': 'Grow Together',
-    '准备启程 · 举行毕业典礼': 'Begin the Farewell Journey',
+    '准备启程 · 举行毕业典礼': 'Celebrate Graduation',
     '毕业不是告别。它会背起行囊，从旅途中继续给你写信。':
-        'Graduation is not goodbye. Your friend will pack a little bag and keep writing from the road.',
+        'Graduation is not goodbye. Your friend will pack for the journey and keep writing from the road.',
     '第一程，想让它往哪里走？': 'Where should the first journey lead?',
     '海滨': 'Coast',
     '森林': 'Forest',
@@ -926,22 +947,21 @@ abstract final class EnglishCopy {
     '树影深处': 'Beneath the forest shade',
     '热闹的街灯': 'Toward the glowing streets',
     '送它去旅行  🎒': 'Send Them Off',
-    '正在收拾行囊…': 'Packing a little bag…',
+    '正在收拾行囊…': 'Packing for the journey…',
     '回到小院': 'Back to the Garden',
     '回到院子': 'Back to the Garden',
-    '🎓 毕业啦': 'Graduated!',
+    '毕业了': 'Graduated',
     '欢迎回家': 'Welcome Home',
-    '欢迎回来，小院守护者': 'Welcome back, Garden Keeper',
     '院子醒来了': 'The garden is awake',
     '小院正在醒来': 'Waking the garden…',
-    '小院暂时没有醒来': 'The garden needs another moment',
-    '先歇一下再试，院子里的记录都还在。': 'Take a moment and try again. Your garden is safe.',
+    '小院暂时没有醒来': 'The garden could not open',
+    '先歇一下再试，院子里的记录都还在。': 'Please try again shortly. Your garden data is safe.',
     '手账': 'Journal',
     '打开手账': 'Open Journal',
     '关闭手账': 'Close Journal',
     '院子记住的事': 'Garden Memories',
     '等第一位朋友入住后，这里会贴上新的小标签。':
-        'Little notes will appear after your first friend moves in.',
+        'New notes will appear after your first friend moves in.',
     '今天的来客': "Today's Visitor",
     '访客': 'Visitor',
     '院子里来了新朋友': 'A New Friend Stopped By',
@@ -954,59 +974,58 @@ abstract final class EnglishCopy {
     '离线陪伴': 'While You Were Away',
     '日常事件': 'Daily Moment',
     '特别事件': 'Special Moment',
-    '本次收获': 'A Little Something',
+    '本次收获': 'Rewards',
     '记进手账': 'Save to Journal',
     '慢慢来，进度已经记在手账里。': 'No rush. Your progress is safely noted in the journal.',
     '达成成就': 'Achievement Unlocked',
     '支持页面暂时没有打开。\n请稍后再试。':
-        'The support page needs a moment.\nPlease try again soon.',
-    '一个不影响成长与收集的安静角落。':
-        'A quiet corner that never changes progression or collecting.',
-    '给小院留一点温暖': 'Leave a Little Warmth',
-    '留下一份自愿支持，也收下院子准备的小小回礼。':
-        'Choose an optional gift and receive a small thank-you from the garden.',
-    '一份小点心': 'A Little Treat',
-    '点心会在院子里留到明天，宠物也会收到一份开心。':
-        'A treat stays in the garden until tomorrow, with a little joy for your friend.',
-    '点心已经放好。它闻到了香味，也知道有人惦记这个小院。':
-        'The treat is ready. Your friend caught the scent and felt your kindness.',
-    '点亮一盏暖灯': 'Light a Warm Lantern',
-    '守护灯会亮到明天，让晚归的伙伴看清回家的路。':
-        'The lantern glows until tomorrow, guiding traveling friends home.',
-    '今晚的灯会亮得久一点。谢谢你让回家的路更暖。':
-        'The light will glow a little longer tonight. Thank you for warming the way home.',
-    '送来一篮花': 'Bring a Basket of Flowers',
-    '鲜花会在院子里盛开七天，替大家安静地说声谢谢。':
-        'Fresh flowers bloom for seven days, quietly saying thank you.',
-    '花已经放进院子。接下来七天，它会替我们向你说谢谢。':
-        'The flowers are in the garden. For seven days, they will carry our thanks.',
-    '成为小院守护者': 'Become a Garden Keeper',
-    '永久点亮守护灯，并收下一枚徽章和一张特别来信。':
-        'Keep the lantern glowing forever, with a badge and a special letter.',
-    '所有回礼都只是装饰和感谢，不会改变成长速度、阳光、冷却或稀有概率。':
-        'Every thank-you is cosmetic. Nothing changes growth, Sunfluff, cooldowns, or rarity.',
-    '购买由 App Store 安全处理。普通支持可以重复购买；小院守护者为一次性永久权益。':
-        'Purchases are securely handled by the App Store. Support gifts can be repeated; Garden Keeper is a one-time unlock.',
+        'Support is temporarily unavailable.\nPlease try again shortly.',
+    '自愿支持与装饰回礼。': 'Optional support and cosmetic thank-yous.',
+    '支持选项': 'Ways to Support',
+    '支持完全自愿，装饰回礼不会影响成长与收集。':
+        'Support is optional. Cosmetic thank-yous do not affect growth or collecting.',
+    '自愿支持 Petopia': 'Support Petopia',
+    '支持完全自愿。所有回礼都只是装饰，不会影响成长、收集或概率。':
+        'Support is optional. Every thank-you is cosmetic and does not affect progression, collecting, or odds.',
+    '一份小点心': 'A Treat',
+    '点心会在院子里保留 24 小时，伙伴也会来尝一口。':
+        'A treat will stay in the garden for 24 hours, and your friend will stop by for a bite.',
+    '点心已经放进院子，将保留 24 小时。感谢你的支持。':
+        'The treat is now in the garden and will remain for 24 hours. Thank you for supporting Petopia.',
+    '点亮一盏暖灯': 'A Warm Lantern',
+    '暖灯会在院子里亮 24 小时。': 'The lantern will glow in the garden for 24 hours.',
+    '暖灯已经点亮，将持续 24 小时。感谢你的支持。':
+        'The lantern is lit for the next 24 hours. Thank you for supporting Petopia.',
+    '送来一篮花': 'Garden Bouquet',
+    '花篮会在院子里展示七天。':
+        'The bouquet will be displayed in the garden for seven days.',
+    '花篮已经放进院子，会展示七天。感谢你的支持。':
+        'The bouquet is in the garden and will be displayed for seven days. Thank you for supporting Petopia.',
+    '小院守护者': 'Garden Keeper',
+    '永久点亮守护灯，并解锁纪念徽章和一张特别来信。':
+        'Keep the garden lantern lit permanently and unlock a keepsake badge and special letter.',
+    '所有回礼均为装饰性内容，不会改变成长、暖绒、冷却、稀有度或可玩内容。':
+        'All thank-yous are cosmetic. They do not affect growth, Sunfluff, cooldowns, rarity, or playable content.',
+    '购买由 App Store 处理。前三项是有固定展示时长的可重复装饰；小院守护者为一次性购买，可恢复。':
+        'Purchases are handled by the App Store. The first three are repeatable decorations with fixed display durations; Garden Keeper is a one-time, restorable purchase.',
     '暂不可用': 'Unavailable',
     '可重复': 'Repeatable',
-    '已经守护': 'Keeper Active',
-    '你已经是小院守护者': 'You are a Garden Keeper',
+    '小院守护者已解锁': 'Garden Keeper Unlocked',
+    '已解锁': 'Unlocked',
     '恢复“小院守护者”': 'Restore Garden Keeper',
     '正在恢复': 'Restoring…',
-    '小院收到了你的心意': 'The Garden Felt Your Kindness',
-    '收下感谢': 'Receive Thanks',
-    '收下这份感谢': 'Receive This Thanks',
-    '谢谢你愿意走到这里': 'Thank You for Being Here',
-    '谢谢你让院子里的灯一直亮着。我们会替你照顾花，也会记得每天等你回来。':
-        'Thank you for keeping the garden light glowing. We will tend the flowers and save a place for you each day.',
+    '感谢你支持 Petopia。守护灯、纪念徽章和特别来信已经解锁。':
+        'Thank you for supporting Petopia. The garden lantern, keepsake badge, and special letter are now unlocked.',
+    '感谢你的支持': 'Thank You for Your Support',
     '小院的灯': 'The Garden Light',
-    '小院的灯一直亮着': 'The garden light is always glowing',
+    '守护灯已点亮': 'Garden Lantern Unlocked',
     '小院守护者特别感谢明信片': 'A Special Garden Keeper Postcard',
-    '守护灯会亮到明天': 'The garden light will glow until tomorrow',
-    '守护灯已经永久点亮': 'The garden light will glow forever',
-    '点心正在院子里': 'A little treat is waiting in the garden',
+    '守护灯已永久解锁': 'Permanent Lantern Unlocked',
+    '暖灯正在院子里亮着': 'The lantern is glowing in the garden',
+    '点心正在院子里': 'A treat is in the garden',
     '鲜花正在院子里盛开': 'Fresh flowers are blooming in the garden',
-    '永久权益已经保存': 'Your permanent thank-you is saved',
+    '小院守护者已恢复': 'Garden Keeper Restored',
+    '完成': 'Done',
     '暂时无法写入记录，稍后会自动重试。':
         'The note could not be saved yet. We will try again automatically.',
     '小院记录已经安全补上。': 'The garden note is safely up to date.',
@@ -1046,12 +1065,12 @@ abstract final class EnglishCopy {
     '一只刚来到院子的奶油橘色小猫': 'A cream-orange kitten, newly arrived in the garden',
     '以后会在邮箱收到它从远方寄来的信': 'Letters from the road will arrive in your mailbox',
     '伙伴毕业后会背上行囊，慢慢走过不同地方。先翻开一张旅行样片看看。':
-        'After graduation, your friend packs a little bag and wanders from place to place. Here is a glimpse of the journey ahead.',
+        'After graduation, your friend packs for the road and wanders from place to place. Here is a glimpse of the journey ahead.',
     '再多陪几位朋友毕业，就能遇见它。': 'Help a few more friends graduate to meet this one.',
     '写给小院守护者': 'For a Garden Keeper',
     '准备旅行的奶油橘色小猫': 'A cream-orange kitten ready for the road',
-    '卸载 App 会删除本机游戏数据和限时回礼记录。建议卸载或换机前导出存档；重新安装后，可从支持页恢复一次性永久的“小院守护者”。':
-        'Deleting the app removes local game data and time-limited thank-yous. Export a save before changing devices. The permanent Garden Keeper unlock can be restored from the support page.',
+    '卸载 App 会删除本机游戏数据和固定时长回礼记录。建议卸载或换机前导出存档；重新安装后，可从支持页恢复一次性永久的“小院守护者”。':
+        'Deleting the app removes local game data and fixed-duration thank-yous. Export a save before changing devices. The permanent Garden Keeper unlock can be restored from the support page.',
     '只有在你主动开启后，App 才会请求本地通知权限。提醒仅用于明信片、老朋友回访和纪念日；可随时在设置中分类关闭，也不会使用广告追踪。':
         'Petopia asks for notification access only after you turn it on. Alerts are limited to postcards, returning friends, and anniversaries. Each category can be disabled anytime, and no ad tracking is used.',
     '存档备份': 'Save Backups',
@@ -1060,17 +1079,17 @@ abstract final class EnglishCopy {
     '它会一路旅行，常寄明信片回来。\n院子空出来了，去迎接下一位小伙伴吧。':
         'Your friend will keep traveling and writing home.\nThe garden is ready to welcome someone new.',
     '它会在小窝附近待到明天。和它打个招呼，就能留下这次相遇。':
-        'This visitor will stay near the little shelter until tomorrow. Say hello to remember the meeting.',
+        'This visitor will stay near the shelter until tomorrow. Say hello to remember the meeting.',
     '它已经在路上了\n第一封信会在合适的时候寄回来':
         'The journey has begun.\nThe first letter will arrive when the time is right.',
     '它的性格': 'Personality',
-    '守护者徽章已经收好，特别来信也会一直留在这里。':
-        'Your Keeper badge is safe, and the special postcard will always stay here.',
+    '守护灯和纪念徽章已解锁，特别来信会保存在这里。':
+        'The garden lantern and keepsake badge are unlocked, and the special postcard is saved here.',
     '导出存档时，文件由你选择保存或分享的位置。导入会先校验文件完整性和数据流水，校验失败不会覆盖当前院子。':
         'You choose where exported saves are stored or shared. Imports verify file integrity and game history before replacing anything.',
     '小橘': 'Tangerine',
     '小院已安全恢复': 'Garden Restored',
-    '小院记住的心意': 'Kindness the Garden Remembers',
+    '支持与回礼': 'Support and Thank-Yous',
     '已经长大的奶油橘色小猫': 'A grown cream-orange cat',
     '当前版本不包含广告、第三方分析、跨 App 追踪、社交登录或联网内容服务。只有在你主动支持小院时，购买和恢复购买会由 Apple App Store 处理；Petopia 不会接触支付卡或 Apple ID。':
         'Petopia contains no ads, third-party analytics, cross-app tracking, social login, or online content service. If you choose to support the garden, Apple handles purchases and restores; Petopia never receives card details or your Apple ID.',
@@ -1082,7 +1101,7 @@ abstract final class EnglishCopy {
     '海边': 'Seaside',
     '海风': 'Sea Breeze',
     '海风把草坡吹得软软的。我在灯塔下面坐了很久，替你看了一场很亮的日落。等真正出发以后，也会把沿途的小事一封封寄回来。':
-        'The sea breeze softened the grassy hill. I sat beneath the lighthouse and watched a bright sunset for you. Once the real journey begins, I will send every little moment home.',
+        'The sea breeze softened the grassy hill. I sat beneath the lighthouse and watched a bright sunset for you. Once the real journey begins, I will send moments from the road home.',
     '清空': 'Clear',
     '清除筛选': 'Clear Filters',
     '灯塔湾': 'Lighthouse Bay',
@@ -1093,15 +1112,13 @@ abstract final class EnglishCopy {
     '还没有可摆放的小物。去商店买到装饰后，就能指定到院子的固定位置。':
         'No decor is ready to place yet. Find something in the shop, then choose its garden spot.',
     '这是一份 Petopia 院子存档备份。': 'This is a Petopia garden save backup.',
-    '这里没有付费加速，也没有限定宠物。每一份支持，只会给院子留下一点温柔的回礼。':
-        'There are no paid boosts or exclusive pets here. Every gift simply leaves a gentle thank-you in the garden.',
     '远处还跟着一位害羞的旅行伙伴。': 'A shy traveling friend is following in the distance.',
     '远方也会寄回回忆': 'Memories Still Arrive from Afar',
     '选择一个槽位，再点已拥有的小物；同一个小物只会出现在一个位置。':
         'Choose a spot, then select owned decor. Each item can appear in only one place.',
     '道具加成': 'Item Bonus',
     '院子布置': 'Garden Layout',
-    '院子布置暂时没有打开': 'The garden layout needs a moment',
+    '院子布置暂时没有打开': 'Garden layout is temporarily unavailable',
     '院子来客贴纸册': 'Garden Visitor Sticker Book',
     '预览旅行明信片': 'Preview a Travel Postcard',
     '四季花园 5 折券': 'Four Seasons Garden · 50% Off',

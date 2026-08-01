@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:petopia/app/distribution_environment.dart';
 import 'package:petopia/app/game_controller.dart';
 import 'package:petopia/app/game_services.dart';
 import 'package:petopia/audio/audio_service.dart';
@@ -216,6 +217,7 @@ Future<void> _pumpYard(
   required GameView view,
   double textScale = 1,
   AudioService? audio,
+  bool testFlight = false,
 }) async {
   await tester.binding.setSurfaceSize(size);
   tester.platformDispatcher.textScaleFactorTestValue = textScale;
@@ -225,6 +227,7 @@ Future<void> _pumpYard(
       overrides: [
         audioServiceProvider.overrideWithValue(audio ?? _SilentAudio()),
         gameControllerProvider.overrideWith(() => _FixtureGameController(view)),
+        isTestFlightProvider.overrideWith((_) async => testFlight),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -300,9 +303,35 @@ void main() {
     expect(find.textContaining('今日来客'), findsNothing);
     expect(find.textContaining('性格'), findsNothing);
     expect(find.textContaining('档）'), findsNothing);
+    expect(
+      find.byKey(const ValueKey<String>('testflight_advance_day')),
+      findsNothing,
+    );
     expect(tester.takeException(), isNull);
     await _disposeYard(tester);
   });
+
+  testWidgets(
+    'TestFlight tools build shows the compact day control without overflow',
+    (tester) async {
+      for (final size in const <Size>[Size(393, 852), Size(834, 1194)]) {
+        await _pumpYard(
+          tester,
+          size: size,
+          safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+          view: _view(),
+          testFlight: true,
+        );
+        expect(
+          find.byKey(const ValueKey<String>('testflight_advance_day')),
+          findsOneWidget,
+        );
+        expect(tester.takeException(), isNull);
+      }
+      await _disposeYard(tester);
+    },
+    skip: !testFlightToolsCompiled,
+  );
 
   testWidgets('returning from a secondary route restores yard soundscape', (
     tester,

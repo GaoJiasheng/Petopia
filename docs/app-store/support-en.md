@@ -16,10 +16,10 @@ Open Settings > Gentle Reminders and confirm the relevant category is enabled.
 Then check that notifications are allowed for Petopia in iOS Settings. Travel,
 visitors, and progress continue normally when notifications are disabled.
 
-### Restore Yard Guardian
+### Restore Garden Keeper
 
-Open Settings > Garden Light > Support the Garden, then choose Restore "Yard
-Guardian". Only the permanent Yard Guardian product is restorable. The three
+Open Settings > Garden Light > Support the Garden, then choose Restore "Garden
+Keeper". Only the permanent Garden Keeper product is restorable. The three
 ordinary support products are consumables.
 
 ### The app has no network connection

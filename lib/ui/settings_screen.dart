@@ -225,14 +225,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     iconName: 'gift',
                     fallbackIcon: Icons.favorite_outline_rounded,
                     title: '小院的灯',
-                    subtitle: '一个不影响成长与收集的安静角落。',
+                    subtitle: '自愿支持与装饰回礼。',
                   ),
                   const SizedBox(height: 10),
                   _CommandCard(
                     icon: Icons.favorite_outline_rounded,
                     iconName: 'gift',
                     title: '支持小院',
-                    subtitle: '留下一份自愿支持，也收下院子准备的小小回礼。',
+                    subtitle: '支持完全自愿，装饰回礼不会影响成长与收集。',
                     onTap: () => Navigator.of(context).push(
                       MaterialPageRoute<void>(
                         builder: (_) => SupportYardScreen(pet: view.pet),

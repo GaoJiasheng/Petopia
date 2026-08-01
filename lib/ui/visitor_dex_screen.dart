@@ -92,17 +92,19 @@ class _VisitorDexGrid extends StatelessWidget {
         child: LayoutBuilder(
           builder: (context, constraints) {
             final width = constraints.maxWidth;
-            final largeText = MediaQuery.textScalerOf(context).scale(14) >= 28;
+            final scaledBodySize = MediaQuery.textScalerOf(context).scale(14);
+            final largeText = scaledBodySize >= 28;
+            final enlargedText = scaledBodySize >= 16.5;
             final columns = largeText
                 ? (width >= 900 ? 2 : 1)
                 : (width >= 900 ? 4 : (width >= 600 ? 3 : 2));
             final english = context.l10n.isEnglish;
             final ratio = width >= 900
-                ? (english ? 0.80 : 0.88)
+                ? (english ? (enlargedText ? 0.68 : 0.80) : 0.88)
                 : width >= 600
-                ? (english ? 0.68 : 0.74)
+                ? (english ? (enlargedText ? 0.64 : 0.68) : 0.74)
                 : english
-                ? 0.52
+                ? (enlargedText ? 0.48 : 0.52)
                 : 0.62;
             final margin = PetopiaAdaptive.sideMargin(context);
             return CustomScrollView(
@@ -335,11 +337,12 @@ class _VisitorCard extends StatelessWidget {
                 const Spacer(),
                 AppText(
                   entry.collected ? entry.name : '？',
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: entry.collected ? VisitorDexScreen._ink : color,
                     fontSize: 17,
+                    height: 1.15,
                     fontWeight: FontWeight.w900,
                   ),
                 ),

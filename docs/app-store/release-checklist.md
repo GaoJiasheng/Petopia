@@ -68,7 +68,14 @@
 
 ## 发布控制
 
-- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `20`）
+- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `22`）
+- [x] 内测日推进工具已改为双重编译门禁：Dart 仅在
+      `PETOPIA_TESTFLIGHT_TOOLS=true` 时保留入口，Swift 仅在
+      `PETOPIA_TESTFLIGHT_TOOLS` 条件下注册 StoreKit 环境通道。普通 Release
+      不生成按钮、不调用通道，也不能从控制器推进时间。
+- [ ] 使用 `tools/build_ios_variants.sh testflight-tools 21` 构建仅供内部
+      TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 22`
+      构建无内测入口的送审包。不得将 build 21 选为 App Store 审核版本。
 - [x] 完整双语 build 20 已归档、通过 Apple 后处理验证并上传 TestFlight
 - [x] 2026-07-25 创建 `1.0.0 (16)` Release archive，Validate 后上传
       TestFlight；Delivery UUID `407ad891-403b-44a8-ab2b-6e7ec2bf9bbc`，
@@ -87,4 +94,6 @@
 - [ ] 从 TestFlight build 18 或 19 覆盖安装 build 20，验证 schema 2 → 3 升级
 - [ ] 完成至少一次 iPhone 与 iPad 外部/内部测试
 - [ ] 检查 TestFlight 崩溃、卡死、资源缺失和通知权限行为
+- [ ] 在 TestFlight build 21 确认首页右上角出现 `+1` 日推进按钮；在正式
+      build 22 确认按钮不存在且控制器执行能力被编译门禁关闭
 - [ ] 选择手动发布或 7 天分阶段发布

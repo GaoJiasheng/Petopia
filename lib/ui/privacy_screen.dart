@@ -55,7 +55,7 @@ class PrivacyScreen extends StatelessWidget {
                 const _PolicySection(
                   title: '删除数据',
                   body:
-                      '卸载 App 会删除本机游戏数据和限时回礼记录。建议卸载或换机前导出存档；重新安装后，可从支持页恢复一次性永久的“小院守护者”。',
+                      '卸载 App 会删除本机游戏数据和固定时长回礼记录。建议卸载或换机前导出存档；重新安装后，可从支持页恢复一次性永久的“小院守护者”。',
                 ),
                 const Padding(
                   padding: EdgeInsets.only(top: 10),

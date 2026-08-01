@@ -19,7 +19,7 @@
    "id": "tpl_gl_hb_02",
    "personalityId": "p_glutton",
    "category": "海滨",
-   "skeleton": "今天在{location}退潮的滩涂上刨了一下午。{incident}。捡到的东西能不能吃我还在研究，研究方式是舔一舔。——{petName}",
+   "skeleton": "今天在{location}退潮的滩涂上找了一下午。{incident}。捡到的东西能不能吃，我还在研究；先闻闻，再问问当地人。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -88,7 +88,7 @@
    "id": "tpl_gl_cs_01",
    "personalityId": "p_glutton",
    "category": "城市",
-   "skeleton": "{ownerName}！{location}半条街都是香味，我用鼻子逛完了全程。{encounter}，{incident}。这里的月亮是好吃的形状（大概）。——{petName}",
+   "skeleton": "{ownerName}！{location}半条街都是香味，我循着香气逛完了全程。{encounter}，{incident}。这里的月亮看起来也很好吃。——{petName}",
    "slots": [
     "encounter",
     "incident",
@@ -96,20 +96,20 @@
     "ownerName",
     "petName"
    ],
-   "tone": "鼻子逛街；「月亮是X形状」收尾梗（承接示例 1）。"
+   "tone": "循香逛街；月亮也被看成食物（承接示例 1）。"
   },
   {
    "id": "tpl_gl_cs_02",
    "personalityId": "p_glutton",
    "category": "城市",
-   "skeleton": "{location}的{timeOfDay}排队最长的那家店，现在也认识我了。{encounter}。我没有蹭吃，我是在做美食巡查（尾巴除外，它很诚实）。——{petName}",
+   "skeleton": "{location}的{timeOfDay}排队最长的那家店，现在也认识我了。{encounter}。我没有蹭吃，我是在做美食巡查；只是排队的样子有点诚实。——{petName}",
    "slots": [
     "encounter",
     "location",
     "petName",
     "timeOfDay"
    ],
-   "tone": "一本正经的职务化借口 + 身体部位拆台。"
+   "tone": "一本正经的职务化借口 + 行为拆台。"
   },
   {
    "id": "tpl_gl_cs_03",
@@ -166,7 +166,7 @@
    "id": "tpl_gl_sl_01",
    "personalityId": "p_glutton",
    "category": "森林",
-   "skeleton": "重大发现：{location}的{encounter}！{incident}。附：本次收获已全部安置于肚子/腮帮/背包（按重要度排序）。——{petName}",
+   "skeleton": "重大发现：{location}的{encounter}！{incident}。附：本次收获已按重要程度装进背包，最好吃的那份另有安排。——{petName}",
    "slots": [
     "encounter",
     "incident",
@@ -229,7 +229,7 @@
    "id": "tpl_gl_sm_03",
    "personalityId": "p_glutton",
    "category": "沙漠异域",
-   "skeleton": "在{location}学会一件事：讨吃的要先坐正、耳朵放平。{encounter}。这里的人管这叫礼仪，我管这叫战术。——{petName}",
+   "skeleton": "在{location}学会一件事：想尝一口，要先坐好，再把眼神放认真。{encounter}。这里的人管这叫礼仪，我管这叫战术。——{petName}",
    "slots": [
     "encounter",
     "location",
@@ -241,7 +241,7 @@
    "id": "tpl_gl_jd_01",
    "personalityId": "p_glutton",
    "category": "极地水域",
-   "skeleton": "{location}冷是冷，但冷的地方饭都是热的！{encounter}，{incident}。我抱着碗取暖，顺便把碗舔穿了（没有，但差一点）。——{petName}",
+   "skeleton": "{location}冷是冷，但冷的地方饭都是热的！{encounter}，{incident}。我守着热碗取暖，差点连最后一滴汤也没放过。——{petName}",
    "slots": [
     "encounter",
     "incident",
@@ -281,7 +281,7 @@
    "id": "tpl_gl_qh_01",
    "personalityId": "p_glutton",
    "category": "奇幻",
-   "skeleton": "{ownerName}，{location}的云是甜的！！不是比喻！{encounter}，{incident}。我打包了一朵，如果收到的信纸黏黏的，别问。——{petName}",
+   "skeleton": "{ownerName}，{location}的云居然是甜的！不是比喻。{encounter}，{incident}。我打包了一朵，如果收到的信纸有点黏，别问。——{petName}",
    "slots": [
     "encounter",
     "incident",
@@ -309,7 +309,7 @@
    "id": "tpl_gl_qh_03",
    "personalityId": "p_glutton",
    "category": "奇幻",
-   "skeleton": "{location}的{encounter}。我问它什么味道，它说梦的味道。我尝了，是{season}早晨你厨房的味道。想你（和你的厨房）。——{petName}",
+   "skeleton": "{location}的{encounter}。我问它什么味道，它说是梦的味道。我尝了，像{season}早晨你厨房里的香气。想你，也想那间厨房。——{petName}",
    "slots": [
     "encounter",
     "location",
@@ -459,13 +459,13 @@
    "id": "tpl_lz_xy_02",
    "personalityId": "p_lazy",
    "category": "乡野",
-   "skeleton": "{encounter}。对方很热情，我用尾巴回应了两下，这已经是我今天全部的运动量。{season}的午后好长，长得可以睡两觉。——{petName}",
+   "skeleton": "{encounter}。对方很热情，我认真点头回应了两下，这已经是我今天全部的运动量。{season}的午后好长，长得可以睡两觉。——{petName}",
    "slots": [
     "encounter",
     "petName",
     "season"
    ],
-   "tone": "尾巴两下=社交极限。"
+   "tone": "点头两下=社交极限。"
   },
   {
    "id": "tpl_lz_xy_03",
@@ -521,7 +521,7 @@
    "id": "tpl_lz_sm_01",
    "personalityId": "p_lazy",
    "category": "沙漠异域",
-   "skeleton": "走了很久。也可能没有很久，我的很久和别人的不太一样。{location}的{timeOfDay}，{incident}。趴着不动的时候，好事会自己落下来。——{petName}",
+   "skeleton": "走了很久。也可能没有很久，我的很久和别人的不太一样。{location}的{timeOfDay}，{incident}。停下来不动的时候，好事会自己落下来。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -638,7 +638,7 @@
    "id": "tpl_cu_hb_01",
    "personalityId": "p_curious",
    "category": "海滨",
-   "skeleton": "你知道吗？{location}的灯塔楼梯有一百零八级！我数的！上去又下来核对了一遍！{incident}。下一个问题：浪为什么不累？——{petName}",
+   "skeleton": "你知道吗？{location}的灯塔楼梯有一百零八级！我数完以后，又走了一遍核对。{incident}。下一个问题：浪为什么不累？——{petName}",
    "slots": [
     "incident",
     "location",
@@ -665,7 +665,7 @@
    "id": "tpl_cu_hb_03",
    "personalityId": "p_curious",
    "category": "海滨",
-   "skeleton": "退潮以后地上全是小洞洞，每个洞里住着谁？我挨个看了 {location} 的一整片滩！{weather}的时候它们会换房子吗？？——{petName}",
+   "skeleton": "退潮以后地上全是小洞，每个洞里住着谁？我挨个看了 {location} 的一整片滩！{weather}的时候它们会换房子吗？——{petName}",
    "slots": [
     "location",
     "petName",
@@ -680,7 +680,7 @@
    "id": "tpl_cu_sd_01",
    "personalityId": "p_curious",
    "category": "山地",
-   "skeleton": "{location}的回声会学我说话！我喊了二十遍验证：它永远比我少半个字！为什么？！{incident}。——{petName}",
+   "skeleton": "{location}的回声会学我说话！我喊了二十遍验证，它总比我少半个字。为什么？{incident}。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -695,7 +695,7 @@
    "id": "tpl_cu_sd_02",
    "personalityId": "p_curious",
    "category": "山地",
-   "skeleton": "{encounter}。我跟着它抄了一条只有本地动物知道的小路，发现了{incident}！地图上没有！我要给它起名字！——{petName}",
+   "skeleton": "{encounter}。我跟着它走了一条只有本地动物知道的小路，发现了{incident}！地图上没有，所以我准备替它起个名字。——{petName}",
    "slots": [
     "encounter",
     "incident",
@@ -707,7 +707,7 @@
    "id": "tpl_cu_sd_03",
    "personalityId": "p_curious",
    "category": "山地",
-   "skeleton": "山上的云摸起来是什么手感？答案：{timeOfDay}的云偏凉，有点像你冰箱的门。别问我怎么知道的，问就是爪子伸进雾里了。——{petName}",
+   "skeleton": "山上的云摸起来是什么手感？答案：{timeOfDay}的云偏凉，有点像你冰箱的门。别问我怎么知道的，我已经站进雾里试过了。——{petName}",
    "slots": [
     "petName",
     "timeOfDay"
@@ -750,7 +750,7 @@
    "id": "tpl_cu_cs_03",
    "personalityId": "p_curious",
    "category": "城市",
-   "skeleton": "{encounter}！原来{location}的旧书里会夹着别人忘掉的东西：车票、花瓣、还有一根不知道谁的胡须（不是我的，我对过了）。——{petName}",
+   "skeleton": "{encounter}！原来{location}的旧书里会夹着别人忘掉的东西：车票、花瓣，还有一根不知道谁留下的细线。我仔细比对过，不是我的。——{petName}",
    "slots": [
     "encounter",
     "location",
@@ -781,7 +781,7 @@
    "id": "tpl_cu_xy_02",
    "personalityId": "p_curious",
    "category": "乡野",
-   "skeleton": "{encounter}。我学会了分辨三种麦子的味道、两种风的方向，还有一种「要下雨了」的气味！{weather}果然被我说中了！——{petName}",
+   "skeleton": "{encounter}。我学会了分辨三种麦子的味道、两种风的方向，还有一种快下雨的气味！{weather}果然被我说中了。——{petName}",
    "slots": [
     "encounter",
     "petName",
@@ -810,7 +810,7 @@
    "id": "tpl_cu_sl_01",
    "personalityId": "p_curious",
    "category": "森林",
-   "skeleton": "{location}的蘑菇圈到底是谁画的圆？！我量过了，误差不超过一个爪印！{encounter}，它也不知道！{incident}。——{petName}",
+   "skeleton": "{location}的蘑菇圈到底是谁画的圆？我量过了，误差还不到一片落叶那么宽！{encounter}，它也不知道。{incident}。——{petName}",
    "slots": [
     "encounter",
     "incident",
@@ -826,11 +826,11 @@
    "id": "tpl_cu_sl_02",
    "personalityId": "p_curious",
    "category": "森林",
-   "skeleton": "你知道吗？橡树邮筒里的信是松鼠送的，走树枝比走地面快三倍！我押着一封信全程跟踪验证过了！——{petName}",
+   "skeleton": "你知道吗？橡树邮筒里的信是松鼠送的，走树枝比走地面快三倍！我跟着一封信走完全程，已经验证过了。——{petName}",
    "slots": [
     "petName"
    ],
-   "tone": "跟踪送快递的执行力。",
+   "tone": "跟随送信路线验证的执行力。",
    "locationIds": [
     "loc_oak_postbox"
    ]
@@ -839,13 +839,13 @@
    "id": "tpl_cu_sl_03",
    "personalityId": "p_curious",
    "category": "森林",
-   "skeleton": "{timeOfDay}的雾里，吊桥对面若隐若现。过去要 128 步（我数的），回来只要 126 步？？{incident}。森林在跟我玩什么？——{petName}",
+   "skeleton": "{timeOfDay}的雾里，吊桥对面若隐若现。过去要 128 步（我数的），回来只要 126 步？{incident}。森林在跟我玩什么？——{petName}",
    "slots": [
     "incident",
     "petName",
     "timeOfDay"
    ],
-   "tone": "步数不对称的细思恐萌。",
+   "tone": "步数不对称的微妙悬念。",
    "locationIds": [
     "loc_fog_bridge"
    ]
@@ -866,7 +866,7 @@
    "id": "tpl_cu_sm_02",
    "personalityId": "p_curious",
    "category": "沙漠异域",
-   "skeleton": "盐湖的星星是天上的还是水里的？我把爪子伸进去搅了搅——星星碎了又拼回来！{incident}！！——{petName}",
+   "skeleton": "盐湖的星星是天上的还是水里的？我轻轻碰了碰水面，星星碎开，又慢慢拼了回来。{incident}。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -894,7 +894,7 @@
    "id": "tpl_cu_jd_01",
    "personalityId": "p_curious",
    "category": "极地水域",
-   "skeleton": "极光会响吗？我竖着耳朵在{location}的雪地里站了一个{timeOfDay}！{incident}。答案先保密，附在下一张明信片里（其实是我还没听清）。——{petName}",
+   "skeleton": "极光会响吗？我在{location}的雪地里认真听了一个{timeOfDay}！{incident}。答案先保密，留到下一张明信片里；其实是我还没听清。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -921,12 +921,12 @@
    "id": "tpl_cu_jd_03",
    "personalityId": "p_curious",
    "category": "极地水域",
-   "skeleton": "蓝洞的水为什么这么蓝？我盯着看了很久，差点掉进去（没有掉！半只爪子不算）。{incident}。——{petName}",
+   "skeleton": "蓝洞的水为什么这么蓝？我盯着看了很久，差点靠得太近；放心，离边缘还差一点。{incident}。——{petName}",
    "slots": [
     "incident",
     "petName"
    ],
-   "tone": "括号里的险情缩小化。",
+   "tone": "险情缩小化 + 主动报平安。",
    "locationIds": [
     "loc_blue_spring"
    ]
@@ -935,7 +935,7 @@
    "id": "tpl_cu_qh_01",
    "personalityId": "p_curious",
    "category": "奇幻",
-   "skeleton": "{location}的邮局盖章是月光做的墨！我问邮差墨水用完了怎么办，他说等下一次满月。那阴天呢？？他不理我了。{incident}。——{petName}",
+   "skeleton": "{location}的邮局盖章是月光做的墨！我问邮差墨水用完了怎么办，他说等下一次满月。那阴天呢？他不理我了。{incident}。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -950,7 +950,7 @@
    "id": "tpl_cu_qh_02",
    "personalityId": "p_curious",
    "category": "奇幻",
-   "skeleton": "会走路的岛今天往南走了三步！我在它背上量了步长！{encounter}，它说岛在找一个老朋友。是谁？去哪儿找？我决定跟到底！——{petName}",
+   "skeleton": "会走路的岛今天往南走了三步！我在岛上量了步长。{encounter}，它说岛在找一个老朋友。是谁？去哪儿找？我准备继续查下去。——{petName}",
    "slots": [
     "encounter",
     "petName"
@@ -964,7 +964,7 @@
    "id": "tpl_cu_qh_03",
    "personalityId": "p_curious",
    "category": "奇幻",
-   "skeleton": "云端牧场的羊毛就是云！剪下来会下小雨！我蹲在剪毛现场淋了三场！{incident}。问题：雨是羊的还是天的？——{petName}",
+   "skeleton": "云端牧场的羊毛就是云，剪下来还会落一阵小雨！我在现场看了三场。{incident}。新问题：这场雨算羊的，还是天的？——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -978,7 +978,7 @@
    "id": "tpl_ti_hb_01",
    "personalityId": "p_timid",
    "category": "海滨",
-   "skeleton": "{location}的浪好大声，我第一天躲在浮木后面看。第三天……我把爪子伸进海里了！只有一秒！但是伸了！{incident}。——{petName}",
+   "skeleton": "{location}的浪好大声，我第一天躲在浮木后面看。第三天……我终于往海水里探近了一点！只有一秒，但我做到了。{incident}。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -1017,14 +1017,14 @@
    "id": "tpl_ti_sd_01",
    "personalityId": "p_timid",
    "category": "山地",
-   "skeleton": "{location}的峡谷风会突然变大！我在转弯处坐了半个{timeOfDay}做心理建设。{encounter}，它带我贴着岩壁慢慢走过去。路上的风景我一点没敢看，回头补。——{petName}",
+   "skeleton": "{location}的吊桥会晃！我在桥头坐了半个{timeOfDay}做心理建设。{encounter}，它陪我一起走了过去。桥那边的风景我还没顾上看，下次补。——{petName}",
    "slots": [
     "encounter",
     "location",
     "petName",
     "timeOfDay"
    ],
-   "tone": "被搭救式穿过峡谷；诚实的没看风景。",
+   "tone": "被陪伴式过桥；诚实的没看风景。",
    "locationIds": [
     "loc_echo_canyon"
    ]
@@ -1089,7 +1089,7 @@
    "id": "tpl_ti_cs_03",
    "personalityId": "p_timid",
    "category": "城市",
-   "skeleton": "深夜的{location}其实很温柔，没什么人，{incident}。原来我不是怕城市，是怕人多。这个发现让我很开心，写信的爪子都不抖了。——{petName}",
+   "skeleton": "深夜的{location}其实很温柔，没什么人，{incident}。原来我不是怕城市，是怕人多。这个发现让我很开心，现在写信已经不再发抖了。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -1209,7 +1209,7 @@
    "id": "tpl_ti_sm_03",
    "personalityId": "p_timid",
    "category": "沙漠异域",
-   "skeleton": "风蚀石林的石头长得像巨兽，{timeOfDay}的影子好长。我抱着行李在两块『兽爪』中间睡了一夜——早上才发现，是它们替我挡了一夜风。——{petName}",
+   "skeleton": "风蚀石林的石头像巨兽，{timeOfDay}的影子好长。我靠着行李，在两块『兽爪』中间睡了一夜。早上才发现，是它们替我挡了一夜风。——{petName}",
    "slots": [
     "petName",
     "timeOfDay"
@@ -1264,7 +1264,7 @@
    "id": "tpl_ti_qh_01",
    "personalityId": "p_timid",
    "category": "奇幻",
-   "skeleton": "{location}会自己走路！地面一动我就趴下抱紧草。后来岛上的居民告诉我：抱着也行，岛喜欢被抱着。{incident}。——{petName}",
+   "skeleton": "{location}会自己走路！地面一动，我就伏低身子，抓紧旁边的草。岛上的居民告诉我：这样也很好，岛知道有人在认真和它同行。{incident}。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -1308,7 +1308,7 @@
    "id": "tpl_en_hb_01",
    "personalityId": "p_energetic",
    "category": "海滨",
-   "skeleton": "{location}的沙滩我来回跑了八趟！！浪追我！我追浪！平局！！{incident}！！这封信的字歪是因为我是颠着写的！！——{petName}",
+   "skeleton": "{location}的沙滩我来回跑了八趟！浪追我，我追浪，最后平局。{incident}。这封信的字有点歪，因为我是一边跑一边写的。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -1320,19 +1320,19 @@
    "id": "tpl_en_hb_02",
    "personalityId": "p_energetic",
    "category": "海滨",
-   "skeleton": "{encounter}！！比赛结果：它游泳第一，我刨沙第一，我们都是第一！！{ownerName}你要是在，可以当我们的奖杯！！——{petName}",
+   "skeleton": "{encounter}。比赛结果：它游泳第一，我刨沙第一，我们都是第一！{ownerName}，下次你来当颁奖嘉宾。——{petName}",
    "slots": [
     "encounter",
     "ownerName",
     "petName"
    ],
-   "tone": "双冠军的孩子气 + 把主人封为奖杯。"
+   "tone": "双冠军的孩子气 + 邀请主人颁奖。"
   },
   {
    "id": "tpl_en_hb_03",
    "personalityId": "p_energetic",
    "category": "海滨",
-   "skeleton": "今天绕灯塔跑圈，跑到管理员探出头！他以为出事了！没有！我就是开心！！{incident}！——{petName}",
+   "skeleton": "今天绕灯塔跑圈，管理员都探头问是不是出了什么事。没有，我只是很开心！{incident}。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -1346,19 +1346,19 @@
    "id": "tpl_en_sd_01",
    "personalityId": "p_energetic",
    "category": "山地",
-   "skeleton": "我！跑！上！{location}！啦！！！{incident}！！风在给我鼓掌（我认定是鼓掌）！下山我打算再跑一遍，倒着！——{petName}",
+   "skeleton": "我跑上{location}了！{incident}。风一直在响，我就当它在鼓掌。下山还想再跑一遍，换条路。——{petName}",
    "slots": [
     "incident",
     "location",
     "petName"
    ],
-   "tone": "字字断开的登顶咆哮（承接示例 2）。"
+   "tone": "登顶后的兴奋 + 风声像掌声。"
   },
   {
    "id": "tpl_en_sd_02",
    "personalityId": "p_energetic",
    "category": "山地",
-   "skeleton": "{encounter}！！我们比赛爬坡，它四条腿我四条腿，公平！！结果：{incident}！明天加赛！！——{petName}",
+   "skeleton": "{encounter}。我们比赛爬坡，谁也不肯慢下来。结果：{incident}。没分出胜负，明天加赛！——{petName}",
    "slots": [
     "encounter",
     "incident",
@@ -1370,7 +1370,7 @@
    "id": "tpl_en_sd_03",
    "personalityId": "p_energetic",
    "category": "山地",
-   "skeleton": "山里的{timeOfDay}空气一吸就想跑！我沿着枫火岭一路跑上山脊又跑回来，满地枫叶都被我带着一起冲线！！{ownerName}，我今天跑过了整个{season}！！——{petName}",
+   "skeleton": "山里的{timeOfDay}空气一吸就想跑！我从枫树跑到雪线又跑回来，一路的季节全见了一遍。{ownerName}，我今天像是跑过了整个{season}。——{petName}",
    "slots": [
     "ownerName",
     "petName",
@@ -1386,7 +1386,7 @@
    "id": "tpl_en_cs_01",
    "personalityId": "p_energetic",
    "category": "城市",
-   "skeleton": "{location}的台阶！桥！天桥！我全跑遍了！！{encounter}，他说我比早高峰还准时！！{incident}！——{petName}",
+   "skeleton": "{location}的台阶、桥和天桥，我全跑遍了！{encounter}，他说我比早高峰还准时。{incident}。——{petName}",
    "slots": [
     "encounter",
     "incident",
@@ -1402,7 +1402,7 @@
    "id": "tpl_en_cs_02",
    "personalityId": "p_energetic",
    "category": "城市",
-   "skeleton": "和电车赛跑！！从这站到下站！它赢了但只赢了一个车头！！司机看到我冲线还按了两声铃！那是我的欢呼！！——{petName}",
+   "skeleton": "我和电车从这站赛跑到下站。它赢了，但只领先一个车头！司机看到我冲线，还按了两声铃；我决定把那当作欢呼。——{petName}",
    "slots": [
     "petName"
    ],
@@ -1415,12 +1415,12 @@
    "id": "tpl_en_cs_03",
    "personalityId": "p_energetic",
    "category": "城市",
-   "skeleton": "屋顶水塔上视野超好！！我是跳上来的！三级跳！！{incident}！下去的路线已经勘察完毕：还是三级跳！！——{petName}",
+   "skeleton": "屋顶水塔上的视野太好了！我是一路跳上来的。{incident}。下去的路线也勘察完毕：换另一边。——{petName}",
    "slots": [
     "incident",
     "petName"
    ],
-   "tone": "上得去就下得来的迷之自信。",
+   "tone": "上得去也找得到回程的自信。",
    "locationIds": [
     "loc_rooftop_city"
    ]
@@ -1429,7 +1429,7 @@
    "id": "tpl_en_xy_01",
    "personalityId": "p_energetic",
    "category": "乡野",
-   "skeleton": "{location}的田埂是天然跑道！！我领跑，风第二，麦浪第三！！{incident}！——{petName}",
+   "skeleton": "{location}的田埂是天然跑道！我领跑，风第二，麦浪第三。{incident}。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -1444,7 +1444,7 @@
    "id": "tpl_en_xy_02",
    "personalityId": "p_energetic",
    "category": "乡野",
-   "skeleton": "{encounter}！！它跑我也跑，跑着跑着后面跟了半个农场！！最后大家在风车下集体喘气，太阳落山给我们发了金牌（光）！！——{petName}",
+   "skeleton": "{encounter}。它跑，我也跑，后来半个农场都跟了上来！最后大家在风车下喘气，夕阳正好给每个人镀了一枚金牌。——{petName}",
    "slots": [
     "encounter",
     "petName"
@@ -1458,7 +1458,7 @@
    "id": "tpl_en_xy_03",
    "personalityId": "p_energetic",
    "category": "乡野",
-   "skeleton": "今天帮邮局跑腿送了三封信！！全程没歇！！{incident}！{ownerName}，这封是第四封，是我给自己揽的活！！——{petName}",
+   "skeleton": "今天帮邮局送了三封信，一路都没歇！{incident}。{ownerName}，这封是第四封，是我给自己接的任务。——{petName}",
    "slots": [
     "incident",
     "ownerName",
@@ -1473,7 +1473,7 @@
    "id": "tpl_en_sl_01",
    "personalityId": "p_energetic",
    "category": "森林",
-   "skeleton": "{location}的树根一个接一个，是森林给我摆的跨栏！！{incident}！！松鼠说我把它一周的运动量吓出来了！！——{petName}",
+   "skeleton": "{location}的树根一个接一个，像森林专门摆好的跨栏！{incident}。松鼠说，我把它一周的运动量都吓出来了。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -1485,7 +1485,7 @@
    "id": "tpl_en_sl_02",
    "personalityId": "p_energetic",
    "category": "森林",
-   "skeleton": "{encounter}！！比谁先到千年橡树！它抄近道！我直线穿越灌木！！结果我们同时到——头上都顶着叶子笑成一团！！——{petName}",
+   "skeleton": "{encounter}。我们比赛谁先到千年橡树：它抄近道，我穿过灌木！结果同时抵达，身上都带着叶子，谁也顾不上争第一。——{petName}",
    "slots": [
     "encounter",
     "petName"
@@ -1499,7 +1499,7 @@
    "id": "tpl_en_sl_03",
    "personalityId": "p_energetic",
    "category": "森林",
-   "skeleton": "雾里跑步像在云里冲刺！！我给自己解说：『观众朋友们它冲出来了！！』{incident}！！——{petName}",
+   "skeleton": "雾里跑步像在云里冲刺！我一路给自己解说：『它从雾里冲出来了。』{incident}。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -1513,7 +1513,7 @@
    "id": "tpl_en_sm_01",
    "personalityId": "p_energetic",
    "category": "沙漠异域",
-   "skeleton": "沙丘冲刺太好玩了！！冲上去两步滑下来三步！！我和沙丘打了三十回合！！{incident}！！——{petName}",
+   "skeleton": "沙丘冲刺太好玩了！冲上去两步，又滑下来三步。我和沙丘来回较量了三十次。{incident}。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -1524,7 +1524,7 @@
    "id": "tpl_en_sm_02",
    "personalityId": "p_energetic",
    "category": "沙漠异域",
-   "skeleton": "{encounter}！！它们走一步顶我三步，我就用三倍步频跟！！商队叔叔说我是队伍里最小的发动机！！——{petName}",
+   "skeleton": "{encounter}。它们一步顶我三步，我就用三倍速度跟上！商队的人说，我是队伍里最卖力的小发动机。——{petName}",
    "slots": [
     "encounter",
     "petName"
@@ -1535,7 +1535,7 @@
    "id": "tpl_en_sm_03",
    "personalityId": "p_energetic",
    "category": "沙漠异域",
-   "skeleton": "热气球升起来的时候我在下面追着跑！！追出去好远！！{incident}！{ownerName}，影子和我赛跑，我俩都尽力了！！——{petName}",
+   "skeleton": "热气球升起来时，我在下面追了很远！{incident}。{ownerName}，后来影子也加入比赛，我们都尽力了。——{petName}",
    "slots": [
     "incident",
     "ownerName",
@@ -1550,7 +1550,7 @@
    "id": "tpl_en_jd_01",
    "personalityId": "p_energetic",
    "category": "极地水域",
-   "skeleton": "冰面滑滑的！！我起跑一次滑出去十米！！这不是摔倒是新技能！！{incident}！！——{petName}",
+   "skeleton": "冰面太滑了，我起跑一次就滑出去十米！这不是摔倒，是刚学会的新技能。{incident}。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -1561,18 +1561,18 @@
    "id": "tpl_en_jd_02",
    "personalityId": "p_energetic",
    "category": "极地水域",
-   "skeleton": "{encounter}！！它们排队跳水我也跟着跳（浅的地方！别担心！）！！水花比我整个还大！！裁判（一只海鸥）打了满分！！——{petName}",
+   "skeleton": "{encounter}。它们排队跳进浅水，我也跟着试了一次！溅起的水花比我还高，旁边那只海鸥给了满分。——{petName}",
    "slots": [
     "encounter",
     "petName"
    ],
-   "tone": "括号里先安抚主人再继续疯。"
+   "tone": "谨慎尝试后拿到满分。"
   },
   {
    "id": "tpl_en_jd_03",
    "personalityId": "p_energetic",
    "category": "极地水域",
-   "skeleton": "运河结冰的地方能助跑漂移！！我发明了三种刹车姿势，成功率一种！！{incident}！！——{petName}",
+   "skeleton": "结冰的运河可以助跑漂移！我试了三种刹车办法，其中一种很成功。{incident}。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -1586,7 +1586,7 @@
    "id": "tpl_en_qh_01",
    "personalityId": "p_energetic",
    "category": "奇幻",
-   "skeleton": "云做的地面弹弹的！！我跳一下飞三米！！{location}就是为我建的吧！！{incident}！！——{petName}",
+   "skeleton": "云做的地面会轻轻弹起，我一下就跃出去三米！{location}简直像为我准备的。{incident}。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -1601,7 +1601,7 @@
    "id": "tpl_en_qh_02",
    "personalityId": "p_energetic",
    "category": "奇幻",
-   "skeleton": "{encounter}！！我们绕着会走路的岛跑了一整圈！岛走它的我跑我的，等于我跑了动态一圈！！这是新纪录！没有人有这个纪录！！——{petName}",
+   "skeleton": "{encounter}。我们绕着会走路的岛跑了一整圈！岛走它的，我跑我的，最后创造了一项没人记录过的新纪录。——{petName}",
    "slots": [
     "encounter",
     "petName"
@@ -1615,7 +1615,7 @@
    "id": "tpl_en_qh_03",
    "personalityId": "p_energetic",
    "category": "奇幻",
-   "skeleton": "月亮背面重力小！！我一步跳过了三个邮筒！！邮差说慢点，我说好的！！然后跳过了四个！！{incident}！——{petName}",
+   "skeleton": "月亮背面的重力很轻，我一步跳过三个邮筒！邮差让我慢一点，我认真答应了，然后下一步跳过了四个。{incident}。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -1655,7 +1655,7 @@
    "id": "tpl_cl_hb_03",
    "personalityId": "p_clingy",
    "category": "海滨",
-   "skeleton": "捡了一枚耳朵形状的贝壳，对着它说了今天发生的事。{incident}。等我回去，它负责一字不落地讲给你听（如果它敢忘我就再讲一遍）。——{petName}",
+   "skeleton": "捡了一枚弯弯的贝壳，对着它说了今天发生的事。{incident}。等我回去，它负责一字不落地讲给你听；忘了也没关系，我再讲一遍。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -1761,7 +1761,7 @@
    "id": "tpl_cl_xy_02",
    "personalityId": "p_clingy",
    "category": "乡野",
-   "skeleton": "{encounter}，它的窝里有一整窝崽崽挤在一起睡。我看着看着就想：我们也这样睡过（你占的地方比较多）。{season}的{location}，晚安。——{petName}",
+   "skeleton": "{encounter}，它家里的小家伙们挤在一起睡。我看着看着就想：我们也这样靠在一起休息过，只是你占的地方比较多。{season}的{location}，晚安。——{petName}",
    "slots": [
     "encounter",
     "location",
@@ -1774,12 +1774,12 @@
    "id": "tpl_cl_xy_03",
    "personalityId": "p_clingy",
    "category": "乡野",
-   "skeleton": "向日葵一整天都朝着太阳转，我懂它。我也有我的太阳（就是你，怕你装不懂，写明）。{incident}。——{petName}",
+   "skeleton": "向日葵一整天都朝着太阳转，我懂它。我也有一个总会望向的方向。{incident}。是院子那边。——{petName}",
    "slots": [
     "incident",
     "petName"
    ],
-   "tone": "比喻怕不达意干脆注明。",
+   "tone": "借向日葵写思念，落点回到院子。",
    "locationIds": [
     "loc_sunflower_station"
    ]
@@ -1828,13 +1828,12 @@
    "id": "tpl_cl_sm_01",
    "personalityId": "p_clingy",
    "category": "沙漠异域",
-   "skeleton": "星空盐湖的星星多得数不完。我不数了，反正每颗亮的都替我看你一眼。{incident}。{ownerName}，你抬头的时候眨一下眼，就当回看我了。——{petName}",
+   "skeleton": "星空盐湖的星星多得数不完。我不数了，反正每颗亮的都替我朝院子的方向看一眼。{incident}。下次抬头时，最亮的那颗会替我先问好。——{petName}",
    "slots": [
     "incident",
-    "ownerName",
     "petName"
    ],
-   "tone": "跨地共星的约定。",
+   "tone": "跨地共星的问候。",
    "locationIds": [
     "loc_salt_lake"
    ]
@@ -1843,7 +1842,7 @@
    "id": "tpl_cl_sm_02",
    "personalityId": "p_clingy",
    "category": "沙漠异域",
-   "skeleton": "{encounter}，驼队的铃铛一路响，我把铃声学下来了，回去唱给你听（走调也要听完，先说好）。——{petName}",
+   "skeleton": "{encounter}，驼队的铃铛一路响，我把铃声学下来了，回去唱给你听。要是走调，就算沙漠送来的另一种纪念。——{petName}",
    "slots": [
     "encounter",
     "petName"
@@ -1857,7 +1856,7 @@
    "id": "tpl_cl_sm_03",
    "personalityId": "p_clingy",
    "category": "沙漠异域",
-   "skeleton": "沙漠的夜里降温好快，我裹紧毯子的时候第一个念头是：你的被子够厚吗？{incident}。远方一切都好，就是手边少一个你。——{petName}",
+   "skeleton": "沙漠的夜里降温好快，我裹紧毯子时第一个念头是：你的被子够厚吗？{incident}。远方一切都好，只是在看见身旁空出来的位置时，会想起你。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -1882,7 +1881,7 @@
    "id": "tpl_cl_jd_02",
    "personalityId": "p_clingy",
    "category": "极地水域",
-   "skeleton": "{encounter}，它们那儿流行贴贴取暖。我技术娴熟，毕竟是跟你练的。{location}很冷，想你的地方很暖。——{petName}",
+   "skeleton": "{encounter}，它们那里习惯靠在一起取暖。我很熟练，毕竟是跟你学的。{location}很冷，想起院子时却很暖。——{petName}",
    "slots": [
     "encounter",
     "location",
@@ -1909,13 +1908,13 @@
    "id": "tpl_cl_qh_01",
    "personalityId": "p_clingy",
    "category": "奇幻",
-   "skeleton": "{location}的邮差说，寄给『很想很想的人』的信可以免邮票。所以这张没贴。{incident}。收到的话，今晚对着窗台应一声，就当是回信啦。——{petName}",
+   "skeleton": "{location}的邮差说，寄给常常想起的人可以免邮票，所以这张没贴。{incident}。窗台风铃响时，就当它替我先打了招呼。——{petName}",
    "slots": [
     "incident",
     "location",
     "petName"
    ],
-   "tone": "免邮票规则（承接示例 9）+ 隔空互动邀请。",
+   "tone": "免邮票规则（承接示例 9）+ 风铃代为问候。",
    "locationIds": [
     "loc_moon_post"
    ]
@@ -1938,12 +1937,12 @@
    "id": "tpl_cl_qh_03",
    "personalityId": "p_clingy",
    "category": "奇幻",
-   "skeleton": "会走路的岛问我要去哪儿，我说了院子的方向，它居然真的转了个小弯！{incident}。全世界都在帮我离你近一点。——{petName}",
+   "skeleton": "会走路的岛问我要去哪儿，我说了院子的方向，它居然真的转了个小弯！{incident}。那一刻，世界好像也记得回去的方向。——{petName}",
    "slots": [
     "incident",
     "petName"
    ],
-   "tone": "万物助攻的甜。",
+   "tone": "万物也记得院子的方向。",
    "locationIds": [
     "loc_walking_island"
    ]
@@ -2049,7 +2048,7 @@
    "id": "tpl_al_cs_03",
    "personalityId": "p_aloof",
    "category": "城市",
-   "skeleton": "旧书坊巷。翻了一下午书（趴在上面）。老板没赶我。{incident}。这个城市，勉强有点意思。——{petName}",
+   "skeleton": "旧书坊巷。靠着书睡了一下午。老板没赶我。{incident}。这个城市，勉强有点意思。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -2155,7 +2154,7 @@
    "id": "tpl_al_sm_02",
    "personalityId": "p_aloof",
    "category": "沙漠异域",
-   "skeleton": "{encounter}。请我喝了一碗奶茶。没道谢，尾巴摇了一下，它看见了，算扯平。——{petName}",
+   "skeleton": "{encounter}。请我喝了一碗奶茶。没道谢，只认真点了一下头。它看见了，算扯平。——{petName}",
    "slots": [
     "encounter",
     "petName"
@@ -2271,7 +2270,7 @@
    "id": "tpl_na_hb_02",
    "personalityId": "p_naughty",
    "category": "海滨",
-   "skeleton": "{encounter}！比赛谁先抢到浪头扔上来的东西！我赢了三次，代价是全身湿透被它嘲笑到现在。值。——{petName}",
+   "skeleton": "{encounter}。我们比赛谁先捡到浪头送来的东西，我赢了三次！代价是全身湿透，被它笑到现在。值。——{petName}",
    "slots": [
     "encounter",
     "petName"
@@ -2282,7 +2281,7 @@
    "id": "tpl_na_hb_03",
    "personalityId": "p_naughty",
    "category": "海滨",
-   "skeleton": "我在沙滩上给每个晒太阳的螃蟹画了圈圈（用爪子）。它们醒来都很困惑。{incident}。艺术，是需要观众醒着的。——{petName}",
+   "skeleton": "我在沙滩上绕着每只晒太阳的螃蟹画了圈。它们醒来都很困惑。{incident}。艺术，是需要观众醒着的。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -2361,7 +2360,7 @@
    "id": "tpl_na_cs_03",
    "personalityId": "p_naughty",
    "category": "城市",
-   "skeleton": "把{location}晾着的袜子按颜色重新配了对。全楼的人都穿错了但都更好看了。{incident}。没有人抓到我，这封信是唯一证据，请销毁（不许）。——{petName}",
+   "skeleton": "把{location}晾着的袜子按颜色重新配了对。全楼的人都穿错了，但都更好看了。{incident}。没有人抓到我，这封信是唯一证据。请销毁；算了，还是留着吧。——{petName}",
    "slots": [
     "incident",
     "location",
@@ -2460,7 +2459,7 @@
    "id": "tpl_na_sm_01",
    "personalityId": "p_naughty",
    "category": "沙漠异域",
-   "skeleton": "彩绘集市的颜料摊，我只是尾巴扫了一下下。{incident}。摊主看着那面墙沉默了很久，然后……给它标了价。我要分成！——{petName}",
+   "skeleton": "经过彩绘集市的颜料摊时，行李带不小心扫了一下。{incident}。摊主看着那面墙沉默很久，然后给它标了价。我要分成！——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -2517,7 +2516,7 @@
    "id": "tpl_na_jd_02",
    "personalityId": "p_naughty",
    "category": "极地水域",
-   "skeleton": "{encounter}，比赛在冰面画画（用肚皮滑）。我画的圆最圆，因为我刹不住。裁判争议很大，快乐没有争议。——{petName}",
+   "skeleton": "{encounter}，比赛贴着冰面滑行画画。我画的圆最圆，因为我没能及时刹住。裁判争议很大，快乐没有争议。——{petName}",
    "slots": [
     "encounter",
     "petName"
@@ -2528,7 +2527,7 @@
    "id": "tpl_na_jd_03",
    "personalityId": "p_naughty",
    "category": "极地水域",
-   "skeleton": "往蓝洞泉里丢了颗雪球，想看它会不会染成蓝色。旁边看水的老海豹被溅了一脸。{incident}。现在丢雪球成了这里的许愿仪式，是我发明的，没人知道，你知道就行。——{petName}",
+   "skeleton": "往温泉里丢了颗雪球，想看它化。旁边泡汤的老海豹被溅了一脸。{incident}。现在丢雪球成了这里的泡汤仪式，是我发明的，没人知道，你知道就行。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -2542,12 +2541,12 @@
    "id": "tpl_na_qh_01",
    "personalityId": "p_naughty",
    "category": "奇幻",
-   "skeleton": "云端牧场的云羊被我骑了一只（它同意的，咩了一声，我认定是同意）。{incident}。牧云人说我是十年来第一个摔进云里还笑的。——{petName}",
+   "skeleton": "云端牧场的一只云羊邀我跟着跑了一段。{incident}。牧云人说，我是十年来第一个摔进云里还笑得出来的旅客。——{petName}",
    "slots": [
     "incident",
     "petName"
    ],
-   "tone": "单方面宣布获得同意。",
+   "tone": "和云羊赛跑，摔进云里仍然开心。",
    "locationIds": [
     "loc_cloud_ranch"
    ]
@@ -2652,7 +2651,7 @@
    "id": "tpl_ge_sd_03",
    "personalityId": "p_gentle",
    "category": "山地",
-   "skeleton": "{location}的温泉里，年纪最大的猴子泡在最暖的位置——是小猴们让的。我看着看着心里也暖暖的，往它们那边挪了挪我捡的栗子。——{petName}",
+   "skeleton": "{location}的温泉里，年纪最大的猴子泡在最暖的位置——是小猴们让的。我看着看着，心里也跟着暖起来，便把捡到的栗子分给了它们。——{petName}",
    "slots": [
     "location",
     "petName"
@@ -2692,7 +2691,7 @@
    "id": "tpl_ge_cs_03",
    "personalityId": "p_gentle",
    "category": "城市",
-   "skeleton": "旧书坊的老板眼睛不好，我趴在窗台帮他晒书、赶走啄书角的鸽子（很温和地赶，鸽子也要面子）。{incident}。——{petName}",
+   "skeleton": "旧书坊的老板眼睛不好，我守在窗台边帮他晒书，也请啄书角的鸽子去别处散步。{incident}。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -2706,7 +2705,7 @@
    "id": "tpl_ge_xy_01",
    "personalityId": "p_gentle",
    "category": "乡野",
-   "skeleton": "今天帮一只迷路的瓢虫过了马路——是田埂，但对它来说就是很宽很宽的马路。{incident}。它道谢的声音，要把耳朵贴到草上才听得见。——{petName}",
+   "skeleton": "今天帮一只迷路的瓢虫过了马路——是田埂，但对它来说就是很宽很宽的马路。{incident}。它道谢的声音，要俯下身靠近草面才能听见。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -2833,7 +2832,7 @@
    "id": "tpl_ge_jd_02",
    "personalityId": "p_gentle",
    "category": "极地水域",
-   "skeleton": "{encounter}，它的孩子第一次下水不敢跳。我在旁边陪它趴了好久，一起数浪，数到第二十个它就跳了。溅起的水花小小的，很勇敢。——{petName}",
+   "skeleton": "{encounter}，它的孩子第一次下水不敢跳。我在旁边陪它等了很久，一起数浪，数到第二十个它就跳了。溅起的水花不大，却很勇敢。——{petName}",
    "slots": [
     "encounter",
     "petName"
@@ -2873,7 +2872,7 @@
    "id": "tpl_ge_qh_02",
    "personalityId": "p_gentle",
    "category": "奇幻",
-   "skeleton": "{encounter}，它说会走路的岛累了一百年了。全岛的居民商量后决定：这个{season}谁也不许催它赶路。我举了爪（表示赞成）。——{petName}",
+   "skeleton": "{encounter}，它说会走路的岛累了一百年了。全岛的居民商量后决定：这个{season}谁也不催它赶路。我第一个表示赞成。——{petName}",
    "slots": [
     "encounter",
     "petName",
@@ -2888,7 +2887,7 @@
    "id": "tpl_ge_qh_03",
    "personalityId": "p_gentle",
    "category": "奇幻",
-   "skeleton": "云端牧场里最旧的一朵云快散了，牧云人舍不得。大家轮流往它身上哈热气。{incident}。它最后变成了一场很小很小的雨，落在每个人鼻尖上。谁也没哭，都笑着说凉凉的。——{petName}",
+   "skeleton": "云端牧场里最旧的一朵云快散了，牧云人舍不得。大家轮流往它身上哈热气。{incident}。它最后变成一阵细得几乎看不见的雨，落在每个人鼻尖上。谁也没哭，都笑着说凉凉的。——{petName}",
    "slots": [
     "incident",
     "petName"
@@ -2915,7 +2914,7 @@
    "id": "tpl_dr_hb_02",
    "personalityId": "p_dreamy",
    "category": "海滨",
-   "skeleton": "{encounter}。它说贝壳里的声音是海的回忆。那我听到的这一段，一定是海很小的时候——声音软软的，还不会打雷。——{petName}",
+   "skeleton": "{encounter}。它说贝壳里的声音是海的回忆。那我听到的这一段，一定是海很小的时候——声音很轻，还不会打雷。——{petName}",
    "slots": [
     "encounter",
     "petName"
@@ -3215,12 +3214,12 @@
    "id": "tpl_dr_qh_02",
    "personalityId": "p_dreamy",
    "category": "奇幻",
-   "skeleton": "{encounter}。它问我从哪儿来，我描述了院子：会开花，会下雨，有一个每天等信的人。它说，听上去你来自一个童话。……对哦。——{petName}",
+   "skeleton": "{encounter}。它问我从哪儿来，我说起一座会开花、会下雨，也会收下远方来信的院子。它说，听上去你来自一个童话。……对哦。——{petName}",
    "slots": [
     "encounter",
     "petName"
    ],
-   "tone": "视角反转——院子被认证为童话，落点是玩家。"
+   "tone": "视角反转——院子被认证为童话。"
   },
   {
    "id": "tpl_dr_qh_03",

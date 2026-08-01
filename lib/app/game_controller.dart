@@ -21,6 +21,7 @@ import '../services/postcard_content_alignment.dart';
 import 'bootstrap.dart';
 import 'diagnostic_report.dart';
 import 'app_error_log.dart';
+import 'distribution_environment.dart';
 import 'game_services.dart';
 import 'notification_service.dart';
 
@@ -598,7 +599,7 @@ class GameController extends AsyncNotifier<GameView> {
       CareAction.feed => '${pet.name}认真吃完，又抬头看了看你。',
       CareAction.pat => '${pet.name}慢慢放松下来，往你的手心靠近了一点。',
       CareAction.toy => '${pet.name}追着玩具跑了一圈，又开心地回到你身边。',
-      CareAction.bath => '${pet.name}变得软乎乎的，身上还留着暖暖的水汽。',
+      CareAction.bath => '${pet.name}洗得干干净净，身上还带着温热的水汽。',
     };
   }
 
@@ -715,7 +716,7 @@ class GameController extends AsyncNotifier<GameView> {
     if (count >= threshold - 1) {
       return switch (clueId) {
         'clue_ember' => '线索几乎完整：那团火光已经记住院子，再相遇一次也许就会留下。',
-        'clue_uni' => '线索几乎完整：雨后的白色身影已经很近了，再等一场彩虹。',
+        'clue_uni' => '线索几乎完整：雨后的白色身影已经很近了，下一场彩虹里也许会再靠近。',
         'clue_boo' => '线索几乎完整：午夜的空食盘旁，只差最后一次轻轻的脚步。',
         'clue_starbug' => '线索几乎完整：草丛里的星光正试着认出这座院子。',
         _ => '线索已经很清晰了，也许下一次相遇就会有答案。',
@@ -724,7 +725,7 @@ class GameController extends AsyncNotifier<GameView> {
     if (count * 2 >= threshold) {
       return switch (clueId) {
         'clue_ember' => '寒夜里的火光不只是路过，它似乎在寻找一座愿意为来客留灯的院子。',
-        'clue_uni' => '那道白色身影只在雨停后靠近，彩虹出现时要多等一会儿。',
+        'clue_uni' => '那道白色身影常在雨停后、彩虹刚出现时靠近。',
         'clue_boo' => '夜深以后，安静又空着的食盘会让害羞的脚步更靠近。',
         'clue_starbug' => '晴朗夜里，温柔的灯和不被打扰的草丛会让星光停得更久。',
         _ => firstHint,
@@ -1153,6 +1154,44 @@ class GameController extends AsyncNotifier<GameView> {
     _svc.session.settings.onboardingComplete = true;
     state = AsyncData(_snapshot());
     await _persistTracked();
+  }
+
+  /// TestFlight-only manual clock step used for beta verification. Access is
+  /// checked again here so a hidden or stale UI cannot invoke it in production.
+  Future<bool> advanceOneDayForTesting() async {
+    if (!testFlightToolsCompiled || _disposed || !state.hasValue) return false;
+    final isTestFlight = await ref
+        .read(distributionEnvironmentProvider)
+        .isTestFlight();
+    if (!isTestFlight) return false;
+
+    var advanced = false;
+    await _enqueueLifecycle('testflight-day-advance', () async {
+      _flushActivePresence();
+      final now = _svc.clock.now();
+      _svc.prepareOneDayAdvanceForTesting(now);
+
+      final pet = _svc.session.current;
+      if (pet != null) {
+        final before = pet.level;
+        _svc.exp.grantOffline(pet: pet, elapsed: const Duration(days: 1));
+        _grantLevelRewards(pet.id, before, pet.level);
+        _svc.recordGrowthMemories(pet, before, pet.level);
+      }
+
+      _svc.clock.markHeartbeat();
+      await _svc.scheduler.onDailyTick(now);
+      await _svc.scheduler.onResume(now.add(const Duration(days: 1)));
+      await _svc.processRoaming(now);
+      _renewCareLedger();
+      _settleAchievements();
+      state = AsyncData(_snapshot());
+      await _persistTracked(flushPortable: true);
+      await _syncNotifications();
+      _activePresenceAt = now;
+      advanced = true;
+    });
+    return advanced;
   }
 
   /// App 从后台恢复时统一推进离线成长、日程、明信片和回访。
@@ -1698,7 +1737,7 @@ class GameController extends AsyncNotifier<GameView> {
         TodayYardKind.pat => '摸摸${pet.name}，听听今天的心情',
         TodayYardKind.feed => '${pet.name}好像想尝点好吃的',
         TodayYardKind.toy => '把玩具滚到${pet.name}身边',
-        TodayYardKind.bath => '让${pet.name}洗得软乎乎',
+        TodayYardKind.bath => '给${pet.name}洗个舒服的澡',
         _ => '',
       };
       items.add(
@@ -1766,14 +1805,14 @@ class GameController extends AsyncNotifier<GameView> {
   }) {
     if (pet == null || elapsed < const Duration(hours: 3)) return;
     final story = switch (pet.personality.firstOrNull) {
-      'p_clingy' => '你不在的时候，它把窝悄悄挪到了最靠近门口的地方。',
-      'p_aloof' => '它才没有一直看门口。（只是偶尔路过了很多次。）',
+      'p_clingy' => '它把窝挪到了能晒到午后阳光的位置，醒来时正好听见院门响。',
+      'p_aloof' => '它把院子巡视了许多遍，确认每个角落都还是熟悉的样子。',
       'p_lazy' => '这段时间它认真忙了一件事：把同一个午觉睡完。',
-      'p_glutton' => '它把食盆检查得很仔细，也给你留了一小口想象中的点心。',
-      'p_curious' => '它把院子的每一阵风都闻了一遍，正等着讲给你听。',
+      'p_glutton' => '它把食盆检查得很仔细，也认真规划好了下一顿点心。',
+      'p_curious' => '它把院子的每一阵风都研究了一遍，攒下不少新发现。',
       'p_energetic' => '它自己在草地上跑了好几圈，现在刚好愿意靠着你歇一会儿。',
       'p_mischievous' => '院子里好像有几片叶子换了位置，但它决定先不解释。',
-      'p_gentle' => '它替你看顾了花和来客，院子一直好好的。',
+      'p_gentle' => '它照看了花和来客，院子一直好好的。',
       'p_dreamy' => '它睡着时梦见一朵云落进院子，醒来还记得云的形状。',
       _ => '它睡饱了，也把院子照看得好好的。',
     };
@@ -1792,25 +1831,24 @@ class GameController extends AsyncNotifier<GameView> {
   static String _offlineWelcomeStoryEn(Pet pet) {
     return switch (pet.personality.firstOrNull) {
       'p_clingy' =>
-        'While you were away, they quietly moved their bed closer to the gate.',
+        'They moved their bed into the afternoon sun and woke just as the garden gate opened.',
       'p_aloof' =>
-        'They were not watching the gate the whole time. They merely happened to pass it rather often.',
+        'They made several rounds of the garden and confirmed that every corner still felt familiar.',
       'p_lazy' =>
         'They worked very hard on one important task: finishing the same long nap.',
       'p_glutton' =>
-        'They inspected the food bowl carefully and saved you one imaginary bite of a favorite treat.',
+        'They inspected the food bowl carefully and made a serious plan for the next treat.',
       'p_curious' =>
-        'They examined every breeze that crossed the garden and have been waiting to tell you about each one.',
+        'They examined every breeze that crossed the garden and gathered plenty of new discoveries.',
       'p_energetic' =>
         'They ran several laps alone and are now perfectly happy to rest beside you.',
       'p_naughty' =>
         'A few leaves seem to have changed places, but they have decided explanations can wait.',
       'p_gentle' =>
-        'They watched over the flowers and visitors for you. The garden stayed safe and quiet.',
+        'They watched over the flowers and visitors. The garden stayed peaceful.',
       'p_dreamy' =>
         'They dreamed that a cloud settled in the garden and still remember its shape after waking.',
-      _ =>
-        'They slept well and kept gentle watch over the garden until you came home.',
+      _ => 'They slept well, and the garden stayed peaceful around them.',
     };
   }
 

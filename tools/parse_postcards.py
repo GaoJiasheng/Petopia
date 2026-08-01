@@ -46,6 +46,15 @@ def pose_of(cell):
 
 def main():
     lines = open(SRC, encoding="utf-8").read().splitlines()
+    existing_affinity = {}
+    try:
+        existing = json.load(open(OUT, encoding="utf-8"))
+        for collection in ("templates", "encounters", "incidents"):
+            for item in existing.get(collection, []):
+                if item.get("locationIds"):
+                    existing_affinity[item["id"]] = item["locationIds"]
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
     section = 0
     persona = None
     tcat = None            # 当前模板类别（§2）
@@ -99,6 +108,10 @@ def main():
                     "phrase": m.group(3).strip(), "poseHint": pose_of(m.group(5)),
                     "personalityBias": bias(m.group(4)),
                 })
+
+    for item in (*templates, *encounters, *incidents):
+        if item["id"] in existing_affinity:
+            item["locationIds"] = existing_affinity[item["id"]]
 
     doc = {"schemaVersion": 1, "templates": templates,
            "encounters": encounters, "incidents": incidents}

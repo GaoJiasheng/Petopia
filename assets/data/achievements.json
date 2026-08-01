@@ -20,7 +20,7 @@
     },
     {
       "id": "ach_grad_3",
-      "name": "小院常客",
+      "name": "三段相伴",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -37,7 +37,7 @@
     },
     {
       "id": "ach_grad_5",
-      "name": "五次拥抱五次目送",
+      "name": "五段相伴",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -54,7 +54,7 @@
     },
     {
       "id": "ach_grad_8",
-      "name": "满园桃李",
+      "name": "八次启程",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -73,7 +73,7 @@
     },
     {
       "id": "ach_grad_12",
-      "name": "十二次拥抱",
+      "name": "十二段相伴",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -109,7 +109,7 @@
     },
     {
       "id": "ach_lv8_first",
-      "name": "亭亭玉立",
+      "name": "初见成年",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -166,7 +166,7 @@
     },
     {
       "id": "ach_species_repeat_3",
-      "name": "三代同名册",
+      "name": "三次相遇",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -257,7 +257,7 @@
     },
     {
       "id": "ach_visitor_uncommon_6",
-      "name": "缘分收藏夹",
+      "name": "六次难得相遇",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -435,7 +435,7 @@
     },
     {
       "id": "ach_revisit_10",
-      "name": "常回家看看",
+      "name": "十次归来",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -488,7 +488,7 @@
     },
     {
       "id": "ach_revisit_gift_20",
-      "name": "礼物拆不完",
+      "name": "远方的二十份心意",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -507,7 +507,7 @@
     },
     {
       "id": "ach_pat_100",
-      "name": "摸头狂魔",
+      "name": "一百次问候",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -526,7 +526,7 @@
     },
     {
       "id": "ach_pat_500",
-      "name": "手感认证大师",
+      "name": "熟悉的手心",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -545,7 +545,7 @@
     },
     {
       "id": "ach_feed_300",
-      "name": "干饭监督员",
+      "name": "饭点守时人",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -621,7 +621,7 @@
     },
     {
       "id": "ach_toy_200",
-      "name": "玩不腻",
+      "name": "两百次游戏",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -640,7 +640,7 @@
     },
     {
       "id": "ach_toy_500",
-      "name": "院子游乐场场长",
+      "name": "院子里的游乐场",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -744,7 +744,7 @@
     },
     {
       "id": "ach_theme_8",
-      "name": "十二时装衣橱",
+      "name": "八种院景",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -778,7 +778,7 @@
     },
     {
       "id": "ach_weather_6",
-      "name": "晴雨雪都寄了",
+      "name": "晴雨雪来信",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -797,7 +797,7 @@
     },
     {
       "id": "ach_rain_care_10",
-      "name": "雨天也要好好吃饭",
+      "name": "雨天的一顿饭",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -816,7 +816,7 @@
     },
     {
       "id": "ach_login_7",
-      "name": "七日之约",
+      "name": "七次日安",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -1287,9 +1287,9 @@
     },
     {
       "id": "ach_h_perfectjourney",
-      "name": "完美旅程",
+      "name": "一路来信",
       "hidden": true,
-      "clueText": "每一封信，都被第一时间拆开过。",
+      "clueText": "每一封信，都在相册里找到了位置。",
       "condition": {
         "type": "postcardCount",
         "target": 1,
@@ -1389,9 +1389,9 @@
     },
     {
       "id": "ach_h_fullcare",
-      "name": "宠爱满格",
+      "name": "完整的一天",
       "hidden": true,
-      "clueText": "那一天，它被爱得满满当当。",
+      "clueText": "那一天，每一种陪伴都刚刚好。",
       "condition": {
         "type": "actionCount",
         "target": 4,
@@ -1455,9 +1455,9 @@
     },
     {
       "id": "ach_h_rainbowwait",
-      "name": "等虹的人",
+      "name": "雨后的白影",
       "hidden": true,
-      "clueText": "不是每场雨都有下文——除非你肯等。",
+      "clueText": "雨停以后，彩虹落下的地方闪过一抹白。",
       "condition": {
         "type": "custom",
         "target": 3,
@@ -1497,7 +1497,7 @@
       "id": "ach_h_nightmail",
       "name": "夜航信",
       "hidden": true,
-      "clueText": "有些信，是写给失眠的人的。",
+      "clueText": "夜深时，邮箱里也会亮起一盏小灯。",
       "condition": {
         "type": "custom",
         "target": 1,
@@ -1517,7 +1517,7 @@
       "id": "ach_h_tsundere",
       "name": "口是心非观察员",
       "hidden": true,
-      "clueText": "它说不要的时候，尾巴是诚实的。",
+      "clueText": "它说不在意，却总记得回头。",
       "condition": {
         "type": "custom",
         "target": 30,

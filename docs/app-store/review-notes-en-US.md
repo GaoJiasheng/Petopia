@@ -33,7 +33,7 @@ Petopia is a single-player, local-first companion game with on-device saves.
 6. Use the journal menu to inspect the compendiums, Shop, Visitor Book, and
    Settings.
 7. In Settings > Garden Light > Support the Garden, inspect all four IAPs.
-   Restore "Yard Guardian" is available at the bottom. The three ordinary
+   Restore "Garden Keeper" is available at the bottom. The three ordinary
    support products are consumables and cannot be restored.
 8. Settings also contains separate music, sound, and gentle-haptics controls,
    notification categories, privacy and help pages, and save import/export.

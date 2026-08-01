@@ -98,7 +98,7 @@ abstract final class EnglishNarrative {
     final visitor = visitorName(visitorId, fallback: visitorFallback);
     final friend = petName?.trim().isNotEmpty == true
         ? petName!.trim()
-        : speciesName(speciesId, fallback: 'your little friend');
+        : speciesName(speciesId, fallback: 'your friend');
     final arrival =
         _visitorMoments[visitorId] ??
         'shared a quiet patch of the garden with $friend';
@@ -121,7 +121,7 @@ abstract final class EnglishNarrative {
     required String visitorFallback,
   }) {
     final visitor = visitorName(visitorId, fallback: visitorFallback);
-    return '$visitor is taking a slow, peaceful look around the garden.';
+    return '$visitor is taking their time looking around the garden.';
   }
 
   static String growthMemory({
@@ -139,8 +139,7 @@ abstract final class EnglishNarrative {
       6 => _personalityGrowthMemory(petName, personalityId),
       7 =>
         '$petName now treats the flowers, breeze, and garden visitors as friends.',
-      9 =>
-        '$petName has begun watching the gate and quietly packing a tiny travel bag.',
+      9 => '$petName has begun watching the gate and packing for the journey.',
       _ => fallback,
     };
   }
@@ -162,7 +161,8 @@ abstract final class EnglishNarrative {
       'p_mischievous' || 'p_naughty' =>
         'promises there was no trouble this time, or at least no large trouble',
       'p_gentle' => 'has been looking after every small friend met on the road',
-      'p_dreamy' => 'dreamed that the garden light was still glowing all night',
+      'p_dreamy' =>
+        'dreamed they could see the garden light even from far away',
       _ => 'is still seeing the world slowly and remembers every turn home',
     };
     return 'News from afar: $petName $detail.';
@@ -222,20 +222,20 @@ abstract final class EnglishNarrative {
   static String _personalityGrowthMemory(String petName, String personalityId) {
     final habit = switch (personalityId) {
       'p_glutton' =>
-        'saves the tastiest bite for last, then gives you one serious little look',
+        'saves the tastiest bite for last, then gives you one thoughtful look',
       'p_energetic' =>
         'finishes every garden lap by coming back to touch your side',
       'p_lazy' => 'naps most peacefully wherever you spend the most time',
       'p_curious' =>
         'always checks that you noticed whenever something new appears',
-      'p_clingy' => 'is always first at the door when footsteps approach',
+      'p_clingy' => 'is always first to look when footsteps approach',
       'p_aloof' =>
         'still pretends not to care, but keeps moving their resting place closer to you',
       'p_mischievous' || 'p_naughty' =>
-        'sits beside you with perfect innocence after every tiny bit of trouble',
+        'sits beside you with perfect innocence after every harmless bit of trouble',
       'p_gentle' => 'quietly watches over visitors smaller than they are',
-      'p_dreamy' => 'wakes as if returning from one long, soft dream',
-      _ => 'has grown a little habit that only you know by heart',
+      'p_dreamy' => 'wakes as if returning from a clear, warm dream',
+      _ => 'has grown a habit that only you know by heart',
     };
     return '$petName $habit.';
   }
@@ -268,32 +268,32 @@ abstract final class EnglishNarrative {
 
   static const Map<String, String> _locationNames = <String, String>{
     'loc_lighthouse_bay': 'Lighthouse Bay',
-    'loc_catback_reef': 'Catback Reef',
+    'loc_catback_reef': "Cat's Back Reef",
     'loc_shell_town': 'Seashell Town',
-    'loc_tide_flat': 'Low-Tide Shoals',
-    'loc_seafog_pier': 'Sea-Mist Pier',
+    'loc_tide_flat': 'Low-Tide Sandbar',
+    'loc_seafog_pier': 'Sea Mist Pier',
     'loc_cloud_pass': 'Cloudtop Pass',
     'loc_monkey_spring': 'Monkey Hot Springs',
     'loc_maple_ridge': 'Maplefire Ridge',
     'loc_snowline_cabin': 'Snowline Cabin',
     'loc_echo_canyon': 'Echo Canyon',
     'loc_tram_street': 'Old Tram Street',
-    'loc_rooftop_city': 'Water-Tower City',
-    'loc_midnight_noodles': 'Midnight Noodle Lane',
+    'loc_rooftop_city': 'Rooftop Water Tower City',
+    'loc_midnight_noodles': 'Midnight Noodle Street',
     'loc_oldbook_alley': 'Old Bookshop Alley',
     'loc_ferris_wharf': 'Ferris Wheel Wharf',
     'loc_wheat_post': 'Wheatfield Post Office',
     'loc_sunflower_station': 'Sunflower Station',
     'loc_firefly_paddy': 'Firefly Rice Fields',
-    'loc_apple_farm': 'Applehill Farm',
+    'loc_apple_farm': 'Apple Hill Farm',
     'loc_windmill_pond': 'Windmill Pond',
-    'loc_mushroom_ring': 'Mushroom-Ring Grove',
+    'loc_mushroom_ring': 'Mushroom Ring Grove',
     'loc_oak_postbox': 'Ancient Oak Postbox',
     'loc_pinecone_market': 'Pinecone Market',
-    'loc_fog_bridge': 'Bridge in the Mist',
-    'loc_logger_lodge': 'Woodcutter Lodge',
+    'loc_fog_bridge': 'Misty Rope Bridge',
+    'loc_logger_lodge': "Woodcutter's Lodge",
     'loc_salt_lake': 'Starlit Salt Lake',
-    'loc_camel_oasis': 'Camel-Bell Oasis',
+    'loc_camel_oasis': 'Camel Bell Oasis',
     'loc_painted_bazaar': 'Painted Bazaar',
     'loc_wind_rocks': 'Wind-Carved Stone Forest',
     'loc_balloon_camp': 'Hot-Air Balloon Camp',
@@ -301,34 +301,34 @@ abstract final class EnglishNarrative {
     'loc_icefloe_lighthouse': 'Ice-Floe Lighthouse',
     'loc_blue_spring': 'Blue Grotto Spring',
     'loc_canal_town': 'Canal Town',
-    'loc_steamboat_pier': 'Steamboat Landing',
+    'loc_steamboat_pier': 'Steamboat Pier',
     'loc_cloud_ranch': 'Cloudtop Ranch',
     'loc_moon_post': 'Far-Side Moon Post Office',
     'loc_frosting_volcano': 'Frosting Volcano',
-    'loc_walking_island': 'The Walking Island',
+    'loc_walking_island': 'Wandering Island',
     'loc_star_repair': 'Star Repair Shop',
   };
 
   static const Map<String, String> _visitorNames = <String, String>{
-    'visitor_sparrow': 'Chirrup the Sparrow',
+    'visitor_sparrow': 'Chirpy the Sparrow',
     'visitor_calico': 'Wandering Calico',
-    'visitor_snail': 'Slowpost Snail',
-    'visitor_butterfly': 'White Butterfly',
+    'visitor_snail': 'Slow-Mail Snail',
+    'visitor_butterfly': 'Cabbage White',
     'visitor_hedgehog': 'Pip the Hedgehog',
     'visitor_pigeon': 'Coo the Pigeon',
     'visitor_squirrel': 'Chestnut the Squirrel',
-    'visitor_crow': 'Shine the Crow',
+    'visitor_crow': 'Shiny the Crow',
     'visitor_frog': 'Ribbit the Frog',
     'visitor_firefly': 'Firefly Parade',
     'visitor_tanuki': 'Ginger Tanuki',
     'visitor_egret': 'Mr. Egret',
     'visitor_fox': 'Sienna the Fox',
     'visitor_owl': 'Professor Owl',
-    'visitor_deer': 'Little Deer',
+    'visitor_deer': 'Little Fawn',
     'visitor_snowhare': 'Snow Hare',
     'visitor_starbug': 'Starbug',
-    'visitor_campfire_light': 'The Campfire Glow',
-    'visitor_rainbow_shade': 'The White Shape by the Rainbow',
+    'visitor_campfire_light': 'Campfire Glow',
+    'visitor_rainbow_shade': 'The Rainbow\'s White Shadow',
     'visitor_night_blob': 'Midnight Puff',
   };
 
@@ -364,8 +364,7 @@ abstract final class EnglishNarrative {
     'visitor_fox': 'arrived with a russet leaf tucked neatly behind one ear',
     'visitor_owl': 'offered a thoughtful lecture on clouds, shadows, and naps',
     'visitor_deer': 'stepped softly among the flowers without bending a stem',
-    'visitor_snowhare':
-        'left a cool little footprint beside the sun-warmed path',
+    'visitor_snowhare': 'left a cool footprint beside the sun-warmed path',
     'visitor_starbug':
         'blinked among the grass like a pocket-sized constellation',
     'visitor_campfire_light':
@@ -393,21 +392,21 @@ abstract final class EnglishNarrative {
     'pet_ember': 'They kept one tiny flame glowing warmly between them',
     'pet_uni': 'They left a faint rainbow shimmer over the visitor\'s path',
     'pet_boo':
-        'They floated close enough to be friendly and soft enough not to startle',
+        'They floated close enough to be friendly and calmly enough not to startle',
     'pet_starbug':
-        'They blinked in time until the garden seemed full of little stars',
+        'They blinked in time until the garden seemed full of scattered stars',
   };
 
   static const Map<String, String>
   _legendaryVisitorInteractions = <String, String>{
     'vpi_l_starbug_any':
-        'Your little friend held their breath as a tiny light blinked among the grass. A softly glowing page appeared in the compendium.',
+        'Your friend held their breath as a point of light blinked among the grass. For a moment, even the visitor book seemed to glow.',
     'vpi_l_flame_any':
         'A flame that should not have been there danced beside the hearth. You both saw it, and neither of you broke the quiet.',
     'vpi_l_white_any':
-        'After the rain, a white shape flashed where the rainbow touched the ground. Your little friend watched that spot for a long time.',
+        'After the rain, a white shape flashed where the rainbow touched the ground. Your friend watched that spot for a long time.',
     'vpi_l_boo_any':
-        'A round white puff drifted through the midnight garden. Your little friend followed it with their eyes; you saw only the wind.',
+        'A round white puff drifted through the midnight garden. Your friend followed it with their eyes; you saw only the wind.',
   };
 
   static const Map<String, List<String>>
@@ -420,7 +419,7 @@ abstract final class EnglishNarrative {
     'p_lazy': <String>[
       'Made it to {location}. Found a comfortable spot. {encounter}. {incident}. I will investigate the rest after one more nap. Love, {petName}',
       '{location} moves at exactly the right speed: slowly. {encounter}. {incident}. Writing this used up today\'s remaining energy. Love, {petName}',
-      'The {timeOfDay} at {location} is soft and quiet. {encounter}. {incident}. I am traveling very efficiently by letting the view come to me. Love, {petName}',
+      'The {timeOfDay} at {location} is hushed and calm. {encounter}. {incident}. I am traveling very efficiently by letting the view come to me. Love, {petName}',
     ],
     'p_curious': <String>[
       '{ownerName}, I have questions about {location}! {encounter}. {incident}. I wrote everything down, except the seventeen things I still need to test. Love, {petName}',
@@ -429,27 +428,27 @@ abstract final class EnglishNarrative {
     ],
     'p_timid': <String>[
       'I arrived safely at {location}. {encounter}. {incident}. I was nervous at first, but I took one more step than yesterday. Love, {petName}',
-      '{location} felt very big when I arrived. {encounter}. {incident}. Someone was kind, and the road became a little less frightening. Love, {petName}',
-      'The {weather} at {location} startled me, but I remembered the garden and breathed slowly. {encounter}. {incident}. I am all right. Love, {petName}',
+      '{location} felt very big when I arrived. {encounter}. {incident}. Someone was kind, and the road became less frightening. Love, {petName}',
+      'The {weather} at {location} startled me, so I thought of the garden and took a slow breath. {encounter}. {incident}. Everything is fine here. Love, {petName}',
     ],
     'p_energetic': <String>[
-      'I MADE IT TO {location}!! {encounter}! {incident}! There are still so many paths left to run, so I am setting off again RIGHT NOW!! Love, {petName}',
-      'Travel record from {location}: first place in running, first place in exploring, and first place in being excited!! {encounter}! {incident}! Love, {petName}',
-      '{ownerName}, the {weather} cannot keep up with me!! {encounter}! {incident}! I ran across the whole view so I could tell you every part of it!! Love, {petName}',
+      'I made it to {location}! {encounter}. {incident}. There are more paths ahead, and I am already on my way. Love, {petName}',
+      'Travel record from {location}: first in running, first in exploring, and first in enthusiasm! {encounter}. {incident}. Love, {petName}',
+      '{ownerName}, even the {weather} could not keep up today! {encounter}. {incident}. I crossed the whole view so I could tell you about it. Love, {petName}',
     ],
     'p_clingy': <String>[
       '{ownerName}, I reached {location}. {encounter}. {incident}. The first thing I wanted to do was write to you. Love, {petName}',
       '{location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName}',
-      'I tied a little memory of the garden to my bag today. {encounter}. {incident}. However far I walk, it feels as though you are waving from just ahead. Love, {petName}',
+      'I tied a memory of the garden to my bag today. {encounter}. {incident}. However far I walk, it feels as though the garden is just ahead. Love, {petName}',
     ],
     'p_aloof': <String>[
-      '{location}. Arrived. The view is acceptable. {encounter}. {incident}. Thinking of you was incidental. Do not make a fuss. {petName}',
+      '{location}. Arrived. The view is better than expected. {encounter}. {incident}. I happened to think of you. That is all. {petName}',
       'Report from {location}: {weather}. {encounter}. {incident}. I checked whether the garden was visible from here. It was not. I checked twice. {petName}',
-      '{location} is quiet enough. {encounter}. {incident}. I may stay another day. Not because I miss anyone. Obviously. {petName}',
+      '{location} is quiet enough. {encounter}. {incident}. I may stay another day. The garden crossed my mind. {petName}',
     ],
     'p_naughty': <String>[
       'For the record, not everything that happened in {location} was my fault. {encounter}. {incident}. I will explain the details when I get home. Maybe. Love, {petName}',
-      'Official statement from {location}: I only helped events happen a little faster. {encounter}. {incident}. No regrets worth mentioning. Love, {petName}',
+      'Official statement from {location}: I only helped events along. {encounter}. {incident}. No regrets worth mentioning. Love, {petName}',
       '{ownerName}, please keep this letter as evidence that I was mostly well behaved. {encounter}. {incident}. Mostly is an important word. Love, {petName}',
     ],
     'p_gentle': <String>[
@@ -463,9 +462,9 @@ abstract final class EnglishNarrative {
       'Perhaps {weather} is only the sky remembering a story. {encounter}. {incident}. Tonight, that story leads all the way back to our garden. Love, {petName}',
     ],
     '': <String>[
-      '{ownerName}, I reached {location}. {encounter}. {incident}. I am safe, and I am keeping this little piece of the journey for you. Love, {petName}',
+      '{ownerName}, I reached {location}. {encounter}. {incident}. I am safe, and I am keeping this piece of the journey for you. Love, {petName}',
       'A note from {location}: {encounter}. {incident}. The road is kind today, and I still remember every turn home. Love, {petName}',
-      'Today at {location}. {encounter}. {incident}. I hope this letter carries a little of the view back to you. Love, {petName}',
+      'Today at {location}. {encounter}. {incident}. I hope this letter carries some of the view back to you. Love, {petName}',
     ],
   };
 
@@ -679,7 +678,7 @@ abstract final class EnglishNarrative {
     'ev_d01': 'Chasing Leaves',
     'ev_d02': 'Sun-Warmed Pancake',
     'ev_d03': 'Three Head Tilts',
-    'ev_d04': 'The Claimed Glove',
+    'ev_d04': 'The Hidden Glove',
     'ev_d05': 'Quality Inspection',
     'ev_d06': 'Surprise Sneeze',
     'ev_d07': 'Moonlight Recital',
@@ -709,12 +708,12 @@ abstract final class EnglishNarrative {
     'ev_d31': 'Rolling into Sunshine',
     'ev_d32': 'The Afternoon Yawn',
     'ev_d33': 'Too Foggy to Rise',
-    'ev_d34': 'Summer Rice Cake',
-    'ev_d35': 'A Little More Sleep',
-    'ev_d36': 'Staying by Your Feet',
+    'ev_d34': 'Keeping Cool',
+    'ev_d35': 'Another Nap',
+    'ev_d36': 'Staying Close',
     'ev_d37': 'Ant Procession Escort',
     'ev_d38': 'Patrol in the Mist',
-    'ev_d39': 'Nose-Tapped Chimes',
+    'ev_d39': 'A Wind Chime Lesson',
     'ev_d40': 'A Dinosaur Egg, Perhaps',
     'ev_d41': 'Waiting for the Bloom',
     'ev_d42': 'Peace with a Shadow',
@@ -725,19 +724,19 @@ abstract final class EnglishNarrative {
     'ev_d47': 'Shelter in Your Coat',
     'ev_d48': 'Morning Sprint',
     'ev_d49': 'Snowfield Art',
-    'ev_d50': 'Wheel-Running Flight',
-    'ev_d51': 'A Draw with the Tail',
+    'ev_d50': 'After the Laps',
+    'ev_d51': 'Chasing the Grass Cord',
     'ev_d52': 'Chasing Rainbow Mist',
-    'ev_d53': 'Chin on Your Knee',
+    'ev_d53': 'By Your Knee',
     'ev_d54': 'Your Footsteps',
     'ev_d55': 'The Treasure Button',
     'ev_d56': 'A Window of Mist',
-    'ev_d57': 'Warm Hands',
-    'ev_d58': 'Ears Turned Toward You',
+    'ev_d57': 'Warming Up',
+    'ev_d58': 'Sunbathing, Listening',
     'ev_d59': 'Polishing the Portrait',
-    'ev_d60': 'A Flawless Shed',
+    'ev_d60': 'A Neat Collection',
     'ev_d61': 'Watching the Moon',
-    'ev_d62': 'Visitor Scent Review',
+    'ev_d62': 'Inspecting the Visitor\'s Seat',
     'ev_d63': 'The Slipper Hunt',
     'ev_d64': 'The Open Food Bowl',
     'ev_d65': 'Borrowed Hat',
@@ -750,7 +749,7 @@ abstract final class EnglishNarrative {
     'ev_d72': 'A Favorite Leaf for You',
     'ev_d73': 'Beetle Escort',
     'ev_d74': 'A Long Way into the Mist',
-    'ev_d75': 'Matching the Sunset',
+    'ev_d75': 'Chasing the Sunset Colors',
     'ev_d76': 'Dandelion Fleet',
     'ev_d77': 'One Snowflake',
     'ev_d78': 'Guardian of the Bowl Moon',
@@ -759,11 +758,11 @@ abstract final class EnglishNarrative {
     'ev_d81': 'One by One',
     'ev_d82': 'Ready by the Door',
     'ev_d83': 'The Secret Tunnel',
-    'ev_d84': 'What Was I Doing?',
-    'ev_d85': 'Exercise Complete',
+    'ev_d84': 'Where Was I Going?',
+    'ev_d85': 'Enough for Today',
     'ev_d86': 'A Self Wake-Up Call',
-    'ev_d87': 'A Brand-New Coat',
-    'ev_d88': 'An Earnest Color',
+    'ev_d87': 'A Fresh Look',
+    'ev_d88': 'Finding the Right Light',
     'ev_d89': 'A Grass-Scented Breath',
     'ev_d90': 'Chasing Winter Breath',
     'ev_d91': 'Raindrop Rhythm',
@@ -773,15 +772,15 @@ abstract final class EnglishNarrative {
     'ev_d95': 'Unfinished Watercolor',
     'ev_d96': 'Cloud-Watching Debate',
     'ev_d97': 'Checking on You',
-    'ev_d98': 'A Little Puff of Me',
-    'ev_d99': 'Waiting for Lights-Out',
-    'ev_d100': 'The Best Kind of Day',
+    'ev_d98': 'A Trace of the Season',
+    'ev_d99': 'By the Window Light',
+    'ev_d100': 'A Good Kind of Day',
     'ev_s01': 'First Snow',
     'ev_s02': 'Adoption Anniversary',
     'ev_s03': 'Night of Falling Stars',
-    'ev_s04': 'Half a Day Away',
+    'ev_s04': 'A Half-Day Adventure',
     'ev_s05': 'Shelter from the Storm',
-    'ev_s06': 'A Travel Rehearsal',
+    'ev_s06': 'A Departure Rehearsal',
     'ev_s07': 'An Old Friend\'s Keepsake',
     'ev_s08': 'Campfire Gathering',
     'ev_s09': 'The Rainbow\'s End',
@@ -790,7 +789,7 @@ abstract final class EnglishNarrative {
     'ev_s12': 'The Great Firefly Parade',
     'ev_s13': 'Autumn Treasures in the Sun',
     'ev_s14': 'The Longest Winter Night',
-    'ev_s15': 'A Little More Grown-Up',
+    'ev_s15': 'Growing Into Themselves',
     'ev_s16': 'Coming of Age',
     'ev_s17': 'The Night the Grass Blinked',
     'ev_s18': 'The Midnight White Puff',
@@ -804,11 +803,11 @@ abstract final class EnglishNarrative {
     'ev_d03':
         'They tilted their head at the reflection in the water bowl three times.',
     'ev_d04':
-        'They carried the glove you left outside into their bed and claimed it.',
+        'They dragged the glove you left outside into their bed and solemnly claimed it for safekeeping.',
     'ev_d05':
         'Caught nibbling from the visitor dish, they pretended to be checking the food quality.',
     'ev_d06':
-        'Their own sneeze startled them into a tiny jump straight upward.',
+        'Their own sneeze startled them into a quick jump straight upward.',
     'ev_d07':
         'Late at night, they offered the moon one suspiciously poetic recital.',
     'ev_d08':
@@ -816,67 +815,67 @@ abstract final class EnglishNarrative {
     'ev_d09':
         'They gave half their shelter beneath the eaves to a rain-soaked white butterfly.',
     'ev_d10':
-        'They guarded the coat you set down from a distance, looking fierce whenever anyone approached.',
+        'They guarded the coat you set down from a distance, putting on their most serious look whenever anyone approached.',
     'ev_d11':
         'They buried an acorn with great care and immediately forgot where it was.',
     'ev_d12':
         'They found a comfortable patch of grass and sat perfectly still, listening to the wind move through the flowers.',
     'ev_d13':
-        'At dawn, they waited on top of the mailbox for sunrise, then yawned into the first bright ray.',
+        'At dawn, they waited on top of the mailbox and greeted the first ray of sunlight with a long yawn.',
     'ev_d14':
         'They began standing watch over the food bowl an hour early, asking with their eyes whether it was time yet.',
     'ev_d15':
-        'On their first step into snow, they held up one paw and studied the cool white mystery.',
+        'The first touch of snow stopped them in place while they studied the cool white mystery.',
     'ev_d16':
-        'Thunder sent them into a cardboard box, with half an ear left outside to monitor the world.',
+        'Thunder sent them into a cardboard box, leaving only a narrow gap through which to watch the world.',
     'ev_d17':
-        'They ran circles to guide Slowpost Snail. The snail traveled three centimeters; they completed thirty laps.',
+        'They ran circles to guide Slow-Mail Snail. The snail traveled three centimeters; they completed thirty laps.',
     'ev_d18':
         'During the night, they quietly moved their bed to a place where they could see your light.',
     'ev_d19':
-        'They casually passed the clothesline seven times, then carried off your sock on the eighth.',
+        'They casually passed the clothesline seven times, then dragged away your sock on the eighth.',
     'ev_d20':
-        'They leaned in to smell spring\'s first flower and returned with pollen dusting their nose.',
+        'They studied spring\'s first flower up close and returned with pollen dusting their face.',
     'ev_d21':
         'They spent the rainy afternoon watching the sky break apart and mend itself in a puddle.',
     'ev_d22':
         'They trotted after summer fireflies, then stopped as if catching one suddenly felt too sad.',
     'ev_d23':
-        'A delicious smell drifted from the reunion cottage, so they sat politely by the fence and drooled.',
+        'A delicious smell drifted from the reunion cottage, so they sat politely by the fence and waited.',
     'ev_d24':
-        'At dawn, they placed a dew-bright little stone where you usually sit.',
+        'At dawn, they brought a dew-bright stone and placed it where you usually sit.',
     'ev_d25':
-        'They kept the last biscuit in one cheek overnight and woke up startled by how delicious they smelled.',
+        'They hid the last biscuit in their bed overnight, then followed its scent straight back in the morning.',
     'ev_d26':
-        'At dusk, their nose followed someone\'s cooking smoke while their tail kept the rhythm of dinnertime.',
+        'At dusk, they watched cooking smoke beyond the fence and looked up at every clink of dishes.',
     'ev_d27':
         'They sleepily chewed a leaf that drifted to their mouth before realizing they were awake.',
     'ev_d28':
-        'They brought home a carrot frozen solid by the snow and insisted it was a gift from nature.',
+        'They dragged home a carrot frozen solid by the snow and insisted it was a gift from nature.',
     'ev_d29':
         'They studied the illustrated food bowls in the pet compendium until one tiny drool spot bloomed on the page.',
     'ev_d30':
         'They found an acorn left from last autumn and held a very formal banquet for one.',
     'ev_d31':
-        'They moved from bed to sunshine entirely by rolling, without taking a single step.',
+        'They inched from bed to the sunlit patch with impressive calm and not one wasted movement.',
     'ev_d32':
         'One yawn stretched across the whole afternoon. You counted seven continuations.',
     'ev_d33':
         'One look at the fog convinced them that visibility was too poor for getting up, so back to bed they went.',
     'ev_d34':
-        'On a summer afternoon, they pressed their belly to the coolest stone and became a slowly breathing rice cake.',
+        'On a summer afternoon, they stretched across the coolest stone until only slow, easy breathing remained.',
     'ev_d35':
-        'Halfway through a nap, they peered out at the world, decided it seemed fine, and tucked back in for another round.',
+        'Halfway through a nap, they peered out from bed, decided everything was fine, and settled in for another round.',
     'ev_d36':
-        'At dusk, they refused to leave your feet, tapping the ground with their tail in quiet protest.',
+        'At dusk, they stayed close to your feet, shifting every so often into an even more comfortable spot.',
     'ev_d37':
         'They discovered a line of ants moving house and anxiously escorted the procession for three whole meters.',
     'ev_d38':
         'They patrolled the misty garden with great care, looking for whoever had hidden the world.',
     'ev_d39':
-        'After a long study of the new wind chime, they learned to ring it with the tip of their nose.',
+        'After a long study of the new wind chime, they learned how to ring it with the lightest touch.',
     'ev_d40':
-        'They dug up a perfectly round stone and rushed over to ask whether it might be a dinosaur egg.',
+        'They found a perfectly round stone by the flower bed and rushed over to ask whether it might be a dinosaur egg.',
     'ev_d41':
         'They waited beside one flower bud all morning just to see the moment it opened.',
     'ev_d42':
@@ -884,7 +883,7 @@ abstract final class EnglishNarrative {
     'ev_d43':
         'In the fog, they stayed within sight and looked back every three steps to make sure you were still there.',
     'ev_d44':
-        'When a visitor arrived, they tucked in and played the part of a stone. Half an hour later, they peeked out and found the visitor still waiting patiently.',
+        'When a visitor arrived, they became perfectly still and played the part of a stone. Half an hour later, they glanced over and found the visitor still waiting patiently.',
     'ev_d45':
         'After the windblown clothesline startled them at night, they returned in daylight to question it properly.',
     'ev_d46':
@@ -896,39 +895,39 @@ abstract final class EnglishNarrative {
     'ev_d49':
         'They plowed one crooked trench across the snow, then turned around to admire their landscape art.',
     'ev_d50':
-        'They ran fast enough on the wheel to nearly take flight, then stepped off and kept walking in circles.',
+        'They ran several fast laps around the garden. After stopping, the flowers still seemed to circle around them.',
     'ev_d51':
-        'They fought an evenly matched battle with their own tail, then called a truce.',
+        'They fought an evenly matched battle with a windblown grass cord, then called a truce.',
     'ev_d52':
-        'They chased the tiny rainbow in the summer spray and refused to stop even when completely soaked.',
+        'They chased the rainbow in the summer spray until they were completely soaked.',
     'ev_d53':
-        'For as long as you sat in the garden, their chin rested on your knee.',
+        'For as long as you sat in the garden, they rested quietly beside your knee.',
     'ev_d54':
         'They learned the sound of your footsteps and began spinning before you even reached the gate.',
     'ev_d55':
         'They found one of your lost buttons, declared it treasure, and hid it in the deepest part of their bed.',
     'ev_d56':
-        'On a rainy day, they breathed a little cloud onto the window, then cleared it with their nose to see you again.',
+        'On a rainy day, they left a patch of mist on the window, then slowly cleared it to see you again.',
     'ev_d57':
-        'On a winter morning, they placed their paws in your palm for warmth while looking straight ahead as if merely passing by.',
+        'On a winter morning, they moved close to your open palm for warmth while looking straight ahead as if merely passing by.',
     'ev_d58':
-        'They sunbathed with their back to you, though both ears remained turned in your direction.',
+        'They sunbathed with their back to you while keeping careful track of every sound from your direction.',
     'ev_d59':
         'After you praised another pet in the compendium, they polished their own portrait until it shone.',
     'ev_d60':
-        'They arranged their shed skin in one perfectly straight line, presenting an unquestionably flawless result.',
+        'They arranged the day\'s finest grass blades in one perfectly straight line, presenting an unquestionably flawless result.',
     'ev_d61':
         'They sat alone in a high place watching the moon, then pretended to be counting roof tiles when you came outside.',
     'ev_d62':
-        'After the visitor left, they carefully inspected the place where the guest had sat and delivered one quiet huff of judgment.',
+        'After the visitor left, they carefully inspected the place where the guest had sat, then paused as if reaching a private conclusion.',
     'ev_d63':
         'They hid your slippers at opposite ends of the garden and sat in the middle to enjoy the search.',
     'ev_d64':
         'They learned to open the food-bowl lid. Only three uneaten pieces remained at the scene.',
     'ev_d65':
-        'They balanced a visitor\'s little hat on their head and ran halfway around the garden before it was recovered.',
+        'They borrowed a visitor\'s hat, showed it off around half the garden, then returned it with ceremony.',
     'ev_d66':
-        'They chose every puddle after the rain, splashing mud over themselves with enormous pride.',
+        'They chose every puddle after the rain and seemed thoroughly pleased with every new splash of mud.',
     'ev_d67':
         'They copied your cough perfectly enough to fool you three times, then laughed first on the fourth.',
     'ev_d68':
@@ -936,45 +935,44 @@ abstract final class EnglishNarrative {
     'ev_d69':
         'They nudged the largest piece in the bowl toward the visitor and quietly ate a smaller one.',
     'ev_d70':
-        'In the snow, their warmth cleared one tiny patch of ground for a passing sparrow to land.',
+        'In the snow, their warmth cleared one small patch of ground for a passing sparrow to land.',
     'ev_d71':
         'They found a rain-damaged spiderweb and watched its owner repair it all afternoon without interrupting.',
     'ev_d72':
         'When you sneezed, they hurried over and placed their favorite leaf on the back of your hand.',
     'ev_d73':
-        'At dusk, they gently escorted a lost beetle all the way beyond the fence.',
+        'At dusk, they slowed every movement while escorting a lost beetle all the way beyond the fence.',
     'ev_d74':
         'They sat for a long time in the deepest fog and returned looking as though they had traveled very far.',
     'ev_d75':
-        'They changed colors again and again beneath the sunset, trying to wear the same colors as the sky.',
+        'They tried several spots beneath the sunset, searching for the corner whose colors looked most like the sky.',
     'ev_d76':
         'They gathered a small tuft of dandelion down and blew it into the night like a fleet of invisible boats.',
     'ev_d77':
-        'On a snowy night, they watched one flake fall from high above until it landed on their nose.',
+        'On a snowy night, they watched one flake fall from high above until it came to rest before them.',
     'ev_d78':
         'They announced that another moon lived in the water bowl and volunteered for nightly guard duty.',
-    'ev_d79':
-        'A bright morning sneeze launched the dewdrop resting on their nose into the air.',
+    'ev_d79': 'A bright morning sneeze launched a nearby dewdrop into the air.',
     'ev_d80':
         'After a nap changed the angle of the light, they checked the whole garden: grass, bowl, and you. Everything was where it belonged.',
     'ev_d81':
         'They pushed each small object from the windowsill one at a time, looking back after every piece to check your expression.',
     'ev_d82':
-        'They carried your shoes to the door and arranged them into a very clear request to go outside together.',
+        'They dragged your shoes to the door and arranged them into a very clear request to go outside together.',
     'ev_d83':
-        'They dug a secret tunnel beside the flower bed. Its exit was twenty centimeters from the entrance, and the engineer was delighted.',
+        'They dug a secret tunnel beside the flower bed. Its exit was twenty centimeters from the entrance, and they were delighted.',
     'ev_d84':
-        'With both cheeks packed full, they forgot where they had been going and stood thinking for a very long time.',
+        'After filling their travel pouch, they forgot where they had been going and stood thinking for a very long time.',
     'ev_d85':
-        'They moved one meter over the course of the afternoon. Today\'s exercise requirement was officially complete.',
+        'They moved one meter over the course of the afternoon. From their expression, that was clearly enough exercise for one day.',
     'ev_d86':
         'They learned the exact way you call their name and now use it to wake themselves every morning.',
     'ev_d87':
-        'After shedding, they went straight to the water bowl to make sure the new coat fit properly.',
+        'After carefully tidying up, they checked their reflection in the water bowl and approved of the day\'s fresh look.',
     'ev_d88':
-        'They tried to match the color of your sweater and became a completely new shade best described as "an honest effort."',
+        'They tried several spots beside your sweater and finally found the light that suited them best.',
     'ev_d89':
-        'After the storm, they took one enormous breath of wet grass and puffed up like a small balloon.',
+        'After the storm, they took one enormous breath of wet grass and seemed to relax from end to end.',
     'ev_d90':
         'Their first white breath of the winter morning surprised them, so they chased it for two steps.',
     'ev_d91':
@@ -984,7 +982,7 @@ abstract final class EnglishNarrative {
     'ev_d93':
         'They waited beside the place in the grass that blinked last time, hoping someone might blink again.',
     'ev_d94':
-        'They found an exceptionally fine branch and carried it around the garden on exhibition all day.',
+        'They found an exceptionally fine branch and took it around the garden on exhibition all day.',
     'ev_d95':
         'The way they emerged slowly from the mist looked like a watercolor still waiting for its final brushstroke.',
     'ev_d96':
@@ -992,49 +990,49 @@ abstract final class EnglishNarrative {
     'ev_d97':
         'As soon as the thunder passed, they checked you from head to toe, then pretended they had only wandered by.',
     'ev_d98':
-        'You gathered one soft tuft of seasonal fluff. They studied it as though thinking, "That is me too."',
+        'While tidying the bed for the new season, you found a small trace of an earlier day. They studied it as though recognizing their past self.',
     'ev_d99':
-        'They refused to sleep until the light in your room went out, then finally returned to bed.',
+        'Sleep was slow to arrive, so they stayed near your window for a while and returned to bed when the light dimmed.',
     'ev_d100':
-        'Nothing happened today. They rested their chin on their paws and watched the sky for a long time, and somehow it was the best kind of day.',
+        'Nothing happened today. They rested quietly and watched the sky for a long time. It was a good kind of day.',
     'ev_s01':
-        'Your friend met snow for the first time and left a trail of blossom-shaped prints. A First Snow photo was tucked into the travel album.',
+        'Your friend stepped into snow for the first time and left a trail of blossom-shaped marks behind.',
     'ev_s02':
-        'On the anniversary of your first meeting, the garden visitors each arrived with a small gift.',
+        'On the anniversary of your first meeting, garden visitors arrived one by one, each carrying a gift chosen along the way.',
     'ev_s03':
-        'Beneath a shower of falling stars, your friend made one wish. A postcard someday will carry its answer home.',
+        'As falling stars crossed the garden sky, your friend closed their eyes and made a wish, then shared only half of it with you.',
     'ev_s04':
-        'Your friend slipped beyond the fence for half a day and returned at dusk carrying a flower no one had seen before.',
+        'Your friend discovered a new path by the fence and returned at dusk with a flower no one in the garden had seen before.',
     'ev_s05':
-        'When thunder rolled across the garden, your friend tucked close against you and found that the storm felt smaller there.',
+        'When thunder rolled across the garden, your friend moved close. As the rain softened, they relaxed beside you.',
     'ev_s06':
-        'At level nine, your friend tried on a tiny backpack, took two steps toward the gate, and looked back at you.',
+        'With departure drawing closer, your friend tried on a backpack, took two steps toward the gate, and looked back at you.',
     'ev_s07':
-        'Before leaving, an old friend placed a scarf in the garden. Your current companion wore it carefully all day.',
+        'Before leaving, an old friend placed a scarf in the garden. Your current companion kept it close all day.',
     'ev_s08':
-        'Beside the winter fire, a tiny shape seemed to dance inside the glow. Somewhere, an Emberling clue grew brighter.',
+        'Beside the winter fire, a small shape seemed to dance inside the glow, then vanished between two flickers.',
     'ev_s09':
-        'After the rain, the rainbow touched one corner of the garden. Your friend watched that place for a very long time.',
+        'After the rain, the rainbow touched one corner of the garden. A white shape passed through the light, and your friend kept watching long after it vanished.',
     'ev_s10':
         'On the full moon, visitors filled the garden for a quiet tea gathering where no one needed to speak.',
     'ev_s11':
-        'The first warm spring breeze filled the garden with petals. Your friend rolled happily through the shower, and a photo found its way into the album.',
+        'The first warm spring breeze filled the garden with petals. Your friend turned through the shower before stopping in the brightest patch of sunlight.',
     'ev_s12':
         'Hundreds of fireflies passed through on a summer night, lighting the fence while your friend watched from below.',
     'ev_s13':
         'In the clear autumn sun, your friend carefully laid out every treasure from the bed: a button, a branch, half an acorn, each warmed in turn.',
     'ev_s14':
-        'On the longest winter night, you shared the lantern glow until your friend fell asleep with one paw beside your hand.',
+        'On the longest winter night, you sat together in the lantern glow. Before falling asleep, your friend moved closer to your hand.',
     'ev_s15':
         'After growing into a new form, your friend studied the reflection in the water bowl, then looked back to make sure you still knew them. Of course you did.',
     'ev_s16':
-        'On the evening they grew up, your friend carried over a beloved childhood toy as gently as if returning a piece of time.',
+        'On the first evening in their grown-up form, your friend brought over a beloved childhood toy as if offering that time a quiet thank-you.',
     'ev_s17':
         'On a clear moonless night, the grass beside the lantern truly blinked. You and your friend held your breath together.',
     'ev_s18':
         'Late at night, a round white shape floated over the wall and paused above your friend for one shy second.',
     'ev_s19':
-        'A nameless old postcard appeared in the mailbox during heavy fog. It showed a garden no one had ever seen.',
+        'A nameless old postcard appeared in the mailbox during heavy fog. It showed a garden no one had ever seen, and your friend studied it for a long time.',
     'ev_s20':
         'After fourteen days together, the growth journal turned back to its first page and set your friend\'s earliest clumsy steps beside who they are today.',
   };
@@ -1047,7 +1045,7 @@ abstract final class EnglishNarrative {
     'ev_d24:1': 'Praise it and return it for safekeeping',
     'ev_d28:0': 'Let them warm the carrot slowly',
     'ev_d28:1': 'Quietly trade it for a fresh one',
-    'ev_d36:0': 'Carry them back and tuck them in',
+    'ev_d36:0': 'See them back to bed and tuck them in',
     'ev_d36:1': 'Stay together until the sky is dark',
     'ev_d40:0': 'Give it a place on the treasure shelf',
     'ev_d40:1': 'Return to the dig as an archaeology team',
@@ -1061,34 +1059,34 @@ abstract final class EnglishNarrative {
     'ev_d78:1': 'Place a small lantern beside the bowl',
     'ev_d81:0': 'Move every small object out of reach',
     'ev_d81:1': 'Keep a straight face for the final piece',
-    'ev_d87:0': 'Tell them the new coat looks wonderful',
-    'ev_d87:1': 'Keep the old skin safely as a bookmark',
+    'ev_d87:0': 'Tell them they look wonderful today',
+    'ev_d87:1': 'Take a photo of the new look',
     'ev_d94:0': 'Build the branch a proper display stand',
-    'ev_d94:1': 'Pretend it is your first look and gasp',
+    'ev_d94:1': 'Admire it as though seeing it for the first time',
     'ev_d96:0': 'Agree that the cloud looks like a rice ball',
     'ev_d96:1': 'Insist that the cloud looks like a pillow',
     'ev_d99:0': 'Turn the light off early for bedtime',
-    'ev_d99:1': 'Leave the light on and stay a little longer',
+    'ev_d99:1': 'Leave the light on and stay a while longer',
   };
   static const Map<String, String> _eventChoiceResults = <String, String>{
     'ev_d12:0':
-        'You took out the camera, and they sat a little straighter for you. The little moment was saved forever.',
+        'You lifted the camera, and they sat straighter for you. The photograph kept the stillness of the afternoon.',
     'ev_d12:1':
         'You sat down beside them. Neither of you said a word while the breeze slowly carried the scent of flowers past.',
     'ev_d16:0':
-        'You sat quietly beside the box. One ear slowly appeared, and together you listened until the storm had passed.',
+        'You sat beside the box. The gap slowly widened, and together you listened until the storm had passed.',
     'ev_d16:1':
         'You lowered the lid by a third. They curled up at once and soon fell asleep in the soft darkness.',
     'ev_d24:0':
         'You placed the stone in the brightest spot on the windowsill. They pretended not to care while secretly checking it.',
     'ev_d24:1':
-        'Your praise delighted them. They reclaimed the stone and set it solemnly inside the treasure box.',
+        'Your thoughtful praise delighted them. They reclaimed the stone and set it solemnly inside their keepsake box.',
     'ev_d28:0':
-        'You settled the carrot against their belly. They held it happily as though hugging the whole winter.',
+        'You set the carrot on a warm cloth to thaw. They stayed beside it as though guarding the whole winter.',
     'ev_d28:1':
         'You quietly swapped in a fresh carrot. One surprised bite later, it was joyfully gone.',
     'ev_d36:0':
-        'You carried them back, tucked in the blanket, and heard a tiny purr almost immediately.',
+        'You carried them back and tucked in the blanket. Their breathing soon settled into an easy rhythm.',
     'ev_d36:1':
         'You stayed until the stars appeared. Leaning against your feet, they finally felt ready for bed.',
     'ev_d40:0':
@@ -1096,13 +1094,13 @@ abstract final class EnglishNarrative {
     'ev_d40:1':
         'You returned to the dig together. They worked earnestly while you served as the official assistant.',
     'ev_d52:0':
-        'You waited with a towel. They ran straight into your arms and shook rainbow droplets over both of you.',
+        'You waited with a towel. They rushed over and scattered a trail of rainbow droplets across the grass.',
     'ev_d52:1':
-        'You joined the chase, and together you became two very happy, very soggy runners in the rainbow mist.',
+        'You joined the chase. By the time the rainbow faded, both of you were soaked and neither was ready to stop.',
     'ev_d61:0':
-        'You sat beside them on a small stool. They edged a little closer without taking their eyes from the moon.',
+        'You sat beside them on a small stool. They edged closer without taking their eyes from the moon.',
     'ev_d61:1':
-        'You left a warm lantern and went inside. A soft sound behind you felt exactly like good night.',
+        'You left a warm lantern and went inside. A quiet sound behind you felt exactly like good night.',
     'ev_d66:0':
         'You carried them to the bath, where they discovered that splashing indoors was every bit as enjoyable.',
     'ev_d66:1':
@@ -1116,20 +1114,20 @@ abstract final class EnglishNarrative {
     'ev_d81:1':
         'You watched the final piece fall without changing expression. Thoroughly satisfied, they bounded off to explore.',
     'ev_d87:0':
-        'You praised the beautiful new coat. They wriggled proudly until every fresh scale caught the light.',
+        'You praised the way they looked today. They turned proudly until the sunlight found every angle.',
     'ev_d87:1':
-        'You kept the old skin as a bookmark. They often stop to sniff it as though greeting an old friend.',
+        'You took a photograph. Whenever the journal opens to this page, the light from that day is there again.',
     'ev_d94:0':
-        'You built a tiny display stand. They now inspect the branch each day to make sure the collection is complete.',
+        'You built a display stand. They now inspect the branch each day to make sure the collection is complete.',
     'ev_d94:1':
-        'Your astonished gasp made them even prouder. The exhibition continued around the garden at once.',
+        'Your admiration made them even prouder. The exhibition immediately continued for another lap of the garden.',
     'ev_d96:0':
         'You agreed that it looked like a rice ball. They happily explained every fluffy detail.',
     'ev_d96:1':
         'You insisted on pillow. They gave you one doubtful look, then accepted the new interpretation.',
     'ev_d99:0':
-        'You turned the light off early. They padded toward bed, pausing at the doorway for one last look at you.',
+        'You turned the light off early. They headed toward bed, pausing at the doorway for one last look at you.',
     'ev_d99:1':
-        'You stayed with the light on. After one more happy cuddle at your feet, they returned to bed content.',
+        'You stayed with the light on. After a quiet moment beside you, they returned to bed content.',
   };
 }

@@ -852,7 +852,7 @@ class _StatusBadge extends StatelessWidget {
 
   String get _label {
     if (item.owned) return '已拥有';
-    if (!item.affordable) return '买不起';
+    if (!item.affordable) return '暖绒不足';
     return '可兑换';
   }
 }

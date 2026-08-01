@@ -72,7 +72,7 @@ class _SupportYardScreenState extends ConsumerState<SupportYardScreen> {
     return showGeneralDialog<void>(
       context: context,
       barrierDismissible: true,
-      barrierLabel: '收下感谢',
+      barrierLabel: '完成',
       barrierColor: Colors.black.withValues(alpha: 0.32),
       transitionDuration: PetopiaMotion.duration(context, PetopiaMotion.modal),
       pageBuilder: (_, _, _) =>
@@ -127,7 +127,7 @@ class _SupportBody extends ConsumerWidget {
                     ],
                     const SizedBox(height: 20),
                     const AppText(
-                      '给小院留一点温暖',
+                      '支持选项',
                       style: TextStyle(
                         color: PetopiaColors.ink,
                         fontSize: 18,
@@ -136,7 +136,7 @@ class _SupportBody extends ConsumerWidget {
                     ),
                     const SizedBox(height: 5),
                     const AppText(
-                      '所有回礼都只是装饰和感谢，不会改变成长速度、阳光、冷却或稀有概率。',
+                      '所有回礼均为装饰性内容，不会改变成长、暖绒、冷却、稀有度或可玩内容。',
                       style: TextStyle(
                         color: PetopiaColors.mutedText,
                         height: 1.5,
@@ -207,7 +207,7 @@ class _SupportBody extends ConsumerWidget {
                     ),
                     const SizedBox(height: 4),
                     const AppText(
-                      '购买由 App Store 安全处理。普通支持可以重复购买；小院守护者为一次性永久权益。',
+                      '购买由 App Store 处理。前三项是有固定展示时长的可重复装饰；小院守护者为一次性购买，可恢复。',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: PetopiaColors.mutedText,
@@ -234,7 +234,7 @@ class _SupportIntro extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Semantics(
-      label: context.tr(guardian ? '你已经是小院守护者' : '支持小院'),
+      label: context.tr(guardian ? '小院守护者已解锁' : '支持小院'),
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: const Color(0xFFFFFCF6),
@@ -259,7 +259,7 @@ class _SupportIntro extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppText(
-                      guardian ? '小院的灯一直亮着' : '谢谢你愿意走到这里',
+                      guardian ? '守护灯已点亮' : '自愿支持 Petopia',
                       style: const TextStyle(
                         color: PetopiaColors.ink,
                         fontSize: 20,
@@ -269,8 +269,8 @@ class _SupportIntro extends StatelessWidget {
                     const SizedBox(height: 6),
                     AppText(
                       guardian
-                          ? '守护者徽章已经收好，特别来信也会一直留在这里。'
-                          : '这里没有付费加速，也没有限定宠物。每一份支持，只会给院子留下一点温柔的回礼。',
+                          ? '守护灯和纪念徽章已解锁，特别来信会保存在这里。'
+                          : '支持完全自愿。所有回礼都只是装饰，不会影响成长、收集或概率。',
                       style: const TextStyle(
                         color: PetopiaColors.mutedText,
                         height: 1.5,
@@ -396,7 +396,7 @@ class _SupportProductCard extends ConsumerWidget {
                                 )
                               : AppText(
                                   owned
-                                      ? '已经守护'
+                                      ? '已解锁'
                                       : offer?.displayPrice ??
                                             (state.loadingOffers
                                                 ? '正在连接'
@@ -420,10 +420,10 @@ class _SupportProductCard extends ConsumerWidget {
     return switch (product.kind) {
       SupportProductKind.treat when benefits.treatActive(now) => '点心正在院子里',
       SupportProductKind.lantern when benefits.lanternActive(now) =>
-        benefits.guardian ? '守护灯已经永久点亮' : '守护灯会亮到明天',
+        benefits.guardian ? '守护灯已永久解锁' : '暖灯正在院子里亮着',
       SupportProductKind.bouquet when benefits.bouquetActive(now) =>
         '鲜花正在院子里盛开',
-      SupportProductKind.guardian when benefits.guardian => '永久权益已经保存',
+      SupportProductKind.guardian when benefits.guardian => '小院守护者已解锁',
       _ => null,
     };
   }
@@ -472,7 +472,7 @@ class _GuardianLetter extends StatelessWidget {
                     ),
                     SizedBox(height: 7),
                     AppText(
-                      '谢谢你让院子里的灯一直亮着。我们会替你照顾花，也会记得每天等你回来。',
+                      '感谢你支持 Petopia。守护灯、纪念徽章和特别来信已经解锁。',
                       style: TextStyle(
                         color: PetopiaColors.mutedText,
                         height: 1.6,
@@ -606,7 +606,7 @@ class _SupportThankYouDialog extends StatelessWidget {
                       ),
                     const SizedBox(height: 16),
                     AppText(
-                      delivery.restored ? '欢迎回来，小院守护者' : '小院收到了你的心意',
+                      delivery.restored ? '小院守护者已恢复' : '感谢你的支持',
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                         color: PetopiaColors.ink,
@@ -630,7 +630,7 @@ class _SupportThankYouDialog extends StatelessWidget {
                       child: FilledButton(
                         autofocus: true,
                         onPressed: () => Navigator.of(context).pop(),
-                        child: const AppText('收下这份感谢'),
+                        child: const AppText('完成'),
                       ),
                     ),
                   ],

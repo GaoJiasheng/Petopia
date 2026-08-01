@@ -205,12 +205,14 @@ class _GrowthMoments extends StatelessWidget {
             children: [
               Icon(Icons.spa_rounded, color: GrowthJournalScreen._green),
               SizedBox(width: 8),
-              AppText(
-                '慢慢长大的时刻',
-                style: TextStyle(
-                  color: GrowthJournalScreen._ink,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w900,
+              Expanded(
+                child: AppText(
+                  '慢慢长大的时刻',
+                  style: TextStyle(
+                    color: GrowthJournalScreen._ink,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               ),
             ],
@@ -268,7 +270,7 @@ class _SummaryCard extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           final stack =
-              MediaQuery.textScalerOf(context).scale(14) >= 28 &&
+              MediaQuery.textScalerOf(context).scale(14) > 16 &&
               constraints.maxWidth < 560;
           final today = _StatPill(
             icon: Icons.wb_sunny_outlined,
@@ -580,7 +582,7 @@ class _EmptyState extends StatelessWidget {
           ),
           SizedBox(height: 8),
           AppText(
-            '陪 TA 吃点东西、摸摸头，手账就会慢慢热闹起来。',
+            '陪它吃点东西、摸摸头，手账就会慢慢写下新的故事。',
             textAlign: TextAlign.center,
             style: TextStyle(color: GrowthJournalScreen._muted),
           ),

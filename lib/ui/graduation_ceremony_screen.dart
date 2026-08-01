@@ -125,7 +125,7 @@ class _GraduationCeremonyScreenState
       mainAxisSize: MainAxisSize.min,
       children: [
         const AppText(
-          '🎓 毕业啦',
+          '毕业了',
           style: TextStyle(
             fontSize: 26,
             fontWeight: FontWeight.bold,
@@ -173,7 +173,7 @@ class _GraduationCeremonyScreenState
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   const AppText(
-                    '🎓 毕业啦',
+                    '毕业了',
                     style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,

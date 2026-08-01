@@ -349,7 +349,7 @@ class _AchievementCard extends StatelessWidget {
     if (veiled) {
       return entry.clueText ?? '线索还藏在院子的某一页。';
     }
-    if (entry.unlocked) return '这一页已经贴上亮亮的完成章。';
+    if (entry.unlocked) return '这一页已经盖上完成章。';
     return '慢慢来，进度已经记在手账里。';
   }
 }

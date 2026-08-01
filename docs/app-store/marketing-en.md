@@ -1,9 +1,9 @@
 # Petopia: Letters from Home
 
-A quiet watercolor garden. One little friend at a time.
+A quiet watercolor garden. One friend at a time.
 
-Help a young companion grow through meals, play, gentle care, and ordinary days
-together. When graduation comes, they pack a little bag and begin a long
+Help a young companion grow through meals, play, care, and ordinary days
+together. When graduation comes, they pack for the road and begin a long
 journey. Soon, hand-painted postcards arrive from distant shores, mountain
 paths, old bookshops, and places above the clouds.
 
@@ -15,7 +15,7 @@ personality, remembers the garden, and may return with another small story.
 ## A Garden With Its Own Rhythm
 
 Wild visitors stop by, weather changes the light, and quiet events become pages
-in your private journal. There are no streaks to protect, no hunger deaths, and
+in your garden journal. There are no streaks to protect, no hunger penalties, and
 no punishment for stepping away.
 
 ## Made for iPhone and iPad
@@ -29,8 +29,8 @@ accounts, ads, analytics, or tracking.
 - Daily visitors, returning graduates, and small garden events
 - Hand-painted watercolor art, expressive animation, and ambient music
 
-The garden light stays on while your friend grows, and while their next letter
-finds its way home.
+Each friend leaves a page in the garden journal, and every letter adds another
+view from the road.
 
 - Support: <https://blog.gavingao.cn/petopia/support.html>
 - Privacy: <https://blog.gavingao.cn/petopia/privacy.html>

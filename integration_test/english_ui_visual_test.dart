@@ -41,9 +41,27 @@ const _capturePrefix = String.fromEnvironment(
   'PETOPIA_CAPTURE_PREFIX',
   defaultValue: 'petopia-english-ui',
 );
+const _captureDirectory = String.fromEnvironment(
+  'PETOPIA_CAPTURE_DIR',
+  defaultValue: '/tmp',
+);
+const _visualLanguage = String.fromEnvironment(
+  'PETOPIA_VISUAL_LANGUAGE',
+  defaultValue: 'en',
+);
+const _visualLandscape = bool.fromEnvironment('PETOPIA_VISUAL_LANDSCAPE');
+const _visualTextScaleSource = String.fromEnvironment(
+  'PETOPIA_VISUAL_TEXT_SCALE',
+  defaultValue: '1.0',
+);
+const _visualEnglish = _visualLanguage == 'en';
+final _visualTextScale = double.tryParse(_visualTextScaleSource) ?? 1.0;
 const _captureBoundaryKey = ValueKey<String>(
   'english_ui_visual_capture_boundary',
 );
+
+String _localizedLabel({required String en, required String zhHans}) =>
+    _visualEnglish ? en : zhHans;
 
 class _SilentAudio implements AudioService {
   @override
@@ -202,7 +220,7 @@ class _VisualController extends GameController {
         createdAt: DateTime.utc(2026, 7, 27),
       ),
     ],
-    appLanguage: AppLanguage.en,
+    appLanguage: _visualEnglish ? AppLanguage.en : AppLanguage.zhHans,
   );
 
   @override
@@ -597,7 +615,7 @@ class _EnglishEventController extends _VisualController {
     todayYard: _VisualController.fixture.todayYard,
     preferredCareAction: _VisualController.fixture.preferredCareAction,
     recentMemories: _VisualController.fixture.recentMemories,
-    appLanguage: AppLanguage.en,
+    appLanguage: _visualEnglish ? AppLanguage.en : AppLanguage.zhHans,
   );
 
   @override
@@ -648,8 +666,8 @@ class _VisualStorefront implements SupportStorefront {
   Future<void> dispose() => _transactions.close();
 }
 
-class _EnglishHost extends StatelessWidget {
-  const _EnglishHost({required this.screen});
+class _VisualHost extends StatelessWidget {
+  const _VisualHost({required this.screen});
 
   final Widget screen;
 
@@ -657,7 +675,13 @@ class _EnglishHost extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      locale: const Locale('en'),
+      locale: _visualEnglish ? const Locale('en') : const Locale('zh', 'CN'),
+      builder: (context, child) => MediaQuery(
+        data: MediaQuery.of(
+          context,
+        ).copyWith(textScaler: TextScaler.linear(_visualTextScale)),
+        child: child ?? const SizedBox.shrink(),
+      ),
       supportedLocales: PetopiaLocalizations.supportedLocales,
       localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
         PetopiaLocalizations.delegate,
@@ -698,9 +722,11 @@ class _EnglishHost extends StatelessWidget {
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('capture and audit the complete English UI', (tester) async {
+  testWidgets('capture and audit the complete localized UI', (tester) async {
     await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
-      DeviceOrientation.portraitUp,
+      _visualLandscape
+          ? DeviceOrientation.landscapeLeft
+          : DeviceOrientation.portraitUp,
     ]);
     await tester.pump(const Duration(milliseconds: 700));
 
@@ -732,7 +758,7 @@ void main() {
           ],
           child: RepaintBoundary(
             key: _captureBoundaryKey,
-            child: _EnglishHost(screen: screen),
+            child: _VisualHost(screen: screen),
           ),
         ),
       );
@@ -740,9 +766,22 @@ void main() {
       await tester.pump(settle);
       await Future<void>.delayed(wallSettle);
       await tester.pump();
-      expect(tester.takeException(), isNull, reason: '$name has a UI error');
       _expectNoVisibleHanText(tester, name);
       await _captureVisual(tester, name);
+      expect(tester.takeException(), isNull, reason: '$name has a UI error');
+    }
+
+    Future<void> captureScrollEnd(String name) async {
+      final scrollable = find.byType(Scrollable).first;
+      expect(scrollable, findsOneWidget, reason: '$name needs a scroll view');
+      final state = tester.state<ScrollableState>(scrollable);
+      state.position.jumpTo(state.position.maxScrollExtent);
+      await tester.pump(const Duration(milliseconds: 400));
+      await Future<void>.delayed(const Duration(milliseconds: 250));
+      await tester.pump();
+      _expectNoVisibleHanText(tester, name);
+      await _captureVisual(tester, name);
+      expect(tester.takeException(), isNull, reason: '$name has a UI error');
     }
 
     await show('yard', const YardHomeScreen(enableCooldownRefresh: false));
@@ -755,13 +794,13 @@ void main() {
     );
 
     await show('onboarding-1', const OnboardingScreen(needsAdoption: true));
-    await tester.tap(find.text('Continue'));
+    await tester.tap(find.text(_localizedLabel(en: 'Continue', zhHans: '继续')));
     await tester.pump(const Duration(milliseconds: 500));
     await Future<void>.delayed(const Duration(milliseconds: 350));
     await tester.pump();
     _expectNoVisibleHanText(tester, 'onboarding-2');
     await _captureVisual(tester, 'onboarding-2');
-    await tester.tap(find.text('Continue'));
+    await tester.tap(find.text(_localizedLabel(en: 'Continue', zhHans: '继续')));
     await tester.pump(const Duration(milliseconds: 500));
     await Future<void>.delayed(const Duration(milliseconds: 350));
     await tester.pump();
@@ -774,20 +813,25 @@ void main() {
       PetDetailScreen(initialPet: _VisualController.pet),
     );
     await show('growth-journal', const GrowthJournalScreen());
+    await captureScrollEnd('growth-journal-bottom');
     await show('album-postcards', const AlbumScreen());
-    await tester.tap(find.text('Traveling Friends'));
+    await tester.tap(
+      find.text(_localizedLabel(en: 'Traveling Friends', zhHans: '旅行伙伴')),
+    );
     await tester.pump(const Duration(milliseconds: 450));
     _expectNoVisibleHanText(tester, 'album-travel');
     await _captureVisual(tester, 'album-travel');
 
     await show('pet-compendium', const PetDexScreen());
     await show('visitor-compendium', const VisitorDexScreen());
+    await captureScrollEnd('visitor-compendium-bottom');
     await show('achievements', const AchievementsScreen());
     await show('shop', const ShopScreen());
+    await captureScrollEnd('shop-bottom');
 
     await show('settings-top', const SettingsScreen());
     await tester.scrollUntilVisible(
-      find.text('Saves & Privacy'),
+      find.text(_localizedLabel(en: 'Saves & Privacy', zhHans: '存档与隐私')),
       420,
       scrollable: find.byType(Scrollable).first,
     );
@@ -796,6 +840,7 @@ void main() {
     await _captureVisual(tester, 'settings-bottom');
 
     await show('privacy', const PrivacyScreen());
+    await captureScrollEnd('privacy-bottom');
     await show(
       'graduation',
       const GraduationCeremonyScreen(
@@ -811,6 +856,28 @@ void main() {
       wallSettle: const Duration(milliseconds: 900),
     );
     await show('support', SupportYardScreen(pet: _VisualController.pet));
+    await tester.scrollUntilVisible(
+      find.text(_localizedLabel(en: 'Garden Bouquet', zhHans: '送来一篮花')),
+      460,
+      scrollable: find.byType(Scrollable).last,
+    );
+    await tester.ensureVisible(
+      find.text(_localizedLabel(en: 'Garden Bouquet', zhHans: '送来一篮花')),
+    );
+    await tester.pump(const Duration(milliseconds: 350));
+    _expectNoVisibleHanText(tester, 'support-middle');
+    await _captureVisual(tester, 'support-middle');
+    await tester.scrollUntilVisible(
+      find.text(_localizedLabel(en: 'Garden Keeper', zhHans: '小院守护者')),
+      460,
+      scrollable: find.byType(Scrollable).last,
+    );
+    await tester.ensureVisible(
+      find.text(_localizedLabel(en: 'Garden Keeper', zhHans: '小院守护者')),
+    );
+    await tester.pump(const Duration(milliseconds: 350));
+    _expectNoVisibleHanText(tester, 'support-bottom');
+    await _captureVisual(tester, 'support-bottom');
 
     await tester.pumpWidget(const SizedBox.shrink());
     await tester.pump(const Duration(milliseconds: 300));
@@ -831,10 +898,14 @@ Future<void> _captureVisual(WidgetTester tester, String name) async {
     data.offsetInBytes,
     data.lengthInBytes,
   );
-  await File('/tmp/$_capturePrefix-$name.png').writeAsBytes(bytes, flush: true);
+  final directory = Directory(_captureDirectory)..createSync(recursive: true);
+  await File(
+    '${directory.path}/$_capturePrefix-$name.png',
+  ).writeAsBytes(bytes, flush: true);
 }
 
 void _expectNoVisibleHanText(WidgetTester tester, String screen) {
+  if (!_visualEnglish) return;
   const intentionalNativeLanguageLabels = <String>{'简中'};
   final untranslated = <String>{};
   for (final text in tester.widgetList<Text>(find.byType(Text))) {

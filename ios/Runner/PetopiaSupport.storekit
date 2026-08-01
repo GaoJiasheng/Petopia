@@ -10,12 +10,12 @@
       "internalID" : "002C7EBB-64B6-46D6-92C1-B59BDCC6A578",
       "localizations" : [
         {
-          "description" : "A tiny thank-you treat for the yard.",
-          "displayName" : "A Little Treat",
+          "description" : "A decorative treat that stays in the garden for 24 hours.",
+          "displayName" : "A Treat",
           "locale" : "en_US"
         },
         {
-          "description" : "给小动物留下一份感谢点心。",
+          "description" : "在院子里展示 24 小时的装饰点心。",
           "displayName" : "一份小点心",
           "locale" : "zh_CN"
         }
@@ -30,12 +30,12 @@
       "internalID" : "97A74C4E-BDEE-4497-B880-C3F036C8C161",
       "localizations" : [
         {
-          "description" : "Keeps the garden lantern glowing until tomorrow.",
+          "description" : "Keeps the garden lantern glowing for 24 hours.",
           "displayName" : "A Warm Lantern",
           "locale" : "en_US"
         },
         {
-          "description" : "让小院的守护灯温暖地亮到明天。",
+          "description" : "在小院里亮 24 小时的装饰暖灯。",
           "displayName" : "点亮一盏暖灯",
           "locale" : "zh_CN"
         }
@@ -55,7 +55,7 @@
           "locale" : "en_US"
         },
         {
-          "description" : "让一篮鲜花在院子里盛开七天。",
+          "description" : "在院子里展示七天的装饰花篮。",
           "displayName" : "送来一篮花",
           "locale" : "zh_CN"
         }
@@ -70,18 +70,18 @@
       "internalID" : "949676BA-DAE5-4D43-9D59-1A453EC6ABF6",
       "localizations" : [
         {
-          "description" : "A permanent badge, lantern, and thank-you letter.",
-          "displayName" : "Yard Guardian",
+          "description" : "A permanent lantern, keepsake badge, and special letter.",
+          "displayName" : "Garden Keeper",
           "locale" : "en_US"
         },
         {
-          "description" : "永久点亮守护灯，收下徽章和特别来信。",
+          "description" : "永久点亮守护灯，并解锁纪念徽章和特别来信。",
           "displayName" : "小院守护者",
           "locale" : "zh_CN"
         }
       ],
       "productID" : "com.petopia.petopia.support.guardian",
-      "referenceName" : "Petopia Support - Yard Guardian",
+      "referenceName" : "Petopia Support - Garden Keeper",
       "type" : "NonConsumable"
     }
   ],

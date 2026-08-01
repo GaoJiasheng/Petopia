@@ -1,6 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:petopia/data/content/content_repository_impl.dart';
 import 'package:petopia/domain/enums.dart';
+import 'package:petopia/l10n/english_copy.dart';
 import 'package:petopia/l10n/english_narrative.dart';
 
 void main() {
@@ -37,6 +38,23 @@ void main() {
       _expectEnglish(
         EnglishNarrative.incident(incident.id),
         reason: incident.id,
+      );
+    }
+  });
+
+  test('location and visitor names stay consistent across every screen', () {
+    for (final location in content.locations) {
+      expect(
+        EnglishNarrative.locationName(location.id, fallback: location.name),
+        EnglishCopy.translate(location.name),
+        reason: 'Location name diverged for ${location.id}',
+      );
+    }
+    for (final visitor in content.visitors) {
+      expect(
+        EnglishNarrative.visitorName(visitor.id, fallback: visitor.name),
+        EnglishCopy.translate(visitor.name),
+        reason: 'Visitor name diverged for ${visitor.id}',
       );
     }
   });
@@ -180,6 +198,49 @@ void main() {
         isFalse,
         reason: '${template.id} contains a lowercase sentence start: $body',
       );
+      expect(
+        RegExp(r'[!！]{2,}|[?？]{2,}').hasMatch(body),
+        isFalse,
+        reason: '${template.id} uses exaggerated punctuation: $body',
+      );
+    }
+  });
+
+  test('runtime narrative copy stays warm, clean, and species-neutral', () {
+    final forbiddenInternal = RegExp(
+      r'【§|系统自动|线索\+\d|图鉴到访|Lv\s?\d',
+      caseSensitive: false,
+    );
+    final repeatedPunctuation = RegExp(r'[!！]{2,}|[?？]{2,}');
+    final coercive = RegExp(r'每天等信|很想很想|除非你肯等|要听完|应一声|没有你|离不开你');
+    final genericAnatomy = RegExp(r'我的耳朵|我的尾巴|我的爪|我的肚皮|我的胡须|四条腿');
+
+    final rows = <MapEntry<String, String>>[];
+    for (final event in content.events) {
+      rows.add(MapEntry('${event.id} title', event.title));
+      rows.add(MapEntry('${event.id} script', event.script));
+      for (var index = 0; index < (event.choices?.length ?? 0); index++) {
+        final choice = event.choices![index];
+        rows.add(MapEntry('${event.id} choice $index', choice.text));
+        rows.add(MapEntry('${event.id} result $index', choice.resultScript));
+      }
+    }
+    for (final template in content.postcardTemplates) {
+      rows.add(MapEntry(template.id, template.skeleton));
+      expect(
+        genericAnatomy.hasMatch(template.skeleton),
+        isFalse,
+        reason: '${template.id} cannot assume a generic pet anatomy',
+      );
+    }
+    for (final interaction in content.visitorInteractions) {
+      rows.add(MapEntry(interaction.id, interaction.script));
+    }
+
+    for (final row in rows) {
+      expect(forbiddenInternal.hasMatch(row.value), isFalse, reason: row.key);
+      expect(repeatedPunctuation.hasMatch(row.value), isFalse, reason: row.key);
+      expect(coercive.hasMatch(row.value), isFalse, reason: row.key);
     }
   });
 }

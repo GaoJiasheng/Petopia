@@ -1,5 +1,7 @@
 # Petopia Localization
 
+Runtime copy must also follow the [bilingual copy tone guide](copy-tone-guide.md), including warmth, restraint, character voice, purchase language, and narrative immersion.
+
 ## Supported languages
 
 - `system`: follow the device. Simplified Chinese devices use Chinese; all

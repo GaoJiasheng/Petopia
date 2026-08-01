@@ -37,7 +37,8 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('支持小院'), findsOneWidget);
-      expect(find.text('给小院留一点温暖'), findsOneWidget);
+      expect(find.text('自愿支持 Petopia'), findsOneWidget);
+      expect(find.text('支持选项'), findsOneWidget);
       expect(find.text(r'$0.99'), findsOneWidget);
       expect(find.text(r'$6.99'), findsOneWidget);
       expect(find.byType(OverflowBar), findsNothing);
@@ -68,9 +69,9 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('小院的灯一直亮着'), findsOneWidget);
+    expect(find.text('守护灯已点亮'), findsOneWidget);
     expect(find.text('写给小院守护者'), findsOneWidget);
-    expect(find.text('已经守护'), findsOneWidget);
+    expect(find.text('已解锁'), findsOneWidget);
   });
 
   testWidgets('a treat thanks the current pet with its five-second animation', (
@@ -118,7 +119,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 420));
     await tester.pump();
 
-    expect(find.text('小院收到了你的心意'), findsOneWidget);
+    expect(find.text('感谢你的支持'), findsOneWidget);
     expect(
       find.byKey(const ValueKey<String>('pet_action_eat')),
       findsOneWidget,

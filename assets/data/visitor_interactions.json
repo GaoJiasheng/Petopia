@@ -56,7 +56,7 @@
       "visitorId": "visitor_sparrow",
       "petSpeciesId": "pet_parrot",
       "personalityBias": null,
-      "script": "两只鸟用你听不懂的话聊了一下午，皮皮学会了一句新的（内容存疑的）方言",
+      "script": "两只鸟用你听不懂的话聊了一下午。皮皮还学会了一句新方言；它们显然都懂，你没有。",
       "animRef": "anim_vi_sparrow_parrot",
       "expReward": 4,
       "unlockClue": null
@@ -756,7 +756,7 @@
       "visitorId": "visitor_squirrel",
       "petSpeciesId": "pet_hamster",
       "personalityBias": null,
-      "script": "一场庄严的「囤货交流会」：双方互相检阅腮帮与树洞，结为塞满联盟【§8.4 原示例】",
+      "script": "一场郑重其事的囤货交流会：栗栗展示树洞里的橡果，仓鼠摊开藏粮，最后互相交换了最舍不得的一小份。",
       "animRef": "anim_vpi_squirrel_hamster",
       "expReward": 5,
       "unlockClue": null
@@ -876,7 +876,7 @@
       "visitorId": "visitor_crow",
       "petSpeciesId": "pet_hamster",
       "personalityBias": null,
-      "script": "收集家会面：亮亮展示瓶盖珍藏，仓鼠鼓出腮帮展示存粮，互相看不懂但大受震撼",
+      "script": "两位收集家见面：亮亮展示瓶盖珍藏，仓鼠摊开存粮。它们互相没有看懂，却都郑重点头。",
       "animRef": "anim_vpi_crow_hamster",
       "expReward": 5,
       "unlockClue": null
@@ -916,7 +916,7 @@
       "visitorId": "visitor_crow",
       "petSpeciesId": "pet_chameleon",
       "personalityBias": null,
-      "script": "亮亮叼来一颗玻璃珠，阿彩为表感谢把自己变成了玻璃珠色，亮亮困惑离场【§8.4 原示例】",
+      "script": "亮亮带来一颗玻璃珠，变色龙把自己变成同样的颜色作为答谢。亮亮绕着看了三圈，才郑重点头。",
       "animRef": "anim_vpi_crow_chameleon",
       "expReward": 5,
       "unlockClue": null
@@ -1006,7 +1006,7 @@
       "visitorId": "visitor_frog",
       "petSpeciesId": "pet_turtle",
       "personalityBias": null,
-      "script": "池塘边的静坐大赛，三小时无人动。裁判（你）宣布并列冠军【§8.4 原示例】",
+      "script": "池塘边的静坐比赛持续了整整一个下午。你宣布并列第一，它们谁也没有挪动。",
       "animRef": "anim_vpi_frog_turtle",
       "expReward": 4,
       "unlockClue": null
@@ -1456,7 +1456,7 @@
       "visitorId": "visitor_fox",
       "petSpeciesId": "pet_shiba",
       "personalityBias": null,
-      "script": "追逐战绕院三圈，最后一起瘫在树荫下，尾巴打成了结（并没有）【§8.4 原示例】",
+      "script": "绕院追逐三圈后，它们并肩歇在树荫下，谁都不肯先承认累。",
       "animRef": "anim_vpi_fox_shiba",
       "expReward": 6,
       "unlockClue": null
@@ -1646,7 +1646,7 @@
       "visitorId": "visitor_owl",
       "petSpeciesId": "pet_ember",
       "personalityBias": null,
-      "script": "教授借小火龙的暖光批改「学生作业」（一堆落叶标本），评价这是全森林最好的台灯",
+      "script": "教授借着小火龙的暖光批改了一叠落叶标本，最后授予它「全森林最合适的阅读灯」称号。",
       "animRef": "anim_vpi_owl_ember",
       "expReward": 5,
       "unlockClue": null
@@ -1926,7 +1926,7 @@
       "visitorId": "visitor_starbug",
       "petSpeciesId": "*",
       "personalityBias": null,
-      "script": "宠物屏息看着草叶上明灭的小光点，你的图鉴里多了一页会发光的纸",
+      "script": "宠物屏息看着草叶上明灭的小光点，访客册的那一页也像被微光照亮",
       "animRef": "anim_vpi_l_starbug_any",
       "expReward": 6,
       "unlockClue": "starbug+1"
@@ -2436,7 +2436,7 @@
       "visitorId": "visitor_night_blob",
       "petSpeciesId": "pet_starbug",
       "personalityBias": null,
-      "script": "星星虫为怕黑（是的）的白团子亮了一整夜，白团子第一次在光里待到了天亮前",
+      "script": "星星虫为白团子亮了一整夜。白团子第一次在光里待到了天亮前。",
       "animRef": "anim_vpi_l_boo_starbug",
       "expReward": 6,
       "unlockClue": "clue_boo+1"

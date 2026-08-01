@@ -2,7 +2,7 @@
   "bytesByCategory": {
     "art": 37050175,
     "audio": 23888482,
-    "content-data": 399902,
+    "content-data": 400052,
     "runtime-art": 80907580
   },
   "counts": {
@@ -1599,9 +1599,9 @@
     },
     {
       "asset": "assets/data/achievements.json",
-      "bytes": 34410,
+      "bytes": 34413,
       "category": "content-data",
-      "sha256": "e1e6eebfd6d1792d388d108c09854cc4963a1b41a591ada657935808b367115a"
+      "sha256": "65e93e4d9629b15154d0b3d031faf98a070aa1ba84992a0c0fc70a0d62646224"
     },
     {
       "asset": "assets/data/clue_defs.json",
@@ -1611,15 +1611,15 @@
     },
     {
       "asset": "assets/data/events.json",
-      "bytes": 88310,
+      "bytes": 88593,
       "category": "content-data",
-      "sha256": "ba08e8b29d592ca172956eff6bb5a488678b6e621554538d4b901fe7e0727019"
+      "sha256": "4bb0750b5c78927f0fc4602537cc533627ebee3892dff6700bd5d14152579058"
     },
     {
       "asset": "assets/data/locations.json",
-      "bytes": 21790,
+      "bytes": 21789,
       "category": "content-data",
-      "sha256": "11ba0600b9c9f193d65ef8c5cddb733b34607c95550f08d67776a59e0c6a4b8b"
+      "sha256": "c9b520e5d399337c6c6a5bc4c973db5463c38787db1b476526156eb6b52828e8"
     },
     {
       "asset": "assets/data/personalities.json",
@@ -1629,9 +1629,9 @@
     },
     {
       "asset": "assets/data/postcard_templates.json",
-      "bytes": 130580,
+      "bytes": 130417,
       "category": "content-data",
-      "sha256": "4579dbdb4f947839273a716dc9d56d0c64bef6ecae796efa829aa6f71f88cf36"
+      "sha256": "51698376e002c06a6c4542de3b3126dc96665bc16c4b7505887d5f7ddfca8be6"
     },
     {
       "asset": "assets/data/shop_items.json",
@@ -1647,9 +1647,9 @@
     },
     {
       "asset": "assets/data/visitor_interactions.json",
-      "bytes": 88724,
+      "bytes": 88752,
       "category": "content-data",
-      "sha256": "4148ed95db5625c9acfcb9ec11ef5861db3bc919e2d92f274b4e87d669fdd6c4"
+      "sha256": "9ffa159d988d436d098d6a3b499fd9b06382247a135f2b623c9d571c2f044753"
     },
     {
       "asset": "assets/data/visitors.json",
