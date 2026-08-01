@@ -15,8 +15,8 @@
       无占位符和地点文案错配
 - [x] 参数化/隐藏成就逐条件契约测试，所有条件参数均有显式判定器
 - [x] 检查产物中存在 `PrivacyInfo.xcprivacy`
-- [x] 2026-07-28 build 19 App Store 签名归档成功，导出 IPA 为
-      158.96 MiB，
+- [x] 2026-08-01 build 20 App Store 签名归档成功，导出 IPA 为
+      159.01 MiB，
       低于当前 200 MiB 首包目标（最终商店下载体积以 App Store Connect
       thinning 报告为准）
 - [ ] 真机安装并完成首次领养、四个互动、后台恢复、存档导入导出
@@ -69,7 +69,7 @@
 ## 发布控制
 
 - [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `20`）
-- [ ] 完整双语 build 20 待通过本清单门禁后归档、验证并上传 TestFlight
+- [x] 完整双语 build 20 已归档、通过 Apple 后处理验证并上传 TestFlight
 - [x] 2026-07-25 创建 `1.0.0 (16)` Release archive，Validate 后上传
       TestFlight；Delivery UUID `407ad891-403b-44a8-ab2b-6e7ec2bf9bbc`，
       Apple 状态为 `VALID` / `APP_STORE_ELIGIBLE`
@@ -80,7 +80,11 @@
       Delivery UUID `16298ef6-e96f-4cab-b091-8a5d22723188`，上传过程
       零 errors、零 warnings，Apple 状态为 `VALID` /
       `APP_STORE_ELIGIBLE`，并已进入 App Store Connect
-- [ ] 从 TestFlight build 16 覆盖安装 build 18，验证 schema 2 → 3 升级
+- [x] 2026-08-01 创建并上传完整双语 `1.0.0 (20)` App Store 签名归档；
+      Delivery UUID `20a4bf3d-b830-45fe-b75f-13e205638a12`，Apple 状态为
+      `VALID` / `APP_STORE_ELIGIBLE`，`usesNonExemptEncryption=false`，
+      并已进入 App Store Connect
+- [ ] 从 TestFlight build 18 或 19 覆盖安装 build 20，验证 schema 2 → 3 升级
 - [ ] 完成至少一次 iPhone 与 iPad 外部/内部测试
 - [ ] 检查 TestFlight 崩溃、卡死、资源缺失和通知权限行为
 - [ ] 选择手动发布或 7 天分阶段发布

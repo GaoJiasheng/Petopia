@@ -7,8 +7,9 @@
 
 - [ ] 在 App Store Connect 确认 `com.petopia.petopia` 对应的 App 记录、SKU、
       主语言和开发者显示名称均正确。
-- [x] build `19` 已上传 App Store Connect；完整双语构建已提升为新的未使用
-      build number `20`，待工程门禁通过后上传 TestFlight。
+- [x] 完整双语 build `20` 已上传 App Store Connect，Apple 状态为 `VALID` /
+      `APP_STORE_ELIGIBLE`；Delivery UUID
+      `20a4bf3d-b830-45fe-b75f-13e205638a12`。
 - [ ] 确认 Apple Developer Program 协议、税务与银行资料没有待处理项目。
 - [ ] 在 App Store Connect 接受 Paid Applications Agreement，并确认税务与
       收款账户状态允许提交应用内购买。
@@ -49,9 +50,9 @@
 
 ## 签名与人工验收
 
-- [ ] 使用 Distribution 签名创建 Archive，先运行 Validate App，再上传
-      TestFlight。
-- [ ] 在保留进度的设备上先安装 TestFlight build 18 或 19，再覆盖安装下一构建，
+- [x] 使用 Cloud Managed Apple Distribution 签名创建 build 20 Archive，
+      通过 Apple package/SPI analysis，并上传 TestFlight。
+- [ ] 在保留进度的设备上先安装 TestFlight build 18 或 19，再覆盖安装 build 20，
       确认 schema 2 → 3 后宠物、货币、旅程、明信片、来客、成就和设置均保留。
 - [ ] 在至少一台真实 iPhone 和一台真实 iPad 上走完：首次领养、四种互动、
       后台恢复、来客、明信片、存档导出与导入、横竖屏旋转。
