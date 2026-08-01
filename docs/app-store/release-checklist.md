@@ -41,23 +41,25 @@
 
 ## App Store Connect
 
-- [ ] 按 `support-iap.md` 创建并提交 4 个 IAP 商品；确认价格、本地化、商品类型、
-      审核截图和 Product ID 与本地 StoreKit 配置完全一致
+- [x] 按 `support-iap.md` 创建 4 个 IAP 商品；价格、本地化、商品类型、审核截图和
+      Product ID 已与本地 StoreKit 配置核对，并与 App 1.0 一同加入审核草稿
 - [ ] 使用 Sandbox Apple Account 在真机验证消耗型购买、取消/失败、幂等发放，
       以及“小院守护者”跨安装恢复
-- [ ] 按 `metadata-zh-Hans.md` 和 `metadata-en-US.md` 分别填写简体中文与英文名称、
+- [x] 按 `metadata-zh-Hans.md` 和 `metadata-en-US.md` 分别填写简体中文与英文名称、
       副标题、描述、关键词和促销文本
-- [ ] 上传 iPhone 6.9 英寸和 iPad 13 英寸截图
-- [ ] 配置主类别“游戏/休闲”与次类别“游戏/模拟”
+- [x] 上传 iPhone 6.9 英寸和 iPad 13 英寸截图；两组各 7 张，资产状态均为
+      `COMPLETE`，顺序已经反向读取复核
+- [x] 配置主类别“游戏”，主类别子分类为“休闲”和“模拟”
 - [x] 填写隐私政策 URL：`https://blog.gavingao.cn/petopia/privacy.html`
 - [x] 填写包含真实联系方式的支持 URL：`https://blog.gavingao.cn/petopia/support.html`
 - [x] 已将 `privacy-policy-en.md`、`support-en.md` 和 `marketing-en.md` 同步到三个公开
       URL，并验证网页中英文切换、移动端排版和联系方式
 - [ ] 完成 App Privacy 问卷，并与 Xcode Privacy Report 复核
-- [ ] 完成年龄分级问卷
-- [ ] 确认出口合规答案与 `ITSAppUsesNonExemptEncryption=false` 一致
-- [ ] 填写版权主体与 App Review 联系人
-- [ ] 粘贴 `review-notes-en-US.md` 的英文审核说明；需要中文上下文时附
+- [x] 完成年龄分级问卷；当前评级为 4+，无聊天、社交媒体或 UGC
+- [x] 确认出口合规答案与 `ITSAppUsesNonExemptEncryption=false` 一致；build 22
+      已由 Apple 标记 `usesNonExemptEncryption=false`
+- [x] 填写版权主体 `2026 Gavin Gao` 与 App Review 联系人
+- [x] 粘贴 `review-notes-en-US.md` 的英文审核说明；需要中文上下文时附
       `review-notes-zh-Hans.md`
 - [ ] 完成 EU Digital Services Act trader / non-trader 声明
 - [ ] 按真机验收结果填写 Accessibility Nutrition Labels；未经完整验证的
@@ -73,9 +75,16 @@
       `PETOPIA_TESTFLIGHT_TOOLS=true` 时保留入口，Swift 仅在
       `PETOPIA_TESTFLIGHT_TOOLS` 条件下注册 StoreKit 环境通道。普通 Release
       不生成按钮、不调用通道，也不能从控制器推进时间。
-- [ ] 使用 `tools/build_ios_variants.sh testflight-tools 21` 构建仅供内部
+- [x] 使用 `tools/build_ios_variants.sh testflight-tools 21` 构建仅供内部
       TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 22`
-      构建无内测入口的送审包。不得将 build 21 选为 App Store 审核版本。
+      构建无内测入口的送审包。build 22 已选为 App Store 审核版本；build 21
+      仅对内部 TestFlight 组开放。
+- [x] build 21 已上传并通过 Apple 验证；Delivery UUID
+      `24ef87e7-04d8-4852-8adf-88887b0e1c41`，中英文 TestFlight App 说明与
+      “测试内容”均已填写
+- [x] build 22 已上传并通过 Apple 验证；Delivery UUID
+      `52565869-4f41-46d9-aafb-1e5cd47dfbed`，状态 `VALID` /
+      `APP_STORE_ELIGIBLE`，并已关联 App 1.0 审核草稿
 - [x] 完整双语 build 20 已归档、通过 Apple 后处理验证并上传 TestFlight
 - [x] 2026-07-25 创建 `1.0.0 (16)` Release archive，Validate 后上传
       TestFlight；Delivery UUID `407ad891-403b-44a8-ab2b-6e7ec2bf9bbc`，
@@ -91,9 +100,16 @@
       Delivery UUID `20a4bf3d-b830-45fe-b75f-13e205638a12`，Apple 状态为
       `VALID` / `APP_STORE_ELIGIBLE`，`usesNonExemptEncryption=false`，
       并已进入 App Store Connect
-- [ ] 从 TestFlight build 18 或 19 覆盖安装 build 20，验证 schema 2 → 3 升级
+- [ ] 从 TestFlight build 18、19 或 20 覆盖安装 build 22，验证 schema 2 → 3 升级
 - [ ] 完成至少一次 iPhone 与 iPad 外部/内部测试
 - [ ] 检查 TestFlight 崩溃、卡死、资源缺失和通知权限行为
-- [ ] 在 TestFlight build 21 确认首页右上角出现 `+1` 日推进按钮；在正式
+- [ ] 在真机 TestFlight build 21 确认首页右上角出现 `+1` 日推进按钮；在正式
       build 22 确认按钮不存在且控制器执行能力被编译门禁关闭
-- [ ] 选择手动发布或 7 天分阶段发布
+- [x] 已选择手动发布
+
+## 审核草稿
+
+- [x] App 1.0 与 4 个 IAP 已加入同一审核草稿，五项均为
+      `READY_FOR_REVIEW`
+- [x] 发布方式为手动，首发免费；中国大陆和越南未开放，其余 173 个地区可用
+- [ ] 账号持有人完成法律、税务、银行与 DSA 声明后，执行最终“提交审核”

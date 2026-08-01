@@ -4,8 +4,8 @@
 
 - App 名称（30 字符内）：`Petopia：小院来信`
 - 副标题（30 字符内）：`养大一只宠物，收下远方的信`
-- 主类别：`游戏 / 休闲`
-- 次类别：`游戏 / 模拟`
+- 主类别：`游戏`
+- 主类别子分类：`休闲`、`模拟`
 - 关键词（100 bytes 内）：`宠物,治愈,放置,收集,明信片,养成,手绘,水彩`
 - 促销文本（170 字符内）：`在手绘水彩小院里，陪一位伙伴长大。毕业不是告别：它会背起行囊，从远方寄回明信片，也会偶尔带着新故事回家。`
 
@@ -43,5 +43,5 @@ App Store 首个版本不填写“此版本的新功能”。后续版本可使�
 - 隐私政策 URL：`https://blog.gavingao.cn/petopia/privacy.html`
 - 支持 URL：`https://blog.gavingao.cn/petopia/support.html`
 - 营销 URL：`https://blog.gavingao.cn/petopia/`
-- 版权主体
-- App Review 联系人姓名、邮箱与电话
+- 版权主体：`2026 Gavin Gao`
+- App Review 联系人姓名、邮箱与电话：已在 App Store Connect 填写

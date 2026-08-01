@@ -4,8 +4,8 @@
 
 - App name (30 characters): `Petopia: Letters from Home`
 - Subtitle (30 characters): `Raise a friend, get letters`
-- Primary category: `Games / Casual`
-- Secondary category: `Games / Simulation`
+- Primary category: `Games`
+- Primary category subcategories: `Casual`, `Simulation`
 - Keywords (100 bytes):
   `pet,cozy,care,raising,postcards,watercolor,offline,collecting,simulation,relaxing`
 - Promotional text:
@@ -54,5 +54,5 @@ later update:
 - Privacy Policy URL: `https://blog.gavingao.cn/petopia/privacy.html`
 - Support URL: `https://blog.gavingao.cn/petopia/support.html`
 - Marketing URL: `https://blog.gavingao.cn/petopia/`
-- Copyright holder: owner to provide
-- App Review contact name, email, and phone: owner to provide
+- Copyright holder: `2026 Gavin Gao`
+- App Review contact name, email, and phone: completed in App Store Connect

@@ -57,6 +57,16 @@ def main() -> int:
         help="directory containing integration-test captures",
     )
     parser.add_argument(
+        "--iphone-source-dir",
+        type=Path,
+        help="optional iPhone capture directory; defaults to --source-dir",
+    )
+    parser.add_argument(
+        "--ipad-source-dir",
+        type=Path,
+        help="optional iPad capture directory; defaults to --source-dir",
+    )
+    parser.add_argument(
         "--iphone-prefix",
         default="petopia-store-en-iphone69",
         help="filename prefix for iPhone captures",
@@ -74,10 +84,16 @@ def main() -> int:
     )
     args = parser.parse_args()
 
+    sources = (
+        args.iphone_source_dir or args.source_dir,
+        args.ipad_source_dir or args.source_dir,
+    )
     prefixes = (args.iphone_prefix, args.ipad_prefix)
-    for (device, expected_size), prefix in zip(DEVICES, prefixes):
+    for (device, expected_size), prefix, source_dir in zip(
+        DEVICES, prefixes, sources
+    ):
         prepare_device(
-            source_dir=args.source_dir,
+            source_dir=source_dir,
             prefix=prefix,
             output_dir=args.output / device,
             expected_size=expected_size,

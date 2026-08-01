@@ -10,7 +10,7 @@
       "internalID" : "002C7EBB-64B6-46D6-92C1-B59BDCC6A578",
       "localizations" : [
         {
-          "description" : "A decorative treat that stays in the garden for 24 hours.",
+          "description" : "A decorative garden treat that stays for 24 hours.",
           "displayName" : "A Treat",
           "locale" : "en_US"
         },
@@ -70,7 +70,7 @@
       "internalID" : "949676BA-DAE5-4D43-9D59-1A453EC6ABF6",
       "localizations" : [
         {
-          "description" : "A permanent lantern, keepsake badge, and special letter.",
+          "description" : "Permanent lantern, keepsake badge, and special letter.",
           "displayName" : "Garden Keeper",
           "locale" : "en_US"
         },

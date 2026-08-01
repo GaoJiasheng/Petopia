@@ -293,7 +293,7 @@ class _VisualController extends GameController {
     ),
     AchievementView(
       id: 'ach_grad_3',
-      name: '小院常客',
+      name: '三段相伴',
       hidden: false,
       unlocked: false,
       progress: 2,
@@ -749,7 +749,7 @@ void main() {
             ),
             audioServiceProvider.overrideWithValue(_SilentAudio()),
             appInfoProvider.overrideWith(
-              (ref) async => const AppInfo(version: '1.0.0', buildNumber: '20'),
+              (ref) async => const AppInfo(version: '1.0.0', buildNumber: '22'),
             ),
             supportStorefrontProvider.overrideWithValue(storefront),
             supportBenefitsStoreProvider.overrideWithValue(

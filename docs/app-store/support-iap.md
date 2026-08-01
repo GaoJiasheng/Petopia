@@ -37,7 +37,7 @@ transaction ID 幂等处理；本地权益成功落盘后才完成交易，避�
 ## 商品描述
 
 `A Treat`
-: A decorative treat that stays in the garden for 24 hours.
+: A decorative garden treat that stays for 24 hours.
 
 `A Warm Lantern`
 : Keeps the garden lantern glowing for 24 hours.
@@ -46,7 +46,7 @@ transaction ID 幂等处理；本地权益成功落盘后才完成交易，避�
 : Flowers bloom in the yard for seven days.
 
 `Garden Keeper`
-: A permanent lantern, keepsake badge, and special letter.
+: Permanent lantern, keepsake badge, and special letter.
 
 简体中文描述已固化在 `ios/Runner/PetopiaSupport.storekit`。商品审核截图应使用
 支持页完整界面，不使用 TestFlight 标记、占位价格或本地调试提示。
