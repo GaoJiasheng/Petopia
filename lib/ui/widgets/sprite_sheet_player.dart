@@ -47,9 +47,7 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
     with SingleTickerProviderStateMixin {
   late final AnimationController _c = AnimationController(
     vsync: this,
-    duration:
-        widget.duration ??
-        Duration(milliseconds: (widget.frameCount / widget.fps * 1000).round()),
+    duration: _animationDuration(widget),
   );
   ui.Image? _image;
   bool _failed = false;
@@ -71,17 +69,48 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
   @override
   void didUpdateWidget(SpriteSheetPlayer oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.animate == widget.animate) return;
-    if (!widget.animate) {
+    final assetChanged = oldWidget.assetPath != widget.assetPath;
+    final timingChanged =
+        oldWidget.duration != widget.duration ||
+        oldWidget.frameCount != widget.frameCount ||
+        oldWidget.fps != widget.fps;
+    final playbackChanged =
+        oldWidget.animate != widget.animate ||
+        oldWidget.loop != widget.loop ||
+        oldWidget.playDuration != widget.playDuration ||
+        timingChanged;
+
+    if (assetChanged) {
+      _detachImageStream();
       _completionTimer?.cancel();
-      _c.stop();
-      _c.value = 0;
-    } else if (_image != null) {
-      _startPlayback();
+      _completionTimer = null;
+      _c
+        ..stop()
+        ..value = 0
+        ..duration = _animationDuration(widget);
+      _image = null;
+      _failed = false;
+      if (oldWidget.evictOnDispose) {
+        unawaited(AssetImage(oldWidget.assetPath).evict());
+      }
+      _resolveImage();
+      return;
+    }
+
+    if (timingChanged) _c.duration = _animationDuration(widget);
+    if (playbackChanged) {
+      _completionTimer?.cancel();
+      _completionTimer = null;
+      _c
+        ..stop()
+        ..value = 0;
+      if (widget.animate && _image != null) _startPlayback();
     }
   }
 
   void _startPlayback() {
+    _completionTimer?.cancel();
+    _completionTimer = null;
     if (!widget.animate) return;
     if (widget.loop) {
       _c.repeat();
@@ -127,11 +156,17 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
     stream.addListener(listener);
   }
 
+  void _detachImageStream() {
+    final stream = _stream;
+    final listener = _listener;
+    if (stream != null && listener != null) stream.removeListener(listener);
+    _stream = null;
+    _listener = null;
+  }
+
   @override
   void dispose() {
-    if (_stream != null && _listener != null) {
-      _stream!.removeListener(_listener!);
-    }
+    _detachImageStream();
     _c.dispose();
     _completionTimer?.cancel();
     if (widget.evictOnDispose) {
@@ -139,6 +174,10 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
     }
     super.dispose();
   }
+
+  static Duration _animationDuration(SpriteSheetPlayer player) =>
+      player.duration ??
+      Duration(milliseconds: (player.frameCount / player.fps * 1000).round());
 
   @override
   Widget build(BuildContext context) {

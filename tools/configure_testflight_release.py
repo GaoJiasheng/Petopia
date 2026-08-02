@@ -131,7 +131,7 @@ def _sync_build_localizations(build_id: str) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--build", default="21")
+    parser.add_argument("--build", default="23")
     args = parser.parse_args()
 
     builds = request(

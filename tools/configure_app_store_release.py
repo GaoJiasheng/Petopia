@@ -181,7 +181,7 @@ def _add_iap_review_item(submission_id: str, version_id: str) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--version", default="1.0")
-    parser.add_argument("--build", default="22")
+    parser.add_argument("--build", default="24")
     args = parser.parse_args()
 
     versions = request(

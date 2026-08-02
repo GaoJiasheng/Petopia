@@ -11,6 +11,7 @@ import 'package:petopia/app/notification_service.dart';
 import 'package:petopia/audio/audio_service.dart';
 import 'package:petopia/data/content/content_repository_impl.dart';
 import 'package:petopia/data/save/session_store.dart';
+import 'package:petopia/domain/models/game_state.dart';
 import 'package:petopia/domain/models/logs.dart';
 import 'package:petopia/domain/models/pet.dart';
 import 'package:petopia/services/clock_service.dart';
@@ -421,6 +422,57 @@ void main() {
       expect(restored, isNotNull);
       expect(restored!.current!.bornAt, services.session.current!.bornAt);
       expect(restored.current!.exp, services.session.current!.exp);
+    },
+    skip: !testFlightToolsCompiled,
+  );
+
+  test(
+    'TestFlight day advance replaces the expired visitor everywhere',
+    () async {
+      final root = await Directory.systemTemp.createTemp(
+        'petopia_testflight_visitor_advance_',
+      );
+      final clock = _MutableClock(DateTime.utc(2026, 7, 26, 10));
+      final services = _services(content: content, saveDir: root, clock: clock);
+      final frogInteraction = content.visitorInteractions.firstWhere(
+        (item) =>
+            item.visitorId == 'visitor_frog' &&
+            item.petSpeciesId == services.session.current!.speciesId,
+      );
+      services.session.activeVisitor = ActiveVisitor(
+        visitorId: 'visitor_frog',
+        arrivedAt: clock.now().subtract(const Duration(hours: 23)),
+        leavesAt: clock.now().add(const Duration(hours: 1)),
+        interactionId: frogInteraction.id,
+        withPetId: services.session.current!.id,
+        arrivalSeen: true,
+      );
+      final container = _container(
+        services: services,
+        audio: _RecordingAudio(),
+        notifications: _RecordingNotifications(),
+        distribution: _FixedDistributionEnvironment(true),
+      );
+      addTearDown(() async {
+        container.dispose();
+        await root.delete(recursive: true);
+      });
+
+      await container.read(gameControllerProvider.future);
+      final advanced = await container
+          .read(gameControllerProvider.notifier)
+          .advanceOneDayForTesting();
+      final view = container.read(gameControllerProvider).requireValue;
+
+      expect(advanced, isTrue);
+      expect(services.session.activeVisitor, isNotNull);
+      expect(services.session.activeVisitor!.visitorId, isNot('visitor_frog'));
+      expect(view.activeVisitor?.id, services.session.activeVisitor!.visitorId);
+      expect(view.visitorArrival?.id, view.activeVisitor?.id);
+      expect(
+        view.activeVisitor?.yardAsset,
+        contains('${view.activeVisitor!.id}_yard.png'),
+      );
     },
     skip: !testFlightToolsCompiled,
   );

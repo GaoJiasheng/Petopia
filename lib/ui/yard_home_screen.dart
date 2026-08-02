@@ -2382,6 +2382,7 @@ class _YardVisitorState extends State<_YardVisitor>
     final reduceMotion =
         widget.reduceEffects || MediaQuery.disableAnimationsOf(context);
     final sprite = SpriteSheetPlayer(
+      key: ValueKey<String>('visitor_sprite:${visitor.yardAsset}'),
       assetPath: visitor.yardAsset,
       size: widget.size,
       duration: profile.frameDuration,

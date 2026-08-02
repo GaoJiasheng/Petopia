@@ -56,7 +56,7 @@
       URL，并验证网页中英文切换、移动端排版和联系方式
 - [ ] 完成 App Privacy 问卷，并与 Xcode Privacy Report 复核
 - [x] 完成年龄分级问卷；当前评级为 4+，无聊天、社交媒体或 UGC
-- [x] 确认出口合规答案与 `ITSAppUsesNonExemptEncryption=false` 一致；build 22
+- [x] 确认出口合规答案与 `ITSAppUsesNonExemptEncryption=false` 一致；build 24
       已由 Apple 标记 `usesNonExemptEncryption=false`
 - [x] 填写版权主体 `2026 Gavin Gao` 与 App Review 联系人
 - [x] 粘贴 `review-notes-en-US.md` 的英文审核说明；需要中文上下文时附
@@ -70,21 +70,23 @@
 
 ## 发布控制
 
-- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `22`）
+- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `24`）
 - [x] 内测日推进工具已改为双重编译门禁：Dart 仅在
       `PETOPIA_TESTFLIGHT_TOOLS=true` 时保留入口，Swift 仅在
       `PETOPIA_TESTFLIGHT_TOOLS` 条件下注册 StoreKit 环境通道。普通 Release
       不生成按钮、不调用通道，也不能从控制器推进时间。
-- [x] 使用 `tools/build_ios_variants.sh testflight-tools 21` 构建仅供内部
-      TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 22`
-      构建无内测入口的送审包。build 22 已选为 App Store 审核版本；build 21
+- [x] 使用 `tools/build_ios_variants.sh testflight-tools 23` 构建仅供内部
+      TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 24`
+      构建无内测入口的送审包。build 24 已选为 App Store 审核版本；build 23
       仅对内部 TestFlight 组开放。
-- [x] build 21 已上传并通过 Apple 验证；Delivery UUID
-      `24ef87e7-04d8-4852-8adf-88887b0e1c41`，中英文 TestFlight App 说明与
+- [x] build 23 已上传并通过 Apple 验证；Delivery UUID
+      `d53385db-45ac-4a8b-a374-88f347e9ee9c`，中英文 TestFlight App 说明与
       “测试内容”均已填写
-- [x] build 22 已上传并通过 Apple 验证；Delivery UUID
-      `52565869-4f41-46d9-aafb-1e5cd47dfbed`，状态 `VALID` /
+- [x] build 24 已上传并通过 Apple 验证；Delivery UUID
+      `bb9c85d0-6515-4e7e-9431-701b83853eb9`，状态 `VALID` /
       `APP_STORE_ELIGIBLE`，并已关联 App 1.0 审核草稿
+- [x] build 21/22 已停用：它们的访客数据会正常跨日更新，但院子动画组件可能
+      保留上一位访客的已解码图像；build 23/24 已修复资源切换并加入回归测试
 - [x] 完整双语 build 20 已归档、通过 Apple 后处理验证并上传 TestFlight
 - [x] 2026-07-25 创建 `1.0.0 (16)` Release archive，Validate 后上传
       TestFlight；Delivery UUID `407ad891-403b-44a8-ab2b-6e7ec2bf9bbc`，
@@ -100,11 +102,12 @@
       Delivery UUID `20a4bf3d-b830-45fe-b75f-13e205638a12`，Apple 状态为
       `VALID` / `APP_STORE_ELIGIBLE`，`usesNonExemptEncryption=false`，
       并已进入 App Store Connect
-- [ ] 从 TestFlight build 18、19 或 20 覆盖安装 build 22，验证 schema 2 → 3 升级
+- [ ] 从 TestFlight build 18、19 或 20 覆盖安装 build 24，验证 schema 2 → 3 升级
 - [ ] 完成至少一次 iPhone 与 iPad 外部/内部测试
 - [ ] 检查 TestFlight 崩溃、卡死、资源缺失和通知权限行为
-- [ ] 在真机 TestFlight build 21 确认首页右上角出现 `+1` 日推进按钮；在正式
-      build 22 确认按钮不存在且控制器执行能力被编译门禁关闭
+- [ ] 在真机 TestFlight build 23 确认首页右上角出现 `+1` 日推进按钮，并验证
+      连续跨日时来客弹窗与院子模型一致；在正式 build 24 确认按钮不存在且
+      控制器执行能力被编译门禁关闭
 - [x] 已选择手动发布
 
 ## 审核草稿
