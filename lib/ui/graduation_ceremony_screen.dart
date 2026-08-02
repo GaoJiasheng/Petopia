@@ -6,6 +6,7 @@ import '../audio/audio_service.dart';
 import '../audio/route_audio.dart';
 import '../domain/enums.dart';
 import 'adaptive_layout.dart';
+import 'app_error_state.dart';
 import 'pet_art.dart';
 import 'petopia_theme.dart';
 import 'yard_art.dart';
@@ -46,31 +47,50 @@ class _GraduationCeremonyScreenState
   Bgm get routeBgm => Bgm.graduation;
 
   Future<void> _sendOff() async {
+    if (_sending) return;
     setState(() => _sending = true);
-    final stops = await ref
-        .read(gameControllerProvider.notifier)
-        .graduate(routeTheme: _routeTheme);
-    if (!mounted) return;
-    setState(() {
-      _sending = false;
-      _sent = true;
-      _stops = stops;
-    });
+    try {
+      final stops = await ref
+          .read(gameControllerProvider.notifier)
+          .graduate(routeTheme: _routeTheme);
+      if (!mounted) return;
+      setState(() {
+        _sent = true;
+        _stops = stops;
+      });
+    } catch (error, stackTrace) {
+      logUiError('graduation send-off', error, stackTrace);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: AppText('这次没有顺利出发，旅程还没有开始。请稍后再试。')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _sending = false);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final wideBackground =
+        screenSize.width >= 820 && screenSize.width > screenSize.height;
+    final night = YardArt.isNight(DateTime.now().hour);
     return Scaffold(
       backgroundColor: const Color(0xFFFBF5E9),
       body: Stack(
         fit: StackFit.expand,
         children: [
           Image.asset(
-            YardArt.themeBg('meadow'),
+            YardArt.themeBg('meadow', wide: wideBackground, night: night),
             fit: BoxFit.cover,
             alignment: Alignment.center,
           ),
-          ColoredBox(color: const Color(0xFFFCEFD6).withValues(alpha: 0.38)),
+          ColoredBox(
+            color: const Color(
+              0xFFFCEFD6,
+            ).withValues(alpha: night ? 0.16 : 0.38),
+          ),
           SafeArea(
             child: LayoutBuilder(
               builder: (context, constraints) {

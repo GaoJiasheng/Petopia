@@ -1,6 +1,6 @@
 {
-  "generated_at_local": "2026-07-02 22:00:23 +08",
-  "scanner": "ffmpeg loudnorm print_format=json",
+  "generated_at_local": "2026-08-02 18:33:39 +08",
+  "scanner": "ffmpeg loudnorm I=-16:TP=-1:LRA=7 print_format=json",
   "items": [
     {
       "asset_id": "bgm_yard_day__st1_bed",
@@ -923,43 +923,43 @@
       }
     },
     {
-      "asset_id": "bgm_shop__st1_marimba_whistle",
+      "asset_id": "bgm_shop__st1_home_motif",
       "role": "stem",
       "category": "bgm",
-      "wav": "assets/audio/bgm/stems/wav/bgm_shop__st1_marimba_whistle.wav",
-      "duration_seconds": 100.0,
+      "wav": "assets/audio/bgm/stems/wav/bgm_shop__st1_home_motif.wav",
+      "duration_seconds": 101.053,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-18.64",
-        "input_tp": "-6.16",
-        "input_lra": "3.20",
-        "input_thresh": "-29.21",
-        "output_i": "-15.76",
-        "output_tp": "-3.43",
-        "output_lra": "3.00",
-        "output_thresh": "-26.42",
+        "input_i": "-19.14",
+        "input_tp": "-5.34",
+        "input_lra": "2.30",
+        "input_thresh": "-29.32",
+        "output_i": "-16.29",
+        "output_tp": "-2.42",
+        "output_lra": "2.40",
+        "output_thresh": "-26.47",
         "normalization_type": "dynamic",
-        "target_offset": "-0.24"
+        "target_offset": "0.29"
       }
     },
     {
-      "asset_id": "bgm_shop__st2_light_perc",
+      "asset_id": "bgm_shop__st2_counter_glow",
       "role": "stem",
       "category": "bgm",
-      "wav": "assets/audio/bgm/stems/wav/bgm_shop__st2_light_perc.wav",
-      "duration_seconds": 100.0,
+      "wav": "assets/audio/bgm/stems/wav/bgm_shop__st2_counter_glow.wav",
+      "duration_seconds": 101.053,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-41.63",
-        "input_tp": "-11.42",
-        "input_lra": "2.00",
-        "input_thresh": "-51.78",
-        "output_i": "-22.87",
-        "output_tp": "-1.00",
-        "output_lra": "2.10",
-        "output_thresh": "-34.59",
+        "input_i": "-32.20",
+        "input_tp": "-21.42",
+        "input_lra": "2.50",
+        "input_thresh": "-42.20",
+        "output_i": "-15.99",
+        "output_tp": "-5.27",
+        "output_lra": "2.40",
+        "output_thresh": "-25.99",
         "normalization_type": "dynamic",
-        "target_offset": "6.87"
+        "target_offset": "-0.01"
       }
     },
     {
@@ -967,19 +967,19 @@
       "role": "mix",
       "category": "bgm",
       "wav": "assets/audio/bgm/mix/wav/bgm_shop.wav",
-      "duration_seconds": 100.0,
+      "duration_seconds": 101.053,
       "loop": true,
       "ffmpeg_loudnorm": {
-        "input_i": "-15.99",
-        "input_tp": "-3.54",
-        "input_lra": "3.20",
-        "input_thresh": "-26.97",
-        "output_i": "-15.77",
-        "output_tp": "-3.50",
-        "output_lra": "3.10",
-        "output_thresh": "-26.75",
+        "input_i": "-16.28",
+        "input_tp": "-2.39",
+        "input_lra": "2.20",
+        "input_thresh": "-26.39",
+        "output_i": "-16.29",
+        "output_tp": "-2.38",
+        "output_lra": "2.30",
+        "output_thresh": "-26.39",
         "normalization_type": "dynamic",
-        "target_offset": "-0.23"
+        "target_offset": "0.29"
       }
     },
     {

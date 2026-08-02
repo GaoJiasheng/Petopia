@@ -30,7 +30,7 @@ Petopia is a single-player, local-first companion game with on-device saves.
 5. Open the journal menu and choose Album. A new save has no delivered letters,
    so select Preview a Travel Postcard to inspect the complete reading view.
    This preview does not alter progress.
-6. Use the journal menu to inspect the compendiums, Shop, Visitor Book, and
+6. Use the journal menu to inspect the compendiums, Shop, Visitor Compendium, and
    Settings.
 7. In Settings > Garden Light > Support the Garden, inspect all four IAPs.
    Restore "Garden Keeper" is available at the bottom. The three ordinary

@@ -1,15 +1,15 @@
 {
   "bytesByCategory": {
-    "art": 37050175,
-    "audio": 23888482,
-    "content-data": 400052,
-    "runtime-art": 80907580
+    "art": 33787772,
+    "audio": 23934476,
+    "content-data": 401844,
+    "runtime-art": 82276684
   },
   "counts": {
-    "art": 197,
+    "art": 222,
     "audio": 59,
     "content-data": 10,
-    "runtime-art": 427
+    "runtime-art": 439
   },
   "declarations": {
     "generatedForPetopia": true,
@@ -127,9 +127,9 @@
     },
     {
       "asset": "assets/art/pets/dex/pet_snake_dex_color.png",
-      "bytes": 243607,
+      "bytes": 229652,
       "category": "art",
-      "sha256": "85235a66c1fc1abe1cfbc2fbb1a78f36a0ab78579bc40a75f8b99494e42e0563"
+      "sha256": "3a82e5bfec84b51d9a3aefec321f126b6a23ca94fec37aa328fa615304f0466c"
     },
     {
       "asset": "assets/art/pets/dex/pet_snake_dex_silhouette.png",
@@ -498,6 +498,12 @@
       "sha256": "26c3fed72b4b71604bbb0da31ba9d7ce5a6f6411e703cb3164c10ea9a7ebae47"
     },
     {
+      "asset": "assets/art/ui/ui_frame_offline_card.png",
+      "bytes": 437289,
+      "category": "art",
+      "sha256": "3dfc1dfe9e1890cfc66152d9ab68a930f7dae98df08644b1c5743ea5268b9b36"
+    },
+    {
       "asset": "assets/art/ui/ui_icon_ach_care.png",
       "bytes": 6091,
       "category": "art",
@@ -828,30 +834,6 @@
       "sha256": "2b2ff33c0ae8beabd9025232fad2218b3450d41667ad5845c30f48b1a6f42d84"
     },
     {
-      "asset": "assets/art/world/fx/yard_fx_dusk.webp",
-      "bytes": 1078034,
-      "category": "art",
-      "sha256": "c867392bf625496f2be12ef873f34ec2460e1ab20c534e3ba55e699870fba870",
-      "source": "assets/art/world/fx/yard_fx_dusk.png",
-      "sourceSha256": "66797a4da60b68a8a9ff3b0df66c3f111ace21ba0df461a201ca221344c77423"
-    },
-    {
-      "asset": "assets/art/world/fx/yard_fx_night.webp",
-      "bytes": 545780,
-      "category": "art",
-      "sha256": "15dc2c2d4b3df3731979cf39266d6297637dd6d03b032ef1c43e15e260bb6dae",
-      "source": "assets/art/world/fx/yard_fx_night.png",
-      "sourceSha256": "ea3ee1a79946fd221e58688fad6e5f1a751338fcf9d1069a2f9b3bb20932fc05"
-    },
-    {
-      "asset": "assets/art/world/fx/yard_fx_night_stars.webp",
-      "bytes": 564646,
-      "category": "art",
-      "sha256": "73d4e34e272b1871cac104731b45732d00f529ff6045d1462eaa085af8db88c9",
-      "source": "assets/art/world/fx/yard_fx_night_stars.png",
-      "sourceSha256": "03b040784697e48438c9796e0f107115ed352045ade567c96f68970556d1b7f2"
-    },
-    {
       "asset": "assets/art/world/fx/yard_fx_rain_overlay.webp",
       "bytes": 932956,
       "category": "art",
@@ -868,140 +850,196 @@
       "sourceSha256": "a2b44aadc25fb0914438678071159ebbe50abf9618eb01c79f96365d30e8e786"
     },
     {
-      "asset": "assets/art/world/layouts/yard_luxury02_delta.webp",
-      "bytes": 847086,
-      "category": "art",
-      "sha256": "f44dfb24436727ac8197de30c7ba57aba0bcf486e18f60514a17147d29f5806e",
-      "source": "assets/art/world/layouts/yard_luxury02_delta.png",
-      "sourceSha256": "7735e684ac78a4b701814233729e3ed1c59c3502e987f64988509eb9f39cbc07"
-    },
-    {
-      "asset": "assets/art/world/layouts/yard_luxury03_delta.webp",
-      "bytes": 1389964,
-      "category": "art",
-      "sha256": "c57336e011e7b333c2c87332f804fdfe0f6a8abee26d0367fb54babbefcbd350",
-      "source": "assets/art/world/layouts/yard_luxury03_delta.png",
-      "sourceSha256": "598e5c41acddaa05ae19bc678665d754d79f07a111499d076d530054121b6efb"
-    },
-    {
-      "asset": "assets/art/world/layouts/yard_luxury04_delta.webp",
-      "bytes": 1411492,
-      "category": "art",
-      "sha256": "2e748be35f4db3b16507edb90e569b3f19d676a07d9f958758d9f55a25139920",
-      "source": "assets/art/world/layouts/yard_luxury04_delta.png",
-      "sourceSha256": "436a3c967a1e28deae9fe6a97a2a14e458393dfa9e824a9639d2d7e6cc462110"
-    },
-    {
-      "asset": "assets/art/world/layouts/yard_luxury05_delta.webp",
-      "bytes": 1653800,
-      "category": "art",
-      "sha256": "06edf85c7d2cdb589f1d8690cd1f6b162d6767a1b154275f97fdc09c3143c52b",
-      "source": "assets/art/world/layouts/yard_luxury05_delta.png",
-      "sourceSha256": "13a6a71945f6e42464c1c9cc2a4f6cd9f5bda52ea2625b8abc75d9871835297e"
-    },
-    {
-      "asset": "assets/art/world/layouts/yard_luxury06_delta.webp",
-      "bytes": 1828174,
-      "category": "art",
-      "sha256": "7361aa8f713bd155fef195acf1eef9e4feae1860ee2ae6962234f7d3c6c78d15",
-      "source": "assets/art/world/layouts/yard_luxury06_delta.png",
-      "sourceSha256": "95bf5a4030b64b8ad61e4d1b7bdd5ae8ebd4dba0f3caf1a40f2d8e3ecc41366a"
-    },
-    {
       "asset": "assets/art/world/themes/yard_theme_autumnjam_bg.webp",
-      "bytes": 792814,
+      "bytes": 646898,
       "category": "art",
-      "sha256": "68846f5271085f41a73743099d1ed6eadd1bda96daa16002ba7a86f6682d92d4",
+      "sha256": "3120736bd36e5dc5a7b19547426c772416572a3c43e9cd75c59275c28f79585e",
       "source": "assets/art/world/exports_1290/themes/yard_theme_autumnjam_bg_1290x2796.png",
-      "sourceSha256": "704bf9d423a1199dfa1e9678d2646f31ad2f7675f1650c01045d603150e807d9"
+      "sourceSha256": "f7b0f59917ec16436cb722c193fe927e5334a0ddf24b3ac8ce79e678cef29dc5"
+    },
+    {
+      "asset": "assets/art/world/themes/yard_theme_autumnjam_bg_night.webp",
+      "bytes": 721324,
+      "category": "art",
+      "sha256": "4977e11504d58d2aac4db8e43e400c0dd350a92c898c68f08bf844063d84e7af",
+      "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_autumnjam_night.png",
+      "sourceSha256": "b54ea513a9277c50ddad1d22714f669150861edc60c538e85e952ebe87e5bdd4"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_bambootea_bg.webp",
-      "bytes": 885670,
+      "bytes": 606032,
       "category": "art",
-      "sha256": "83d055452e78343659b6900ff8a713249d3521883d84a029126f0ae3767bdac6",
+      "sha256": "4d10c809c94d1e1c5fab6b7939820c80ebf101c23f337cfa92d888b4c06d8814",
       "source": "assets/art/world/exports_1290/themes/yard_theme_bambootea_bg_1290x2796.png",
-      "sourceSha256": "4cefe05c23d6e308c0cfa99c823d30eb667d01f38ee60bf3213c5c5bfa65a140"
+      "sourceSha256": "293ba6ab4e7a35299277853db178dd1cbf2d2a03f666aa8e0aedd45e261cb745"
+    },
+    {
+      "asset": "assets/art/world/themes/yard_theme_bambootea_bg_night.webp",
+      "bytes": 524326,
+      "category": "art",
+      "sha256": "01a28cb74280507880df27acc722ddb086b4513e0ea0a5c00c38e0b0d85f3c62",
+      "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_bambootea_night.png",
+      "sourceSha256": "80cee3679aa6ac313066e88e03db6df1336f12280d234f02b1664cbb70b7900d"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_candybake_bg.webp",
-      "bytes": 665848,
+      "bytes": 583386,
       "category": "art",
-      "sha256": "45af4c6a41a5ac2a8eb9597d34a63294d42c5b86394059c1e1280033d6663772",
+      "sha256": "d49b3af3ec913c5eabb6176fca0a1ef020040a1756c2b58332a27a7c94119f50",
       "source": "assets/art/world/exports_1290/themes/yard_theme_candybake_bg_1290x2796.png",
-      "sourceSha256": "de96ad8eb90b3d8d899dd132d5239192b75b0742f65ed3c31d3c945d5c3f07f2"
+      "sourceSha256": "a5e16f21771ae2ee4eb38496f14b028533ed1b1b550cfb99861392083ac7ce16"
+    },
+    {
+      "asset": "assets/art/world/themes/yard_theme_candybake_bg_night.webp",
+      "bytes": 507348,
+      "category": "art",
+      "sha256": "7251fb6d2267843c55c79980281d8e35cb1283c226c025a87f6be820cd9c2a3f",
+      "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_candybake_night.png",
+      "sourceSha256": "568c7540422502100e6b349eb3eb574c5d6d10542137e1cfd1f4e6e92f7713ef"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_fourseasons_bg.webp",
-      "bytes": 977630,
+      "bytes": 679828,
       "category": "art",
-      "sha256": "e2d6952e77c4e9801a7736feadb892555d975b38330a00613264b631685bc97a",
+      "sha256": "788e3f503bfb8a0a92a0583d1b99aad98946b4ca4f138a9086af40f72dd8cd09",
       "source": "assets/art/world/exports_1290/themes/yard_theme_fourseasons_bg_1290x2796.png",
-      "sourceSha256": "5a048a8e0661ee3f6f46d651bb25e0050c394a23e12dbc3764b6cd1be163c4f1"
+      "sourceSha256": "dffa5a6ce7f2f5925287b62bcdefa95243a7f951d40b7b7fd574431dc9244a32"
+    },
+    {
+      "asset": "assets/art/world/themes/yard_theme_fourseasons_bg_night.webp",
+      "bytes": 642656,
+      "category": "art",
+      "sha256": "50a148069f9745c0d38b65742821c3d85b0b0d1e0456d91e74e6e88d547f9644",
+      "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_fourseasons_night.png",
+      "sourceSha256": "1c6c3464055be05d02e5ee8a5738dce57c613450ff14d6f87b42134bdee75a60"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_meadow_bg.webp",
-      "bytes": 642780,
+      "bytes": 610524,
       "category": "art",
-      "sha256": "69fae815f7ffa99772a2b8f32dc6afb607e0806860928d5db49b0e45337e21f9",
+      "sha256": "f2a1846f397120f710639994c61081b2293f546a8eb3887cf6c336172e1c09af",
       "source": "assets/art/world/exports_1290/themes/yard_theme_meadow_bg_1290x2796.png",
-      "sourceSha256": "4e39cee79c67c3e90d5b4f1d3202c91330d50a257d13e8f22596acc957b40143"
+      "sourceSha256": "3310e77ffdfbd84c76494beb713fed64b51764344bda762446102a884a82055f"
+    },
+    {
+      "asset": "assets/art/world/themes/yard_theme_meadow_bg_night.webp",
+      "bytes": 582382,
+      "category": "art",
+      "sha256": "0193b0840a0fcbbb578b42aac2cac7d6d4c258c6531dd3cdded40e4e86efbb30",
+      "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_meadow_night.png",
+      "sourceSha256": "5abf1f85dae70fece55300ce486c37e81799471964a5941e4164e9a1e2d299b1"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_moongreen_bg.webp",
-      "bytes": 867268,
+      "bytes": 634082,
       "category": "art",
-      "sha256": "1afe68936b88f41676aae8b64de2e33a584b9ff80460019ab49b96bf831ed416",
+      "sha256": "8d1a424f1bd9aeed8e1e5dac069b0cd3cdd3017a2b1ad8f7d717a388beebe51e",
       "source": "assets/art/world/exports_1290/themes/yard_theme_moongreen_bg_1290x2796.png",
-      "sourceSha256": "7ae431c7e65d132c346a7f90c478a0e2430ec104e7cc4f1deb40715bd255f17a"
+      "sourceSha256": "a0318d2855974a5e55f2830c14805ed0fb8fbe3e69f2e14b11f8e0f91f07e7d7"
+    },
+    {
+      "asset": "assets/art/world/themes/yard_theme_moongreen_bg_night.webp",
+      "bytes": 664710,
+      "category": "art",
+      "sha256": "aa0d3ea08d152e8c1f3200a016828e99fe8e49786dd155b7ab3ec4305e1a7e0e",
+      "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_moongreen_night.png",
+      "sourceSha256": "96dfc32bfdf2e4c01b0161e8d76ac2add97823c4941b82dc349c92dfdf15bcf1"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_mossrain_bg.webp",
-      "bytes": 827538,
+      "bytes": 713124,
       "category": "art",
-      "sha256": "81b6aca7dd7493f119e372ae99d49503224ae0cdad0364fe8a4af9744fc44688",
+      "sha256": "e10b3e639f2315aedc14e99583b64d344f7dfaa786e329135c3bf46e7fd37f13",
       "source": "assets/art/world/exports_1290/themes/yard_theme_mossrain_bg_1290x2796.png",
-      "sourceSha256": "6a107be95218461d8ac76afbf670661f7cf3399b086e31393d553b1b3571263c"
+      "sourceSha256": "c51761c10f672fcb3a5b770f97c575b659d601a76bb3d8a18cbea5f131427a9f"
+    },
+    {
+      "asset": "assets/art/world/themes/yard_theme_mossrain_bg_night.webp",
+      "bytes": 634636,
+      "category": "art",
+      "sha256": "4d3c94f3bf4d049424a899dc0b7d5eb600e65f860ad33da0e182b5e8dd748f84",
+      "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_mossrain_night.png",
+      "sourceSha256": "8686d39dc1d3817ff864587642ab3a0535f0ec1ce101704a6b595fc3a772fa4a"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_sakura_bg.webp",
-      "bytes": 634922,
+      "bytes": 543500,
       "category": "art",
-      "sha256": "11f2ea3b6aeb462b17db4dcb01eec6568416c06812d13acc7ab7d7062a0956a7",
+      "sha256": "193beabcf673e784ec57bf90e3b57fbb61face98fc99da72891425b3a213ba74",
       "source": "assets/art/world/exports_1290/themes/yard_theme_sakura_bg_1290x2796.png",
-      "sourceSha256": "3e4725e2a0137061d81b303696fea2f4049f816c2dcc0444e29e538343f89c99"
+      "sourceSha256": "1edc71b1b9b0579ed00d02a6158c156d0e815318be227d541513d81fb9d14e81"
+    },
+    {
+      "asset": "assets/art/world/themes/yard_theme_sakura_bg_night.webp",
+      "bytes": 481540,
+      "category": "art",
+      "sha256": "be3dad39e10f2f9b9edad2c13a508063cddd52692c78c96bfce55ecad2f9b12c",
+      "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_sakura_night.png",
+      "sourceSha256": "9296065683a866b39cd06e82cef5f83fd4a4db7fa7d9afe0cc8a23f09a0572a3"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_seaside_bg.webp",
-      "bytes": 648136,
+      "bytes": 545588,
       "category": "art",
-      "sha256": "601ed248096554b80666c8bb08c01d67a40295459845d1d22d233c4f344d6219",
+      "sha256": "db09385d9d839a0c387c0c69d7e273af11815f50612908042485d1d9308c13a2",
       "source": "assets/art/world/exports_1290/themes/yard_theme_seaside_bg_1290x2796.png",
-      "sourceSha256": "86aaf787be505fc737e1caa4e56cad284ae94ebb619187ccb4891403fed7af4b"
+      "sourceSha256": "62d038a366e029df34ebd632f39ac35ae867519b1730aa9ebd893df5f9db1944"
+    },
+    {
+      "asset": "assets/art/world/themes/yard_theme_seaside_bg_night.webp",
+      "bytes": 403572,
+      "category": "art",
+      "sha256": "82d50329a5d6b5765560bb5fc891bce747cc436b017cc244f5701f625f5186a1",
+      "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_seaside_night.png",
+      "sourceSha256": "66149ca138da012d0c664b7042071858186495e4edc7aec741d933ca331b7421"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_snowhut_bg.webp",
-      "bytes": 742160,
+      "bytes": 506644,
       "category": "art",
-      "sha256": "49630c0ff3998f9f226c0738f3c80561d94e8eec768a3c28562ca969cbc3c4b0",
+      "sha256": "e5306daebf1dbe9db3d45b18e1cc9eba472df09878d46c4a69c7c998fd4b9f1a",
       "source": "assets/art/world/exports_1290/themes/yard_theme_snowhut_bg_1290x2796.png",
-      "sourceSha256": "44a9bed515edef6a936320c1f34a0b44a7e472a4052ba5b693ac5b3eb7590956"
+      "sourceSha256": "652075d41e70176559382e18d7ef61ab3bc8f4365c2b9995ae84f4f957680049"
+    },
+    {
+      "asset": "assets/art/world/themes/yard_theme_snowhut_bg_night.webp",
+      "bytes": 456842,
+      "category": "art",
+      "sha256": "272f08f11e849528a6f4d190a7a2fa0f0cf99e3f34fbbc61e86206227f210bcd",
+      "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_snowhut_night.png",
+      "sourceSha256": "f6a980a45967b82bd4d599a970551ffccbc9de1c7a475982f25a035a2c31b95f"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_starcamp_bg.webp",
-      "bytes": 771976,
+      "bytes": 612162,
       "category": "art",
-      "sha256": "b7f094404bd4e4febb3a4e8d0dcddafe589c8a4a703210b737214badeb82e428",
+      "sha256": "a62bc98bbfb1c9d4e127c57ec6b565eea745ee430342643445d02ccb5c5eb41e",
       "source": "assets/art/world/exports_1290/themes/yard_theme_starcamp_bg_1290x2796.png",
-      "sourceSha256": "8447d5fb36b1d4d43f023b227f67aca8c0e4e2d2c05c4ab3676ba1536e931333"
+      "sourceSha256": "0016294871168a5bbbffad5124069faa8804425802a32f994f66836848f249e6"
+    },
+    {
+      "asset": "assets/art/world/themes/yard_theme_starcamp_bg_night.webp",
+      "bytes": 536016,
+      "category": "art",
+      "sha256": "d63900c54fd0d3fb64d66ad37beb63dde39d56985ee1cea2ef644b025e90c8f4",
+      "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_starcamp_night.png",
+      "sourceSha256": "f2ed3273c452f906faae8d3c9985513cce11fe091bf438cfaea7b30db51c6010"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_wheatkite_bg.webp",
-      "bytes": 827994,
+      "bytes": 731824,
       "category": "art",
-      "sha256": "536d0e846ae762317cf6b2a9e52f93a8fb2bdb8fed60eee41c65333ed3dc7e07",
+      "sha256": "5c85dc9e0ced4dcc8195c37e2a247e8c735cdbed155960385884e6cd40a0a582",
       "source": "assets/art/world/exports_1290/themes/yard_theme_wheatkite_bg_1290x2796.png",
-      "sourceSha256": "82da021f88cef72af06692fd5bf639d22be2c6f3b8c9ea360359fce7d4f743ca"
+      "sourceSha256": "462ccea7ef2f62f019e8c798cf7c2f6677f2809ac02b0894e9f638d3c1c86751"
+    },
+    {
+      "asset": "assets/art/world/themes/yard_theme_wheatkite_bg_night.webp",
+      "bytes": 546918,
+      "category": "art",
+      "sha256": "fcb5ef4db82511f2053dbcdf415f18f9bd795ce90b60292dafe2ddcf8937f5f4",
+      "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_wheatkite_night.png",
+      "sourceSha256": "bb7d33a34daa730342cb2136b51d9a9c17cb2a9389683b24ec819870f8da29f6"
     },
     {
       "asset": "assets/art/world/visitors/visitor_butterfly_portrait.png",
@@ -1016,6 +1054,12 @@
       "sha256": "93fd4bb894039479741dedd06191353064ce0dc7e493175f9dad358e65c2302d"
     },
     {
+      "asset": "assets/art/world/visitors/visitor_butterfly_yard_base.png",
+      "bytes": 30865,
+      "category": "art",
+      "sha256": "3d447096f7615e42d8710d8d5b341d70a52ba5efaf6480b1b395ef6c5f03bc3a"
+    },
+    {
       "asset": "assets/art/world/visitors/visitor_calico_portrait.png",
       "bytes": 128974,
       "category": "art",
@@ -1026,6 +1070,12 @@
       "bytes": 503930,
       "category": "art",
       "sha256": "5e07068ab76527358671aa50da4756181e28d9c511cab42f639607ce5a32a39a"
+    },
+    {
+      "asset": "assets/art/world/visitors/visitor_calico_yard_base.png",
+      "bytes": 58296,
+      "category": "art",
+      "sha256": "bfffb4066b895798e0e91547566cae2a295487203fdb201c584fe794f59d1874"
     },
     {
       "asset": "assets/art/world/visitors/visitor_crow_portrait.png",
@@ -1040,6 +1090,12 @@
       "sha256": "914bb106c1140fe4e08e7578f77c5df5be38d28e25edcf42c81d604730db4f62"
     },
     {
+      "asset": "assets/art/world/visitors/visitor_crow_yard_base.png",
+      "bytes": 46864,
+      "category": "art",
+      "sha256": "38b6e21aa2f16e6c51794ae06f7483892f413fc734198d1198466916b57c0660"
+    },
+    {
       "asset": "assets/art/world/visitors/visitor_deer_portrait.png",
       "bytes": 123887,
       "category": "art",
@@ -1050,6 +1106,12 @@
       "bytes": 614100,
       "category": "art",
       "sha256": "4a6275354e996bed1ce1adf8864e34fab11787c0819d90fdb0cd93016f734eaa"
+    },
+    {
+      "asset": "assets/art/world/visitors/visitor_deer_yard_base.png",
+      "bytes": 54735,
+      "category": "art",
+      "sha256": "6391a3bcf7e1d9b8917ab2f8aef0c7ab264ad08b65b0e251316e15f82ab9062a"
     },
     {
       "asset": "assets/art/world/visitors/visitor_egret_portrait.png",
@@ -1064,6 +1126,12 @@
       "sha256": "c730420af9df2636d93ead0fa2e69e06fb9a0d92f0359c6b6e17ed005602bde3"
     },
     {
+      "asset": "assets/art/world/visitors/visitor_egret_yard_base.png",
+      "bytes": 36219,
+      "category": "art",
+      "sha256": "4e62f22ebe215c82cb6b557fbfb7147799538fd1a5ccb521ee87fb0a286e63ed"
+    },
+    {
       "asset": "assets/art/world/visitors/visitor_emberlight_portrait.png",
       "bytes": 98884,
       "category": "art",
@@ -1074,6 +1142,12 @@
       "bytes": 309271,
       "category": "art",
       "sha256": "dca58bbdcb0772c7d67ba0a3237712728a2204605c9fe3fc4ba2d3a795770274"
+    },
+    {
+      "asset": "assets/art/world/visitors/visitor_emberlight_yard_base.png",
+      "bytes": 31626,
+      "category": "art",
+      "sha256": "0a2b368677b57f82cd136caa19667b8ae01436de80de1f6a0deea768ba7b4086"
     },
     {
       "asset": "assets/art/world/visitors/visitor_firefly_portrait.png",
@@ -1088,6 +1162,12 @@
       "sha256": "4dabc35e42c7fda58734f9160b03071b2616892ebbf6b9488e80a6b2902c8fac"
     },
     {
+      "asset": "assets/art/world/visitors/visitor_firefly_yard_base.png",
+      "bytes": 41457,
+      "category": "art",
+      "sha256": "62f740a38d1cac2e195be63f6505274526f51ed6b10d278cdf01850793ae7819"
+    },
+    {
       "asset": "assets/art/world/visitors/visitor_fox_portrait.png",
       "bytes": 126035,
       "category": "art",
@@ -1098,6 +1178,12 @@
       "bytes": 494082,
       "category": "art",
       "sha256": "a69f4279296e3164df5ec63c251122d190d3910bda6ff56ad701b6410c5e44ce"
+    },
+    {
+      "asset": "assets/art/world/visitors/visitor_fox_yard_base.png",
+      "bytes": 57839,
+      "category": "art",
+      "sha256": "8e2b23b34026527a39cbe38955017ef9b79917f879f8abb95530f3738c02698c"
     },
     {
       "asset": "assets/art/world/visitors/visitor_frog_portrait.png",
@@ -1112,6 +1198,12 @@
       "sha256": "b2726ef965dc092fb86f7ae1768bd5bc5612159e2d25e08b0cc6065b419b5af4"
     },
     {
+      "asset": "assets/art/world/visitors/visitor_frog_yard_base.png",
+      "bytes": 28576,
+      "category": "art",
+      "sha256": "9e3bcdcd0414d4c5fe6eb59ad7abc9885ec75a97284bec7a60d74f7c6106ea13"
+    },
+    {
       "asset": "assets/art/world/visitors/visitor_ghostpuff_portrait.png",
       "bytes": 91007,
       "category": "art",
@@ -1122,6 +1214,12 @@
       "bytes": 311033,
       "category": "art",
       "sha256": "18c282d3887f37d70d051db771675a6be0b93f32c9fd3d5809fcfff7234ac96c"
+    },
+    {
+      "asset": "assets/art/world/visitors/visitor_ghostpuff_yard_base.png",
+      "bytes": 37294,
+      "category": "art",
+      "sha256": "ae58481d59e8eeabfeec93c7db1edf98d3356ae7a7655f85669048b9db50587c"
     },
     {
       "asset": "assets/art/world/visitors/visitor_hedgehog_portrait.png",
@@ -1136,6 +1234,12 @@
       "sha256": "8ea2aa33a041a212bce69879ea7588852bad3dae8434866e5c5c8d87d90fda8f"
     },
     {
+      "asset": "assets/art/world/visitors/visitor_hedgehog_yard_base.png",
+      "bytes": 44679,
+      "category": "art",
+      "sha256": "36d0630ec363e1af1a2f076b1309f25046032ed805ca22bbc10508894db38017"
+    },
+    {
       "asset": "assets/art/world/visitors/visitor_owl_portrait.png",
       "bytes": 139674,
       "category": "art",
@@ -1146,6 +1250,12 @@
       "bytes": 430772,
       "category": "art",
       "sha256": "bf36e28e1b458ce8c5ce7a21d23e8ce131fb2fa506aeca7147294ba197a4543f"
+    },
+    {
+      "asset": "assets/art/world/visitors/visitor_owl_yard_base.png",
+      "bytes": 50290,
+      "category": "art",
+      "sha256": "297f6afa66f29d50bb078767824e61d6e3bfc2c3156d77a95f7c4adc67aefe99"
     },
     {
       "asset": "assets/art/world/visitors/visitor_pigeon_portrait.png",
@@ -1160,6 +1270,12 @@
       "sha256": "fe21a70e0603071b85038c5feaf97d784cc6533e2a720411f91b99506898bc5a"
     },
     {
+      "asset": "assets/art/world/visitors/visitor_pigeon_yard_base.png",
+      "bytes": 21494,
+      "category": "art",
+      "sha256": "0567aaa2095d373e7b8b4fccff8dbe2b5d18161b44b7dfa22c2323d92fc721f2"
+    },
+    {
       "asset": "assets/art/world/visitors/visitor_rainbowshade_portrait.png",
       "bytes": 111055,
       "category": "art",
@@ -1170,6 +1286,12 @@
       "bytes": 358411,
       "category": "art",
       "sha256": "e20b3b6750c8b984137eacfd313dd931f32b2f39877cc3500469a3eeb269a7ab"
+    },
+    {
+      "asset": "assets/art/world/visitors/visitor_rainbowshade_yard_base.png",
+      "bytes": 39057,
+      "category": "art",
+      "sha256": "f90510c5df65f790bee315d89aeae8e2a86667f082871526d310c83c17f2a00e"
     },
     {
       "asset": "assets/art/world/visitors/visitor_snail_portrait.png",
@@ -1184,6 +1306,12 @@
       "sha256": "952d5a7b1a8bee086196e201564df7f9f1f72b65d529953fec74d558fb4e68d9"
     },
     {
+      "asset": "assets/art/world/visitors/visitor_snail_yard_base.png",
+      "bytes": 32393,
+      "category": "art",
+      "sha256": "fc6e333b78d95898fc911404cc6e28e7781ac5f98154dad6dcdccee4c20d8836"
+    },
+    {
       "asset": "assets/art/world/visitors/visitor_snowhare_portrait.png",
       "bytes": 117448,
       "category": "art",
@@ -1194,6 +1322,12 @@
       "bytes": 412237,
       "category": "art",
       "sha256": "c713fafe0e722f692b3c62cf845a11b036c34aa6cc2051279eed45387baf2276"
+    },
+    {
+      "asset": "assets/art/world/visitors/visitor_snowhare_yard_base.png",
+      "bytes": 47807,
+      "category": "art",
+      "sha256": "f17da5f9c3d128b38123f53ddb33289ff8b5fdee2b3e74483b31bce3eefeb905"
     },
     {
       "asset": "assets/art/world/visitors/visitor_sparrow_portrait.png",
@@ -1208,6 +1342,12 @@
       "sha256": "5d7f65ce186d7e61a6c08f052e896e71e4e81758affb3457bbbafcc9493e995d"
     },
     {
+      "asset": "assets/art/world/visitors/visitor_sparrow_yard_base.png",
+      "bytes": 26213,
+      "category": "art",
+      "sha256": "b426ffe387d414faff0190f68ac07d92ca3fdcbec26e4fe13f9b688e91913dd3"
+    },
+    {
       "asset": "assets/art/world/visitors/visitor_squirrel_portrait.png",
       "bytes": 138875,
       "category": "art",
@@ -1218,6 +1358,12 @@
       "bytes": 130611,
       "category": "art",
       "sha256": "3f35e4c2d21ac827aae3b458a7a711ed6e21c78de5ab778278363568ea4d6296"
+    },
+    {
+      "asset": "assets/art/world/visitors/visitor_squirrel_yard_base.png",
+      "bytes": 31004,
+      "category": "art",
+      "sha256": "65251d970bae36341a1c1b5e54061e5c9d27534df6f80139ff95d682cb53a52f"
     },
     {
       "asset": "assets/art/world/visitors/visitor_starbug_portrait.png",
@@ -1232,6 +1378,12 @@
       "sha256": "a1e885e372b4620d860c0ba52b7f2fb672189be74def6ad4b95969e1475a38a2"
     },
     {
+      "asset": "assets/art/world/visitors/visitor_starbug_yard_base.png",
+      "bytes": 27842,
+      "category": "art",
+      "sha256": "eaf62bccc639bbe9aff8bdc96370289b24d1cc7cbb05a36326d636709ad403b7"
+    },
+    {
       "asset": "assets/art/world/visitors/visitor_tanuki_portrait.png",
       "bytes": 135626,
       "category": "art",
@@ -1242,6 +1394,12 @@
       "bytes": 493629,
       "category": "art",
       "sha256": "fb5217e34ae76043c20a87ad293e9b73576df318129c7213389117ccf66ad66b"
+    },
+    {
+      "asset": "assets/art/world/visitors/visitor_tanuki_yard_base.png",
+      "bytes": 57563,
+      "category": "art",
+      "sha256": "eb13129af306c83157150cd846a843f88c7657602a71235f4a362431a93a04ed"
     },
     {
       "asset": "assets/audio/ambient/m4a/amb_gentle_rain.m4a",
@@ -1317,9 +1475,9 @@
     },
     {
       "asset": "assets/audio/bgm/mix/m4a/bgm_shop.m4a",
-      "bytes": 1620659,
+      "bytes": 1666653,
       "category": "audio",
-      "sha256": "ae94926f22290f78c782e6205a5879f1b0032d20e2dfdf7e632b9646a3a70f32"
+      "sha256": "2015875a9ec52aed1fa1f5331ddb05eaaef9f61002659c363027f802c725d423"
     },
     {
       "asset": "assets/audio/bgm/mix/m4a/bgm_yard_day.m4a",
@@ -1599,9 +1757,9 @@
     },
     {
       "asset": "assets/data/achievements.json",
-      "bytes": 34413,
+      "bytes": 34431,
       "category": "content-data",
-      "sha256": "65e93e4d9629b15154d0b3d031faf98a070aa1ba84992a0c0fc70a0d62646224"
+      "sha256": "5b5e7076bdcb106c174ecf234a0407856bd848d879b48ae209eb8b226a521aaf"
     },
     {
       "asset": "assets/data/clue_defs.json",
@@ -1613,7 +1771,7 @@
       "asset": "assets/data/events.json",
       "bytes": 88593,
       "category": "content-data",
-      "sha256": "4bb0750b5c78927f0fc4602537cc533627ebee3892dff6700bd5d14152579058"
+      "sha256": "ea0f82cb0d29c881d3de31ca3a7789b3abb0af4d0d17b3fe2d3a9e35beb3a9fd"
     },
     {
       "asset": "assets/data/locations.json",
@@ -1629,15 +1787,15 @@
     },
     {
       "asset": "assets/data/postcard_templates.json",
-      "bytes": 130417,
+      "bytes": 132166,
       "category": "content-data",
-      "sha256": "51698376e002c06a6c4542de3b3126dc96665bc16c4b7505887d5f7ddfca8be6"
+      "sha256": "32b50cf4dc263b3cb4f54fcd1bd3fbe807f1bcab33e04de926de8732d2284081"
     },
     {
       "asset": "assets/data/shop_items.json",
-      "bytes": 13880,
+      "bytes": 13905,
       "category": "content-data",
-      "sha256": "347a59ff023500dcd6b0ee4c11c81c97a18c8e1b83b60ffb8acae87c3b42a7b0"
+      "sha256": "545aae98d304d96f88a11b01c33385c37636aa9cd858baad1b52782f36fe9213"
     },
     {
       "asset": "assets/data/species.json",
@@ -1649,7 +1807,7 @@
       "asset": "assets/data/visitor_interactions.json",
       "bytes": 88752,
       "category": "content-data",
-      "sha256": "9ffa159d988d436d098d6a3b499fd9b06382247a135f2b623c9d571c2f044753"
+      "sha256": "9271b3a52000b22e40a8cc509db6cc590ecdecd6dda6a5342edd77da30424f00"
     },
     {
       "asset": "assets/data/visitors.json",
@@ -1707,11 +1865,11 @@
     },
     {
       "asset": "assets/runtime/pets/boo/pet_boo_var01_stageC.webp",
-      "bytes": 55890,
+      "bytes": 65606,
       "category": "runtime-art",
-      "sha256": "40c813b04337a6b0cc4c0d3d65bacb9abeaf9449ba0f0cc75d9217907a130b8e",
+      "sha256": "abe4dfd932c6c8ebd0bfdc0688d9aa9afb97c488d69cd9f73cd1390ca73c2b9a",
       "source": "assets/runtime/pets/boo/pet_boo_var01_stageC.png",
-      "sourceSha256": "c9c4228a02a3c526d4f410fa4e567dcbbae7bae3119ca034dc2e19c860121604"
+      "sourceSha256": "bb6be49ac86fbdcf82bec0df8540335bba68aaf93912ab8c67e8d317e504803a"
     },
     {
       "asset": "assets/runtime/pets/boo/pet_boo_var01_stageD.webp",
@@ -4978,100 +5136,196 @@
       "sourceSha256": "03a3a30e4e601f737a3e6df79d0e04ed5c272f24ca028adf158329ced3a60ca2"
     },
     {
-      "asset": "assets/runtime/yard/themes/wide/yard_theme_autumnjam_bg_wide.webp",
-      "bytes": 1753190,
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_autumnjam_bg_night_wide.webp",
+      "bytes": 884552,
       "category": "runtime-art",
-      "sha256": "339b9e8a77ea49fd8726589efe54062381ccd254e7268d13eb9aeaf10a61c02b",
+      "sha256": "bf66ccb10dbb420004d459bab0ea4138fd71c2f735950f525714a5ba82ed19dc",
+      "source": "docs/art-review/theme-redesign/wide/night/yard_theme_autumnjam_night.png",
+      "sourceSha256": "b6b64c14595f300d8e7bf18bfe41676f8f9a3ac320098755f4f8ad19a0dbe181"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_autumnjam_bg_wide.webp",
+      "bytes": 900180,
+      "category": "runtime-art",
+      "sha256": "0d2815c0b8a07d619127d9c60b87f5a4e20a593cc8ea4f9c6f01ac705cad0fa8",
       "source": "assets/art/world/themes/wide/yard_theme_autumnjam_bg_wide.jpg",
-      "sourceSha256": "a5491f05d19bfd93e277b45e73c10124d03909a890e70da68c4e2c515366e1b7"
+      "sourceSha256": "888ad057c6bc08fcb292aaf262dd656f9bf8cadf2a597d39f2b3714c3e2e09ab"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_bambootea_bg_night_wide.webp",
+      "bytes": 761452,
+      "category": "runtime-art",
+      "sha256": "41365765ccc93f37b24037d41bc0231bc2b90092646f7aa1852c0211715ab394",
+      "source": "docs/art-review/theme-redesign/wide/night/yard_theme_bambootea_night.png",
+      "sourceSha256": "bef778b3ef36ebe817b25c17f03b5a62ed8287e9aac21e547cf15e37d9723200"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_bambootea_bg_wide.webp",
-      "bytes": 1844654,
+      "bytes": 963330,
       "category": "runtime-art",
-      "sha256": "adca973714eda108921c7febcd043d9f23d396790b25afa90ffc2fb75c95ac66",
+      "sha256": "d6a6c15578ca2c05226707aeef62646c346563c6e4ff3be839f6fa55c8fd3c9c",
       "source": "assets/art/world/themes/wide/yard_theme_bambootea_bg_wide.jpg",
-      "sourceSha256": "fdd5ac5f25ef7cc3d18472c3cbce8e572191f25c378eb3f0379b53bee677f565"
+      "sourceSha256": "83d8d0bbbd2d2695e8782c0b3248c591f5c6ba594af65da4e8ef1fc39f28bd61"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_candybake_bg_night_wide.webp",
+      "bytes": 725606,
+      "category": "runtime-art",
+      "sha256": "f6407c2287fdd4155c01c989f17a6147304ea629bff115a2a22b2776e09abfd8",
+      "source": "docs/art-review/theme-redesign/wide/night/yard_theme_candybake_night.png",
+      "sourceSha256": "d5e41fedc9015cd37b1eb10d80978bb743f009b2a667c2c4ae3c488feecf92cd"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_candybake_bg_wide.webp",
-      "bytes": 1375546,
+      "bytes": 822334,
       "category": "runtime-art",
-      "sha256": "89afd8c642b4abb85a93e2e1f9ae11f72f693850c53990cb9dc7e863e28d7080",
+      "sha256": "b8d38897c489d2b4b967224c000f950b069ae11321d83a177c06bdd1042304ea",
       "source": "assets/art/world/themes/wide/yard_theme_candybake_bg_wide.jpg",
-      "sourceSha256": "af41c7a7d59efa8ce62e2ca1c259da6fa54733884ad1e9d329f0e9db34282f03"
+      "sourceSha256": "2c74ff0f5eb02bd57a014ea5b3589c1802e0075aee87f7f0d201f9f0a0103ab9"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_fourseasons_bg_night_wide.webp",
+      "bytes": 968808,
+      "category": "runtime-art",
+      "sha256": "e0d855cba890bc41fc97ce2d03da429f76409454ac478acb3cb3d8cfb80dc219",
+      "source": "docs/art-review/theme-redesign/wide/night/yard_theme_fourseasons_night.png",
+      "sourceSha256": "c70ef1ecb33857737c21a79a61eeeef9d4e125577057fb23d2c72cf12c9340e6"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_fourseasons_bg_wide.webp",
-      "bytes": 1884664,
+      "bytes": 1505654,
       "category": "runtime-art",
-      "sha256": "a9f61ade12e6080c837d93eed5e324e146bf04a7f8c4097a253ce6ed2dcc9ae4",
+      "sha256": "190d91da42e7972e035ab875848a3c5867b2cf440f138f8dfb3880c8d7a8227d",
       "source": "assets/art/world/themes/wide/yard_theme_fourseasons_bg_wide.jpg",
-      "sourceSha256": "a38dbff00186cc4eb127e78e4af235e861c071c81f27ff29ea4a32389bf5d6d1"
+      "sourceSha256": "87437ed9b24b6146a87cb8fca7df5dd3507fb386112262283566bb4afae8a8d0"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_meadow_bg_night_wide.webp",
+      "bytes": 796244,
+      "category": "runtime-art",
+      "sha256": "b908f7331c9df9dc0c4bb6da678d3cc4ee00a8971d90b1fb96550676c72563a9",
+      "source": "docs/art-review/theme-redesign/wide/night/yard_theme_meadow_night.png",
+      "sourceSha256": "610b6af789b8fc1709ef21f88529bf5539abc03ffa44e98f0aeafedf505c22dc"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_meadow_bg_wide.webp",
-      "bytes": 1448574,
+      "bytes": 761722,
       "category": "runtime-art",
-      "sha256": "72156fb11c2d5f90b3e46c26695989c0e467cf11dbcb37870e6453fae8e4274e",
+      "sha256": "b439b072ec1aa6f67c2096a59e65ef3f42c3e88176dfb3681a58bc49cc36a0f4",
       "source": "assets/art/world/themes/wide/yard_theme_meadow_bg_wide.jpg",
-      "sourceSha256": "c62cad5935955c757a5d55cbdee1aaeee908fc4c3ddd50ed499e2a8705323d43"
+      "sourceSha256": "c602c51b5035acee2852c1f448db9f13da567f4830ec3763542469742fa18a41"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_moongreen_bg_night_wide.webp",
+      "bytes": 965146,
+      "category": "runtime-art",
+      "sha256": "8a9bb2d8161613ae02e47fa95bb83d6726118e543443140750cf8a7c3b7630da",
+      "source": "docs/art-review/theme-redesign/wide/night/yard_theme_moongreen_night.png",
+      "sourceSha256": "3da31dd5e64b3ce5f481aa1df1e891174215787d2e8fde11d8c973da4ff24195"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_moongreen_bg_wide.webp",
-      "bytes": 1645882,
+      "bytes": 986630,
       "category": "runtime-art",
-      "sha256": "f3b4b76fdf17dc08da5c3c24a10c1f41193994b4f47b870aedeb67cb73c88803",
+      "sha256": "9e77e1361983b09d442ae7ed14ba88ec9e7ce08a5e0f4931a0ea6973ae016a2d",
       "source": "assets/art/world/themes/wide/yard_theme_moongreen_bg_wide.jpg",
-      "sourceSha256": "56cb41e51a4d41e025dfce3e2ce986ce0472244a2230f877412ac65787065ab2"
+      "sourceSha256": "04fb0ca9d3bfa5e74b02d5d626324a135a217159539644d39a1fc8010212396f"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_mossrain_bg_night_wide.webp",
+      "bytes": 956818,
+      "category": "runtime-art",
+      "sha256": "6c4f515bafa97f4bd754001fc141bd9818f295704e307f854f1634adb6245739",
+      "source": "docs/art-review/theme-redesign/wide/night/yard_theme_mossrain_night.png",
+      "sourceSha256": "32466b76ac73ea6139c7d94aa8079e06f87147127bd65d94a174513a73a8920b"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_mossrain_bg_wide.webp",
-      "bytes": 1801868,
+      "bytes": 1043704,
       "category": "runtime-art",
-      "sha256": "2fc1e7d434ac17161b104c9f37c8def4ba6bfdca8a3652dbc0067f0dfce2dfce",
+      "sha256": "d862ad1b8daad55a29eeb41238f1affbabc986dca1393daa3825cc840fdf8cdc",
       "source": "assets/art/world/themes/wide/yard_theme_mossrain_bg_wide.jpg",
-      "sourceSha256": "4f79365ae7d8edfddbccfa9d544fff2ebbd7661099b9fcbbe232638a2a3d5a3a"
+      "sourceSha256": "abaf1e4226d51f395285e64c63bd353142ad2c599c7d5ca15fb2c8be261dd489"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_sakura_bg_night_wide.webp",
+      "bytes": 648932,
+      "category": "runtime-art",
+      "sha256": "b00b9426d33e05d699d6f0210e9a049d78f2bcfa1ee52d361fd7647ff19db38d",
+      "source": "docs/art-review/theme-redesign/wide/night/yard_theme_sakura_night.png",
+      "sourceSha256": "2ad624950071dcbc8e06a0acda0fcd0684c764d9cf8cdd225b5295641547e275"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_sakura_bg_wide.webp",
-      "bytes": 1522396,
+      "bytes": 774116,
       "category": "runtime-art",
-      "sha256": "1600cb3ccd9a9efe0035f6a1e24b408a6c518c0555778a0f16be5cb246ab178c",
+      "sha256": "11abf11ed789f8d2665c78d9deb1c72717b2522f3e0185ff58b9f87f4b8f092b",
       "source": "assets/art/world/themes/wide/yard_theme_sakura_bg_wide.jpg",
-      "sourceSha256": "f83d98f8a80ec760f8f84825ea41fe631f1573a59a2d1259515e538bf14384ee"
+      "sourceSha256": "5dd61fa213dec19a611775228596c784fd2327a798e23cedbd0434ff787866a5"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_seaside_bg_night_wide.webp",
+      "bytes": 662174,
+      "category": "runtime-art",
+      "sha256": "17b83741ffe1466a62849e276bd911a851919aa0c2d5a55aa18047d2643cd596",
+      "source": "docs/art-review/theme-redesign/wide/night/yard_theme_seaside_night.png",
+      "sourceSha256": "00799c4c5a95e758ea7b9b7422853db9fd0276e5a45f144bb0ca7d66e2830d42"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_seaside_bg_wide.webp",
-      "bytes": 1305266,
+      "bytes": 808130,
       "category": "runtime-art",
-      "sha256": "5b65c2400875a8fedc189e0412ca30e6454727e1d3712a6c969a2e45728a1268",
+      "sha256": "7a0d5c5b7bde4b85d144ba57978456f988ebde6c47702133b7d46afc23f55892",
       "source": "assets/art/world/themes/wide/yard_theme_seaside_bg_wide.jpg",
-      "sourceSha256": "582f6ee29aba0a9f69ba9b6fcc5196f982c0577e3c84d43115a9aa2e12e7fb65"
+      "sourceSha256": "5e92a7c8f4594f30f8fb10ab968e4ee2c3b14d3c62aeb0b6cbaafb8e0e8be11a"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_snowhut_bg_night_wide.webp",
+      "bytes": 674904,
+      "category": "runtime-art",
+      "sha256": "e4eefffaec785102f11bdb0f455222fe6c1990a08f9e0c67a2b021105578e0b7",
+      "source": "docs/art-review/theme-redesign/wide/night/yard_theme_snowhut_night.png",
+      "sourceSha256": "385fa79b7f588fff95c8462d27ee2e076f53847d74e8ea33467a7c73a24f437b"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_snowhut_bg_wide.webp",
-      "bytes": 1261248,
+      "bytes": 677418,
       "category": "runtime-art",
-      "sha256": "5d436d3a6119520cf0fc8889c29900626564802d238778d70c8db317b377d0e4",
+      "sha256": "f03fdeb3c256f1c2e00f16beeb578f1e534f45181b1ba93e8ab52ed6663bf059",
       "source": "assets/art/world/themes/wide/yard_theme_snowhut_bg_wide.jpg",
-      "sourceSha256": "4022f6e0ad0d488b3a1f50ff4bffd7583adc47e0857a7d51174eb6035ec731f2"
+      "sourceSha256": "8081f30b952cc44025bf10a91b32a1fd7569aed23c4e8baf7ef6cf61dc98a899"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_starcamp_bg_night_wide.webp",
+      "bytes": 712534,
+      "category": "runtime-art",
+      "sha256": "5086d8967068f2fec0af874e03f9649156bbdcadcc8c669a935a090bb76580d4",
+      "source": "docs/art-review/theme-redesign/wide/night/yard_theme_starcamp_night.png",
+      "sourceSha256": "70fe9c530d056ac3529ea830fd6f6aeaa4ed54ae2e1fb6428d5c54d581d0fe19"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_starcamp_bg_wide.webp",
-      "bytes": 1572962,
+      "bytes": 801872,
       "category": "runtime-art",
-      "sha256": "ac2fb22e8052617bf96d73ddfcaf79dd5dd92b325e92c81925f3a69ade652666",
+      "sha256": "193a92a81b71a4f03457f2f38dd655f9561f5e2cde4b6060c218775e4b4db631",
       "source": "assets/art/world/themes/wide/yard_theme_starcamp_bg_wide.jpg",
-      "sourceSha256": "71bb54848598236414f54e99d090d56a2670bbc905034154bcd4cf5825c2f8bc"
+      "sourceSha256": "45e4ee9ac625daf5864608d687d091a878051e84b1c66a029b8ad1610e050c40"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_wheatkite_bg_night_wide.webp",
+      "bytes": 734160,
+      "category": "runtime-art",
+      "sha256": "27437a64dbf50ab37882e834c304e917c81b4fb9f7f9d001aaa5e7b6dcb8af55",
+      "source": "docs/art-review/theme-redesign/wide/night/yard_theme_wheatkite_night.png",
+      "sourceSha256": "f20aef30a4c7cb724d6b3723f5287496fea42fefb039deee8e58773f1edb2f27"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_wheatkite_bg_wide.webp",
-      "bytes": 1628182,
+      "bytes": 867400,
       "category": "runtime-art",
-      "sha256": "0bc538cb7d62a3db89ae2f3fdf94436f53e6dda4a79f18debc17da35bfe2355a",
+      "sha256": "ccfd3b1f78c397363f9bbc50e8c472a4d38bf0526407976b579f961d3a3e1d8f",
       "source": "assets/art/world/themes/wide/yard_theme_wheatkite_bg_wide.jpg",
-      "sourceSha256": "89b4800ce7dc6dfcd828583963c268c07be7e8892d460f93da539199de1adff6"
+      "sourceSha256": "bcdbf48bdd8770f1ca0476eaeee0048a6088ac2d6c3e7f9934395c1d47f5f007"
     }
   ],
   "license": "ASSET_LICENSE applies to art and audio; LICENSE applies to code.",

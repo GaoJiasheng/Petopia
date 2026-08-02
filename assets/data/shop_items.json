@@ -543,7 +543,7 @@
     },
     {
       "id": "shop_album_paper",
-      "category": "明信片",
+      "category": "相册与皮肤",
       "name": "相册皮肤·牛皮纸",
       "price": 150,
       "effect": {
@@ -558,7 +558,7 @@
     },
     {
       "id": "shop_album_picnic",
-      "category": "明信片",
+      "category": "相册与皮肤",
       "name": "相册皮肤·蓝格纹野餐布",
       "price": 150,
       "effect": {
@@ -573,7 +573,7 @@
     },
     {
       "id": "shop_album_dried_flower",
-      "category": "明信片",
+      "category": "相册与皮肤",
       "name": "相册皮肤·干花押纸",
       "price": 200,
       "effect": {
@@ -588,8 +588,8 @@
     },
     {
       "id": "shop_album_star_chart",
-      "category": "明信片",
-      "name": "图鉴皮肤·星图夜航",
+      "category": "相册与皮肤",
+      "name": "相册皮肤·星图夜航",
       "price": 250,
       "effect": {
         "type": "albumSkin",

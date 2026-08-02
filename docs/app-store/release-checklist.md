@@ -70,15 +70,18 @@
 
 ## 发布控制
 
-- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `24`）
+- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `25`）
 - [x] 内测日推进工具已改为双重编译门禁：Dart 仅在
       `PETOPIA_TESTFLIGHT_TOOLS=true` 时保留入口，Swift 仅在
       `PETOPIA_TESTFLIGHT_TOOLS` 条件下注册 StoreKit 环境通道。普通 Release
       不生成按钮、不调用通道，也不能从控制器推进时间。
-- [x] 使用 `tools/build_ios_variants.sh testflight-tools 23` 构建仅供内部
+- [x] 使用 `tools/build_ios_variants.sh testflight-tools 25` 构建仅供内部
       TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 24`
-      构建无内测入口的送审包。build 24 已选为 App Store 审核版本；build 23
+      构建无内测入口的送审包。build 24 已选为 App Store 审核版本；build 25
       仅对内部 TestFlight 组开放。
+- [x] build 25 已上传并通过 Apple 验证；Apple Build ID
+      `3aba2ccf-a91a-49b3-80ff-9da1b91d3362`，已加入内部组 `test001`，
+      中英文“测试内容”均已填写，非豁免加密为“否”
 - [x] build 23 已上传并通过 Apple 验证；Delivery UUID
       `d53385db-45ac-4a8b-a374-88f347e9ee9c`，中英文 TestFlight App 说明与
       “测试内容”均已填写
@@ -105,7 +108,7 @@
 - [ ] 从 TestFlight build 18、19 或 20 覆盖安装 build 24，验证 schema 2 → 3 升级
 - [ ] 完成至少一次 iPhone 与 iPad 外部/内部测试
 - [ ] 检查 TestFlight 崩溃、卡死、资源缺失和通知权限行为
-- [ ] 在真机 TestFlight build 23 确认首页右上角出现 `+1` 日推进按钮，并验证
+- [ ] 在真机 TestFlight build 25 确认首页右上角出现 `+1` 日推进按钮，并验证
       连续跨日时来客弹窗与院子模型一致；在正式 build 24 确认按钮不存在且
       控制器执行能力被编译门禁关闭
 - [x] 已选择手动发布

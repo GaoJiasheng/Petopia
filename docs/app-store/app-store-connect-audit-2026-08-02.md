@@ -31,14 +31,15 @@ build 22 因访客切换时动画组件可能保留上一位访客的已解码�
 
 | 项目 | 已验证状态 |
 | --- | --- |
-| 内测构建 | build 23，`VALID`，带编译隔离的 `+1` 日推进工具 |
-| 内部测试组 | 1 个内部组，启用所有构建访问 |
+| 内测构建 | build 25，Apple 已验证，带编译隔离的 `+1` 日推进工具 |
+| 内部测试组 | `test001`，1 位内部测试员，可访问 build 25 |
 | TestFlight App 信息 | English (U.S.) 与简体中文描述、反馈邮箱、营销和隐私 URL 已填写 |
-| 测试内容 | build 23 的中英文说明已填写，明确 `+1` 仅存在于内测构建 |
+| 测试内容 | build 25 的中英文说明已填写，明确 `+1` 仅存在于内测构建 |
 
 ## 二进制门禁
 
-- build 23：原生环境通道与 Dart `+1` 标记均存在，供内部测试。
+- build 25：原生环境通道与 Dart `+1` 标记均存在，供内部测试；Apple Build ID
+  `3aba2ccf-a91a-49b3-80ff-9da1b91d3362`。
 - build 24：原生环境通道与 Dart `+1` 标记均不存在，签名验证通过。
 - 两个构建均声明 `ITSAppUsesNonExemptEncryption=false`。
 
@@ -47,5 +48,5 @@ build 22 因访客切换时动画组件可能保留上一位访客的已解码�
 - Apple Developer Program、Paid Applications Agreement、税务和银行状态确认。
 - EU Digital Services Act trader / non-trader 法律身份声明。
 - 生成式美术、字体、音频和第三方依赖商业发行权的最终主体确认。
-- build 23 真机连续跨日、Sandbox 购买、真实 iPhone/iPad 性能验收，以及最终点击
+- build 25 真机连续跨日、Sandbox 购买、真实 iPhone/iPad 性能验收，以及最终点击
   “提交审核”。

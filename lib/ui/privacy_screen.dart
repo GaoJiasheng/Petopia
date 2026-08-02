@@ -104,10 +104,12 @@ class _PolicyLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return OutlinedButton.icon(
       onPressed: () async {
-        final opened = await launchUrl(
-          uri,
-          mode: LaunchMode.externalApplication,
-        );
+        var opened = false;
+        try {
+          opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+        } catch (_) {
+          opened = false;
+        }
         if (!opened && context.mounted) {
           ScaffoldMessenger.of(
             context,

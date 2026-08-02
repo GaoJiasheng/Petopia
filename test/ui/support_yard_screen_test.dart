@@ -46,6 +46,38 @@ void main() {
     });
   }
 
+  testWidgets('support cards remain readable at accessibility text sizes', (
+    tester,
+  ) async {
+    final storefront = _UiStorefront();
+    addTearDown(storefront.dispose);
+    await tester.binding.setSurfaceSize(const Size(820, 1180));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          supportStorefrontProvider.overrideWithValue(storefront),
+          supportBenefitsStoreProvider.overrideWithValue(_UiBenefitsStore()),
+        ],
+        child: const MaterialApp(
+          home: MediaQuery(
+            data: MediaQueryData(
+              size: Size(820, 1180),
+              textScaler: TextScaler.linear(3.2),
+            ),
+            child: SupportYardScreen(),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(find.text('支持选项'), findsOneWidget);
+    expect(find.byType(OverflowBar), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('guardian state reveals the permanent thank-you letter', (
     tester,
   ) async {

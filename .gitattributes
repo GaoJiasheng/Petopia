@@ -7,3 +7,9 @@ assets/audio/**/*.wav filter=lfs diff=lfs merge=lfs -text
 assets/audio/**/*.ogg filter=lfs diff=lfs merge=lfs -text
 assets/audio/**/*.mp3 filter=lfs diff=lfs merge=lfs -text
 assets/audio/**/*.aac filter=lfs diff=lfs merge=lfs -text
+docs/art-review/**/*.png filter=lfs diff=lfs merge=lfs -text
+docs/art-review/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+docs/art-review/**/*.jpeg filter=lfs diff=lfs merge=lfs -text
+docs/art-sources/**/*.png filter=lfs diff=lfs merge=lfs -text
+docs/art-sources/**/*.jpg filter=lfs diff=lfs merge=lfs -text
+docs/art-sources/**/*.jpeg filter=lfs diff=lfs merge=lfs -text

@@ -283,9 +283,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   }
 
   Future<void> _openExternal(Uri uri) async {
-    final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
-    if (!opened && mounted) {
-      setState(() => _status = '暂时无法打开网页，请稍后再试。');
+    try {
+      final opened = await launchUrl(uri, mode: LaunchMode.externalApplication);
+      if (!opened && mounted) {
+        setState(() => _status = '暂时无法打开网页，请稍后再试。');
+      }
+    } catch (error, stackTrace) {
+      logUiError('open external link', error, stackTrace);
+      if (mounted) setState(() => _status = '暂时无法打开网页，请稍后再试。');
     }
   }
 
@@ -355,8 +360,12 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         _backupBusy = false;
         _status = '存档已经恢复。';
       });
+      final messenger = ScaffoldMessenger.of(context);
       ref.invalidate(gameControllerProvider);
       Navigator.of(context).pop();
+      messenger
+        ..hideCurrentSnackBar()
+        ..showSnackBar(const SnackBar(content: AppText('存档已经恢复。')));
     } catch (error, stackTrace) {
       logUiError('save import', error, stackTrace);
       if (mounted) setState(() => _status = '导入没有完成，当前院子保持不变。');
@@ -894,7 +903,7 @@ class _AboutCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          const _InfoLine(label: '应用', value: 'Petopia'),
+          const _InfoLine(label: '应用名称', value: 'Petopia'),
           const SizedBox(height: 10),
           _InfoLine(label: '版本', value: version),
           const SizedBox(height: 10),

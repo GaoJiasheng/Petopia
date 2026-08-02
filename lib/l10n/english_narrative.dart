@@ -400,7 +400,7 @@ abstract final class EnglishNarrative {
   static const Map<String, String>
   _legendaryVisitorInteractions = <String, String>{
     'vpi_l_starbug_any':
-        'Your friend held their breath as a point of light blinked among the grass. For a moment, even the visitor book seemed to glow.',
+        'Your friend held their breath as a point of light blinked among the grass. For a moment, even the Visitor Compendium seemed to glow.',
     'vpi_l_flame_any':
         'A flame that should not have been there danced beside the hearth. You both saw it, and neither of you broke the quiet.',
     'vpi_l_white_any':

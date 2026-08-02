@@ -291,9 +291,6 @@ abstract final class EnglishCopy {
     match = RegExp(r'^暖绒 (\d+)，打开商店$').firstMatch(source);
     if (match != null) return '${match[1]} Sunfluff · Open shop';
 
-    match = RegExp(r'^绒光 (\d+)，打开商店$').firstMatch(source);
-    if (match != null) return '${match[1]} Sunfluff · Open shop';
-
     match = RegExp(r'^(.+)来客缘分 \+(\d+)%$').firstMatch(source);
     if (match != null) {
       return '+${match[2]}% chance for ${_term(match[1]!).toLowerCase()} visitors';
@@ -318,7 +315,7 @@ abstract final class EnglishCopy {
 
     match = RegExp(r'^首次 (\d{4})\.(\d{2})\.(\d{2})$').firstMatch(source);
     if (match != null) {
-      return 'First seen ${int.parse(match[2]!)}/${int.parse(match[3]!)}';
+      return 'First seen ${int.parse(match[2]!)}/${int.parse(match[3]!)}/${match[1]}';
     }
 
     match = RegExp(r'^首次 (.+)$').firstMatch(source);
@@ -450,8 +447,8 @@ abstract final class EnglishCopy {
     '第一次目送': 'First Farewell',
     '三段相伴': 'Three Shared Journeys',
     '五段相伴': 'Five Shared Journeys',
-    '八次启程': 'Eight Departures',
-    '十二段相伴': 'Twelve Shared Journeys',
+    '八种伙伴': 'Eight Kinds of Friends',
+    '十二页图鉴': 'Twelve Compendium Pages',
     '第一次长大': 'First Growth Spurt',
     '初见成年': 'First Grown-Up Form',
     '六十个早安': 'Sixty Good Mornings',
@@ -619,6 +616,9 @@ abstract final class EnglishCopy {
     '鸽子咕咕': 'Coo the Pigeon',
     '松鼠栗栗': 'Chestnut the Squirrel',
     '乌鸦亮亮': 'Shiny the Crow',
+    '松鼠': 'Squirrel',
+    '蝴蝶': 'Butterfly',
+    '特别': 'Special',
     '青蛙呱太': 'Ribbit the Frog',
     '萤火虫群': 'Firefly Parade',
     '橘色狸猫': 'Ginger Tanuki',
@@ -667,7 +667,8 @@ abstract final class EnglishCopy {
     '相册皮肤·牛皮纸': 'Album Cover · Kraft Paper',
     '相册皮肤·蓝格纹野餐布': 'Album Cover · Blue Picnic Check',
     '相册皮肤·干花押纸': 'Album Cover · Pressed Flowers',
-    '图鉴皮肤·星图夜航': 'Compendium Cover · Star Chart',
+    '相册皮肤·星图夜航': 'Album Cover · Star Chart',
+    '相册与皮肤': 'Albums & Covers',
 
     // Content categories.
     '乡野': 'Countryside',
@@ -724,6 +725,12 @@ abstract final class EnglishCopy {
     '继续': 'Continue',
     '确认': 'Confirm',
     '再试一次': 'Try Again',
+    '这次没有顺利出发，旅程还没有开始。请稍后再试。':
+        'The journey has not started yet. Please try again.',
+    '小院暂时没能记下这一步，请再试一次。':
+        'The garden could not save that step. Please try again.',
+    '这次没能迎接它进院子，请再试一次。':
+        'Your new friend could not move in yet. Please try again.',
     '读取中': 'Loading',
     '正在连接': 'Connecting',
     '测试：推进一天': 'Testing: advance one day',
@@ -792,7 +799,8 @@ abstract final class EnglishCopy {
     '已拥有': 'Owned',
     '使用中': 'In Use',
     '应用': 'Use',
-    '暖绒不够': 'Not Enough Sunfluff',
+    '应用名称': 'App',
+    '暖绒不足': 'Not Enough Sunfluff',
     '全部': 'All',
     '院子主题': 'Garden Themes',
     '装饰小物': 'Decor',
@@ -848,10 +856,10 @@ abstract final class EnglishCopy {
     '可领养': 'Available',
     '未遇见': 'Not Met',
     '来客图鉴': 'Visitor Compendium',
-    '来客图鉴暂时没有翻开': 'The visitor book is temporarily unavailable',
-    '来客册还是空白页': 'The visitor book is still blank',
-    '等院子里有访客停留，这里会贴上第一张小贴纸。':
-        'Your first visitor sticker will appear after someone stops by.',
+    '来客图鉴暂时没有翻开': 'The Visitor Compendium is temporarily unavailable',
+    '来客册还是空白页': 'The Visitor Compendium is still blank',
+    '等院子里有来客停留，这里会贴上第一张小贴纸。':
+        'Your first Visitor Compendium entry will appear after someone stops by.',
     '尚未收录的来客': 'Undiscovered Visitor',
     '常见': 'Common',
     '不常见': 'Uncommon',
@@ -963,11 +971,11 @@ abstract final class EnglishCopy {
     '等第一位朋友入住后，这里会贴上新的小标签。':
         'New notes will appear after your first friend moves in.',
     '今天的来客': "Today's Visitor",
-    '访客': 'Visitor',
+    '来客': 'Visitor',
     '院子里来了新朋友': 'A New Friend Stopped By',
     '和它打个招呼': 'Say Hello',
-    '收进来客图鉴': 'Save to Visitor Book',
-    '这段相遇已经收进来客图鉴。': 'This meeting is now tucked into your visitor book.',
+    '收进来客图鉴': 'Save to Visitor Compendium',
+    '这段相遇已经收进来客图鉴。': 'This meeting is now saved in your Visitor Compendium.',
     '老朋友回访': 'An Old Friend Returns',
     '回访': 'Returning Friend',
     '远方': 'From Afar',
@@ -1119,7 +1127,7 @@ abstract final class EnglishCopy {
     '道具加成': 'Item Bonus',
     '院子布置': 'Garden Layout',
     '院子布置暂时没有打开': 'Garden layout is temporarily unavailable',
-    '院子来客贴纸册': 'Garden Visitor Sticker Book',
+    '院子来客贴纸册': 'Visitor Compendium',
     '预览旅行明信片': 'Preview a Travel Postcard',
     '四季花园 5 折券': 'Four Seasons Garden · 50% Off',
     '糖果焙房 8 折券': 'Candy Bakehouse · 20% Off',

@@ -40,3 +40,12 @@ build/
 # ── 其他 ───────────────────────────────────────
 *.log
 coverage/
+
+# Regenerable visual-QA captures stay local for manual review. Commit the
+# accompanying README files, but keep hundreds of device renders out of LFS.
+docs/art-review/theme-placement-regression-*/**/*.png
+docs/art-review/theme-placement-regression-*/**/*.jpg
+docs/art-review/theme-placement-regression-*/**/*.jpeg
+docs/art-review/theme-redesign/**/*.png
+docs/art-review/theme-redesign/**/*.jpg
+docs/art-review/theme-redesign/**/*.jpeg

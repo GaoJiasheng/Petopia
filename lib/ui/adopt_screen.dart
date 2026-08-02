@@ -7,6 +7,7 @@ import '../audio/route_audio.dart';
 import '../l10n/petopia_localizations.dart';
 import '../l10n/petopia_text.dart';
 import 'adaptive_layout.dart';
+import 'app_error_state.dart';
 import 'pet_art.dart';
 import 'petopia_theme.dart';
 
@@ -43,9 +44,20 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen>
     final id = _selectedId;
     if (id == null || _adopting) return;
     setState(() => _adopting = true);
-    await ref.read(gameControllerProvider.notifier).adopt(id, _nameCtrl.text);
-    if (!mounted) return;
-    Navigator.of(context).pop();
+    try {
+      await ref.read(gameControllerProvider.notifier).adopt(id, _nameCtrl.text);
+      if (!mounted) return;
+      Navigator.of(context).pop();
+    } catch (error, stackTrace) {
+      logUiError('adopt pet', error, stackTrace);
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: AppText('这次没能迎接它进院子，请再试一次。')));
+      }
+    } finally {
+      if (mounted) setState(() => _adopting = false);
+    }
   }
 
   @override

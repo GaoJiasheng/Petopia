@@ -631,7 +631,7 @@ String _sourceLabel(ExpSource source) {
     ExpSource.offline => '离线陪伴',
     ExpSource.eventDaily => '日常事件',
     ExpSource.eventSpecial => '特别事件',
-    ExpSource.visitor => '访客',
+    ExpSource.visitor => '来客',
     ExpSource.revisit => '回访',
     ExpSource.itemBonus => '道具加成',
   };

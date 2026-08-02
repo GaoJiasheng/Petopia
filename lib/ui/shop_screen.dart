@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
@@ -82,6 +85,10 @@ class _ShopScreenState extends ConsumerState<ShopScreen>
           .buy(item.id);
       if (!mounted) return;
       final discount = item.discountLabel;
+      if (success) {
+        unawaited(ref.read(audioServiceProvider).sfx(Sfx.tapSoft));
+        unawaited(HapticFeedback.lightImpact());
+      }
       _showMessage(
         success
             ? discount == null
@@ -529,12 +536,16 @@ class _SectionHeader extends StatelessWidget {
       children: [
         AppIcon(iconName, size: 20, fallback: fallbackIcon),
         const SizedBox(width: 8),
-        AppText(
-          title,
-          style: const TextStyle(
-            color: ShopScreen._ink,
-            fontSize: 18,
-            fontWeight: FontWeight.w900,
+        Flexible(
+          child: AppText(
+            title,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              color: ShopScreen._ink,
+              fontSize: 18,
+              fontWeight: FontWeight.w900,
+            ),
           ),
         ),
         const SizedBox(width: 10),
@@ -714,7 +725,7 @@ class _ShopItemCard extends StatelessWidget {
     if (item.active) return '使用中';
     if (_canApply) return '应用';
     if (item.owned) return '已拥有';
-    if (!item.affordable) return '暖绒不够';
+    if (!item.affordable) return '暖绒不足';
     return '兑换';
   }
 }

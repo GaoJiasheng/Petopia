@@ -361,7 +361,7 @@ def main() -> None:
     assert len(encounters_en) == len(encounters) == 60
     assert len(incidents_en) == len(incidents) == 60
     assert len(visitor_interactions) == 244
-    assert len(patterns) == 98
+    assert len(patterns) == 97
 
     english_values = [
         *terms.values(),

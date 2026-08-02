@@ -190,7 +190,16 @@ class AudioplayersAudioService implements AudioService {
         /* 无声降级 */
       }
     }
-    if (!_musicEnabled || _interrupted) return;
+    if (!_musicEnabled || _interrupted) {
+      if (yardContext &&
+          _effectsEnabled &&
+          !_interrupted &&
+          _currentAmbience != null) {
+        await initialize();
+        await _resumeOrLoadAmbience(_currentAmbience!);
+      }
+      return;
+    }
     await initialize();
     final request = ++_bgmRequest;
     try {
@@ -246,7 +255,9 @@ class AudioplayersAudioService implements AudioService {
         !_isYardBgm(_current!)) {
       return;
     }
-    if (previous == ambience && _loadedAmbience == ambience) {
+    if (previous == ambience &&
+        _loadedAmbience == ambience &&
+        _ambience.state == PlayerState.playing) {
       return;
     }
     await initialize();

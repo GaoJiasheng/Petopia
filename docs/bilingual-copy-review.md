@@ -8,9 +8,9 @@
 
 | 领域 | 数量 | 当前英文策略 | 审阅重点 |
 | --- | --- | --- | --- |
-| 固定 UI | 368 | 逐条人工英文 | 按钮、标题、说明、空状态 |
-| 名称与短语 | 257 | 逐条人工英文 | 物种、性格、商店、成就、地点 |
-| 动态 UI | 98 | 98 条参数化规则 | 数字、宠物名、日期、进度 |
+| 固定 UI | 375 | 逐条人工英文 | 按钮、标题、说明、空状态 |
+| 名称与短语 | 261 | 逐条人工英文 | 物种、性格、商店、成就、地点 |
+| 动态 UI | 97 | 98 条参数化规则 | 数字、宠物名、日期、进度 |
 | 事件 | 120 | 120 个事件逐条英文 | 标题、正文、30 个选择及结果 |
 | 明信片 | 240 | 240 个中文模板映射到 30 个英文性格模板 | 英文保留性格，但未逐张直译中文梗 |
 | 旅途片段 | 120 | 120 条逐条英文 | 遭遇与小插曲 |
@@ -81,8 +81,14 @@
 | 继续 | Continue |
 | 确认 | Confirm |
 | 再试一次 | Try Again |
+| 这次没有顺利出发，旅程还没有开始。请稍后再试。 | The journey has not started yet. Please try again. |
+| 小院暂时没能记下这一步，请再试一次。 | The garden could not save that step. Please try again. |
+| 这次没能迎接它进院子，请再试一次。 | Your new friend could not move in yet. Please try again. |
 | 读取中 | Loading |
 | 正在连接 | Connecting |
+| 测试：推进一天 | Testing: advance one day |
+| 正在推进内测时间 | Advancing test time |
+| 内测时间已推进 1 天 | Test time advanced by 1 day |
 | 设置暂时没有翻开 | Settings are temporarily unavailable |
 | 音乐和互动音效可以分别保留。 | Choose music and interaction sounds separately. |
 | 院子、相册和毕业旅程的情境音乐。 | Music for the garden, album, and journeys. |
@@ -131,7 +137,8 @@
 | 已拥有 | Owned |
 | 使用中 | In Use |
 | 应用 | Use |
-| 暖绒不够 | Not Enough Sunfluff |
+| 应用名称 | App |
+| 暖绒不足 | Not Enough Sunfluff |
 | 全部 | All |
 | 院子主题 | Garden Themes |
 | 装饰小物 | Decor |
@@ -177,9 +184,9 @@
 | 可领养 | Available |
 | 未遇见 | Not Met |
 | 来客图鉴 | Visitor Compendium |
-| 来客图鉴暂时没有翻开 | The visitor book is temporarily unavailable |
-| 来客册还是空白页 | The visitor book is still blank |
-| 等院子里有访客停留，这里会贴上第一张小贴纸。 | Your first visitor sticker will appear after someone stops by. |
+| 来客图鉴暂时没有翻开 | The Visitor Compendium is temporarily unavailable |
+| 来客册还是空白页 | The Visitor Compendium is still blank |
+| 等院子里有来客停留，这里会贴上第一张小贴纸。 | Your first Visitor Compendium entry will appear after someone stops by. |
 | 尚未收录的来客 | Undiscovered Visitor |
 | 常见 | Common |
 | 不常见 | Uncommon |
@@ -283,11 +290,11 @@
 | 院子记住的事 | Garden Memories |
 | 等第一位朋友入住后，这里会贴上新的小标签。 | New notes will appear after your first friend moves in. |
 | 今天的来客 | Today's Visitor |
-| 访客 | Visitor |
+| 来客 | Visitor |
 | 院子里来了新朋友 | A New Friend Stopped By |
 | 和它打个招呼 | Say Hello |
-| 收进来客图鉴 | Save to Visitor Book |
-| 这段相遇已经收进来客图鉴。 | This meeting is now tucked into your visitor book. |
+| 收进来客图鉴 | Save to Visitor Compendium |
+| 这段相遇已经收进来客图鉴。 | This meeting is now saved in your Visitor Compendium. |
 | 老朋友回访 | An Old Friend Returns |
 | 回访 | Returning Friend |
 | 远方 | From Afar |
@@ -403,7 +410,7 @@
 | 道具加成 | Item Bonus |
 | 院子布置 | Garden Layout |
 | 院子布置暂时没有打开 | Garden layout is temporarily unavailable |
-| 院子来客贴纸册 | Garden Visitor Sticker Book |
+| 院子来客贴纸册 | Visitor Compendium |
 | 预览旅行明信片 | Preview a Travel Postcard |
 | 四季花园 5 折券 | Four Seasons Garden · 50% Off |
 | 糖果焙房 8 折券 | Candy Bakehouse · 20% Off |
@@ -459,8 +466,8 @@
 | 第一次目送 | First Farewell |
 | 三段相伴 | Three Shared Journeys |
 | 五段相伴 | Five Shared Journeys |
-| 八次启程 | Eight Departures |
-| 十二段相伴 | Twelve Shared Journeys |
+| 八种伙伴 | Eight Kinds of Friends |
+| 十二页图鉴 | Twelve Compendium Pages |
 | 第一次长大 | First Growth Spurt |
 | 初见成年 | First Grown-Up Form |
 | 六十个早安 | Sixty Good Mornings |
@@ -615,6 +622,9 @@
 | 鸽子咕咕 | Coo the Pigeon |
 | 松鼠栗栗 | Chestnut the Squirrel |
 | 乌鸦亮亮 | Shiny the Crow |
+| 松鼠 | Squirrel |
+| 蝴蝶 | Butterfly |
+| 特别 | Special |
 | 青蛙呱太 | Ribbit the Frog |
 | 萤火虫群 | Firefly Parade |
 | 橘色狸猫 | Ginger Tanuki |
@@ -661,7 +671,8 @@
 | 相册皮肤·牛皮纸 | Album Cover · Kraft Paper |
 | 相册皮肤·蓝格纹野餐布 | Album Cover · Blue Picnic Check |
 | 相册皮肤·干花押纸 | Album Cover · Pressed Flowers |
-| 图鉴皮肤·星图夜航 | Compendium Cover · Star Chart |
+| 相册皮肤·星图夜航 | Album Cover · Star Chart |
+| 相册与皮肤 | Albums & Covers |
 | 乡野 | Countryside |
 | 山地 | Highlands |
 | 奇幻 | Wonderlands |
@@ -755,14 +766,13 @@
 | ^第一次见面：(.+)$ | 'First met: ${match[1]}' |
 | ^第一程：(.+) · (.+)$ | 'First route: ${_term(match[1]!)} · ${match[2]}' |
 | ^暖绒 (\d+)，打开商店$ | '${match[1]} Sunfluff · Open shop' |
-| ^绒光 (\d+)，打开商店$ | '${match[1]} Sunfluff · Open shop' |
 | ^(.+)来客缘分 \+(\d+)%$ | '+${match[2]}% chance for ${_term(match[1]!).toLowerCase()} visitors' |
 | ^下一次使用时，经验提升至 (\d+) 点$ | 'Raises the next care action to ${match[1]} XP' |
 | ^永久拥有，玩耍经验提升至 (\d+) 点$ | 'Permanent · Play actions grant ${match[1]} XP' |
 | ^达成成就：(.+)$ | 'Achievement unlocked: ${_term(match[1]!)}' |
 | ^进度 (\d+) / (\d+)，奖励 (.+)$ | 'Progress ${match[1]} of ${match[2]} · Reward: ${translate(match[3]!)}' |
 | ^陪伴经验 \+(\d+)$ | 'Friendship XP +${match[1]}' |
-| ^首次 (\d{4})\.(\d{2})\.(\d{2})$ | 'First seen ${int.parse(match[2]!)}/${int.parse(match[3]!)}' |
+| ^首次 (\d{4})\.(\d{2})\.(\d{2})$ | 'First seen ${int.parse(match[2]!)}/${int.parse(match[3]!)}/${match[1]}' |
 | ^首次 (.+)$ | 'First seen ${match[1]}' |
 | ^再送 (\d+) 只毕业就能遇见它$ | 'Help ${match[1]} more friends graduate to meet this one' |
 | ^摸摸(.+)，听听今天的心情$ | 'Pet ${_term(match[1]!)} and see how today feels' |
@@ -918,15 +928,15 @@
 | shop_album_paper | 相册皮肤·牛皮纸 | Album Cover · Kraft Paper |
 | shop_album_picnic | 相册皮肤·蓝格纹野餐布 | Album Cover · Blue Picnic Check |
 | shop_album_dried_flower | 相册皮肤·干花押纸 | Album Cover · Pressed Flowers |
-| shop_album_star_chart | 图鉴皮肤·星图夜航 | Compendium Cover · Star Chart |
+| shop_album_star_chart | 相册皮肤·星图夜航 | Album Cover · Star Chart |
 
 | ID | 字段 | 中文 | English |
 | --- | --- | --- | --- |
 | ach_first_grad | 名称 | 第一次目送 | First Farewell |
 | ach_grad_3 | 名称 | 三段相伴 | Three Shared Journeys |
 | ach_grad_5 | 名称 | 五段相伴 | Five Shared Journeys |
-| ach_grad_8 | 名称 | 八次启程 | Eight Departures |
-| ach_grad_12 | 名称 | 十二段相伴 | Twelve Shared Journeys |
+| ach_grad_8 | 名称 | 八种伙伴 | Eight Kinds of Friends |
+| ach_grad_12 | 名称 | 十二页图鉴 | Twelve Compendium Pages |
 | ach_evolve_first | 名称 | 第一次长大 | First Growth Spurt |
 | ach_lv8_first | 名称 | 初见成年 | First Grown-Up Form |
 | ach_daily_care_60 | 名称 | 六十个早安 | Sixty Good Mornings |
@@ -1047,7 +1057,7 @@
 | ev_d04 | 标题 | 藏手套 | The Hidden Glove |
 | ev_d04 | 正文 | 把你落在院里的手套拖进了窝，郑重宣布归自己保管。 | They dragged the glove you left outside into their bed and solemnly claimed it for safekeeping. |
 | ev_d05 | 标题 | 偷吃 | Quality Inspection |
-| ev_d05 | 正文 | 偷吃访客食盘被抓包，装作在检查食物质量。 | Caught nibbling from the visitor dish, they pretended to be checking the food quality. |
+| ev_d05 | 正文 | 偷吃来客食盘被抓包，装作在检查食物质量。 | Caught nibbling from the visitor dish, they pretended to be checking the food quality. |
 | ev_d06 | 标题 | 喷嚏 | Surprise Sneeze |
 | ev_d06 | 正文 | 被自己的喷嚏吓得原地弹起。 | Their own sneeze startled them into a quick jump straight upward. |
 | ev_d07 | 标题 | 诗朗诵 | Moonlight Recital |
@@ -1149,7 +1159,7 @@
 | ev_d43 | 标题 | 回头确认 | Checking You Are There |
 | ev_d43 | 正文 | 雾天寸步不离你的视线，每走三步回头确认一次你还在。 | In the fog, they stayed within sight and looked back every three steps to make sure you were still there. |
 | ev_d44 | 标题 | 扮演石头 | Playing a Stone |
-| ev_d44 | 正文 | 访客来了，它当场一动不动地扮演石头；半小时后悄悄看过去，发现对方还在耐心等它。 | When a visitor arrived, they became perfectly still and played the part of a stone. Half an hour later, they glanced over and found the visitor still waiting patiently. |
+| ev_d44 | 正文 | 来客到了，它当场一动不动地扮演石头；半小时后悄悄看过去，发现对方还在耐心等它。 | When a visitor arrived, they became perfectly still and played the part of a stone. Half an hour later, they glanced over and found the visitor still waiting patiently. |
 | ev_d45 | 标题 | 质问晾衣绳 | Questioning the Clothesline |
 | ev_d45 | 正文 | 夜里被风吹动的晾衣绳吓了一跳，第二天白天专门跑去「质问」了它。 | After the windblown clothesline startled them at night, they returned in daylight to question it properly. |
 | ev_d46 | 标题 | 绕路走 | The Crunchy Detour |
@@ -1193,13 +1203,13 @@
 | ev_d61 | 选择 2 | 给它留一盏灯先回屋 | Leave a lantern and head inside |
 | ev_d61 | 结果 2 | 你给它留了一盏小灯回屋。身后传来一声很轻的动静，像是在道晚安。 | You left a warm lantern and went inside. A quiet sound behind you felt exactly like good night. |
 | ev_d62 | 标题 | 检查座位 | Inspecting the Visitor's Seat |
-| ev_d62 | 正文 | 访客走后，它仔细检查了对方坐过的地方，沉默片刻，像是得出了自己的结论。 | After the visitor left, they carefully inspected the place where the guest had sat, then paused as if reaching a private conclusion. |
+| ev_d62 | 正文 | 来客走后，它仔细检查了对方坐过的地方，沉默片刻，像是得出了自己的结论。 | After the visitor left, they carefully inspected the place where the guest had sat, then paused as if reaching a private conclusion. |
 | ev_d63 | 标题 | 藏拖鞋 | The Slipper Hunt |
 | ev_d63 | 正文 | 把你的两只拖鞋分别藏在院子两端，蹲在中间欣赏你找鞋。 | They hid your slippers at opposite ends of the garden and sat in the middle to enjoy the search. |
 | ev_d64 | 标题 | 开食盆 | The Open Food Bowl |
 | ev_d64 | 正文 | 学会了开食盆的盖子——案发现场只留下三颗没来得及吃完的粮。 | They learned to open the food-bowl lid. Only three uneaten pieces remained at the scene. |
 | ev_d65 | 标题 | 借帽子 | Borrowed Hat |
-| ev_d65 | 正文 | 借走访客的小帽子，在院子里展示了半圈才郑重归还。 | They borrowed a visitor's hat, showed it off around half the garden, then returned it with ceremony. |
+| ev_d65 | 正文 | 借走来客的小帽子，在院子里展示了半圈才郑重归还。 | They borrowed a visitor's hat, showed it off around half the garden, then returned it with ceremony. |
 | ev_d66 | 标题 | 踩水洼 | Puddle Stomping |
 | ev_d66 | 正文 | 雨后专挑水洼踩，溅了自己一身泥点，还显得十分得意。 | They chose every puddle after the rain and seemed thoroughly pleased with every new splash of mud. |
 | ev_d66 | 选择 1 | 立刻押去洗澡 | Straight to the bath |
@@ -1211,7 +1221,7 @@
 | ev_d68 | 标题 | 扑落叶 | Helping with the Leaves |
 | ev_d68 | 正文 | 把你堆好的落叶小山一头扑散，然后开始「帮忙」重堆——越帮越大片。 | They dove through the leaf pile you had just made, then offered to help rebuild it into something much wider. |
 | ev_d69 | 标题 | 让食物 | The Biggest Piece |
-| ev_d69 | 正文 | 把食盆里最大的一块推到访客面前，自己默默吃小的。 | They nudged the largest piece in the bowl toward the visitor and quietly ate a smaller one. |
+| ev_d69 | 正文 | 把食盆里最大的一块推到来客面前，自己默默吃小的。 | They nudged the largest piece in the bowl toward the visitor and quietly ate a smaller one. |
 | ev_d70 | 标题 | 焐地面 | A Warm Place to Land |
 | ev_d70 | 正文 | 雪天用自己的体温焐化了一小块地面，留给路过的麻雀落脚。 | In the snow, their warmth cleared one small patch of ground for a passing sparrow to land. |
 | ev_d71 | 标题 | 看蜘蛛 | Watching the Web Mend |
@@ -1281,7 +1291,7 @@
 | ev_d95 | 标题 | 水彩 | Unfinished Watercolor |
 | ev_d95 | 正文 | 从雾里慢慢走出来的样子，像一幅还没画完的水彩。 | The way they emerged slowly from the mist looked like a watercolor still waiting for its final brushstroke. |
 | ev_d96 | 标题 | 看云 | Cloud-Watching Debate |
-| ev_d96 | 正文 | 午后和访客排排坐看云。一朵云飘过，气氛突然认真起来。 | They sat beside a visitor watching clouds. One particular cloud drifted by, and the discussion suddenly became very serious. |
+| ev_d96 | 正文 | 午后和来客排排坐看云。一朵云飘过，气氛突然认真起来。 | They sat beside a visitor watching clouds. One particular cloud drifted by, and the discussion suddenly became very serious. |
 | ev_d96 | 选择 1 | 同意那朵云像饭团 | Agree that the cloud looks like a rice ball |
 | ev_d96 | 结果 1 | 你表示赞同，它开心地比划起来，好像真的一样。 | You agreed that it looked like a rice ball. They happily explained every fluffy detail. |
 | ev_d96 | 选择 2 | 坚持那朵云像枕头 | Insist that the cloud looks like a pillow |
@@ -1349,7 +1359,7 @@
 | tpl_gl_hb_01 | p_glutton | 海滨 | {ownerName}！{location}的海很大很蓝，但重点是——{encounter}！{incident}。海风都是咸鲜味的，我打算再住三天（为了吃）。——{petName} | {ownerName}! I made it to {location}. {encounter}. {incident}. I am taking my responsibility to taste the whole journey very seriously. Love, {petName} |
 | tpl_gl_hb_02 | p_glutton | 海滨 | 今天在{location}退潮的滩涂上找了一下午。{incident}。捡到的东西能不能吃，我还在研究；先闻闻，再问问当地人。——{petName} | Food report from {location}: {encounter}. {incident}. The scenery is lovely, especially when viewed from beside a full plate. Love, {petName} |
 | tpl_gl_hb_03 | p_glutton | 海滨 | {location}报告：{encounter}。我假装矜持了三秒，第四秒盘子空了。{weather}的海边什么都好，就是饭点之间隔得太久。——{petName} | I reached {location} under {weather}. {encounter}. {incident}. I miss you, and I also miss your kitchen. Both feelings are sincere. Love, {petName} |
-| tpl_gl_sd_01 | p_glutton | 山地 | 爬山好累，但{location}的山顶有{encounter}，值了。{incident}。下山的路我打算滚下去，省力气留着咀嚼。——{petName} | {ownerName}! I made it to {location}. {encounter}. {incident}. I am taking my responsibility to taste the whole journey very seriously. Love, {petName} |
+| tpl_gl_sd_01 | p_glutton | 山地 | 爬山好累。到了{location}山顶，又遇上一件事：{encounter}。值了。后来还有个新发现：{incident}。下山的路我打算滚下去，省力气留着咀嚼。——{petName} | {ownerName}! I made it to {location}. {encounter}. {incident}. I am taking my responsibility to taste the whole journey very seriously. Love, {petName} |
 | tpl_gl_sd_02 | p_glutton | 山地 | {ownerName}，{location}的雾里全是炊烟味！我循着味走了一路，{incident}。风景？哦，风景也在，在饭的旁边。——{petName} | Food report from {location}: {encounter}. {incident}. The scenery is lovely, especially when viewed from beside a full plate. Love, {petName} |
 | tpl_gl_sd_03 | p_glutton | 山地 | 山里的{season}，{encounter}。人家说山货要留着过冬，我说我的冬天从今天下午开始。——{petName} | I reached {location} under {weather}. {encounter}. {incident}. I miss you, and I also miss your kitchen. Both feelings are sincere. Love, {petName} |
 | tpl_gl_cs_01 | p_glutton | 城市 | {ownerName}！{location}半条街都是香味，我循着香气逛完了全程。{encounter}，{incident}。这里的月亮看起来也很好吃。——{petName} | {ownerName}! I made it to {location}. {encounter}. {incident}. I am taking my responsibility to taste the whole journey very seriously. Love, {petName} |
@@ -1357,7 +1367,7 @@
 | tpl_gl_cs_03 | p_glutton | 城市 | 城市生存报告：{incident}。结论：{location}遍地是饭，走三步一个惊喜，走五步一个饱嗝。——{petName} | I reached {location} under {weather}. {encounter}. {incident}. I miss you, and I also miss your kitchen. Both feelings are sincere. Love, {petName} |
 | tpl_gl_xy_01 | p_glutton | 乡野 | {location}的{season}是可以直接吃的！{encounter}，我负责品控，尝了一遍又一遍又一遍。{incident}。——{petName} | {ownerName}! I made it to {location}. {encounter}. {incident}. I am taking my responsibility to taste the whole journey very seriously. Love, {petName} |
 | tpl_gl_xy_02 | p_glutton | 乡野 | {ownerName}你不懂，田里刚摘的东西和店里的不一样，是会冒甜气的。{incident}。今天我的肚子是{location}形状的。——{petName} | Food report from {location}: {encounter}. {incident}. The scenery is lovely, especially when viewed from beside a full plate. Love, {petName} |
-| tpl_gl_xy_03 | p_glutton | 乡野 | {location}的{encounter}。他们管这叫招待，我管这叫命运。饱到打嗝的时候我想起你了——你煮饭也很香。——{petName} | I reached {location} under {weather}. {encounter}. {incident}. I miss you, and I also miss your kitchen. Both feelings are sincere. Love, {petName} |
+| tpl_gl_xy_03 | p_glutton | 乡野 | 到了{location}，又遇上一件事：{encounter}。这里的招待像命运一样躲不开。饱到打嗝的时候我想起你了——你煮饭也很香。——{petName} | I reached {location} under {weather}. {encounter}. {incident}. I miss you, and I also miss your kitchen. Both feelings are sincere. Love, {petName} |
 | tpl_gl_sl_01 | p_glutton | 森林 | 重大发现：{location}的{encounter}！{incident}。附：本次收获已按重要程度装进背包，最好吃的那份另有安排。——{petName} | {ownerName}! I made it to {location}. {encounter}. {incident}. I am taking my responsibility to taste the whole journey very seriously. Love, {petName} |
 | tpl_gl_sl_02 | p_glutton | 森林 | 森林里到处是零食，只是它们管自己叫『果实』。{incident}。{ownerName}，等我回去教你认哪种叶子是薄荷味的。——{petName} | Food report from {location}: {encounter}. {incident}. The scenery is lovely, especially when viewed from beside a full plate. Love, {petName} |
 | tpl_gl_sl_03 | p_glutton | 森林 | {location}的{timeOfDay}，{encounter}。我们交换了食物，也交换了各自藏粮的秘密（我编了一半，饭可以分，老窝不能露）。——{petName} | I reached {location} under {weather}. {encounter}. {incident}. I miss you, and I also miss your kitchen. Both feelings are sincere. Love, {petName} |
@@ -1366,7 +1376,7 @@
 | tpl_gl_sm_03 | p_glutton | 沙漠异域 | 在{location}学会一件事：想尝一口，要先坐好，再把眼神放认真。{encounter}。这里的人管这叫礼仪，我管这叫战术。——{petName} | I reached {location} under {weather}. {encounter}. {incident}. I miss you, and I also miss your kitchen. Both feelings are sincere. Love, {petName} |
 | tpl_gl_jd_01 | p_glutton | 极地水域 | {location}冷是冷，但冷的地方饭都是热的！{encounter}，{incident}。我守着热碗取暖，差点连最后一滴汤也没放过。——{petName} | {ownerName}! I made it to {location}. {encounter}. {incident}. I am taking my responsibility to taste the whole journey very seriously. Love, {petName} |
 | tpl_gl_jd_02 | p_glutton | 极地水域 | 冰面下有鱼在游。我看了整整一个{timeOfDay}。{incident}。这不是发呆，这是点菜。——{petName} | Food report from {location}: {encounter}. {incident}. The scenery is lovely, especially when viewed from beside a full plate. Love, {petName} |
-| tpl_gl_jd_03 | p_glutton | 极地水域 | {location}的{encounter}。他们说极光好看，我说锅里的更好看。后来极光出来了……行吧，并列第一。——{petName} | I reached {location} under {weather}. {encounter}. {incident}. I miss you, and I also miss your kitchen. Both feelings are sincere. Love, {petName} |
+| tpl_gl_jd_03 | p_glutton | 极地水域 | 到了{location}，又遇上一件事：{encounter}。极光很好看，锅里的也很好看。后来极光真的亮起来了……行吧，并列第一。——{petName} | I reached {location} under {weather}. {encounter}. {incident}. I miss you, and I also miss your kitchen. Both feelings are sincere. Love, {petName} |
 | tpl_gl_qh_01 | p_glutton | 奇幻 | {ownerName}，{location}的云居然是甜的！不是比喻。{encounter}，{incident}。我打包了一朵，如果收到的信纸有点黏，别问。——{petName} | {ownerName}! I made it to {location}. {encounter}. {incident}. I am taking my responsibility to taste the whole journey very seriously. Love, {petName} |
 | tpl_gl_qh_02 | p_glutton | 奇幻 | 这里的规矩很奇怪：{incident}。但只要最后能落到吃的上，什么规矩我都学得飞快。——{petName} | Food report from {location}: {encounter}. {incident}. The scenery is lovely, especially when viewed from beside a full plate. Love, {petName} |
 | tpl_gl_qh_03 | p_glutton | 奇幻 | {location}的{encounter}。我问它什么味道，它说是梦的味道。我尝了，像{season}早晨你厨房里的香气。想你，也想那间厨房。——{petName} | I reached {location} under {weather}. {encounter}. {incident}. I miss you, and I also miss your kitchen. Both feelings are sincere. Love, {petName} |
@@ -1377,7 +1387,7 @@
 | tpl_lz_sd_02 | p_lazy | 山地 | 山很高。我没爬。{incident}。山顶的风景据说很好，据躺在我旁边的那位说的。转述完毕。——{petName} | {location} moves at exactly the right speed: slowly. {encounter}. {incident}. Writing this used up today's remaining energy. Love, {petName} |
 | tpl_lz_sd_03 | p_lazy | 山地 | {season}的{location}，云从山这边慢慢挪到那边。我跟它比了一下午谁挪得慢。我赢了。——{petName} | The {timeOfDay} at {location} is hushed and calm. {encounter}. {incident}. I am traveling very efficiently by letting the view come to me. Love, {petName} |
 | tpl_lz_cs_01 | p_lazy | 城市 | {location}好吵，但有一个屋顶晒得到太阳还没人。{incident}。城市最好的地方就是……这个屋顶。其他没去。——{petName} | Made it to {location}. Found a comfortable spot. {encounter}. {incident}. I will investigate the rest after one more nap. Love, {petName} |
-| tpl_lz_cs_02 | p_lazy | 城市 | {encounter}。他走得太快了，我跟了三步，决定在原地等他明天路过。{timeOfDay}的电车叮叮响，像催眠铃。——{petName} | {location} moves at exactly the right speed: slowly. {encounter}. {incident}. Writing this used up today's remaining energy. Love, {petName} |
+| tpl_lz_cs_02 | p_lazy | 城市 | 今天遇上一件事：{encounter}。电车开得太快，我跟了三步，决定留在原地等下一班。{timeOfDay}的叮叮声像催眠铃。——{petName} | {location} moves at exactly the right speed: slowly. {encounter}. {incident}. Writing this used up today's remaining energy. Love, {petName} |
 | tpl_lz_cs_03 | p_lazy | 城市 | 这条街的猫都懂：太阳到哪儿，就搬到哪儿。{incident}。……算了，先睡一觉再写。（醒了。没什么补充。）——{petName} | The {timeOfDay} at {location} is hushed and calm. {encounter}. {incident}. I am traveling very efficiently by letting the view come to me. Love, {petName} |
 | tpl_lz_xy_01 | p_lazy | 乡野 | {location}的草垛是世界上最伟大的发明。{incident}。今天的我 = 草垛的一部分。——{petName} | Made it to {location}. Found a comfortable spot. {encounter}. {incident}. I will investigate the rest after one more nap. Love, {petName} |
 | tpl_lz_xy_02 | p_lazy | 乡野 | {encounter}。对方很热情，我认真点头回应了两下，这已经是我今天全部的运动量。{season}的午后好长，长得可以睡两觉。——{petName} | {location} moves at exactly the right speed: slowly. {encounter}. {incident}. Writing this used up today's remaining energy. Love, {petName} |
@@ -1389,7 +1399,7 @@
 | tpl_lz_sm_02 | p_lazy | 沙漠异域 | 沙漠的白天不宜行动。晚上也不宜。{encounter}，是对方走过来的，特此说明。——{petName} | {location} moves at exactly the right speed: slowly. {encounter}. {incident}. Writing this used up today's remaining energy. Love, {petName} |
 | tpl_lz_sm_03 | p_lazy | 沙漠异域 | {location}的沙丘每天换形状，挺勤快的。我替它把『躺着』这部分演好。{incident}。——{petName} | The {timeOfDay} at {location} is hushed and calm. {encounter}. {incident}. I am traveling very efficiently by letting the view come to me. Love, {petName} |
 | tpl_lz_jd_01 | p_lazy | 极地水域 | {location}很冷，冷得适合裹成一团。{incident}。裹好了。不出去了。极光要看就从窗户看。——{petName} | Made it to {location}. Found a comfortable spot. {encounter}. {incident}. I will investigate the rest after one more nap. Love, {petName} |
-| tpl_lz_jd_02 | p_lazy | 极地水域 | {encounter}。他们那儿冬眠是正经事，我表示深深的敬意和加入的意愿。——{petName} | {location} moves at exactly the right speed: slowly. {encounter}. {incident}. Writing this used up today's remaining energy. Love, {petName} |
+| tpl_lz_jd_02 | p_lazy | 极地水域 | 今天遇上一件事：{encounter}。这里把冬眠当成正经事，我表示深深的敬意和加入的意愿。——{petName} | {location} moves at exactly the right speed: slowly. {encounter}. {incident}. Writing this used up today's remaining energy. Love, {petName} |
 | tpl_lz_jd_03 | p_lazy | 极地水域 | 浮冰漂到哪儿算哪儿。我在冰上，冰在水上，谁也不用力。{incident}。{ownerName}，这叫顺其自然。——{petName} | The {timeOfDay} at {location} is hushed and calm. {encounter}. {incident}. I am traveling very efficiently by letting the view come to me. Love, {petName} |
 | tpl_lz_qh_01 | p_lazy | 奇幻 | {location}的床是云做的，我陷进去就没打算出来。{incident}。这封信是托路过的风寄的，因为我没起来。——{petName} | Made it to {location}. Found a comfortable spot. {encounter}. {incident}. I will investigate the rest after one more nap. Love, {petName} |
 | tpl_lz_qh_02 | p_lazy | 奇幻 | {encounter}。它说这里一天有三十个小时。多出来的六个我全睡了，一点没浪费。——{petName} | {location} moves at exactly the right speed: slowly. {encounter}. {incident}. Writing this used up today's remaining energy. Love, {petName} |
@@ -1398,31 +1408,31 @@
 | tpl_cu_hb_02 | p_curious | 海滨 | {encounter}！我问了它十七个问题，它回答了三个，剩下的我打算自己试。第一项实验：{incident}。——{petName} | Field notes, page {seq}: {location}. {encounter}. {incident}. One answer led to three new questions, so the expedition is going perfectly. Love, {petName} |
 | tpl_cu_hb_03 | p_curious | 海滨 | 退潮以后地上全是小洞，每个洞里住着谁？我挨个看了 {location} 的一整片滩！{weather}的时候它们会换房子吗？——{petName} | Did you know {location} looks completely different at {timeOfDay}? {encounter}. {incident}. I am staying until I understand at least one mystery. Love, {petName} |
 | tpl_cu_sd_01 | p_curious | 山地 | {location}的回声会学我说话！我喊了二十遍验证，它总比我少半个字。为什么？{incident}。——{petName} | {ownerName}, I have questions about {location}! {encounter}. {incident}. I wrote everything down, except the seventeen things I still need to test. Love, {petName} |
-| tpl_cu_sd_02 | p_curious | 山地 | {encounter}。我跟着它走了一条只有本地动物知道的小路，发现了{incident}！地图上没有，所以我准备替它起个名字。——{petName} | Field notes, page {seq}: {location}. {encounter}. {incident}. One answer led to three new questions, so the expedition is going perfectly. Love, {petName} |
+| tpl_cu_sd_02 | p_curious | 山地 | 今天遇上一件事：{encounter}。我顺着一条只有本地动物知道的小路往前走，又有了新发现：{incident}！地图上没有，所以我准备替这条路起个名字。——{petName} | Field notes, page {seq}: {location}. {encounter}. {incident}. One answer led to three new questions, so the expedition is going perfectly. Love, {petName} |
 | tpl_cu_sd_03 | p_curious | 山地 | 山上的云摸起来是什么手感？答案：{timeOfDay}的云偏凉，有点像你冰箱的门。别问我怎么知道的，我已经站进雾里试过了。——{petName} | Did you know {location} looks completely different at {timeOfDay}? {encounter}. {incident}. I am staying until I understand at least one mystery. Love, {petName} |
-| tpl_cu_cs_01 | p_curious | 城市 | {location}情报：这条街有 9 个井盖，每个花纹都不一样！{encounter}，他说我是第一个发现的。{incident}。——{petName} | {ownerName}, I have questions about {location}! {encounter}. {incident}. I wrote everything down, except the seventeen things I still need to test. Love, {petName} |
+| tpl_cu_cs_01 | p_curious | 城市 | {location}情报：这条街有 9 个井盖，每个花纹都不一样！路上还遇上一件事：{encounter}。我把它郑重记成第十条情报。后来又有个新发现：{incident}。——{petName} | {ownerName}, I have questions about {location}! {encounter}. {incident}. I wrote everything down, except the seventeen things I still need to test. Love, {petName} |
 | tpl_cu_cs_02 | p_curious | 城市 | 电车为什么叮叮两声不是三声？我蹲在{location}站台听了一个{timeOfDay}。{incident}。结论：还需要再蹲一天。——{petName} | Field notes, page {seq}: {location}. {encounter}. {incident}. One answer led to three new questions, so the expedition is going perfectly. Love, {petName} |
 | tpl_cu_cs_03 | p_curious | 城市 | {encounter}！原来{location}的旧书里会夹着别人忘掉的东西：车票、花瓣，还有一根不知道谁留下的细线。我仔细比对过，不是我的。——{petName} | Did you know {location} looks completely different at {timeOfDay}? {encounter}. {incident}. I am staying until I understand at least one mystery. Love, {petName} |
 | tpl_cu_xy_01 | p_curious | 乡野 | 重大疑问：{location}的向日葵晚上把头转回去，是几点转的？我守到{timeOfDay}……睡着了。{incident}。明天继续蹲！——{petName} | {ownerName}, I have questions about {location}! {encounter}. {incident}. I wrote everything down, except the seventeen things I still need to test. Love, {petName} |
-| tpl_cu_xy_02 | p_curious | 乡野 | {encounter}。我学会了分辨三种麦子的味道、两种风的方向，还有一种快下雨的气味！{weather}果然被我说中了。——{petName} | Field notes, page {seq}: {location}. {encounter}. {incident}. One answer led to three new questions, so the expedition is going perfectly. Love, {petName} |
+| tpl_cu_xy_02 | p_curious | 乡野 | {encounter}。我学会了分辨三种麦子的味道、两种风的方向，还有一种空气快要变潮的气味！过了一会儿，风果然转了方向。——{petName} | Field notes, page {seq}: {location}. {encounter}. {incident}. One answer led to three new questions, so the expedition is going perfectly. Love, {petName} |
 | tpl_cu_xy_03 | p_curious | 乡野 | 稻田里的萤火虫为什么排队？我跟着队伍走了半里地，{incident}。队伍的尽头是什么我还不知道——所以这封信先寄，我先去了！——{petName} | Did you know {location} looks completely different at {timeOfDay}? {encounter}. {incident}. I am staying until I understand at least one mystery. Love, {petName} |
-| tpl_cu_sl_01 | p_curious | 森林 | {location}的蘑菇圈到底是谁画的圆？我量过了，误差还不到一片落叶那么宽！{encounter}，它也不知道。{incident}。——{petName} | {ownerName}, I have questions about {location}! {encounter}. {incident}. I wrote everything down, except the seventeen things I still need to test. Love, {petName} |
+| tpl_cu_sl_01 | p_curious | 森林 | {location}的蘑菇圈到底是谁画的圆？我量过了，误差还不到一片落叶那么宽！路上还遇上一件事：{encounter}。问了一圈，还是没有答案。后来又有个新发现：{incident}。——{petName} | {ownerName}, I have questions about {location}! {encounter}. {incident}. I wrote everything down, except the seventeen things I still need to test. Love, {petName} |
 | tpl_cu_sl_02 | p_curious | 森林 | 你知道吗？橡树邮筒里的信是松鼠送的，走树枝比走地面快三倍！我跟着一封信走完全程，已经验证过了。——{petName} | Field notes, page {seq}: {location}. {encounter}. {incident}. One answer led to three new questions, so the expedition is going perfectly. Love, {petName} |
 | tpl_cu_sl_03 | p_curious | 森林 | {timeOfDay}的雾里，吊桥对面若隐若现。过去要 128 步（我数的），回来只要 126 步？{incident}。森林在跟我玩什么？——{petName} | Did you know {location} looks completely different at {timeOfDay}? {encounter}. {incident}. I am staying until I understand at least one mystery. Love, {petName} |
-| tpl_cu_sm_01 | p_curious | 沙漠异域 | {location}的沙子白天烫、晚上凉，我每小时踩一次做记录！{encounter}，他借给我一顶小帽子当实验器材（其实是怕我晒着）。——{petName} | {ownerName}, I have questions about {location}! {encounter}. {incident}. I wrote everything down, except the seventeen things I still need to test. Love, {petName} |
+| tpl_cu_sm_01 | p_curious | 沙漠异域 | {location}的沙子白天烫、晚上凉，我每小时踩一次做记录！路上还遇上一件事：{encounter}。后来有人借我一顶小帽子当实验器材，其实是怕我晒着。——{petName} | {ownerName}, I have questions about {location}! {encounter}. {incident}. I wrote everything down, except the seventeen things I still need to test. Love, {petName} |
 | tpl_cu_sm_02 | p_curious | 沙漠异域 | 盐湖的星星是天上的还是水里的？我轻轻碰了碰水面，星星碎开，又慢慢拼了回来。{incident}。——{petName} | Field notes, page {seq}: {location}. {encounter}. {incident}. One answer led to three new questions, so the expedition is going perfectly. Love, {petName} |
 | tpl_cu_sm_03 | p_curious | 沙漠异域 | 集市上有一百种没见过的东西，我闻了六十三种，被摊主笑着赶走四次。{incident}。明天从第六十四种继续。——{petName} | Did you know {location} looks completely different at {timeOfDay}? {encounter}. {incident}. I am staying until I understand at least one mystery. Love, {petName} |
 | tpl_cu_jd_01 | p_curious | 极地水域 | 极光会响吗？我在{location}的雪地里认真听了一个{timeOfDay}！{incident}。答案先保密，留到下一张明信片里；其实是我还没听清。——{petName} | {ownerName}, I have questions about {location}! {encounter}. {incident}. I wrote everything down, except the seventeen things I still need to test. Love, {petName} |
 | tpl_cu_jd_02 | p_curious | 极地水域 | {encounter}！它教我认冰的年纪：蓝得越深越老。我现在看什么都想问一句『你几岁』。——{petName} | Field notes, page {seq}: {location}. {encounter}. {incident}. One answer led to three new questions, so the expedition is going perfectly. Love, {petName} |
 | tpl_cu_jd_03 | p_curious | 极地水域 | 蓝洞的水为什么这么蓝？我盯着看了很久，差点靠得太近；放心，离边缘还差一点。{incident}。——{petName} | Did you know {location} looks completely different at {timeOfDay}? {encounter}. {incident}. I am staying until I understand at least one mystery. Love, {petName} |
 | tpl_cu_qh_01 | p_curious | 奇幻 | {location}的邮局盖章是月光做的墨！我问邮差墨水用完了怎么办，他说等下一次满月。那阴天呢？他不理我了。{incident}。——{petName} | {ownerName}, I have questions about {location}! {encounter}. {incident}. I wrote everything down, except the seventeen things I still need to test. Love, {petName} |
-| tpl_cu_qh_02 | p_curious | 奇幻 | 会走路的岛今天往南走了三步！我在岛上量了步长。{encounter}，它说岛在找一个老朋友。是谁？去哪儿找？我准备继续查下去。——{petName} | Field notes, page {seq}: {location}. {encounter}. {incident}. One answer led to three new questions, so the expedition is going perfectly. Love, {petName} |
+| tpl_cu_qh_02 | p_curious | 奇幻 | 会走路的岛今天往南走了三步！我在岛上量了步长，又遇上一件事：{encounter}。听说岛在找一位老朋友。是谁？去哪儿找？我准备继续查下去。——{petName} | Field notes, page {seq}: {location}. {encounter}. {incident}. One answer led to three new questions, so the expedition is going perfectly. Love, {petName} |
 | tpl_cu_qh_03 | p_curious | 奇幻 | 云端牧场的羊毛就是云，剪下来还会落一阵小雨！我在现场看了三场。{incident}。新问题：这场雨算羊的，还是天的？——{petName} | Did you know {location} looks completely different at {timeOfDay}? {encounter}. {incident}. I am staying until I understand at least one mystery. Love, {petName} |
 | tpl_ti_hb_01 | p_timid | 海滨 | {location}的浪好大声，我第一天躲在浮木后面看。第三天……我终于往海水里探近了一点！只有一秒，但我做到了。{incident}。——{petName} | I arrived safely at {location}. {encounter}. {incident}. I was nervous at first, but I took one more step than yesterday. Love, {petName} |
 | tpl_ti_hb_02 | p_timid | 海滨 | {encounter}的时候，我差点把信纸吃了。后来发现它是来送吃的的……{ownerName}，下次我一定先深呼吸再跑。——{petName} | {location} felt very big when I arrived. {encounter}. {incident}. Someone was kind, and the road became less frightening. Love, {petName} |
 | tpl_ti_hb_03 | p_timid | 海滨 | 海雾把{location}藏起来的时候我有点慌，抱住了一根系船柱。{incident}。雾散了，我还抱着。它现在是我朋友了。——{petName} | The {weather} at {location} startled me, so I thought of the garden and took a slow breath. {encounter}. {incident}. Everything is fine here. Love, {petName} |
-| tpl_ti_sd_01 | p_timid | 山地 | {location}的吊桥会晃！我在桥头坐了半个{timeOfDay}做心理建设。{encounter}，它陪我一起走了过去。桥那边的风景我还没顾上看，下次补。——{petName} | I arrived safely at {location}. {encounter}. {incident}. I was nervous at first, but I took one more step than yesterday. Love, {petName} |
-| tpl_ti_sd_02 | p_timid | 山地 | 打雷的时候我钻进了木屋的柴堆。{incident}。雷停了以后我探出头，山谷里安安静静的，好像刚才凶我的不是它。——{petName} | {location} felt very big when I arrived. {encounter}. {incident}. Someone was kind, and the road became less frightening. Love, {petName} |
+| tpl_ti_sd_01 | p_timid | 山地 | {location}的吊桥会晃！我在桥头坐了半个{timeOfDay}做心理建设。路上还遇上一件事：{encounter}。最后我沿着桥上的旧脚印走了过去。桥那边的风景我还没顾上看，下次补。——{petName} | I arrived safely at {location}. {encounter}. {incident}. I was nervous at first, but I took one more step than yesterday. Love, {petName} |
+| tpl_ti_sd_02 | p_timid | 山地 | 山风敲窗的时候我钻进了木屋的柴堆。{incident}。风停以后我探出头，山谷里安安静静的，好像刚才凶我的不是它。——{petName} | {location} felt very big when I arrived. {encounter}. {incident}. Someone was kind, and the road became less frightening. Love, {petName} |
 | tpl_ti_sd_03 | p_timid | 山地 | {season}的{location}，猴子们很热情，热情得我把自己缩成了一颗球。后来最小的那只猴也缩成球陪我。……我们现在是两颗球朋友。——{petName} | The {weather} at {location} startled me, so I thought of the garden and took a slow breath. {encounter}. {incident}. Everything is fine here. Love, {petName} |
 | tpl_ti_cs_01 | p_timid | 城市 | {location}的喇叭声、脚步声、电车声，我全躲在纸箱里听完了。{encounter}，把我连箱子一起搬到了安静的巷子口。人类……有一些是好的。——{petName} | I arrived safely at {location}. {encounter}. {incident}. I was nervous at first, but I took one more step than yesterday. Love, {petName} |
 | tpl_ti_cs_02 | p_timid | 城市 | 我在{location}学会了看红绿灯！虽然是躲在一位老奶奶的购物袋后面过的马路。{incident}。明天试试只躲半个身子。——{petName} | {location} felt very big when I arrived. {encounter}. {incident}. Someone was kind, and the road became less frightening. Love, {petName} |
@@ -1432,11 +1442,11 @@
 | tpl_ti_xy_03 | p_timid | 乡野 | {timeOfDay}的{location}起风了，麦浪哗啦哗啦追着我跑……跑到邮局我才想明白：风又抓不到我。它只是想一起玩。——{petName} | The {weather} at {location} startled me, so I thought of the garden and took a slow breath. {encounter}. {incident}. Everything is fine here. Love, {petName} |
 | tpl_ti_sl_01 | p_timid | 森林 | {location}的{timeOfDay}会发光，我先躲在树后看了好久。后来{encounter}，我居然是被需要的那一个。……我好像没那么怕黑了。——{petName} | I arrived safely at {location}. {encounter}. {incident}. I was nervous at first, but I took one more step than yesterday. Love, {petName} |
 | tpl_ti_sl_02 | p_timid | 森林 | 树影一动我就一激灵，一激灵就跳，一跳就踩响一地落叶，把自己吓得更结实了。{incident}。……森林笑话大全第一页：我。——{petName} | {location} felt very big when I arrived. {encounter}. {incident}. Someone was kind, and the road became less frightening. Love, {petName} |
-| tpl_ti_sl_03 | p_timid | 森林 | 雾里的吊桥我不敢过。{encounter}，它说：『闭眼，数二十步。』我数到十九步就到了。多出来的那一步，是我自己迈的。——{petName} | The {weather} at {location} startled me, so I thought of the garden and took a slow breath. {encounter}. {incident}. Everything is fine here. Love, {petName} |
+| tpl_ti_sl_03 | p_timid | 森林 | 雾里的吊桥我不敢过。路上还遇上一件事：{encounter}。后来我闭上眼数二十步，数到十九步就到了。多出来的那一步，是我自己迈的。——{petName} | The {weather} at {location} startled me, so I thought of the garden and took a slow breath. {encounter}. {incident}. Everything is fine here. Love, {petName} |
 | tpl_ti_sm_01 | p_timid | 沙漠异域 | {location}晚上会有很远的驼铃声，我躲进帐篷数铃铛：一颗、两颗……数着数着就不怕了，铃铛像是黑夜别在身上的扣子。{incident}。——{petName} | I arrived safely at {location}. {encounter}. {incident}. I was nervous at first, but I took one more step than yesterday. Love, {petName} |
 | tpl_ti_sm_02 | p_timid | 沙漠异域 | 集市好挤，我贴着墙根走完了全程。{encounter}，蹲下来跟我说话的时候，我居然没有后退。写下来纪念一下：没有后退！——{petName} | {location} felt very big when I arrived. {encounter}. {incident}. Someone was kind, and the road became less frightening. Love, {petName} |
 | tpl_ti_sm_03 | p_timid | 沙漠异域 | 风蚀石林的石头像巨兽，{timeOfDay}的影子好长。我靠着行李，在两块『兽爪』中间睡了一夜。早上才发现，是它们替我挡了一夜风。——{petName} | The {weather} at {location} startled me, so I thought of the garden and took a slow breath. {encounter}. {incident}. Everything is fine here. Love, {petName} |
-| tpl_ti_jd_01 | p_timid | 极地水域 | {location}的冰会咯吱响，每响一声我就停一步。{encounter}，它踩过的地方我跟着踩，一步都没错。到岸的时候它说我是它带过最乖的旅客。——{petName} | I arrived safely at {location}. {encounter}. {incident}. I was nervous at first, but I took one more step than yesterday. Love, {petName} |
+| tpl_ti_jd_01 | p_timid | 极地水域 | {location}的冰会咯吱响，每响一声我就停一步。路上还遇上一件事：{encounter}。后来我沿着岸边的旧脚印慢慢走，一步都没错。到岸的时候，连风都安静下来了。——{petName} | I arrived safely at {location}. {encounter}. {incident}. I was nervous at first, but I took one more step than yesterday. Love, {petName} |
 | tpl_ti_jd_02 | p_timid | 极地水域 | 极光第一次亮起来的时候我钻进了雪堆（对不起，本能）。第二次我露出了眼睛。第三次……{incident}。{ownerName}，天上真的会开花。——{petName} | {location} felt very big when I arrived. {encounter}. {incident}. Someone was kind, and the road became less frightening. Love, {petName} |
 | tpl_ti_jd_03 | p_timid | 极地水域 | 汽船鸣笛把我震进了缆绳堆。船长说抱歉抱歉，然后给了我一条小毯子。{incident}。现在毯子在我身上，我在毯子里，世界很安全。——{petName} | The {weather} at {location} startled me, so I thought of the garden and took a slow breath. {encounter}. {incident}. Everything is fine here. Love, {petName} |
 | tpl_ti_qh_01 | p_timid | 奇幻 | {location}会自己走路！地面一动，我就伏低身子，抓紧旁边的草。岛上的居民告诉我：这样也很好，岛知道有人在认真和它同行。{incident}。——{petName} | I arrived safely at {location}. {encounter}. {incident}. I was nervous at first, but I took one more step than yesterday. Love, {petName} |
@@ -1448,7 +1458,7 @@
 | tpl_en_sd_01 | p_energetic | 山地 | 我跑上{location}了！{incident}。风一直在响，我就当它在鼓掌。下山还想再跑一遍，换条路。——{petName} | I made it to {location}! {encounter}. {incident}. There are more paths ahead, and I am already on my way. Love, {petName} |
 | tpl_en_sd_02 | p_energetic | 山地 | {encounter}。我们比赛爬坡，谁也不肯慢下来。结果：{incident}。没分出胜负，明天加赛！——{petName} | Travel record from {location}: first in running, first in exploring, and first in enthusiasm! {encounter}. {incident}. Love, {petName} |
 | tpl_en_sd_03 | p_energetic | 山地 | 山里的{timeOfDay}空气一吸就想跑！我从枫树跑到雪线又跑回来，一路的季节全见了一遍。{ownerName}，我今天像是跑过了整个{season}。——{petName} | {ownerName}, even the {weather} could not keep up today! {encounter}. {incident}. I crossed the whole view so I could tell you about it. Love, {petName} |
-| tpl_en_cs_01 | p_energetic | 城市 | {location}的台阶、桥和天桥，我全跑遍了！{encounter}，他说我比早高峰还准时。{incident}。——{petName} | I made it to {location}! {encounter}. {incident}. There are more paths ahead, and I am already on my way. Love, {petName} |
+| tpl_en_cs_01 | p_energetic | 城市 | {location}的台阶、桥和天桥，我全跑遍了！路上还遇上一件事：{encounter}。今天我比早高峰还准时。后来又有个新发现：{incident}。——{petName} | I made it to {location}! {encounter}. {incident}. There are more paths ahead, and I am already on my way. Love, {petName} |
 | tpl_en_cs_02 | p_energetic | 城市 | 我和电车从这站赛跑到下站。它赢了，但只领先一个车头！司机看到我冲线，还按了两声铃；我决定把那当作欢呼。——{petName} | Travel record from {location}: first in running, first in exploring, and first in enthusiasm! {encounter}. {incident}. Love, {petName} |
 | tpl_en_cs_03 | p_energetic | 城市 | 屋顶水塔上的视野太好了！我是一路跳上来的。{incident}。下去的路线也勘察完毕：换另一边。——{petName} | {ownerName}, even the {weather} could not keep up today! {encounter}. {incident}. I crossed the whole view so I could tell you about it. Love, {petName} |
 | tpl_en_xy_01 | p_energetic | 乡野 | {location}的田埂是天然跑道！我领跑，风第二，麦浪第三。{incident}。——{petName} | I made it to {location}! {encounter}. {incident}. There are more paths ahead, and I am already on my way. Love, {petName} |
@@ -1462,21 +1472,21 @@
 | tpl_en_sm_03 | p_energetic | 沙漠异域 | 热气球升起来时，我在下面追了很远！{incident}。{ownerName}，后来影子也加入比赛，我们都尽力了。——{petName} | {ownerName}, even the {weather} could not keep up today! {encounter}. {incident}. I crossed the whole view so I could tell you about it. Love, {petName} |
 | tpl_en_jd_01 | p_energetic | 极地水域 | 冰面太滑了，我起跑一次就滑出去十米！这不是摔倒，是刚学会的新技能。{incident}。——{petName} | I made it to {location}! {encounter}. {incident}. There are more paths ahead, and I am already on my way. Love, {petName} |
 | tpl_en_jd_02 | p_energetic | 极地水域 | {encounter}。它们排队跳进浅水，我也跟着试了一次！溅起的水花比我还高，旁边那只海鸥给了满分。——{petName} | Travel record from {location}: first in running, first in exploring, and first in enthusiasm! {encounter}. {incident}. Love, {petName} |
-| tpl_en_jd_03 | p_energetic | 极地水域 | 结冰的运河可以助跑漂移！我试了三种刹车办法，其中一种很成功。{incident}。——{petName} | {ownerName}, even the {weather} could not keep up today! {encounter}. {incident}. I crossed the whole view so I could tell you about it. Love, {petName} |
+| tpl_en_jd_03 | p_energetic | 极地水域 | {location}的石板路可以助跑滑行！我试了三种刹车办法，其中一种很成功。{incident}。——{petName} | {ownerName}, even the {weather} could not keep up today! {encounter}. {incident}. I crossed the whole view so I could tell you about it. Love, {petName} |
 | tpl_en_qh_01 | p_energetic | 奇幻 | 云做的地面会轻轻弹起，我一下就跃出去三米！{location}简直像为我准备的。{incident}。——{petName} | I made it to {location}! {encounter}. {incident}. There are more paths ahead, and I am already on my way. Love, {petName} |
 | tpl_en_qh_02 | p_energetic | 奇幻 | {encounter}。我们绕着会走路的岛跑了一整圈！岛走它的，我跑我的，最后创造了一项没人记录过的新纪录。——{petName} | Travel record from {location}: first in running, first in exploring, and first in enthusiasm! {encounter}. {incident}. Love, {petName} |
 | tpl_en_qh_03 | p_energetic | 奇幻 | 月亮背面的重力很轻，我一步跳过三个邮筒！邮差让我慢一点，我认真答应了，然后下一步跳过了四个。{incident}。——{petName} | {ownerName}, even the {weather} could not keep up today! {encounter}. {incident}. I crossed the whole view so I could tell you about it. Love, {petName} |
 | tpl_cl_hb_01 | p_clingy | 海滨 | {ownerName}，你今天有好好吃饭吗？我把你的名字写在{location}的沙滩上了，浪冲掉一遍我就写一遍，写到第九遍浪就不冲了——它大概记住你了。{incident}。——{petName} | {ownerName}, I reached {location}. {encounter}. {incident}. The first thing I wanted to do was write to you. Love, {petName} |
-| tpl_cl_hb_02 | p_clingy | 海滨 | {encounter}，它问我在等谁，我说没等谁，就是习惯朝着家的方向坐。{location}的{timeOfDay}风很软，像你晾过的毛巾。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
+| tpl_cl_hb_02 | p_clingy | 海滨 | 今天遇上一件事：{encounter}。风一吹，我又习惯朝着家的方向坐。{location}的{timeOfDay}风很软，像你晾过的毛巾。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
 | tpl_cl_hb_03 | p_clingy | 海滨 | 捡了一枚弯弯的贝壳，对着它说了今天发生的事。{incident}。等我回去，它负责一字不落地讲给你听；忘了也没关系，我再讲一遍。——{petName} | I tied a memory of the garden to my bag today. {encounter}. {incident}. However far I walk, it feels as though the garden is just ahead. Love, {petName} |
 | tpl_cl_sd_01 | p_clingy | 山地 | {location}的山顶能看好远，我努力看了又看——嗯，看不到院子，但我知道它在哪个方向，我就朝那边坐了一会儿。{incident}。你记得添衣服，山里都冷了。——{petName} | {ownerName}, I reached {location}. {encounter}. {incident}. The first thing I wanted to do was write to you. Love, {petName} |
 | tpl_cl_sd_02 | p_clingy | 山地 | {encounter}。围着篝火的时候大家轮流讲『最想的人』，轮到我，我讲了好久，火都替我旺了一圈。{ownerName}，讲的是你。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
 | tpl_cl_sd_03 | p_clingy | 山地 | 温泉好舒服，但泡到一半我突然想：你那儿的水烧开了吗？想到这儿就爬起来给你写信。{incident}。写完再回去泡，位置我用毛巾占好了。——{petName} | I tied a memory of the garden to my bag today. {encounter}. {incident}. However far I walk, it feels as though the garden is just ahead. Love, {petName} |
 | tpl_cl_cs_01 | p_clingy | 城市 | {location}的橱窗里有一条和你那条一模一样的围巾！我在玻璃前站了好久，路人以为我想买。不是，我是想你。{incident}。——{petName} | {ownerName}, I reached {location}. {encounter}. {incident}. The first thing I wanted to do was write to you. Love, {petName} |
-| tpl_cl_cs_02 | p_clingy | 城市 | {encounter}，他家的灯和你房间的灯一个颜色。我蹭着灯光把这封信写完，就当在你旁边写的。{timeOfDay}的{location}，到处都有一点点你。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
+| tpl_cl_cs_02 | p_clingy | 城市 | 今天遇上一件事：{encounter}。街边有盏灯和你房间的灯一个颜色。我蹭着灯光把这封信写完，就当在你旁边写的。{timeOfDay}的{location}，到处都有一点点你。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
 | tpl_cl_cs_03 | p_clingy | 城市 | 摩天轮转到最高的时候，全城的灯都亮了。我许愿列表更新：第一条没变，还是快点见到你。{incident}。——{petName} | I tied a memory of the garden to my bag today. {encounter}. {incident}. However far I walk, it feels as though the garden is just ahead. Love, {petName} |
 | tpl_cl_xy_01 | p_clingy | 乡野 | {location}的邮局姐姐都认识我了，因为我每站都寄信，收件人都是你。{incident}。她说被这么惦记的人一定很幸福——我说那当然！——{petName} | {ownerName}, I reached {location}. {encounter}. {incident}. The first thing I wanted to do was write to you. Love, {petName} |
-| tpl_cl_xy_02 | p_clingy | 乡野 | {encounter}，它家里的小家伙们挤在一起睡。我看着看着就想：我们也这样靠在一起休息过，只是你占的地方比较多。{season}的{location}，晚安。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
+| tpl_cl_xy_02 | p_clingy | 乡野 | 今天遇上一件事：{encounter}。一扇窗里，小家伙们正挤在一起睡。我看着看着就想：我们也这样靠在一起休息过，只是你占的地方比较多。{season}的{location}，晚安。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
 | tpl_cl_xy_03 | p_clingy | 乡野 | 向日葵一整天都朝着太阳转，我懂它。我也有一个总会望向的方向。{incident}。是院子那边。——{petName} | I tied a memory of the garden to my bag today. {encounter}. {incident}. However far I walk, it feels as though the garden is just ahead. Love, {petName} |
 | tpl_cl_sl_01 | p_clingy | 森林 | {location}的千年橡树邮筒说，塞进树洞的信最快三天到。我塞了信，又对着树洞喊了一声你的名字——声音说不定比信还快。{incident}。——{petName} | {ownerName}, I reached {location}. {encounter}. {incident}. The first thing I wanted to do was write to you. Love, {petName} |
 | tpl_cl_sl_02 | p_clingy | 森林 | {encounter}。它问我为什么每片好看的落叶都捡，我说要给你带回去铺一条小路，从门口铺到你脚边。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
@@ -1485,10 +1495,10 @@
 | tpl_cl_sm_02 | p_clingy | 沙漠异域 | {encounter}，驼队的铃铛一路响，我把铃声学下来了，回去唱给你听。要是走调，就算沙漠送来的另一种纪念。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
 | tpl_cl_sm_03 | p_clingy | 沙漠异域 | 沙漠的夜里降温好快，我裹紧毯子时第一个念头是：你的被子够厚吗？{incident}。远方一切都好，只是在看见身旁空出来的位置时，会想起你。——{petName} | I tied a memory of the garden to my bag today. {encounter}. {incident}. However far I walk, it feels as though the garden is just ahead. Love, {petName} |
 | tpl_cl_jd_01 | p_clingy | 极地水域 | 极光亮起来的那一刻，全村的人都在喊。我也喊了，喊的是你的名字——这么好看的东西，第一反应当然是想让你看见。{incident}。——{petName} | {ownerName}, I reached {location}. {encounter}. {incident}. The first thing I wanted to do was write to you. Love, {petName} |
-| tpl_cl_jd_02 | p_clingy | 极地水域 | {encounter}，它们那里习惯靠在一起取暖。我很熟练，毕竟是跟你学的。{location}很冷，想起院子时却很暖。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
+| tpl_cl_jd_02 | p_clingy | 极地水域 | 今天遇上一件事：{encounter}。这里的大家习惯靠在一起取暖，我很熟练，毕竟是跟你学的。{location}很冷，想起院子时却很暖。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
 | tpl_cl_jd_03 | p_clingy | 极地水域 | 浮冰灯塔一亮一亮的，像有人在说『在呢，在呢』。我盯着看了好久。{incident}。{ownerName}，你也要好好的，在呢。——{petName} | I tied a memory of the garden to my bag today. {encounter}. {incident}. However far I walk, it feels as though the garden is just ahead. Love, {petName} |
 | tpl_cl_qh_01 | p_clingy | 奇幻 | {location}的邮差说，寄给常常想起的人可以免邮票，所以这张没贴。{incident}。窗台风铃响时，就当它替我先打了招呼。——{petName} | {ownerName}, I reached {location}. {encounter}. {incident}. The first thing I wanted to do was write to you. Love, {petName} |
-| tpl_cl_qh_02 | p_clingy | 奇幻 | {encounter}，它说云端牧场的云可以定制形状。我订了一朵你的样子，牧云人明天开工。等哪天你抬头看见一朵特别眼熟的云——别怀疑，是我干的。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
+| tpl_cl_qh_02 | p_clingy | 奇幻 | 今天遇上一件事：{encounter}。听说云端牧场的云可以定制形状，我订了一朵你的样子，牧云人明天开工。等哪天你抬头看见一朵特别眼熟的云——别怀疑，是我干的。——{petName} | {location} is beautiful, but every lovely thing makes me wonder whether you can see the same sky. {encounter}. {incident}. Love, {petName} |
 | tpl_cl_qh_03 | p_clingy | 奇幻 | 会走路的岛问我要去哪儿，我说了院子的方向，它居然真的转了个小弯！{incident}。那一刻，世界好像也记得回去的方向。——{petName} | I tied a memory of the garden to my bag today. {encounter}. {incident}. However far I walk, it feels as though the garden is just ahead. Love, {petName} |
 | tpl_al_hb_01 | p_aloof | 海滨 | 到{location}了。海是蓝的。浪很吵。{incident}。……涛声睡前听还行。你那儿，应该很安静吧。——{petName} | {location}. Arrived. The view is better than expected. {encounter}. {incident}. I happened to think of you. That is all. {petName} |
 | tpl_al_hb_02 | p_aloof | 海滨 | {encounter}。没有理。后来它把最好的位置让给了我。……勉强坐了。挺暖和。就这样。——{petName} | Report from {location}: {weather}. {encounter}. {incident}. I checked whether the garden was visible from here. It was not. I checked twice. {petName} |
@@ -1501,12 +1511,12 @@
 | tpl_al_cs_03 | p_aloof | 城市 | 旧书坊巷。靠着书睡了一下午。老板没赶我。{incident}。这个城市，勉强有点意思。——{petName} | {location} is quiet enough. {encounter}. {incident}. I may stay another day. The garden crossed my mind. {petName} |
 | tpl_al_xy_01 | p_aloof | 乡野 | {location}。安静。{encounter}，跟了我一路。没赶。乡下的路长，有个跟班……也不是不行。——{petName} | {location}. Arrived. The view is better than expected. {encounter}. {incident}. I happened to think of you. That is all. {petName} |
 | tpl_al_xy_02 | p_aloof | 乡野 | 麦子熟了，一片金的。看久了眼睛有点热。是风沙。{incident}。——{petName} | Report from {location}: {weather}. {encounter}. {incident}. I checked whether the garden was visible from here. It was not. I checked twice. {petName} |
-| tpl_al_xy_03 | p_aloof | 乡野 | 在{location}的屋檐下躲雨。{incident}。雨声。稻香。……你以前也这样跟我一起躲过。就提一句。——{petName} | {location} is quiet enough. {encounter}. {incident}. I may stay another day. The garden crossed my mind. {petName} |
+| tpl_al_xy_03 | p_aloof | 乡野 | 在{location}的屋檐下歇脚。{incident}。虫鸣。稻香。……你以前也这样跟我一起坐过。就提一句。——{petName} | {location} is quiet enough. {encounter}. {incident}. I may stay another day. The garden crossed my mind. {petName} |
 | tpl_al_sl_01 | p_aloof | 森林 | {location}。雾。走了很久没遇到谁。挺好。{incident}。……太安静了也不算太好。仅供参考。——{petName} | {location}. Arrived. The view is better than expected. {encounter}. {incident}. I happened to think of you. That is all. {petName} |
 | tpl_al_sl_02 | p_aloof | 森林 | {encounter}。它话多。我话少。它讲了一路，我听了一路。……分开的时候它说下次再讲。没有拒绝。——{petName} | Report from {location}: {weather}. {encounter}. {incident}. I checked whether the garden was visible from here. It was not. I checked twice. {petName} |
 | tpl_al_sl_03 | p_aloof | 森林 | 千年橡树下睡了一觉。树洞里有别人塞的信。我也塞了一张。内容不告诉你。收件人……写的谁你应该知道。——{petName} | {location} is quiet enough. {encounter}. {incident}. I may stay another day. The garden crossed my mind. {petName} |
 | tpl_al_sm_01 | p_aloof | 沙漠异域 | {location}。昼热夜冷。星星过量。{incident}。夜里数星星数到第七颗就停了——第七颗最亮，像某个总喊我吃饭的人的窗户。睡了。——{petName} | {location}. Arrived. The view is better than expected. {encounter}. {incident}. I happened to think of you. That is all. {petName} |
-| tpl_al_sm_02 | p_aloof | 沙漠异域 | {encounter}。请我喝了一碗奶茶。没道谢，只认真点了一下头。它看见了，算扯平。——{petName} | Report from {location}: {weather}. {encounter}. {incident}. I checked whether the garden was visible from here. It was not. I checked twice. {petName} |
+| tpl_al_sm_02 | p_aloof | 沙漠异域 | 今天遇上一件事：{encounter}。我在摊边借了个背风的位置，离开前认真点了一下头。对方看见了，算扯平。——{petName} | Report from {location}: {weather}. {encounter}. {incident}. I checked whether the garden was visible from here. It was not. I checked twice. {petName} |
 | tpl_al_sm_03 | p_aloof | 沙漠异域 | 热气球。升空。地面变小。感想：一般。……院子从天上看会是什么样，倒是想知道。就这样。——{petName} | {location} is quiet enough. {encounter}. {incident}. I may stay another day. The garden crossed my mind. {petName} |
 | tpl_al_jd_01 | p_aloof | 极地水域 | {location}。冷。极光，绿的，还行。{incident}。……好吧。不止还行。这句只写一遍，看完就忘。——{petName} | {location}. Arrived. The view is better than expected. {encounter}. {incident}. I happened to think of you. That is all. {petName} |
 | tpl_al_jd_02 | p_aloof | 极地水域 | {encounter}。它们轮流贴过来取暖。队伍很长。我没同意，也没走。天冷，特殊情况。——{petName} | Report from {location}: {weather}. {encounter}. {incident}. I checked whether the garden was visible from here. It was not. I checked twice. {petName} |
@@ -1514,62 +1524,62 @@
 | tpl_al_qh_01 | p_aloof | 奇幻 | {location}。设定离谱。体验……可以。{incident}。奇迹见多了也就那样。除了一件：这里寄信真的能到你手上。这件算奇迹。——{petName} | {location}. Arrived. The view is better than expected. {encounter}. {incident}. I happened to think of you. That is all. {petName} |
 | tpl_al_qh_02 | p_aloof | 奇幻 | {encounter}。它说可以帮我实现一个愿望。我说没有。它说撒谎。……愿望内容保密，反正和某个院子有关。——{petName} | Report from {location}: {weather}. {encounter}. {incident}. I checked whether the garden was visible from here. It was not. I checked twice. {petName} |
 | tpl_al_qh_03 | p_aloof | 奇幻 | 月亮背面。安静。适合我。{incident}。这里能看到地球。我看了很久。……不解释。——{petName} | {location} is quiet enough. {encounter}. {incident}. I may stay another day. The garden crossed my mind. {petName} |
-| tpl_na_hb_01 | p_naughty | 海滨 | 郑重澄清：{location}那艘小船不是我解开的，缆绳是自己松的，我只是……帮它松得快了一点。{incident}。船主罚我看船一下午，看船能晒太阳，血赚。——{petName} | For the record, not everything that happened in {location} was my fault. {encounter}. {incident}. I will explain the details when I get home. Maybe. Love, {petName} |
+| tpl_na_hb_01 | p_naughty | 海滨 | 郑重澄清：{location}那艘小船不是我解开的，缆绳是自己松的，我只是……帮它松得快了一点。{incident}。船主罚我看船一下午，看船还能晒太阳，怎么算都不亏。——{petName} | For the record, not everything that happened in {location} was my fault. {encounter}. {incident}. I will explain the details when I get home. Maybe. Love, {petName} |
 | tpl_na_hb_02 | p_naughty | 海滨 | {encounter}。我们比赛谁先捡到浪头送来的东西，我赢了三次！代价是全身湿透，被它笑到现在。值。——{petName} | Official statement from {location}: I only helped events along. {encounter}. {incident}. No regrets worth mentioning. Love, {petName} |
 | tpl_na_hb_03 | p_naughty | 海滨 | 我在沙滩上绕着每只晒太阳的螃蟹画了圈。它们醒来都很困惑。{incident}。艺术，是需要观众醒着的。——{petName} | {ownerName}, please keep this letter as evidence that I was mostly well behaved. {encounter}. {incident}. Mostly is an important word. Love, {petName} |
 | tpl_na_sd_01 | p_naughty | 山地 | 对着{location}的回声谷喊了『开饭啦』，结果半座山的动物都探出了头。{incident}。我错了，但是场面真的很壮观。——{petName} | For the record, not everything that happened in {location} was my fault. {encounter}. {incident}. I will explain the details when I get home. Maybe. Love, {petName} |
-| tpl_na_sd_02 | p_naughty | 山地 | {encounter}，它藏坚果我就换个地方帮它重新藏，帮了一下午。它现在找不到了。我也忘了。{season}的山里将来会多出很多棵树，都算我种的。——{petName} | Official statement from {location}: I only helped events along. {encounter}. {incident}. No regrets worth mentioning. Love, {petName} |
+| tpl_na_sd_02 | p_naughty | 山地 | 今天遇上一件事：{encounter}。我又看见一处藏坚果的地方，就换个位置帮忙重新藏，忙了一下午。现在谁都找不到了，我也忘了。{season}的山里将来会多出很多棵树，都算我种的。——{petName} | Official statement from {location}: I only helped events along. {encounter}. {incident}. No regrets worth mentioning. Love, {petName} |
 | tpl_na_sd_03 | p_naughty | 山地 | 温泉边立了牌子『禁止扑通』。我研究了一下，牌子上没写禁止『咚』。{incident}。规则漏洞是用来跳的。——{petName} | {ownerName}, please keep this letter as evidence that I was mostly well behaved. {encounter}. {incident}. Mostly is an important word. Love, {petName} |
-| tpl_na_cs_01 | p_naughty | 城市 | 在{location}学会了{incident}（对不起但是真的好好笑）。{encounter}——最后我不但没被赶走，还转正了。我现在是本街最红的。——{petName} | For the record, not everything that happened in {location} was my fault. {encounter}. {incident}. I will explain the details when I get home. Maybe. Love, {petName} |
+| tpl_na_cs_01 | p_naughty | 城市 | 在{location}有了一个新发现：{incident}。对不起，但真的好好笑。后来又遇上一件事：{encounter}。最后我不但没被赶走，还转正了。我现在是本街最红的。——{petName} | For the record, not everything that happened in {location} was my fault. {encounter}. {incident}. I will explain the details when I get home. Maybe. Love, {petName} |
 | tpl_na_cs_02 | p_naughty | 城市 | 正式声明：旧书坊的书塔倒塌与我无关，我路过时它已经在晃了（我承认我又碰了一下，想确认它晃不晃）。{incident}。——{petName} | Official statement from {location}: I only helped events along. {encounter}. {incident}. No regrets worth mentioning. Love, {petName} |
 | tpl_na_cs_03 | p_naughty | 城市 | 把{location}晾着的袜子按颜色重新配了对。全楼的人都穿错了，但都更好看了。{incident}。没有人抓到我，这封信是唯一证据。请销毁；算了，还是留着吧。——{petName} | {ownerName}, please keep this letter as evidence that I was mostly well behaved. {encounter}. {incident}. Mostly is an important word. Love, {petName} |
-| tpl_na_xy_01 | p_naughty | 乡野 | 郑重澄清：{location}的{incident}，我只是……组织了一下事情发生的方向。罚是罚了，但罚出了{encounter}。这就是传说中的因祸得福！——{petName} | For the record, not everything that happened in {location} was my fault. {encounter}. {incident}. I will explain the details when I get home. Maybe. Love, {petName} |
+| tpl_na_xy_01 | p_naughty | 乡野 | 郑重澄清：在{location}发生了一件事，{incident}。我只是……组织了一下事情发生的方向。罚是罚了，后来却又遇上一件好事：{encounter}。这就是传说中的因祸得福！——{petName} | For the record, not everything that happened in {location} was my fault. {encounter}. {incident}. I will explain the details when I get home. Maybe. Love, {petName} |
 | tpl_na_xy_02 | p_naughty | 乡野 | 稻草人的帽子现在在我头上。它没有意见（它没有意见的能力）。{incident}。全田的乌鸦都以为换了新领导，听话得很。——{petName} | Official statement from {location}: I only helped events along. {encounter}. {incident}. No regrets worth mentioning. Love, {petName} |
 | tpl_na_xy_03 | p_naughty | 乡野 | {encounter}，我们联手把风车下的午睡大爷的草帽转移到了羊头上。大爷醒来夸羊有品位。{season}的乡下，快乐简单。——{petName} | {ownerName}, please keep this letter as evidence that I was mostly well behaved. {encounter}. {incident}. Mostly is an important word. Love, {petName} |
 | tpl_na_sl_01 | p_naughty | 森林 | 松果集市今天促销，因为我把『每颗一果』的牌子啃成了『每颗十果』。{incident}。松鼠会计追了我三棵树，追上以后……我们合伙把牌子改回来了，收手续费两颗榛子。——{petName} | For the record, not everything that happened in {location} was my fault. {encounter}. {incident}. I will explain the details when I get home. Maybe. Love, {petName} |
-| tpl_na_sl_02 | p_naughty | 森林 | {encounter}，它教我认蘑菇，我教它装蘑菇（蹲着不动头顶叶子）。路过的采蘑菇奶奶差点把我们俩都摘走。——{petName} | Official statement from {location}: I only helped events along. {encounter}. {incident}. No regrets worth mentioning. Love, {petName} |
+| tpl_na_sl_02 | p_naughty | 森林 | 今天遇上一件事：{encounter}。我还学会了认蘑菇，也学会了装蘑菇——蹲着不动，头顶一片叶子。路过的采蘑菇奶奶差点把我也摘走。——{petName} | Official statement from {location}: I only helped events along. {encounter}. {incident}. No regrets worth mentioning. Love, {petName} |
 | tpl_na_sl_03 | p_naughty | 森林 | 往树洞邮筒里塞了一片超大的落叶，收件人：随便谁。{incident}。第二天树洞里多了三片回信落叶。我不小心发明了一个邮政系统。——{petName} | {ownerName}, please keep this letter as evidence that I was mostly well behaved. {encounter}. {incident}. Mostly is an important word. Love, {petName} |
 | tpl_na_sm_01 | p_naughty | 沙漠异域 | 经过彩绘集市的颜料摊时，行李带不小心扫了一下。{incident}。摊主看着那面墙沉默很久，然后给它标了价。我要分成！——{petName} | For the record, not everything that happened in {location} was my fault. {encounter}. {incident}. I will explain the details when I get home. Maybe. Love, {petName} |
-| tpl_na_sm_02 | p_naughty | 沙漠异域 | {encounter}，我趁它打盹把它的铃铛和别人的换了。醒来全队的节奏都乱了，乱出了一种新的曲子。领队说明天就按这个走。——{petName} | Official statement from {location}: I only helped events along. {encounter}. {incident}. No regrets worth mentioning. Love, {petName} |
+| tpl_na_sm_02 | p_naughty | 沙漠异域 | 今天遇上一件事：{encounter}。午后我趁商队打盹，把两枚铃铛换了位置。醒来后全队的节奏都乱了，乱出了一种新的曲子。领队说明天就按这个走。——{petName} | Official statement from {location}: I only helped events along. {encounter}. {incident}. No regrets worth mentioning. Love, {petName} |
 | tpl_na_sm_03 | p_naughty | 沙漠异域 | 热气球点火师说小孩别碰。我没碰，我只是对着火吹了口气（表示友好）。{incident}。现在全营地都认识我了，认识的方式不太光彩，但认识了。——{petName} | {ownerName}, please keep this letter as evidence that I was mostly well behaved. {encounter}. {incident}. Mostly is an important word. Love, {petName} |
 | tpl_na_jd_01 | p_naughty | 极地水域 | 把{location}渔夫钓上来的鱼偷偷放回去了两条（它们眼神太可怜）。被抓包后我摆出最无辜的脸。{incident}。渔夫说：行吧，就当放生积福。我：对，是这样的。——{petName} | For the record, not everything that happened in {location} was my fault. {encounter}. {incident}. I will explain the details when I get home. Maybe. Love, {petName} |
 | tpl_na_jd_02 | p_naughty | 极地水域 | {encounter}，比赛贴着冰面滑行画画。我画的圆最圆，因为我没能及时刹住。裁判争议很大，快乐没有争议。——{petName} | Official statement from {location}: I only helped events along. {encounter}. {incident}. No regrets worth mentioning. Love, {petName} |
-| tpl_na_jd_03 | p_naughty | 极地水域 | 往温泉里丢了颗雪球，想看它化。旁边泡汤的老海豹被溅了一脸。{incident}。现在丢雪球成了这里的泡汤仪式，是我发明的，没人知道，你知道就行。——{petName} | {ownerName}, please keep this letter as evidence that I was mostly well behaved. {encounter}. {incident}. Mostly is an important word. Love, {petName} |
+| tpl_na_jd_03 | p_naughty | 极地水域 | 往蓝洞泉里放了一片叶子，想看它漂到哪里。旁边看水的小孩也跟着放了一片。{incident}。现在比赛叶子漂流成了这里的新游戏，是我发明的，没人知道，你知道就行。——{petName} | {ownerName}, please keep this letter as evidence that I was mostly well behaved. {encounter}. {incident}. Mostly is an important word. Love, {petName} |
 | tpl_na_qh_01 | p_naughty | 奇幻 | 云端牧场的一只云羊邀我跟着跑了一段。{incident}。牧云人说，我是十年来第一个摔进云里还笑得出来的旅客。——{petName} | For the record, not everything that happened in {location} was my fault. {encounter}. {incident}. I will explain the details when I get home. Maybe. Love, {petName} |
 | tpl_na_qh_02 | p_naughty | 奇幻 | 往月亮背面的邮筒里投了一张白纸。{encounter}问我寄什么，我说寄一个谜。现在全邮局都在猜。谜底：没有谜底。（别揭发我。）——{petName} | Official statement from {location}: I only helped events along. {encounter}. {incident}. No regrets worth mentioning. Love, {petName} |
 | tpl_na_qh_03 | p_naughty | 奇幻 | 糖霜火山喷发前会『咕嘟』一声。我学会了这个声音。{incident}。全镇演习了三次之后禁止我再学。第四次是火山自己咕嘟的，这次真不是我！——{petName} | {ownerName}, please keep this letter as evidence that I was mostly well behaved. {encounter}. {incident}. Mostly is an important word. Love, {petName} |
 | tpl_ge_hb_01 | p_gentle | 海滨 | 今天帮一只被浪打翻的小寄居蟹翻了个身，它道谢的样子好小声。{incident}。{location}的浪很大，但大家都在好好生活。——{petName} | Today I reached {location}. {encounter}. {incident}. Everyone here is caring for someone in a small way. I will remember that. Love, {petName} |
 | tpl_ge_hb_02 | p_gentle | 海滨 | {encounter}。分别的时候它送了我半片珍珠色的贝壳，另外半片它留着——它说这样我们就算认识了一整个海。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
 | tpl_ge_hb_03 | p_gentle | 海滨 | {timeOfDay}退潮，好多小水洼里困着小鱼。我一个一个把它们送回海里，最后一只回头看了我一眼。{incident}。今天的海比昨天满一点点，有我的功劳。——{petName} | {ownerName}, I found something tender at {location}. {encounter}. {incident}. I am sending this page home so the garden can keep it too. Love, {petName} |
-| tpl_ge_sd_01 | p_gentle | 山地 | 山路上遇到{encounter}，它的行李散了一地。我们一起捡到{timeOfDay}，它把最后一颗野莓分给了我。{incident}。山很陡，但没有谁是一个人爬的。——{petName} | Today I reached {location}. {encounter}. {incident}. Everyone here is caring for someone in a small way. I will remember that. Love, {petName} |
+| tpl_ge_sd_01 | p_gentle | 山地 | 山路上遇到一件事：{encounter}。路边还有一袋散开的行李，我帮着捡到{timeOfDay}，最后收到一颗野莓作谢礼。后来又有个新发现：{incident}。山很陡，但没有谁是一个人爬的。——{petName} | Today I reached {location}. {encounter}. {incident}. Everyone here is caring for someone in a small way. I will remember that. Love, {petName} |
 | tpl_ge_sd_02 | p_gentle | 山地 | 雪线上有一株开在石缝里的小花，路过的都替它挡一下风。我也挡了一会儿。{incident}。它不知道我们的名字，我们也不需要。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
 | tpl_ge_sd_03 | p_gentle | 山地 | {location}的温泉里，年纪最大的猴子泡在最暖的位置——是小猴们让的。我看着看着，心里也跟着暖起来，便把捡到的栗子分给了它们。——{petName} | {ownerName}, I found something tender at {location}. {encounter}. {incident}. I am sending this page home so the garden can keep it too. Love, {petName} |
 | tpl_ge_cs_01 | p_gentle | 城市 | 深夜面馆打烊后，老板会把剩的汤留给巷子里的猫。今晚我帮他把碗摆整齐了。{incident}。{location}的深夜，比白天软。——{petName} | Today I reached {location}. {encounter}. {incident}. Everyone here is caring for someone in a small way. I will remember that. Love, {petName} |
 | tpl_ge_cs_02 | p_gentle | 城市 | {encounter}。它找不到回家的路，我陪它一站一站地闻回去。到家的时候它家人冲出来的样子，我会记很久。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
 | tpl_ge_cs_03 | p_gentle | 城市 | 旧书坊的老板眼睛不好，我守在窗台边帮他晒书，也请啄书角的鸽子去别处散步。{incident}。——{petName} | {ownerName}, I found something tender at {location}. {encounter}. {incident}. I am sending this page home so the garden can keep it too. Love, {petName} |
 | tpl_ge_xy_01 | p_gentle | 乡野 | 今天帮一只迷路的瓢虫过了马路——是田埂，但对它来说就是很宽很宽的马路。{incident}。它道谢的声音，要俯下身靠近草面才能听见。——{petName} | Today I reached {location}. {encounter}. {incident}. Everyone here is caring for someone in a small way. I will remember that. Love, {petName} |
-| tpl_ge_xy_02 | p_gentle | 乡野 | {encounter}。它的谷仓漏雨，我们花了一下午用干草把漏的地方垫好。完工时{weather}刚好停了，像是天也来验收。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
+| tpl_ge_xy_02 | p_gentle | 乡野 | {encounter}。谷仓有一处漏风，我们花了一下午用干草把缝隙垫好。完工时风刚好停了，像是天也来验收。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
 | tpl_ge_xy_03 | p_gentle | 乡野 | 向日葵车站的长椅上有一颗没人认领的纽扣，我把它摆到最显眼的地方，又怕它晒着，挪到了有阴影的显眼地方。{incident}。希望丢它的人回来找。——{petName} | {ownerName}, I found something tender at {location}. {encounter}. {incident}. I am sending this page home so the garden can keep it too. Love, {petName} |
 | tpl_ge_sl_01 | p_gentle | 森林 | {location}的落叶下面睡着过冬的虫子，所以我走路很慢很慢，像在读一封不能吵醒的信。{incident}。——{petName} | Today I reached {location}. {encounter}. {incident}. Everyone here is caring for someone in a small way. I will remember that. Love, {petName} |
-| tpl_ge_sl_02 | p_gentle | 森林 | {encounter}，它的刺上挂了太多果子，卡在树洞口进退两难。我帮它一颗一颗卸下来，再一颗一颗从洞口递进去。它在里面小声说：都在的，谢谢你。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
+| tpl_ge_sl_02 | p_gentle | 森林 | 今天遇上一件事：{encounter}。树洞边还有个小家伙，刺上挂了太多果子，卡在洞口进退两难。我帮忙一颗一颗卸下来，再一颗一颗从洞口递进去。洞里传来一句小小的谢谢。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
 | tpl_ge_sl_03 | p_gentle | 森林 | 雾太大，我把捡到的萤火虫小灯（一片会发光的菌子）放在了吊桥入口。{incident}。不知道会照亮谁，反正会照亮谁的。——{petName} | {ownerName}, I found something tender at {location}. {encounter}. {incident}. I am sending this page home so the garden can keep it too. Love, {petName} |
 | tpl_ge_sm_01 | p_gentle | 沙漠异域 | 绿洲的水边，商队的骆驼排队喝水，最小的那只总被挤到最后。我陪它站了会儿，把我的位置让给了它。{incident}。它睫毛好长，眨一下像说了句谢谢。——{petName} | Today I reached {location}. {encounter}. {incident}. Everyone here is caring for someone in a small way. I will remember that. Love, {petName} |
-| tpl_ge_sm_02 | p_gentle | 沙漠异域 | {encounter}。他画了一下午没人买，我就蹲在画前当第一个观众。后来围过来好多人。他偷偷送了我一张小画：是蹲着的我。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
+| tpl_ge_sm_02 | p_gentle | 沙漠异域 | 今天遇上一件事：{encounter}。街角还有人画了一下午，我就蹲在画前当第一个观众。后来围过来好多人。离开前，我收到一张小画：是蹲着的我。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
 | tpl_ge_sm_03 | p_gentle | 沙漠异域 | 夜里降温，我把毯子分了一半给帐篷外的流浪小猫。{incident}。半条毯子没有不够，暖是会互相传的。——{petName} | {ownerName}, I found something tender at {location}. {encounter}. {incident}. I am sending this page home so the garden can keep it too. Love, {petName} |
 | tpl_ge_jd_01 | p_gentle | 极地水域 | 渔村的爷爷说腿疼，出不了门看极光。我陪他坐在窗边等，极光出来时我们谁都没说话。{incident}。有些陪伴不需要翻译。——{petName} | Today I reached {location}. {encounter}. {incident}. Everyone here is caring for someone in a small way. I will remember that. Love, {petName} |
-| tpl_ge_jd_02 | p_gentle | 极地水域 | {encounter}，它的孩子第一次下水不敢跳。我在旁边陪它等了很久，一起数浪，数到第二十个它就跳了。溅起的水花不大，却很勇敢。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
+| tpl_ge_jd_02 | p_gentle | 极地水域 | 今天遇上一件事：{encounter}。浅水边还有个小家伙，第一次下水不敢跳。我在旁边陪着一起数浪，数到第二十个，终于听见轻轻一声水响。溅起的水花不大，却很勇敢。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
 | tpl_ge_jd_03 | p_gentle | 极地水域 | 浮冰上冻着一朵不知从哪儿漂来的花。大家都绕开走，怕踩碎它。{incident}。整个{location}都在保护一朵花，这里的冷是假的。——{petName} | {ownerName}, I found something tender at {location}. {encounter}. {incident}. I am sending this page home so the garden can keep it too. Love, {petName} |
 | tpl_ge_qh_01 | p_gentle | 奇幻 | 月亮背面的邮局有一格『无人认领的信』。邮差说有些收信人已经等不到了。我请他把那格的灰擦了擦，窗子开了一条缝。{incident}。信等人的样子，也应该体面一点。——{petName} | Today I reached {location}. {encounter}. {incident}. Everyone here is caring for someone in a small way. I will remember that. Love, {petName} |
-| tpl_ge_qh_02 | p_gentle | 奇幻 | {encounter}，它说会走路的岛累了一百年了。全岛的居民商量后决定：这个{season}谁也不催它赶路。我第一个表示赞成。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
+| tpl_ge_qh_02 | p_gentle | 奇幻 | 今天遇上一件事：{encounter}。岛上的居民说，会走路的岛已经累了一百年。大家商量后决定：这个{season}谁也不催它赶路。我第一个表示赞成。——{petName} | The {timeOfDay} at {location} felt especially kind. {encounter}. {incident}. A little company can make a long road feel warm. Love, {petName} |
 | tpl_ge_qh_03 | p_gentle | 奇幻 | 云端牧场里最旧的一朵云快散了，牧云人舍不得。大家轮流往它身上哈热气。{incident}。它最后变成一阵细得几乎看不见的雨，落在每个人鼻尖上。谁也没哭，都笑着说凉凉的。——{petName} | {ownerName}, I found something tender at {location}. {encounter}. {incident}. I am sending this page home so the garden can keep it too. Love, {petName} |
-| tpl_dr_hb_01 | p_dreamy | 海滨 | {location}的浪一遍一遍地翻，像谁在找一页夹丢了的信纸。{incident}。我帮它找到{timeOfDay}，找到的都是月光。——{petName} | {location} looked like a letter opened by the wind. {encounter}. {incident}. I am sending you this page of the dream. Love, {petName} |
+| tpl_dr_hb_01 | p_dreamy | 海滨 | {location}的浪一遍一遍地翻，像谁在找一页夹丢了的信纸。{incident}。我帮它找了很久，找到的都是细碎的光。——{petName} | {location} looked like a letter opened by the wind. {encounter}. {incident}. I am sending you this page of the dream. Love, {petName} |
 | tpl_dr_hb_02 | p_dreamy | 海滨 | {encounter}。它说贝壳里的声音是海的回忆。那我听到的这一段，一定是海很小的时候——声音很轻，还不会打雷。——{petName} | At {timeOfDay}, {location} seemed to float between two skies. {encounter}. {incident}. I made a wish in both directions, just in case. Love, {petName} |
 | tpl_dr_hb_03 | p_dreamy | 海滨 | 海雾漫上来的时候，{location}就被装进了一只毛玻璃罐子。{incident}。我也在罐子里，标签上写着：请轻放，内有想家的（一只）。——{petName} | Perhaps {weather} is only the sky remembering a story. {encounter}. {incident}. Tonight, that story leads all the way back to our garden. Love, {petName} |
 | tpl_dr_sd_01 | p_dreamy | 山地 | 云从{location}的垭口翻过去，像一群没睡醒的绵羊，我数着数着也想家了。{incident}。——{petName} | {location} looked like a letter opened by the wind. {encounter}. {incident}. I am sending you this page of the dream. Love, {petName} |
 | tpl_dr_sd_02 | p_dreamy | 山地 | {encounter}。它说回声谷的回声其实是山在做笔记。那我今天对着山谷说的那句话，山已经记下了。内容保密，反正是关于你的。——{petName} | At {timeOfDay}, {location} seemed to float between two skies. {encounter}. {incident}. I made a wish in both directions, just in case. Love, {petName} |
 | tpl_dr_sd_03 | p_dreamy | 山地 | 枫叶红透的那面山坡，是{season}打翻的颜料，也可能是晚霞下山的时候没提好裙摆。{incident}。两种说法我都信。——{petName} | Perhaps {weather} is only the sky remembering a story. {encounter}. {incident}. Tonight, that story leads all the way back to our garden. Love, {petName} |
 | tpl_dr_cs_01 | p_dreamy | 城市 | {location}的路灯到了{timeOfDay}就一盏一盏亮，像有人在给城市盖章：这一页读完了，这一页也读完了。{incident}。我的这一页上，盖的是你的名字。——{petName} | {location} looked like a letter opened by the wind. {encounter}. {incident}. I am sending you this page of the dream. Love, {petName} |
-| tpl_dr_cs_02 | p_dreamy | 城市 | {encounter}。他说摩天轮转一圈要十五分钟。我坐了一圈，看城市慢慢躺下又慢慢站起来——原来城市也要翻身的，睡不着的时候。——{petName} | At {timeOfDay}, {location} seemed to float between two skies. {encounter}. {incident}. I made a wish in both directions, just in case. Love, {petName} |
+| tpl_dr_cs_02 | p_dreamy | 城市 | 今天遇上一件事：{encounter}。摩天轮转一圈要十五分钟。我坐了一圈，看城市慢慢躺下又慢慢站起来——原来城市也要翻身的，睡不着的时候。——{petName} | At {timeOfDay}, {location} seemed to float between two skies. {encounter}. {incident}. I made a wish in both directions, just in case. Love, {petName} |
 | tpl_dr_cs_03 | p_dreamy | 城市 | 深夜的电车空着开过去，我觉得它是替所有睡着的人，把没做完的梦送去下一站。{incident}。我的那个梦，麻烦送到院子。——{petName} | Perhaps {weather} is only the sky remembering a story. {encounter}. {incident}. Tonight, that story leads all the way back to our garden. Love, {petName} |
 | tpl_dr_xy_01 | p_dreamy | 乡野 | 萤火稻田到了夜里就变成一片矮矮的星空，{incident}。我怀疑天上的星星是从这里毕业的——你看，连星星都要毕业的。——{petName} | {location} looked like a letter opened by the wind. {encounter}. {incident}. I am sending you this page of the dream. Love, {petName} |
 | tpl_dr_xy_02 | p_dreamy | 乡野 | {encounter}。它说风车转是在给风磨面粉。所以起风的日子面包更香——这个说法没有证据，但有道理。——{petName} | At {timeOfDay}, {location} seemed to float between two skies. {encounter}. {incident}. I made a wish in both directions, just in case. Love, {petName} |
@@ -1577,7 +1587,7 @@
 | tpl_dr_sl_01 | p_dreamy | 森林 | {location}的雾不是雾，是森林还没写完的草稿，谁走进去谁就成了句子。{incident}。我今天是一个走得很慢的逗号。——{petName} | {location} looked like a letter opened by the wind. {encounter}. {incident}. I am sending you this page of the dream. Love, {petName} |
 | tpl_dr_sl_02 | p_dreamy | 森林 | {encounter}。它说千年橡树每年长一圈年轮，是在给自己写日记。那树洞里的信，就是它替大家保管的心事吧。我也存了一件进去。——{petName} | At {timeOfDay}, {location} seemed to float between two skies. {encounter}. {incident}. I made a wish in both directions, just in case. Love, {petName} |
 | tpl_dr_sl_03 | p_dreamy | 森林 | 蘑菇圈在{timeOfDay}发光，像森林把星星按在了地上，怕它们飞走。{incident}。我蹲在圈外没有进去——万一那是谁的梦，别踩醒。——{petName} | Perhaps {weather} is only the sky remembering a story. {encounter}. {incident}. Tonight, that story leads all the way back to our garden. Love, {petName} |
-| tpl_dr_sm_01 | p_dreamy | 沙漠异域 | {location}的墙全是画。我在里面待了一个{timeOfDay}，成了画的一部分。{encounter}，他说我是他见过最安静的颜色。今天我是{incident}的颜色，和你有关。——{petName} | {location} looked like a letter opened by the wind. {encounter}. {incident}. I am sending you this page of the dream. Love, {petName} |
+| tpl_dr_sm_01 | p_dreamy | 沙漠异域 | {location}的墙全是画。我在里面待了一个{timeOfDay}，成了画的一部分。路上还遇上一件事：{encounter}。后来有人说，我是这里最安静的颜色。今天又有了新发现：{incident}。这份颜色和你有关。——{petName} | {location} looked like a letter opened by the wind. {encounter}. {incident}. I am sending you this page of the dream. Love, {petName} |
 | tpl_dr_sm_02 | p_dreamy | 沙漠异域 | 星空盐湖把天空原样抄了一遍，连流星的错别字都没改。{incident}。我站在两片星空中间，不知道该把愿望许给哪边，就许了两遍。——{petName} | At {timeOfDay}, {location} seemed to float between two skies. {encounter}. {incident}. I made a wish in both directions, just in case. Love, {petName} |
 | tpl_dr_sm_03 | p_dreamy | 沙漠异域 | {encounter}。它说驼铃响一路，是给沙漠念经文，念到哪儿哪儿就不寂寞。我跟着走了一段，替铃铛换了个说法：是给沙漠讲睡前故事。——{petName} | Perhaps {weather} is only the sky remembering a story. {encounter}. {incident}. Tonight, that story leads all the way back to our garden. Love, {petName} |
 | tpl_dr_jd_01 | p_dreamy | 极地水域 | 极光在{location}的天上慢慢写字，笔画很长，谁都认不出写的什么。{incident}。我认出来了（大概）：是『别急』。天空写给冬天的。——{petName} | {location} looked like a letter opened by the wind. {encounter}. {incident}. I am sending you this page of the dream. Love, {petName} |
@@ -1684,7 +1694,7 @@
 | inc_xy_07 | 插曲 | 帮忙看摊时把「特价」牌碰倒了，一下午都是特价，果农说就当感谢街坊 | I knocked over the sale sign, so the orchard keeper thanked the whole village with a sale |
 | inc_xy_08 | 插曲 | 邮局的邮戳今天缺墨，盖出来的圈刚好像一颗爱心 | a dry postmark stamped a perfect little heart around the missing ink |
 | inc_sl_01 | 插曲 | 蘑菇圈在我路过时齐刷刷亮了一下，像一圈小路灯给我鼓掌 | a mushroom ring lit up all at once as though tiny path lights were applauding |
-| inc_sl_02 | 插曲 | 腮帮/背包塞太满，过树洞时卡住，全集市帮忙往外拽 | an overfilled backpack wedged me in a tree hollow and the whole market pulled me free |
+| inc_sl_02 | 插曲 | 背包塞得太满，过树洞时卡住，全集市都来帮忙往外拽 | an overfilled backpack wedged me in a tree hollow and the whole market pulled me free |
 | inc_sl_03 | 插曲 | 我埋的橡果位置忘了，挖开三个坑，坑坑有别人埋的存货 | I forgot my acorn hiding place and every wrong hole contained someone else's treasure |
 | inc_sl_04 | 插曲 | 雾散开的一瞬，吊桥尽头站着一只回头看我的鹿，一秒又没入雾里 | when the fog opened, a deer looked back from the bridge and vanished a second later |
 | inc_sl_05 | 插曲 | 踩到一根会翘起来的树根，被弹进了一堆刚扫拢的落叶山 | a springy root flipped me straight into a freshly swept mountain of leaves |
@@ -1728,7 +1738,7 @@
 | vi_sparrow_chameleon | Chirpy the Sparrow | Chameleon | 阿彩把自己变成麻雀色想混进对话，啾啾绕着它跳了一圈，礼貌地没有拆穿 | Chirpy the Sparrow sang a tiny fence-top concert for the afternoon. They changed into the gentlest welcome color they could find. |
 | vi_sparrow_ember | Chirpy the Sparrow | Emberling | 啾啾在小火龙尾巴的暖光旁烘蓬松了羽毛，走时留下一根亮闪闪的小灰羽当谢礼 | Chirpy the Sparrow sang a tiny fence-top concert for the afternoon. They kept one tiny flame glowing warmly between them. |
 | vi_sparrow_uni | Chirpy the Sparrow | Niko the Uni-Rabbit | 啾啾站上尼可的小角尖梳羽毛，尼可僵着脖子一动不敢动，像顶着全世界最轻的王冠 | Chirpy the Sparrow sang a tiny fence-top concert for the afternoon. They left a faint rainbow shimmer over the visitor's path. |
-| vi_sparrow_boo | Chirpy the Sparrow | Boo the Little Ghost | 啾啾径盶从噗噗身体里穿了过去，愣了两秒，决定当作今天风有点凉 | Chirpy the Sparrow sang a tiny fence-top concert for the afternoon. They floated close enough to be friendly and calmly enough not to startle. |
+| vi_sparrow_boo | Chirpy the Sparrow | Boo the Little Ghost | 啾啾径直从噗噗身体里穿了过去，愣了两秒，决定当作今天风有点凉 | Chirpy the Sparrow sang a tiny fence-top concert for the afternoon. They floated close enough to be friendly and calmly enough not to startle. |
 | vi_sparrow_starbug | Chirpy the Sparrow | Starbug | 啾啾把星星虫认成了掉在地上的星星，围着它蹦了一圈，最后郑重地鞠了一躬 | Chirpy the Sparrow sang a tiny fence-top concert for the afternoon. They blinked in time until the garden seemed full of scattered stars. |
 | vi_calico_cat | Wandering Calico | Orange Tabby | 两只猫背对背各晒各的太阳，中间隔着一掌宽的「江湖规矩」，谁也没先开口 | Wandering Calico shared the warmest patch of sunlight without a fuss. They answered with three slow tail taps and a contented blink. |
 | vi_calico_shiba | Wandering Calico | Shiba Inu | 柴犬热情冲上去交朋友，三花猫一记眼神让它急刹车，改成原地摇尾巴问好 | Wandering Calico shared the warmest patch of sunlight without a fuss. They stood proudly on lookout, taking the visit very seriously. |
@@ -1744,7 +1754,7 @@
 | vi_calico_starbug | Wandering Calico | Starbug | 三花猫把星星虫小心地衔到高处的花盆沿，好让这颗「星星」离天空更近一点 | Wandering Calico shared the warmest patch of sunlight without a fuss. They blinked in time until the garden seemed full of scattered stars. |
 | vi_snail_cat | Slow-Mail Snail | Orange Tabby | 蜗牛递送一片叶子信用了两小时，阿橘睡了两觉醒来，签收时假装自己等了很久 | Slow-Mail Snail delivered a leaf-sized note at an admirably careful pace. They answered with three slow tail taps and a contented blink. |
 | vi_snail_shiba | Slow-Mail Snail | Shiba Inu | 柴犬绕着蜗牛跑了三十圈想帮它「加速」，蜗牛在风里坚定地前进了三厘米 | Slow-Mail Snail delivered a leaf-sized note at an admirably careful pace. They stood proudly on lookout, taking the visit very seriously. |
-| vi_snail_rabbit | Slow-Mail Snail | Lop Rabbit | 雪团收到蜗牛慢递的三叶草，快递签收方式是：当场吃掉，五星好评 | Slow-Mail Snail delivered a leaf-sized note at an admirably careful pace. They listened with both long ears loose and peaceful. |
+| vi_snail_rabbit | Slow-Mail Snail | Lop Rabbit | 雪团收到蜗牛慢递的三叶草，慢递签收方式是：当场吃掉，五星好评 | Slow-Mail Snail delivered a leaf-sized note at an admirably careful pace. They listened with both long ears loose and peaceful. |
 | vi_snail_hamster | Slow-Mail Snail | Hamster | 仓鼠想把蜗牛的壳也收进囤货清单，反复确认后遗憾地发现里面「已有住户」 | Slow-Mail Snail delivered a leaf-sized note at an admirably careful pace. They offered one carefully saved crumb from their secret stash. |
 | vi_snail_turtle | Slow-Mail Snail | Tortoise | 两位慢家伙并排走完一段石板路，用了一下午，聊了很多，谁也没催谁 | Slow-Mail Snail delivered a leaf-sized note at an admirably careful pace. They made room on the warmest stone and stayed for company. |
 | vi_snail_parrot | Slow-Mail Snail | Parrot | 皮皮全程实况转播蜗牛的行进：「向左！向左！停！」蜗牛的路线毫无变化 | Slow-Mail Snail delivered a leaf-sized note at an admirably careful pace. They tried out a brand-new greeting until everyone recognized it. |
@@ -1910,7 +1920,7 @@
 | vpi_snowhare_uni | Snow Hare | Niko the Uni-Rabbit | 雪地里两团白影追逐，只有一道细细的彩光标记着尼可跑过的弧线 | Snow Hare left a cool footprint beside the sun-warmed path. They left a faint rainbow shimmer over the visitor's path. |
 | vpi_snowhare_boo | Snow Hare | Boo the Little Ghost | 噗噗混进雪地里玩「谁最白」，雪兔赢了，因为噗噗激动起来会变透明，犯规 | Snow Hare left a cool footprint beside the sun-warmed path. They floated close enough to be friendly and calmly enough not to startle. |
 | vpi_snowhare_starbug | Snow Hare | Starbug | 雪兔驮着星星虫在雪原上跑了一圈，雪反着光，像驮着一颗星星巡视了整个冬天 | Snow Hare left a cool footprint beside the sun-warmed path. They blinked in time until the garden seemed full of scattered stars. |
-| vpi_l_starbug_any | Starbug | * | 宠物屏息看着草叶上明灭的小光点，访客册的那一页也像被微光照亮 | Your friend held their breath as a point of light blinked among the grass. For a moment, even the visitor book seemed to glow. |
+| vpi_l_starbug_any | Starbug | * | 宠物屏息看着草叶上明灭的小光点，来客册的那一页也像被微光照亮 | Your friend held their breath as a point of light blinked among the grass. For a moment, even the Visitor Compendium seemed to glow. |
 | vpi_l_starbug_cat | Starbug | Orange Tabby | 阿橘为了这颗落地的星星整晚没睡，用尾巴圈出一块「星星保护区」 | Starbug blinked among the grass like a pocket-sized constellation. They answered with three slow tail taps and a contented blink. |
 | vpi_l_starbug_shiba | Starbug | Shiba Inu | 柴犬压低身子守着光点，忍住了所有想扑的冲动，那是它最漫长也最骄傲的一夜 | Starbug blinked among the grass like a pocket-sized constellation. They stood proudly on lookout, taking the visit very seriously. |
 | vpi_l_starbug_rabbit | Starbug | Lop Rabbit | 雪团第一次主动凑近陌生的东西——那点光太温柔了，连胆小都忘了 | Starbug blinked among the grass like a pocket-sized constellation. They listened with both long ears loose and peaceful. |

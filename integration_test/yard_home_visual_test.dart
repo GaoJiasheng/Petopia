@@ -135,7 +135,10 @@ class _VisualApp extends StatelessWidget {
             ),
           ),
         ),
-        home: const YardHomeScreen(enableCooldownRefresh: false),
+        home: YardHomeScreen(
+          enableCooldownRefresh: false,
+          visualTestHour: _visualHour < 0 ? null : _visualHour,
+        ),
       ),
     );
   }
@@ -169,6 +172,52 @@ VisitorPresenceView _visitor() {
     portraitAsset: 'assets/art/world/visitors/visitor_calico_portrait.png',
   );
 }
+
+VisitorPresenceView _placementVisitor({required bool rightLane}) {
+  final id = rightLane ? 'visitor_butterfly' : 'visitor_deer';
+  return VisitorPresenceView(
+    id: id,
+    name: rightLane ? '白粉蝶' : '小鹿',
+    rarity: rightLane ? VisitorRarity.common : VisitorRarity.rare,
+    message: rightLane ? '它停在花香旁边。' : '它从篱笆边安静地走来。',
+    arrivedAt: DateTime.utc(2026, 8, 2),
+    leavesAt: DateTime.utc(2026, 8, 3),
+    arrivalSeen: true,
+    interacted: true,
+    yardAsset: 'assets/art/world/visitors/${id}_yard.png',
+    portraitAsset: 'assets/art/world/visitors/${id}_portrait.png',
+  );
+}
+
+RevisitorPresenceView _revisitor() {
+  return RevisitorPresenceView(
+    id: 'visual-revisitor-rabbit',
+    name: '小云',
+    speciesId: 'pet_rabbit',
+    variantId: 'pet_rabbit_v1',
+    arrivedAt: DateTime.utc(2026, 8, 2),
+    leavesAt: DateTime.utc(2026, 8, 4),
+    arrivalSeen: true,
+    interacted: true,
+  );
+}
+
+const _allDecorSlots = <YardSlotView>[
+  YardSlotView(pos: 0, itemId: 'mailbox_wood'),
+  YardSlotView(pos: 1, itemId: 'food_bowl_full'),
+  YardSlotView(pos: 2, itemId: 'flowerbed_small'),
+  YardSlotView(pos: 3, itemId: 'water_bowl'),
+  YardSlotView(pos: 4, itemId: 'night_light'),
+  YardSlotView(pos: 5, itemId: 'fireplace'),
+  YardSlotView(pos: 6, itemId: 'wind_chime'),
+  YardSlotView(pos: 7, itemId: 'flower_box'),
+  YardSlotView(pos: 8, itemId: 'mushroom_bench'),
+  YardSlotView(pos: 9, itemId: 'scarecrow'),
+  YardSlotView(pos: 10, itemId: 'wind_vane'),
+  YardSlotView(pos: 11, itemId: 'wood_sign'),
+  YardSlotView(pos: 12, itemId: 'pond_small'),
+  YardSlotView(pos: 13, itemId: 'album_shelf'),
+];
 
 const _today = TodayYardView([
   TodayYardItemView(
@@ -204,6 +253,8 @@ GameView _view({
   CareAction? preferredAction,
   bool careContented = false,
   List<YardMemoryView> recentMemories = const <YardMemoryView>[],
+  List<YardSlotView> decorSlots = const <YardSlotView>[],
+  RevisitorPresenceView? revisitor,
 }) {
   return GameView(
     pet: emptyYard ? null : (pet ?? _pet()),
@@ -213,8 +264,9 @@ GameView _view({
     dailyMaxed: const {},
     canGraduate: canGraduate,
     activeThemeId: theme,
-    decorSlots: const <YardSlotView>[],
+    decorSlots: decorSlots,
     activeVisitor: visitor,
+    revisitor: revisitor,
     pendingEvent: pendingEvent,
     weather: Weather.clear,
     onboardingComplete: true,
@@ -234,6 +286,11 @@ const _prefix = String.fromEnvironment(
 const _landscape = bool.fromEnvironment('PETOPIA_VISUAL_LANDSCAPE');
 const _allThemes = bool.fromEnvironment('PETOPIA_VISUAL_ALL_THEMES');
 const _allLuxury = bool.fromEnvironment('PETOPIA_VISUAL_ALL_LUXURY');
+const _placementRegression = bool.fromEnvironment('PETOPIA_VISUAL_PLACEMENTS');
+const _visualHour = int.fromEnvironment(
+  'PETOPIA_VISUAL_HOUR',
+  defaultValue: -1,
+);
 const _capturePerformance = bool.fromEnvironment('PETOPIA_CAPTURE_PERFORMANCE');
 const _expectedScreenshotWidth = int.fromEnvironment(
   'PETOPIA_VISUAL_EXPECTED_WIDTH',
@@ -529,6 +586,50 @@ void main() {
       (name: 'theme-starcamp', view: _view(theme: 'starry_camp')),
       (name: 'theme-wheatkite', view: _view(theme: 'wheat_kite')),
     ];
+    final placementScenarios = <({String name, GameView view})>[
+      for (final theme in const <(String, String)>[
+        ('meadow', 'meadow'),
+        ('autumnjam', 'autumn_jam'),
+        ('bambootea', 'bamboo_tea'),
+        ('candybake', 'candy_bakery'),
+        ('fourseasons', 'four_seasons'),
+        ('moongreen', 'moonlight'),
+        ('mossrain', 'rain_moss'),
+        ('sakura', 'sakura'),
+        ('seaside', 'sea_breeze'),
+        ('snowhut', 'snow_house'),
+        ('starcamp', 'starry_camp'),
+        ('wheatkite', 'wheat_kite'),
+      ]) ...[
+        (
+          name: '${theme.$1}-visitor-left',
+          view: _view(
+            theme: theme.$2,
+            luxuryStage: 6,
+            decorSlots: _allDecorSlots,
+            visitor: _placementVisitor(rightLane: false),
+          ),
+        ),
+        (
+          name: '${theme.$1}-visitor-right',
+          view: _view(
+            theme: theme.$2,
+            luxuryStage: 6,
+            decorSlots: _allDecorSlots,
+            visitor: _placementVisitor(rightLane: true),
+          ),
+        ),
+        (
+          name: '${theme.$1}-revisitor',
+          view: _view(
+            theme: theme.$2,
+            luxuryStage: 6,
+            decorSlots: _allDecorSlots,
+            revisitor: _revisitor(),
+          ),
+        ),
+      ],
+    ];
     final luxuryScenarios = <({String name, GameView view})>[
       for (var stage = 1; stage <= 6; stage++)
         (
@@ -536,7 +637,9 @@ void main() {
           view: _view(theme: 'meadow', luxuryStage: stage),
         ),
     ];
-    final scenarios = _allThemes
+    final scenarios = _placementRegression
+        ? placementScenarios
+        : _allThemes
         ? themeScenarios
         : _allLuxury
         ? luxuryScenarios
@@ -546,6 +649,31 @@ void main() {
     for (final scenario in scenarios) {
       await _pumpScenario(tester, scenario.view);
       expect(tester.takeException(), isNull, reason: scenario.name);
+      if (_placementRegression) {
+        expect(
+          find.byKey(const ValueKey<String>('yard_pet_sprite')),
+          findsOneWidget,
+          reason: '${scenario.name} is missing its current pet',
+        );
+        for (final slot in _allDecorSlots) {
+          expect(
+            find.byKey(ValueKey<String>('yard_decor_6_${slot.itemId}')),
+            findsOneWidget,
+            reason: '${scenario.name} is missing decor slot ${slot.pos}',
+          );
+        }
+        final sideActor = scenario.view.activeVisitor != null
+            ? find.byKey(const ValueKey<String>('active_visitor'))
+            : find.byKey(const ValueKey<String>('active_revisitor'));
+        expect(sideActor, findsOneWidget, reason: scenario.name);
+        expect(
+          tester
+              .getRect(find.byKey(const ValueKey<String>('yard_pet_sprite')))
+              .overlaps(tester.getRect(sideActor)),
+          isFalse,
+          reason: '${scenario.name} overlaps the current pet and side actor',
+        );
+      }
       final fingerprint = await _capture(tester, scenario.name);
       expect(
         fingerprint.luminanceDeviation,
@@ -564,7 +692,7 @@ void main() {
       }
     }
 
-    if (!_allThemes && !_allLuxury) {
+    if (!_placementRegression && !_allThemes && !_allLuxury) {
       await _pumpScenario(
         tester,
         _view(preferredAction: CareAction.feed),

@@ -7,7 +7,7 @@
 
 - [x] 已确认 App 记录为 `com.petopia.petopia`、SKU `petopia001`、主语言
       English (U.S.)，商店名称为 `Petopia: Letters from Home`。
-- [x] build 23 为带 `+1` 的内部 TestFlight 工具包；build 24 为不含内测入口的
+- [x] build 25 为带 `+1` 的内部 TestFlight 工具包；build 24 为不含内测入口的
       正式包，Apple 状态为 `VALID` / `APP_STORE_ELIGIBLE`，且已关联 App 1.0。
 - [ ] 确认 Apple Developer Program 协议、税务与银行资料没有待处理项目。
 - [ ] 在 App Store Connect 接受 Paid Applications Agreement，并确认税务与
@@ -50,11 +50,11 @@
 
 ## 签名与人工验收
 
-- [x] 使用 Cloud Managed Apple Distribution 签名创建 build 23 与 build 24
-      Archive，均通过 Apple 验证；build 23 用于内部测试，build 24 用于送审。
+- [x] 使用 Cloud Managed Apple Distribution 签名创建 build 24 与 build 25
+      Archive，均通过 Apple 验证；build 25 用于内部测试，build 24 用于送审。
 - [ ] 在保留进度的设备上先安装 TestFlight build 18、19 或 20，再覆盖安装 build 24，
       确认 schema 2 → 3 后宠物、货币、旅程、明信片、来客、成就和设置均保留。
-- [ ] 在 TestFlight build 23 连续点击 `+1`，确认新来客弹窗、院子模型和来客图鉴
+- [ ] 在 TestFlight build 25 连续点击 `+1`，确认新来客弹窗、院子模型和来客图鉴
       始终为同一访客；build 21/22 不再作为验收或送审候选。
 - [ ] 在至少一台真实 iPhone 和一台真实 iPad 上走完：首次领养、四种互动、
       后台恢复、来客、明信片、存档导出与导入、横竖屏旋转。

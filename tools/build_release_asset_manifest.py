@@ -70,12 +70,30 @@ def source_for(path: Path) -> Path | None:
             / path.with_suffix(".png").name
         )
     if parts[:5] == ("assets", "runtime", "yard", "themes", "wide"):
+        if path.stem.endswith("_bg_night_wide"):
+            slug = path.stem.removeprefix("yard_theme_").removesuffix(
+                "_bg_night_wide"
+            )
+            return (
+                ROOT
+                / "docs/art-review/theme-redesign/wide/night"
+                / f"yard_theme_{slug}_night.png"
+            )
         return (
             ROOT
             / "assets/art/world/themes/wide"
             / path.with_suffix(".jpg").name
         )
     if parts[:4] == ("assets", "art", "world", "themes"):
+        if path.stem.endswith("_bg_night"):
+            slug = path.stem.removeprefix("yard_theme_").removesuffix(
+                "_bg_night"
+            )
+            return (
+                ROOT
+                / "docs/art-review/theme-redesign/portrait/night"
+                / f"yard_theme_{slug}_night.png"
+            )
         return (
             ROOT
             / "assets/art/world/exports_1290/themes"

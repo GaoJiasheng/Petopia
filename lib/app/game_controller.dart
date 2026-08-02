@@ -1009,7 +1009,7 @@ class GameController extends AsyncNotifier<GameView> {
       'snow_rabbit' => '雪兔',
       'squirrel' => '松鼠',
       'butterfly' => '蝴蝶',
-      'crow_liang' => '亮亮乌鸦',
+      'crow_liang' => '乌鸦亮亮',
       _ => '特别',
     };
   }
@@ -1979,15 +1979,8 @@ class GameController extends AsyncNotifier<GameView> {
     );
   }
 
-  String _visitorArtAsset(String visitorId, String suffix) {
-    final slug = switch (visitorId) {
-      'visitor_campfire_light' => 'visitor_emberlight',
-      'visitor_rainbow_shade' => 'visitor_rainbowshade',
-      'visitor_night_blob' => 'visitor_ghostpuff',
-      _ => visitorId,
-    };
-    return 'assets/art/world/visitors/${slug}_$suffix.png';
-  }
+  String _visitorArtAsset(String visitorId, String suffix) =>
+      visitorArtAsset(visitorId, suffix);
 
   VisitorPetInteraction? _visitorInteractionById(String? id) {
     if (id == null) return null;
@@ -2480,6 +2473,18 @@ class VisitorMemoryView {
     this.scriptEn = '',
     required this.expReward,
   });
+}
+
+/// 访客美术路径：部分隐藏访客的数据 id 与文件 slug 不同（历史命名），
+/// 所有取访客图的地方必须走这里，不得用 raw id 拼路径。
+String visitorArtAsset(String visitorId, String suffix) {
+  final slug = switch (visitorId) {
+    'visitor_campfire_light' => 'visitor_emberlight',
+    'visitor_rainbow_shade' => 'visitor_rainbowshade',
+    'visitor_night_blob' => 'visitor_ghostpuff',
+    _ => visitorId,
+  };
+  return 'assets/art/world/visitors/${slug}_$suffix.png';
 }
 
 final gameControllerProvider = AsyncNotifierProvider<GameController, GameView>(

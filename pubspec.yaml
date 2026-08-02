@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+24
+version: 1.0.0+25
 
 environment:
   sdk: ^3.12.2
@@ -85,6 +85,7 @@ flutter:
     - assets/audio/voc/m4a/
     - assets/audio/sting/m4a/
     - assets/audio/ui/wav/
+    - assets/art/ui/ui_frame_offline_card.png
     - assets/art/ui/ui_icon_ach_care.png
     - assets/art/ui/ui_icon_ach_firstgrad.png
     - assets/art/ui/ui_icon_ach_hidden_q.png
@@ -138,15 +139,19 @@ flutter:
     - assets/art/world/themes/yard_theme_snowhut_bg.webp
     - assets/art/world/themes/yard_theme_starcamp_bg.webp
     - assets/art/world/themes/yard_theme_wheatkite_bg.webp
+    - assets/art/world/themes/yard_theme_autumnjam_bg_night.webp
+    - assets/art/world/themes/yard_theme_bambootea_bg_night.webp
+    - assets/art/world/themes/yard_theme_candybake_bg_night.webp
+    - assets/art/world/themes/yard_theme_fourseasons_bg_night.webp
+    - assets/art/world/themes/yard_theme_meadow_bg_night.webp
+    - assets/art/world/themes/yard_theme_moongreen_bg_night.webp
+    - assets/art/world/themes/yard_theme_mossrain_bg_night.webp
+    - assets/art/world/themes/yard_theme_sakura_bg_night.webp
+    - assets/art/world/themes/yard_theme_seaside_bg_night.webp
+    - assets/art/world/themes/yard_theme_snowhut_bg_night.webp
+    - assets/art/world/themes/yard_theme_starcamp_bg_night.webp
+    - assets/art/world/themes/yard_theme_wheatkite_bg_night.webp
     - assets/runtime/yard/themes/wide/
-    - assets/art/world/layouts/yard_luxury02_delta.webp
-    - assets/art/world/layouts/yard_luxury03_delta.webp
-    - assets/art/world/layouts/yard_luxury04_delta.webp
-    - assets/art/world/layouts/yard_luxury05_delta.webp
-    - assets/art/world/layouts/yard_luxury06_delta.webp
-    - assets/art/world/fx/yard_fx_dusk.webp
-    - assets/art/world/fx/yard_fx_night.webp
-    - assets/art/world/fx/yard_fx_night_stars.webp
     - assets/art/world/fx/yard_fx_rain_overlay.webp
     - assets/art/world/fx/yard_fx_snow_overlay.webp
     - assets/art/world/decor/deco_water_bowl.png
@@ -170,44 +175,64 @@ flutter:
     - assets/art/world/decor/deco_mailbox_red.png
     - assets/art/world/visitors/visitor_butterfly_portrait.png
     - assets/art/world/visitors/visitor_butterfly_yard.png
+    - assets/art/world/visitors/visitor_butterfly_yard_base.png
     - assets/art/world/visitors/visitor_calico_portrait.png
     - assets/art/world/visitors/visitor_calico_yard.png
+    - assets/art/world/visitors/visitor_calico_yard_base.png
     - assets/art/world/visitors/visitor_crow_portrait.png
     - assets/art/world/visitors/visitor_crow_yard.png
+    - assets/art/world/visitors/visitor_crow_yard_base.png
     - assets/art/world/visitors/visitor_deer_portrait.png
     - assets/art/world/visitors/visitor_deer_yard.png
+    - assets/art/world/visitors/visitor_deer_yard_base.png
     - assets/art/world/visitors/visitor_egret_portrait.png
     - assets/art/world/visitors/visitor_egret_yard.png
+    - assets/art/world/visitors/visitor_egret_yard_base.png
     - assets/art/world/visitors/visitor_emberlight_portrait.png
     - assets/art/world/visitors/visitor_emberlight_yard.png
+    - assets/art/world/visitors/visitor_emberlight_yard_base.png
     - assets/art/world/visitors/visitor_firefly_portrait.png
     - assets/art/world/visitors/visitor_firefly_yard.png
+    - assets/art/world/visitors/visitor_firefly_yard_base.png
     - assets/art/world/visitors/visitor_fox_portrait.png
     - assets/art/world/visitors/visitor_fox_yard.png
+    - assets/art/world/visitors/visitor_fox_yard_base.png
     - assets/art/world/visitors/visitor_frog_portrait.png
     - assets/art/world/visitors/visitor_frog_yard.png
+    - assets/art/world/visitors/visitor_frog_yard_base.png
     - assets/art/world/visitors/visitor_ghostpuff_portrait.png
     - assets/art/world/visitors/visitor_ghostpuff_yard.png
+    - assets/art/world/visitors/visitor_ghostpuff_yard_base.png
     - assets/art/world/visitors/visitor_hedgehog_portrait.png
     - assets/art/world/visitors/visitor_hedgehog_yard.png
+    - assets/art/world/visitors/visitor_hedgehog_yard_base.png
     - assets/art/world/visitors/visitor_owl_portrait.png
     - assets/art/world/visitors/visitor_owl_yard.png
+    - assets/art/world/visitors/visitor_owl_yard_base.png
     - assets/art/world/visitors/visitor_pigeon_portrait.png
     - assets/art/world/visitors/visitor_pigeon_yard.png
+    - assets/art/world/visitors/visitor_pigeon_yard_base.png
     - assets/art/world/visitors/visitor_rainbowshade_portrait.png
     - assets/art/world/visitors/visitor_rainbowshade_yard.png
+    - assets/art/world/visitors/visitor_rainbowshade_yard_base.png
     - assets/art/world/visitors/visitor_snail_portrait.png
     - assets/art/world/visitors/visitor_snail_yard.png
+    - assets/art/world/visitors/visitor_snail_yard_base.png
     - assets/art/world/visitors/visitor_snowhare_portrait.png
     - assets/art/world/visitors/visitor_snowhare_yard.png
+    - assets/art/world/visitors/visitor_snowhare_yard_base.png
     - assets/art/world/visitors/visitor_sparrow_portrait.png
     - assets/art/world/visitors/visitor_sparrow_yard.png
+    - assets/art/world/visitors/visitor_sparrow_yard_base.png
     - assets/art/world/visitors/visitor_squirrel_portrait.png
     - assets/art/world/visitors/visitor_squirrel_yard.png
+    - assets/art/world/visitors/visitor_squirrel_yard_base.png
     - assets/art/world/visitors/visitor_starbug_portrait.png
     - assets/art/world/visitors/visitor_starbug_yard.png
+    - assets/art/world/visitors/visitor_starbug_yard_base.png
     - assets/art/world/visitors/visitor_tanuki_portrait.png
     - assets/art/world/visitors/visitor_tanuki_yard.png
+    - assets/art/world/visitors/visitor_tanuki_yard_base.png
     - assets/art/pets/portraits/
     - assets/runtime/pets/cat/pet_cat_var01_stageA.webp
     - assets/runtime/pets/cat/pet_cat_var01_stageB.webp

@@ -60,11 +60,22 @@ String _interactionName(CareAction action) => switch (action) {
   CareAction.bath => 'bath',
 };
 
+@visibleForTesting
+DateTime nextYardDaypartBoundary(DateTime now) {
+  final morning = DateTime(now.year, now.month, now.day, 6);
+  final dusk = DateTime(now.year, now.month, now.day, 16);
+  final night = DateTime(now.year, now.month, now.day, 18);
+  if (now.isBefore(morning)) return morning;
+  if (now.isBefore(dusk)) return dusk;
+  if (now.isBefore(night)) return night;
+  return morning.add(const Duration(days: 1));
+}
+
 void _showCareFeedback(BuildContext context, CareFeedbackView? feedback) {
   if (feedback == null) return;
   final messenger = ScaffoldMessenger.of(context);
   messenger
-    ..clearSnackBars()
+    ..hideCurrentSnackBar()
     ..showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
@@ -137,7 +148,7 @@ YardAmbience _yardAmbience({
     return YardAmbience.snow;
   }
   if (themeId == 'sea_breeze') return YardAmbience.seaside;
-  if (hour >= 19 || hour < 6) return YardAmbience.meadowNight;
+  if (YardArt.isNight(hour)) return YardAmbience.meadowNight;
   if (hour >= 16) return YardAmbience.meadowDusk;
   return YardAmbience.meadowDay;
 }
@@ -146,7 +157,16 @@ YardAmbience _yardAmbience({
 /// 动作走真实服务链路（ExpEngine→审计→sqflite）。Flame 动画场景为后续。
 class YardHomeScreen extends ConsumerStatefulWidget {
   final bool enableCooldownRefresh;
-  const YardHomeScreen({super.key, this.enableCooldownRefresh = true});
+  final int? visualTestHour;
+
+  const YardHomeScreen({
+    super.key,
+    this.enableCooldownRefresh = true,
+    this.visualTestHour,
+  }) : assert(
+         visualTestHour == null ||
+             (visualTestHour >= 0 && visualTestHour <= 23),
+       );
 
   @override
   ConsumerState<YardHomeScreen> createState() => _YardHomeScreenState();
@@ -156,6 +176,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
     with WidgetsBindingObserver, RouteAware {
   Timer? _presenceTimer;
   Timer? _memoryRecoveryTimer;
+  Timer? _dayNightTimer;
   PageRoute<dynamic>? _yardRoute;
   Bgm? _currentYardBgm;
   YardAmbience? _currentYardAmbience;
@@ -180,6 +201,21 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
         ref.read(gameControllerProvider.notifier).recordActiveHeartbeat();
       });
     }
+    _scheduleDayNightRefresh();
+  }
+
+  void _scheduleDayNightRefresh() {
+    _dayNightTimer?.cancel();
+    final now = DateTime.now();
+    final nextBoundary = nextYardDaypartBoundary(now);
+    _dayNightTimer = Timer(
+      nextBoundary.difference(now) + const Duration(seconds: 1),
+      () {
+        if (!mounted) return;
+        setState(() {});
+        _scheduleDayNightRefresh();
+      },
+    );
   }
 
   @override
@@ -187,6 +223,8 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
     if (state == AppLifecycleState.resumed) {
       _automaticMomentPresentedThisActivation = false;
       _eventPresentedThisActivation = false;
+      _scheduleDayNightRefresh();
+      if (mounted) setState(() {});
       unawaited(ref.read(gameControllerProvider.notifier).onAppResumed());
     } else if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive ||
@@ -249,6 +287,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
   void dispose() {
     _presenceTimer?.cancel();
     _memoryRecoveryTimer?.cancel();
+    _dayNightTimer?.cancel();
     _precacheGeneration += 1;
     WidgetsBinding.instance.removeObserver(this);
     petopiaRouteObserver.unsubscribe(this);
@@ -351,8 +390,9 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
         final ctrl = ref.read(gameControllerProvider.notifier);
         final routeIsCurrent = ModalRoute.of(context)?.isCurrent ?? true;
         // 院子 BGM 按时段切换（幂等，已在播则忽略）。
-        final hour = DateTime.now().hour;
-        final yardBgm = (hour >= 19 || hour < 6)
+        final hour = widget.visualTestHour ?? DateTime.now().hour;
+        final nightTheme = YardArt.isNight(hour);
+        final yardBgm = nightTheme
             ? Bgm.yardNight
             : (hour >= 16 ? Bgm.yardDusk : Bgm.yardDay);
         final yardAmbience = _yardAmbience(
@@ -458,28 +498,24 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                   fit: StackFit.expand,
                   children: [
                     Image.asset(
-                      YardArt.themeBg(view.activeThemeId, wide: wideLayout),
+                      YardArt.themeBg(
+                        view.activeThemeId,
+                        wide: wideLayout,
+                        night: nightTheme,
+                      ),
                       key: const ValueKey<String>('yard_background'),
                       fit: BoxFit.cover,
                       cacheWidth: backgroundCacheWidth,
                       errorBuilder: (_, _, _) => Image.asset(
-                        YardArt.themeBg('', wide: wideLayout),
+                        YardArt.themeBg(
+                          '',
+                          wide: wideLayout,
+                          night: nightTheme,
+                        ),
                         fit: BoxFit.cover,
                         cacheWidth: backgroundCacheWidth,
                       ),
                     ),
-                    if (!wideLayout)
-                      if (YardArt.luxuryDelta(view.luxuryStage)
-                          case final asset?)
-                        IgnorePointer(
-                          child: Image.asset(
-                            asset,
-                            key: ValueKey('yard_luxury_${view.luxuryStage}'),
-                            fit: BoxFit.cover,
-                            alignment: Alignment.center,
-                            errorBuilder: (_, _, _) => const SizedBox(),
-                          ),
-                        ),
                     // 摆件中景层（渲染在宠物之下）：自定义 slots 为空时使用默认布置。
                     for (final decor in visibleDecor)
                       _YardDecor(
@@ -529,13 +565,15 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                               visitor: visitor,
                               size: rect.width,
                               reduceEffects: conserveMemory,
-                              onTap: () async {
-                                await showVisitorArrivalDialog(
-                                  context,
-                                  ctrl,
-                                  visitor,
-                                );
-                                ctrl.markVisitorArrivalSeen(visitor.id);
+                              onTap: () {
+                                _runMoment(() async {
+                                  await showVisitorArrivalDialog(
+                                    context,
+                                    ctrl,
+                                    visitor,
+                                  );
+                                  ctrl.markVisitorArrivalSeen(visitor.id);
+                                });
                               },
                             ),
                           );
@@ -544,26 +582,32 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                     if (petAsset != null)
                       Align(
                         alignment: petAlignment,
-                        child: PetSprite(
-                          key: const ValueKey<String>('yard_pet_sprite'),
-                          assetPath: petAsset,
-                          width: petWidth,
-                          speciesId: pet!.speciesId,
-                          variantId: pet.variantId,
-                          stage: pet.stage,
-                          reduceEffects: conserveMemory,
-                          cue: ref.watch(petActionCueProvider),
-                          semanticLabel: context.tr('摸摸${pet.name}'),
-                          onTap: () async {
-                            if (await ctrl.pat()) {
-                              _fireCue(ref, 'pat');
-                              if (context.mounted) {
-                                _showCareFeedback(
-                                  context,
-                                  ctrl.takeCareFeedback(),
-                                );
-                              }
-                            }
+                        child: Consumer(
+                          builder: (context, petRef, _) {
+                            return RepaintBoundary(
+                              child: PetSprite(
+                                key: const ValueKey<String>('yard_pet_sprite'),
+                                assetPath: petAsset,
+                                width: petWidth,
+                                speciesId: pet!.speciesId,
+                                variantId: pet.variantId,
+                                stage: pet.stage,
+                                reduceEffects: conserveMemory,
+                                cue: petRef.watch(petActionCueProvider),
+                                semanticLabel: context.tr('摸摸${pet.name}'),
+                                onTap: () async {
+                                  if (await ctrl.pat()) {
+                                    _fireCue(petRef, 'pat');
+                                    if (context.mounted) {
+                                      _showCareFeedback(
+                                        context,
+                                        ctrl.takeCareFeedback(),
+                                      );
+                                    }
+                                  }
+                                },
+                              ),
+                            );
                           },
                         ),
                       ),
@@ -600,9 +644,16 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                                 type: MaterialType.transparency,
                                 child: InkResponse(
                                   radius: rect.width * 0.5,
-                                  onTap: () async {
-                                    await _showRevisitorDialog(ctrl, revisitor);
-                                    ctrl.markRevisitorArrivalSeen(revisitor.id);
+                                  onTap: () {
+                                    _runMoment(() async {
+                                      await _showRevisitorDialog(
+                                        ctrl,
+                                        revisitor,
+                                      );
+                                      ctrl.markRevisitorArrivalSeen(
+                                        revisitor.id,
+                                      );
+                                    });
                                   },
                                   child: Image.asset(
                                     PetArt.stage(
@@ -622,7 +673,6 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                     Positioned.fill(
                       child: _YardAtmosphere(
                         weather: view.weather,
-                        hour: DateTime.now().hour,
                         reduceEffects: conserveMemory,
                       ),
                     ),
@@ -1707,7 +1757,7 @@ class _EventDialogState extends State<_EventDialog> {
         ? null
         : event.choices[_selectedChoice!];
     return PopScope(
-      canPop: false,
+      canPop: _selectedChoice == null,
       child: Dialog(
         insetPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
         backgroundColor: Colors.transparent,
@@ -1920,7 +1970,11 @@ class _EventMoment extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   Image.asset(
-                    YardArt.themeBg(profile.themeId),
+                    YardArt.themeBg(
+                      profile.themeId,
+                      wide: true,
+                      night: profile.night,
+                    ),
                     fit: BoxFit.cover,
                     alignment: profile.backgroundAlignment,
                   ),
@@ -1978,6 +2032,7 @@ typedef _EventArtProfile = ({
   double tintOpacity,
   Alignment backgroundAlignment,
   Alignment petAlignment,
+  bool night,
 });
 
 _EventArtProfile _eventArtProfile(
@@ -2017,30 +2072,24 @@ _EventArtProfile _eventArtProfile(
       ? 'assets/art/world/fx/yard_fx_snow_overlay.webp'
       : rain
       ? 'assets/art/world/fx/yard_fx_rain_overlay.webp'
-      : night
-      ? 'assets/art/world/fx/yard_fx_night_stars.webp'
       : null;
   return (
     themeId: specialTheme,
     overlayAsset: overlay,
-    overlayOpacity: night ? 0.58 : 0.42,
+    overlayOpacity: 0.42,
     tint: night ? const Color(0xFF27386A) : const Color(0xFFFFF0D2),
-    tintOpacity: night ? 0.16 : 0.05,
+    tintOpacity: night ? 0.03 : 0.05,
     backgroundAlignment: const Alignment(0, 0.34),
     petAlignment: const Alignment(0, 0.72),
+    night: night,
   );
 }
 
 class _YardAtmosphere extends StatefulWidget {
   final Weather weather;
-  final int hour;
   final bool reduceEffects;
 
-  const _YardAtmosphere({
-    required this.weather,
-    required this.hour,
-    this.reduceEffects = false,
-  });
+  const _YardAtmosphere({required this.weather, this.reduceEffects = false});
 
   @override
   State<_YardAtmosphere> createState() => _YardAtmosphereState();
@@ -2093,30 +2142,12 @@ class _YardAtmosphereState extends State<_YardAtmosphere>
 
   @override
   Widget build(BuildContext context) {
-    final night = widget.hour >= 19 || widget.hour < 6;
-    final dusk = widget.hour >= 16 && widget.hour < 19;
     final weatherAsset = YardArt.weatherFx(widget.weather.name);
     final reduceMotion = MediaQuery.disableAnimationsOf(context);
     return IgnorePointer(
       child: Stack(
         fit: StackFit.expand,
         children: [
-          if (night || dusk)
-            Opacity(
-              opacity: night ? 0.34 : 0.16,
-              child: Image.asset(
-                YardArt.timeFx(widget.hour),
-                fit: BoxFit.cover,
-              ),
-            ),
-          if (night && !widget.reduceEffects)
-            Opacity(
-              opacity: 0.42,
-              child: Image.asset(
-                'assets/art/world/fx/yard_fx_night_stars.webp',
-                fit: BoxFit.cover,
-              ),
-            ),
           if (weatherAsset.isNotEmpty)
             Opacity(
               opacity: widget.weather == Weather.snow ? 0.30 : 0.16,
@@ -2590,8 +2621,9 @@ const _decorAnchors = <int, _DecorAnchor>{
   5: _DecorAnchor(Alignment(0.62, 0.08), 90),
   6: _DecorAnchor(Alignment(-0.34, 0.18), 82),
   7: _DecorAnchor(Alignment(0.20, 0.16), 84),
-  8: _DecorAnchor(Alignment(-0.72, 0.38), 88),
-  9: _DecorAnchor(Alignment(0.78, 0.54), 86),
+  // Keep the lower side lanes open for a daily visitor or returning pet.
+  8: _DecorAnchor(Alignment(-0.72, 0.20), 88),
+  9: _DecorAnchor(Alignment(0.78, 0.72), 86),
   10: _DecorAnchor(Alignment(-0.30, 0.72), 78),
   11: _DecorAnchor(Alignment(0.28, 0.74), 78),
   12: _DecorAnchor(Alignment(-0.84, 0.62), 80),
@@ -2658,7 +2690,7 @@ List<_VisibleDecor> _visibleDecor(
     if (wideLayout) {
       return _wideLuxuryDecor[luxuryStage.clamp(1, 6)] ?? _wideLuxuryDecor[1]!;
     }
-    return luxuryStage <= 1 ? _defaultDecor : const <_VisibleDecor>[];
+    return _defaultDecor;
   }
   return [
     for (final slot in slots)
@@ -3013,7 +3045,7 @@ class _WalletButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Semantics(
       button: true,
-      label: context.tr('绒光 $wallet，打开商店'),
+      label: context.tr('暖绒 $wallet，打开商店'),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
@@ -3139,12 +3171,19 @@ const _homeMenuItems =
       ),
     ];
 
-class _HomeMenuButton extends ConsumerWidget {
+class _HomeMenuButton extends ConsumerStatefulWidget {
   final GameView view;
   const _HomeMenuButton({required this.view});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_HomeMenuButton> createState() => _HomeMenuButtonState();
+}
+
+class _HomeMenuButtonState extends ConsumerState<_HomeMenuButton> {
+  bool _opening = false;
+
+  @override
+  Widget build(BuildContext context) {
     return IconButton(
       key: const ValueKey<String>('home_menu'),
       tooltip: context.tr('打开手账'),
@@ -3159,16 +3198,26 @@ class _HomeMenuButton extends ConsumerWidget {
         size: 22,
         fallback: Icons.menu_book_rounded,
       ),
-      onPressed: () async {
-        unawaited(ref.read(audioServiceProvider).sfx(Sfx.paperOpen));
-        final benefits =
-            ref.read(supportPurchaseControllerProvider).valueOrNull?.benefits ??
-            const SupportBenefits();
-        final target = await _showAdaptiveNotebook(context, benefits);
-        if (target != null && context.mounted) {
-          _openHomeTarget(context, target, pet: view.pet);
-        }
-      },
+      onPressed: _opening
+          ? null
+          : () async {
+              setState(() => _opening = true);
+              unawaited(ref.read(audioServiceProvider).sfx(Sfx.paperOpen));
+              try {
+                final benefits =
+                    ref
+                        .read(supportPurchaseControllerProvider)
+                        .valueOrNull
+                        ?.benefits ??
+                    const SupportBenefits();
+                final target = await _showAdaptiveNotebook(context, benefits);
+                if (target != null && context.mounted) {
+                  _openHomeTarget(context, target, pet: widget.view.pet);
+                }
+              } finally {
+                if (mounted) setState(() => _opening = false);
+              }
+            },
     );
   }
 
@@ -3184,7 +3233,7 @@ class _HomeMenuButton extends ConsumerWidget {
       barrierColor: Colors.black.withValues(alpha: 0.22),
       transitionDuration: PetopiaMotion.duration(context, PetopiaMotion.quick),
       pageBuilder: (context, animation, secondaryAnimation) =>
-          _AdaptiveNotebookDialog(view: view, supportBenefits: benefits),
+          _AdaptiveNotebookDialog(view: widget.view, supportBenefits: benefits),
       transitionBuilder: (context, animation, secondaryAnimation, child) {
         final eased = CurvedAnimation(
           parent: animation,

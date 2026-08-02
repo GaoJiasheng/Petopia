@@ -43,7 +43,7 @@ transaction ID 幂等处理；本地权益成功落盘后才完成交易，避�
 : Keeps the garden lantern glowing for 24 hours.
 
 `Garden Bouquet`
-: Flowers bloom in the yard for seven days.
+: Flowers bloom in the garden for seven days.
 
 `Garden Keeper`
 : Permanent lantern, keepsake badge, and special letter.

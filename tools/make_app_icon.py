@@ -1,58 +1,25 @@
 #!/usr/bin/env python3
-"""Petopia App 图标：暖色院子渐变底 + 橘猫，输出全套 iOS 尺寸（不透明 RGB）。"""
+"""Build Petopia launcher icons from the approved opaque RGB master."""
 import os
-from PIL import Image, ImageFilter, ImageDraw
+from PIL import Image, ImageFilter
 
 ICONSET = "ios/Runner/Assets.xcassets/AppIcon.appiconset"
-SRC_CAT = "assets/art/pets/cat/pet_cat_var01_stageA.png"
+ANDROID_RES = "android/app/src/main/res"
+MASTER = "docs/art-sources/app-icon/app_icon_master_2026-08-02.png"
 S = 1024
 
-# 1) 暖色渐变底（奶油→嫩草），呼应院子
-bg = Image.new("RGB", (S, S))
-top = (252, 239, 214)      # 奶油
-bot = (206, 232, 198)      # 嫩草
-for y in range(S):
-    t = y / (S - 1)
-    r = int(top[0] * (1 - t) + bot[0] * t)
-    g = int(top[1] * (1 - t) + bot[1] * t)
-    b = int(top[2] * (1 - t) + bot[2] * t)
-    for x_line in range(0):
-        pass
-    ImageDraw.Draw(bg).line([(0, y), (S, y)], fill=(r, g, b))
+icon = Image.open(MASTER).convert("RGB")
+if icon.size != (S, S):
+    icon = icon.resize((S, S), Image.Resampling.LANCZOS)
 
-# 柔和高光晕（中上部提亮）
-glow = Image.new("L", (S, S), 0)
-gd = ImageDraw.Draw(glow)
-gd.ellipse([S*0.18, S*0.05, S*0.82, S*0.7], fill=90)
-glow = glow.filter(ImageFilter.GaussianBlur(120))
-white = Image.new("RGB", (S, S), (255, 252, 245))
-bg = Image.composite(white, bg, glow)
 
-# 2) 猫：裁到内容包围盒 → 缩放居中，带柔和落影
-cat = Image.open(SRC_CAT).convert("RGBA")
-bbox = cat.split()[3].getbbox()
-if bbox:
-    cat = cat.crop(bbox)
-target_w = int(S * 0.62)
-scale = target_w / cat.width
-cat = cat.resize((target_w, int(cat.height * scale)), Image.LANCZOS)
-cx = (S - cat.width) // 2
-cy = int(S * 0.54 - cat.height / 2)
-
-# 落影
-shadow = Image.new("RGBA", (S, S), (0, 0, 0, 0))
-sh = Image.new("L", (S, S), 0)
-alpha = cat.split()[3]
-sh.paste(alpha, (cx, cy + int(S * 0.02)))
-sh = sh.filter(ImageFilter.GaussianBlur(22))
-shadow_col = Image.new("RGBA", (S, S), (120, 100, 80, 90))
-shadow_col.putalpha(sh.point(lambda p: int(p * 0.35)))
-base = bg.convert("RGBA")
-base = Image.alpha_composite(base, shadow_col)
-
-# 贴猫
-base.alpha_composite(cat, (cx, cy))
-icon = base.convert("RGB")  # 去 alpha：App Store 要求图标不透明
+def resized(px: int) -> Image.Image:
+    output = icon.resize((px, px), Image.Resampling.LANCZOS)
+    if px <= 120:
+        output = output.filter(
+            ImageFilter.UnsharpMask(radius=0.55, percent=55, threshold=3)
+        )
+    return output
 
 # 3) 输出全套尺寸
 specs = {
@@ -65,5 +32,21 @@ specs = {
     "Icon-App-1024x1024@1x.png": 1024,
 }
 for name, px in specs.items():
-    icon.resize((px, px), Image.LANCZOS).save(os.path.join(ICONSET, name))
-print(f"wrote {len(specs)} icons; 1024 mode = {icon.mode} (must be RGB)")
+    resized(px).save(os.path.join(ICONSET, name), optimize=True)
+
+android_specs = {
+    "mipmap-mdpi": 48,
+    "mipmap-hdpi": 72,
+    "mipmap-xhdpi": 96,
+    "mipmap-xxhdpi": 144,
+    "mipmap-xxxhdpi": 192,
+}
+for folder, px in android_specs.items():
+    resized(px).save(
+        os.path.join(ANDROID_RES, folder, "ic_launcher.png"), optimize=True
+    )
+
+print(
+    f"wrote {len(specs)} iOS and {len(android_specs)} Android icons; "
+    f"1024 mode = {icon.mode} (must be RGB)"
+)

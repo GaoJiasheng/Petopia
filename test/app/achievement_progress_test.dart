@@ -617,6 +617,25 @@ void main() {
     }
   });
 
+  test('解锁物种成就引用的宠物名必须与物种正式名完全一致', () async {
+    final harness = await _buildHarness();
+    final speciesNames = harness.content.species
+        .map((species) => species.name)
+        .toSet();
+    for (final achievement in harness.content.achievements) {
+      if (achievement.condition.type != AchievementCondType.unlockPet) {
+        continue;
+      }
+      final petName = achievement.condition.params['petId']?.toString();
+      if (petName == null) continue;
+      expect(
+        speciesNames,
+        contains(petName),
+        reason: '${achievement.id} references unknown species name $petName',
+      );
+    }
+  });
+
   test('所有动作与自定义成就都有明确的生产语义', () async {
     final harness = await _buildHarness();
     const actionSignals = {

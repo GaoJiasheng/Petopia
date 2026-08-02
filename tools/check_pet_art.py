@@ -188,7 +188,30 @@ def check_postcard_naming():
         if re.search(r'(?<![a-z])cham(?![a-z])', base):
             fail(f'{f}: 使用了变色龙旧缩写 cham（应为 chameleon）')
 
-check_id_dir_match(); check_postcard_naming(); check_base(); check_actions(); check_dex(); check_static_action_match()
+def check_edge_color_contamination():
+    """Block the two known transparent-edge color spills from returning."""
+    snake_path = f'{ROOT}/dex/pet_snake_dex_color.png'
+    if os.path.exists(snake_path):
+        snake = Image.open(snake_path).convert('RGBA')
+        magenta = 0
+        for y in range(341, snake.height):
+            for r, g, b, a in (snake.getpixel((x, y)) for x in range(snake.width)):
+                if a and r > g * 1.22 and b > g * 1.10 and r > 70:
+                    magenta += 1
+        if magenta > 8:
+            fail(f'dex/snake_color: 底部仍有品红边缘污染（{magenta} px）')
+
+    boo_path = f'{ROOT}/boo/pet_boo_var01_stageC.png'
+    if os.path.exists(boo_path):
+        boo = Image.open(boo_path).convert('RGBA')
+        green = 0
+        for r, g, b, a in boo.getdata():
+            if a and g > r * 1.02 and g > b * 1.10 and g - b > 12:
+                green += 1
+        if green > 8:
+            fail(f'boo/var01_stageC: 轮廓仍有绿色 halo（{green} px）')
+
+check_id_dir_match(); check_postcard_naming(); check_base(); check_actions(); check_dex(); check_static_action_match(); check_edge_color_contamination()
 print('=' * 50)
 if FAILS:
     print(f'❌ {len(FAILS)} 项 FAIL：')

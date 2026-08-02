@@ -106,7 +106,7 @@
       "visitorId": "visitor_sparrow",
       "petSpeciesId": "pet_boo",
       "personalityBias": null,
-      "script": "啾啾径盶从噗噗身体里穿了过去，愣了两秒，决定当作今天风有点凉",
+      "script": "啾啾径直从噗噗身体里穿了过去，愣了两秒，决定当作今天风有点凉",
       "animRef": "anim_vi_sparrow_boo",
       "expReward": 4,
       "unlockClue": null
@@ -266,7 +266,7 @@
       "visitorId": "visitor_snail",
       "petSpeciesId": "pet_rabbit",
       "personalityBias": null,
-      "script": "雪团收到蜗牛慢递的三叶草，快递签收方式是：当场吃掉，五星好评",
+      "script": "雪团收到蜗牛慢递的三叶草，慢递签收方式是：当场吃掉，五星好评",
       "animRef": "anim_vi_snail_rabbit",
       "expReward": 4,
       "unlockClue": null
@@ -1926,7 +1926,7 @@
       "visitorId": "visitor_starbug",
       "petSpeciesId": "*",
       "personalityBias": null,
-      "script": "宠物屏息看着草叶上明灭的小光点，访客册的那一页也像被微光照亮",
+      "script": "宠物屏息看着草叶上明灭的小光点，来客册的那一页也像被微光照亮",
       "animRef": "anim_vpi_l_starbug_any",
       "expReward": 6,
       "unlockClue": "starbug+1"

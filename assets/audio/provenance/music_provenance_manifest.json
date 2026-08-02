@@ -1,13 +1,14 @@
 {
   "project": "Petopia",
-  "generated_at_local": "2026-07-02 21:48:51 +08",
+  "generated_at_local": "2026-08-02 18:33:27 +08",
   "scope": "music only: bgm_* and sting_* assets from docs/spec-audio.md",
   "source_policy": "Programmatic original synthesis. No third-party samples, loops, reference audio, artist-name prompts, or commercial melodies used.",
   "technical_defaults": {
     "sample_rate_hz": 48000,
     "wav_codec": "PCM 24-bit little-endian",
     "ogg_codec": "Vorbis q6 via ffmpeg native vorbis encoder",
-    "channels": "stereo"
+    "channels": "stereo",
+    "runtime_mix_codec": "AAC-LC 128 kbps in M4A"
   },
   "assets": [
     {
@@ -989,67 +990,69 @@
       "bars": 39
     },
     {
-      "asset_id": "bgm_shop__st1_marimba_whistle",
+      "asset_id": "bgm_shop__st1_home_motif",
       "category": "bgm",
       "role": "stem",
-      "duration_seconds": 100.0,
-      "bpm": 84,
+      "duration_seconds": 101.053,
+      "bpm": 76.0,
       "time_signature": "4/4",
       "key": "C major / A minor family",
       "loop": true,
       "loop_start_sample": 0,
-      "loop_end_sample": 4800000,
-      "wav": "assets/audio/bgm/stems/wav/bgm_shop__st1_marimba_whistle.wav",
-      "ogg": "assets/audio/bgm/stems/ogg/bgm_shop__st1_marimba_whistle.ogg",
+      "loop_end_sample": 4850526,
+      "wav": "assets/audio/bgm/stems/wav/bgm_shop__st1_home_motif.wav",
+      "ogg": "assets/audio/bgm/stems/ogg/bgm_shop__st1_home_motif.ogg",
       "metrics": {
-        "approx_lufs": -23.3,
-        "peak_dbfs": -6.17
+        "approx_lufs": -21.45,
+        "peak_dbfs": -5.34
       },
-      "sha256_wav": "a20c48503abf4b5472235c28261e658c7ebd489b5e60c5c2b264588951b8e6d8",
-      "sha256_ogg": "c55f7ccfe574f0995b79bb79f8744a8e72608c34e7bd7fdde280655c90b74b4b",
-      "bars": 35
+      "sha256_wav": "cdfda2c469a50a193ab805698b782c4a794c51d04b14c3cd9c3f0c71ba2ee63c",
+      "sha256_ogg": "2f0e4255410e29b3b3a267c5ec74c70dc707a3258ba2584f26b89edb01694c64",
+      "bars": 32
     },
     {
-      "asset_id": "bgm_shop__st2_light_perc",
+      "asset_id": "bgm_shop__st2_counter_glow",
       "category": "bgm",
       "role": "stem",
-      "duration_seconds": 100.0,
-      "bpm": 84,
+      "duration_seconds": 101.053,
+      "bpm": 76.0,
       "time_signature": "4/4",
       "key": "C major / A minor family",
       "loop": true,
       "loop_start_sample": 0,
-      "loop_end_sample": 4800000,
-      "wav": "assets/audio/bgm/stems/wav/bgm_shop__st2_light_perc.wav",
-      "ogg": "assets/audio/bgm/stems/ogg/bgm_shop__st2_light_perc.ogg",
+      "loop_end_sample": 4850526,
+      "wav": "assets/audio/bgm/stems/wav/bgm_shop__st2_counter_glow.wav",
+      "ogg": "assets/audio/bgm/stems/ogg/bgm_shop__st2_counter_glow.ogg",
       "metrics": {
-        "approx_lufs": -47.47,
-        "peak_dbfs": -11.42
+        "approx_lufs": -34.04,
+        "peak_dbfs": -21.42
       },
-      "sha256_wav": "7af9d60fc3252af5b62dd897e0209a87c50206b3f7009756cac5e83fc8d63154",
-      "sha256_ogg": "f77bbc7f1f0dc282e0d4290f34ba0b1ea290826b87829692ce3f85ed9a058165",
-      "bars": 35
+      "sha256_wav": "d3e43a01edecc75df342e82913f6d22caab5cc048f9c60930ed348681a96d827",
+      "sha256_ogg": "3d2dcc0179ed68f4fadfaa12c1ff6af097ed5066f9dc1e1a5bf44f83fd626904",
+      "bars": 32
     },
     {
       "asset_id": "bgm_shop",
       "category": "bgm",
       "role": "mix",
-      "duration_seconds": 100.0,
-      "bpm": 84,
+      "duration_seconds": 101.053,
+      "bpm": 76.0,
       "time_signature": "4/4",
       "key": "C major / A minor family",
       "loop": true,
       "loop_start_sample": 0,
-      "loop_end_sample": 4800000,
+      "loop_end_sample": 4850526,
       "wav": "assets/audio/bgm/mix/wav/bgm_shop.wav",
       "ogg": "assets/audio/bgm/mix/ogg/bgm_shop.ogg",
       "metrics": {
-        "approx_lufs": -20.61,
-        "peak_dbfs": -3.56
+        "approx_lufs": -18.5,
+        "peak_dbfs": -2.39
       },
-      "sha256_wav": "9902cccf895fb6251502bcfd40cd8a6800f41c9663158d8d7d6f96180d3c5209",
-      "sha256_ogg": "96c3f8102ba495f2706b06cfb17c0d51ebba77353b457a4d4515556019944c6f",
-      "bars": 35
+      "sha256_wav": "b522eddf43e74c478100770c8d35481d7542f7a9c9bc629fb892024b300832c3",
+      "sha256_ogg": "a8dc463975168ae5403b118b88fc789a3d4e3f5f202eb5cfc5edd420495d81be",
+      "bars": 32,
+      "m4a": "assets/audio/bgm/mix/m4a/bgm_shop.m4a",
+      "sha256_m4a": "2015875a9ec52aed1fa1f5331ddb05eaaef9f61002659c363027f802c725d423"
     },
     {
       "asset_id": "bgm_event_special_bed__st1_bed",
@@ -1581,6 +1584,14 @@
         "sting_evolve_c": "volume=-1.40dB",
         "sting_evolve_d": "acompressor=threshold=-16dB:ratio=2:attack=5:release=120:makeup=1,volume=1dB,alimiter=limit=0.70"
       }
+    }
+  ],
+  "partial_updates": [
+    {
+      "time_local": "2026-08-02 18:33:27 +08",
+      "scope": "bgm_shop only",
+      "reason": "replace clock-like repeated marimba/whistle with a warm yard-theme variation",
+      "runtime_m4a": "assets/audio/bgm/mix/m4a/bgm_shop.m4a"
     }
   ]
 }

@@ -1,60 +1,110 @@
 {
-  "generatedAt": "2026-07-23",
+  "generatedAt": "2026-08-02",
   "generator": "OpenAI imagegen",
   "thirdPartyAssets": false,
-  "references": "Petopia-owned portrait theme art in assets/art/world/themes/",
-  "sourceResolution": "1448x1086",
+  "references": "Petopia-owned theme art and approved day/night control samples in docs/art-review/theme-redesign/",
+  "sourceResolution": "1448x1086 selected wide control master",
   "deliveryResolution": "2732x2048",
-  "deliveryFormat": "opaque JPEG, quality 92, lossless Huffman optimization",
-  "composition": "native 4:3 repaint with full-bleed perimeter detail and a quiet central interaction field",
+  "deliveryFormat": "opaque JPEG master plus opaque WebP runtime derivative",
+  "composition": "native 4:3 repaint with edge landmarks, open actor stage, and dedicated bright moonlit night art",
   "assets": [
     {
-      "asset": "yard_theme_autumnjam_bg_wide.jpg",
-      "sha256": "a5491f05d19bfd93e277b45e73c10124d03909a890e70da68c4e2c515366e1b7"
-    },
-    {
-      "asset": "yard_theme_bambootea_bg_wide.jpg",
-      "sha256": "fdd5ac5f25ef7cc3d18472c3cbce8e572191f25c378eb3f0379b53bee677f565"
-    },
-    {
-      "asset": "yard_theme_candybake_bg_wide.jpg",
-      "sha256": "af41c7a7d59efa8ce62e2ca1c259da6fa54733884ad1e9d329f0e9db34282f03"
-    },
-    {
-      "asset": "yard_theme_fourseasons_bg_wide.jpg",
-      "sha256": "a38dbff00186cc4eb127e78e4af235e861c071c81f27ff29ea4a32389bf5d6d1"
-    },
-    {
       "asset": "yard_theme_meadow_bg_wide.jpg",
-      "sha256": "c62cad5935955c757a5d55cbdee1aaeee908fc4c3ddd50ed499e2a8705323d43"
-    },
-    {
-      "asset": "yard_theme_moongreen_bg_wide.jpg",
-      "sha256": "56cb41e51a4d41e025dfce3e2ce986ce0472244a2230f877412ac65787065ab2"
-    },
-    {
-      "asset": "yard_theme_mossrain_bg_wide.jpg",
-      "sha256": "4f79365ae7d8edfddbccfa9d544fff2ebbd7661099b9fcbbe232638a2a3d5a3a"
+      "sha256": "c602c51b5035acee2852c1f448db9f13da567f4830ec3763542469742fa18a41"
     },
     {
       "asset": "yard_theme_sakura_bg_wide.jpg",
-      "sha256": "f83d98f8a80ec760f8f84825ea41fe631f1573a59a2d1259515e538bf14384ee"
+      "sha256": "5dd61fa213dec19a611775228596c784fd2327a798e23cedbd0434ff787866a5"
+    },
+    {
+      "asset": "yard_theme_autumnjam_bg_wide.jpg",
+      "sha256": "888ad057c6bc08fcb292aaf262dd656f9bf8cadf2a597d39f2b3714c3e2e09ab"
+    },
+    {
+      "asset": "yard_theme_bambootea_bg_wide.jpg",
+      "sha256": "83d8d0bbbd2d2695e8782c0b3248c591f5c6ba594af65da4e8ef1fc39f28bd61"
+    },
+    {
+      "asset": "yard_theme_candybake_bg_wide.jpg",
+      "sha256": "2c74ff0f5eb02bd57a014ea5b3589c1802e0075aee87f7f0d201f9f0a0103ab9"
+    },
+    {
+      "asset": "yard_theme_fourseasons_bg_wide.jpg",
+      "sha256": "87437ed9b24b6146a87cb8fca7df5dd3507fb386112262283566bb4afae8a8d0"
+    },
+    {
+      "asset": "yard_theme_moongreen_bg_wide.jpg",
+      "sha256": "04fb0ca9d3bfa5e74b02d5d626324a135a217159539644d39a1fc8010212396f"
+    },
+    {
+      "asset": "yard_theme_mossrain_bg_wide.jpg",
+      "sha256": "abaf1e4226d51f395285e64c63bd353142ad2c599c7d5ca15fb2c8be261dd489"
     },
     {
       "asset": "yard_theme_seaside_bg_wide.jpg",
-      "sha256": "582f6ee29aba0a9f69ba9b6fcc5196f982c0577e3c84d43115a9aa2e12e7fb65"
+      "sha256": "5e92a7c8f4594f30f8fb10ab968e4ee2c3b14d3c62aeb0b6cbaafb8e0e8be11a"
     },
     {
       "asset": "yard_theme_snowhut_bg_wide.jpg",
-      "sha256": "4022f6e0ad0d488b3a1f50ff4bffd7583adc47e0857a7d51174eb6035ec731f2"
+      "sha256": "8081f30b952cc44025bf10a91b32a1fd7569aed23c4e8baf7ef6cf61dc98a899"
     },
     {
       "asset": "yard_theme_starcamp_bg_wide.jpg",
-      "sha256": "71bb54848598236414f54e99d090d56a2670bbc905034154bcd4cf5825c2f8bc"
+      "sha256": "45e4ee9ac625daf5864608d687d091a878051e84b1c66a029b8ad1610e050c40"
     },
     {
       "asset": "yard_theme_wheatkite_bg_wide.jpg",
-      "sha256": "89b4800ce7dc6dfcd828583963c268c07be7e8892d460f93da539199de1adff6"
+      "sha256": "bcdbf48bdd8770f1ca0476eaeee0048a6088ac2d6c3e7f9934395c1d47f5f007"
+    }
+  ],
+  "nightRuntimeAssets": [
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_meadow_bg_night_wide.webp",
+      "sha256": "b908f7331c9df9dc0c4bb6da678d3cc4ee00a8971d90b1fb96550676c72563a9"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_sakura_bg_night_wide.webp",
+      "sha256": "b00b9426d33e05d699d6f0210e9a049d78f2bcfa1ee52d361fd7647ff19db38d"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_autumnjam_bg_night_wide.webp",
+      "sha256": "bf66ccb10dbb420004d459bab0ea4138fd71c2f735950f525714a5ba82ed19dc"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_bambootea_bg_night_wide.webp",
+      "sha256": "41365765ccc93f37b24037d41bc0231bc2b90092646f7aa1852c0211715ab394"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_candybake_bg_night_wide.webp",
+      "sha256": "f6407c2287fdd4155c01c989f17a6147304ea629bff115a2a22b2776e09abfd8"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_fourseasons_bg_night_wide.webp",
+      "sha256": "e0d855cba890bc41fc97ce2d03da429f76409454ac478acb3cb3d8cfb80dc219"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_moongreen_bg_night_wide.webp",
+      "sha256": "8a9bb2d8161613ae02e47fa95bb83d6726118e543443140750cf8a7c3b7630da"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_mossrain_bg_night_wide.webp",
+      "sha256": "6c4f515bafa97f4bd754001fc141bd9818f295704e307f854f1634adb6245739"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_seaside_bg_night_wide.webp",
+      "sha256": "17b83741ffe1466a62849e276bd911a851919aa0c2d5a55aa18047d2643cd596"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_snowhut_bg_night_wide.webp",
+      "sha256": "e4eefffaec785102f11bdb0f455222fe6c1990a08f9e0c67a2b021105578e0b7"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_starcamp_bg_night_wide.webp",
+      "sha256": "5086d8967068f2fec0af874e03f9649156bbdcadcc8c669a935a090bb76580d4"
+    },
+    {
+      "asset": "assets/runtime/yard/themes/wide/yard_theme_wheatkite_bg_night_wide.webp",
+      "sha256": "27437a64dbf50ab37882e834c304e917c81b4fb9f7f9d001aaa5e7b6dcb8af55"
     }
   ]
 }

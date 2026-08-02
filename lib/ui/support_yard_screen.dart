@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
+import '../audio/audio_service.dart';
 import '../l10n/petopia_localizations.dart';
 import '../l10n/petopia_text.dart';
 import '../purchases/support_benefits.dart';
@@ -37,6 +40,9 @@ class _SupportYardScreenState extends ConsumerState<SupportYardScreen> {
           return;
         }
         _lastDeliverySequence = delivery.sequence;
+        if (!delivery.restored) {
+          unawaited(ref.read(audioServiceProvider).sting(Sting.achievement));
+        }
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (mounted) _showThankYou(delivery);
         });
@@ -103,6 +109,9 @@ class _SupportBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final side = MediaQuery.sizeOf(context).width >= 600 ? 32.0 : 18.0;
+    final textScale = MediaQuery.textScalerOf(context).scale(16) / 16;
+    final productExtent = (224.0 + (textScale - 1).clamp(0.0, 2.3) * 128.0)
+        .clamp(224.0, 520.0);
     return LayoutBuilder(
       builder: (context, constraints) {
         final twoColumns = constraints.maxWidth >= 760;
@@ -148,17 +157,17 @@ class _SupportBody extends ConsumerWidget {
                       GridView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 12,
-                              mainAxisSpacing: 12,
-                              mainAxisExtent: 224,
-                            ),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 12,
+                          mainAxisSpacing: 12,
+                          mainAxisExtent: productExtent,
+                        ),
                         itemCount: SupportCatalog.all.length,
                         itemBuilder: (_, index) => _SupportProductCard(
                           product: SupportCatalog.all[index],
                           state: state,
+                          height: productExtent,
                         ),
                       )
                     else
@@ -170,6 +179,7 @@ class _SupportBody extends ConsumerWidget {
                         _SupportProductCard(
                           product: SupportCatalog.all[index],
                           state: state,
+                          height: productExtent,
                         ),
                         if (index != SupportCatalog.all.length - 1)
                           const SizedBox(height: 12),
@@ -289,10 +299,15 @@ class _SupportIntro extends StatelessWidget {
 }
 
 class _SupportProductCard extends ConsumerWidget {
-  const _SupportProductCard({required this.product, required this.state});
+  const _SupportProductCard({
+    required this.product,
+    required this.state,
+    required this.height,
+  });
 
   final SupportProductSpec product;
   final SupportPurchaseState state;
+  final double height;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -311,7 +326,7 @@ class _SupportProductCard extends ConsumerWidget {
       container: true,
       label: '${context.tr(product.title)}, ${context.tr(product.subtitle)}',
       child: SizedBox(
-        height: 224,
+        height: height,
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: const Color(0xFFFFFCF6),
@@ -342,6 +357,7 @@ class _SupportProductCard extends ConsumerWidget {
                       AppText(
                         product.title,
                         maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           color: PetopiaColors.ink,
                           fontSize: 16,

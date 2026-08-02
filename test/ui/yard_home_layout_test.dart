@@ -266,6 +266,25 @@ Future<void> _disposeYard(WidgetTester tester) async {
 }
 
 void main() {
+  test('yard daypart refresh includes morning, dusk, and night boundaries', () {
+    expect(
+      nextYardDaypartBoundary(DateTime(2026, 8, 2, 5, 59)),
+      DateTime(2026, 8, 2, 6),
+    );
+    expect(
+      nextYardDaypartBoundary(DateTime(2026, 8, 2, 12)),
+      DateTime(2026, 8, 2, 16),
+    );
+    expect(
+      nextYardDaypartBoundary(DateTime(2026, 8, 2, 16)),
+      DateTime(2026, 8, 2, 18),
+    );
+    expect(
+      nextYardDaypartBoundary(DateTime(2026, 8, 2, 18)),
+      DateTime(2026, 8, 3, 6),
+    );
+  });
+
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('wide luxury composition assets are bundled', () async {
@@ -611,7 +630,7 @@ void main() {
     }
   });
 
-  testWidgets('portrait iPad keeps the authored luxury overlays', (
+  testWidgets('portrait iPad keeps a quiet stage with compact default decor', (
     tester,
   ) async {
     const size = Size(1024, 1366);
@@ -622,7 +641,15 @@ void main() {
         safeArea: const EdgeInsets.only(top: 24, bottom: 20),
         view: _view(luxuryStage: stage),
       );
-      expect(find.byKey(ValueKey('yard_luxury_$stage')), findsOneWidget);
+      expect(find.byKey(ValueKey('yard_luxury_$stage')), findsNothing);
+      final decor = find.byWidgetPredicate(
+        (widget) =>
+            widget.key is ValueKey<String> &&
+            (widget.key! as ValueKey<String>).value.startsWith(
+              'yard_decor_${stage}_',
+            ),
+      );
+      expect(decor, findsNWidgets(3));
       expect(tester.takeException(), isNull);
       await _disposeYard(tester);
     }

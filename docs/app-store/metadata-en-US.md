@@ -24,7 +24,7 @@ and sets out. Hand-painted postcards soon arrive from faraway places, each
 carrying a scene, a chance encounter, and a voice shaped by the personality you
 came to know. Old friends may even find their way back to the garden.
 
-Wild visitors stop by for a day, leaving quiet memories in your visitor book.
+Wild visitors stop by for a day, leaving quiet memories in your Visitor Compendium.
 As new companions arrive, your pet compendium, postcard album, and garden
 journal become a record of many small relationships.
 

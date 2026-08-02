@@ -20,27 +20,21 @@ class YardArt {
   /// 当前主题背景图。未知/默认主题回落到 meadow。
   ///
   /// iPad 横屏使用单独重绘的 4:3 母图，避免把竖屏背景裁切或拉伸。
-  static String themeBg(String themeId, {bool wide = false}) {
+  static String themeBg(
+    String themeId, {
+    bool wide = false,
+    bool night = false,
+  }) {
     final slug = _themeSlug[themeId] ?? 'meadow';
     if (wide) {
       return 'assets/runtime/yard/themes/wide/'
-          'yard_theme_${slug}_bg_wide.webp';
+          'yard_theme_${slug}_bg${night ? '_night' : ''}_wide.webp';
     }
-    return 'assets/art/world/themes/yard_theme_${slug}_bg.webp';
+    return 'assets/art/world/themes/'
+        'yard_theme_${slug}_bg${night ? '_night' : ''}.webp';
   }
 
-  static String? luxuryDelta(int stage) {
-    if (stage < 2 || stage > 6) return null;
-    final number = stage.toString().padLeft(2, '0');
-    return 'assets/art/world/layouts/yard_luxury${number}_delta.webp';
-  }
-
-  static String timeFx(int hour) {
-    if (hour >= 19 || hour < 6) {
-      return 'assets/art/world/fx/yard_fx_night.webp';
-    }
-    return 'assets/art/world/fx/yard_fx_dusk.webp';
-  }
+  static bool isNight(int hour) => hour >= 18 || hour < 6;
 
   static String weatherFx(String weather) => switch (weather) {
     'rain' || 'thunder' => 'assets/art/world/fx/yard_fx_rain_overlay.webp',

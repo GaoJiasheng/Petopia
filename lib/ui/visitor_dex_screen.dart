@@ -493,7 +493,7 @@ class _VisitorMemoryPanel extends StatelessWidget {
                     width: 126,
                     height: 126,
                     child: Image.asset(
-                      'assets/art/world/visitors/${entry.id}_yard_base.png',
+                      visitorArtAsset(entry.id, 'yard_base'),
                       fit: BoxFit.contain,
                       cacheWidth: 420,
                       errorBuilder: (_, _, _) => _VisitorMark(
@@ -616,7 +616,7 @@ class _LargeTextVisitorMemoryPanel extends StatelessWidget {
                 width: 126,
                 height: 126,
                 child: Image.asset(
-                  'assets/art/world/visitors/${entry.id}_yard_base.png',
+                  visitorArtAsset(entry.id, 'yard_base'),
                   fit: BoxFit.contain,
                   cacheWidth: 420,
                   semanticLabel: context.tr(entry.name),
@@ -788,8 +788,7 @@ class _VisitorMark extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(24),
                 child: Image.asset(
-                  // id 已含 visitor_ 前缀；文件名即 <id>_portrait.png。
-                  'assets/art/world/visitors/${id}_portrait.png',
+                  visitorArtAsset(id, 'portrait'),
                   fit: BoxFit.contain,
                   cacheWidth: 220,
                   errorBuilder: (_, _, _) => icon,
@@ -930,7 +929,7 @@ class _EmptyState extends StatelessWidget {
               ),
               SizedBox(height: 8),
               AppText(
-                '等院子里有访客停留，这里会贴上第一张小贴纸。',
+                '等院子里有来客停留，这里会贴上第一张小贴纸。',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: VisitorDexScreen._muted),
               ),

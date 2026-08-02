@@ -8,6 +8,7 @@ import '../domain/enums.dart';
 import '../l10n/petopia_localizations.dart';
 import '../l10n/petopia_text.dart';
 import 'adopt_screen.dart';
+import 'app_error_state.dart';
 import 'pet_art.dart';
 import 'petopia_theme.dart';
 import 'yard_art.dart';
@@ -62,14 +63,25 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
   Future<void> _finish() async {
     if (_finishing) return;
     setState(() => _finishing = true);
-    await ref.read(gameControllerProvider.notifier).completeOnboarding();
-    if (!mounted) return;
-    if (widget.needsAdoption) {
-      await Navigator.of(context).pushReplacement(
-        MaterialPageRoute<void>(builder: (_) => const AdoptScreen()),
-      );
-    } else {
-      Navigator.of(context).pop();
+    try {
+      await ref.read(gameControllerProvider.notifier).completeOnboarding();
+      if (!mounted) return;
+      if (widget.needsAdoption) {
+        await Navigator.of(context).pushReplacement(
+          MaterialPageRoute<void>(builder: (_) => const AdoptScreen()),
+        );
+      } else {
+        Navigator.of(context).pop();
+      }
+    } catch (error, stackTrace) {
+      logUiError('complete onboarding', error, stackTrace);
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: AppText('小院暂时没能记下这一步，请再试一次。')));
+      }
+    } finally {
+      if (mounted) setState(() => _finishing = false);
     }
   }
 
@@ -92,6 +104,10 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.sizeOf(context);
+    final wideBackground =
+        screenSize.width >= 820 && screenSize.width > screenSize.height;
+    final night = YardArt.isNight(DateTime.now().hour);
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -100,11 +116,13 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
           fit: StackFit.expand,
           children: [
             Image.asset(
-              YardArt.themeBg('meadow'),
+              YardArt.themeBg('meadow', wide: wideBackground, night: night),
               fit: BoxFit.cover,
               alignment: Alignment.topCenter,
             ),
-            ColoredBox(color: Colors.white.withValues(alpha: 0.16)),
+            ColoredBox(
+              color: Colors.white.withValues(alpha: night ? 0.08 : 0.16),
+            ),
             SafeArea(
               child: Center(
                 child: ConstrainedBox(

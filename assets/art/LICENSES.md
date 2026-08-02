@@ -26,6 +26,14 @@ This folder contains Petopia-specific visual assets created for this project.
   artwork.
 - Human review covers composition, clipping, transparency, text, watermark,
   visual consistency, and similarity concerns before an asset enters runtime.
+- The 2026-08-02 day/night yard-theme batch uses only Petopia-owned theme art
+  and approved control samples under `docs/art-review/theme-redesign/` as its
+  visual references. It contains no third-party reference image or stock asset.
+- The 2026-08-02 App Icon batch uses only the Petopia-owned orange kitten Stage
+  A art and the previous Petopia icon as character and palette references. The
+  approved master is retained under `docs/art-sources/app-icon/`; platform
+  renditions are deterministic project derivatives with no third-party stock,
+  character, logo, or font content.
 
 ## Commercial Release Record
 

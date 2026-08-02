@@ -96,7 +96,7 @@ void main() {
       ...repo.encounters.map((item) => item.locationIds),
       ...repo.incidents.map((item) => item.locationIds),
     ].where((ids) => ids.isNotEmpty).length;
-    expect(affinityCount, 240, reason: 'landmark-specific postcard entries');
+    expect(affinityCount, 248, reason: 'landmark-specific postcard entries');
 
     for (final location in repo.locations) {
       expect(

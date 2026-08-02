@@ -29,11 +29,24 @@
 - `assets/art/support/` 的点心、暖灯、花篮、守护者徽章和特别明信片同属上述
   Petopia 定向生成批次；运行时 WebP 位于 `assets/runtime/support/`，母版与
   运行图哈希由发布清单逐一关联。
+- 2026-08-02 的 12 套院子昼夜重绘批次，仅以 Petopia 已有主题美术和
+  `docs/art-review/theme-redesign/` 内经确认的控制样张作为视觉锚点；竖屏与
+  iPad 4:3 均为本项目定向生成和人工选片、校色、适配的成果，不含第三方参考图、
+  图库或素材包。运行时昼夜 WebP 与对应审核母版由发布清单逐一关联。
+- 2026-08-02 的 App Icon 重绘以 Petopia 自有橘猫 Stage A 立绘和旧版图标作为
+  角色与色彩参考，为本项目定向生成；未使用第三方角色、品牌、字体、图库或素材包。
+  经人工构图审核、小尺寸清晰度处理和平台尺寸适配后，母图保存在
+  `docs/art-sources/app-icon/app_icon_master_2026-08-02.png`，iOS 与 Android
+  图标由 `tools/make_app_icon.py` 确定性生成。
 
 ## 音频来源记录
 
 - BGM 与过场音乐：
   `assets/audio/provenance/music_provenance_manifest.json`
+- 2026-08-02 的暖绒商店 BGM 重制沿用 Petopia 程序化生成器中自有的院子和声与
+  主主题动机，重新编配为毛毡钢琴、尼龙吉他、柔和木质点音和空气织体；未使用
+  第三方采样、循环、参考录音、商业旋律或艺术家风格提示。WAV/OGG 分轨、运行时
+  M4A、响度记录与哈希均由同一生成流程更新。
 - 互动与 UI 音效：
   `assets/audio/provenance/sfx_provenance_manifest.json`
 - 环境声与访客声音：

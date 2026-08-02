@@ -8,6 +8,7 @@ audio, artist-style prompts, or commercial melodies.
 
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import math
@@ -27,9 +28,11 @@ BGM_STEM_WAV = ROOT / "assets/audio/bgm/stems/wav"
 BGM_STEM_OGG = ROOT / "assets/audio/bgm/stems/ogg"
 BGM_MIX_WAV = ROOT / "assets/audio/bgm/mix/wav"
 BGM_MIX_OGG = ROOT / "assets/audio/bgm/mix/ogg"
+BGM_MIX_M4A = ROOT / "assets/audio/bgm/mix/m4a"
 STING_WAV = ROOT / "assets/audio/sting/wav"
 STING_OGG = ROOT / "assets/audio/sting/ogg"
 PROV = ROOT / "assets/audio/provenance"
+MUSIC_QA_REPORT = PROV / "music_qa_loudnorm_report.json"
 
 
 def ensure_dirs() -> None:
@@ -38,6 +41,7 @@ def ensure_dirs() -> None:
         BGM_STEM_OGG,
         BGM_MIX_WAV,
         BGM_MIX_OGG,
+        BGM_MIX_M4A,
         STING_WAV,
         STING_OGG,
         PROV,
@@ -517,15 +521,124 @@ def render_simple_loop(asset_id: str, seconds: float, bpm: float, bars: int, kin
             if bar % 8 == 7:
                 add_noise_burst(stems[f"{asset_id}__st2_texture"], t0 + 3.1 * bt, 0.22, 0.010, 0.22, "paper", f"{asset_id}:page:{bar}")
         elif kind == "shop":
-            for j, midi in enumerate([chord[2] + 12, chord[3] + 12, chord[4] + 12, chord[5] + 12]):
-                add_note(stems[f"{asset_id}__st1_marimba_whistle"], t0 + (0.2 + j * 0.55) * bt, 0.42 * bt, midi, "marimba", 0.18, -0.2 + 0.13 * j, f"{asset_id}:mar:{bar}:{j}")
-            if bar % 4 in (2, 3):
-                add_note(stems[f"{asset_id}__st1_marimba_whistle"], t0 + 1.2 * bt, bt, 76, "whistle", 0.12, 0.22, f"{asset_id}:wh:{bar}")
-            if bar % 8 in (6, 7):
-                add_phrase(stems[f"{asset_id}__st1_marimba_whistle"], t0 + 0.1 * bt, bt, [79, 76, 79, 81, 76], "marimba", 0.14, -0.1, f"{asset_id}:shop_tag:{bar}", stretch=0.62)
-            for beat in (0, 2):
-                add_noise_burst(stems[f"{asset_id}__st2_light_perc"], t0 + beat * bt, 0.10, 0.018, 0.1, "brush", f"{asset_id}:br:{bar}:{beat}")
-                add_noise_burst(stems[f"{asset_id}__st2_light_perc"], t0 + (beat + 0.5) * bt, 0.08, 0.014, -0.2, "shaker", f"{asset_id}:sh:{bar}:{beat}")
+            home = stems[f"{asset_id}__st1_home_motif"]
+            glow = stems[f"{asset_id}__st2_counter_glow"]
+
+            # The shop is a close relative of the yard theme: same harmonic
+            # path and eight-note motif, reharmonized as a quieter indoor
+            # miniature. Long guitar/piano releases avoid timer-like attacks.
+            add_note(
+                home,
+                t0,
+                bd * 0.92,
+                chord[0],
+                "felt_piano",
+                0.24,
+                -0.08,
+                f"{asset_id}:root:{bar}",
+            )
+            guitar_shapes = [
+                (
+                    [0.12, 0.91, 1.73, 2.52, 3.43],
+                    [chord[2], chord[4], chord[3], chord[5], chord[4]],
+                ),
+                (
+                    [0.24, 1.22, 2.08, 3.28],
+                    [chord[3], chord[5], chord[4], chord[2]],
+                ),
+                (
+                    [0.10, 0.76, 1.63, 2.66, 3.54],
+                    [chord[2], chord[3], chord[5], chord[4], chord[3]],
+                ),
+                (
+                    [0.19, 1.08, 1.96, 3.14],
+                    [chord[4], chord[3], chord[5], chord[2]],
+                ),
+            ]
+            guitar_times, guitar_notes = guitar_shapes[bar % len(guitar_shapes)]
+            for j, (beat, midi) in enumerate(zip(guitar_times, guitar_notes)):
+                add_note(
+                    home,
+                    t0 + beat * bt,
+                    1.02 * bt,
+                    midi + 12,
+                    "nylon_guitar",
+                    0.17,
+                    -0.24 if j % 2 else 0.20,
+                    f"{asset_id}:guitar:{bar}:{j}",
+                )
+
+            if bar % 8 == 0:
+                add_phrase(
+                    home,
+                    t0 + 0.28 * bt,
+                    bt,
+                    MOTIF,
+                    "felt_piano",
+                    0.105,
+                    0.12,
+                    f"{asset_id}:yard_memory:{bar}",
+                    stretch=1.08,
+                )
+            elif bar % 8 == 4:
+                add_phrase(
+                    home,
+                    t0 + 0.38 * bt,
+                    bt,
+                    MOTIF_TENDER,
+                    "nylon_guitar",
+                    0.11,
+                    -0.14,
+                    f"{asset_id}:warm_answer:{bar}",
+                    shift=0,
+                    stretch=1.16,
+                )
+
+            # A single muted wooden accent every four bars is enough to retain
+            # the shop's playful identity without becoming an alarm pulse.
+            if bar % 4 == 3:
+                add_note(
+                    home,
+                    t0 + 3.05 * bt,
+                    1.1 * bt,
+                    chord[4] + 12,
+                    "marimba",
+                    0.052,
+                    0.24,
+                    f"{asset_id}:wood_smile:{bar}",
+                )
+
+            if bar % 2 == 0:
+                add_chord_pad(
+                    glow,
+                    t0,
+                    bd * 2.05,
+                    chord,
+                    "clarinet",
+                    0.062,
+                    f"{asset_id}:counter_pad:{bar}",
+                )
+            if bar % 8 in (2, 6):
+                add_note(
+                    glow,
+                    t0 + 1.35 * bt,
+                    2.2 * bt,
+                    chord[2] + 12,
+                    "hum",
+                    0.065,
+                    0.18,
+                    f"{asset_id}:counter_hum:{bar}",
+                )
+            if bar % 4 == 1:
+                add_noise_burst(
+                    glow,
+                    t0 + 2.72 * bt,
+                    0.22,
+                    0.007,
+                    -0.16,
+                    "brush",
+                    f"{asset_id}:soft_brush:{bar}",
+                )
         else:
             add_chord_pad(stems[f"{asset_id}__st1_bed"], t0, bd * 1.5, [m + 12 for m in chord], "vibraphone", 0.075, f"{asset_id}:evt:{bar}")
             if bar % 3 == 0:
@@ -533,7 +646,7 @@ def render_simple_loop(asset_id: str, seconds: float, bpm: float, bars: int, kin
             if bar % 8 in (2, 6):
                 add_phrase(stems[f"{asset_id}__st1_bed"], t0 + 0.3 * bt, bt, [84, 83, 79, 76], "glass_vibes", 0.075, -0.18, f"{asset_id}:question:{bar}", stretch=1.15)
     for sid, buf in stems.items():
-        if kind in {"album", "event"}:
+        if kind in {"album", "event", "shop"}:
             add_air(buf, 0.0032, f"{sid}:air")
     meta = loop_meta(seconds, bpm, bars)
     if kind == "opening":
@@ -781,6 +894,95 @@ def convert_ogg(wav_path: Path, ogg_path: Path) -> None:
     )
 
 
+def convert_m4a(wav_path: Path, m4a_path: Path) -> None:
+    subprocess.run(
+        [
+            "ffmpeg",
+            "-y",
+            "-v",
+            "error",
+            "-i",
+            str(wav_path),
+            "-c:a",
+            "aac",
+            "-b:a",
+            "128k",
+            "-movflags",
+            "+faststart",
+            str(m4a_path),
+        ],
+        check=True,
+    )
+
+
+def loudnorm_metrics(wav_path: Path) -> dict:
+    result = subprocess.run(
+        [
+            "ffmpeg",
+            "-hide_banner",
+            "-nostats",
+            "-i",
+            str(wav_path),
+            "-af",
+            "loudnorm=I=-16:TP=-1:LRA=7:print_format=json",
+            "-f",
+            "null",
+            "-",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    start = result.stderr.rfind("{")
+    end = result.stderr.rfind("}")
+    if start < 0 or end < start:
+        raise RuntimeError(f"ffmpeg did not return loudnorm JSON for {wav_path}")
+    return json.loads(result.stderr[start : end + 1])
+
+
+def refresh_shop_qa(shop_assets: list[dict]) -> None:
+    report = json.loads(MUSIC_QA_REPORT.read_text(encoding="utf-8"))
+    old_items = [
+        item for item in report["items"] if item["asset_id"].startswith("bgm_shop")
+    ]
+    insertion = min(
+        (
+            i
+            for i, item in enumerate(report["items"])
+            if item["asset_id"].startswith("bgm_shop")
+        ),
+        default=len(report["items"]),
+    )
+    retained = [
+        item
+        for item in report["items"]
+        if not item["asset_id"].startswith("bgm_shop")
+    ]
+    refreshed = []
+    for asset in shop_assets:
+        wav = ROOT / asset["wav"]
+        refreshed.append(
+            {
+                "asset_id": asset["asset_id"],
+                "role": asset["role"],
+                "category": asset["category"],
+                "wav": asset["wav"],
+                "duration_seconds": asset["duration_seconds"],
+                "loop": asset["loop"],
+                "ffmpeg_loudnorm": loudnorm_metrics(wav),
+            }
+        )
+    report["items"] = retained
+    report["items"][insertion:insertion] = refreshed
+    report["generated_at_local"] = time.strftime("%Y-%m-%d %H:%M:%S %Z")
+    report["scanner"] = "ffmpeg loudnorm I=-16:TP=-1:LRA=7 print_format=json"
+    MUSIC_QA_REPORT.write_text(
+        json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    if old_items:
+        print(f"refreshed {len(refreshed)} shop loudness records", flush=True)
+
+
 def sha256(path: Path) -> str:
     h = hashlib.sha256()
     with path.open("rb") as handle:
@@ -852,8 +1054,100 @@ def save_sting(manifest: dict, asset_id: str, seconds: float) -> None:
     print(f"generated {asset_id}", flush=True)
 
 
+def refresh_counts(manifest: dict) -> None:
+    manifest["counts"] = {
+        "bgm_entries": sum(1 for asset in manifest["assets"] if asset["category"] == "bgm"),
+        "sting_entries": sum(1 for asset in manifest["assets"] if asset["category"] == "sting"),
+        "file_pairs": len(manifest["assets"]),
+    }
+
+
+def regenerate_shop_only() -> None:
+    manifest_path = PROV / "music_provenance_manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    old_shop = [
+        asset for asset in manifest["assets"] if asset["asset_id"].startswith("bgm_shop")
+    ]
+    insertion = min(
+        (i for i, asset in enumerate(manifest["assets"]) if asset["asset_id"].startswith("bgm_shop")),
+        default=len(manifest["assets"]),
+    )
+    retained = [
+        asset for asset in manifest["assets"] if not asset["asset_id"].startswith("bgm_shop")
+    ]
+
+    shop_manifest = {"assets": []}
+    bpm, bars = 76.0, 32
+    seconds = bars * bar_time(bpm)
+    stems, meta = render_simple_loop(
+        "bgm_shop",
+        seconds,
+        bpm,
+        bars,
+        "shop",
+        ["home_motif", "counter_glow"],
+    )
+    save_stem_group(shop_manifest, "bgm_shop", stems, meta, True, -18.5)
+    mix_wav = BGM_MIX_WAV / "bgm_shop.wav"
+    mix_m4a = BGM_MIX_M4A / "bgm_shop.m4a"
+    convert_m4a(mix_wav, mix_m4a)
+    for asset in shop_manifest["assets"]:
+        if asset["asset_id"] == "bgm_shop":
+            asset["m4a"] = str(mix_m4a.relative_to(ROOT))
+            asset["sha256_m4a"] = sha256(mix_m4a)
+
+    manifest["assets"] = retained
+    manifest["assets"][insertion:insertion] = shop_manifest["assets"]
+    manifest["generated_at_local"] = time.strftime("%Y-%m-%d %H:%M:%S %Z")
+    manifest["partial_updates"] = [
+        update
+        for update in manifest.get("partial_updates", [])
+        if update.get("scope") != "bgm_shop only"
+    ]
+    manifest["partial_updates"].append(
+        {
+            "time_local": manifest["generated_at_local"],
+            "scope": "bgm_shop only",
+            "reason": "replace clock-like repeated marimba/whistle with a warm yard-theme variation",
+            "runtime_m4a": str(mix_m4a.relative_to(ROOT)),
+        }
+    )
+    manifest.setdefault("technical_defaults", {})["runtime_mix_codec"] = (
+        "AAC-LC 128 kbps in M4A"
+    )
+    refresh_counts(manifest)
+    refresh_shop_qa(shop_manifest["assets"])
+
+    new_paths = {
+        asset[key]
+        for asset in shop_manifest["assets"]
+        for key in ("wav", "ogg")
+        if key in asset
+    }
+    for asset in old_shop:
+        for key in ("wav", "ogg"):
+            relative = asset.get(key)
+            if relative and relative not in new_paths:
+                (ROOT / relative).unlink(missing_ok=True)
+
+    manifest_path.write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8"
+    )
+    print(f"wrote {manifest_path.relative_to(ROOT)} (shop-only refresh)", flush=True)
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--only",
+        choices=["shop"],
+        help="regenerate one production music group without touching other assets",
+    )
+    args = parser.parse_args()
     ensure_dirs()
+    if args.only == "shop":
+        regenerate_shop_only()
+        return
     manifest = {
         "project": "Petopia",
         "generated_at_local": time.strftime("%Y-%m-%d %H:%M:%S %Z"),
@@ -887,7 +1181,7 @@ def main() -> None:
         ("bgm_adoption", 90.0, 80, 30, "adoption", ["guitar", "kalimba"]),
         ("bgm_postcard_read", 110.0, 72, 33, "postcard", ["bed", "melody", "accordion"]),
         ("bgm_album_browse", 130.0, 72, 39, "album", ["piano", "texture"]),
-        ("bgm_shop", 100.0, 84, 35, "shop", ["marimba_whistle", "light_perc"]),
+        ("bgm_shop", 32 * bar_time(76), 76, 32, "shop", ["home_motif", "counter_glow"]),
         ("bgm_event_special_bed", 80.0, 72, 24, "event", ["bed"]),
     ]
     for asset_id, seconds, bpm, bars, kind, stemspec in context_specs:
@@ -921,11 +1215,7 @@ def main() -> None:
     for asset_id, seconds in stingers.items():
         save_sting(manifest, asset_id, seconds)
 
-    manifest["counts"] = {
-        "bgm_entries": sum(1 for asset in manifest["assets"] if asset["category"] == "bgm"),
-        "sting_entries": sum(1 for asset in manifest["assets"] if asset["category"] == "sting"),
-        "file_pairs": len(manifest["assets"]),
-    }
+    refresh_counts(manifest)
     manifest_path = PROV / "music_provenance_manifest.json"
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"wrote {manifest_path.relative_to(ROOT)} with {len(manifest['assets'])} entries", flush=True)

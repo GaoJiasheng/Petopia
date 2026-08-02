@@ -51,6 +51,24 @@ SUPPORT_PRODUCTS = {
 DECLARED_ASSET_BUDGET_BYTES = 138 * 1024 * 1024
 IOS_APP_BUDGET_BYTES = 166 * 1024 * 1024
 IOS_FLUTTER_ASSET_BUDGET_BYTES = 139 * 1024 * 1024
+VISITOR_ART_SLUG_OVERRIDES = {
+    "visitor_campfire_light": "visitor_emberlight",
+    "visitor_rainbow_shade": "visitor_rainbowshade",
+    "visitor_night_blob": "visitor_ghostpuff",
+}
+VISITOR_CLEAN_BASE_SLUGS = (
+    "visitor_crow",
+    "visitor_egret",
+    "visitor_fox",
+    "visitor_owl",
+    "visitor_pigeon",
+    "visitor_squirrel",
+    "visitor_tanuki",
+)
+CONCRETE_ASSET_LITERAL_RE = re.compile(
+    r"(?P<quote>['\"])(?P<path>assets/[^'\"\n]+\."
+    r"(?:png|webp|jpg|jpeg|m4a|wav|json))(?P=quote)"
+)
 
 
 def run(label: str, command: list[str]) -> None:
@@ -63,6 +81,89 @@ def run(label: str, command: list[str]) -> None:
 def require(condition: bool, message: str) -> None:
     if not condition:
         FAILURES.append(message)
+
+
+def declared_asset_files(pubspec: str) -> set[str]:
+    """Expand pubspec asset entries using Flutter's non-recursive directory rule."""
+    declared: set[str] = set()
+    entries = re.findall(r"^\s+-\s+(assets/\S+)\s*$", pubspec, re.M)
+    for entry in entries:
+        path = ROOT / entry
+        if entry.endswith("/") and path.is_dir():
+            declared.update(
+                str(item.relative_to(ROOT))
+                for item in path.iterdir()
+                if item.is_file()
+            )
+        elif path.is_file():
+            declared.add(entry)
+    return declared
+
+
+def check_literal_asset_contract(pubspec: str) -> set[str]:
+    declared = declared_asset_files(pubspec)
+    for dart_path in sorted((ROOT / "lib").rglob("*.dart")):
+        source = dart_path.read_text()
+        for match in CONCRETE_ASSET_LITERAL_RE.finditer(source):
+            relative = match.group("path")
+            if "$" in relative:
+                continue
+            require(
+                (ROOT / relative).is_file(),
+                f"Dart asset literal does not exist: {relative} "
+                f"({dart_path.relative_to(ROOT)})",
+            )
+            require(
+                relative in declared,
+                f"Dart asset literal is not bundled by pubspec: {relative} "
+                f"({dart_path.relative_to(ROOT)})",
+            )
+    return declared
+
+
+def check_visitor_art_contract(declared: set[str]) -> None:
+    visitor_data = json.loads((ROOT / "assets/data/visitors.json").read_text())
+    visitors = visitor_data.get("items", [])
+    require(len(visitors) == 20, f"expected 20 visitors, found {len(visitors)}")
+
+    for item in visitors:
+        visitor_id = item.get("id")
+        require(isinstance(visitor_id, str), "visitor data contains an invalid id")
+        if not isinstance(visitor_id, str):
+            continue
+        slug = VISITOR_ART_SLUG_OVERRIDES.get(visitor_id, visitor_id)
+        for suffix in ("portrait", "yard", "yard_base"):
+            relative = f"assets/art/world/visitors/{slug}_{suffix}.png"
+            require((ROOT / relative).is_file(), f"missing visitor art {relative}")
+            require(relative in declared, f"visitor art is not bundled: {relative}")
+
+    controller = (ROOT / "lib/app/game_controller.dart").read_text()
+    require(
+        "String visitorArtAsset(String visitorId, String suffix)" in controller,
+        "visitor art mapping helper is missing or no longer public",
+    )
+    for visitor_id, slug in VISITOR_ART_SLUG_OVERRIDES.items():
+        mapping = f"'{visitor_id}' => '{slug}'"
+        require(mapping in controller, f"visitor art slug mapping is missing: {mapping}")
+
+    dex = (ROOT / "lib/ui/visitor_dex_screen.dart").read_text()
+    require(
+        dex.count("visitorArtAsset(") >= 3,
+        "visitor dex must route portrait and yard-base art through visitorArtAsset",
+    )
+    for dart_path in sorted((ROOT / "lib").rglob("*.dart")):
+        for line_number, line in enumerate(dart_path.read_text().splitlines(), 1):
+            if "assets/art/world/visitors/" not in line or "$" not in line:
+                continue
+            allowed = (
+                dart_path == ROOT / "lib/app/game_controller.dart"
+                and "${slug}_$suffix.png" in line
+            )
+            require(
+                allowed,
+                "raw visitor id interpolation bypasses visitorArtAsset: "
+                f"{dart_path.relative_to(ROOT)}:{line_number}",
+            )
 
 
 def psnr(source: Image.Image, runtime: Image.Image) -> float:
@@ -79,6 +180,8 @@ def psnr(source: Image.Image, runtime: Image.Image) -> float:
 
 def static_checks() -> None:
     pubspec = (ROOT / "pubspec.yaml").read_text()
+    declared = check_literal_asset_contract(pubspec)
+    check_visitor_art_contract(declared)
     version_match = re.search(r"^version:\s*(\d+\.\d+\.\d+)\+(\d+)\s*$", pubspec, re.M)
     require(version_match is not None, "pubspec version must use x.y.z+build format")
     require("A new Flutter project" not in pubspec, "pubspec description is still the template")
@@ -220,10 +323,30 @@ def static_checks() -> None:
 
 def asset_checks() -> None:
     pubspec = (ROOT / "pubspec.yaml").read_text()
+    for slug in VISITOR_CLEAN_BASE_SLUGS:
+        path = ROOT / f"assets/art/world/visitors/{slug}_yard_base.png"
+        require(path.exists(), f"missing cleaned visitor base {path.relative_to(ROOT)}")
+        if not path.exists():
+            continue
+        with Image.open(path) as image:
+            alpha = image.convert("RGBA").getchannel("A")
+            solid_enough = alpha.point(lambda value: 255 if value >= 24 else 0)
+            bounds = solid_enough.getbbox()
+            require(bounds is not None, f"visitor base is empty: {path.name}")
+            if bounds is None:
+                continue
+            residue_top = min(image.height, bounds[3] + 8)
+            residue = alpha.crop((0, residue_top, image.width, image.height))
+            require(
+                residue.getbbox() is None,
+                f"visitor base retains detached low-alpha residue: {path.name}",
+            )
+
     portrait_dir = ROOT / "assets/art/world/themes"
     portrait_master_dir = ROOT / "assets/art/world/exports_1290/themes"
     for slug in PORTRAIT_THEME_SLUGS:
         path = portrait_dir / f"yard_theme_{slug}_bg.webp"
+        night_path = portrait_dir / f"yard_theme_{slug}_bg_night.webp"
         master = portrait_master_dir / f"yard_theme_{slug}_bg_1290x2796.png"
         require(path.exists(), f"missing portrait theme {path.relative_to(ROOT)}")
         require(
@@ -233,6 +356,14 @@ def asset_checks() -> None:
         require(
             master.exists(),
             f"missing portrait theme master {master.relative_to(ROOT)}",
+        )
+        require(
+            night_path.exists(),
+            f"missing portrait night theme {night_path.relative_to(ROOT)}",
+        )
+        require(
+            str(night_path.relative_to(ROOT)) in pubspec,
+            f"portrait night theme is not bundled: {night_path.relative_to(ROOT)}",
         )
         if master.exists():
             with Image.open(master) as image:
@@ -255,6 +386,20 @@ def asset_checks() -> None:
                 "A" not in image.getbands() and "transparency" not in image.info,
                 f"{path.relative_to(ROOT)} must not contain alpha",
             )
+        if night_path.exists():
+            with Image.open(night_path) as image:
+                require(
+                    image.size == (1290, 2796),
+                    f"{night_path.relative_to(ROOT)} is {image.size}, expected 1290x2796",
+                )
+                require(
+                    image.format == "WEBP",
+                    f"{night_path.relative_to(ROOT)} must be WebP",
+                )
+                require(
+                    "A" not in image.getbands() and "transparency" not in image.info,
+                    f"{night_path.relative_to(ROOT)} must not contain alpha",
+                )
 
     decor_dir = ROOT / "assets/art/world/decor"
     for filename in WIDE_LUXURY_DECOR_FILES:
@@ -283,6 +428,9 @@ def asset_checks() -> None:
     for slug in WIDE_THEME_SLUGS:
         path = wide_dir / f"yard_theme_{slug}_bg_wide.jpg"
         runtime_path = runtime_wide_dir / f"yard_theme_{slug}_bg_wide.webp"
+        night_runtime_path = (
+            runtime_wide_dir / f"yard_theme_{slug}_bg_night_wide.webp"
+        )
         require(path.exists(), f"missing iPad wide theme {path.relative_to(ROOT)}")
         require(
             runtime_path.exists(),
@@ -291,6 +439,10 @@ def asset_checks() -> None:
         require(
             str(runtime_path.parent.relative_to(ROOT)) + "/" in pubspec,
             "runtime iPad theme directory is not bundled",
+        )
+        require(
+            night_runtime_path.exists(),
+            f"missing runtime iPad night theme {night_runtime_path.relative_to(ROOT)}",
         )
         if not path.exists():
             continue
@@ -331,6 +483,20 @@ def asset_checks() -> None:
                     quality >= 39,
                     f"runtime iPad theme quality {quality:.2f} dB is below 39 dB: "
                     f"{runtime_path.name}",
+                )
+        if night_runtime_path.exists():
+            with Image.open(night_runtime_path) as image:
+                require(
+                    image.size == (2732, 2048),
+                    f"{night_runtime_path.relative_to(ROOT)} is {image.size}, expected 2732x2048",
+                )
+                require(
+                    image.format == "WEBP",
+                    f"{night_runtime_path.relative_to(ROOT)} must be WebP",
+                )
+                require(
+                    "A" not in image.getbands() and "transparency" not in image.info,
+                    f"{night_runtime_path.relative_to(ROOT)} must not contain alpha",
                 )
 
     postcard_source_dir = ROOT / "assets/art/postcards/backgrounds"

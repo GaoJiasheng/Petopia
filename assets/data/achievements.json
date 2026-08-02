@@ -54,7 +54,7 @@
     },
     {
       "id": "ach_grad_8",
-      "name": "八次启程",
+      "name": "八种伙伴",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -73,7 +73,7 @@
     },
     {
       "id": "ach_grad_12",
-      "name": "十二段相伴",
+      "name": "十二页图鉴",
       "hidden": false,
       "clueText": null,
       "condition": {
@@ -1030,7 +1030,7 @@
         "type": "unlockPet",
         "target": 1,
         "params": {
-          "petId": "尼可"
+          "petId": "独角兔尼可"
         }
       },
       "reward": {
@@ -1049,7 +1049,7 @@
         "type": "unlockPet",
         "target": 1,
         "params": {
-          "petId": "噗噗"
+          "petId": "小幽灵噗噗"
         }
       },
       "reward": {

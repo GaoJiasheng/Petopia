@@ -49,7 +49,7 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
     vsync: this,
     duration: _animationDuration(widget),
   );
-  ui.Image? _image;
+  ImageInfo? _imageInfo;
   bool _failed = false;
   ImageStream? _stream;
   ImageStreamListener? _listener;
@@ -88,7 +88,7 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
         ..stop()
         ..value = 0
         ..duration = _animationDuration(widget);
-      _image = null;
+      _replaceImageInfo(null);
       _failed = false;
       if (oldWidget.evictOnDispose) {
         unawaited(AssetImage(oldWidget.assetPath).evict());
@@ -104,7 +104,7 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
       _c
         ..stop()
         ..value = 0;
-      if (widget.animate && _image != null) _startPlayback();
+      if (widget.animate && _imageInfo != null) _startPlayback();
     }
   }
 
@@ -131,8 +131,11 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
     final stream = provider.resolve(const ImageConfiguration());
     final listener = ImageStreamListener(
       (info, _) {
-        if (!mounted) return;
-        setState(() => _image = info.image);
+        if (!mounted) {
+          info.dispose();
+          return;
+        }
+        setState(() => _replaceImageInfo(info));
         _startPlayback();
       },
       onError: (_, _) {
@@ -164,9 +167,17 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
     _listener = null;
   }
 
+  void _replaceImageInfo(ImageInfo? next) {
+    final previous = _imageInfo;
+    if (identical(previous, next)) return;
+    _imageInfo = next;
+    previous?.dispose();
+  }
+
   @override
   void dispose() {
     _detachImageStream();
+    _replaceImageInfo(null);
     _c.dispose();
     _completionTimer?.cancel();
     if (widget.evictOnDispose) {
@@ -181,7 +192,7 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
 
   @override
   Widget build(BuildContext context) {
-    final img = _image;
+    final img = _imageInfo?.image;
     if (_failed || img == null) return widget.fallback;
     return SizedBox(
       width: widget.size,
