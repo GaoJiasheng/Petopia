@@ -12,7 +12,7 @@ import 'adaptive_layout.dart';
 import 'petopia_theme.dart';
 
 /// 明信片查看器：单张明信片的手账式展示——
-/// 上半为地点照片（pc_bg）+ 邮戳贴角，下半为手写体正文，页脚署名/站序/日期。
+/// 上半为地点照片（pc_bg）+ 天气贴角，下半为手写体正文，页脚署名/站序/日期。
 class PostcardViewerScreen extends ConsumerStatefulWidget {
   final PostcardView card;
   const PostcardViewerScreen({super.key, required this.card});
@@ -434,6 +434,23 @@ class _PostcardPhoto extends StatelessWidget {
 
   static const _muted = PetopiaColors.mutedText;
 
+  String _weatherLabel(BuildContext context) {
+    final (zhHans, en) = switch (card.weather.name) {
+      'clear' => ('晴朗', 'Clear'),
+      'cloudy' => ('多云', 'Cloudy'),
+      'rain' => ('下雨', 'Rain'),
+      'thunder' => ('雷雨', 'Thunderstorm'),
+      'snow' => ('下雪', 'Snow'),
+      'fog' => ('有雾', 'Fog'),
+      'rainbow' => ('彩虹', 'Rainbow'),
+      _ => ('天气', 'Weather'),
+    };
+    return context.l10n.bilingual(
+      zhHans: '明信片天气：$zhHans',
+      en: 'Postcard weather: $en',
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -516,9 +533,13 @@ class _PostcardPhoto extends StatelessWidget {
               ],
             ),
             child: Image.asset(
-              'assets/art/postcards/stamps/${card.stampId}.png',
+              'assets/art/postcards/weather/'
+              'pc_weather_${card.weather.name}.png',
+              key: ValueKey<String>('postcard_weather_${card.weather.name}'),
               width: 46,
               height: 46,
+              fit: BoxFit.contain,
+              semanticLabel: _weatherLabel(context),
               errorBuilder: (_, _, _) => const SizedBox(width: 46, height: 46),
             ),
           ),

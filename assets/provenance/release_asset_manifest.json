@@ -1,12 +1,12 @@
 {
   "bytesByCategory": {
-    "art": 33787772,
+    "art": 33284556,
     "audio": 23934476,
     "content-data": 401844,
-    "runtime-art": 82276684
+    "runtime-art": 82149848
   },
   "counts": {
-    "art": 222,
+    "art": 233,
     "audio": 59,
     "content-data": 10,
     "runtime-art": 439
@@ -17,6 +17,30 @@
     "thirdPartyStockArt": false
   },
   "entries": [
+    {
+      "asset": "assets/art/pets/action_props/pet_action_prop_bath.png",
+      "bytes": 148708,
+      "category": "art",
+      "sha256": "e2b2249303b321da330e8ff7b176f808718eb87317ede62274b41549b1da88b2"
+    },
+    {
+      "asset": "assets/art/pets/action_props/pet_action_prop_feed.png",
+      "bytes": 203679,
+      "category": "art",
+      "sha256": "ffc627f98fde612576466454135408e6884431a2d6506cd6f354772b43a2a6d2"
+    },
+    {
+      "asset": "assets/art/pets/action_props/pet_action_prop_pat.png",
+      "bytes": 98086,
+      "category": "art",
+      "sha256": "032fd91c0db5bc67fe993c18bca8e9db750271b6b64c9f8bc6d791755f0540c8"
+    },
+    {
+      "asset": "assets/art/pets/action_props/pet_action_prop_play.png",
+      "bytes": 127739,
+      "category": "art",
+      "sha256": "81dfdf3d5fffad8e625351d61a941d9230f657804a32a3ac275a9c549a370354"
+    },
     {
       "asset": "assets/art/pets/dex/pet_boo_dex_color.png",
       "bytes": 171830,
@@ -498,6 +522,48 @@
       "sha256": "26c3fed72b4b71604bbb0da31ba9d7ce5a6f6411e703cb3164c10ea9a7ebae47"
     },
     {
+      "asset": "assets/art/postcards/weather/pc_weather_clear.png",
+      "bytes": 58292,
+      "category": "art",
+      "sha256": "fb4563c7e4407e4839e818c75f7f9c08702b4cc3c10b4fd34f6e44a42ea00bd1"
+    },
+    {
+      "asset": "assets/art/postcards/weather/pc_weather_cloudy.png",
+      "bytes": 43470,
+      "category": "art",
+      "sha256": "928205ea37d6b77e6d6e1851f50be813258be3235454dcc3a25eb630ebece679"
+    },
+    {
+      "asset": "assets/art/postcards/weather/pc_weather_fog.png",
+      "bytes": 45553,
+      "category": "art",
+      "sha256": "565434f3ca4d753ea4dbf0071bba9d6d61cce857ae9fccfb3965522cb8d70152"
+    },
+    {
+      "asset": "assets/art/postcards/weather/pc_weather_rain.png",
+      "bytes": 47820,
+      "category": "art",
+      "sha256": "426b61de08754c3c51c7bcf856b1da27fabbddf014c932df0c932efb2498cb32"
+    },
+    {
+      "asset": "assets/art/postcards/weather/pc_weather_rainbow.png",
+      "bytes": 49482,
+      "category": "art",
+      "sha256": "a2975d1e90647cf17f17d748d28af0fb7381d703cb2145f997d10bf71430084b"
+    },
+    {
+      "asset": "assets/art/postcards/weather/pc_weather_snow.png",
+      "bytes": 45810,
+      "category": "art",
+      "sha256": "d0cbaa42e3a7515ae258d1144cc1d2f3b3e4b77055c6ce8f13f5cecc7ace6cec"
+    },
+    {
+      "asset": "assets/art/postcards/weather/pc_weather_thunder.png",
+      "bytes": 55800,
+      "category": "art",
+      "sha256": "bfd627dd194b0a4da0ff7d91365a123a7c9400a26f548228f6dbeef87c98ecc7"
+    },
+    {
       "asset": "assets/art/ui/ui_frame_offline_card.png",
       "bytes": 437289,
       "category": "art",
@@ -745,9 +811,9 @@
     },
     {
       "asset": "assets/art/world/decor/deco_flowerbox_wild.png",
-      "bytes": 76442,
+      "bytes": 81202,
       "category": "art",
-      "sha256": "afc97d42ba5485577a8115c18e4263a1bc1217e36062c86ef4fd16351da4c539"
+      "sha256": "7bcfd5ac2ff6a16b8315c163d9ef5d08c42b8ba4b6c6981490422c81d2a900fd"
     },
     {
       "asset": "assets/art/world/decor/deco_food_bowl_full.png",
@@ -775,9 +841,9 @@
     },
     {
       "asset": "assets/art/world/decor/deco_mushroom_stool.png",
-      "bytes": 60534,
+      "bytes": 62721,
       "category": "art",
-      "sha256": "29632aaca91a3e729bc24c9f20de6334f4813bbc1e60c50994804a8e0db3a5a6"
+      "sha256": "d2949e8c1eb9288505b9db0680a68f9ddcd6a5b3b7f5da1bbf443442176ebd90"
     },
     {
       "asset": "assets/art/world/decor/deco_night_lamp.png",
@@ -793,9 +859,9 @@
     },
     {
       "asset": "assets/art/world/decor/deco_scarecrow_postman.png",
-      "bytes": 110946,
+      "bytes": 120488,
       "category": "art",
-      "sha256": "c2700f72bea2cd437d1a82cd7e6be87308a8132193c8dfd053335c349fc2c4d7"
+      "sha256": "e1f17a4957c83ed621485a7fa60a1bb71092ec8a6aa61eb922f7171971e29475"
     },
     {
       "asset": "assets/art/world/decor/deco_signpost_journal.png",
@@ -805,9 +871,9 @@
     },
     {
       "asset": "assets/art/world/decor/deco_star_vane.png",
-      "bytes": 61416,
+      "bytes": 125004,
       "category": "art",
-      "sha256": "52a21afefb0468630931131686d030de8ae6f85a6d5304fa8f68732830af65d1"
+      "sha256": "5fc5ef6d01816077492915b40e48a725ef9aca39df672e9142cad9890671bf74"
     },
     {
       "asset": "assets/art/world/decor/deco_tree_seasonal.png",
@@ -829,9 +895,9 @@
     },
     {
       "asset": "assets/art/world/decor/deco_windchime_shiny.png",
-      "bytes": 37972,
+      "bytes": 137332,
       "category": "art",
-      "sha256": "2b2ff33c0ae8beabd9025232fad2218b3450d41667ad5845c30f48b1a6f42d84"
+      "sha256": "142cdd19463e83033a49e5c81d0061949e22a8a3f0f07c5e161227dd440886e1"
     },
     {
       "asset": "assets/art/world/fx/yard_fx_rain_overlay.webp",
@@ -1043,21 +1109,21 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_butterfly_portrait.png",
-      "bytes": 122493,
+      "bytes": 119916,
       "category": "art",
-      "sha256": "314219ec77d5c983dc8d7693ad01c6efbb6bbebc29c6438053cdc4b7fd9f2228"
+      "sha256": "2f22d5a2f2d1e5236db25c1deff397913b2f563079ff78b65ca0b22e06028018"
     },
     {
       "asset": "assets/art/world/visitors/visitor_butterfly_yard.png",
-      "bytes": 273976,
+      "bytes": 212915,
       "category": "art",
-      "sha256": "93fd4bb894039479741dedd06191353064ce0dc7e493175f9dad358e65c2302d"
+      "sha256": "f3724757b57ec55e723c7eae159d3c7fc10c6f47e714f10df906cf78e8446d49"
     },
     {
       "asset": "assets/art/world/visitors/visitor_butterfly_yard_base.png",
-      "bytes": 30865,
+      "bytes": 32520,
       "category": "art",
-      "sha256": "3d447096f7615e42d8710d8d5b341d70a52ba5efaf6480b1b395ef6c5f03bc3a"
+      "sha256": "fba87367ea38f91406bb1db66f6fcc7d57cf1a564fccdcff06ab8b965d5fc8d3"
     },
     {
       "asset": "assets/art/world/visitors/visitor_calico_portrait.png",
@@ -1085,9 +1151,9 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_crow_yard.png",
-      "bytes": 332015,
+      "bytes": 343847,
       "category": "art",
-      "sha256": "914bb106c1140fe4e08e7578f77c5df5be38d28e25edcf42c81d604730db4f62"
+      "sha256": "6d1fe09a8cb4e5a6c95f2b9ceaa9f2279336446566778fe2203dcf0eba8a7258"
     },
     {
       "asset": "assets/art/world/visitors/visitor_crow_yard_base.png",
@@ -1097,57 +1163,57 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_deer_portrait.png",
-      "bytes": 123887,
+      "bytes": 86866,
       "category": "art",
-      "sha256": "90a6d2c8f120978488255c86421fb411995a4d6967fe3c814ec60f9a9635a7c3"
+      "sha256": "dd0e3eda2a6d372710798aed837da756c39c0d51b7c3b23086b78cd64191f960"
     },
     {
       "asset": "assets/art/world/visitors/visitor_deer_yard.png",
-      "bytes": 614100,
+      "bytes": 511926,
       "category": "art",
-      "sha256": "4a6275354e996bed1ce1adf8864e34fab11787c0819d90fdb0cd93016f734eaa"
+      "sha256": "77e94c48edbb71a670c163692627727f1671d8054d8c316c18dbcb8bdfc15f95"
     },
     {
       "asset": "assets/art/world/visitors/visitor_deer_yard_base.png",
-      "bytes": 54735,
+      "bytes": 78774,
       "category": "art",
-      "sha256": "6391a3bcf7e1d9b8917ab2f8aef0c7ab264ad08b65b0e251316e15f82ab9062a"
+      "sha256": "8353db67799d55e2751f0a585daff78225b4093aa43702a92f887e9938339a17"
     },
     {
       "asset": "assets/art/world/visitors/visitor_egret_portrait.png",
-      "bytes": 103828,
+      "bytes": 54507,
       "category": "art",
-      "sha256": "3b4431f31ee176bed86811dc671277de178dcf45781168d026ac3e00b37d9f09"
+      "sha256": "1faa901ed1eecfa7153210d9ec67d5210a18fd1d83c1eb3e63e2f5d11a9e2cfb"
     },
     {
       "asset": "assets/art/world/visitors/visitor_egret_yard.png",
-      "bytes": 307962,
+      "bytes": 326679,
       "category": "art",
-      "sha256": "c730420af9df2636d93ead0fa2e69e06fb9a0d92f0359c6b6e17ed005602bde3"
+      "sha256": "25336141f1ddb976f6f3e1748b8fbb32d9d47f2b98335f41a33dc65a088adcf5"
     },
     {
       "asset": "assets/art/world/visitors/visitor_egret_yard_base.png",
-      "bytes": 36219,
+      "bytes": 49827,
       "category": "art",
-      "sha256": "4e62f22ebe215c82cb6b557fbfb7147799538fd1a5ccb521ee87fb0a286e63ed"
+      "sha256": "b5102b924e83cf61468e0a721b09d83789115716f486ade018c06f6c41a64574"
     },
     {
       "asset": "assets/art/world/visitors/visitor_emberlight_portrait.png",
-      "bytes": 98884,
+      "bytes": 62489,
       "category": "art",
-      "sha256": "d957cbb686b0cf9645fdc6544dc146c1d731da1f62532ef63a2f28c66a41b9d7"
+      "sha256": "78a32931c4a2d160438addb0adb487e495ffc855ed44e5b29267f7ebf82ec222"
     },
     {
       "asset": "assets/art/world/visitors/visitor_emberlight_yard.png",
-      "bytes": 309271,
+      "bytes": 110014,
       "category": "art",
-      "sha256": "dca58bbdcb0772c7d67ba0a3237712728a2204605c9fe3fc4ba2d3a795770274"
+      "sha256": "f31aabfd51471f46eadeffbd78f0bb776f92c437f0025151eff1785646a7f249"
     },
     {
       "asset": "assets/art/world/visitors/visitor_emberlight_yard_base.png",
-      "bytes": 31626,
+      "bytes": 17596,
       "category": "art",
-      "sha256": "0a2b368677b57f82cd136caa19667b8ae01436de80de1f6a0deea768ba7b4086"
+      "sha256": "fa98b402d71836f0b38c061eb0f297ff36b0f7859e4ff4e6b9fac2ce2c6dc424"
     },
     {
       "asset": "assets/art/world/visitors/visitor_firefly_portrait.png",
@@ -1157,33 +1223,33 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_firefly_yard.png",
-      "bytes": 365033,
+      "bytes": 138307,
       "category": "art",
-      "sha256": "4dabc35e42c7fda58734f9160b03071b2616892ebbf6b9488e80a6b2902c8fac"
+      "sha256": "8ae8d8ff4342c61745aacba2b96cfa6ac582496dfc640fde6d63d7350fa8864f"
     },
     {
       "asset": "assets/art/world/visitors/visitor_firefly_yard_base.png",
-      "bytes": 41457,
+      "bytes": 39617,
       "category": "art",
-      "sha256": "62f740a38d1cac2e195be63f6505274526f51ed6b10d278cdf01850793ae7819"
+      "sha256": "99f4a1a1fdcca18462aff3e1ebf3f4393275d9987c8a1cf7dcdd5cef7e595b8f"
     },
     {
       "asset": "assets/art/world/visitors/visitor_fox_portrait.png",
-      "bytes": 126035,
+      "bytes": 81410,
       "category": "art",
-      "sha256": "1ea10f0a74d06ab9e84bf3ed670bd2678267b2fa4b1b94034286bc502bf85e88"
+      "sha256": "ed601db3fd891cb7474ad566fb50be9f21483f16c09353e9e4745048afe4f6df"
     },
     {
       "asset": "assets/art/world/visitors/visitor_fox_yard.png",
-      "bytes": 494082,
+      "bytes": 483615,
       "category": "art",
-      "sha256": "a69f4279296e3164df5ec63c251122d190d3910bda6ff56ad701b6410c5e44ce"
+      "sha256": "a439c175547384b3251a8a7d34040e5b0e5ab3cc2ac0fce08c461176571dc0f5"
     },
     {
       "asset": "assets/art/world/visitors/visitor_fox_yard_base.png",
-      "bytes": 57839,
+      "bytes": 73649,
       "category": "art",
-      "sha256": "8e2b23b34026527a39cbe38955017ef9b79917f879f8abb95530f3738c02698c"
+      "sha256": "edba7b8ed3b4c5b9f33f054ac58a61ff534dce6687c0584df9a709d39307fd88"
     },
     {
       "asset": "assets/art/world/visitors/visitor_frog_portrait.png",
@@ -1193,15 +1259,15 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_frog_yard.png",
-      "bytes": 117262,
+      "bytes": 95262,
       "category": "art",
-      "sha256": "b2726ef965dc092fb86f7ae1768bd5bc5612159e2d25e08b0cc6065b419b5af4"
+      "sha256": "1a5ab6c1d3d8dd702a3d99cd6738697df4faa5400104b4ecd336d958fd6d456c"
     },
     {
       "asset": "assets/art/world/visitors/visitor_frog_yard_base.png",
-      "bytes": 28576,
+      "bytes": 27883,
       "category": "art",
-      "sha256": "9e3bcdcd0414d4c5fe6eb59ad7abc9885ec75a97284bec7a60d74f7c6106ea13"
+      "sha256": "9eda664d8a906914f50875811bd666aad8a377e9a33be2a7762479a7ab9c7753"
     },
     {
       "asset": "assets/art/world/visitors/visitor_ghostpuff_portrait.png",
@@ -1211,15 +1277,15 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_ghostpuff_yard.png",
-      "bytes": 311033,
+      "bytes": 121952,
       "category": "art",
-      "sha256": "18c282d3887f37d70d051db771675a6be0b93f32c9fd3d5809fcfff7234ac96c"
+      "sha256": "6544366cb17e44f09427d7866542d9cd4977dd76616f362e296092c21b6cd39a"
     },
     {
       "asset": "assets/art/world/visitors/visitor_ghostpuff_yard_base.png",
-      "bytes": 37294,
+      "bytes": 35687,
       "category": "art",
-      "sha256": "ae58481d59e8eeabfeec93c7db1edf98d3356ae7a7655f85669048b9db50587c"
+      "sha256": "de6b27ef327b32b2ad8b1a635052a06a66c4f20d57526b2b6259b838fb4233f7"
     },
     {
       "asset": "assets/art/world/visitors/visitor_hedgehog_portrait.png",
@@ -1247,9 +1313,9 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_owl_yard.png",
-      "bytes": 430772,
+      "bytes": 394354,
       "category": "art",
-      "sha256": "bf36e28e1b458ce8c5ce7a21d23e8ce131fb2fa506aeca7147294ba197a4543f"
+      "sha256": "bebf4a70b4e236c0090c654557abab79670afaa2b9d60daf449500b58ddf5c70"
     },
     {
       "asset": "assets/art/world/visitors/visitor_owl_yard_base.png",
@@ -1265,9 +1331,9 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_pigeon_yard.png",
-      "bytes": 243281,
+      "bytes": 133115,
       "category": "art",
-      "sha256": "fe21a70e0603071b85038c5feaf97d784cc6533e2a720411f91b99506898bc5a"
+      "sha256": "1ae29bdd2da47bd806761b3f2da69527b03d94981628b4baa400decdf0e9d54b"
     },
     {
       "asset": "assets/art/world/visitors/visitor_pigeon_yard_base.png",
@@ -1277,21 +1343,21 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_rainbowshade_portrait.png",
-      "bytes": 111055,
+      "bytes": 73700,
       "category": "art",
-      "sha256": "647e01425e546bb3af625ffe479906ae58d6a170fc218abca1abd2f2d5e0377b"
+      "sha256": "0605cfad943bfbc2393e9d248f0d84b5253de611a14ed90a72cd41f0c447156e"
     },
     {
       "asset": "assets/art/world/visitors/visitor_rainbowshade_yard.png",
-      "bytes": 358411,
+      "bytes": 272641,
       "category": "art",
-      "sha256": "e20b3b6750c8b984137eacfd313dd931f32b2f39877cc3500469a3eeb269a7ab"
+      "sha256": "3260a98af6a4e7579f67fc9b112b5f14646c92a22f3cb1c3d9e1dc68fa53f65f"
     },
     {
       "asset": "assets/art/world/visitors/visitor_rainbowshade_yard_base.png",
-      "bytes": 39057,
+      "bytes": 41933,
       "category": "art",
-      "sha256": "f90510c5df65f790bee315d89aeae8e2a86667f082871526d310c83c17f2a00e"
+      "sha256": "2aa9c5ac4dc71bc256b5976fb9de6ab9fc646418e0adcccbe9d41060ce00b122"
     },
     {
       "asset": "assets/art/world/visitors/visitor_snail_portrait.png",
@@ -1319,15 +1385,15 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_snowhare_yard.png",
-      "bytes": 412237,
+      "bytes": 152500,
       "category": "art",
-      "sha256": "c713fafe0e722f692b3c62cf845a11b036c34aa6cc2051279eed45387baf2276"
+      "sha256": "efb9018d3a3d6e24723ecfb746e61ad876ecda9b3ea64a88f367f878ce128317"
     },
     {
       "asset": "assets/art/world/visitors/visitor_snowhare_yard_base.png",
-      "bytes": 47807,
+      "bytes": 45999,
       "category": "art",
-      "sha256": "f17da5f9c3d128b38123f53ddb33289ff8b5fdee2b3e74483b31bce3eefeb905"
+      "sha256": "697c98678014f0365e632af9f36e2ee3a5c5506555bf378c51b988ee5bb563d4"
     },
     {
       "asset": "assets/art/world/visitors/visitor_sparrow_portrait.png",
@@ -1337,9 +1403,9 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_sparrow_yard.png",
-      "bytes": 251497,
+      "bytes": 138850,
       "category": "art",
-      "sha256": "5d7f65ce186d7e61a6c08f052e896e71e4e81758affb3457bbbafcc9493e995d"
+      "sha256": "94bc6e503aedab162acff127bb16e2b5def0b70628378681d7e75452f5b644ab"
     },
     {
       "asset": "assets/art/world/visitors/visitor_sparrow_yard_base.png",
@@ -1355,15 +1421,15 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_squirrel_yard.png",
-      "bytes": 130611,
+      "bytes": 104557,
       "category": "art",
-      "sha256": "3f35e4c2d21ac827aae3b458a7a711ed6e21c78de5ab778278363568ea4d6296"
+      "sha256": "de14ac56a946fa3f56f5b2f626919df277455428759f3f22dc259ef9481b55ab"
     },
     {
       "asset": "assets/art/world/visitors/visitor_squirrel_yard_base.png",
-      "bytes": 31004,
+      "bytes": 30588,
       "category": "art",
-      "sha256": "65251d970bae36341a1c1b5e54061e5c9d27534df6f80139ff95d682cb53a52f"
+      "sha256": "2ac738081f7683a417fe827c4e1e92853f63affadaf2034a0e7db7d6a0761577"
     },
     {
       "asset": "assets/art/world/visitors/visitor_starbug_portrait.png",
@@ -1385,21 +1451,21 @@
     },
     {
       "asset": "assets/art/world/visitors/visitor_tanuki_portrait.png",
-      "bytes": 135626,
+      "bytes": 136743,
       "category": "art",
-      "sha256": "d1679ea4d10083019cbfd3e7453829d98e68a89534b9a742d8042c293ef127a0"
+      "sha256": "7eebc5988a238492059e6ab84cbe5f45a6f59ebfa05c0a9a34b4fe3c514b6a1e"
     },
     {
       "asset": "assets/art/world/visitors/visitor_tanuki_yard.png",
-      "bytes": 493629,
+      "bytes": 451834,
       "category": "art",
-      "sha256": "fb5217e34ae76043c20a87ad293e9b73576df318129c7213389117ccf66ad66b"
+      "sha256": "0d0ac81a05199e5c5e749d103ddab2493a00311d08ec8cbc9ac0a2fbc1639717"
     },
     {
       "asset": "assets/art/world/visitors/visitor_tanuki_yard_base.png",
-      "bytes": 57563,
+      "bytes": 71858,
       "category": "art",
-      "sha256": "eb13129af306c83157150cd846a843f88c7657602a71235f4a362431a93a04ed"
+      "sha256": "06a64d0a161fa0f92f6e452685e078b5cffe4a2f54ff8cd0e4d4bb9e25105523"
     },
     {
       "asset": "assets/audio/ambient/m4a/amb_gentle_rain.m4a",
@@ -4441,11 +4507,11 @@
     },
     {
       "asset": "assets/runtime/postcards/poses/pc_pose_boo_gaze.webp",
-      "bytes": 53322,
+      "bytes": 58878,
       "category": "runtime-art",
-      "sha256": "641d683359745281be0512408c7f7be3fafafaf6317b318b0b2958dcf22815eb",
+      "sha256": "43ac5826b68635d569bc56360a1bd6d2b08d33da1053e50d9b87628697fd3796",
       "source": "assets/art/postcards/poses/pc_pose_boo_gaze.png",
-      "sourceSha256": "5c6b5e43e6ddbc67bd145861c90a0c8e8247fadc9039f8aba2f5b3cc99f4d6ab"
+      "sourceSha256": "ed487b532e3607197141ee7feb0680aaa6fb7e6bc7b44faf768dafb93f78de2e"
     },
     {
       "asset": "assets/runtime/postcards/poses/pc_pose_cat_gaze.webp",
@@ -4457,83 +4523,83 @@
     },
     {
       "asset": "assets/runtime/postcards/poses/pc_pose_chameleon_gaze.webp",
-      "bytes": 93960,
+      "bytes": 97078,
       "category": "runtime-art",
-      "sha256": "f7127fcaa1c13150c0d79e95f9f17c799d89ea75ff7d5c4c5d4083dc700f2b11",
+      "sha256": "9f4e0a6e90e99ca41efe18af2462b39b33301d4b3faf9a13175e8503ae0bf3d5",
       "source": "assets/art/postcards/poses/pc_pose_chameleon_gaze.png",
-      "sourceSha256": "8c4a90a48257b9de69da2d43994773feb44b1b22710b14c185a164967092afe7"
+      "sourceSha256": "3441c638f67cad2f02e78c05b2c6ff45428947672fc47639e8f0b207422cbe2e"
     },
     {
       "asset": "assets/runtime/postcards/poses/pc_pose_ember_gaze.webp",
-      "bytes": 108146,
+      "bytes": 92046,
       "category": "runtime-art",
-      "sha256": "d0d32d290f10d7077776de85c5394b993229f38195fc4bbd6a1986594b825714",
+      "sha256": "29098ecd397f00fbc3de650936e948f5a4b19ffc02733232eb51cba9937e85fd",
       "source": "assets/art/postcards/poses/pc_pose_ember_gaze.png",
-      "sourceSha256": "657e8eebbce3f545dddc18f684ec76428273578772df17dfad777a1976f59bf1"
+      "sourceSha256": "e777d4822827db8b6fbf28bf9e3e1168a10989d79589fd29ad030e23f1ce7c49"
     },
     {
       "asset": "assets/runtime/postcards/poses/pc_pose_hamster_gaze.webp",
-      "bytes": 99704,
+      "bytes": 84982,
       "category": "runtime-art",
-      "sha256": "0190dc57154674708b0e9a2b3efdaeb3c207df7a8d4ad4507a4549ed90f09fe2",
+      "sha256": "aa3f8e23881d2cba99d6bfd1dbdd00fd20bd855df61446b60372519f3511e6c2",
       "source": "assets/art/postcards/poses/pc_pose_hamster_gaze.png",
-      "sourceSha256": "d8e6bb33b30991f085325d4d9f7b62a4180b5d574fef98e4862617a7435d5a1e"
+      "sourceSha256": "5135fe4ff020649f4f29d0ad68f044c0aa7a382a0569fefd544c6942cfae0777"
     },
     {
       "asset": "assets/runtime/postcards/poses/pc_pose_parrot_gaze.webp",
-      "bytes": 84758,
+      "bytes": 79682,
       "category": "runtime-art",
-      "sha256": "ac43d948ac9d03c3667fa915e5a5d9f65265924b5e76328d1a0952d2abf04997",
+      "sha256": "d93ccd9c935b7a62b4d125da858c60e812d4f7eae609724ed1f4895c444c1a9e",
       "source": "assets/art/postcards/poses/pc_pose_parrot_gaze.png",
-      "sourceSha256": "ed0dccae1771b22d63b058d43e6331acf49d1c902b598b9dccb34649700928c2"
+      "sourceSha256": "0ceaa42df123c67bb88fa9d9f5c1946cfb95d35b82324eacb9bc08ec12ea5c13"
     },
     {
       "asset": "assets/runtime/postcards/poses/pc_pose_rabbit_gaze.webp",
-      "bytes": 100556,
+      "bytes": 67390,
       "category": "runtime-art",
-      "sha256": "b290f77de9708bf8f176e95c58a6541911209c3c8e8c4fcb063a7e576d813e88",
+      "sha256": "56dbd2dff8704a295666d79fbe3de861b40da61f01f070985bf0c5c3a20c37a5",
       "source": "assets/art/postcards/poses/pc_pose_rabbit_gaze.png",
-      "sourceSha256": "5f86e578e4243748e00da81c40b1838d160d508f2cfa7bf8a1d2a8ce10f967ed"
+      "sourceSha256": "3df5d841b7ddfaa9cd9dd7ae8c2cb3ede8432a1ddeea1df61e5c92b680604724"
     },
     {
       "asset": "assets/runtime/postcards/poses/pc_pose_shiba_gaze.webp",
-      "bytes": 100990,
+      "bytes": 75688,
       "category": "runtime-art",
-      "sha256": "bfb8496a823434764248a5a5f177c800154eb70075bcfbf836fd03e0cbe236e4",
+      "sha256": "2501712deb8a4953c7f62509910877fc7ce27210cd96d73230359b65fb53e942",
       "source": "assets/art/postcards/poses/pc_pose_shiba_gaze.png",
-      "sourceSha256": "3187fe937f710e4fe0e54870f3c114aa87a3db98c13461b804e7e1e5cabcefa2"
+      "sourceSha256": "3afa7bf550caeee3e00d0e1330737de8ed58efd9d20876ef77e390dca7c769a8"
     },
     {
       "asset": "assets/runtime/postcards/poses/pc_pose_snake_gaze.webp",
-      "bytes": 89018,
+      "bytes": 88768,
       "category": "runtime-art",
-      "sha256": "86df20245bbb74b219f02e3141883173abcea704a7c7eeb70f45b73ebc60a723",
+      "sha256": "711462c1b77c63c91b814d992edc0a761090f2ef51b9a8ece7644c341b0a3d22",
       "source": "assets/art/postcards/poses/pc_pose_snake_gaze.png",
-      "sourceSha256": "22974d3414942479c684fd4d8767611077e02db562ac8349b7d6986526a93475"
+      "sourceSha256": "918b60debe4037630cd8333789507f6951aa69176fa68bcd96028daa77bf3be7"
     },
     {
       "asset": "assets/runtime/postcards/poses/pc_pose_starbug_gaze.webp",
-      "bytes": 81968,
+      "bytes": 80640,
       "category": "runtime-art",
-      "sha256": "5014097094c41985ebb07c04a27292d77f555573ac849a584845615a5a45a748",
+      "sha256": "58b49924b33ef4e431ed7dcc693ba6ae543eb1ce9644ac9d4db78b6b10721d79",
       "source": "assets/art/postcards/poses/pc_pose_starbug_gaze.png",
-      "sourceSha256": "5551e79145b702706a6af40c8c313744c4e05ae4e2cf278be7752dbf031d9fe4"
+      "sourceSha256": "efe685c268733b44e324471b7b8ef00d41a6eae613b1822d5995e34bd3cee77b"
     },
     {
       "asset": "assets/runtime/postcards/poses/pc_pose_turtle_gaze.webp",
-      "bytes": 80938,
+      "bytes": 88320,
       "category": "runtime-art",
-      "sha256": "29f93bef6a10e5ed98b283978d3e9b698354e8de0c883a098461f39e23a669c3",
+      "sha256": "da53f0304d58e43aa2452e6b2b168618683adbf537d4bcdebbf4764160d76d5f",
       "source": "assets/art/postcards/poses/pc_pose_turtle_gaze.png",
-      "sourceSha256": "e28d47248d053e4bc1f52006bf4f84f90d5e3a97ee76a3610a058d31c9249f0f"
+      "sourceSha256": "ed0613470a3f7d0819fab94790aa92dc19aacc8a16d76f4504a2525131954afd"
     },
     {
       "asset": "assets/runtime/postcards/poses/pc_pose_uni_gaze.webp",
-      "bytes": 105622,
+      "bytes": 58674,
       "category": "runtime-art",
-      "sha256": "943913a6d2d24ebd092695d54ee15c07409603cf3d53ac134d489ad06c244cdd",
+      "sha256": "fd90a999c9e8bd9690b656a3df8aceb55a5a4b3200f9ed0127076e06568688c8",
       "source": "assets/art/postcards/poses/pc_pose_uni_gaze.png",
-      "sourceSha256": "494764b28f2df6e9e27b6cca1913fb539c8ed7f05e61a4bea346316fe33256d5"
+      "sourceSha256": "2a6b5b1af55e464442cbc7eafcb6cc6eaca7fb897271e524231e1e52eb1a31b3"
     },
     {
       "asset": "assets/runtime/postcards/stickers/pc_sticker_cloud_gap.webp",

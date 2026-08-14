@@ -23,9 +23,10 @@ def main() -> int:
     parser.add_argument("source", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("--columns", type=int, default=4)
+    parser.add_argument("--pattern", default="*.png")
     args = parser.parse_args()
 
-    paths = sorted(args.source.glob("*.png"), key=lambda path: display_name(path))
+    paths = sorted(args.source.glob(args.pattern), key=lambda path: display_name(path))
     if not paths:
         parser.error(f"no PNG captures found in {args.source}")
 

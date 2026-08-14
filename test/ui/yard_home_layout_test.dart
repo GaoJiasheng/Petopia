@@ -459,9 +459,12 @@ void main() {
         safeArea: const EdgeInsets.only(top: 24, bottom: 20),
         view: _view(theme: 'sakura', visitor: _visitor()),
       );
-      final petRect = tester.getRect(
+      final petCanvasRect = tester.getRect(
         find.byKey(const ValueKey<String>('yard_pet_sprite')),
       );
+      // Pet art keeps transparent safety margins to protect ears and tails.
+      // Compare the painted silhouette estimate, not the full PNG canvas.
+      final petRect = petCanvasRect.deflate(petCanvasRect.width * 0.10);
       final visitorRect = tester.getRect(
         find.byKey(const ValueKey<String>('active_visitor')),
       );
@@ -596,7 +599,8 @@ void main() {
     tester,
   ) async {
     const size = Size(1366, 1024);
-    const minimumDecorCount = <int, int>{1: 3, 2: 4, 3: 5, 4: 6, 5: 6, 6: 6};
+    // Each stage includes its composed scenery plus the pet-side food bowl.
+    const minimumDecorCount = <int, int>{1: 3, 2: 4, 3: 5, 4: 6, 5: 6, 6: 7};
     for (var stage = 1; stage <= 6; stage++) {
       await _pumpYard(
         tester,
@@ -617,13 +621,30 @@ void main() {
         reason: 'luxury stage $stage should have a complete wide composition',
       );
       for (final element in decor.evaluate()) {
+        final decorKey = (element.widget.key! as ValueKey<String>).value;
         final rect = tester.getRect(
           find.byElementPredicate((item) => item == element),
         );
-        expect(rect.left, greaterThanOrEqualTo(-0.1));
-        expect(rect.top, greaterThanOrEqualTo(-0.1));
-        expect(rect.right, lessThanOrEqualTo(size.width + 0.1));
-        expect(rect.bottom, lessThanOrEqualTo(size.height + 0.1));
+        expect(
+          rect.left,
+          greaterThanOrEqualTo(-0.1),
+          reason: '$decorKey crosses the left edge: $rect',
+        );
+        expect(
+          rect.top,
+          greaterThanOrEqualTo(-0.1),
+          reason: '$decorKey crosses the top edge: $rect',
+        );
+        expect(
+          rect.right,
+          lessThanOrEqualTo(size.width + 0.1),
+          reason: '$decorKey crosses the right edge: $rect',
+        );
+        expect(
+          rect.bottom,
+          lessThanOrEqualTo(size.height + 0.1),
+          reason: '$decorKey crosses the bottom edge: $rect',
+        );
       }
       expect(tester.takeException(), isNull);
       await _disposeYard(tester);

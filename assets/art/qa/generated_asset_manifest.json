@@ -11490,11 +11490,11 @@
     {
       "path": "assets/art/world/decor/deco_windchime_shiny.png",
       "width": 256,
-      "height": 256,
+      "height": 512,
       "mode": "RGBA",
-      "bytes": 37972,
-      "sha256": "2b2ff33c0ae8beabd9025232fad2218b3450d41667ad5845c30f48b1a6f42d84",
-      "alphaNonZero": 8908
+      "bytes": 137332,
+      "sha256": "142cdd19463e83033a49e5c81d0061949e22a8a3f0f07c5e161227dd440886e1",
+      "alphaNonZero": 45693
     },
     {
       "path": "assets/art/world/decor/deco_windchime_shiny_swing_left.png",

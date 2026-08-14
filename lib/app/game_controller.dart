@@ -320,6 +320,7 @@ class GameView {
   final CareAction? preferredCareAction;
   final bool careContented;
   final List<YardMemoryView> recentMemories;
+  final bool waterBowlOwned;
   final RenderQuality renderQuality;
   final AppLanguage appLanguage;
 
@@ -347,6 +348,7 @@ class GameView {
     this.preferredCareAction,
     this.careContented = false,
     this.recentMemories = const <YardMemoryView>[],
+    this.waterBowlOwned = false,
     this.renderQuality = RenderQuality.auto,
     this.appLanguage = AppLanguage.system,
   });
@@ -1631,7 +1633,7 @@ class GameController extends AsyncNotifier<GameView> {
       },
       canGraduate: p != null && p.exp >= GameConfig.graduationExp,
       activeThemeId: _svc.session.yard.activeThemeId,
-      decorSlots: _svc.session.yard.slots
+      decorSlots: _svc.session.yard.visibleDecorSlots
           .map((slot) => YardSlotView(pos: slot.pos, itemId: slot.itemId))
           .toList(growable: false),
       activeVisitor: activeVisitor,
@@ -1659,6 +1661,9 @@ class GameController extends AsyncNotifier<GameView> {
           p != null &&
           CareExperiencePolicy.isContented(_svc.session.careLedger.counts),
       recentMemories: _recentYardMemories(),
+      waterBowlOwned:
+          _svc.session.yard.ownedDecorIds.contains('water_bowl') ||
+          _svc.session.yard.slots.any((slot) => slot.itemId == 'water_bowl'),
       renderQuality: _svc.session.settings.renderQuality,
       appLanguage: _svc.session.settings.appLanguage,
     );
@@ -2051,7 +2056,11 @@ class GameController extends AsyncNotifier<GameView> {
         .where((item) => item.effect.type == EffectType.decor)
         .map((item) {
           final decorId = item.effect.params['decorId'] as String?;
-          if (decorId == null || !owned.contains(decorId)) return null;
+          if (decorId == null ||
+              YardState.fixedUtilityDecorIds.contains(decorId) ||
+              !owned.contains(decorId)) {
+            return null;
+          }
           return DecorItemView(decorId: decorId, name: item.name);
         })
         .whereType<DecorItemView>()
@@ -2063,6 +2072,13 @@ class GameController extends AsyncNotifier<GameView> {
     final yard = _svc.session.yard;
     if (pos < 0 || pos >= yard.slotCapacity) return;
     if (decorId != null && !yard.ownedDecorIds.contains(decorId)) return;
+    if (decorId != null && YardState.fixedUtilityDecorIds.contains(decorId)) {
+      return;
+    }
+
+    // Commit the read-only legacy projection before the first user edit so
+    // old point 11-14 items cannot reappear in another free point afterward.
+    yard.normalizeDecorSlots();
 
     yard.slots.removeWhere(
       (slot) => slot.pos == pos || (decorId != null && slot.itemId == decorId),
@@ -2189,6 +2205,7 @@ class GameController extends AsyncNotifier<GameView> {
         ),
         photoBg: loc?.photoStyle ?? '',
         stampId: pc.stampId,
+        weather: pc.weather,
         stickerIds: _postcardStickerIds(pc),
         sentAt: pc.sentAt,
         seq: pc.seq,
@@ -2264,6 +2281,7 @@ class PostcardView {
   final String bodyTextEn;
   final String photoBg; // 地点背景美术引用（pc_bg_*）
   final String stampId;
+  final Weather weather;
   final List<String> stickerIds;
   final DateTime sentAt;
   final int seq;
@@ -2281,6 +2299,7 @@ class PostcardView {
     this.bodyTextEn = '',
     required this.photoBg,
     required this.stampId,
+    this.weather = Weather.clear,
     required this.stickerIds,
     required this.sentAt,
     required this.seq,

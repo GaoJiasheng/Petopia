@@ -70,15 +70,40 @@
 
 ## 发布控制
 
-- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `25`）
+- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `30`）
 - [x] 内测日推进工具已改为双重编译门禁：Dart 仅在
       `PETOPIA_TESTFLIGHT_TOOLS=true` 时保留入口，Swift 仅在
       `PETOPIA_TESTFLIGHT_TOOLS` 条件下注册 StoreKit 环境通道。普通 Release
       不生成按钮、不调用通道，也不能从控制器推进时间。
-- [x] 使用 `tools/build_ios_variants.sh testflight-tools 25` 构建仅供内部
+- [x] 使用 `tools/build_ios_variants.sh testflight-tools 30` 构建仅供内部
       TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 24`
-      构建无内测入口的送审包。build 24 已选为 App Store 审核版本；build 25
+      构建无内测入口的送审包。build 24 已选为 App Store 审核版本；build 30
       仅对内部 TestFlight 组开放。
+- [x] build 30 已上传并通过 Apple 验证；Delivery UUID
+      `9e8112ef-7cd2-4e4a-93dc-a004533384ef`，状态 `VALID` / `INTERNAL_ONLY`，
+      `usesNonExemptEncryption=false`，最低系统为 iOS 16.0。中英文测试说明已同步，
+      内部测试组启用全部构建访问。该构建修复院子装饰悬空与篱笆贴附问题，使用
+      可见底边落地、远近透视和动物动态让位，并通过 12 主题、三种设备、昼夜、
+      四种院子状态共 288 张截图回归；同时保留仅限内测的 `+1` 日推进工具。
+- [x] build 29 已上传并通过 Apple 验证；Delivery UUID
+      `199e9018-10cc-4a05-a2f2-ad525eed7b4e`，状态 `VALID` / `INTERNAL_ONLY`，
+      `usesNonExemptEncryption=false`，最低系统为 iOS 16.0。中英文测试说明已同步，
+      内部测试组启用全部构建访问。该构建包含围绕主宠物的语义点位院子布局、
+      最多 10 件装饰限制、访客与回访伙伴独立空间，以及仅限内测的 `+1` 日推进工具。
+- [x] build 28 已上传并通过 Apple 验证；Delivery UUID
+      `eee7800c-ecfa-473d-bf8e-a41bb8fc0294`，状态 `VALID` / `INTERNAL_ONLY`，
+      `usesNonExemptEncryption=false`。中英文测试说明已同步，内部测试组启用
+      全部构建访问。该构建包含完整四互动动画矩阵、明信片天气图标、装饰重绘与
+      全素材裁切回归，并保留仅限内测的 `+1` 日推进工具。
+- [x] build 27 已上传并通过 Apple 验证；Apple Build ID / Delivery UUID
+      `f5ff91c5-34a7-440d-bfb2-9255ac3d074e`，状态 `VALID` /
+      `APP_STORE_ELIGIBLE` / `IN_BETA_TESTING`。中英文测试说明已同步，内部测试组
+      启用全部构建访问，非豁免加密为“否”。该构建包含完整素材裁切回归、全设备
+      双语截图复核，并保留仅限内测的 `+1` 日推进工具。
+- [x] build 26 已上传并通过 Apple 验证；Apple Build ID / Delivery UUID
+      `c2b605b2-86cb-412b-af64-1a46f67db043`，状态 `VALID` /
+      `APP_STORE_ELIGIBLE`。中英文测试说明已同步，内部测试组启用全部构建访问，
+      非豁免加密为“否”。该构建包含访客、明信片姿态和院子装饰裁切修复。
 - [x] build 25 已上传并通过 Apple 验证；Apple Build ID
       `3aba2ccf-a91a-49b3-80ff-9da1b91d3362`，已加入内部组 `test001`，
       中英文“测试内容”均已填写，非豁免加密为“否”
@@ -108,7 +133,7 @@
 - [ ] 从 TestFlight build 18、19 或 20 覆盖安装 build 24，验证 schema 2 → 3 升级
 - [ ] 完成至少一次 iPhone 与 iPad 外部/内部测试
 - [ ] 检查 TestFlight 崩溃、卡死、资源缺失和通知权限行为
-- [ ] 在真机 TestFlight build 25 确认首页右上角出现 `+1` 日推进按钮，并验证
+- [ ] 在真机 TestFlight build 30 确认首页右上角出现 `+1` 日推进按钮，并验证
       连续跨日时来客弹窗与院子模型一致；在正式 build 24 确认按钮不存在且
       控制器执行能力被编译门禁关闭
 - [x] 已选择手动发布

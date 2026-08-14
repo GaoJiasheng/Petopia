@@ -21,6 +21,7 @@ case "$variant" in
       --release \
       --build-number="$build_number" \
       --dart-define=PETOPIA_TESTFLIGHT_TOOLS=true \
+      --export-options-plist=ios/ExportOptions-TestFlight-Internal.plist \
       "$@"
     ;;
   app-store)

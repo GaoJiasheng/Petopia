@@ -34,6 +34,29 @@ This folder contains Petopia-specific visual assets created for this project.
   approved master is retained under `docs/art-sources/app-icon/`; platform
   renditions are deterministic project derivatives with no third-party stock,
   character, logo, or font content.
+- The 2026-08-10 postcard-pose and visitor-repair batch uses only Petopia-owned
+  species prototypes, visitor specifications, and Golden Set references. Its
+  chroma-key generation records are retained under
+  `assets/art/qa/chroma_sources/*_20260810/`; production cutouts, portraits,
+  and animation strips are human-reviewed project derivatives with no
+  third-party stock, character, brand, logo, or font content.
+- The 2026-08-10 decor-repair batch uses only Petopia-owned legacy decoration
+  art as identity and palette reference. Chroma-key generation records are
+  retained under `assets/art/qa/chroma_sources/decor_redo_20260810/`; the
+  production planter and mushroom stool are human-reviewed project derivatives
+  with no third-party stock, character, brand, logo, or font content.
+- The 2026-08-12 interaction-UI batch covers four care props, seven postcard
+  weather badges, and the repaired scarecrow and star wind vane. It uses only
+  Petopia-owned Golden Set and existing project art as visual references.
+  Chroma-key source outputs and prompt boundaries are retained under
+  `assets/art/qa/chroma_sources/interaction_ui_20260812/`; no third-party
+  reference image, stock asset, texture pack, character, brand, logo, or font
+  is included.
+- The 2026-08-13 freestanding wind-chime redraw uses only Petopia-owned yard
+  decoration art, the Golden Set palette, and the existing item description.
+  Its chroma-key source and processing boundary are retained under
+  `assets/art/qa/chroma_sources/decor_redo_20260813/`; no third-party reference
+  image, stock asset, texture pack, character, brand, logo, or font is included.
 
 ## Commercial Release Record
 

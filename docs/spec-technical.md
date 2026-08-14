@@ -283,7 +283,7 @@ class ItemEffect { EffectType type; Map<String,dynamic> params; }
 | gradCount | int | 0 | 累计毕业数（驱动 luxuryStage + GradCountUnlock） |
 | activeThemeId | String | `theme_default` | |
 | ownedThemeIds | List\<String\> | [`theme_default`] | |
-| slots | List\<YardSlot\> | 见下 | 格位数随 luxuryStage：4/6/8/10/12/14 |
+| slots | List\<YardSlot\> | 见下 | 可替换陈设点随 luxuryStage：4/5/6/8，之后保持 8；饭盆/水碗使用独立生活锚点。装饰可无限购买，槽位决定同时展示几件，溢出部分留在库存 |
 | foodTray | FoodTray | 空 | |
 | ownedPerks | List\<String\> | [] | 永久强化（如 `toy_yarn_perm`）|
 | ownedDecorIds | List\<String\> | [] | 已购装饰（驱动访客加成） |

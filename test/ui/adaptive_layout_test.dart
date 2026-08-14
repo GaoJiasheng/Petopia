@@ -36,8 +36,12 @@ void main() {
       expect(PetopiaAdaptive.postcardMaxWidth(1024), closeTo(737.28, 0.01));
       expect(PetopiaAdaptive.postcardMaxWidth(1600), 860);
 
-      expect(PetopiaAdaptive.petStageWidth(const Size(390, 844)), 220);
-      expect(PetopiaAdaptive.petStageWidth(const Size(1024, 1366)), 340);
+      expect(PetopiaAdaptive.petStageWidth(const Size(390, 844)), closeTo(181.35, 0.01));
+      expect(PetopiaAdaptive.petStageWidth(const Size(1024, 1366)), 288);
+      expect(
+        PetopiaAdaptive.petStageWidth(const Size(1194, 834)),
+        closeTo(268.97, 0.01),
+      );
     });
 
     test('yard visitors never overlap the centered pet on supported sizes', () {
@@ -58,13 +62,10 @@ void main() {
 
       for (final scene in scenes) {
         final petWidth = PetopiaAdaptive.petStageWidth(scene);
-        final petAlignment = Alignment(
-          0,
-          PetopiaAdaptive.useYardSidePanels(scene) ? 0.32 : 0.4,
-        );
+        final petAlignment = PetopiaAdaptive.yardPetAlignment(scene);
         final petRect = PetopiaAdaptive.alignedSquareRect(
           sceneSize: scene,
-          squareSize: petWidth,
+          squareSize: petWidth * 0.80,
           alignment: petAlignment,
         );
         for (final preferred in const [
@@ -108,7 +109,7 @@ void main() {
     test('opposite yard side lanes keep two visitors separated', () {
       const scene = Size(393, 852);
       final petWidth = PetopiaAdaptive.petStageWidth(scene);
-      const petAlignment = Alignment(0, 0.4);
+      final petAlignment = PetopiaAdaptive.yardPetAlignment(scene);
       final left = PetopiaAdaptive.yardSideActorRect(
         sceneSize: scene,
         petWidth: petWidth,
@@ -125,6 +126,30 @@ void main() {
       );
 
       expect(left.overlaps(right), isFalse);
+    });
+
+    test('yard pet remains above the lower interaction controls', () {
+      expect(
+        PetopiaAdaptive.yardPetAlignment(const Size(393, 852)),
+        const Alignment(0, 0.36),
+      );
+      expect(
+        PetopiaAdaptive.yardPetAlignment(const Size(1194, 834)),
+        const Alignment(0, 0.26),
+      );
+    });
+
+    test('yard scene art keeps a stable visual proportion across devices', () {
+      expect(PetopiaAdaptive.yardSceneScale(const Size(402, 874)), 1);
+      expect(
+        PetopiaAdaptive.yardSceneScale(const Size(834, 1194)),
+        closeTo(1.986, 0.001),
+      );
+      expect(PetopiaAdaptive.yardSceneScale(const Size(1024, 1366)), 2.35);
+      expect(
+        PetopiaAdaptive.yardSceneScale(const Size(1366, 1024)),
+        closeTo(1.797, 0.001),
+      );
     });
   });
 }

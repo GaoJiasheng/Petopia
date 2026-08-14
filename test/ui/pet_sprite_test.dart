@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:petopia/domain/enums.dart';
 import 'package:petopia/ui/pet_action_cue.dart';
+import 'package:petopia/ui/pet_art.dart';
 import 'package:petopia/ui/widgets/pet_sprite.dart';
 import 'package:petopia/ui/widgets/sprite_sheet_player.dart';
 
@@ -18,6 +19,20 @@ void main() {
       );
       expect(find.byType(SpriteSheetPlayer), findsNothing);
       expect(find.byKey(const ValueKey<String>('pose_1')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey<String>('pet_action_prop_eat')),
+        findsOneWidget,
+      );
+      final feedImage = tester.widget<Image>(
+        find.descendant(
+          of: find.byKey(const ValueKey<String>('pet_action_prop_eat')),
+          matching: find.byType(Image),
+        ),
+      );
+      expect(
+        (feedImage.image as AssetImage).assetName,
+        'assets/art/pets/action_props/pet_action_prop_feed.png',
+      );
       expect(
         find.byWidgetPredicate(
           (widget) =>
@@ -140,6 +155,125 @@ void main() {
 
     await tester.pumpWidget(const SizedBox.shrink());
   });
+
+  testWidgets('every identity interaction uses a rendered scene prop', (
+    tester,
+  ) async {
+    var seq = 0;
+    await tester.pumpWidget(_app(cue: null));
+
+    for (final action in PetArt.interactionNames) {
+      seq += 1;
+      await tester.pumpWidget(_app(cue: PetActionCue(action, seq)));
+      await tester.pump(const Duration(milliseconds: 120));
+
+      final assetName = action == 'eat' ? 'feed' : action;
+      expect(
+        find.byKey(ValueKey<String>('pet_action_$action')),
+        findsOneWidget,
+      );
+      expect(
+        find.byKey(ValueKey<String>('pet_action_prop_$action')),
+        findsOneWidget,
+      );
+      expect(
+        find.byWidgetPredicate(
+          (widget) =>
+              widget is Image &&
+              widget.image is AssetImage &&
+              (widget.image as AssetImage).assetName ==
+                  'assets/art/pets/action_props/'
+                      'pet_action_prop_$assetName.png',
+        ),
+        findsOneWidget,
+      );
+    }
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump(const Duration(seconds: 1));
+  });
+
+  testWidgets('every species and stage has visible identity-preserving motion', (
+    tester,
+  ) async {
+    const species = <String>[
+      'boo',
+      'cat',
+      'chameleon',
+      'ember',
+      'hamster',
+      'parrot',
+      'rabbit',
+      'shiba',
+      'snake',
+      'starbug',
+      'turtle',
+      'uni',
+    ];
+    var seq = 0;
+
+    for (final speciesId in species) {
+      for (final stage in PetStage.values) {
+        for (final action in PetArt.interactionNames) {
+          seq += 1;
+          await tester.pumpWidget(const SizedBox.shrink());
+          await tester.pumpWidget(
+            _app(
+              cue: null,
+              variantId: 'pet_${speciesId}_v5',
+              stage: stage,
+              assetPath:
+                  'assets/runtime/pets/$speciesId/'
+                  'pet_${speciesId}_var05_stage${stage.name.toUpperCase()}.webp',
+              speciesId: 'pet_$speciesId',
+            ),
+          );
+          await tester.pumpWidget(
+            _app(
+              cue: PetActionCue(action, seq),
+              variantId: 'pet_${speciesId}_v5',
+              stage: stage,
+              assetPath:
+                  'assets/runtime/pets/$speciesId/'
+                  'pet_${speciesId}_var05_stage${stage.name.toUpperCase()}.webp',
+              speciesId: 'pet_$speciesId',
+            ),
+          );
+
+          await tester.pump(const Duration(milliseconds: 450));
+          final first = tester
+              .widget<Transform>(
+                find.byKey(ValueKey<String>('pet_action_actor_$action')),
+              )
+              .transform
+              .storage
+              .toList();
+          await tester.pump(const Duration(milliseconds: 650));
+          final second = tester
+              .widget<Transform>(
+                find.byKey(ValueKey<String>('pet_action_actor_$action')),
+              )
+              .transform
+              .storage
+              .toList();
+
+          expect(
+            second,
+            isNot(orderedEquals(first)),
+            reason: '$speciesId ${stage.name} $action stayed static',
+          );
+          expect(
+            find.byKey(ValueKey<String>('pet_action_prop_$action')),
+            findsOneWidget,
+            reason: '$speciesId ${stage.name} $action lost its rendered prop',
+          );
+        }
+      }
+    }
+
+    await tester.pumpWidget(const SizedBox.shrink());
+    await tester.pump(const Duration(seconds: 1));
+  });
 }
 
 Widget _app({
@@ -149,6 +283,7 @@ Widget _app({
   PetStage stage = PetStage.a,
   String assetPath = 'assets/runtime/pets/cat/pet_cat_var05_stageA.webp',
   bool reduceEffects = false,
+  String speciesId = 'pet_cat',
 }) {
   return MaterialApp(
     home: MediaQuery(
@@ -156,7 +291,7 @@ Widget _app({
       child: Scaffold(
         body: PetSprite(
           assetPath: assetPath,
-          speciesId: 'pet_cat',
+          speciesId: speciesId,
           variantId: variantId,
           stage: stage,
           reduceEffects: reduceEffects,

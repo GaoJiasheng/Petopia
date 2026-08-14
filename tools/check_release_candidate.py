@@ -51,6 +51,7 @@ SUPPORT_PRODUCTS = {
 DECLARED_ASSET_BUDGET_BYTES = 138 * 1024 * 1024
 IOS_APP_BUDGET_BYTES = 166 * 1024 * 1024
 IOS_FLUTTER_ASSET_BUDGET_BYTES = 139 * 1024 * 1024
+IOS_MINIMUM_OS_VERSION = "16.0"
 VISITOR_ART_SLUG_OVERRIDES = {
     "visitor_campfire_light": "visitor_emberlight",
     "visitor_rainbow_shade": "visitor_rainbowshade",
@@ -188,6 +189,16 @@ def static_checks() -> None:
 
     privacy = ROOT / "ios/Runner/PrivacyInfo.xcprivacy"
     project = (ROOT / "ios/Runner.xcodeproj/project.pbxproj").read_text()
+    deployment_targets = re.findall(
+        r"IPHONEOS_DEPLOYMENT_TARGET\s*=\s*([0-9.]+);",
+        project,
+    )
+    require(deployment_targets, "Xcode project has no explicit iOS deployment target")
+    require(
+        set(deployment_targets) == {IOS_MINIMUM_OS_VERSION},
+        "all Xcode build configurations must use iOS "
+        f"{IOS_MINIMUM_OS_VERSION}; found {sorted(set(deployment_targets))}",
+    )
     require(privacy.exists(), "missing ios/Runner/PrivacyInfo.xcprivacy")
     require(
         project.count("PrivacyInfo.xcprivacy") >= 3,

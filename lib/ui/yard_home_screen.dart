@@ -465,9 +465,9 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
               builder: (context, constraints) {
                 final size = Size(constraints.maxWidth, constraints.maxHeight);
                 final wideLayout = PetopiaAdaptive.useYardSidePanels(size);
-                final sceneScale = wideLayout ? 1.16 : 1.0;
+                final sceneScale = PetopiaAdaptive.yardSceneScale(size);
                 final petWidth = PetopiaAdaptive.petStageWidth(size);
-                final petAlignment = Alignment(0, wideLayout ? 0.32 : 0.4);
+                final petAlignment = PetopiaAdaptive.yardPetAlignment(size);
                 final sourceWidth = wideLayout ? 2732 : 1290;
                 final backgroundCacheWidth = math.min(
                   sourceWidth,
@@ -482,18 +482,56 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                 final treatActive = supportBenefits.treatActive(supportNow);
                 final lanternActive = supportBenefits.lanternActive(supportNow);
                 final bouquetActive = supportBenefits.bouquetActive(supportNow);
+                final visitorUsesRightLane =
+                    view.activeVisitor != null &&
+                    _visitorYardPlacement(view.activeVisitor!).alignment.x > 0;
+                final occupiedAnimalPoints = <int>{
+                  if (view.activeVisitor != null ||
+                      view.revisitor != null) ...const <int>{8, 9},
+                  if (view.activeVisitor != null)
+                    ...(visitorUsesRightLane
+                        ? const <int>{1, 3, 9}
+                        : const <int>{0, 2, 8}),
+                  if (view.revisitor != null)
+                    ...(visitorUsesRightLane
+                        ? const <int>{0, 2, 8}
+                        : const <int>{1, 3, 9}),
+                };
                 final visibleDecor =
-                    _visibleDecor(
-                      view.decorSlots,
-                      view.luxuryStage,
-                      wideLayout: wideLayout,
-                    ).where(
-                      (decor) =>
-                          !(treatActive && decor.decorId == 'food_bowl_full') &&
-                          !(lanternActive && decor.decorId == 'night_light') &&
-                          !(bouquetActive &&
-                              decor.decorId == 'flowerbed_small'),
-                    );
+                    <_VisibleDecor>[
+                          ..._visibleDecor(
+                            view.decorSlots,
+                            view.luxuryStage,
+                            wideLayout: wideLayout,
+                            tabletPortrait: !wideLayout && size.width >= 600,
+                            excludedPositions: occupiedAnimalPoints,
+                          ),
+                          ..._fixedYardUtilities(
+                            waterBowlOwned: view.waterBowlOwned,
+                            wideLayout: wideLayout,
+                            tabletPortrait: !wideLayout && size.width >= 600,
+                          ),
+                        ]
+                        .where(
+                          (decor) =>
+                              !(treatActive &&
+                                  decor.decorId == 'food_bowl_full') &&
+                              !(lanternActive &&
+                                  decor.decorId == 'night_light') &&
+                              !(bouquetActive &&
+                                  decor.decorId == 'flowerbed_small'),
+                        )
+                        .toList()
+                      ..sort(
+                        (a, b) => a.anchor.align.y.compareTo(b.anchor.align.y),
+                      );
+                final usesPlacedDecorPerspective = view.decorSlots.isNotEmpty;
+                final rearDecor = visibleDecor
+                    .where((decor) => decor.anchor.align.y < 0.44)
+                    .toList(growable: false);
+                final foregroundDecor = visibleDecor
+                    .where((decor) => decor.anchor.align.y >= 0.44)
+                    .toList(growable: false);
                 return Stack(
                   fit: StackFit.expand,
                   children: [
@@ -517,35 +555,35 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                       ),
                     ),
                     // 摆件中景层（渲染在宠物之下）：自定义 slots 为空时使用默认布置。
-                    for (final decor in visibleDecor)
-                      _YardDecor(
-                        imageKey: ValueKey<String>(
-                          'yard_decor_${view.luxuryStage}_${decor.decorId}',
-                        ),
-                        align: decor.anchor.align,
-                        decorId: decor.decorId,
-                        width: decor.anchor.width * sceneScale,
+                    for (final decor in rearDecor)
+                      _placedDecor(
+                        decor,
+                        luxuryStage: view.luxuryStage,
+                        heightDriven: usesPlacedDecorPerspective,
+                        wideLayout: wideLayout,
+                        tabletPortrait: !wideLayout && size.width >= 600,
+                        sceneScale: sceneScale,
                       ),
                     if (lanternActive)
                       _SupportYardDecor(
                         key: const ValueKey<String>('support_yard_lantern'),
                         assetPath: SupportCatalog.lantern.assetPath,
-                        alignment: const Alignment(-0.50, 0.36),
-                        width: 104 * sceneScale,
+                        alignment: const Alignment(-0.18, -0.22),
+                        width: 58 * sceneScale,
                       ),
                     if (bouquetActive)
                       _SupportYardDecor(
                         key: const ValueKey<String>('support_yard_bouquet'),
                         assetPath: SupportCatalog.bouquet.assetPath,
-                        alignment: const Alignment(0.76, 0.34),
-                        width: 116 * sceneScale,
+                        alignment: const Alignment(0.84, -0.22),
+                        width: 68 * sceneScale,
                       ),
                     if (treatActive)
                       _SupportYardDecor(
                         key: const ValueKey<String>('support_yard_treat'),
                         assetPath: SupportCatalog.treat.assetPath,
-                        alignment: const Alignment(0.42, 0.66),
-                        width: 92 * sceneScale,
+                        alignment: const Alignment(0.16, 0.60),
+                        width: 60 * sceneScale,
                       ),
                     if (view.activeVisitor != null)
                       Builder(
@@ -615,12 +653,6 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                       Builder(
                         builder: (context) {
                           final revisitor = view.revisitor!;
-                          final visitorUsesRightLane =
-                              view.activeVisitor != null &&
-                              _visitorYardPlacement(
-                                    view.activeVisitor!,
-                                  ).alignment.x >
-                                  0;
                           final revisitorAlignment = Alignment(
                             visitorUsesRightLane ? -0.56 : 0.56,
                             0.46,
@@ -669,6 +701,18 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                             ),
                           );
                         },
+                      ),
+                    // Bowls and low foreground props sit in front of the pet's
+                    // feet. This small depth split makes the composition read
+                    // as one lawn rather than independent stickers.
+                    for (final decor in foregroundDecor)
+                      _placedDecor(
+                        decor,
+                        luxuryStage: view.luxuryStage,
+                        heightDriven: usesPlacedDecorPerspective,
+                        wideLayout: wideLayout,
+                        tabletPortrait: !wideLayout && size.width >= 600,
+                        sceneScale: sceneScale,
                       ),
                     Positioned.fill(
                       child: _YardAtmosphere(
@@ -2191,25 +2235,81 @@ String _visitorRarityLabel(VisitorRarity rarity) {
 class _YardDecor extends StatelessWidget {
   final Alignment align;
   final String decorId;
-  final double width;
+
+  /// Painted width. Mutually exclusive with [height]; scenery presets still
+  /// author an explicit width because their anchors encode art size directly.
+  final double? width;
+
+  /// Painted height of the visible subject. Placed decor uses this so props
+  /// stand at authored heights instead of inheriting their canvas format.
+  final double? height;
   final Key? imageKey;
   const _YardDecor({
     required this.align,
     required this.decorId,
-    required this.width,
+    this.width,
+    this.height,
     this.imageKey,
-  });
+  }) : assert(
+         (width == null) != (height == null),
+         'Provide exactly one of width or height.',
+       );
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: align,
-      child: Image.asset(
-        key: imageKey,
-        YardArt.decor(decorId),
-        width: width,
-        errorBuilder: (_, _, _) => const SizedBox(),
-      ),
+    final crop = _decorCrop(decorId);
+    // Subject aspect ratio: how tall the cropped subject is per unit of width.
+    final subjectAspect =
+        crop.canvasAspectRatio * crop.heightFraction / crop.widthFraction;
+    final width = this.width ?? (height! / subjectAspect);
+    final fullWidth = width / crop.widthFraction;
+    final fullHeight = fullWidth * crop.canvasAspectRatio;
+    final visibleHeight = fullHeight * crop.heightFraction;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final left = (constraints.maxWidth - width) * (align.x + 1) / 2;
+        final baseline = constraints.maxHeight * (align.y + 1) / 2;
+        // No synthetic contact shadow: the props paint their own grass tufts
+        // and bases, so an added ellipse double-grounds most of them — and any
+        // strength subtle enough to avoid smudging the watercolour is invisible
+        // on both the bright and the night themes.
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Positioned(
+              left: left,
+              top: baseline - visibleHeight,
+              child: SizedBox(
+                key: imageKey,
+                width: width,
+                height: visibleHeight,
+                child: ClipRect(
+                  child: OverflowBox(
+                    alignment: Alignment.topLeft,
+                    minWidth: fullWidth,
+                    maxWidth: fullWidth,
+                    minHeight: fullHeight,
+                    maxHeight: fullHeight,
+                    child: Transform.translate(
+                      offset: Offset(
+                        -fullWidth * crop.left,
+                        -fullHeight * crop.top,
+                      ),
+                      child: Image.asset(
+                        YardArt.decor(decorId),
+                        width: fullWidth,
+                        height: fullHeight,
+                        fit: BoxFit.fill,
+                        errorBuilder: (_, _, _) => const SizedBox(),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -2606,58 +2706,297 @@ class _DecorAnchor {
   const _DecorAnchor(this.align, this.width);
 }
 
+class _DecorCrop {
+  final double canvasAspectRatio;
+  final double left;
+  final double top;
+  final double right;
+  final double bottom;
+
+  const _DecorCrop({
+    this.canvasAspectRatio = 1,
+    this.left = 0,
+    this.top = 0,
+    this.right = 1,
+    this.bottom = 1,
+  });
+
+  double get widthFraction => right - left;
+  double get heightFraction => bottom - top;
+}
+
+// The source PNGs intentionally carry transparent safety margins. Yard layout
+// works from the painted footprint so a tall vane, shallow bowl and square
+// flower box can each keep a natural visual size without colliding because of
+// invisible canvas pixels.
+_DecorCrop _decorCrop(String decorId) => switch (decorId) {
+  'mailbox_wood' => const _DecorCrop(
+    left: 18 / 256,
+    top: 18 / 256,
+    right: 237 / 256,
+    bottom: 248 / 256,
+  ),
+  'food_bowl_full' => const _DecorCrop(
+    left: 19 / 256,
+    top: 69 / 256,
+    right: 237 / 256,
+    bottom: 248 / 256,
+  ),
+  'flowerbed_small' => const _DecorCrop(
+    left: 13 / 256,
+    top: 114 / 256,
+    right: 243 / 256,
+    bottom: 248 / 256,
+  ),
+  'water_bowl' => const _DecorCrop(
+    left: 20 / 256,
+    top: 81 / 256,
+    right: 236 / 256,
+    bottom: 248 / 256,
+  ),
+  'night_light' => const _DecorCrop(
+    left: 40 / 256,
+    top: 18 / 256,
+    right: 215 / 256,
+    bottom: 248 / 256,
+  ),
+  'fireplace' => const _DecorCrop(
+    left: 65 / 256,
+    top: 18 / 256,
+    right: 187 / 256,
+    bottom: 210 / 256,
+  ),
+  'wind_chime' => const _DecorCrop(
+    canvasAspectRatio: 2,
+    left: 10 / 256,
+    top: 12 / 512,
+    right: 246 / 256,
+    bottom: 499 / 512,
+  ),
+  'flower_box' => const _DecorCrop(top: 35 / 256, right: 226 / 256),
+  'mushroom_bench' => const _DecorCrop(top: 46 / 256),
+  'scarecrow' => const _DecorCrop(
+    canvasAspectRatio: 2,
+    left: 13 / 256,
+    top: 100 / 512,
+    right: 243 / 256,
+    bottom: 385 / 512,
+  ),
+  'wind_vane' => const _DecorCrop(
+    canvasAspectRatio: 2,
+    left: 18 / 256,
+    top: 48 / 512,
+    right: 238 / 256,
+    bottom: 462 / 512,
+  ),
+  'wood_sign' => const _DecorCrop(
+    canvasAspectRatio: 2,
+    left: 13 / 256,
+    top: 261 / 512,
+    right: 243 / 256,
+    bottom: 504 / 512,
+  ),
+  'pond_small' => const _DecorCrop(
+    canvasAspectRatio: 384 / 512,
+    left: 110 / 512,
+    top: 94 / 384,
+    right: 401 / 512,
+    bottom: 330 / 384,
+  ),
+  'album_shelf' => const _DecorCrop(
+    left: 13 / 256,
+    top: 21 / 256,
+    right: 243 / 256,
+    bottom: 248 / 256,
+  ),
+  _ => const _DecorCrop(),
+};
+
 class _VisibleDecor {
   final String decorId;
   final _DecorAnchor anchor;
   const _VisibleDecor(this.decorId, this.anchor);
 }
 
-const _decorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.78, 0.02), 96),
-  1: _DecorAnchor(Alignment(0.42, 0.66), 84),
-  2: _DecorAnchor(Alignment(0.74, 0.34), 110),
-  3: _DecorAnchor(Alignment(-0.12, 0.68), 100),
-  4: _DecorAnchor(Alignment(-0.52, 0.58), 92),
-  5: _DecorAnchor(Alignment(0.62, 0.08), 90),
-  6: _DecorAnchor(Alignment(-0.34, 0.18), 82),
-  7: _DecorAnchor(Alignment(0.20, 0.16), 84),
-  // Keep the lower side lanes open for a daily visitor or returning pet.
-  8: _DecorAnchor(Alignment(-0.72, 0.20), 88),
-  9: _DecorAnchor(Alignment(0.78, 0.72), 86),
-  10: _DecorAnchor(Alignment(-0.30, 0.72), 78),
-  11: _DecorAnchor(Alignment(0.28, 0.74), 78),
-  12: _DecorAnchor(Alignment(-0.84, 0.62), 80),
-  13: _DecorAnchor(Alignment(0.84, 0.18), 80),
+// Every anchor is the painted footprint on the lawn, never the visual center.
+// Even the deepest row starts below the fence line on every shipped portrait
+// background. Tall artwork may rise in front of foliage, but its base must
+// always remain visibly planted in grass.
+// Slots are deliberately not mirrored. Paired anchors at matching depths made
+// the lawn read as two shelves flanking an empty corridor, so each side keeps
+// its own depth rhythm and the near row is allowed to step inward.
+const _compactDecorAnchors = <int, _DecorAnchor>{
+  0: _DecorAnchor(Alignment(-0.84, 0.05), 56),
+  1: _DecorAnchor(Alignment(0.82, 0.17), 58),
+  2: _DecorAnchor(Alignment(-0.88, 0.40), 64),
+  3: _DecorAnchor(Alignment(0.86, 0.37), 66),
+  4: _DecorAnchor(Alignment(-0.80, 0.68), 72),
+  5: _DecorAnchor(Alignment(0.78, 0.67), 74),
+  // 后排：宠物下移后腾出的远景地面，可以靠近中线，但基线必须高于宠物顶边。
+  6: _DecorAnchor(Alignment(-0.30, 0.04), 50),
+  7: _DecorAnchor(Alignment(0.32, 0.07), 52),
+};
+
+const _wideDecorAnchors = <int, _DecorAnchor>{
+  0: _DecorAnchor(Alignment(-0.84, 0.02), 54),
+  1: _DecorAnchor(Alignment(0.82, 0.16), 56),
+  2: _DecorAnchor(Alignment(-0.88, 0.40), 62),
+  3: _DecorAnchor(Alignment(0.86, 0.38), 64),
+  4: _DecorAnchor(Alignment(-0.80, 0.72), 70),
+  5: _DecorAnchor(Alignment(0.78, 0.70), 72),
+  6: _DecorAnchor(Alignment(-0.30, 0.01), 48),
+  7: _DecorAnchor(Alignment(0.32, 0.04), 50),
+};
+
+const _tabletPortraitDecorAnchors = <int, _DecorAnchor>{
+  0: _DecorAnchor(Alignment(-0.84, 0.03), 46),
+  1: _DecorAnchor(Alignment(0.82, 0.16), 48),
+  2: _DecorAnchor(Alignment(-0.88, 0.40), 53),
+  3: _DecorAnchor(Alignment(0.86, 0.38), 55),
+  4: _DecorAnchor(Alignment(-0.80, 0.72), 60),
+  5: _DecorAnchor(Alignment(0.78, 0.70), 61),
+  6: _DecorAnchor(Alignment(-0.30, 0.02), 42),
+  7: _DecorAnchor(Alignment(0.32, 0.05), 44),
+};
+
+const _compactUtilityAnchors = <String, _DecorAnchor>{
+  'food_bowl_full': _DecorAnchor(Alignment(-0.26, 0.62), 72),
+  'water_bowl': _DecorAnchor(Alignment(0.28, 0.68), 72),
+};
+
+const _tabletPortraitUtilityAnchors = <String, _DecorAnchor>{
+  'food_bowl_full': _DecorAnchor(Alignment(-0.24, 0.63), 72),
+  'water_bowl': _DecorAnchor(Alignment(0.26, 0.69), 72),
+};
+
+const _wideUtilityAnchors = <String, _DecorAnchor>{
+  'food_bowl_full': _DecorAnchor(Alignment(-0.23, 0.62), 82),
+  'water_bowl': _DecorAnchor(Alignment(0.25, 0.68), 82),
+};
+
+List<_VisibleDecor> _fixedYardUtilities({
+  required bool waterBowlOwned,
+  required bool wideLayout,
+  required bool tabletPortrait,
+}) {
+  final anchors = wideLayout
+      ? _wideUtilityAnchors
+      : tabletPortrait
+      ? _tabletPortraitUtilityAnchors
+      : _compactUtilityAnchors;
+  return <_VisibleDecor>[
+    _VisibleDecor('food_bowl_full', anchors['food_bowl_full']!),
+    if (waterBowlOwned) _VisibleDecor('water_bowl', anchors['water_bowl']!),
+  ];
+}
+
+double _decorPerspectiveScale(
+  double footprintY, {
+  required bool wideLayout,
+  required bool tabletPortrait,
+}) {
+  final farY = wideLayout ? 0.18 : 0.22;
+  final nearY = wideLayout
+      ? 0.74
+      : tabletPortrait
+      ? 0.84
+      : 0.72;
+  final progress = ((footprintY - farY) / (nearY - farY)).clamp(0.0, 1.0);
+  return 0.78 + progress * 0.30;
+}
+
+double _decorWidthScale(String decorId) => switch (decorId) {
+  // Tall, narrow objects remain prominent but leave air around their tips.
+  'wind_vane' => 0.92,
+  'wind_chime' => 0.94,
+  // Ground-hugging objects benefit from a little more horizontal presence.
+  'pond_small' || 'flowerbed_small' => 1.06,
+  _ => 1.0,
+};
+
+/// Builds one prop on the lawn.
+///
+/// Placed decor (the slot system) is sized by height so authored proportions
+/// survive the source canvases' wildly different aspect ratios. The fixed
+/// scenery presets keep width sizing because their anchors encode art width.
+_YardDecor _placedDecor(
+  _VisibleDecor decor, {
+  required int luxuryStage,
+  required bool heightDriven,
+  required bool wideLayout,
+  required bool tabletPortrait,
+  required double sceneScale,
+}) {
+  final unit =
+      decor.anchor.width *
+      sceneScale *
+      (heightDriven
+          ? _decorPerspectiveScale(
+              decor.anchor.align.y,
+              wideLayout: wideLayout,
+              tabletPortrait: tabletPortrait,
+            )
+          : 1);
+  return _YardDecor(
+    imageKey: ValueKey<String>('yard_decor_${luxuryStage}_${decor.decorId}'),
+    align: decor.anchor.align,
+    decorId: decor.decorId,
+    width: heightDriven ? null : unit * _decorWidthScale(decor.decorId),
+    height: heightDriven ? unit * _decorHeightRatio(decor.decorId) : null,
+  );
+}
+
+/// How tall a placed prop stands, as a multiple of its slot unit.
+///
+/// Placed decor is sized by height, not width: the source canvases range from
+/// 0.58 to 2.06 in subject aspect ratio, so a shared width made a wind chime
+/// render 3.2x taller than a flower bed and the lawn read as a shelf. Sizing by
+/// height puts the ordering back under authorship — a pond stays flat and a
+/// chime stays tall — and lets each canvas derive its own width.
+double _decorHeightRatio(String decorId) => switch (decorId) {
+  // Standing structures a person could lean on.
+  'scarecrow' => 1.89,
+  'wind_chime' => 1.83,
+  'wind_vane' => 1.71,
+  'wood_sign' => 1.55,
+  'mailbox_wood' => 1.48,
+  'album_shelf' => 1.33,
+  // Waist-high furniture.
+  'fireplace' => 1.04,
+  'night_light' => 0.82,
+  'mushroom_bench' => 0.65,
+  'flower_box' => 0.62,
+  // Ground-hugging props: wide and low, never towers.
+  'food_bowl_full' => 0.66,
+  'flowerbed_small' => 0.45,
+  'water_bowl' => 0.63,
+  'pond_small' => 0.39,
+  _ => 1.12,
 };
 
 const _defaultDecor = <_VisibleDecor>[
-  _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.78, 0.02), 96)),
-  _VisibleDecor('food_bowl_full', _DecorAnchor(Alignment(0.42, 0.66), 84)),
-  _VisibleDecor('flowerbed_small', _DecorAnchor(Alignment(0.74, 0.34), 110)),
+  _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.72, -0.02), 84)),
+  _VisibleDecor('flowerbed_small', _DecorAnchor(Alignment(0.72, 0.08), 94)),
 ];
 
 const _wideLuxuryDecor = <int, List<_VisibleDecor>>{
   1: [
     _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.76, 0.02), 128)),
-    _VisibleDecor('food_bowl_full', _DecorAnchor(Alignment(0.44, 0.68), 104)),
     _VisibleDecor('flowerbed_small', _DecorAnchor(Alignment(0.78, 0.34), 142)),
   ],
   2: [
     _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.76, 0.02), 128)),
-    _VisibleDecor('food_bowl_full', _DecorAnchor(Alignment(0.44, 0.68), 104)),
     _VisibleDecor('flowerbed_small', _DecorAnchor(Alignment(0.78, 0.34), 142)),
     _VisibleDecor('welcome_bell', _DecorAnchor(Alignment(-0.48, 0.34), 104)),
   ],
   3: [
     _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.78, 0.04), 128)),
-    _VisibleDecor('food_bowl_full', _DecorAnchor(Alignment(0.42, 0.68), 104)),
     _VisibleDecor('mushroom_bench', _DecorAnchor(Alignment(0.72, 0.10), 146)),
     _VisibleDecor('night_light', _DecorAnchor(Alignment(-0.50, 0.36), 104)),
     _VisibleDecor('flowerbed_small', _DecorAnchor(Alignment(0.80, 0.46), 138)),
   ],
   4: [
     _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.80, 0.08), 126)),
-    _VisibleDecor('food_bowl_full', _DecorAnchor(Alignment(0.44, 0.70), 102)),
     _VisibleDecor('arch_flower', _DecorAnchor(Alignment(-0.08, 0.02), 230)),
     _VisibleDecor('mushroom_bench', _DecorAnchor(Alignment(0.72, 0.12), 142)),
     _VisibleDecor('wood_sign', _DecorAnchor(Alignment(-0.56, 0.48), 116)),
@@ -2667,12 +3006,11 @@ const _wideLuxuryDecor = <int, List<_VisibleDecor>>{
     _VisibleDecor('tree_seasonal', _DecorAnchor(Alignment(-0.70, -0.02), 270)),
     _VisibleDecor('attic_house', _DecorAnchor(Alignment(0.74, -0.02), 248)),
     _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.82, 0.52), 122)),
-    _VisibleDecor('food_bowl_full', _DecorAnchor(Alignment(0.42, 0.70), 102)),
     _VisibleDecor('arch_flower', _DecorAnchor(Alignment(-0.08, 0.10), 220)),
     _VisibleDecor('flowerbed_small', _DecorAnchor(Alignment(0.80, 0.48), 134)),
   ],
   6: [
-    _VisibleDecor('tree_seasonal', _DecorAnchor(Alignment(-0.72, -0.04), 286)),
+    _VisibleDecor('tree_seasonal', _DecorAnchor(Alignment(-0.72, 0.01), 286)),
     _VisibleDecor('attic_house', _DecorAnchor(Alignment(0.74, -0.04), 264)),
     _VisibleDecor('arch_flower', _DecorAnchor(Alignment(-0.08, 0.08), 228)),
     _VisibleDecor('album_shelf', _DecorAnchor(Alignment(-0.70, 0.54), 190)),
@@ -2685,6 +3023,8 @@ List<_VisibleDecor> _visibleDecor(
   List<YardSlotView> slots,
   int luxuryStage, {
   required bool wideLayout,
+  bool tabletPortrait = false,
+  Set<int> excludedPositions = const <int>{},
 }) {
   if (slots.isEmpty) {
     if (wideLayout) {
@@ -2692,10 +3032,18 @@ List<_VisibleDecor> _visibleDecor(
     }
     return _defaultDecor;
   }
+  final anchors = wideLayout
+      ? _wideDecorAnchors
+      : tabletPortrait
+      ? _tabletPortraitDecorAnchors
+      : _compactDecorAnchors;
   return [
     for (final slot in slots)
-      if (slot.itemId != null && _decorAnchors[slot.pos] != null)
-        _VisibleDecor(slot.itemId!, _decorAnchors[slot.pos]!),
+      if (slot.itemId != null &&
+          anchors[slot.pos] != null &&
+          !excludedPositions.contains(slot.pos))
+        if (!const {'food_bowl_full', 'water_bowl'}.contains(slot.itemId))
+          _VisibleDecor(slot.itemId!, anchors[slot.pos]!),
   ];
 }
 
@@ -3837,7 +4185,7 @@ class _YardDecorLayoutScreen extends ConsumerWidget {
                     child: AppText(
                       inventory.isEmpty
                           ? '还没有可摆放的小物。去商店买到装饰后，就能指定到院子的固定位置。'
-                          : '选择一个槽位，再点已拥有的小物；同一个小物只会出现在一个位置。',
+                          : '饭盆和水碗会留在宠物身边。其余小物可在最多 10 个固定点之间切换，每个位置只显示适合该远近层级的摆件。',
                       style: const TextStyle(
                         color: _muted,
                         height: 1.5,
@@ -3901,6 +4249,12 @@ class _DecorSlotEditor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final choices = inventory
+        .where(
+          (item) =>
+              item.decorId == current || _decorFitsSlot(pos, item.decorId),
+        )
+        .toList(growable: false);
     return Container(
       margin: const EdgeInsets.only(top: 12),
       padding: const EdgeInsets.all(12),
@@ -3915,7 +4269,7 @@ class _DecorSlotEditor extends StatelessWidget {
           Row(
             children: [
               AppText(
-                '位置 ${pos + 1}',
+                _decorSlotLabel(pos),
                 style: const TextStyle(
                   color: Color(0xFF6B5445),
                   fontWeight: FontWeight.w800,
@@ -3934,7 +4288,7 @@ class _DecorSlotEditor extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                for (final item in inventory)
+                for (final item in choices)
                   _DecorChoiceButton(
                     item: item,
                     selected: item.decorId == current,
@@ -3947,6 +4301,30 @@ class _DecorSlotEditor extends StatelessWidget {
       ),
     );
   }
+}
+
+String _decorSlotLabel(int pos) => switch (pos) {
+  0 => '后景左侧',
+  1 => '后景右侧',
+  2 => '左侧后方',
+  3 => '右侧后方',
+  4 => '左侧前方',
+  5 => '右侧前方',
+  6 => '前景左侧',
+  7 => '前景右侧',
+  8 => '后景中左',
+  9 => '后景中右',
+  _ => '位置 ${pos + 1}',
+};
+
+bool _decorFitsSlot(int pos, String decorId) {
+  if (const {'food_bowl_full', 'water_bowl'}.contains(decorId)) return false;
+  const tall = <String>{'wind_chime', 'scarecrow', 'wind_vane', 'wood_sign'};
+  // The two foreground points are reserved for low, grounded objects. Rear
+  // center points take lighter silhouettes so the lawn entrance stays open.
+  if (pos == 6 || pos == 7) return !tall.contains(decorId);
+  if (pos == 8 || pos == 9) return decorId != 'fireplace';
+  return true;
 }
 
 class _DecorChoiceButton extends StatelessWidget {

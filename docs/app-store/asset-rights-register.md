@@ -38,6 +38,26 @@
   经人工构图审核、小尺寸清晰度处理和平台尺寸适配后，母图保存在
   `docs/art-sources/app-icon/app_icon_master_2026-08-02.png`，iOS 与 Android
   图标由 `tools/make_app_icon.py` 确定性生成。
+- 2026-08-10 的明信片姿势与访客修复批次仅参考 Petopia 自有物种原型、访客规格
+  和 Golden Set。生成源图保存在
+  `assets/art/qa/chroma_sources/postcard_pose_redo_20260810/` 与
+  `assets/art/qa/chroma_sources/visitor_redo_20260810/`；其 README 记录生成工具、
+  参考边界和派生范围。生产图经过人工选片、透明底提取、完整主体重构、安全边距
+  校验和真实设备回归，不含第三方图库、角色、品牌、字体或外部参考图。
+- 2026-08-10 的花箱与蘑菇凳修复批次仅以 Petopia 自有旧版摆件作为物件设定、
+  视角与色彩参考，重新生成完整无残片的透明摆件。生成源图与说明保存在
+  `assets/art/qa/chroma_sources/decor_redo_20260810/`，不含第三方图库、品牌、
+  字体、角色或外部参考图。
+- 2026-08-12 的互动 UI 批次包含喂食、摸头、玩具、洗澡四套手绘道具，七种
+  明信片天气徽章，以及重新生成的邮差稻草人与星星风向标。视觉参考仅限
+  Petopia 自有 Golden Set、既有宠物与摆件设定；生成源图、提示词边界和派生
+  说明保存在 `assets/art/qa/chroma_sources/interaction_ui_20260812/`。该批次未
+  使用第三方参考图、图库、贴图包、角色、品牌、Logo 或字体。
+- 2026-08-13 的落地式风铃重绘仅参考 Petopia 自有院子摆件设定、Golden Set
+  色彩和既有风铃物件描述。生成源图与派生说明保存在
+  `assets/art/qa/chroma_sources/decor_redo_20260813/`；生产图经过人工选片、
+  色键移除、边缘清理、完整支架与石基座保留以及透明画布适配，不含第三方
+  参考图、图库、贴图包、角色、品牌、Logo 或字体。
 
 ## 音频来源记录
 

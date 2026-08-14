@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 
 import '../../domain/enums.dart';
 import '../../l10n/petopia_localizations.dart';
-import '../app_icons.dart';
 import '../pet_action_cue.dart';
 import '../pet_art.dart';
 import 'sprite_sheet_player.dart';
 
-/// 会「呼吸」的宠物立绘：静止呼吸 + 点击弹跳 + 冒爱心；收到动作 cue 时播序列帧动画。
-/// 缺动作帧时优雅回落到静态立绘。
+/// 会「呼吸」的宠物立绘：静止呼吸 + 点击弹跳 + 冒爱心；收到动作 cue 时播互动动画。
+/// var01/C 使用手绘关键帧，其余身份使用保留原花色与成长体型的五秒动作编排。
 class PetSprite extends StatefulWidget {
   final String assetPath;
   final double width;
@@ -149,7 +148,7 @@ class _PetSpriteState extends State<PetSprite> with TickerProviderStateMixin {
     final species = PetArt.dir(widget.speciesId ?? '');
     final offset = switch (species) {
       'parrot' || 'starbug' => 2,
-      'snake' || 'cham' || 'turtle' => 1,
+      'snake' || 'chameleon' || 'turtle' => 1,
       _ => 0,
     };
     return (offset + _random.nextInt(3)) % 3;
@@ -407,12 +406,18 @@ class _StaticActionChoreographyState extends State<_StaticActionChoreography>
           t: t,
           reduceMotion: widget.reduceMotion,
         );
-        final accentProgress = math.sin(t * math.pi).clamp(0.0, 1.0);
+        final prop = _petActionPropFrame(
+          action: widget.action,
+          species: widget.species,
+          t: t,
+          reduceMotion: widget.reduceMotion,
+        );
         return Stack(
           alignment: Alignment.center,
           clipBehavior: Clip.none,
           children: [
             Transform.translate(
+              key: ValueKey<String>('pet_action_actor_${widget.action}'),
               offset: Offset(frame.dx, frame.dy),
               child: Transform.rotate(
                 angle: frame.angle,
@@ -428,40 +433,142 @@ class _StaticActionChoreographyState extends State<_StaticActionChoreography>
                 ),
               ),
             ),
-            if (!widget.reduceMotion)
-              Align(
-                alignment: const Alignment(0.72, -0.68),
-                child: Opacity(
-                  opacity: accentProgress * 0.92,
-                  child: Transform.translate(
-                    offset: Offset(0, -accentProgress * 12),
-                    child: Transform.scale(
-                      scale: 0.82 + accentProgress * 0.18,
-                      child: AppIcon(
-                        switch (widget.action) {
-                          'eat' => 'act_feed',
-                          'pat' => 'act_pat',
-                          'play' => 'act_toy',
-                          'bath' => 'act_bath',
-                          _ => 'act_pat',
-                        },
-                        size: 34,
-                        fallback: switch (widget.action) {
-                          'eat' => Icons.restaurant_rounded,
-                          'play' => Icons.sports_baseball_rounded,
-                          'bath' => Icons.bubble_chart_rounded,
-                          _ => Icons.favorite_rounded,
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            _PetActionProp(
+              key: ValueKey<String>('pet_action_prop_${widget.action}'),
+              action: widget.action,
+              frame: prop,
+            ),
           ],
         );
       },
     );
   }
+}
+
+typedef _PetActionPropFrame = ({
+  Alignment alignment,
+  double widthFactor,
+  double dx,
+  double dy,
+  double angle,
+  double scale,
+  double opacity,
+});
+
+class _PetActionProp extends StatelessWidget {
+  final String action;
+  final _PetActionPropFrame frame;
+
+  const _PetActionProp({super.key, required this.action, required this.frame});
+
+  @override
+  Widget build(BuildContext context) {
+    final assetName = switch (action) {
+      'eat' => 'feed',
+      _ => action,
+    };
+    return Align(
+      alignment: frame.alignment,
+      child: FractionallySizedBox(
+        widthFactor: frame.widthFactor,
+        child: Opacity(
+          opacity: frame.opacity,
+          child: Transform.translate(
+            offset: Offset(frame.dx, frame.dy),
+            child: Transform.rotate(
+              key: ValueKey<String>('pet_action_prop_motion_$action'),
+              angle: frame.angle,
+              child: Transform.scale(
+                scale: frame.scale,
+                child: ExcludeSemantics(
+                  child: Image.asset(
+                    'assets/art/pets/action_props/pet_action_prop_$assetName.png',
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, _, _) => const SizedBox.shrink(),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+_PetActionPropFrame _petActionPropFrame({
+  required String action,
+  required String species,
+  required double t,
+  required bool reduceMotion,
+}) {
+  final edge = reduceMotion ? 1.0 : _actionEdge(t);
+  final cycle = _actionCycle(t);
+  final entrance = _smoothSegment(cycle, 0.02, 0.20);
+  final exit = 1 - _smoothSegment(cycle, 0.80, 0.98);
+  final presence = math.min(entrance, exit);
+  final stroke = math.sin(_segment(cycle, 0.20, 0.78) * math.pi * 3).abs();
+  final pulse = math.sin(cycle * math.pi * 2);
+  final active = reduceMotion ? 0.0 : 1.0;
+  final slowSpecies = species == 'turtle' || species == 'snake';
+  final tempoScale = slowSpecies ? 0.64 : 1.0;
+  final eatAlignment = switch (species) {
+    'snake' || 'chameleon' || 'turtle' => const Alignment(-0.54, 0.66),
+    'parrot' || 'starbug' || 'boo' => const Alignment(-0.18, 0.58),
+    _ => const Alignment(-0.54, 0.72),
+  };
+  final eatWidth = switch (species) {
+    'parrot' || 'starbug' || 'boo' => 0.32,
+    _ => 0.35,
+  };
+
+  return switch (action) {
+    'eat' => (
+      alignment: eatAlignment,
+      widthFactor: eatWidth,
+      dx: pulse * 1.2 * tempoScale * active,
+      dy: 3.0 + (1 - presence) * 9.0 * active,
+      angle: pulse * 0.006 * active,
+      scale: 0.94 + presence * 0.06,
+      opacity: edge * presence,
+    ),
+    'pat' => (
+      alignment: const Alignment(0.22, -0.82),
+      widthFactor: 0.52,
+      dx: pulse * 2.0 * active,
+      dy: -28.0 + entrance * 16.0 + stroke * 8.0 * tempoScale * active,
+      angle: -0.07 + pulse * 0.014 * active,
+      scale: 0.96 + stroke * 0.035 * active,
+      opacity: edge * presence,
+    ),
+    'play' => (
+      alignment: const Alignment(0.72, 0.82),
+      widthFactor: 0.42,
+      dx: (-22.0 + entrance * 22.0 + pulse * 18.0 * tempoScale) * active,
+      dy: 14.0 - stroke * 16.0 * tempoScale * active,
+      angle: pulse * 0.22 * tempoScale * active,
+      scale: 0.92 + stroke * 0.09 * active,
+      opacity: edge * presence,
+    ),
+    'bath' => (
+      alignment: const Alignment(0, 0.04),
+      widthFactor: 1.02,
+      dx: pulse * 1.4 * tempoScale * active,
+      dy: 10.0 + (1 - presence) * 12.0 * active,
+      angle: pulse * 0.008 * active,
+      scale: 0.94 + presence * 0.07 + stroke * 0.015 * active,
+      opacity: edge * presence,
+    ),
+    _ => (
+      alignment: const Alignment(0, 0.68),
+      widthFactor: 0.5,
+      dx: 0,
+      dy: 0,
+      angle: 0,
+      scale: 1,
+      opacity: 0,
+    ),
+  };
 }
 
 typedef _PetActionFrame = ({
@@ -540,7 +647,7 @@ _PetMotionProfile _petMotionProfile(String species) {
       sway: 1.42,
       floatiness: 0,
     ),
-    'cham' => (
+    'chameleon' => (
       tempo: 0.62,
       lift: 0.46,
       travel: 0.64,
@@ -599,14 +706,18 @@ _PetActionFrame _petActionFrame({
   };
   final reduced = reduceMotion ? 0.0 : 1.0;
   final strength = stageWeight * reduced;
-  final edge = math
-      .min(1.0, math.min(t / 0.10, (1 - t) / 0.10))
-      .clamp(0.0, 1.0)
-      .toDouble();
-  final phase = t * math.pi * 2 * profile.tempo;
-  final wave = math.sin(phase * 2) * edge;
-  final beat = math.sin(phase * 4).abs() * edge;
-  final leap = math.sin(phase * 2).abs() * edge;
+  final edge = _actionEdge(t);
+  final cycle = _actionCycle(t);
+  final prepare = _smoothSegment(cycle, 0.04, 0.22);
+  final engage = _smoothSegment(cycle, 0.20, 0.42);
+  final release = 1 - _smoothSegment(cycle, 0.70, 0.94);
+  final hold = math.min(engage, release) * edge;
+  final recover = _smoothSegment(cycle, 0.72, 0.98);
+  final gesturePhase = _segment(cycle, 0.25, 0.78);
+  final wave = math.sin(gesturePhase * math.pi * 4 * profile.tempo) * hold;
+  final beat =
+      math.sin(gesturePhase * math.pi * 6 * profile.tempo).abs() * hold;
+  final pounce = math.sin(_segment(cycle, 0.23, 0.72) * math.pi) * edge;
 
   var dx = 0.0;
   var dy = 0.0;
@@ -618,74 +729,80 @@ _PetActionFrame _petActionFrame({
   switch (action) {
     case 'eat':
       if (species == 'snake') {
-        dx = wave * 5.5 * profile.travel * strength;
-        dy = beat * 1.5 * strength;
-        angle = wave * 0.026 * strength;
+        dx = (-prepare * 5.0 + wave * 5.5 * profile.travel) * strength;
+        dy = (hold * 3.5 + beat * 1.8) * strength;
+        angle = (-hold * 0.028 + wave * 0.030) * strength;
       } else if (species == 'turtle') {
-        dx = leap * 3.2 * strength;
-        dy = beat * 1.2 * strength;
-        angle = -leap * 0.018 * strength;
+        dx = (-hold * 7.0 + wave * 2.0) * strength;
+        dy = (hold * 2.6 + beat * 1.2) * strength;
+        angle = (-hold * 0.024 + wave * 0.010) * strength;
       } else {
-        dy = beat * 5.2 * profile.squash * strength;
-        angle = wave * 0.010 * profile.sway * strength;
-        scaleX += beat * 0.018 * profile.squash * strength;
-        scaleY -= beat * 0.028 * profile.squash * strength;
+        dx = -hold * 7.0 * profile.travel * strength;
+        dy = (hold * 7.5 + beat * 2.8) * profile.squash * strength;
+        angle = (-hold * 0.045 + wave * 0.012 * profile.sway) * strength;
+        scaleX += (hold * 0.035 + beat * 0.018) * profile.squash * strength;
+        scaleY -= (hold * 0.050 + beat * 0.024) * profile.squash * strength;
       }
       break;
     case 'pat':
-      dy = -leap * 4.2 * profile.lift * strength;
-      dx = wave * 1.2 * profile.travel * strength;
-      angle = wave * 0.018 * profile.sway * strength;
-      scaleX += leap * 0.012 * profile.squash * strength;
-      scaleY += leap * 0.027 * profile.squash * strength;
-      if (species == 'snake' || species == 'cham') {
-        dy *= 0.45;
-        dx = wave * 4.4 * profile.travel * strength;
+      dy = (hold * 3.2 - beat * 2.2 * profile.lift) * strength;
+      dx = (hold * 4.0 + wave * 1.6 * profile.travel) * strength;
+      angle = (hold * 0.038 + wave * 0.014 * profile.sway) * strength;
+      scaleX += (hold * 0.025 + beat * 0.008) * profile.squash * strength;
+      scaleY -= (hold * 0.022 - beat * 0.010) * profile.squash * strength;
+      if (species == 'snake' || species == 'chameleon') {
+        dy *= 0.42;
+        dx = (hold * 5.5 + wave * 4.4 * profile.travel) * strength;
       }
       break;
     case 'play':
       if (species == 'snake') {
-        dx = wave * 10.5 * strength;
-        dy = -beat * 3.0 * strength;
-        angle = wave * 0.052 * strength;
+        dx = (-prepare * 4.0 + pounce * 15.0 + wave * 5.0) * strength;
+        dy = (-pounce * 4.5 + recover * 1.5) * strength;
+        angle = (wave * 0.070 - pounce * 0.028) * strength;
       } else if (species == 'turtle') {
-        dx = wave * 3.2 * strength;
-        dy = -leap * 2.4 * strength;
-        angle = wave * 0.018 * strength;
+        dx = (-prepare * 2.0 + pounce * 7.0 + wave * 1.8) * strength;
+        dy = -pounce * 3.2 * strength;
+        angle = (wave * 0.015 - pounce * 0.020) * strength;
       } else {
-        dy = -leap * 12 * profile.lift * strength;
-        dx = wave * 8 * profile.travel * strength;
-        angle = wave * 0.045 * profile.sway * strength;
-        scaleX += beat * 0.034 * profile.squash * strength;
-        scaleY -= beat * 0.020 * profile.squash * strength;
+        dx = (-prepare * 5.0 + pounce * 18.0 * profile.travel) * strength;
+        dy = (-pounce * 13.0 * profile.lift + recover * 2.0) * strength;
+        angle = (-prepare * 0.035 + pounce * 0.065 * profile.sway) * strength;
+        scaleX +=
+            (prepare * 0.045 - pounce * 0.018) * profile.squash * strength;
+        scaleY -=
+            (prepare * 0.055 - pounce * 0.030) * profile.squash * strength;
       }
       break;
     case 'bath':
       if (species == 'parrot') {
-        dy = -beat * 7.0 * strength;
-        dx = wave * 5.0 * strength;
-        angle = wave * 0.070 * strength;
+        dy = (hold * 5.0 - beat * 8.0) * strength;
+        dx = wave * 6.5 * strength;
+        angle = wave * 0.085 * strength;
       } else if (species == 'snake') {
-        dx = wave * 6.0 * strength;
-        scaleX += beat * 0.024 * strength;
-        scaleY -= beat * 0.016 * strength;
+        dx = wave * 7.0 * strength;
+        dy = hold * 4.0 * strength;
+        angle = wave * 0.040 * strength;
+        scaleX += (hold * 0.018 + beat * 0.030) * strength;
+        scaleY -= (hold * 0.025 + beat * 0.020) * strength;
       } else {
-        dy = wave * 2.8 * profile.lift * strength;
-        dx = wave * 3.2 * profile.travel * strength;
-        angle = wave * 0.032 * profile.sway * strength;
-        scaleX += beat * 0.019 * profile.squash * strength;
-        scaleY -= beat * 0.013 * profile.squash * strength;
+        dy = (hold * 7.0 + wave * 2.5 * profile.lift) * strength;
+        dx = wave * 4.8 * profile.travel * strength;
+        angle = wave * 0.055 * profile.sway * strength;
+        scaleX += (hold * 0.025 + beat * 0.024) * profile.squash * strength;
+        scaleY -= (hold * 0.040 + beat * 0.018) * profile.squash * strength;
       }
       break;
     default:
-      dy = -leap * 2.2 * profile.lift * strength;
+      dy = -pounce * 2.2 * profile.lift * strength;
       angle = wave * 0.012 * profile.sway * strength;
       break;
   }
 
   if (profile.floatiness > 0) {
-    dy -= math.sin(phase).abs() * 4.0 * profile.floatiness * strength;
-    opacity = 1 - math.sin(phase).abs() * 0.045 * profile.floatiness * strength;
+    final floatPulse = math.sin(cycle * math.pi).abs();
+    dy -= floatPulse * 4.0 * profile.floatiness * strength;
+    opacity = 1 - floatPulse * 0.045 * profile.floatiness * strength;
   }
   return (
     dx: dx,
@@ -695,6 +812,24 @@ _PetActionFrame _petActionFrame({
     angle: angle,
     opacity: opacity.clamp(0.88, 1.0).toDouble(),
   );
+}
+
+double _actionCycle(double t) {
+  if (t >= 1) return 1;
+  return (t * 2) % 1;
+}
+
+double _actionEdge(double t) => math
+    .min(1.0, math.min(t / 0.06, (1 - t) / 0.06))
+    .clamp(0.0, 1.0)
+    .toDouble();
+
+double _segment(double value, double start, double end) =>
+    ((value - start) / (end - start)).clamp(0.0, 1.0).toDouble();
+
+double _smoothSegment(double value, double start, double end) {
+  final x = _segment(value, start, end);
+  return x * x * (3 - 2 * x);
 }
 
 /// 点击时向上飘散并淡出的小爱心。

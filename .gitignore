@@ -40,6 +40,7 @@ build/
 # ── 其他 ───────────────────────────────────────
 *.log
 coverage/
+/tmp/
 
 # Regenerable visual-QA captures stay local for manual review. Commit the
 # accompanying README files, but keep hundreds of device renders out of LFS.

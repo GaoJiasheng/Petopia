@@ -451,22 +451,83 @@ class _VisualController extends GameController {
   ];
 
   @override
-  List<ShopItemView> shopItems() => const <ShopItemView>[
-    ShopItemView(
-      id: 'shop_theme_sakura',
-      name: '樱花小径',
-      category: '院子主题',
-      artRef: 'ui_shop_sakura',
-      effectType: EffectType.themeSkin,
-      effectSummary: '完整更换院子的季节、光影与景色',
-      price: 400,
-      originalPrice: 400,
-      owned: false,
-      affordable: true,
-      consumable: false,
-      themeId: 'sakura',
-    ),
-    ShopItemView(
+  List<ShopItemView> shopItems() => <ShopItemView>[
+    for (final theme in const <(String, String, String, String, int)>[
+      ('shop_theme_sakura', '樱花小径', 'ui_shop_sakura', 'sakura', 400),
+      (
+        'shop_theme_starry_camp',
+        '星夜帐篷',
+        'ui_shop_starry_camp',
+        'starry_camp',
+        600,
+      ),
+      (
+        'shop_theme_sea_breeze',
+        '海风假日',
+        'ui_shop_sea_breeze',
+        'sea_breeze',
+        500,
+      ),
+      (
+        'shop_theme_autumn_jam',
+        '秋日果酱',
+        'ui_shop_autumn_jam',
+        'autumn_jam',
+        500,
+      ),
+      (
+        'shop_theme_snow_house',
+        '雪屋暖灯',
+        'ui_shop_snow_house',
+        'snow_house',
+        600,
+      ),
+      ('shop_theme_rain_moss', '雨季青苔', 'ui_shop_rain_moss', 'rain_moss', 450),
+      (
+        'shop_theme_candy_bakery',
+        '糖果焙房',
+        'ui_shop_candy_bakery',
+        'candy_bakery',
+        550,
+      ),
+      (
+        'shop_theme_four_seasons',
+        '四季花园',
+        'ui_shop_four_seasons',
+        'four_seasons',
+        800,
+      ),
+      (
+        'shop_theme_bamboo_tea',
+        '青竹茶亭',
+        'ui_shop_bamboo_tea',
+        'bamboo_tea',
+        550,
+      ),
+      ('shop_theme_moonlight', '月光温室', 'ui_shop_moonlight', 'moonlight', 650),
+      (
+        'shop_theme_wheat_kite',
+        '麦浪风筝',
+        'ui_shop_wheat_kite',
+        'wheat_kite',
+        450,
+      ),
+    ])
+      ShopItemView(
+        id: theme.$1,
+        name: theme.$2,
+        category: '院子主题',
+        artRef: theme.$3,
+        effectType: EffectType.themeSkin,
+        effectSummary: '完整更换院子的季节、光影与景色',
+        price: theme.$5,
+        originalPrice: theme.$5,
+        owned: false,
+        affordable: true,
+        consumable: false,
+        themeId: theme.$4,
+      ),
+    const ShopItemView(
       id: 'shop_decor_wind_chime',
       name: '亮闪闪风铃',
       category: '装饰小物',
@@ -480,7 +541,7 @@ class _VisualController extends GameController {
       consumable: false,
       decorId: 'wind_chime',
     ),
-    ShopItemView(
+    const ShopItemView(
       id: 'shop_feed_salmon_cookie',
       name: '三文鱼小饼干 ×5',
       category: '特殊食粮',
@@ -492,6 +553,33 @@ class _VisualController extends GameController {
       owned: false,
       affordable: true,
       consumable: true,
+    ),
+    const ShopItemView(
+      id: 'shop_toy_yarn_ball',
+      name: '会咕咕叫的毛线球',
+      category: '特殊玩具',
+      artRef: 'ui_shop_yarn_ball',
+      effectType: EffectType.toyPermanentBonus,
+      effectSummary: '永久拥有，玩耍经验提升至 6 点',
+      price: 200,
+      originalPrice: 200,
+      owned: false,
+      affordable: true,
+      consumable: false,
+    ),
+    const ShopItemView(
+      id: 'shop_album_paper',
+      name: '相册皮肤·牛皮纸',
+      category: '相册与皮肤',
+      artRef: 'ui_shop_paper',
+      effectType: EffectType.albumSkin,
+      effectSummary: '更换相册纸张与收藏页的整体气氛',
+      price: 150,
+      originalPrice: 150,
+      owned: false,
+      affordable: true,
+      consumable: false,
+      albumSkinId: 'paper',
     ),
   ];
 
@@ -784,6 +872,19 @@ void main() {
       expect(tester.takeException(), isNull, reason: '$name has a UI error');
     }
 
+    Future<void> captureLastScrollAt(String name, double fraction) async {
+      final scrollables = find.byType(Scrollable);
+      expect(scrollables, findsWidgets, reason: '$name needs a scroll view');
+      final state = tester.state<ScrollableState>(scrollables.last);
+      state.position.jumpTo(state.position.maxScrollExtent * fraction);
+      await tester.pump(const Duration(milliseconds: 400));
+      await Future<void>.delayed(const Duration(milliseconds: 250));
+      await tester.pump();
+      _expectNoVisibleHanText(tester, name);
+      await _captureVisual(tester, name);
+      expect(tester.takeException(), isNull, reason: '$name has a UI error');
+    }
+
     await show('yard', const YardHomeScreen(enableCooldownRefresh: false));
     await show(
       'event-dialog',
@@ -827,7 +928,33 @@ void main() {
     await captureScrollEnd('visitor-compendium-bottom');
     await show('achievements', const AchievementsScreen());
     await show('shop', const ShopScreen());
-    await captureScrollEnd('shop-bottom');
+    await captureLastScrollAt('shop-themes-middle-1', 0.34);
+    await captureLastScrollAt('shop-themes-middle-2', 0.67);
+    await captureLastScrollAt('shop-themes-bottom', 1);
+    final logicalWidth =
+        tester.view.physicalSize.width / tester.view.devicePixelRatio;
+    if (logicalWidth >= 820) {
+      for (final category in const <(String, String, String)>[
+        ('Garden Themes', '院子主题', 'shop-category-themes'),
+        ('Decor', '装饰小物', 'shop-category-decor'),
+        ('Special Treats', '特殊食粮', 'shop-category-treats'),
+        ('Special Toys', '特殊玩具', 'shop-category-toys'),
+        ('Albums & Covers', '相册与皮肤', 'shop-category-albums'),
+      ]) {
+        final label = _localizedLabel(en: category.$1, zhHans: category.$2);
+        final labelFinder = find.text(label);
+        expect(labelFinder, findsWidgets, reason: '${category.$3} is missing');
+        await tester.tap(labelFinder.first);
+        await tester.pump(const Duration(milliseconds: 350));
+        _expectNoVisibleHanText(tester, category.$3);
+        await _captureVisual(tester, category.$3);
+        expect(
+          tester.takeException(),
+          isNull,
+          reason: '${category.$3} has a UI error',
+        );
+      }
+    }
 
     await show('settings-top', const SettingsScreen());
     await tester.scrollUntilVisible(

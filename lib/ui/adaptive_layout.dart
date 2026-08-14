@@ -58,8 +58,35 @@ class PetopiaAdaptive {
   static double dialogMaxWidth(double width) =>
       (width - 32).clamp(320.0, 720.0);
 
-  static double petStageWidth(Size size) =>
-      (math.min(size.width, size.height) * 0.34).clamp(220.0, 340.0);
+  static double petStageWidth(Size size) {
+    if (useYardSidePanels(size)) {
+      return (math.min(size.width, size.height) * 0.3225).clamp(240.0, 285.0);
+    }
+    if (size.width >= 600) {
+      return (math.min(size.width, size.height) * 0.30).clamp(225.0, 288.0);
+    }
+    return (size.width * 0.465).clamp(156.0, 189.0);
+  }
+
+  /// Keeps hand-painted yard actors at a consistent visual proportion instead
+  /// of applying one tablet multiplier to every iPad width. Portrait tablets
+  /// track the phone composition closely; landscape uses the wider anchor map
+  /// and a gentler multiplier so the side panels retain breathing room.
+  static double yardSceneScale(Size size) {
+    if (useYardSidePanels(size)) {
+      return (size.width / 760).clamp(1.55, 1.85);
+    }
+    return (size.width / 420).clamp(1.0, 2.35);
+  }
+
+  /// Keeps the current pet visually central in the open lawn, above the care
+  /// controls and clear of the secondary character lanes.
+  static Alignment yardPetAlignment(Size size) {
+    // Landscape keeps the animal in command of the composition while leaving
+    // a shallow foreground for bowls and other low, grounded props.
+    if (useYardSidePanels(size)) return const Alignment(0, 0.26);
+    return const Alignment(0, 0.36);
+  }
 
   /// Places a secondary yard character inside a side lane that cannot overlap
   /// the centered pet's layout box. Small phones reduce the secondary actor
@@ -71,9 +98,14 @@ class PetopiaAdaptive {
     required Alignment preferredAlignment,
     required double preferredSize,
   }) {
+    // Pet PNGs keep generous transparent safety margins so ears and tails are
+    // never clipped. Secondary actors should avoid the painted silhouette,
+    // not that full transparent canvas, otherwise they become unnecessarily
+    // tiny on phones.
+    final petCollisionWidth = petWidth * 0.80;
     final petRect = alignedSquareRect(
       sceneSize: sceneSize,
-      squareSize: petWidth,
+      squareSize: petCollisionWidth,
       alignment: petAlignment,
     );
     final placeOnRight = preferredAlignment.x > 0;
@@ -87,10 +119,20 @@ class PetopiaAdaptive {
       math.max(1.0, laneWidth - inset - gap),
     );
     final left = placeOnRight ? sceneSize.width - inset - actorSize : inset;
-    final top =
-        ((sceneSize.height - actorSize) * (preferredAlignment.y + 1) / 2)
-            .clamp(0.0, sceneSize.height - actorSize)
-            .toDouble();
+    // Secondary characters belong beside the pet, not in the decor field.
+    // Their horizontal lane still follows the preferred side, while the
+    // vertical center tracks the current pet so the lower lawn remains usable.
+    final preferredTop =
+        (sceneSize.height - actorSize) * (preferredAlignment.y + 1) / 2;
+    // Secondary animals are smaller and read as one depth step behind the
+    // current pet. Their visible feet therefore sit slightly higher in the
+    // lawn perspective instead of sharing an implausibly flat baseline.
+    final companionTop = petRect.bottom - actorSize * 2.30;
+    final groundedTop = sceneSize.height * 0.58 - actorSize;
+    final top = math
+        .max(math.min(preferredTop, companionTop), groundedTop)
+        .clamp(0.0, sceneSize.height - actorSize)
+        .toDouble();
     return Rect.fromLTWH(left, top, actorSize, actorSize);
   }
 
