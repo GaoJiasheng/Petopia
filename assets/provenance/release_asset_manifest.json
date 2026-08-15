@@ -1,9 +1,9 @@
 {
   "bytesByCategory": {
-    "art": 33276190,
+    "art": 33565742,
     "audio": 23934476,
     "content-data": 401844,
-    "runtime-art": 82207906
+    "runtime-art": 82176180
   },
   "counts": {
     "art": 233,
@@ -1077,17 +1077,17 @@
     },
     {
       "asset": "assets/art/world/themes/yard_theme_starcamp_bg.webp",
-      "bytes": 612162,
+      "bytes": 605794,
       "category": "art",
-      "sha256": "a62bc98bbfb1c9d4e127c57ec6b565eea745ee430342643445d02ccb5c5eb41e",
+      "sha256": "c06ca57911bbe0b261164ada640cea87b04f4bc01e4ec22f64b74cfff998e513",
       "source": "assets/art/world/exports_1290/themes/yard_theme_starcamp_bg_1290x2796.png",
       "sourceSha256": "0016294871168a5bbbffad5124069faa8804425802a32f994f66836848f249e6"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_starcamp_bg_night.webp",
-      "bytes": 536016,
+      "bytes": 831936,
       "category": "art",
-      "sha256": "d63900c54fd0d3fb64d66ad37beb63dde39d56985ee1cea2ef644b025e90c8f4",
+      "sha256": "68323b18980f432e07f9b7f5dfb9450b8ddcc9aa7f3ba8bf02892124d104a700",
       "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_starcamp_night.png",
       "sourceSha256": "f2ed3273c452f906faae8d3c9985513cce11fe091bf438cfaea7b30db51c6010"
     },
@@ -5363,19 +5363,19 @@
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_starcamp_bg_night_wide.webp",
-      "bytes": 712534,
+      "bytes": 648594,
       "category": "runtime-art",
-      "sha256": "5086d8967068f2fec0af874e03f9649156bbdcadcc8c669a935a090bb76580d4",
+      "sha256": "3a6f4424a260d8607819152d6d2cfb3b497900ec1f6140ccab4a5f4da579eaad",
       "source": "docs/art-review/theme-redesign/wide/night/yard_theme_starcamp_night.png",
       "sourceSha256": "70fe9c530d056ac3529ea830fd6f6aeaa4ed54ae2e1fb6428d5c54d581d0fe19"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_starcamp_bg_wide.webp",
-      "bytes": 801872,
+      "bytes": 834086,
       "category": "runtime-art",
-      "sha256": "193a92a81b71a4f03457f2f38dd655f9561f5e2cde4b6060c218775e4b4db631",
+      "sha256": "126748122f57fb8b46d2297cca42ac67fb2104911ffe394c9447c762a088bb57",
       "source": "assets/art/world/themes/wide/yard_theme_starcamp_bg_wide.jpg",
-      "sourceSha256": "45e4ee9ac625daf5864608d687d091a878051e84b1c66a029b8ad1610e050c40"
+      "sourceSha256": "d6191886429e6a61a60b37efce6e2fa8691152493ef57077d5f2662e275ce7c6"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_wheatkite_bg_night_wide.webp",

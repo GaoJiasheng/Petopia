@@ -50,7 +50,7 @@
     },
     {
       "asset": "yard_theme_starcamp_bg_wide.jpg",
-      "sha256": "45e4ee9ac625daf5864608d687d091a878051e84b1c66a029b8ad1610e050c40"
+      "sha256": "d6191886429e6a61a60b37efce6e2fa8691152493ef57077d5f2662e275ce7c6"
     },
     {
       "asset": "yard_theme_wheatkite_bg_wide.jpg",
@@ -85,6 +85,36 @@
         {
           "asset": "assets/runtime/yard/themes/wide/yard_theme_seaside_bg_night_wide.webp",
           "sha256": "6f7116a450894d621674a8d56471ccc74849872ac2fbc192d56fde0c31a385d8"
+        }
+      ]
+    },
+    "starcamp": {
+      "generatedAt": "2026-08-15",
+      "generator": "OpenAI imagegen",
+      "thirdPartyAssets": false,
+      "sourceResolution": "portrait 852x1846; wide 1448x1086",
+      "deliveryFormat": "opaque VP8 WebP; quality 92 except star-rich wide night at quality 84",
+      "composition": "cream tent, extinguished fire ring, unlit daytime string lights and picnic basket in the upper feature band; open middle and lower gameplay ground; luminous night with lit strings, campfire and Milky Way",
+      "assets": [
+        {
+          "asset": "assets/art/world/themes/wide/yard_theme_starcamp_bg_wide.jpg",
+          "sha256": "d6191886429e6a61a60b37efce6e2fa8691152493ef57077d5f2662e275ce7c6"
+        },
+        {
+          "asset": "assets/art/world/themes/yard_theme_starcamp_bg.webp",
+          "sha256": "c06ca57911bbe0b261164ada640cea87b04f4bc01e4ec22f64b74cfff998e513"
+        },
+        {
+          "asset": "assets/art/world/themes/yard_theme_starcamp_bg_night.webp",
+          "sha256": "68323b18980f432e07f9b7f5dfb9450b8ddcc9aa7f3ba8bf02892124d104a700"
+        },
+        {
+          "asset": "assets/runtime/yard/themes/wide/yard_theme_starcamp_bg_wide.webp",
+          "sha256": "126748122f57fb8b46d2297cca42ac67fb2104911ffe394c9447c762a088bb57"
+        },
+        {
+          "asset": "assets/runtime/yard/themes/wide/yard_theme_starcamp_bg_night_wide.webp",
+          "sha256": "3a6f4424a260d8607819152d6d2cfb3b497900ec1f6140ccab4a5f4da579eaad"
         }
       ]
     }
@@ -132,7 +162,7 @@
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_starcamp_bg_night_wide.webp",
-      "sha256": "5086d8967068f2fec0af874e03f9649156bbdcadcc8c669a935a090bb76580d4"
+      "sha256": "3a6f4424a260d8607819152d6d2cfb3b497900ec1f6140ccab4a5f4da579eaad"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_wheatkite_bg_night_wide.webp",
