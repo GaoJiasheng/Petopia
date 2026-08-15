@@ -748,9 +748,12 @@ class _ItemPreview extends StatelessWidget {
           color: _categoryColor(item.category).withValues(alpha: 0.12),
           child: themeId != null
               ? Image.asset(
-                  YardArt.themeBg(themeId),
+                  YardArt.themeBg(
+                    themeId,
+                    night: themeId == 'starry_camp' || themeId == 'moonlight',
+                  ),
                   fit: BoxFit.cover,
-                  alignment: Alignment.center,
+                  alignment: const Alignment(0, -0.62),
                   cacheWidth: 480,
                   errorBuilder: (_, _, _) => _ProductIcon(item: item),
                 )
