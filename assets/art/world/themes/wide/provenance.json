@@ -38,7 +38,7 @@
     },
     {
       "asset": "yard_theme_mossrain_bg_wide.jpg",
-      "sha256": "abaf1e4226d51f395285e64c63bd353142ad2c599c7d5ca15fb2c8be261dd489"
+      "sha256": "bf58f665a4a8d839b8f7c26b104ad699563c77a002721680d68b5d712b250a3e"
     },
     {
       "asset": "yard_theme_seaside_bg_wide.jpg",
@@ -177,6 +177,36 @@
           "sha256": "f4fcc9e20fb8632bd557fbd9e6db1fb823ed2511bdda3bb94dea42f3f7b8d66a"
         }
       ]
+    },
+    "mossrain": {
+      "generatedAt": "2026-08-15",
+      "generator": "OpenAI imagegen",
+      "thirdPartyAssets": false,
+      "sourceResolution": "portrait 852x1846; wide 1448x1086",
+      "deliveryFormat": "opaque VP8 WebP; daytime quality 92, night quality 90",
+      "composition": "mossy back steps, edge-hugging shallow stream, umbrella stand and fine rain around an open wet-stone gameplay courtyard; verified with the existing rain overlay",
+      "assets": [
+        {
+          "asset": "assets/art/world/themes/wide/yard_theme_mossrain_bg_wide.jpg",
+          "sha256": "bf58f665a4a8d839b8f7c26b104ad699563c77a002721680d68b5d712b250a3e"
+        },
+        {
+          "asset": "assets/art/world/themes/yard_theme_mossrain_bg.webp",
+          "sha256": "85c12bc4da4e3061d792dd32a5c5ed3e1070ff9bc0d5a24700b58e2929eb1233"
+        },
+        {
+          "asset": "assets/art/world/themes/yard_theme_mossrain_bg_night.webp",
+          "sha256": "f8699c667c684e32573f35ba39ed1faa1c8b71764fe1f04a9dd8d2122c079e1e"
+        },
+        {
+          "asset": "assets/runtime/yard/themes/wide/yard_theme_mossrain_bg_wide.webp",
+          "sha256": "b18e4210de02628b60069d5b1deb4a4060bd1828885beedb3da66f135c47fc71"
+        },
+        {
+          "asset": "assets/runtime/yard/themes/wide/yard_theme_mossrain_bg_night_wide.webp",
+          "sha256": "a4787ced4354206231f13e1ed66cad5beba333f2046f5944e4935593b08db6c8"
+        }
+      ]
     }
   },
   "nightRuntimeAssets": [
@@ -210,7 +240,7 @@
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_mossrain_bg_night_wide.webp",
-      "sha256": "6c4f515bafa97f4bd754001fc141bd9818f295704e307f854f1634adb6245739"
+      "sha256": "a4787ced4354206231f13e1ed66cad5beba333f2046f5944e4935593b08db6c8"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_seaside_bg_night_wide.webp",

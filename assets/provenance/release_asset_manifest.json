@@ -1,9 +1,9 @@
 {
   "bytesByCategory": {
-    "art": 33551044,
+    "art": 33619538,
     "audio": 23934476,
     "content-data": 401844,
-    "runtime-art": 81480480
+    "runtime-art": 81448452
   },
   "counts": {
     "art": 233,
@@ -1013,17 +1013,17 @@
     },
     {
       "asset": "assets/art/world/themes/yard_theme_mossrain_bg.webp",
-      "bytes": 713124,
+      "bytes": 711516,
       "category": "art",
-      "sha256": "e10b3e639f2315aedc14e99583b64d344f7dfaa786e329135c3bf46e7fd37f13",
+      "sha256": "85c12bc4da4e3061d792dd32a5c5ed3e1070ff9bc0d5a24700b58e2929eb1233",
       "source": "assets/art/world/exports_1290/themes/yard_theme_mossrain_bg_1290x2796.png",
       "sourceSha256": "c51761c10f672fcb3a5b770f97c575b659d601a76bb3d8a18cbea5f131427a9f"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_mossrain_bg_night.webp",
-      "bytes": 634636,
+      "bytes": 704738,
       "category": "art",
-      "sha256": "4d3c94f3bf4d049424a899dc0b7d5eb600e65f860ad33da0e182b5e8dd748f84",
+      "sha256": "f8699c667c684e32573f35ba39ed1faa1c8b71764fe1f04a9dd8d2122c079e1e",
       "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_mossrain_night.png",
       "sourceSha256": "8686d39dc1d3817ff864587642ab3a0535f0ec1ce101704a6b595fc3a772fa4a"
     },
@@ -5299,19 +5299,19 @@
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_mossrain_bg_night_wide.webp",
-      "bytes": 956818,
+      "bytes": 946844,
       "category": "runtime-art",
-      "sha256": "6c4f515bafa97f4bd754001fc141bd9818f295704e307f854f1634adb6245739",
+      "sha256": "a4787ced4354206231f13e1ed66cad5beba333f2046f5944e4935593b08db6c8",
       "source": "docs/art-review/theme-redesign/wide/night/yard_theme_mossrain_night.png",
       "sourceSha256": "32466b76ac73ea6139c7d94aa8079e06f87147127bd65d94a174513a73a8920b"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_mossrain_bg_wide.webp",
-      "bytes": 1043704,
+      "bytes": 1021650,
       "category": "runtime-art",
-      "sha256": "d862ad1b8daad55a29eeb41238f1affbabc986dca1393daa3825cc840fdf8cdc",
+      "sha256": "b18e4210de02628b60069d5b1deb4a4060bd1828885beedb3da66f135c47fc71",
       "source": "assets/art/world/themes/wide/yard_theme_mossrain_bg_wide.jpg",
-      "sourceSha256": "abaf1e4226d51f395285e64c63bd353142ad2c599c7d5ca15fb2c8be261dd489"
+      "sourceSha256": "bf58f665a4a8d839b8f7c26b104ad699563c77a002721680d68b5d712b250a3e"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_sakura_bg_night_wide.webp",
