@@ -81,65 +81,111 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen>
             final scaledBody = MediaQuery.textScalerOf(context).scale(14);
             final largeText = scaledBody >= 18;
             final accessibilityText = scaledBody >= 28;
-            final regularColumns = constraints.maxWidth >= 840
-                ? 4
-                : (constraints.maxWidth >= 600 ? 3 : 2);
+            final tablet = constraints.maxWidth >= 600;
+            final regularColumns = tablet ? 3 : 2;
             final columns = accessibilityText
                 ? (constraints.maxWidth >= 840 ? 2 : 1)
                 : regularColumns;
+            final intro = const Padding(
+              padding: EdgeInsets.fromLTRB(20, 4, 20, 12),
+              child: AppText(
+                '挑一只想要陪伴的小伙伴，给它取个名字吧',
+                style: TextStyle(color: _muted, fontSize: 14),
+              ),
+            );
+            Widget choicesGrid({required bool shrinkWrap}) {
+              return GridView.builder(
+                shrinkWrap: shrinkWrap,
+                physics: shrinkWrap
+                    ? const NeverScrollableScrollPhysics()
+                    : null,
+                padding: EdgeInsets.symmetric(
+                  horizontal: shrinkWrap
+                      ? 0
+                      : PetopiaAdaptive.sideMargin(context),
+                ),
+                gridDelegate: accessibilityText
+                    ? SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: columns,
+                        mainAxisExtent: 340,
+                        crossAxisSpacing: 12,
+                        mainAxisSpacing: 12,
+                      )
+                    : SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: columns,
+                        childAspectRatio: largeText ? 0.7 : 0.86,
+                        crossAxisSpacing: tablet ? 18 : 12,
+                        mainAxisSpacing: tablet ? 18 : 12,
+                      ),
+                itemCount: choices.length,
+                itemBuilder: (context, i) {
+                  final c = choices[i];
+                  final selected = c.speciesId == _selectedId;
+                  return _ChoiceCard(
+                    choice: c,
+                    selected: selected,
+                    onTap: () {
+                      setState(() {
+                        _selectedId = c.speciesId;
+                        if (_nameCtrl.text.trim().isEmpty) {
+                          _nameCtrl.text = c.name;
+                          _nameCtrl.selection = TextSelection(
+                            baseOffset: 0,
+                            extentOffset: _nameCtrl.text.length,
+                          );
+                        }
+                      });
+                    },
+                  );
+                },
+              );
+            }
+
+            if (tablet) {
+              final minGroupHeight = constraints.maxHeight > 48
+                  ? constraints.maxHeight - 48
+                  : 0.0;
+              return Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 1120),
+                  child: SingleChildScrollView(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: PetopiaAdaptive.sideMargin(context),
+                      vertical: 24,
+                    ),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(minHeight: minGroupHeight),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          intro,
+                          const SizedBox(height: 10),
+                          choicesGrid(shrinkWrap: true),
+                          const SizedBox(height: 22),
+                          ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: 760),
+                            child: _NameAndConfirm(
+                              controller: _nameCtrl,
+                              enabled: _selectedId != null && !_adopting,
+                              adopting: _adopting,
+                              onConfirm: _confirm,
+                              grouped: true,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
             return Center(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 1040),
                 child: Column(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(20, 4, 20, 12),
-                      child: AppText(
-                        '挑一只想要陪伴的小伙伴，给它取个名字吧',
-                        style: TextStyle(color: _muted, fontSize: 14),
-                      ),
-                    ),
-                    Expanded(
-                      child: GridView.builder(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: PetopiaAdaptive.sideMargin(context),
-                        ),
-                        gridDelegate: accessibilityText
-                            ? SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: columns,
-                                mainAxisExtent: 340,
-                                crossAxisSpacing: 12,
-                                mainAxisSpacing: 12,
-                              )
-                            : SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: columns,
-                                childAspectRatio: largeText ? 0.7 : 0.86,
-                                crossAxisSpacing: 12,
-                                mainAxisSpacing: 12,
-                              ),
-                        itemCount: choices.length,
-                        itemBuilder: (context, i) {
-                          final c = choices[i];
-                          final selected = c.speciesId == _selectedId;
-                          return _ChoiceCard(
-                            choice: c,
-                            selected: selected,
-                            onTap: () {
-                              setState(() {
-                                _selectedId = c.speciesId;
-                                if (_nameCtrl.text.trim().isEmpty) {
-                                  _nameCtrl.text = c.name;
-                                  _nameCtrl.selection = TextSelection(
-                                    baseOffset: 0,
-                                    extentOffset: _nameCtrl.text.length,
-                                  );
-                                }
-                              });
-                            },
-                          );
-                        },
-                      ),
-                    ),
+                    intro,
+                    Expanded(child: choicesGrid(shrinkWrap: false)),
                     _NameAndConfirm(
                       controller: _nameCtrl,
                       enabled: _selectedId != null && !_adopting,
@@ -248,11 +294,13 @@ class _NameAndConfirm extends StatelessWidget {
   final bool enabled;
   final bool adopting;
   final VoidCallback onConfirm;
+  final bool grouped;
   const _NameAndConfirm({
     required this.controller,
     required this.enabled,
     required this.adopting,
     required this.onConfirm,
+    this.grouped = false,
   });
 
   @override
@@ -279,11 +327,15 @@ class _NameAndConfirm extends StatelessWidget {
         16,
         12 + MediaQuery.of(context).viewInsets.bottom,
       ),
-      decoration: const BoxDecoration(
-        color: Color(0xFFFFFDF7),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(22)),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
-      ),
+      decoration:
+          const BoxDecoration(
+            color: Color(0xFFFFFDF7),
+            boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 10)],
+          ).copyWith(
+            borderRadius: grouped
+                ? BorderRadius.circular(18)
+                : const BorderRadius.vertical(top: Radius.circular(22)),
+          ),
       child: LayoutBuilder(
         builder: (context, constraints) {
           final stackControls = largeText || constraints.maxWidth < 360;
