@@ -1126,8 +1126,8 @@ abstract final class EnglishCopy {
     '远方也会寄回回忆': 'Memories Still Arrive from Afar',
     '选择一个槽位，再点已拥有的小物；同一个小物只会出现在一个位置。':
         'Choose a spot, then select owned decor. Each item can appear in only one place.',
-    '饭盆和水碗会留在宠物身边。其余小物可在最多 10 个固定点之间切换，每个位置只显示适合该远近层级的摆件。':
-        'Food and water stay close to your pet. Other decor can move among up to 10 fixed spots, with each spot showing items suited to its depth.',
+    '饭盆和水碗会留在宠物身边。其余小物可在最多 8 个固定点之间切换，每个位置只显示适合该远近层级的摆件。':
+        'Food and water stay close to your pet. Other decor can move among up to 8 fixed spots, with each spot showing items suited to its depth.',
     '前排 1': 'Front 1',
     '前排 2': 'Front 2',
     '前排 3': 'Front 3',
@@ -1144,8 +1144,6 @@ abstract final class EnglishCopy {
     '右侧前方': 'Right Front',
     '前景左侧': 'Foreground Left',
     '前景右侧': 'Foreground Right',
-    '后景中左': 'Rear Center Left',
-    '后景中右': 'Rear Center Right',
     '道具加成': 'Item Bonus',
     '院子布置': 'Garden Layout',
     '院子布置暂时没有打开': 'Garden layout is temporarily unavailable',

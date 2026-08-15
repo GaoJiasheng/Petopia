@@ -4278,7 +4278,7 @@ class _YardDecorLayoutScreen extends ConsumerWidget {
                     child: AppText(
                       inventory.isEmpty
                           ? '还没有可摆放的小物。去商店买到装饰后，就能指定到院子的固定位置。'
-                          : '饭盆和水碗会留在宠物身边。其余小物可在最多 10 个固定点之间切换，每个位置只显示适合该远近层级的摆件。',
+                          : '饭盆和水碗会留在宠物身边。其余小物可在最多 8 个固定点之间切换，每个位置只显示适合该远近层级的摆件。',
                       style: const TextStyle(
                         color: _muted,
                         height: 1.5,
@@ -4405,18 +4405,14 @@ String _decorSlotLabel(int pos) => switch (pos) {
   5 => '右侧前方',
   6 => '前景左侧',
   7 => '前景右侧',
-  8 => '后景中左',
-  9 => '后景中右',
   _ => '位置 ${pos + 1}',
 };
 
 bool _decorFitsSlot(int pos, String decorId) {
   if (const {'food_bowl_full', 'water_bowl'}.contains(decorId)) return false;
   const tall = <String>{'wind_chime', 'scarecrow', 'wind_vane', 'wood_sign'};
-  // The two foreground points are reserved for low, grounded objects. Rear
-  // center points take lighter silhouettes so the lawn entrance stays open.
+  // The two foreground points are reserved for low, grounded objects.
   if (pos == 6 || pos == 7) return !tall.contains(decorId);
-  if (pos == 8 || pos == 9) return decorId != 'fireplace';
   return true;
 }
 
