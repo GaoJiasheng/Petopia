@@ -248,15 +248,43 @@ class _OnboardingPage extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
     final imageSize = (size.shortestSide * 0.54).clamp(220.0, 380.0);
     final wide = size.width >= 900 && size.width > size.height;
+    final tabletPortrait = size.shortestSide >= 600 && !wide;
     final art = Semantics(
       image: true,
       label: context.tr(data.semantics),
-      child: Image.asset(
-        PetArt.stage('pet_cat', data.stage),
-        width: imageSize,
-        height: imageSize,
-        fit: BoxFit.contain,
-        excludeFromSemantics: true,
+      child: SizedBox.square(
+        dimension: imageSize,
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Positioned(
+              left: imageSize * 0.23,
+              right: imageSize * 0.23,
+              bottom: imageSize * 0.075,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: const Color(0x123E6F45),
+                  borderRadius: BorderRadius.circular(imageSize),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color(0x203E6F45),
+                      blurRadius: 20,
+                      spreadRadius: 1,
+                    ),
+                  ],
+                ),
+                child: SizedBox(height: imageSize * 0.055),
+              ),
+            ),
+            Image.asset(
+              PetArt.stage('pet_cat', data.stage),
+              width: imageSize,
+              height: imageSize,
+              fit: BoxFit.contain,
+              excludeFromSemantics: true,
+            ),
+          ],
+        ),
       ),
     );
     final words = Column(
@@ -308,7 +336,14 @@ class _OnboardingPage extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(child: Center(child: art)),
+          Expanded(
+            child: Align(
+              alignment: tabletPortrait
+                  ? const Alignment(0, 0.64)
+                  : Alignment.center,
+              child: art,
+            ),
+          ),
           words,
           const SizedBox(height: 18),
         ],
