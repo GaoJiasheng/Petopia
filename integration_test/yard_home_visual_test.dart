@@ -303,6 +303,118 @@ const _allDecorSlots = <YardSlotView>[
   YardSlotView(pos: 7, itemId: 'night_light'),
 ];
 
+const _selectedDecorRegressionSlots = <YardSlotView>[
+  YardSlotView(pos: 0, itemId: 'night_light'),
+  YardSlotView(pos: 1, itemId: 'wind_chime'),
+  YardSlotView(pos: 2, itemId: 'flower_box'),
+  YardSlotView(pos: 3, itemId: 'mushroom_bench'),
+  YardSlotView(pos: 4, itemId: 'scarecrow'),
+  YardSlotView(pos: 5, itemId: 'wood_sign'),
+];
+
+// A representative player-authored full yard. Unlike [_allDecorSlots], which
+// intentionally stacks the tallest silhouettes for collision stress testing,
+// this mix is meant for human composition review with all eight slots filled.
+const _fullPlayerDecorSlots = <YardSlotView>[
+  YardSlotView(pos: 0, itemId: 'night_light'),
+  YardSlotView(pos: 1, itemId: 'wind_chime'),
+  YardSlotView(pos: 2, itemId: 'flower_box'),
+  YardSlotView(pos: 3, itemId: 'mushroom_bench'),
+  YardSlotView(pos: 4, itemId: 'fireplace'),
+  YardSlotView(pos: 5, itemId: 'wind_vane'),
+  YardSlotView(pos: 6, itemId: 'album_shelf'),
+  YardSlotView(pos: 7, itemId: 'pond_small'),
+];
+
+const _compactDecorAnchorAlignmentsForTest = <int, Alignment>{
+  0: Alignment(-0.84, 0.05),
+  1: Alignment(0.82, 0.17),
+  2: Alignment(-0.88, 0.40),
+  3: Alignment(0.86, 0.37),
+  4: Alignment(-0.80, 0.68),
+  5: Alignment(0.78, 0.67),
+  6: Alignment(-0.30, 0.04),
+  7: Alignment(0.32, 0.07),
+};
+
+const _tabletDecorAnchorAlignmentsForTest = <int, Alignment>{
+  0: Alignment(-0.84, 0.03),
+  1: Alignment(0.82, 0.16),
+  2: Alignment(-0.88, 0.40),
+  3: Alignment(0.86, 0.38),
+  4: Alignment(-0.80, 0.72),
+  5: Alignment(0.78, 0.76),
+  6: Alignment(-0.30, 0.02),
+  7: Alignment(0.32, 0.05),
+};
+
+const _wideDecorAnchorAlignmentsForTest = <int, Alignment>{
+  0: Alignment(-0.84, 0.02),
+  1: Alignment(0.82, 0.16),
+  2: Alignment(-0.88, 0.40),
+  3: Alignment(0.86, 0.38),
+  4: Alignment(-0.80, 0.72),
+  5: Alignment(0.78, 0.76),
+  6: Alignment(-0.30, 0.01),
+  7: Alignment(0.32, 0.04),
+};
+
+const _compactDualActorAlignmentsForTest = <int, Alignment>{
+  0: Alignment(-0.84, 0.56),
+  1: Alignment(0.84, 0.58),
+  6: Alignment(-0.30, 0.04),
+  7: Alignment(0.32, 0.08),
+};
+
+const _tabletDualActorAlignmentsForTest = <int, Alignment>{
+  0: Alignment(-0.84, 0.56),
+  1: Alignment(0.84, 0.58),
+  6: Alignment(-0.30, 0.03),
+  7: Alignment(0.32, 0.07),
+};
+
+const _wideDualActorAlignmentsForTest = <int, Alignment>{
+  0: Alignment(-0.84, 0.56),
+  1: Alignment(0.84, 0.58),
+  6: Alignment(-0.30, 0.02),
+  7: Alignment(0.32, 0.06),
+};
+
+List<({YardSlotView slot, int targetPos})> _resolvedDecorSlotsForTest(
+  List<YardSlotView> slots,
+  Set<int> excludedPositions,
+  Map<int, Alignment> anchorAlignments,
+) {
+  final available = anchorAlignments.keys
+      .where((pos) => !excludedPositions.contains(pos))
+      .toSet();
+  final resolved = <({YardSlotView slot, int targetPos})>[];
+  for (final slot in slots) {
+    if (available.isEmpty) break;
+    final preferred = anchorAlignments[slot.pos];
+    final targetPos = available.reduce((best, candidate) {
+      if (candidate == slot.pos) return candidate;
+      if (best == slot.pos) return best;
+      if (preferred == null) return candidate < best ? candidate : best;
+      final bestAnchor = anchorAlignments[best]!;
+      final candidateAnchor = anchorAlignments[candidate]!;
+      final bestDistance =
+          math.pow(bestAnchor.x - preferred.x, 2) +
+          math.pow(bestAnchor.y - preferred.y, 2);
+      final candidateDistance =
+          math.pow(candidateAnchor.x - preferred.x, 2) +
+          math.pow(candidateAnchor.y - preferred.y, 2);
+      if (candidateDistance == bestDistance) {
+        return candidate < best ? candidate : best;
+      }
+      return candidateDistance < bestDistance ? candidate : best;
+    });
+    available.remove(targetPos);
+    resolved.add((slot: slot, targetPos: targetPos));
+  }
+  return resolved;
+}
+
 Rect _visualSubjectRect(Rect rect) {
   final inset = math.min(rect.width, rect.height) * 0.10;
   return rect.deflate(inset);
@@ -773,6 +885,37 @@ void main() {
           ),
         ),
       ],
+      (
+        name: 'selected-decor-both-actors',
+        view: _view(
+          theme: 'snow_house',
+          luxuryStage: 6,
+          decorSlots: _selectedDecorRegressionSlots,
+          visitor: _placementVisitor(rightLane: false),
+          revisitor: _revisitor(),
+          waterBowlOwned: true,
+        ),
+      ),
+      (
+        name: 'full-player-decor',
+        view: _view(
+          theme: 'meadow',
+          luxuryStage: 6,
+          decorSlots: _fullPlayerDecorSlots,
+          waterBowlOwned: true,
+        ),
+      ),
+      (
+        name: 'full-player-decor-both-actors',
+        view: _view(
+          theme: 'meadow',
+          luxuryStage: 6,
+          decorSlots: _fullPlayerDecorSlots,
+          visitor: _placementVisitor(rightLane: false),
+          revisitor: _revisitor(),
+          waterBowlOwned: true,
+        ),
+      ),
     ];
     final luxuryScenarios = <({String name, GameView view})>[
       for (var stage = 1; stage <= 6; stage++)
@@ -909,37 +1052,85 @@ void main() {
         final visitorUsesRightLane =
             scenario.view.activeVisitor != null &&
             _visitorUsesRightLaneForTest(scenario.view.activeVisitor!);
+        final bothSocialActors =
+            scenario.view.activeVisitor != null &&
+            scenario.view.revisitor != null;
         final occupiedAnimalPoints = <int>{
-          if (scenario.view.activeVisitor != null ||
-              scenario.view.revisitor != null) ...const <int>{8, 9},
+          if (bothSocialActors) ...const <int>{4, 5},
           if (scenario.view.activeVisitor != null)
-            ...(visitorUsesRightLane
-                ? const <int>{1, 3, 9}
-                : const <int>{0, 2, 8}),
+            ...(bothSocialActors
+                ? visitorUsesRightLane
+                      ? const <int>{3}
+                      : const <int>{2}
+                : visitorUsesRightLane
+                ? const <int>{1, 3}
+                : const <int>{0, 2}),
           if (scenario.view.revisitor != null)
-            ...(visitorUsesRightLane
-                ? const <int>{0, 2, 8}
-                : const <int>{1, 3, 9}),
+            ...(bothSocialActors
+                ? visitorUsesRightLane
+                      ? const <int>{2}
+                      : const <int>{3}
+                : const <int>{1, 3}),
         };
-        final decorFinders = <({YardSlotView slot, Finder finder})>[];
-        for (final slot in _allDecorSlots) {
+        final sceneSize = tester.getSize(
+          find.byKey(const ValueKey<String>('yard_background')),
+        );
+        final wideLayout =
+            sceneSize.width >= 900 && sceneSize.width > sceneSize.height * 1.05;
+        final tabletPortrait = !wideLayout && sceneSize.width >= 600;
+        final standardAnchorAlignments = wideLayout
+            ? _wideDecorAnchorAlignmentsForTest
+            : tabletPortrait
+            ? _tabletDecorAnchorAlignmentsForTest
+            : _compactDecorAnchorAlignmentsForTest;
+        final dualActorLayout = occupiedAnimalPoints.containsAll(const <int>{
+          2,
+          3,
+          4,
+          5,
+        });
+        final anchorAlignments = dualActorLayout
+            ? wideLayout
+                  ? _wideDualActorAlignmentsForTest
+                  : tabletPortrait
+                  ? _tabletDualActorAlignmentsForTest
+                  : _compactDualActorAlignmentsForTest
+            : standardAnchorAlignments;
+        final resolvedDecor = _resolvedDecorSlotsForTest(
+          scenario.view.decorSlots,
+          occupiedAnimalPoints,
+          anchorAlignments,
+        );
+        final decorFinders =
+            <({YardSlotView slot, int targetPos, Finder finder})>[];
+        for (final slot in scenario.view.decorSlots) {
           final finder = find.byKey(
             ValueKey<String>('yard_decor_6_${slot.itemId}'),
           );
-          if (occupiedAnimalPoints.contains(slot.pos)) {
+          final placement = resolvedDecor
+              .where((entry) => entry.slot.itemId == slot.itemId)
+              .firstOrNull;
+          if (placement == null) {
             expect(
               finder,
               findsNothing,
               reason:
-                  '${scenario.name} did not yield slot ${slot.pos} to an animal',
+                  '${scenario.name} rendered a lower-priority overflow '
+                  'item from slot ${slot.pos}',
             );
           } else {
             expect(
               finder,
               findsOneWidget,
-              reason: '${scenario.name} is missing decor slot ${slot.pos}',
+              reason:
+                  '${scenario.name} is missing selected decor '
+                  'slot ${slot.pos} at ${placement.targetPos}',
             );
-            decorFinders.add((slot: slot, finder: finder));
+            decorFinders.add((
+              slot: slot,
+              targetPos: placement.targetPos,
+              finder: finder,
+            ));
           }
         }
         for (final utility in const ['food_bowl_full', 'water_bowl']) {
@@ -949,16 +1140,21 @@ void main() {
             reason: '${scenario.name} is missing fixed utility $utility',
           );
         }
-        final hasSideActor =
-            scenario.view.activeVisitor != null ||
-            scenario.view.revisitor != null;
-        final sideActor = scenario.view.activeVisitor != null
-            ? find.byKey(const ValueKey<String>('active_visitor'))
-            : find.byKey(const ValueKey<String>('active_revisitor'));
+        final visitorFinder = find.byKey(
+          const ValueKey<String>('active_visitor'),
+        );
+        final revisitorFinder = find.byKey(
+          const ValueKey<String>('active_revisitor'),
+        );
         expect(
-          sideActor,
-          hasSideActor ? findsOneWidget : findsNothing,
-          reason: scenario.name,
+          visitorFinder,
+          scenario.view.activeVisitor != null ? findsOneWidget : findsNothing,
+          reason: '${scenario.name} visitor visibility mismatch',
+        );
+        expect(
+          revisitorFinder,
+          scenario.view.revisitor != null ? findsOneWidget : findsNothing,
+          reason: '${scenario.name} revisitor visibility mismatch',
         );
         final petRect = _visualSubjectRect(
           tester.getRect(find.byKey(const ValueKey<String>('yard_pet_sprite'))),
@@ -976,48 +1172,74 @@ void main() {
         final actionBarTop = tester
             .getRect(find.byKey(const ValueKey<String>('care_action_feed')))
             .top;
-        final actorRawRect = hasSideActor ? tester.getRect(sideActor) : null;
-        final actorRect = actorRawRect == null
-            ? null
-            : _visualSubjectRect(actorRawRect);
-        if (actorRawRect != null && actorRect != null) {
-          expect(
-            actorRawRect.bottom,
-            greaterThanOrEqualTo(animalGroundStart),
-            reason: '${scenario.name} side actor is standing above the lawn',
-          );
-          expect(
-            actorRawRect.bottom,
-            lessThan(actionBarTop - 8),
-            reason: '${scenario.name} side actor is hidden by the action bar',
-          );
-          expect(
-            _hasSubstantialOverlap(petRect, actorRect),
-            isFalse,
-            reason: '${scenario.name} overlaps the current pet and side actor',
-          );
-        }
-        final decorRects = <({YardSlotView slot, Rect rawRect, Rect rect})>[
-          for (final entry in decorFinders)
+        final actorRects = <({String name, Rect rawRect, Rect rect})>[
+          if (scenario.view.activeVisitor != null)
             (
-              slot: entry.slot,
-              rawRect: tester.getRect(entry.finder),
-              rect: _visualSubjectRect(tester.getRect(entry.finder)),
+              name: 'visitor',
+              rawRect: tester.getRect(visitorFinder),
+              rect: _visualSubjectRect(tester.getRect(visitorFinder)),
+            ),
+          if (scenario.view.revisitor != null)
+            (
+              name: 'revisitor',
+              rawRect: tester.getRect(revisitorFinder),
+              rect: _visualSubjectRect(tester.getRect(revisitorFinder)),
             ),
         ];
+        for (final actor in actorRects) {
+          expect(
+            actor.rawRect.bottom,
+            greaterThanOrEqualTo(animalGroundStart),
+            reason: '${scenario.name} ${actor.name} is standing above the lawn',
+          );
+          expect(
+            actor.rawRect.bottom,
+            lessThan(actionBarTop - 8),
+            reason:
+                '${scenario.name} ${actor.name} is hidden by the action bar',
+          );
+          expect(
+            _hasSubstantialOverlap(petRect, actor.rect),
+            isFalse,
+            reason: '${scenario.name} overlaps the pet and ${actor.name}',
+          );
+        }
+        for (var i = 0; i < actorRects.length; i++) {
+          for (var j = i + 1; j < actorRects.length; j++) {
+            expect(
+              _hasSubstantialOverlap(actorRects[i].rect, actorRects[j].rect),
+              isFalse,
+              reason:
+                  '${scenario.name} overlaps ${actorRects[i].name} and '
+                  '${actorRects[j].name}',
+            );
+          }
+        }
+        final decorRects =
+            <({YardSlotView slot, int targetPos, Rect rawRect, Rect rect})>[
+              for (final entry in decorFinders)
+                (
+                  slot: entry.slot,
+                  targetPos: entry.targetPos,
+                  rawRect: tester.getRect(entry.finder),
+                  rect: _visualSubjectRect(tester.getRect(entry.finder)),
+                ),
+            ];
         final placementIssues = <String>[];
         for (var i = 0; i < decorRects.length; i++) {
           final current = decorRects[i];
           // 6/7 are the back row that sits behind the pet; 4/5 are the near
           // foreground; 2/3 flank the pet; 0/1 are the upper side pair.
-          final minimumBaseline = current.slot.pos >= 4 && current.slot.pos <= 5
+          final minimumBaseline =
+              current.targetPos >= 4 && current.targetPos <= 5
               ? foregroundStart
-              : current.slot.pos >= 2 && current.slot.pos <= 3
+              : current.targetPos >= 2 && current.targetPos <= 3
               ? sideGroundStart
               : farGroundStart;
           if (current.rawRect.bottom < minimumBaseline) {
             placementIssues.add(
-              'slot ${current.slot.pos} floats above its depth band: '
+              'slot ${current.slot.pos}->${current.targetPos} floats above '
+              'its depth band: '
               '${current.rawRect}',
             );
           }
@@ -1039,11 +1261,13 @@ void main() {
               'slot ${current.slot.pos} overlaps pet: ${current.rect}',
             );
           }
-          if (actorRect != null &&
-              _hasSubstantialOverlap(current.rect, actorRect)) {
-            placementIssues.add(
-              'slot ${current.slot.pos} overlaps side actor: ${current.rect}',
-            );
+          for (final actor in actorRects) {
+            if (_hasSubstantialOverlap(current.rect, actor.rect)) {
+              placementIssues.add(
+                'slot ${current.slot.pos} overlaps ${actor.name}: '
+                '${current.rect}',
+              );
+            }
           }
           for (var j = i + 1; j < decorRects.length; j++) {
             final other = decorRects[j];
@@ -1062,9 +1286,9 @@ void main() {
               '${scenario.name} placement issues (ground bands start at '
               '$farGroundStart/$sideGroundStart/$foregroundStart, '
               'action bar starts at $actionBarTop, pet: '
-              '$petRect, side actor: $actorRect):\n'
+              '$petRect, side actors: $actorRects):\n'
               '${placementIssues.join('\n')}\nall decor:\n'
-              '${decorRects.map((entry) => '${entry.slot.pos}: ${entry.rect}').join('\n')}',
+              '${decorRects.map((entry) => '${entry.slot.pos}->${entry.targetPos}: ${entry.rect}').join('\n')}',
         );
       }
       final fingerprint = await _capture(tester, scenario.name);

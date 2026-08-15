@@ -186,6 +186,7 @@ GameView _view({
   CareAction? preferredAction,
   bool careContented = false,
   List<YardMemoryView> recentMemories = const <YardMemoryView>[],
+  List<YardSlotView> decorSlots = const <YardSlotView>[],
 }) {
   return GameView(
     pet: emptyYard ? null : (pet ?? _pet()),
@@ -195,7 +196,7 @@ GameView _view({
     dailyMaxed: dailyMaxed,
     canGraduate: canGraduate,
     activeThemeId: theme,
-    decorSlots: const <YardSlotView>[],
+    decorSlots: decorSlots,
     activeVisitor: visitor,
     revisitor: revisitor,
     pendingEvent: pendingEvent,
@@ -856,6 +857,55 @@ void main() {
     semantics.dispose();
     await _disposeYard(tester);
   });
+
+  testWidgets(
+    'visitor reflow preserves selected decor identity instead of exposing stale slots',
+    (tester) async {
+      const selected = <YardSlotView>[
+        YardSlotView(pos: 0, itemId: 'night_light'),
+        YardSlotView(pos: 1, itemId: 'wind_chime'),
+        YardSlotView(pos: 2, itemId: 'flower_box'),
+        YardSlotView(pos: 3, itemId: 'mushroom_bench'),
+        YardSlotView(pos: 4, itemId: 'scarecrow'),
+        YardSlotView(pos: 5, itemId: 'wood_sign'),
+      ];
+      await _pumpYard(
+        tester,
+        size: const Size(393, 852),
+        safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+        view: _view(
+          luxuryStage: 6,
+          decorSlots: selected,
+          visitor: _visitor(),
+          revisitor: _revisitor(),
+        ),
+      );
+
+      for (final itemId in const <String>[
+        'night_light',
+        'wind_chime',
+        'flower_box',
+        'mushroom_bench',
+      ]) {
+        expect(
+          find.byKey(ValueKey<String>('yard_decor_6_$itemId')),
+          findsOneWidget,
+          reason: '$itemId should move to a free lawn point',
+        );
+      }
+      for (final staleItemId in const <String>['scarecrow', 'wood_sign']) {
+        expect(
+          find.byKey(ValueKey<String>('yard_decor_6_$staleItemId')),
+          findsNothing,
+          reason: '$staleItemId must not replace a higher-priority selection',
+        );
+      }
+      expect(find.byKey(const ValueKey<String>('active_visitor')), findsOne);
+      expect(find.byKey(const ValueKey<String>('active_revisitor')), findsOne);
+      expect(tester.takeException(), isNull);
+      await _disposeYard(tester);
+    },
+  );
 
   testWidgets('core yard controls meet platform accessibility guidelines', (
     tester,

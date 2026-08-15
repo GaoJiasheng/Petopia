@@ -485,17 +485,24 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                 final visitorUsesRightLane =
                     view.activeVisitor != null &&
                     _visitorYardPlacement(view.activeVisitor!).alignment.x > 0;
+                final bothSocialActors =
+                    view.activeVisitor != null && view.revisitor != null;
                 final occupiedAnimalPoints = <int>{
-                  if (view.activeVisitor != null ||
-                      view.revisitor != null) ...const <int>{8, 9},
+                  if (bothSocialActors) ...const <int>{4, 5},
                   if (view.activeVisitor != null)
-                    ...(visitorUsesRightLane
-                        ? const <int>{1, 3, 9}
-                        : const <int>{0, 2, 8}),
+                    ...(bothSocialActors
+                        ? visitorUsesRightLane
+                              ? const <int>{3}
+                              : const <int>{2}
+                        : visitorUsesRightLane
+                        ? const <int>{1, 3}
+                        : const <int>{0, 2}),
                   if (view.revisitor != null)
-                    ...(visitorUsesRightLane
-                        ? const <int>{0, 2, 8}
-                        : const <int>{1, 3, 9}),
+                    ...(bothSocialActors
+                        ? visitorUsesRightLane
+                              ? const <int>{2}
+                              : const <int>{3}
+                        : const <int>{1, 3}),
                 };
                 final visibleDecor =
                     <_VisibleDecor>[
@@ -2843,7 +2850,7 @@ const _wideDecorAnchors = <int, _DecorAnchor>{
   2: _DecorAnchor(Alignment(-0.88, 0.40), 62),
   3: _DecorAnchor(Alignment(0.86, 0.38), 64),
   4: _DecorAnchor(Alignment(-0.80, 0.72), 70),
-  5: _DecorAnchor(Alignment(0.78, 0.70), 72),
+  5: _DecorAnchor(Alignment(0.78, 0.76), 72),
   6: _DecorAnchor(Alignment(-0.30, 0.01), 48),
   7: _DecorAnchor(Alignment(0.32, 0.04), 50),
 };
@@ -2854,24 +2861,48 @@ const _tabletPortraitDecorAnchors = <int, _DecorAnchor>{
   2: _DecorAnchor(Alignment(-0.88, 0.40), 53),
   3: _DecorAnchor(Alignment(0.86, 0.38), 55),
   4: _DecorAnchor(Alignment(-0.80, 0.72), 60),
-  5: _DecorAnchor(Alignment(0.78, 0.70), 61),
+  5: _DecorAnchor(Alignment(0.78, 0.76), 61),
   6: _DecorAnchor(Alignment(-0.30, 0.02), 42),
   7: _DecorAnchor(Alignment(0.32, 0.05), 44),
 };
 
+// When both social actors are present, the outer pair drops below their feet
+// while the center pair stays in the rear lawn. This leaves the shallow
+// foreground to the pet's two bowls instead of forming another prop row.
+const _compactDualActorDecorAnchors = <int, _DecorAnchor>{
+  0: _DecorAnchor(Alignment(-0.84, 0.56), 62),
+  1: _DecorAnchor(Alignment(0.84, 0.58), 64),
+  6: _DecorAnchor(Alignment(-0.30, 0.04), 54),
+  7: _DecorAnchor(Alignment(0.32, 0.08), 56),
+};
+
+const _tabletDualActorDecorAnchors = <int, _DecorAnchor>{
+  0: _DecorAnchor(Alignment(-0.84, 0.56), 52),
+  1: _DecorAnchor(Alignment(0.84, 0.58), 54),
+  6: _DecorAnchor(Alignment(-0.30, 0.03), 46),
+  7: _DecorAnchor(Alignment(0.32, 0.07), 48),
+};
+
+const _wideDualActorDecorAnchors = <int, _DecorAnchor>{
+  0: _DecorAnchor(Alignment(-0.84, 0.56), 60),
+  1: _DecorAnchor(Alignment(0.84, 0.58), 62),
+  6: _DecorAnchor(Alignment(-0.30, 0.02), 52),
+  7: _DecorAnchor(Alignment(0.32, 0.06), 54),
+};
+
 const _compactUtilityAnchors = <String, _DecorAnchor>{
-  'food_bowl_full': _DecorAnchor(Alignment(-0.26, 0.62), 72),
-  'water_bowl': _DecorAnchor(Alignment(0.28, 0.68), 72),
+  'food_bowl_full': _DecorAnchor(Alignment(-0.18, 0.59), 50),
+  'water_bowl': _DecorAnchor(Alignment(0.19, 0.64), 50),
 };
 
 const _tabletPortraitUtilityAnchors = <String, _DecorAnchor>{
-  'food_bowl_full': _DecorAnchor(Alignment(-0.24, 0.63), 72),
-  'water_bowl': _DecorAnchor(Alignment(0.26, 0.69), 72),
+  'food_bowl_full': _DecorAnchor(Alignment(-0.17, 0.60), 50),
+  'water_bowl': _DecorAnchor(Alignment(0.18, 0.65), 50),
 };
 
 const _wideUtilityAnchors = <String, _DecorAnchor>{
-  'food_bowl_full': _DecorAnchor(Alignment(-0.23, 0.62), 82),
-  'water_bowl': _DecorAnchor(Alignment(0.25, 0.68), 82),
+  'food_bowl_full': _DecorAnchor(Alignment(-0.17, 0.59), 58),
+  'water_bowl': _DecorAnchor(Alignment(0.18, 0.64), 58),
 };
 
 List<_VisibleDecor> _fixedYardUtilities({
@@ -2914,6 +2945,17 @@ double _decorWidthScale(String decorId) => switch (decorId) {
   _ => 1.0,
 };
 
+double _decorDepthEmphasis(String decorId, double footprintY) {
+  if (footprintY >= 0.20) return 1;
+  return switch (decorId) {
+    // These low silhouettes lose too much presence after normal far-row
+    // perspective scaling. Restore their readable painted footprint without
+    // changing the depth or enlarging copies placed nearer to the pet.
+    'flower_box' || 'mushroom_bench' => 1.9,
+    _ => 1.0,
+  };
+}
+
 /// Builds one prop on the lawn.
 ///
 /// Placed decor (the slot system) is sized by height so authored proportions
@@ -2942,7 +2984,11 @@ _YardDecor _placedDecor(
     align: decor.anchor.align,
     decorId: decor.decorId,
     width: heightDriven ? null : unit * _decorWidthScale(decor.decorId),
-    height: heightDriven ? unit * _decorHeightRatio(decor.decorId) : null,
+    height: heightDriven
+        ? unit *
+              _decorHeightRatio(decor.decorId) *
+              _decorDepthEmphasis(decor.decorId, decor.anchor.align.y)
+        : null,
   );
 }
 
@@ -2963,9 +3009,9 @@ double _decorHeightRatio(String decorId) => switch (decorId) {
   'album_shelf' => 1.33,
   // Waist-high furniture.
   'fireplace' => 1.04,
-  'night_light' => 0.82,
-  'mushroom_bench' => 0.65,
-  'flower_box' => 0.62,
+  'night_light' => 1.02,
+  'mushroom_bench' => 0.94,
+  'flower_box' => 0.90,
   // Ground-hugging props: wide and low, never towers.
   'food_bowl_full' => 0.66,
   'flowerbed_small' => 0.45,
@@ -3032,19 +3078,66 @@ List<_VisibleDecor> _visibleDecor(
     }
     return _defaultDecor;
   }
-  final anchors = wideLayout
+  final standardAnchors = wideLayout
       ? _wideDecorAnchors
       : tabletPortrait
       ? _tabletPortraitDecorAnchors
       : _compactDecorAnchors;
-  return [
-    for (final slot in slots)
-      if (slot.itemId != null &&
-          anchors[slot.pos] != null &&
-          !excludedPositions.contains(slot.pos))
-        if (!const {'food_bowl_full', 'water_bowl'}.contains(slot.itemId))
-          _VisibleDecor(slot.itemId!, anchors[slot.pos]!),
-  ];
+  final dualActorLayout = excludedPositions.containsAll(const <int>{
+    2,
+    3,
+    4,
+    5,
+  });
+  final anchors = dualActorLayout
+      ? wideLayout
+            ? _wideDualActorDecorAnchors
+            : tabletPortrait
+            ? _tabletDualActorDecorAnchors
+            : _compactDualActorDecorAnchors
+      : standardAnchors;
+  final selectedSlots =
+      slots
+          .where(
+            (slot) =>
+                slot.itemId != null &&
+                !const {'food_bowl_full', 'water_bowl'}.contains(slot.itemId),
+          )
+          .toList(growable: false)
+        ..sort((a, b) => a.pos.compareTo(b.pos));
+  final availablePositions = anchors.keys
+      .where((pos) => !excludedPositions.contains(pos))
+      .toSet();
+  final visible = <_VisibleDecor>[];
+
+  // A visitor may temporarily occupy a configured decor point. Preserve the
+  // player's selected item by moving it to the nearest free lawn anchor. Slot
+  // order remains the display priority, so a newly arranged rear row cannot
+  // disappear and expose unrelated items from lower, older points instead.
+  for (final slot in selectedSlots) {
+    if (availablePositions.isEmpty) break;
+    final preferredAnchor = anchors[slot.pos];
+    final targetPos = availablePositions.reduce((best, candidate) {
+      if (candidate == slot.pos) return candidate;
+      if (best == slot.pos) return best;
+      if (preferredAnchor == null) return candidate < best ? candidate : best;
+      final bestAnchor = anchors[best]!;
+      final candidateAnchor = anchors[candidate]!;
+      final bestDistance =
+          math.pow(bestAnchor.align.x - preferredAnchor.align.x, 2) +
+          math.pow(bestAnchor.align.y - preferredAnchor.align.y, 2);
+      final candidateDistance =
+          math.pow(candidateAnchor.align.x - preferredAnchor.align.x, 2) +
+          math.pow(candidateAnchor.align.y - preferredAnchor.align.y, 2);
+      if (candidateDistance == bestDistance) {
+        return candidate < best ? candidate : best;
+      }
+      return candidateDistance < bestDistance ? candidate : best;
+    });
+    availablePositions.remove(targetPos);
+    visible.add(_VisibleDecor(slot.itemId!, anchors[targetPos]!));
+  }
+  return visible;
 }
 
 /// 毕业提示横幅（达到毕业线时出现在动作栏上方）。
