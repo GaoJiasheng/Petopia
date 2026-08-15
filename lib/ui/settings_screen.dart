@@ -928,7 +928,7 @@ class _InfoLine extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 54,
+          width: 66,
           child: AppText(
             label,
             style: const TextStyle(
