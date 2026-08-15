@@ -54,7 +54,7 @@
     },
     {
       "asset": "yard_theme_wheatkite_bg_wide.jpg",
-      "sha256": "bcdbf48bdd8770f1ca0476eaeee0048a6088ac2d6c3e7f9934395c1d47f5f007"
+      "sha256": "caa7e38106eb4ee9203398a58ad3e15f15c5bbe07966e77c2864e5b0c2de9a40"
     }
   ],
   "themeRevamps": {
@@ -207,6 +207,36 @@
           "sha256": "a4787ced4354206231f13e1ed66cad5beba333f2046f5944e4935593b08db6c8"
         }
       ]
+    },
+    "wheatkite": {
+      "generatedAt": "2026-08-15",
+      "generator": "OpenAI imagegen",
+      "thirdPartyAssets": false,
+      "sourceResolution": "portrait 852x1846; wide 1448x1086",
+      "deliveryFormat": "opaque VP8 WebP; daytime quality 92, night portrait quality 90, night wide quality 88",
+      "composition": "exactly three separated diamond kites and a golden wheat field in the upper shop-preview feature band, with a spool basket at the far edge and an open middle and lower gameplay lawn",
+      "assets": [
+        {
+          "asset": "assets/art/world/themes/wide/yard_theme_wheatkite_bg_wide.jpg",
+          "sha256": "caa7e38106eb4ee9203398a58ad3e15f15c5bbe07966e77c2864e5b0c2de9a40"
+        },
+        {
+          "asset": "assets/art/world/themes/yard_theme_wheatkite_bg.webp",
+          "sha256": "37bf8b427bf66251e0aa3fecef3a603bfb8a2baee75d14e833141b1203d47531"
+        },
+        {
+          "asset": "assets/art/world/themes/yard_theme_wheatkite_bg_night.webp",
+          "sha256": "6f1bd34328dd18522f83813da2b24a5b0039f0532c9b2ae4aaa4b03c1a12b2f9"
+        },
+        {
+          "asset": "assets/runtime/yard/themes/wide/yard_theme_wheatkite_bg_wide.webp",
+          "sha256": "fb7f191e35c49aea498cbffc5dbfc728e64cfe60b1fadda8cb4d25425c9386c8"
+        },
+        {
+          "asset": "assets/runtime/yard/themes/wide/yard_theme_wheatkite_bg_night_wide.webp",
+          "sha256": "3e3e3bdc5c729d8c3f54dc88d1e638508337863c7acdc33e05e5542c2a879446"
+        }
+      ]
     }
   },
   "nightRuntimeAssets": [
@@ -256,7 +286,7 @@
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_wheatkite_bg_night_wide.webp",
-      "sha256": "27437a64dbf50ab37882e834c304e917c81b4fb9f7f9d001aaa5e7b6dcb8af55"
+      "sha256": "3e3e3bdc5c729d8c3f54dc88d1e638508337863c7acdc33e05e5542c2a879446"
     }
   ]
 }

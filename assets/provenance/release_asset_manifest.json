@@ -1,9 +1,9 @@
 {
   "bytesByCategory": {
-    "art": 33619538,
+    "art": 33396716,
     "audio": 23934476,
     "content-data": 401844,
-    "runtime-art": 81448452
+    "runtime-art": 81245592
   },
   "counts": {
     "art": 233,
@@ -1093,17 +1093,17 @@
     },
     {
       "asset": "assets/art/world/themes/yard_theme_wheatkite_bg.webp",
-      "bytes": 731824,
+      "bytes": 497804,
       "category": "art",
-      "sha256": "5c85dc9e0ced4dcc8195c37e2a247e8c735cdbed155960385884e6cd40a0a582",
+      "sha256": "37bf8b427bf66251e0aa3fecef3a603bfb8a2baee75d14e833141b1203d47531",
       "source": "assets/art/world/exports_1290/themes/yard_theme_wheatkite_bg_1290x2796.png",
       "sourceSha256": "462ccea7ef2f62f019e8c798cf7c2f6677f2809ac02b0894e9f638d3c1c86751"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_wheatkite_bg_night.webp",
-      "bytes": 546918,
+      "bytes": 558116,
       "category": "art",
-      "sha256": "fcb5ef4db82511f2053dbcdf415f18f9bd795ce90b60292dafe2ddcf8937f5f4",
+      "sha256": "6f1bd34328dd18522f83813da2b24a5b0039f0532c9b2ae4aaa4b03c1a12b2f9",
       "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_wheatkite_night.png",
       "sourceSha256": "bb7d33a34daa730342cb2136b51d9a9c17cb2a9389683b24ec819870f8da29f6"
     },
@@ -5379,19 +5379,19 @@
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_wheatkite_bg_night_wide.webp",
-      "bytes": 734160,
+      "bytes": 714228,
       "category": "runtime-art",
-      "sha256": "27437a64dbf50ab37882e834c304e917c81b4fb9f7f9d001aaa5e7b6dcb8af55",
+      "sha256": "3e3e3bdc5c729d8c3f54dc88d1e638508337863c7acdc33e05e5542c2a879446",
       "source": "docs/art-review/theme-redesign/wide/night/yard_theme_wheatkite_night.png",
       "sourceSha256": "f20aef30a4c7cb724d6b3723f5287496fea42fefb039deee8e58773f1edb2f27"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_wheatkite_bg_wide.webp",
-      "bytes": 867400,
+      "bytes": 684472,
       "category": "runtime-art",
-      "sha256": "ccfd3b1f78c397363f9bbc50e8c472a4d38bf0526407976b579f961d3a3e1d8f",
+      "sha256": "fb7f191e35c49aea498cbffc5dbfc728e64cfe60b1fadda8cb4d25425c9386c8",
       "source": "assets/art/world/themes/wide/yard_theme_wheatkite_bg_wide.jpg",
-      "sourceSha256": "bcdbf48bdd8770f1ca0476eaeee0048a6088ac2d6c3e7f9934395c1d47f5f007"
+      "sourceSha256": "caa7e38106eb4ee9203398a58ad3e15f15c5bbe07966e77c2864e5b0c2de9a40"
     }
   ],
   "license": "ASSET_LICENSE applies to art and audio; LICENSE applies to code.",
