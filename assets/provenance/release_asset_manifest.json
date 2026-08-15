@@ -1,9 +1,9 @@
 {
   "bytesByCategory": {
-    "art": 33565742,
+    "art": 33314116,
     "audio": 23934476,
     "content-data": 401844,
-    "runtime-art": 82176180
+    "runtime-art": 81659100
   },
   "counts": {
     "art": 233,
@@ -997,17 +997,17 @@
     },
     {
       "asset": "assets/art/world/themes/yard_theme_moongreen_bg.webp",
-      "bytes": 634082,
+      "bytes": 489088,
       "category": "art",
-      "sha256": "8d1a424f1bd9aeed8e1e5dac069b0cd3cdd3017a2b1ad8f7d717a388beebe51e",
+      "sha256": "6a832e530cc577d78b2294b863a642ac4a978db8ceb65b55412b708d8e4263d9",
       "source": "assets/art/world/exports_1290/themes/yard_theme_moongreen_bg_1290x2796.png",
       "sourceSha256": "a0318d2855974a5e55f2830c14805ed0fb8fbe3e69f2e14b11f8e0f91f07e7d7"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_moongreen_bg_night.webp",
-      "bytes": 664710,
+      "bytes": 558078,
       "category": "art",
-      "sha256": "aa0d3ea08d152e8c1f3200a016828e99fe8e49786dd155b7ab3ec4305e1a7e0e",
+      "sha256": "6b199bd65f3d0695fb6b48c363a66c08cf525a12f9c7848c025794f418665eea",
       "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_moongreen_night.png",
       "sourceSha256": "96dfc32bfdf2e4c01b0161e8d76ac2add97823c4941b82dc349c92dfdf15bcf1"
     },
@@ -5283,19 +5283,19 @@
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_moongreen_bg_night_wide.webp",
-      "bytes": 965146,
+      "bytes": 758672,
       "category": "runtime-art",
-      "sha256": "8a9bb2d8161613ae02e47fa95bb83d6726118e543443140750cf8a7c3b7630da",
+      "sha256": "25b09ec4815ba2a28c6af204d821a134edfcd563ffbe11e5186fa5f66ac72380",
       "source": "docs/art-review/theme-redesign/wide/night/yard_theme_moongreen_night.png",
       "sourceSha256": "3da31dd5e64b3ce5f481aa1df1e891174215787d2e8fde11d8c973da4ff24195"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_moongreen_bg_wide.webp",
-      "bytes": 986630,
+      "bytes": 676024,
       "category": "runtime-art",
-      "sha256": "9e77e1361983b09d442ae7ed14ba88ec9e7ce08a5e0f4931a0ea6973ae016a2d",
+      "sha256": "53753fbbf5ce389f6f8a124e3fc8e2dfd11406a5ac2daae9f8e06a639d0e7c0f",
       "source": "assets/art/world/themes/wide/yard_theme_moongreen_bg_wide.jpg",
-      "sourceSha256": "04fb0ca9d3bfa5e74b02d5d626324a135a217159539644d39a1fc8010212396f"
+      "sourceSha256": "27c90c005ab831faf7bc3abfe50f015d2a88f0d41c5affdc9b62dc5f5e10a01c"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_mossrain_bg_night_wide.webp",

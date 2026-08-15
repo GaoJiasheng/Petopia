@@ -34,7 +34,7 @@
     },
     {
       "asset": "yard_theme_moongreen_bg_wide.jpg",
-      "sha256": "04fb0ca9d3bfa5e74b02d5d626324a135a217159539644d39a1fc8010212396f"
+      "sha256": "27c90c005ab831faf7bc3abfe50f015d2a88f0d41c5affdc9b62dc5f5e10a01c"
     },
     {
       "asset": "yard_theme_mossrain_bg_wide.jpg",
@@ -117,6 +117,36 @@
           "sha256": "3a6f4424a260d8607819152d6d2cfb3b497900ec1f6140ccab4a5f4da579eaad"
         }
       ]
+    },
+    "moongreen": {
+      "generatedAt": "2026-08-15",
+      "generator": "OpenAI imagegen",
+      "thirdPartyAssets": false,
+      "sourceResolution": "portrait 852x1846; wide 1448x1086",
+      "deliveryFormat": "opaque VP8 WebP, quality 92",
+      "composition": "glass conservatory dome, hanging ferns, paired stone lamps and edge plant shelves above an open pale limestone gameplay floor",
+      "assets": [
+        {
+          "asset": "assets/art/world/themes/wide/yard_theme_moongreen_bg_wide.jpg",
+          "sha256": "27c90c005ab831faf7bc3abfe50f015d2a88f0d41c5affdc9b62dc5f5e10a01c"
+        },
+        {
+          "asset": "assets/art/world/themes/yard_theme_moongreen_bg.webp",
+          "sha256": "6a832e530cc577d78b2294b863a642ac4a978db8ceb65b55412b708d8e4263d9"
+        },
+        {
+          "asset": "assets/art/world/themes/yard_theme_moongreen_bg_night.webp",
+          "sha256": "6b199bd65f3d0695fb6b48c363a66c08cf525a12f9c7848c025794f418665eea"
+        },
+        {
+          "asset": "assets/runtime/yard/themes/wide/yard_theme_moongreen_bg_wide.webp",
+          "sha256": "53753fbbf5ce389f6f8a124e3fc8e2dfd11406a5ac2daae9f8e06a639d0e7c0f"
+        },
+        {
+          "asset": "assets/runtime/yard/themes/wide/yard_theme_moongreen_bg_night_wide.webp",
+          "sha256": "25b09ec4815ba2a28c6af204d821a134edfcd563ffbe11e5186fa5f66ac72380"
+        }
+      ]
     }
   },
   "nightRuntimeAssets": [
@@ -146,7 +176,7 @@
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_moongreen_bg_night_wide.webp",
-      "sha256": "8a9bb2d8161613ae02e47fa95bb83d6726118e543443140750cf8a7c3b7630da"
+      "sha256": "25b09ec4815ba2a28c6af204d821a134edfcd563ffbe11e5186fa5f66ac72380"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_mossrain_bg_night_wide.webp",
