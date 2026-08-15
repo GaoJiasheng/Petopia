@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'support_benefits.dart';
@@ -125,6 +126,9 @@ class SupportPurchaseController extends AsyncNotifier<SupportPurchaseState> {
         );
       } else {
         final query = await _storefront.queryOffers(SupportCatalog.ids);
+        if (query.error != null) {
+          debugPrint('Support storefront offer query failed: ${query.error}');
+        }
         _model = _model.copyWith(
           storeAvailable: true,
           loadingOffers: false,
@@ -132,7 +136,7 @@ class SupportPurchaseController extends AsyncNotifier<SupportPurchaseState> {
             for (final offer in query.offers) offer.id: offer,
           },
           notFoundIds: query.notFoundIds,
-          message: query.error,
+          message: query.error == null ? null : '商店暂时没有连上，稍后再来看看吧。当前院子不受影响。',
         );
       }
     } on Object {

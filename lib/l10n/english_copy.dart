@@ -808,6 +808,8 @@ abstract final class EnglishCopy {
     '特殊玩具': 'Special Toys',
     '相册装帧': 'Album Covers',
     '商店暂时没有开门': 'The shop is temporarily unavailable',
+    '商店暂时没有连上，稍后再来看看吧。当前院子不受影响。':
+        "The shop couldn't connect just now. Check back soon—your garden is unaffected.",
     '商店货架还在整理': 'The shelves are still being arranged',
     '等新商品上架后，这里会变得热闹起来。': 'New finds will appear here soon.',
     '换一点小院会喜欢的东西。': 'Pick out something lovely for the garden.',

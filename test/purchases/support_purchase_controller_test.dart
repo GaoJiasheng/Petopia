@@ -101,6 +101,17 @@ void main() {
     expect(state.offers, isNot(contains(SupportCatalog.bouquet.id)));
   });
 
+  test('storefront query errors use gentle localized copy', () async {
+    storefront.queryError = 'StoreKit: Failed to get response from platform.';
+
+    final state = await container.read(
+      supportPurchaseControllerProvider.future,
+    );
+
+    expect(state.message, '商店暂时没有连上，稍后再来看看吧。当前院子不受影响。');
+    expect(state.message, isNot(contains('StoreKit')));
+  });
+
   test(
     'transaction stays incomplete when local entitlement cannot be saved',
     () async {
@@ -164,6 +175,7 @@ class _MemoryBenefitsStore implements SupportBenefitsStore {
 class _FakeStorefront implements SupportStorefront {
   final _controller = StreamController<List<SupportTransaction>>.broadcast();
   Set<String> notFoundIds = <String>{};
+  String? queryError;
   String? lastBoughtId;
   var completed = 0;
   var restoreCalls = 0;
@@ -188,6 +200,7 @@ class _FakeStorefront implements SupportStorefront {
             ),
       ],
       notFoundIds: notFoundIds,
+      error: queryError,
     );
   }
 
