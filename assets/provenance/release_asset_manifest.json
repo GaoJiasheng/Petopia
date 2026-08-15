@@ -1,9 +1,9 @@
 {
   "bytesByCategory": {
-    "art": 33314116,
+    "art": 33551044,
     "audio": 23934476,
     "content-data": 401844,
-    "runtime-art": 81659100
+    "runtime-art": 81480480
   },
   "counts": {
     "art": 233,
@@ -933,17 +933,17 @@
     },
     {
       "asset": "assets/art/world/themes/yard_theme_bambootea_bg.webp",
-      "bytes": 606032,
+      "bytes": 598372,
       "category": "art",
-      "sha256": "4d10c809c94d1e1c5fab6b7939820c80ebf101c23f337cfa92d888b4c06d8814",
+      "sha256": "16d74c3eab51134f582d5081a60330b6b015bba3bcc3fc05610be378edc3bece",
       "source": "assets/art/world/exports_1290/themes/yard_theme_bambootea_bg_1290x2796.png",
       "sourceSha256": "293ba6ab4e7a35299277853db178dd1cbf2d2a03f666aa8e0aedd45e261cb745"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_bambootea_bg_night.webp",
-      "bytes": 524326,
+      "bytes": 768914,
       "category": "art",
-      "sha256": "01a28cb74280507880df27acc722ddb086b4513e0ea0a5c00c38e0b0d85f3c62",
+      "sha256": "738d7473cfcaef9da7de9fadda8fe4b144bb254d4f171e95e4e20fb2a7721cfe",
       "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_bambootea_night.png",
       "sourceSha256": "80cee3679aa6ac313066e88e03db6df1336f12280d234f02b1664cbb70b7900d"
     },
@@ -5219,19 +5219,19 @@
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_bambootea_bg_night_wide.webp",
-      "bytes": 761452,
+      "bytes": 772876,
       "category": "runtime-art",
-      "sha256": "41365765ccc93f37b24037d41bc0231bc2b90092646f7aa1852c0211715ab394",
+      "sha256": "f4fcc9e20fb8632bd557fbd9e6db1fb823ed2511bdda3bb94dea42f3f7b8d66a",
       "source": "docs/art-review/theme-redesign/wide/night/yard_theme_bambootea_night.png",
       "sourceSha256": "bef778b3ef36ebe817b25c17f03b5a62ed8287e9aac21e547cf15e37d9723200"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_bambootea_bg_wide.webp",
-      "bytes": 963330,
+      "bytes": 773286,
       "category": "runtime-art",
-      "sha256": "d6a6c15578ca2c05226707aeef62646c346563c6e4ff3be839f6fa55c8fd3c9c",
+      "sha256": "bb5164446ebe88a7ee0a322efed20011716cc3559b06b980caab7c0488eda58b",
       "source": "assets/art/world/themes/wide/yard_theme_bambootea_bg_wide.jpg",
-      "sourceSha256": "83d8d0bbbd2d2695e8782c0b3248c591f5c6ba594af65da4e8ef1fc39f28bd61"
+      "sourceSha256": "5491880062ae773e070942cf1dadba57d3e9fab43bceaf19b2deb27eee4b67a0"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_candybake_bg_night_wide.webp",

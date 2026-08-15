@@ -22,7 +22,7 @@
     },
     {
       "asset": "yard_theme_bambootea_bg_wide.jpg",
-      "sha256": "83d8d0bbbd2d2695e8782c0b3248c591f5c6ba594af65da4e8ef1fc39f28bd61"
+      "sha256": "5491880062ae773e070942cf1dadba57d3e9fab43bceaf19b2deb27eee4b67a0"
     },
     {
       "asset": "yard_theme_candybake_bg_wide.jpg",
@@ -147,6 +147,36 @@
           "sha256": "25b09ec4815ba2a28c6af204d821a134edfcd563ffbe11e5186fa5f66ac72380"
         }
       ]
+    },
+    "bambootea": {
+      "generatedAt": "2026-08-15",
+      "generator": "OpenAI imagegen",
+      "thirdPartyAssets": false,
+      "sourceResolution": "portrait 852x1846; wide 1448x1086",
+      "deliveryFormat": "opaque VP8 WebP; daytime and portrait night quality 92, wide night quality 90",
+      "composition": "tall bamboo corridors, tea pavilion, stone lantern and low tea table confined to the upper and side feature bands around an open moss-and-stone play courtyard",
+      "assets": [
+        {
+          "asset": "assets/art/world/themes/wide/yard_theme_bambootea_bg_wide.jpg",
+          "sha256": "5491880062ae773e070942cf1dadba57d3e9fab43bceaf19b2deb27eee4b67a0"
+        },
+        {
+          "asset": "assets/art/world/themes/yard_theme_bambootea_bg.webp",
+          "sha256": "16d74c3eab51134f582d5081a60330b6b015bba3bcc3fc05610be378edc3bece"
+        },
+        {
+          "asset": "assets/art/world/themes/yard_theme_bambootea_bg_night.webp",
+          "sha256": "738d7473cfcaef9da7de9fadda8fe4b144bb254d4f171e95e4e20fb2a7721cfe"
+        },
+        {
+          "asset": "assets/runtime/yard/themes/wide/yard_theme_bambootea_bg_wide.webp",
+          "sha256": "bb5164446ebe88a7ee0a322efed20011716cc3559b06b980caab7c0488eda58b"
+        },
+        {
+          "asset": "assets/runtime/yard/themes/wide/yard_theme_bambootea_bg_night_wide.webp",
+          "sha256": "f4fcc9e20fb8632bd557fbd9e6db1fb823ed2511bdda3bb94dea42f3f7b8d66a"
+        }
+      ]
     }
   },
   "nightRuntimeAssets": [
@@ -164,7 +194,7 @@
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_bambootea_bg_night_wide.webp",
-      "sha256": "41365765ccc93f37b24037d41bc0231bc2b90092646f7aa1852c0211715ab394"
+      "sha256": "f4fcc9e20fb8632bd557fbd9e6db1fb823ed2511bdda3bb94dea42f3f7b8d66a"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_candybake_bg_night_wide.webp",
