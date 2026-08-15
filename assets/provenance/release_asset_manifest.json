@@ -1,9 +1,9 @@
 {
   "bytesByCategory": {
-    "art": 33284556,
+    "art": 33276190,
     "audio": 23934476,
     "content-data": 401844,
-    "runtime-art": 82149848
+    "runtime-art": 82207906
   },
   "counts": {
     "art": 233,
@@ -1045,17 +1045,17 @@
     },
     {
       "asset": "assets/art/world/themes/yard_theme_seaside_bg.webp",
-      "bytes": 545588,
+      "bytes": 481618,
       "category": "art",
-      "sha256": "db09385d9d839a0c387c0c69d7e273af11815f50612908042485d1d9308c13a2",
+      "sha256": "dc301e38df83d1cbe05fc4669bd674abfd61b1c6b8e469aa8245bdafdb8e6a93",
       "source": "assets/art/world/exports_1290/themes/yard_theme_seaside_bg_1290x2796.png",
       "sourceSha256": "62d038a366e029df34ebd632f39ac35ae867519b1730aa9ebd893df5f9db1944"
     },
     {
       "asset": "assets/art/world/themes/yard_theme_seaside_bg_night.webp",
-      "bytes": 403572,
+      "bytes": 459176,
       "category": "art",
-      "sha256": "82d50329a5d6b5765560bb5fc891bce747cc436b017cc244f5701f625f5186a1",
+      "sha256": "22e30bb15cb7b0d6cdaaa6760d9d717036d15fd59d88adfc15dd8d520091cac5",
       "source": "docs/art-review/theme-redesign/portrait/night/yard_theme_seaside_night.png",
       "sourceSha256": "66149ca138da012d0c664b7042071858186495e4edc7aec741d933ca331b7421"
     },
@@ -5331,19 +5331,19 @@
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_seaside_bg_night_wide.webp",
-      "bytes": 662174,
+      "bytes": 666656,
       "category": "runtime-art",
-      "sha256": "17b83741ffe1466a62849e276bd911a851919aa0c2d5a55aa18047d2643cd596",
+      "sha256": "6f7116a450894d621674a8d56471ccc74849872ac2fbc192d56fde0c31a385d8",
       "source": "docs/art-review/theme-redesign/wide/night/yard_theme_seaside_night.png",
       "sourceSha256": "00799c4c5a95e758ea7b9b7422853db9fd0276e5a45f144bb0ca7d66e2830d42"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_seaside_bg_wide.webp",
-      "bytes": 808130,
+      "bytes": 861706,
       "category": "runtime-art",
-      "sha256": "7a0d5c5b7bde4b85d144ba57978456f988ebde6c47702133b7d46afc23f55892",
+      "sha256": "a1fcb061a236bf430b22a97f4f83369b606706d3ca813bebee1e4567c52eb0ae",
       "source": "assets/art/world/themes/wide/yard_theme_seaside_bg_wide.jpg",
-      "sourceSha256": "5e92a7c8f4594f30f8fb10ab968e4ee2c3b14d3c62aeb0b6cbaafb8e0e8be11a"
+      "sourceSha256": "563b78c032c7cbea7c2ce006c5432e33ff1157d2c57dc7d4d41b6064626443b5"
     },
     {
       "asset": "assets/runtime/yard/themes/wide/yard_theme_snowhut_bg_night_wide.webp",
