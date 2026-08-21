@@ -220,6 +220,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       appInfo?.displayVersion ?? 'unknown',
                     ),
                   ),
+                  const SizedBox(height: 12),
+                  _CommandCard(
+                    icon: Icons.mail_outline_rounded,
+                    title: '报告问题',
+                    subtitle: '通过邮件把问题和诊断信息发给我们。',
+                    onTap: () => _reportProblem(
+                      ctrl,
+                      appInfo?.displayVersion ?? 'unknown',
+                    ),
+                  ),
                   const SizedBox(height: 24),
                   const _SectionTitle(
                     iconName: 'gift',
@@ -313,6 +323,56 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       if (mounted) setState(() => _status = '诊断信息已经准备好，可发送给支持人员。');
     } catch (error, stackTrace) {
       logUiError('diagnostic export', error, stackTrace);
+      if (mounted) setState(() => _status = '这次没有导出成功，请稍后再试。');
+    }
+  }
+
+  Future<void> _reportProblem(GameController ctrl, String appVersion) async {
+    final report = ctrl.diagnosticReport(
+      appVersion: appVersion,
+      platform: Platform.operatingSystem,
+    );
+    final subject = context.tr('Petopia 问题反馈');
+    final body = <String>[
+      context.tr('请在这里描述发生了什么：'),
+      '',
+      '',
+      '---',
+      context.tr('以下诊断信息不包含昵称、明信片正文或设备标识：'),
+      report,
+    ].join('\n');
+
+    try {
+      final opened = await launchUrl(
+        AppUrls.supportEmailUri(subject: subject, body: body),
+        mode: LaunchMode.externalApplication,
+      );
+      if (opened) {
+        if (mounted) setState(() => _status = '邮件已经准备好。');
+        return;
+      }
+    } catch (error, stackTrace) {
+      logUiError('support email', error, stackTrace);
+    }
+
+    if (!mounted) return;
+    try {
+      final box = context.findRenderObject() as RenderBox?;
+      final origin = box == null
+          ? null
+          : box.localToGlobal(Offset.zero) & box.size;
+      await SharePlus.instance.share(
+        ShareParams(
+          subject: subject,
+          text: '${AppUrls.supportEmail}\n\n$body',
+          sharePositionOrigin: origin,
+        ),
+      );
+      if (mounted) {
+        setState(() => _status = '邮件应用暂时没有打开，诊断信息已经准备好，可选择其他方式发送。');
+      }
+    } catch (error, stackTrace) {
+      logUiError('support report share', error, stackTrace);
       if (mounted) setState(() => _status = '这次没有导出成功，请稍后再试。');
     }
   }
@@ -579,6 +639,7 @@ class _LanguageCard extends StatelessWidget {
     final activeLabel = switch (value) {
       AppLanguage.system => '跟随系统',
       AppLanguage.zhHans => '简体中文',
+      AppLanguage.zhHant => '繁体中文',
       AppLanguage.en => 'English',
     };
     return Semantics(
@@ -602,6 +663,11 @@ class _LanguageCard extends StatelessWidget {
                   value: AppLanguage.zhHans,
                   icon: Icon(Icons.translate_rounded),
                   label: AppText('简中'),
+                ),
+                ButtonSegment(
+                  value: AppLanguage.zhHant,
+                  icon: Icon(Icons.translate_rounded),
+                  label: AppText('繁中'),
                 ),
                 ButtonSegment(
                   value: AppLanguage.en,
@@ -630,6 +696,7 @@ class _LanguageCard extends StatelessWidget {
               switch (value) {
                 AppLanguage.system => '使用设备语言；暂不支持的语言会显示英语。',
                 AppLanguage.zhHans => '固定使用简体中文。',
+                AppLanguage.zhHant => '固定使用繁体中文。',
                 AppLanguage.en => 'Use English throughout the app.',
               },
               style: const TextStyle(

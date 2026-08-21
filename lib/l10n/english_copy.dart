@@ -711,14 +711,17 @@ abstract final class EnglishCopy {
     '语言': 'Language',
     '跟随系统': 'Use Device Language',
     '简体中文': 'Simplified Chinese',
+    '繁体中文': 'Traditional Chinese',
     '英语': 'English',
     '系统': 'Device',
     '简中': '简中',
+    '繁中': '繁中',
     '跟随设备语言，也可以在应用内固定选择。':
         'Follow your device, or choose a language just for Petopia.',
     '使用设备语言；暂不支持的语言会显示英语。':
         'Uses your device language. Unsupported languages fall back to English.',
     '固定使用简体中文。': 'Always use Simplified Chinese.',
+    '固定使用繁体中文。': 'Always use Traditional Chinese.',
     'Use English throughout the app.': 'Use English throughout the app.',
     '关闭': 'Close',
     '取消': 'Cancel',
@@ -777,6 +780,16 @@ abstract final class EnglishCopy {
     '这次没有导出成功，当前存档没有受到影响。': 'Export did not finish. Your save is safe.',
     '这次没有导出成功，请稍后再试。': 'Export did not finish. Please try again.',
     '诊断信息已经准备好，可发送给支持人员。': 'Diagnostics are ready to share with support.',
+    '报告问题': 'Report a Problem',
+    '通过邮件把问题和诊断信息发给我们。':
+        'Email us a description with privacy-safe diagnostics.',
+    'Petopia 问题反馈': 'Petopia Support Request',
+    '请在这里描述发生了什么：': 'Please describe what happened here:',
+    '以下诊断信息不包含昵称、明信片正文或设备标识：':
+        'The diagnostics below exclude names, postcard text, and device identifiers:',
+    '邮件已经准备好。': 'Your email is ready.',
+    '邮件应用暂时没有打开，诊断信息已经准备好，可选择其他方式发送。':
+        'Mail could not open, so the diagnostics are ready to share another way.',
     '暂时无法打开网页，请稍后再试。': 'That page could not open. Please try again.',
     '导入这份院子存档？': 'Restore this garden backup?',
     '导入会替换当前进度。文件会先完整校验；任何一步失败都会保留现在的院子。':
@@ -1105,6 +1118,9 @@ abstract final class EnglishCopy {
         'Petopia contains no ads, third-party analytics, cross-app tracking, social login, or online content service. If you choose to support the garden, Apple handles purchases and restores; Petopia never receives card details or your Apple ID.',
     '抱抱它': 'Give a Hug',
     '支持小院的本地记录': 'Local Support Records',
+    '问题反馈与诊断信息': 'Problem Reports & Diagnostics',
+    '只有在你主动选择“报告问题”时，App 才会打开邮件应用，并填入版本与运行状态摘要。发送前可自行查看和修改；内容不包含昵称、明信片正文、存档或设备标识。':
+        'Only when you choose Report a Problem does Petopia open your mail app with a version and status summary. You can review or edit everything before sending. It excludes names, postcard text, saves, and device identifiers.',
     '明写': 'Open Goals',
     '明写成就还在装订中。': 'Open goals are still being bound into the book.',
     '未知宠物': 'Unknown Pet',

@@ -57,6 +57,11 @@ class PrivacyScreen extends StatelessWidget {
                   body:
                       '卸载 App 会删除本机游戏数据和固定时长回礼记录。建议卸载或换机前导出存档；重新安装后，可从支持页恢复一次性永久的“小院守护者”。',
                 ),
+                const _PolicySection(
+                  title: '问题反馈与诊断信息',
+                  body:
+                      '只有在你主动选择“报告问题”时，App 才会打开邮件应用，并填入版本与运行状态摘要。发送前可自行查看和修改；内容不包含昵称、明信片正文、存档或设备标识。',
+                ),
                 const Padding(
                   padding: EdgeInsets.only(top: 10),
                   child: AppText(

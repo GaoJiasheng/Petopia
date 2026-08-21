@@ -115,4 +115,39 @@ void main() {
     expect(find.text('设置'), findsOneWidget);
     expect(find.text('语言'), findsOneWidget);
   });
+
+  testWidgets('Traditional Chinese choice updates settings immediately', (
+    tester,
+  ) async {
+    late _LanguageController controller;
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: <Override>[
+          gameControllerProvider.overrideWith(() {
+            controller = _LanguageController();
+            return controller;
+          }),
+          appInfoProvider.overrideWith(
+            (ref) async => const AppInfo(version: '1.0.0', buildNumber: '34'),
+          ),
+        ],
+        child: const _LocalizedSettingsHost(),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('繁中'));
+    await tester.pumpAndSettle();
+
+    expect(controller.selected, AppLanguage.zhHant);
+    expect(find.text('設定'), findsOneWidget);
+    expect(find.text('語言'), findsOneWidget);
+    expect(find.text('固定使用繁體中文。'), findsOneWidget);
+    await tester.scrollUntilVisible(
+      find.text('回報問題'),
+      320,
+      scrollable: find.byType(Scrollable).first,
+    );
+    expect(find.text('回報問題'), findsOneWidget);
+  });
 }

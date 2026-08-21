@@ -15,6 +15,7 @@ import '../domain/models/logs.dart';
 import '../domain/models/pet.dart';
 import '../domain/models/yard.dart';
 import '../l10n/english_narrative.dart';
+import '../l10n/traditional_copy.dart';
 import '../services/save_service.dart';
 import '../services/local_calendar.dart';
 import '../services/postcard_content_alignment.dart';
@@ -1353,15 +1354,11 @@ class GameController extends AsyncNotifier<GameView> {
 
   Future<bool?> _syncNotifications({bool requestPermission = false}) {
     final settings = _svc.session.settings;
-    final english = switch (settings.appLanguage) {
-      AppLanguage.en => true,
-      AppLanguage.zhHans => false,
-      AppLanguage.system => Platform.localeName.toLowerCase().startsWith('en'),
-    };
+    final language = _effectiveNotificationLanguage(settings.appLanguage);
     return ref
         .read(notificationServiceProvider)
         .sync(
-          candidates: _notificationCandidates(english: english),
+          candidates: _notificationCandidates(language: language),
           preferences: PetopiaNotificationPreferences(
             enabled: settings.notifications,
             postcards: settings.notifyPostcards,
@@ -1373,7 +1370,7 @@ class GameController extends AsyncNotifier<GameView> {
   }
 
   List<PetopiaNotificationCandidate> _notificationCandidates({
-    required bool english,
+    required AppLanguage language,
   }) {
     final now = _svc.clock.now();
     final pets = <String, Pet>{
@@ -1389,16 +1386,20 @@ class GameController extends AsyncNotifier<GameView> {
           at: now.add(const Duration(minutes: 5)),
           title: event.type == EventType.special
               ? _notificationCopy(
-                  english,
+                  language,
                   '院子里发生了一件特别的事',
                   'Something special happened in the garden',
                 )
               : _notificationCopy(
-                  english,
+                  language,
                   '手账多了一页新故事',
                   'A new story is waiting in your journal',
                 ),
-          body: english ? 'Open Petopia to see what happened.' : event.title,
+          body: switch (language) {
+            AppLanguage.en => 'Open Petopia to see what happened.',
+            AppLanguage.zhHant => TraditionalCopy.translateKnown(event.title),
+            _ => event.title,
+          },
         ),
       );
     }
@@ -1416,12 +1417,12 @@ class GameController extends AsyncNotifier<GameView> {
           kind: PetopiaNotificationKind.postcard,
           at: journey.nextPostcardAt,
           title: _notificationCopy(
-            english,
+            language,
             '远方寄来一张明信片',
             'A postcard arrived from afar',
           ),
           body: _notificationCopy(
-            english,
+            language,
             '${pet.name}从旅途中寄来一封信，邮箱轻轻亮起来了。',
             '${pet.name} sent a letter from the road. The mailbox is glowing.',
           ),
@@ -1438,12 +1439,12 @@ class GameController extends AsyncNotifier<GameView> {
             kind: PetopiaNotificationKind.revisit,
             at: revisitAt,
             title: _notificationCopy(
-              english,
+              language,
               '好像听见了熟悉的铃铛',
               'A familiar bell is ringing',
             ),
             body: _notificationCopy(
-              english,
+              language,
               '${pet.name}今天会回小院看看。',
               '${pet.name} is coming home for a visit today.',
             ),
@@ -1458,12 +1459,12 @@ class GameController extends AsyncNotifier<GameView> {
           kind: PetopiaNotificationKind.anniversary,
           at: anniversary,
           title: _notificationCopy(
-            english,
+            language,
             '今天是一个温柔的纪念日',
             'Today is a gentle anniversary',
           ),
           body: _notificationCopy(
-            english,
+            language,
             '${pet.name}来到小院，又多了一年回忆。',
             'Another year of garden memories with ${pet.name}.',
           ),
@@ -1473,8 +1474,28 @@ class GameController extends AsyncNotifier<GameView> {
     return candidates;
   }
 
-  static String _notificationCopy(bool english, String zhHans, String en) =>
-      english ? en : zhHans;
+  static String _notificationCopy(
+    AppLanguage language,
+    String zhHans,
+    String en,
+  ) => switch (language) {
+    AppLanguage.en => en,
+    AppLanguage.zhHant => TraditionalCopy.translateKnown(zhHans),
+    _ => zhHans,
+  };
+
+  static AppLanguage _effectiveNotificationLanguage(AppLanguage selected) {
+    if (selected != AppLanguage.system) return selected;
+    final locale = Platform.localeName.toLowerCase().replaceAll('_', '-');
+    if (!locale.startsWith('zh')) return AppLanguage.en;
+    if (locale.contains('hant') ||
+        locale.contains('-tw') ||
+        locale.contains('-hk') ||
+        locale.contains('-mo')) {
+      return AppLanguage.zhHant;
+    }
+    return AppLanguage.zhHans;
+  }
 
   static DateTime _nextAnniversary(DateTime adoptedAt, DateTime now) {
     final localAdopted = LocalCalendar.local(adoptedAt);

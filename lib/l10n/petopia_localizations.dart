@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../domain/enums.dart';
 import 'english_copy.dart';
+import 'traditional_copy.dart';
 
 /// App-level localization facade.
 ///
@@ -14,7 +15,11 @@ class PetopiaLocalizations {
 
   final Locale locale;
 
-  static const supportedLocales = <Locale>[Locale('zh', 'CN'), Locale('en')];
+  static const supportedLocales = <Locale>[
+    Locale('zh', 'CN'),
+    Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant'),
+    Locale('en'),
+  ];
 
   static const delegate = _PetopiaLocalizationsDelegate();
 
@@ -27,25 +32,41 @@ class PetopiaLocalizations {
   }
 
   bool get isEnglish => locale.languageCode == 'en';
+  bool get isTraditionalChinese =>
+      locale.languageCode == 'zh' &&
+      (locale.scriptCode == 'Hant' ||
+          const <String>{'TW', 'HK', 'MO'}.contains(locale.countryCode));
 
   String text(String source) {
-    if (!isEnglish || source.isEmpty) return source;
-    return EnglishCopy.translate(source);
+    if (source.isEmpty) return source;
+    if (isEnglish) return EnglishCopy.translate(source);
+    if (isTraditionalChinese) return TraditionalCopy.translate(source);
+    return source;
   }
 
   String keyed(String key, {required String zhHans, required String en}) {
     assert(key.isNotEmpty);
-    return isEnglish ? en : zhHans;
+    if (isEnglish) return en;
+    return isTraditionalChinese
+        ? TraditionalCopy.translateKnown(zhHans)
+        : zhHans;
   }
 
   String bilingual({required String zhHans, required String en}) {
-    return isEnglish ? en : zhHans;
+    if (isEnglish) return en;
+    return isTraditionalChinese
+        ? TraditionalCopy.translateKnown(zhHans)
+        : zhHans;
   }
 
   static Locale? localeFor(AppLanguage language) {
     return switch (language) {
       AppLanguage.system => null,
       AppLanguage.zhHans => const Locale('zh', 'CN'),
+      AppLanguage.zhHant => const Locale.fromSubtags(
+        languageCode: 'zh',
+        scriptCode: 'Hant',
+      ),
       AppLanguage.en => const Locale('en'),
     };
   }
@@ -54,7 +75,14 @@ class PetopiaLocalizations {
     Locale? deviceLocale,
     Iterable<Locale> supportedLocales,
   ) {
-    if (deviceLocale?.languageCode == 'zh') return const Locale('zh', 'CN');
+    if (deviceLocale?.languageCode == 'zh') {
+      final traditional =
+          deviceLocale?.scriptCode == 'Hant' ||
+          const <String>{'TW', 'HK', 'MO'}.contains(deviceLocale?.countryCode);
+      return traditional
+          ? const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant')
+          : const Locale('zh', 'CN');
+    }
     return const Locale('en');
   }
 }
