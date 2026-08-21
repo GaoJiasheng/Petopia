@@ -30,10 +30,12 @@ or license webpage.
 
 ## Contact
 
-For help, email
-[gaojiasheng.him@foxmail.com](mailto:gaojiasheng.him@foxmail.com). Include your
-Petopia version, iPhone or iPad model, iOS version, and a short description of
-what happened. Do not send a save file unless support specifically requests it.
+For the quickest report, open Settings > Saves & Privacy > Report a Problem.
+Petopia will prepare an email to
+[gaojiasheng.him@foxmail.com](mailto:gaojiasheng.him@foxmail.com) with its
+version and privacy-safe diagnostics. Add a short description of what happened
+before sending. The report excludes names, postcard text, saves, and device
+identifiers. Do not send a save file unless support specifically requests it.
 
 - Privacy: <https://blog.gavingao.cn/petopia/privacy.html>
 - Product: <https://blog.gavingao.cn/petopia/>

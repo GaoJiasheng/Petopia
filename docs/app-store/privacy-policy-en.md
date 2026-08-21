@@ -1,6 +1,6 @@
 # Petopia Privacy Policy
 
-Effective date: July 27, 2026
+Effective date: August 21, 2026
 
 Public page: <https://blog.gavingao.cn/petopia/privacy.html>
 
@@ -42,6 +42,14 @@ You may choose to export a Petopia save or import a local file. During export,
 the file is sent only to the destination you choose in the system share sheet.
 During import, the app reads only the file you explicitly select. Petopia does
 not upload these files automatically.
+
+## Problem Reports and Diagnostics
+
+If you choose Report a Problem in Settings, Petopia opens your mail app with
+the support address, app version, and a privacy-safe runtime summary filled in.
+You can review, edit, or cancel the message before sending. The summary excludes
+pet names, postcard text, save files, and device identifiers. Petopia never
+sends a report in the background.
 
 ## Network Access and Third Parties
 
