@@ -1,6 +1,6 @@
-# Petopia 美术资产规格 · 明信片（Art Spec · Postcards）
+# Hearth & Tails 美术资产规格 · 明信片（Art Spec · Postcards）
 
-> **Petopia 美术资产规格 v0.3 · 配套 [spec-art-overview.md](spec-art-overview.md) · 本文件是【明信片美术资产】的权威来源**
+> **Hearth & Tails 美术资产规格 v0.3 · 配套 [spec-art-overview.md](spec-art-overview.md) · 本文件是【明信片美术资产】的权威来源**
 >
 > 更新日期：2026-07-02 ｜ 依据：DESIGN.md §6.5（分层合成方案）、[content-postcards.md](content-postcards.md)（碰撞/遭遇词条、poseHint）、[content-world.md](content-world.md)（40 地点 photoStyle/vibe）。
 > 全局风格、调色板、命名规范、@1x/@2x/@3x 导出约定一律遵循 spec-art-overview.md §1–§2，本文件不重复、不冲突。
@@ -425,7 +425,7 @@
 | `pc_chrome_tape_corners` | 纸胶带角贴 | 一套 4 枚半透明纸胶带（米白/柔粉/叶绿/天蓝各 1），斜贴固定照片四角 | 每枚 160 × 96 |
 | `pc_chrome_photo_shadow` | 照片投影 | 照片内窗四周的极柔内阴影层，让照片「贴」在卡纸上 | 1200 × 840 |
 | `pc_chrome_stamp_slot` | 邮票位 | 书写面右上的手绘虚线邮票框（含「贴邮票处」暖棕小字） | 160 × 200 |
-| `pc_chrome_stamp_generic` | 通用邮票 | 一枚锯齿边小邮票：Petopia 院子小屋图案 + 面值「1 暖绒」；贴于邮票位，邮戳（§5）斜压其上 | 140 × 180 |
+| `pc_chrome_stamp_generic` | 通用邮票 | 一枚锯齿边小邮票：Hearth & Tails 院子小屋图案 + 面值「1 暖绒」；贴于邮票位，邮戳（§5）斜压其上 | 140 × 180 |
 | `pc_chrome_writing_lines` | 手写体区域 | 正文区 5 条手绘微波浪基线 + 右下落款短线（「——{petName}」位）；暖棕极淡 | 720 × 420 |
 | `pc_chrome_postmark_ink` | 邮戳压印叠层 | 盖戳时的通用墨痕效果：波浪戳线延伸段 + 斑驳墨点（与 §5 各地点邮戳组合使用） | 256 × 256 |
 

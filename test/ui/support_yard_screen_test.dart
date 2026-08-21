@@ -37,7 +37,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.text('支持小院'), findsOneWidget);
-      expect(find.text('自愿支持 Petopia'), findsOneWidget);
+      expect(find.text('自愿支持暖绒小院'), findsOneWidget);
       expect(find.text('支持选项'), findsOneWidget);
       expect(find.text(r'$0.99'), findsOneWidget);
       expect(find.text(r'$6.99'), findsOneWidget);

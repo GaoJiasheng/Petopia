@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Apply Petopia's checked-in App Store metadata to an editable release."""
+"""Apply Hearth & Tails' checked-in App Store metadata to an editable release."""
 
 from __future__ import annotations
 
@@ -82,6 +82,14 @@ def _metadata(locale: str) -> dict[str, str]:
             "keywords": _backtick_value(markdown, r"Keywords"),
             "promotionalText": _backtick_value(markdown, r"Promotional text"),
             "description": _description(markdown, "Description", "Version Notes"),
+        }
+    if locale == "zh-Hant":
+        return {
+            "name": _backtick_value(markdown, r"App 名稱"),
+            "subtitle": _backtick_value(markdown, r"副標題"),
+            "keywords": _backtick_value(markdown, r"關鍵字"),
+            "promotionalText": _backtick_value(markdown, r"宣傳文字"),
+            "description": _description(markdown, "描述", "首發版本說明"),
         }
     return {
         "name": _backtick_value(markdown, r"App 名称"),
@@ -238,30 +246,71 @@ def main() -> None:
         item["attributes"]["locale"]: item for item in version_localizations
     }
 
-    for locale in ("en-US", "zh-Hans"):
+    for locale in ("en-US", "zh-Hans", "zh-Hant"):
         metadata = _metadata(locale)
-        if locale not in info_by_locale or locale not in version_by_locale:
-            raise SystemExit(f"Missing existing localization: {locale}")
-        _patch(
-            "appInfoLocalizations",
-            info_by_locale[locale]["id"],
-            {
-                "name": metadata["name"],
-                "subtitle": metadata["subtitle"],
-                "privacyPolicyUrl": PRIVACY_URL,
-            },
-        )
-        _patch(
-            "appStoreVersionLocalizations",
-            version_by_locale[locale]["id"],
-            {
-                "description": metadata["description"],
-                "keywords": metadata["keywords"],
-                "marketingUrl": MARKETING_URL,
-                "promotionalText": metadata["promotionalText"],
-                "supportUrl": SUPPORT_URL,
-            },
-        )
+        info_attributes = {
+            "name": metadata["name"],
+            "subtitle": metadata["subtitle"],
+            "privacyPolicyUrl": PRIVACY_URL,
+        }
+        version_attributes = {
+            "description": metadata["description"],
+            "keywords": metadata["keywords"],
+            "marketingUrl": MARKETING_URL,
+            "promotionalText": metadata["promotionalText"],
+            "supportUrl": SUPPORT_URL,
+        }
+        if locale in info_by_locale:
+            _patch(
+                "appInfoLocalizations",
+                info_by_locale[locale]["id"],
+                info_attributes,
+            )
+        else:
+            request(
+                "POST",
+                "/v1/appInfoLocalizations",
+                _json_body(
+                    {
+                        "data": {
+                            "type": "appInfoLocalizations",
+                            "attributes": {"locale": locale, **info_attributes},
+                            "relationships": {
+                                "appInfo": {
+                                    "data": {"type": "appInfos", "id": app_info_id}
+                                }
+                            },
+                        }
+                    }
+                ),
+            )
+        if locale in version_by_locale:
+            _patch(
+                "appStoreVersionLocalizations",
+                version_by_locale[locale]["id"],
+                version_attributes,
+            )
+        else:
+            request(
+                "POST",
+                "/v1/appStoreVersionLocalizations",
+                _json_body(
+                    {
+                        "data": {
+                            "type": "appStoreVersionLocalizations",
+                            "attributes": {"locale": locale, **version_attributes},
+                            "relationships": {
+                                "appStoreVersion": {
+                                    "data": {
+                                        "type": "appStoreVersions",
+                                        "id": version["id"],
+                                    }
+                                }
+                            },
+                        }
+                    }
+                ),
+            )
         print(f"metadata: {locale}")
 
     review = request(

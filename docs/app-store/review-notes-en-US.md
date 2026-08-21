@@ -1,6 +1,6 @@
 # App Review Notes (English, U.S.)
 
-Petopia is a single-player, local-first companion game with on-device saves.
+Hearth & Tails is a single-player, local-first companion game with on-device saves.
 
 ## Review Notes
 

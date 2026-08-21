@@ -1,4 +1,4 @@
-# Petopia 美术资产全局 Review（QA 报告 + UI 重做规格）
+# Hearth & Tails 美术资产全局 Review（QA 报告 + UI 重做规格）
 
 > 审查范围：`assets/art/` 全部 1393 个文件，按类抽样开原图审（接触表拼图 + 关键原图放大）。
 > 对照标准：`spec-art-overview.md` §1（奶油卡通可爱 + 清晰色块可读轮廓）、§1.2（成品水彩渲染、清晰可辨、可上架）、§2.1（满幅无框）、§1.0 Golden Set。

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Petopia launcher icons from the approved opaque RGB master."""
+"""Build Hearth & Tails launcher icons from the approved opaque RGB master."""
 import os
 from PIL import Image, ImageFilter
 

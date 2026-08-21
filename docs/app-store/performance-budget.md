@@ -1,4 +1,4 @@
-# Petopia 真机性能门禁
+# Hearth & Tails 真机性能门禁
 
 性能结论必须来自 Profile 模式物理设备。iOS 模拟器不支持 AOT Profile，
 不能用于首发性能签字。

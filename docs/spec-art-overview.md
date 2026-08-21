@@ -1,4 +1,4 @@
-# Petopia 美术资产规格 · 总纲（Art Bible · Overview）
+# Hearth & Tails 美术资产规格 · 总纲（Art Bible · Overview）
 
 > **版本：v0.4** ｜ 配套 [DESIGN.md](DESIGN.md) ｜ 本文件是**全局美术风格、技术规范、命名约定与资产清单索引**的权威来源。
 >
@@ -154,4 +154,4 @@
 
 ---
 
-*—— 美术是 Petopia 的皮肤与体温；先定规范，再谈每一笔。*
+*—— 美术是 Hearth & Tails 的皮肤与体温；先定规范，再谈每一笔。*

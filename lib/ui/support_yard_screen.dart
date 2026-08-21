@@ -269,7 +269,7 @@ class _SupportIntro extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppText(
-                      guardian ? '守护灯已点亮' : '自愿支持 Petopia',
+                      guardian ? '守护灯已点亮' : '自愿支持暖绒小院',
                       style: const TextStyle(
                         color: PetopiaColors.ink,
                         fontSize: 20,
@@ -488,7 +488,7 @@ class _GuardianLetter extends StatelessWidget {
                     ),
                     SizedBox(height: 7),
                     AppText(
-                      '感谢你支持 Petopia。守护灯、纪念徽章和特别来信已经解锁。',
+                      '感谢你支持暖绒小院。守护灯、纪念徽章和特别来信已经解锁。',
                       style: TextStyle(
                         color: PetopiaColors.mutedText,
                         height: 1.6,

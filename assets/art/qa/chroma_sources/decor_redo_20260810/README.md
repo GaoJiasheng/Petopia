@@ -1,7 +1,7 @@
 # Decor Redraw Provenance - 2026-08-10
 
-These chroma-key masters were generated specifically for Petopia with OpenAI
-image generation. The only visual references were the Petopia-owned legacy
+These chroma-key masters were generated specifically for Hearth & Tails with OpenAI
+image generation. The only visual references were the project-owned legacy
 wildflower planter and mossy mushroom stool, used to preserve their established
 object identity, palette, viewpoint, and creamy watercolor direction.
 

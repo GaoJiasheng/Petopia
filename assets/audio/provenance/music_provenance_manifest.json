@@ -1,5 +1,5 @@
 {
-  "project": "Petopia",
+  "project": "Hearth & Tails",
   "generated_at_local": "2026-08-02 18:33:27 +08",
   "scope": "music only: bgm_* and sting_* assets from docs/spec-audio.md",
   "source_policy": "Programmatic original synthesis. No third-party samples, loops, reference audio, artist-name prompts, or commercial melodies used.",

@@ -1,6 +1,6 @@
-# Petopia 美术资产规格 · 院子与访客（Art Bible · World & Visitors）
+# Hearth & Tails 美术资产规格 · 院子与访客（Art Bible · World & Visitors）
 
-> **Petopia 美术资产规格 v0.3 · 配套 [spec-art-overview.md](spec-art-overview.md) · 本文件是【院子与访客美术资产】的权威来源**
+> **Hearth & Tails 美术资产规格 v0.3 · 配套 [spec-art-overview.md](spec-art-overview.md) · 本文件是【院子与访客美术资产】的权威来源**
 >
 > 数据来源：[content-world.md](content-world.md)（40 地点 / 20 访客 / 12 主题 / 36 SKU）、DESIGN.md §5（院子豪华度×主题双轴、可放置物）、§8（访客系统）。
 >
@@ -79,7 +79,7 @@
 | ★ `deco_water_bowl` | 陶瓷小水碗：奶白釉、蓝边一圈手绘波纹，水面一点高光 | 256×256 | 满/空 2 态；鸟类 ×1.05~1.1 | SKU E.2 |
 | ★ `deco_mailbox_old` | 旧铁皮邮箱：微歪、锈斑、投递口翘起，有新明信片时插一角纸并轻颤 | 256×256 | 有信/无信 2 态 + 颤动 4 帧 | DESIGN §5.1①、明信片入口 |
 | `deco_mailbox_wood` | 木信箱（豪华度②–③形态）：原木小屋造型、小红旗竖起表示有信 | 256×256 | 有信/无信 2 态 | DESIGN §5.1 |
-| `deco_mailbox_red` | 红邮筒（豪华度④+）：圆头立式红邮筒、漆面温润、白字「Petopia 便」 | 256×512（大件·瘦高） | 有信/无信 2 态 + 投信 6 帧 | DESIGN §5.1④ |
+| `deco_mailbox_red` | 红邮筒（豪华度④+）：圆头立式红邮筒、漆面温润、正面使用无文字爪印徽记 | 256×512（大件·瘦高） | 有信/无信 2 态 + 投信 6 帧 | DESIGN §5.1④ |
 | `deco_album_shelf` | 相册架：小木架摊着两本相册（牛皮纸封面、麻绳绑带），点击进双相册 | 256×256 | 静态 | DESIGN §5.3、§6.6 |
 | `deco_memorial_wall` | 纪念墙（大件）：木框拼板墙，挂 3×4 空白小画框，毕业宠物水彩肖像动态填入；框间缠干花藤 | 512×512（大件） | 画框空/满由存档驱动 | DESIGN §5.1⑥ |
 

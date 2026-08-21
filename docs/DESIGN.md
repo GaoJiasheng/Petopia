@@ -1,4 +1,4 @@
-# Petopia 游戏设计框架文档（Game Design Framework）
+# Hearth & Tails 游戏设计框架文档（Game Design Framework）
 
 > **版本：v0.3（框架版 + 完整内容包）** ｜ 更新日期：2026-07-02 ｜ 作者：设计组
 >
@@ -858,4 +858,4 @@ Settings        { notifications, sound, schemaVersion, createdAt }
 
 ---
 
-*—— Petopia · 愿每一次告别都是下一张明信片的开头。*
+*—— Hearth & Tails · 愿每一次告别都是下一张明信片的开头。*

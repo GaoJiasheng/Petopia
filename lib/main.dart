@@ -8,6 +8,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'app/app_error_log.dart';
+import 'app/app_brand.dart';
 import 'app/game_controller.dart';
 import 'app/startup_metrics.dart';
 import 'audio/route_audio.dart';
@@ -38,23 +39,27 @@ void main() {
           details.stack ?? StackTrace.current,
           source: 'flutter',
         );
-        debugPrint('Petopia Flutter error: ${details.exceptionAsString()}');
+        debugPrint(
+          '${AppBrand.englishName} Flutter error: ${details.exceptionAsString()}',
+        );
       };
       PlatformDispatcher.instance.onError = (error, stackTrace) {
         AppErrorLog.instance.record(error, stackTrace, source: 'platform');
-        debugPrint('Petopia platform error: $error\n$stackTrace');
+        debugPrint(
+          '${AppBrand.englishName} platform error: $error\n$stackTrace',
+        );
         return true;
       };
       runApp(const ProviderScope(child: PetopiaApp()));
     },
     (error, stackTrace) {
       AppErrorLog.instance.record(error, stackTrace, source: 'zone');
-      debugPrint('Petopia zone error: $error\n$stackTrace');
+      debugPrint('${AppBrand.englishName} zone error: $error\n$stackTrace');
     },
   );
 }
 
-/// Petopia 根组件。
+/// App 根组件。
 class PetopiaApp extends ConsumerWidget {
   const PetopiaApp({super.key});
 
@@ -66,7 +71,7 @@ class PetopiaApp extends ConsumerWidget {
       ),
     );
     return MaterialApp(
-      title: 'Petopia',
+      title: AppBrand.englishName,
       debugShowCheckedModeBanner: false,
       locale: PetopiaLocalizations.localeFor(appLanguage),
       supportedLocales: PetopiaLocalizations.supportedLocales,

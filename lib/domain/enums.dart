@@ -1,4 +1,4 @@
-/// Petopia · 全局枚举全集
+/// Hearth & Tails · 全局枚举全集
 ///
 /// 对应 spec-technical.md §1.1（钉死）。所有枚举值序列化时用「名称字符串」，
 /// 与 assets/data/*.json 的字符串枚举一一对应。

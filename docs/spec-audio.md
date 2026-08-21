@@ -1,4 +1,4 @@
-# Petopia 音频资产规格（Audio Bible）
+# Hearth & Tails 音频资产规格（Audio Bible）
 
 > **版本：v0.3** ｜ 配套 [DESIGN.md](DESIGN.md) / [spec-art-overview.md](spec-art-overview.md) ｜ **本文件是【音频资产】的权威来源**。
 >
@@ -445,4 +445,4 @@ MVP 必须完整覆盖验收闭环「领养 → 养成（4 档换模）→ 毕�
 
 ---
 
-*—— 音频是 Petopia 的呼吸与心跳；愿玩家闭上眼睛，也能认出自己的院子。*
+*—— 音频是 Hearth & Tails 的呼吸与心跳；愿玩家闭上眼睛，也能认出自己的院子。*

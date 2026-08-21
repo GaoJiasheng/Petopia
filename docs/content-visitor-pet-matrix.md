@@ -1,6 +1,6 @@
-# Petopia 内容包 v0.3 · 访客 × 宠物互动矩阵
+# Hearth & Tails 内容包 v0.3 · 访客 × 宠物互动矩阵
 
-> **Petopia 内容包 v0.3 · 配套 DESIGN.md · 本文件是【访客×宠物互动矩阵】的权威来源。**
+> **Hearth & Tails 内容包 v0.3 · 配套 DESIGN.md · 本文件是【访客×宠物互动矩阵】的权威来源。**
 > - 数据结构沿用 DESIGN.md §8.4 `VisitorPetInteraction`（id / visitorId / petSpeciesId / personalityBias? / script / animRef / expReward(3–6) / unlockClue?）。
 > - 经验写入 `ExpLogEntry`，`source = VISITOR`，`sourceRef = 本条 id`。
 > - 选取规则：exact(visitor, species, personality) > exact(visitor, species) > fallback(visitor, "*")。

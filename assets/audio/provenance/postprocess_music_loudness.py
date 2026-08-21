@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Post-process generated Petopia music loudness.
+"""Post-process generated Hearth & Tails music loudness.
 
 This keeps BGM stem groups phase/level-relative by applying one gain to each
 mix group, and uses ffmpeg loudnorm for non-looping stingers.

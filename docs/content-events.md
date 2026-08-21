@@ -1,6 +1,6 @@
-# Petopia 随机事件库（Content Pack）
+# Hearth & Tails 随机事件库（Content Pack）
 
-> **Petopia 内容包 v0.3 · 配套 DESIGN.md · 本文件是【随机事件库】的权威来源**
+> **Hearth & Tails 内容包 v0.3 · 配套 DESIGN.md · 本文件是【随机事件库】的权威来源**
 >
 > 更新日期：2026-07-02 ｜ 作者：内容组
 >
@@ -244,4 +244,4 @@ d12、d16、d24（种子 3 条）＋ d28、d36、d40、d52、d61、d66、d78、d
 
 ---
 
-*—— Petopia 内容包 v0.3 · 事件是院子里长出来的故事。*
+*—— Hearth & Tails 内容包 v0.3 · 事件是院子里长出来的故事。*

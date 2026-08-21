@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Petopia · Minimax 批量任务派发器
+"""Hearth & Tails · Minimax 批量任务派发器
 
 把耗 token 的机械活（如内容 md→JSON 转换、样板数据生成）外包给 Minimax。
 读取 .env / 环境变量中的 MINIMAX_API_KEY / MINIMAX_BASE_URL / MINIMAX_MODEL /

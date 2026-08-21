@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Petopia's original seamless ambience and visitor voice palette.
+"""Generate Hearth & Tails' original seamless ambience and visitor voice palette.
 
 All sounds are deterministic synthesis. No recordings, sample libraries,
 melodies, model outputs, or third-party source material are used.

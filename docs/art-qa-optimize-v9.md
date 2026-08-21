@@ -1,4 +1,4 @@
-# Petopia 美术复审 v9 —— 重做验收 + 残留优化项
+# Hearth & Tails 美术复审 v9 —— 重做验收 + 残留优化项
 
 > 承接 `art-qa-review.md`。复审 codex v6→v8 重做（ui_icon 61 / ui_btn 22 / ui_badge 18 / pc_sticker 61 / pc_pose 96 / decor 4 全部重画）。
 > 依据 codex 自带审计图 `assets/art/qa/v8_audit_*_docpass.png` 开原图审。日期 2026-07-03。

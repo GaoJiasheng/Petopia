@@ -1,4 +1,4 @@
-# Codex 打磨/优化任务包（Petopia）
+# Codex 打磨/优化任务包（Hearth & Tails）
 
 ## ⛔ 铁律（务必遵守，上次被违反过）
 1. **一个美术/资源文件都不许改**：`assets/**`（png/jpg/ogg/wav/json 里的 data 除外见下）、`ios/Runner/Assets.xcassets/**`（App 图标）、任何图片/音频。**不许重新生成美术、不许 re-save PNG、不许碰 App 图标**。

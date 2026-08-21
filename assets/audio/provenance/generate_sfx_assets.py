@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Petopia's original interaction and paper UI sounds.
+"""Generate Hearth & Tails' original interaction and paper UI sounds.
 
 The synthesis is deterministic and uses no third-party recordings, samples,
 loops, melodies, or artist references. WAV masters are the low-latency runtime

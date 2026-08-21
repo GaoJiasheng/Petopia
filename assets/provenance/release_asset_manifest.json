@@ -5401,5 +5401,5 @@
     "rightsRegister": "docs/app-store/asset-rights-register.md"
   },
   "schemaVersion": 1,
-  "scope": "Assets declared by pubspec.yaml for the Petopia release bundle."
+  "scope": "Assets declared by pubspec.yaml for the Hearth & Tails release bundle."
 }

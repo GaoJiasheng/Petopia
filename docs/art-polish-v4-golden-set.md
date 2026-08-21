@@ -1,4 +1,4 @@
-# Petopia v4 Golden Set Polish Standard
+# Hearth & Tails v4 Golden Set Polish Standard
 
 > 范围：本文件只定义美术 polish 标准，不涉及代码、逻辑、Flutter/Flame 接入或数据转换。
 

@@ -1,4 +1,4 @@
-# Petopia 上架前 Owner Todo
+# Hearth & Tails 上架前 Owner Todo
 
 以下项目需要 Apple Developer / App Store Connect 账号持有人亲自确认。工程侧
 自动化、素材审计、无签名 Release 构建和模拟器矩阵不重复列在这里。
@@ -6,7 +6,7 @@
 ## 提交前
 
 - [x] 已确认 App 记录为 `com.petopia.petopia`、SKU `petopia001`、主语言
-      English (U.S.)，商店名称为 `Petopia: Letters from Home`。
+      English (U.S.)，商店名称为 `Hearth & Tails: Letters Home`。
 - [x] build 32 为带 `+1` 的内部 TestFlight 工具包；build 34 为不含内测入口的
       已上传正式候选，Apple 状态为 `VALID` / `APP_STORE_ELIGIBLE`。
 - [ ] 当前 `main` 已加入“今日故事”直达入口、繁体中文和主动邮件问题反馈；提交审核前
@@ -17,18 +17,18 @@
 - [x] 工程侧已完成生成式美术、原创程序化音效、字体和 124 个 Flutter/Dart 依赖的
       商业版权/许可证审计，并把自动门禁接入发版检查；结果见
       `dependency-license-audit.md`。账号持有人仍需完成该文档末尾两项事实确认。
-- [x] 已完成 `Petopia` / `Petopia: Letters from Home` 的第一轮商店和主要法域
-      商标检索；结论不是“无冲突”，而是**高风险、需决策**，详见
-      `trademark-clearance.md`。
-- [ ] 在提交审核前决定：取得重点发行法域的专业商标清权意见并接受现名风险，或更换
-      更独特的核心品牌；不得把 App Store 允许建档视为商标无冲突证明。
+- [x] 已停用高风险曾用名 `Petopia`，并完成 `Hearth & Tails` /
+      `Hearth & Tails: Letters Home` 的第一轮商店和公开商标检索；未发现精确同名的
+      在架宠物游戏，但这不是正式法律意见，详见 `trademark-clearance.md`。
+- [ ] 在正式市场投放前取得重点发行法域的专业商标清权意见，或由发布人书面接受剩余
+      风险；不得把 App Store 允许建档视为商标无冲突证明。
 
 ## 商店资料
 
 - [x] 已按 `metadata-zh-Hans.md` 填写名称、副标题、描述、关键词、分类和促销文本。
 - [x] 已为英语地区按 `metadata-en-US.md` 填写独立的英文名称、副标题、描述、关键词
       和促销文本；不要依赖 App Store 自动翻译。
-- [ ] 将 2026-08-21 版 `privacy-policy-zh-Hans.md` / `privacy-policy-en.md` /
+- [x] 已将 2026-08-21 版 `privacy-policy-zh-Hans.md` / `privacy-policy-en.md` /
       `privacy-policy-zh-Hant.md` 同步到 `https://blog.gavingao.cn/petopia/privacy.html`，
       确认公开页已说明 StoreKit、自愿支持本地记录、永久权益恢复与主动邮件问题反馈。
 - [x] 已将 `privacy-policy-en.md`、`support-en.md` 与 `marketing-en.md` 的英文内容同步
@@ -45,8 +45,8 @@
 - [x] App 内已支持 zh-Hant：台湾、香港、澳门设备会自动选择繁中，设置页也可手动
       切换；界面、叙事和本地通知均覆盖。繁中商店元数据、隐私与支持稿已归档为
       `metadata-zh-Hant.md`、`privacy-policy-zh-Hant.md` 与 `support-zh-Hant.md`。
-- [ ] 在 App Store Connect 新增繁体中文本地化，粘贴 `metadata-zh-Hant.md`，并在
-      公开隐私/支持页面加入繁中入口；繁中商店截图可随 1.0 一并补齐或作为 v1.x 优化。
+- [x] 已在 App Store Connect 新增繁体中文本地化并同步 `metadata-zh-Hant.md`；
+      公开隐私页也已加入繁中入口。繁中商店截图可随 1.0 一并补齐或作为 v1.x 优化。
 - [x] 已选择免费价格、手动发布；当前开放 173 个地区，中国大陆和越南未开放。
 - [x] 已按 `support-iap.md` 创建 4 个应用内购买商品，补齐英文和简体中文本地化、
       价格和审核截图，并把 4 个商品与 App 1.0 加入同一审核草稿。

@@ -1,4 +1,4 @@
-# Petopia v5 Golden Set Polish Standard
+# Hearth & Tails v5 Golden Set Polish Standard
 
 > 范围：本文件只定义 v0.4 规格后的美术 Golden Set，不涉及代码、逻辑、Flutter/Flame 接入或数据转换。上位约束见 `docs/spec-art-overview.md` §1.0、§2.1、§2.3.1。
 

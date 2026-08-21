@@ -1,6 +1,6 @@
 # Interaction UI Art Generation Record — 2026-08-12
 
-This folder retains the chroma-background source outputs used for the Petopia
+This folder retains the chroma-background source outputs used for the Hearth & Tails
 interaction-prop, postcard-weather, and repaired-decor production batch.
 
 ## Scope
@@ -11,9 +11,9 @@ interaction-prop, postcard-weather, and repaired-decor production batch.
 
 ## Source And Rights Boundary
 
-- Generated specifically for Petopia with OpenAI image-generation tooling.
-- Visual references were limited to Petopia-owned Golden Set art, existing
-  Petopia pet/decor identity, and the palette rules in
+- Generated specifically for Hearth & Tails with OpenAI image-generation tooling.
+- Visual references were limited to project-owned Golden Set art, existing
+  Hearth & Tails pet/decor identity, and the palette rules in
   `docs/spec-art-overview.md`.
 - Prompts did not name living artists, commercial games, protected
   characters, brands, fonts, logos, stock libraries, or external artworks.

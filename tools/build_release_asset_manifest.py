@@ -139,7 +139,7 @@ def build_manifest() -> dict[str, object]:
 
     return {
         "schemaVersion": 1,
-        "scope": "Assets declared by pubspec.yaml for the Petopia release bundle.",
+        "scope": "Assets declared by pubspec.yaml for the Hearth & Tails release bundle.",
         "license": "ASSET_LICENSE applies to art and audio; LICENSE applies to code.",
         "declarations": {
             "generatedForPetopia": True,

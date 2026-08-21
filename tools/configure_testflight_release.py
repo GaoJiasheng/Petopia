@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Synchronize Petopia's localized TestFlight metadata for an internal build."""
+"""Synchronize Hearth & Tails' localized TestFlight metadata for an internal build."""
 
 from __future__ import annotations
 
@@ -24,6 +24,10 @@ BETA_APP_LOCALIZATIONS = {
         "一款安静、以本地存档为核心的水彩陪伴游戏。一次陪一位宠物长大，"
         "在毕业后收下它从旅途寄回的明信片。无账号、无广告、无分析与追踪。"
     ),
+    "zh-Hant": (
+        "一款安靜、以本機存檔為核心的水彩陪伴遊戲。一次陪一位寵物長大，"
+        "在畢業後收下牠從旅途寄回的明信片。無帳號、無廣告、無分析與追蹤。"
+    ),
 }
 
 BETA_BUILD_LOCALIZATIONS = {
@@ -37,6 +41,11 @@ BETA_BUILD_LOCALIZATIONS = {
         "内部测试版本。右上角的小型“+1”按钮会把本地游戏时间推进一天，便于人工"
         "验证事件；正式 App Store 构建会在编译时彻底移除该入口。请重点检查明信片"
         "节奏、每日来客、毕业伙伴回访、互动冷却和存档稳定性。"
+    ),
+    "zh-Hant": (
+        "內部測試版本。右上角的小型「+1」按鈕會把本機遊戲時間推進一天，方便人工"
+        "驗證事件；正式 App Store 版本會在編譯時完全移除該入口。請重點檢查明信片"
+        "節奏、每日來客、畢業夥伴回訪、互動冷卻與存檔穩定性。"
     ),
 }
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic local release gate for Petopia iOS/App Store candidates."""
+"""Deterministic local release gate for Hearth & Tails iOS/App Store candidates."""
 
 from __future__ import annotations
 

@@ -1,6 +1,6 @@
-# Petopia 内容包 v0.3 · 成就库（Achievements）
+# Hearth & Tails 内容包 v0.3 · 成就库（Achievements）
 
-> **Petopia 内容包 v0.3 · 配套 DESIGN.md · 本文件是【成就库】的权威来源**
+> **Hearth & Tails 内容包 v0.3 · 配套 DESIGN.md · 本文件是【成就库】的权威来源**
 >
 > 更新日期：2026-07-02 ｜ 作者：内容组
 >
@@ -206,4 +206,4 @@
 
 ---
 
-*—— Petopia 内容包 v0.3 · 每一枚成就，都是院子里发生过的一件小事。*
+*—— Hearth & Tails 内容包 v0.3 · 每一枚成就，都是院子里发生过的一件小事。*

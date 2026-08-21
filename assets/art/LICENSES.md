@@ -1,6 +1,6 @@
-# Petopia Art Asset License And Provenance
+# Hearth & Tails Art Asset License And Provenance
 
-This folder contains Petopia-specific visual assets created for this project.
+This folder contains Hearth & Tails-specific visual assets created for this project.
 
 ## Scope
 
@@ -16,7 +16,7 @@ This folder contains Petopia-specific visual assets created for this project.
 
 ## Source Declaration
 
-- The current visual batches were generated specifically for Petopia with
+- The current visual batches were generated specifically for Hearth & Tails with
   image-generation tools and were then selected, edited, reframed, cut out,
   color-corrected, and quality-checked for this product.
 - No third-party stock image, character sheet, game asset pack, logo, font,
@@ -26,33 +26,33 @@ This folder contains Petopia-specific visual assets created for this project.
   artwork.
 - Human review covers composition, clipping, transparency, text, watermark,
   visual consistency, and similarity concerns before an asset enters runtime.
-- The 2026-08-02 day/night yard-theme batch uses only Petopia-owned theme art
+- The 2026-08-02 day/night yard-theme batch uses only project-owned theme art
   and approved control samples under `docs/art-review/theme-redesign/` as its
   visual references. It contains no third-party reference image or stock asset.
-- The 2026-08-02 App Icon batch uses only the Petopia-owned orange kitten Stage
-  A art and the previous Petopia icon as character and palette references. The
+- The 2026-08-02 App Icon batch uses only the project-owned orange kitten Stage
+  A art and the previous Hearth & Tails icon as character and palette references. The
   approved master is retained under `docs/art-sources/app-icon/`; platform
   renditions are deterministic project derivatives with no third-party stock,
   character, logo, or font content.
-- The 2026-08-10 postcard-pose and visitor-repair batch uses only Petopia-owned
+- The 2026-08-10 postcard-pose and visitor-repair batch uses only project-owned
   species prototypes, visitor specifications, and Golden Set references. Its
   chroma-key generation records are retained under
   `assets/art/qa/chroma_sources/*_20260810/`; production cutouts, portraits,
   and animation strips are human-reviewed project derivatives with no
   third-party stock, character, brand, logo, or font content.
-- The 2026-08-10 decor-repair batch uses only Petopia-owned legacy decoration
+- The 2026-08-10 decor-repair batch uses only project-owned legacy decoration
   art as identity and palette reference. Chroma-key generation records are
   retained under `assets/art/qa/chroma_sources/decor_redo_20260810/`; the
   production planter and mushroom stool are human-reviewed project derivatives
   with no third-party stock, character, brand, logo, or font content.
 - The 2026-08-12 interaction-UI batch covers four care props, seven postcard
   weather badges, and the repaired scarecrow and star wind vane. It uses only
-  Petopia-owned Golden Set and existing project art as visual references.
+  the project-owned Golden Set and existing project art as visual references.
   Chroma-key source outputs and prompt boundaries are retained under
   `assets/art/qa/chroma_sources/interaction_ui_20260812/`; no third-party
   reference image, stock asset, texture pack, character, brand, logo, or font
   is included.
-- The 2026-08-13 freestanding wind-chime redraw uses only Petopia-owned yard
+- The 2026-08-13 freestanding wind-chime redraw uses only project-owned yard
   decoration art, the Golden Set palette, and the existing item description.
   Its chroma-key source and processing boundary are retained under
   `assets/art/qa/chroma_sources/decor_redo_20260813/`; no third-party reference

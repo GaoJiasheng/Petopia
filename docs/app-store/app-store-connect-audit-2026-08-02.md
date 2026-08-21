@@ -7,7 +7,7 @@
 
 | 项目 | 已验证状态 |
 | --- | --- |
-| App | `Petopia: Letters from Home` / `com.petopia.petopia` / SKU `petopia001` |
+| App | `Petopia: Letters from Home`（当时的曾用名）/ `com.petopia.petopia` / SKU `petopia001` |
 | 版本 | iOS 1.0，手动发布，`READY_FOR_REVIEW` |
 | 正式构建 | build 24，`VALID` / `APP_STORE_ELIGIBLE`，无非豁免加密，无内测入口 |
 | 本地化 | English (U.S.) 与简体中文名称、描述、关键词、促销文本和 URL 已同步 |

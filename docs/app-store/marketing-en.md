@@ -1,4 +1,4 @@
-# Petopia: Letters from Home
+# Hearth & Tails: Letters Home
 
 A quiet watercolor garden. One friend at a time.
 
@@ -20,7 +20,7 @@ no punishment for stepping away.
 
 ## Made for iPhone and iPad
 
-Petopia supports portrait and landscape layouts across iPhone, iPad, iPad Pro
+Hearth & Tails supports portrait and landscape layouts across iPhone, iPad, iPad Pro
 11-inch, and iPad Pro 13-inch displays. It is fully playable offline and has no
 accounts, ads, analytics, or tracking.
 

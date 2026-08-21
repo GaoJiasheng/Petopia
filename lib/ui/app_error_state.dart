@@ -6,7 +6,7 @@ import "../l10n/petopia_text.dart";
 
 void logUiError(String surface, Object error, StackTrace stackTrace) {
   AppErrorLog.instance.record(error, stackTrace, source: 'ui:$surface');
-  debugPrint('Petopia $surface failed: $error\n$stackTrace');
+  debugPrint('Hearth & Tails $surface failed: $error\n$stackTrace');
 }
 
 class AppLoadError extends StatelessWidget {

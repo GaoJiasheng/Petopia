@@ -395,7 +395,7 @@ def main() -> None:
         raise ValueError(f"Copy quality gate failed: {quality_findings[:5]}")
 
     lines = [
-        "# Petopia 中英文文案总审阅表",
+        "# Hearth & Tails 中英文文案总审阅表",
         "",
         "> 本文档由 `tools/generate_bilingual_copy_review.py` 从当前运行时本地化代码和",
         "> `assets/data/*.json` 自动生成。中文是现有存档与内容的基准文案；英文是 App",

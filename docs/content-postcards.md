@@ -1,6 +1,6 @@
-# Petopia 内容包 v0.3 —— 明信片内容库（Postcard Content Bank）
+# Hearth & Tails 内容包 v0.3 —— 明信片内容库（Postcard Content Bank）
 
-> **Petopia 内容包 v0.3 · 配套 DESIGN.md · 本文件是【明信片内容库】的权威来源**
+> **Hearth & Tails 内容包 v0.3 · 配套 DESIGN.md · 本文件是【明信片内容库】的权威来源**
 >
 > 更新日期：2026-07-02 ｜ 作者：内容组
 > 对应设计章节：DESIGN.md §2（性格文风）、§6（明信片/旅行系统）、§6.3（生成模板）、§6.4（示例）。
@@ -907,4 +907,4 @@
 
 ---
 
-*—— Petopia 内容包 v0.3 · 愿每一张明信片都带着那只小家伙独有的口气。*
+*—— Hearth & Tails 内容包 v0.3 · 愿每一张明信片都带着那只小家伙独有的口气。*

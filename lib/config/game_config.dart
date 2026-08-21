@@ -1,4 +1,4 @@
-/// Petopia · 游戏配置常量（Game Config）
+/// Hearth & Tails · 游戏配置常量（Game Config）
 ///
 /// 对应 spec-technical.md §2（初值钉死）。
 /// 「锁定」= 改动会破坏节奏/审计承诺，需评审；「可调」= playtest 可校准。

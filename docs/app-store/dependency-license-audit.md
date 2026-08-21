@@ -1,4 +1,4 @@
-# Petopia 商业版权与依赖许可证审计
+# Hearth & Tails 商业版权与依赖许可证审计
 
 审计日期：2026-08-21
 
@@ -7,7 +7,7 @@
 
 ## 结论
 
-- **美术**：当前发布清单中的美术为 Petopia 定向生成和人工编辑成果；仓库声明
+- **美术**：当前发布清单中的美术为 Hearth & Tails 定向生成和人工编辑成果；仓库声明
   未引入图库、素材包、第三方角色、品牌、Logo 或字体。母版、运行时衍生图、
   生成记录与 SHA-256 已闭环。
 - **音频**：音乐、环境声、访客声音和 UI 音效由项目脚本原创程序化合成；三个
@@ -45,7 +45,7 @@ Apache-2.0。iOS 插件 podspec 的许可证元数据与其包内许可证一致
 
 `dbus` 由 Linux 实现包传递引入，不链接进 iOS 原生二进制；Flutter 仍把完整依赖
 通知放进应用的许可证清单。项目没有修改或单独分发 `dbus` 源文件，因此不存在需要
-公开 Petopia 自有源代码的要求。
+公开 Hearth & Tails 自有源代码的要求。
 
 ## 素材证据
 
@@ -58,7 +58,7 @@ Apache-2.0。iOS 插件 podspec 的许可证元数据与其包内许可证一致
 - 环境声/访客声音清单：
   `assets/audio/provenance/ambient_voc_provenance_manifest.json`
 - 源代码许可：`LICENSE`（Apache-2.0）
-- Petopia 素材许可：`ASSET_LICENSE`
+- Hearth & Tails 素材许可：`ASSET_LICENSE`
 
 截至审计日，OpenAI 的个人版
 [Terms of Use](https://openai.com/policies/terms-of-use/) 与商业

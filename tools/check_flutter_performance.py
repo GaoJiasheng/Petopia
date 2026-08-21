@@ -37,7 +37,7 @@ def find_report(value: Any, report_key: str) -> dict[str, Any] | None:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Check Flutter Profile frame timing against the Petopia launch budget."
+        description="Check Flutter Profile frame timing against the Hearth & Tails launch budget."
     )
     parser.add_argument("report", type=Path)
     parser.add_argument("--report-key", default="care_interactions")

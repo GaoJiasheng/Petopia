@@ -1,8 +1,8 @@
-# Petopia App Store Metadata (English, U.S.)
+# Hearth & Tails App Store Metadata (English, U.S.)
 
 ## General Information
 
-- App name (30 characters): `Petopia: Letters from Home`
+- App name (30 characters): `Hearth & Tails: Letters Home`
 - Subtitle (30 characters): `Raise a friend, get letters`
 - Primary category: `Games`
 - Primary category subcategories: `Casual`, `Simulation`
@@ -28,7 +28,7 @@ Wild visitors stop by for a day, leaving quiet memories in your Visitor Compendi
 As new companions arrive, your pet compendium, postcard album, and garden
 journal become a record of many small relationships.
 
-Petopia is designed to make companionship feel gentle and lasting:
+Hearth & Tails is designed to make companionship feel gentle and lasting:
 
 - No hunger penalties and no punishment for time away
 - One pet at a time, so every bond has room to matter

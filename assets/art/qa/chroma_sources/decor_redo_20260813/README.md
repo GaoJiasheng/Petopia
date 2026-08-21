@@ -1,7 +1,7 @@
 # Freestanding Wind Chime Redraw - 2026-08-13
 
-This source image was generated specifically for Petopia with OpenAI image
-generation. Its only visual references were Petopia-owned yard decoration art,
+This source image was generated specifically for Hearth & Tails with OpenAI image
+generation. Its only visual references were project-owned yard decoration art,
 the Golden Set palette, and the existing wind-chime item description.
 
 - `windchime_freestanding_magenta.png` is the retained chroma-key source.

@@ -1,4 +1,4 @@
-# Petopia 实现规格 · 性能与资产预算 · v0.3 · 配套 DESIGN.md / spec-devices.md / spec-gamefeel.md
+# Hearth & Tails 实现规格 · 性能与资产预算 · v0.3 · 配套 DESIGN.md / spec-devices.md / spec-gamefeel.md
 
 > 本文件是给开发（Flutter + Flame，后续 Codex CLI 实现）、美术、发布工程看的**性能预算与资产交付/包体策略**权威规格。目标：在「~900–1100 项顶级水彩资产（运行时文件更多）+ 最新四代 iPhone/Android + 纯离线可玩 + AAA 渲染红线」这组约束下，给出**可照做、可测、可验收**的预算与降级方案。
 >

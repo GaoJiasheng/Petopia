@@ -2,7 +2,7 @@
   "generatedAt": "2026-08-02",
   "generator": "OpenAI imagegen",
   "thirdPartyAssets": false,
-  "references": "Petopia-owned theme art and approved day/night control samples in docs/art-review/theme-redesign/",
+  "references": "Project-owned Hearth & Tails theme art and approved day/night control samples in docs/art-review/theme-redesign/",
   "sourceResolution": "1448x1086 selected wide control master",
   "deliveryResolution": "2732x2048",
   "deliveryFormat": "opaque JPEG master plus opaque WebP runtime derivative",

@@ -108,7 +108,7 @@ void main() {
     expect(find.text('Settings'), findsOneWidget);
     expect(find.text('Language'), findsOneWidget);
 
-    await tester.tap(find.text('简中'));
+    await tester.tap(find.text('Simplified Chinese'));
     await tester.pumpAndSettle();
 
     expect(controller.selected, AppLanguage.zhHans);
@@ -136,7 +136,7 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(find.text('繁中'));
+    await tester.tap(find.text('Traditional Chinese'));
     await tester.pumpAndSettle();
 
     expect(controller.selected, AppLanguage.zhHant);

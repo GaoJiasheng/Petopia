@@ -1,4 +1,4 @@
-# Petopia Localization
+# Hearth & Tails Localization
 
 Runtime copy must also follow the [bilingual copy tone guide](copy-tone-guide.md), including warmth, restraint, character voice, purchase language, and narrative immersion.
 

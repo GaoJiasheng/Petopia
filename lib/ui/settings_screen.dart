@@ -196,10 +196,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     subtitle: '查看 Flutter 与第三方开源组件的许可证。',
                     onTap: () => showLicensePage(
                       context: context,
-                      applicationName: 'Petopia',
+                      applicationName: context.tr('暖绒小院'),
                       applicationVersion: appInfo?.displayVersion ?? '',
                       applicationLegalese: context.tr(
-                        '源代码使用 Apache-2.0；美术与音频为 Petopia 专有素材。',
+                        '源代码使用 Apache-2.0；美术与音频为暖绒小院专有素材。',
                       ),
                     ),
                   ),
@@ -278,8 +278,8 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             XFile(file.path, mimeType: 'application/octet-stream'),
           ],
           fileNameOverrides: <String>[p.basename(file.path)],
-          subject: context.tr('Petopia 存档备份'),
-          text: context.tr('这是一份 Petopia 院子存档备份。'),
+          subject: context.tr('暖绒小院存档备份'),
+          text: context.tr('这是一份暖绒小院的存档备份。'),
           sharePositionOrigin: origin,
         ),
       );
@@ -312,7 +312,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
           : box.localToGlobal(Offset.zero) & box.size;
       await SharePlus.instance.share(
         ShareParams(
-          subject: context.tr('Petopia 诊断信息'),
+          subject: context.tr('暖绒小院诊断信息'),
           text: ctrl.diagnosticReport(
             appVersion: appVersion,
             platform: Platform.operatingSystem,
@@ -332,7 +332,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
       appVersion: appVersion,
       platform: Platform.operatingSystem,
     );
-    final subject = context.tr('Petopia 问题反馈');
+    final subject = context.tr('暖绒小院问题反馈');
     final body = <String>[
       context.tr('请在这里描述发生了什么：'),
       '',
@@ -379,7 +379,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
 
   Future<void> _importSave(GameController ctrl) async {
     final type = XTypeGroup(
-      label: context.tr('Petopia 存档'),
+      label: context.tr('暖绒小院存档'),
       extensions: <String>['petopia-save'],
       uniformTypeIdentifiers: <String>['public.data'],
     );
@@ -970,13 +970,13 @@ class _AboutCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 14),
-          const _InfoLine(label: '应用名称', value: 'Petopia'),
+          const _InfoLine(label: '应用名称', value: '暖绒小院'),
           const SizedBox(height: 10),
           _InfoLine(label: '版本', value: version),
           const SizedBox(height: 10),
           const _InfoLine(label: '数据', value: '本地保存 · 无账号 · 无广告追踪'),
           const SizedBox(height: 10),
-          const _InfoLine(label: '素材', value: 'Petopia 专有素材 · 禁止单独转载'),
+          const _InfoLine(label: '素材', value: '暖绒小院专有素材 · 禁止单独转载'),
         ],
       ),
     );

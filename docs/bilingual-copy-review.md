@@ -1,4 +1,4 @@
-# Petopia 中英文文案总审阅表
+# Hearth & Tails 中英文文案总审阅表
 
 > 本文档由 `tools/generate_bilingual_copy_review.py` 从当前运行时本地化代码和
 > `assets/data/*.json` 自动生成。中文是现有存档与内容的基准文案；英文是 App
@@ -8,7 +8,7 @@
 
 | 领域 | 数量 | 当前英文策略 | 审阅重点 |
 | --- | --- | --- | --- |
-| 固定 UI | 375 | 逐条人工英文 | 按钮、标题、说明、空状态 |
+| 固定 UI | 407 | 逐条人工英文 | 按钮、标题、说明、空状态 |
 | 名称与短语 | 261 | 逐条人工英文 | 物种、性格、商店、成就、地点 |
 | 动态 UI | 97 | 98 条参数化规则 | 数字、宠物名、日期、进度 |
 | 事件 | 120 | 120 个事件逐条英文 | 标题、正文、30 个选择及结果 |
@@ -69,12 +69,15 @@
 | 语言 | Language |
 | 跟随系统 | Use Device Language |
 | 简体中文 | Simplified Chinese |
+| 繁体中文 | Traditional Chinese |
 | 英语 | English |
 | 系统 | Device |
-| 简中 | 简中 |
-| 跟随设备语言，也可以在应用内固定选择。 | Follow your device, or choose a language just for Petopia. |
+| 简中 | Simplified Chinese |
+| 繁中 | Traditional Chinese |
+| 跟随设备语言，也可以在应用内固定选择。 | Follow your device, or choose a language just for Hearth & Tails. |
 | 使用设备语言；暂不支持的语言会显示英语。 | Uses your device language. Unsupported languages fall back to English. |
 | 固定使用简体中文。 | Always use Simplified Chinese. |
+| 固定使用繁体中文。 | Always use Traditional Chinese. |
 | Use English throughout the app. | Use English throughout the app. |
 | 关闭 | Close |
 | 取消 | Cancel |
@@ -116,14 +119,21 @@
 | 这次没有导出成功，当前存档没有受到影响。 | Export did not finish. Your save is safe. |
 | 这次没有导出成功，请稍后再试。 | Export did not finish. Please try again. |
 | 诊断信息已经准备好，可发送给支持人员。 | Diagnostics are ready to share with support. |
+| 报告问题 | Report a Problem |
+| 通过邮件把问题和诊断信息发给我们。 | Email us a description with privacy-safe diagnostics. |
+| 暖绒小院问题反馈 | Hearth & Tails Support Request |
+| 请在这里描述发生了什么： | Please describe what happened here: |
+| 以下诊断信息不包含昵称、明信片正文或设备标识： | The diagnostics below exclude names, postcard text, and device identifiers: |
+| 邮件已经准备好。 | Your email is ready. |
+| 邮件应用暂时没有打开，诊断信息已经准备好，可选择其他方式发送。 | Mail could not open, so the diagnostics are ready to share another way. |
 | 暂时无法打开网页，请稍后再试。 | That page could not open. Please try again. |
 | 导入这份院子存档？ | Restore this garden backup? |
 | 导入会替换当前进度。文件会先完整校验；任何一步失败都会保留现在的院子。 | This replaces current progress after a full verification. If any check fails, your garden stays untouched. |
 | 校验并导入 | Verify & Import |
 | 正在校验存档… | Verifying backup… |
-| Petopia 存档 | Petopia Save |
-| Petopia 存档备份 | Petopia Save Backup |
-| Petopia 诊断信息 | Petopia Diagnostics |
+| 暖绒小院存档 | Hearth & Tails Save |
+| 暖绒小院存档备份 | Hearth & Tails Save Backup |
+| 暖绒小院诊断信息 | Hearth & Tails Diagnostics |
 | 关于 | About |
 | 本地保存 · 无账号 · 无广告追踪 | Saved locally · No account · No ad tracking |
 | 商店 | Shop |
@@ -146,6 +156,7 @@
 | 特殊玩具 | Special Toys |
 | 相册装帧 | Album Covers |
 | 商店暂时没有开门 | The shop is temporarily unavailable |
+| 商店暂时没有连上，稍后再来看看吧。当前院子不受影响。 | The shop couldn't connect just now. Check back soon—your garden is unaffected. |
 | 商店货架还在整理 | The shelves are still being arranged |
 | 等新商品上架后，这里会变得热闹起来。 | New finds will appear here soon. |
 | 换一点小院会喜欢的东西。 | Pick out something lovely for the garden. |
@@ -309,17 +320,17 @@
 | 自愿支持与装饰回礼。 | Optional support and cosmetic thank-yous. |
 | 支持选项 | Ways to Support |
 | 支持完全自愿，装饰回礼不会影响成长与收集。 | Support is optional. Cosmetic thank-yous do not affect growth or collecting. |
-| 自愿支持 Petopia | Support Petopia |
+| 自愿支持暖绒小院 | Support Hearth & Tails |
 | 支持完全自愿。所有回礼都只是装饰，不会影响成长、收集或概率。 | Support is optional. Every thank-you is cosmetic and does not affect progression, collecting, or odds. |
 | 一份小点心 | A Treat |
 | 点心会在院子里保留 24 小时，伙伴也会来尝一口。 | A treat will stay in the garden for 24 hours, and your friend will stop by for a bite. |
-| 点心已经放进院子，将保留 24 小时。感谢你的支持。 | The treat is now in the garden and will remain for 24 hours. Thank you for supporting Petopia. |
+| 点心已经放进院子，将保留 24 小时。感谢你的支持。 | The treat is now in the garden and will remain for 24 hours. Thank you for supporting Hearth & Tails. |
 | 点亮一盏暖灯 | A Warm Lantern |
 | 暖灯会在院子里亮 24 小时。 | The lantern will glow in the garden for 24 hours. |
-| 暖灯已经点亮，将持续 24 小时。感谢你的支持。 | The lantern is lit for the next 24 hours. Thank you for supporting Petopia. |
+| 暖灯已经点亮，将持续 24 小时。感谢你的支持。 | The lantern is lit for the next 24 hours. Thank you for supporting Hearth & Tails. |
 | 送来一篮花 | Garden Bouquet |
 | 花篮会在院子里展示七天。 | The bouquet will be displayed in the garden for seven days. |
-| 花篮已经放进院子，会展示七天。感谢你的支持。 | The bouquet is in the garden and will be displayed for seven days. Thank you for supporting Petopia. |
+| 花篮已经放进院子，会展示七天。感谢你的支持。 | The bouquet is in the garden and will be displayed for seven days. Thank you for supporting Hearth & Tails. |
 | 小院守护者 | Garden Keeper |
 | 永久点亮守护灯，并解锁纪念徽章和一张特别来信。 | Keep the garden lantern lit permanently and unlock a keepsake badge and special letter. |
 | 所有回礼均为装饰性内容，不会改变成长、暖绒、冷却、稀有度或可玩内容。 | All thank-yous are cosmetic. They do not affect growth, Sunfluff, cooldowns, rarity, or playable content. |
@@ -330,7 +341,7 @@
 | 已解锁 | Unlocked |
 | 恢复“小院守护者” | Restore Garden Keeper |
 | 正在恢复 | Restoring… |
-| 感谢你支持 Petopia。守护灯、纪念徽章和特别来信已经解锁。 | Thank you for supporting Petopia. The garden lantern, keepsake badge, and special letter are now unlocked. |
+| 感谢你支持暖绒小院。守护灯、纪念徽章和特别来信已经解锁。 | Thank you for supporting Hearth & Tails. The garden lantern, keepsake badge, and special letter are now unlocked. |
 | 感谢你的支持 | Thank You for Your Support |
 | 小院的灯 | The Garden Light |
 | 守护灯已点亮 | Garden Lantern Unlocked |
@@ -362,10 +373,10 @@
 | 查看完整隐私政策 | View Full Privacy Policy |
 | 联系支持 | Contact Support |
 | 生效日期：2026 年 7 月 27 日 | Effective July 27, 2026 |
-| 源代码使用 Apache-2.0；美术与音频为 Petopia 专有素材。 | Source code uses Apache-2.0. Petopia artwork and audio are proprietary. |
-| Petopia 专有素材 · 禁止单独转载 | Petopia proprietary assets · Redistribution prohibited |
-| App 只在设备上保存回礼类型、交易幂等键和有效期，用于防止重复发放并展示装饰。普通支持不会写入可导出的游戏存档，也不会改变经验、暖绒、冷却或概率。 | Petopia keeps only the thank-you type, transaction key, and expiry on this device so rewards are never granted twice. Regular support never enters your exported save or changes XP, Sunfluff, cooldowns, or odds. |
-| Petopia 不要求注册账号，也不会把宠物、明信片、互动记录或设备标识上传到服务器。游戏进度保存在当前设备的应用沙盒中。 | Petopia needs no account and does not upload pets, postcards, interactions, or device identifiers. Progress stays in the app sandbox on this device. |
+| 源代码使用 Apache-2.0；美术与音频为暖绒小院专有素材。 | Source code uses Apache-2.0. Hearth & Tails artwork and audio are proprietary. |
+| 暖绒小院专有素材 · 禁止单独转载 | Hearth & Tails proprietary assets · Redistribution prohibited |
+| App 只在设备上保存回礼类型、交易幂等键和有效期，用于防止重复发放并展示装饰。普通支持不会写入可导出的游戏存档，也不会改变经验、暖绒、冷却或概率。 | Hearth & Tails keeps only the thank-you type, transaction key, and expiry on this device so rewards are never granted twice. Regular support never enters your exported save or changes XP, Sunfluff, cooldowns, or odds. |
+| 暖绒小院不要求注册账号，也不会把宠物、明信片、互动记录或设备标识上传到服务器。游戏进度保存在当前设备的应用沙盒中。 | Hearth & Tails needs no account and does not upload pets, postcards, interactions, or device identifiers. Progress stays in the app sandbox on this device. |
 | 一只刚来到院子的奶油橘色小猫 | A cream-orange kitten, newly arrived in the garden |
 | 以后会在邮箱收到它从远方寄来的信 | Letters from the road will arrive in your mailbox |
 | 伙伴毕业后会背上行囊，慢慢走过不同地方。先翻开一张旅行样片看看。 | After graduation, your friend packs for the road and wanders from place to place. Here is a glimpse of the journey ahead. |
@@ -373,7 +384,7 @@
 | 写给小院守护者 | For a Garden Keeper |
 | 准备旅行的奶油橘色小猫 | A cream-orange kitten ready for the road |
 | 卸载 App 会删除本机游戏数据和固定时长回礼记录。建议卸载或换机前导出存档；重新安装后，可从支持页恢复一次性永久的“小院守护者”。 | Deleting the app removes local game data and fixed-duration thank-yous. Export a save before changing devices. The permanent Garden Keeper unlock can be restored from the support page. |
-| 只有在你主动开启后，App 才会请求本地通知权限。提醒仅用于明信片、老朋友回访和纪念日；可随时在设置中分类关闭，也不会使用广告追踪。 | Petopia asks for notification access only after you turn it on. Alerts are limited to postcards, returning friends, and anniversaries. Each category can be disabled anytime, and no ad tracking is used. |
+| 只有在你主动开启后，App 才会请求本地通知权限。提醒仅用于明信片、老朋友回访和纪念日；可随时在设置中分类关闭，也不会使用广告追踪。 | Hearth & Tails asks for notification access only after you turn it on. Alerts are limited to postcards, returning friends, and anniversaries. Each category can be disabled anytime, and no ad tracking is used. |
 | 存档备份 | Save Backups |
 | 它从旅途中回来串门。欢迎它回家，听听这次带回了什么故事。 | A traveling friend has come home for a visit. Welcome them back and hear what the road has brought. |
 | 它会一路旅行，常寄明信片回来。<br>院子空出来了，去迎接下一位小伙伴吧。 | Your friend will keep traveling and writing home.<br>The garden is ready to welcome someone new. |
@@ -386,9 +397,11 @@
 | 小院已安全恢复 | Garden Restored |
 | 支持与回礼 | Support and Thank-Yous |
 | 已经长大的奶油橘色小猫 | A grown cream-orange cat |
-| 当前版本不包含广告、第三方分析、跨 App 追踪、社交登录或联网内容服务。只有在你主动支持小院时，购买和恢复购买会由 Apple App Store 处理；Petopia 不会接触支付卡或 Apple ID。 | Petopia contains no ads, third-party analytics, cross-app tracking, social login, or online content service. If you choose to support the garden, Apple handles purchases and restores; Petopia never receives card details or your Apple ID. |
+| 当前版本不包含广告、第三方分析、跨 App 追踪、社交登录或联网内容服务。只有在你主动支持小院时，购买和恢复购买会由 Apple App Store 处理；暖绒小院不会接触支付卡或 Apple ID。 | Hearth & Tails contains no ads, third-party analytics, cross-app tracking, social login, or online content service. If you choose to support the garden, Apple handles purchases and restores; Hearth & Tails never receives card details or your Apple ID. |
 | 抱抱它 | Give a Hug |
 | 支持小院的本地记录 | Local Support Records |
+| 问题反馈与诊断信息 | Problem Reports & Diagnostics |
+| 只有在你主动选择“报告问题”时，App 才会打开邮件应用，并填入版本与运行状态摘要。发送前可自行查看和修改；内容不包含昵称、明信片正文、存档或设备标识。 | Only when you choose Report a Problem does Hearth & Tails open your mail app with a version and status summary. You can review or edit everything before sending. It excludes names, postcard text, saves, and device identifiers. |
 | 明写 | Open Goals |
 | 明写成就还在装订中。 | Open goals are still being bound into the book. |
 | 未知宠物 | Unknown Pet |
@@ -403,10 +416,28 @@
 | 街灯 | City Lights |
 | 贴纸册正在慢慢填满 | The sticker book is slowly filling up |
 | 还没有可摆放的小物。去商店买到装饰后，就能指定到院子的固定位置。 | No decor is ready to place yet. Find something in the shop, then choose its garden spot. |
-| 这是一份 Petopia 院子存档备份。 | This is a Petopia garden save backup. |
+| 这是一份暖绒小院的存档备份。 | This is a Hearth & Tails garden save backup. |
+| 暖绒小院 | Hearth & Tails |
 | 远处还跟着一位害羞的旅行伙伴。 | A shy traveling friend is following in the distance. |
 | 远方也会寄回回忆 | Memories Still Arrive from Afar |
 | 选择一个槽位，再点已拥有的小物；同一个小物只会出现在一个位置。 | Choose a spot, then select owned decor. Each item can appear in only one place. |
+| 饭盆和水碗会留在宠物身边。其余小物可在最多 8 个固定点之间切换，每个位置只显示适合该远近层级的摆件。 | Food and water stay close to your pet. Other decor can move among up to 8 fixed spots, with each spot showing items suited to its depth. |
+| 前排 1 | Front 1 |
+| 前排 2 | Front 2 |
+| 前排 3 | Front 3 |
+| 前排 4 | Front 4 |
+| 左侧 1 | Left 1 |
+| 左侧 2 | Left 2 |
+| 右侧 1 | Right 1 |
+| 右侧 2 | Right 2 |
+| 后景左侧 | Rear Left |
+| 后景右侧 | Rear Right |
+| 左侧后方 | Left Rear |
+| 右侧后方 | Right Rear |
+| 左侧前方 | Left Front |
+| 右侧前方 | Right Front |
+| 前景左侧 | Foreground Left |
+| 前景右侧 | Foreground Right |
 | 道具加成 | Item Bonus |
 | 院子布置 | Garden Layout |
 | 院子布置暂时没有打开 | Garden layout is temporarily unavailable |
@@ -416,6 +447,7 @@
 | 糖果焙房 8 折券 | Candy Bakehouse · 20% Off |
 | 任意主题 5 折券 | Any Garden Theme · 50% Off |
 | 翻开今天刚写下的新故事 | Read today's new story |
+| 点按阅读 | Read now |
 | 旅行者 | Traveler |
 | 完整更换院子的季节、光影与景色 | Transforms the garden's season, light, and scenery |
 | 可自由摆进院子，也可能吸引特别来客 | Place it anywhere in the garden. A special visitor may notice |

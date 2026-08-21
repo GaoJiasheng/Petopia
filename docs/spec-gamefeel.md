@@ -1,4 +1,4 @@
-# Petopia 实现规格 · 手感/动效 · v0.3 · 配套 DESIGN.md
+# Hearth & Tails 实现规格 · 手感/动效 · v0.3 · 配套 DESIGN.md
 
 > 本文件是给开发（Codex CLI）与美术/音频看的**手感 / Juice / 动效方向实现规格**。目标：让每一个反馈"怎么动、多快、什么曲线、配什么音与触感"都可照做、可验收，无需猜测。
 > 规则、数值、系统状态机以 [DESIGN.md](DESIGN.md)（v0.3）为准；界面/控件/流程以 [spec-ux.md](spec-ux.md) 为准；美术风格以 [spec-art-overview.md](spec-art-overview.md) 为准。本文件只把它们**落成时序、曲线、粒子、音效、触感**。

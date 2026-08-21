@@ -1,6 +1,6 @@
-# Petopia 美术资产规格 v0.3 · 宠物（Art Spec · Pets）
+# Hearth & Tails 美术资产规格 v0.3 · 宠物（Art Spec · Pets）
 
-> **Petopia 美术资产规格 v0.3 ｜ 配套 [spec-art-overview.md](spec-art-overview.md) ｜ 本文件是【宠物美术资产】的权威来源**
+> **Hearth & Tails 美术资产规格 v0.3 ｜ 配套 [spec-art-overview.md](spec-art-overview.md) ｜ 本文件是【宠物美术资产】的权威来源**
 >
 > 内容依据：[content-pets-personalities.md](content-pets-personalities.md)（12 物种 × 5 变体、96 通用动作、100 性格动作、4 成长档、彩蛋链）；DESIGN.md §1.4 / §3.6 / §12。
 > 风格、调色板、命名、字段模板、@1x/@2x/@3x 与格式约定**全部沿用总纲**（overview §1–§2），本文件不再重复、不得冲突。

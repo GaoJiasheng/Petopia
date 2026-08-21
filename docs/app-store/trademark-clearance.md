@@ -1,80 +1,58 @@
-# Petopia 产品名与商标初步冲突检查
+# Hearth & Tails 产品名与商标初步冲突检查
 
 检索日期：2026-08-21
 
-检索对象：`Petopia`、`Petopia: Letters from Home`、`Petopia：小院来信`、
-`Petopia：小院來信`。
+当前品牌：`Hearth & Tails`、`Hearth & Tails: Letters Home`、
+`暖绒小院：远方来信`、`暖絨小院：遠方來信`。
 
-## 结论
+曾用名：`Petopia`。曾用名因同名宠物应用和相关软件商标记录较多而退役，不再作为
+商店名称或醒目的对外品牌使用。Bundle ID、SKU、Product ID 和历史代码标识中的
+`petopia` 仅为不可见的兼容性技术身份，不代表继续使用曾用商标。
 
-**`Petopia` 不是可以按“未发现冲突”直接放行的低风险名称。** 同名词已经被多款
-宠物类应用和游戏使用，并在美国、欧盟、印度等商标体系中出现同名申请或注册。
-完整标题 `Petopia: Letters from Home` 比单独使用 `Petopia` 更有区分度，但副标题
-不会自动消除对核心词 `Petopia` 的混淆风险。
+## 初步结论
 
-工程侧风险评级：**高，需发布人做明确决策**。这不是说当前应用一定侵权，也不是
-App Store 名称一定会被拒绝；它表示不能在没有专业清权意见的情况下宣称全球无冲突。
+本轮对完整组合词和核心词执行了 App Store 与公开网页精确检索，没有发现完全同名的
+在架宠物游戏或明显相同的软件品牌。与曾用名相比，`Hearth & Tails` 的公开同名拥挤
+程度显著降低，完整标题 `Hearth & Tails: Letters Home` 也提供了进一步区分。
 
-## 应用商店实况
+工程侧暂定评级：**中低风险，可进入商店改名和内测，但仍需发布人完成正式清权决策。**
+公开搜索没有结果不等于商标可注册，也不能排除未被搜索引擎收录、近似读音、近似图形、
+地区性申请或尚未公开的在先权利。
 
-通过 Apple Search API 对美国、英国、加拿大、澳大利亚、新加坡、香港、台湾、
-日本、韩国、德国、法国、印度和巴西 13 个 storefront 进行精确词检索，发现至少
-以下在架名称：
+## 已完成检查
 
-| 名称 | 类别/接近程度 | Apple ID |
-| --- | --- | --- |
-| [`Petopia`](https://apps.apple.com/us/app/petopia/id6758300953) | Lifestyle；完全同名 | `6758300953` |
-| [`Petopia - Cute Animal Widgets`](https://apps.apple.com/us/app/petopia-cute-animal-widgets/id6759053024) | Entertainment；虚拟宠物，产品体验接近 | `6759053024` |
-| [`Petopia: Merge & Collect`](https://apps.apple.com/us/app/petopia-merge-collect/id6761158252) | Games；宠物收集游戏 | `6761158252` |
-| [`Petopia: Tile Match 3`](https://apps.apple.com/us/app/petopia-tile-match-3/id6757503910) | Games；宠物题材游戏 | `6757503910` |
-| [`Petopia: Pet Care Tracker`](https://apps.apple.com/us/app/petopia-pet-care-tracker/id6757099799) | Lifestyle；宠物应用 | `6757099799` |
-| [`Petopia Pop: Bubble shooter`](https://apps.apple.com/us/app/petopia-pop-bubble-shooter/id6746445916) | Games | `6746445916` |
+- 精确检索 `"Hearth & Tails"` 与 `"Hearth & Tails: Letters Home"`。
+- 检索 Apple App Store 的相同及近似应用标题。
+- 对美国和欧盟公开商标入口执行第一轮词组检索。
+- 检查英文完整标题长度：28 个字符，符合 App Store 名称 30 字符上限。
+- 检查简体和繁体完整标题长度，均符合 App Store 名称上限。
 
-另外，Google Play 仍可检索到 `Petopia - Hero Battle Arena`，该名称自 2023 年起
-用于动物题材移动游戏。商店允许多个带副标题的近似名称，不代表商标已经清权。
-本轮未检索到完整组合词 `Petopia: Letters from Home` 的相同在架标题；这只说明
-副标题具备一定区分作用，不改变核心词高度拥挤的事实。
+本轮未发现需要立即阻断改名的精确匹配。搜索中出现的 `hearth`、`tails` 单词分别用于
+大量不相关内容，但未形成与当前完整组合词相同、且同时接近宠物陪伴游戏的结果。
 
-## 已发现商标记录
+## 正式发布前建议
 
-| 地区 | 记录 | 范围 | 初步影响 |
-| --- | --- | --- | --- |
-| 美国 | `PETOPIA`，Serial `99016598`，2025-01-23 申请 | Class 9 下载式移动应用、Class 42 SaaS，宠物寄养/美容/照看管理 | 同名且覆盖移动软件；即使业务用途不同，也属于必须由律师评估的材料风险 |
-| 印度 | `PETOPIA`，Application `6328002`，记录显示已注册 | Class 9，计算机软件与移动应用 | 同名、同属软件类；若印度是发行地区，风险高 |
-| 欧盟 | `PETOPIA`，EUTM `014948211`，记录显示已注册并续展 | Classes 28/31/35，宠物玩具、用品和零售 | 与数字游戏类别不完全相同，但词相同且宠物语义高度接近 |
-| 欧盟 | `Petopia`，EUTM `018912203`，记录显示已注册 | Class 8，宠物修剪工具等 | 商品距离较远，单独看风险较低，但增加同名拥挤程度 |
-| 英国 | `Petopia`，UK `UK00003495799`，记录显示已注册 | Class 35，含软件零售及线上市场等 | 与本 App 不完全相同，仍需纳入英国律师检索 |
+1. 在实际发行重点地区，对 Class 9、28、41、42 及相关线上娱乐服务执行专业检索，
+   覆盖词组、近似拼写、读音和图形标识。
+2. 对外始终优先使用组合标识 `Hearth & Tails`；商店页使用完整标题
+   `Hearth & Tails: Letters Home`，不要把 `Hearth` 或 `Tails` 单独作为核心商标。
+3. 中文市场统一使用 `暖绒小院`，完整商店标题使用 `暖绒小院：远方来信`；繁体使用
+   `暖絨小院：遠方來信`。
+4. 在正式市场投放或投入大量线下物料前，保存律师清权意见或发布人风险接受记录。
 
-官方复核入口：
+## 官方复核入口
 
-- [USPTO TSDR](https://tsdr.uspto.gov/)：输入 `99016598`
-- [EUIPO eSearch](https://euipo.europa.eu/eSearch/)：输入 `014948211`、`018912203`
-- [WIPO Global Brand Database](https://www.wipo.int/en/web/global-brand-database/index)：
-  搜索 `PETOPIA`
-- [UK IPO Trade Mark Search](https://trademarks.ipo.gov.uk/ipo-tmtext)：输入
-  `UK00003495799`
-- [IP India Public Search](https://tmrsearch.ipindia.gov.in/tmrpublicsearch/)：输入
-  `6328002`
+- [USPTO Trademark Search](https://tmsearch.uspto.gov/)
+- [EUIPO eSearch](https://euipo.europa.eu/eSearch/)
+- [WIPO Global Brand Database](https://www.wipo.int/en/web/global-brand-database/index)
+- [UK IPO Trade Mark Search](https://trademarks.ipo.gov.uk/ipo-tmtext)
 - [IP Australia Trade Mark Search](https://search.ipaustralia.gov.au/trademarks/)
 - [CIPO Trademark Search](https://ised-isde.canada.ca/site/canadian-intellectual-property-office/en/trademarks/basic-search)
 
-WIPO 明确提示 Global Brand Database 覆盖虽广，但仍应检索目标国家/地区的官方
-登记册。因此本次结果只能作为第一轮排雷，不是全球完整法律检索。
-
-## 建议的发布路径
-
-1. **不要把“Petopia 已无冲突”勾选为完成。** 当前证据不支持这个结论。
-2. 若坚持现名，商店、官网、宣传和应用内尽量始终使用完整组合名称
-   `Petopia: Letters from Home`，不要把 `Petopia` 单独作为醒目的主商标使用。
-3. 在美国、欧盟、英国、印度、加拿大、澳大利亚、新加坡等实际发行重点地区，委托
-   商标律师按 Class 9/41/42 及近似拼写、读音、图形标识做正式 clearance opinion。
-4. 在取得意见前，不建议为 `PETOPIA` 单词标投入大量线下物料或全球推广预算。
-5. 如需最低法律不确定性的路线，应在正式上架和市场投放前更换为更独特的核心品牌，
-   再对新名称重新执行同样的商店和商标检索。
+WIPO 明确建议同时检索目标国家或地区的官方登记册。因此本文件只是一轮工程排雷记录，
+不构成法律意见，也不作“全球无冲突”保证。
 
 ## 发布人决策
 
-- [ ] 接受现名风险并取得重点法域的专业清权意见；或
-- [ ] 决定更名，并在新名称锁定后重跑商店、域名和商标检索。
-
-本文件是公开数据库和商店的初步检索记录，不构成法律意见。
+- [ ] 已取得重点发行法域的专业清权意见；或
+- [ ] 已阅读本记录并接受以当前组合名称发布的剩余风险。

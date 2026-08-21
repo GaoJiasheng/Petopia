@@ -46,7 +46,7 @@ for browsing.
 
 ## Provenance
 
-This track is original procedural synthesis for Petopia. It uses no third-party
+This track is original procedural synthesis for Hearth & Tails. It uses no third-party
 sample, loop, recording, commercial melody, artist reference, or generated
 audio service. The production manifest records the WAV, OGG, and runtime M4A
 hashes; the release asset manifest records the bundled M4A hash.

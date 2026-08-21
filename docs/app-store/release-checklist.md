@@ -1,4 +1,4 @@
-# Petopia App Store 发布清单
+# Hearth & Tails App Store 发布清单
 
 账号持有人必须完成的项目见
 [`owner-todo.md`](owner-todo.md)。
@@ -52,8 +52,8 @@
 - [x] 配置主类别“游戏”，主类别子分类为“休闲”和“模拟”
 - [x] 填写隐私政策 URL：`https://blog.gavingao.cn/petopia/privacy.html`
 - [x] 填写包含真实联系方式的支持 URL：`https://blog.gavingao.cn/petopia/support.html`
-- [x] 已将 `privacy-policy-en.md`、`support-en.md` 和 `marketing-en.md` 同步到三个公开
-      URL，并验证网页中英文切换、移动端排版和联系方式
+- [x] 已将 2026-08-21 版三语隐私政策，以及 `support-en.md` 和 `marketing-en.md`
+      同步到公开 URL；隐私页支持简体、繁体、英文切换，并已验证联系方式
 - [ ] 完成 App Privacy 问卷，并与 Xcode Privacy Report 复核
 - [x] 完成年龄分级问卷；当前评级为 4+，无聊天、社交媒体或 UGC
 - [x] 确认出口合规答案与 `ITSAppUsesNonExemptEncryption=false` 一致；build 24

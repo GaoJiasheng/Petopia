@@ -44,8 +44,8 @@
 
 ## Provenance
 
-Generated specifically for Petopia with OpenAI image generation, then selected,
+Generated specifically for Hearth & Tails with OpenAI image generation, then selected,
 reframed, color-corrected, exported, and visually reviewed for this product.
-References were limited to Petopia-owned theme art and approved control samples
+References were limited to project-owned theme art and approved control samples
 in this directory. No third-party stock image, asset pack, logo, font, trademark,
 or copyrighted franchise artwork was used as a source.

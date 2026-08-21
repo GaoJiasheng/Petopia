@@ -1,4 +1,4 @@
-# Petopia future yard theme concepts
+# Hearth & Tails future yard theme concepts
 
 These five concepts are design candidates for a later paid or high-warmfluff release. They are not registered in the shop, bundled as runtime assets, or connected to gameplay in the current release.
 
@@ -29,6 +29,6 @@ These five concepts are design candidates for a later paid or high-warmfluff rel
 ## Provenance
 
 - Generated on 2026-08-15 with OpenAI imagegen.
-- Style reference: Petopia-owned `assets/art/samples/petopia-golden-v5-yard-main.png`.
+- Style reference: project-owned `assets/art/samples/petopia-golden-v5-yard-main.png`.
 - Third-party assets: none.
 - The images contain no baked text, logos, UI, or watermarks.

@@ -1,4 +1,4 @@
-# Petopia 实现规格 · 技术 · v0.3 · 配套 DESIGN.md
+# Hearth & Tails 实现规格 · 技术 · v0.3 · 配套 DESIGN.md
 
 > 本文档是面向实现的技术规格（implementation spec），目标：让开发者（后续由 Codex CLI 实现）无需再猜测即可照做。
 > 上游依据：`docs/DESIGN.md`（v0.2 框架版）。凡与本文冲突处，以本文（实现口径）为准；凡本文未覆盖处，回退到 DESIGN.md。

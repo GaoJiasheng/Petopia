@@ -221,7 +221,9 @@ Future<String?> _loadStringOrNull(String path) async {
     return await rootBundle.loadString(path);
   } on FlutterError catch (error) {
     if (error.toString().contains('Unable to load asset')) {
-      debugPrint('Petopia content warning: missing $path, using empty list.');
+      debugPrint(
+        'Hearth & Tails content warning: missing $path, using empty list.',
+      );
       return null;
     }
     rethrow;

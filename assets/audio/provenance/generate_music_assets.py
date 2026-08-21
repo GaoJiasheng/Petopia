@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Petopia music assets from docs/spec-audio.md.
+"""Generate Hearth & Tails music assets from docs/spec-audio.md.
 
 This is a production-source script for music assets, not game runtime code.
 It uses only procedural synthesis: no third-party samples, loops, reference
@@ -1149,7 +1149,7 @@ def main() -> None:
         regenerate_shop_only()
         return
     manifest = {
-        "project": "Petopia",
+        "project": "Hearth & Tails",
         "generated_at_local": time.strftime("%Y-%m-%d %H:%M:%S %Z"),
         "scope": "music only: bgm_* and sting_* assets from docs/spec-audio.md",
         "source_policy": "Programmatic original synthesis. No third-party samples, loops, reference audio, artist-name prompts, or commercial melodies used.",

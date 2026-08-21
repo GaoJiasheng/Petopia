@@ -1,19 +1,19 @@
-# Petopia Support
+# Hearth & Tails Support
 
-Petopia is a quiet, offline-first companion game for iPhone and iPad.
+Hearth & Tails is a quiet, offline-first companion game for iPhone and iPad.
 
 ## Quick Help
 
 ### My progress is missing
 
-Open Settings > Saves & Privacy. If you previously exported a Petopia save,
+Open Settings > Saves & Privacy. If you previously exported a Hearth & Tails save,
 choose Import Save and select that file. Importing replaces the current local
 save only after the file passes validation.
 
 ### A notification did not arrive
 
 Open Settings > Gentle Reminders and confirm the relevant category is enabled.
-Then check that notifications are allowed for Petopia in iOS Settings. Travel,
+Then check that notifications are allowed for Hearth & Tails in iOS Settings. Travel,
 visitors, and progress continue normally when notifications are disabled.
 
 ### Restore Garden Keeper
@@ -31,7 +31,7 @@ or license webpage.
 ## Contact
 
 For the quickest report, open Settings > Saves & Privacy > Report a Problem.
-Petopia will prepare an email to
+Hearth & Tails will prepare an email to
 [gaojiasheng.him@foxmail.com](mailto:gaojiasheng.him@foxmail.com) with its
 version and privacy-safe diagnostics. Add a short description of what happened
 before sending. The report excludes names, postcard text, saves, and device

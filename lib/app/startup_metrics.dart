@@ -21,6 +21,6 @@ class StartupMetrics {
       'Petopia.firstInteractiveFrame',
       arguments: <String, Object?>{'elapsedMs': elapsedMs},
     );
-    debugPrint('Petopia first interactive frame: ${elapsedMs}ms');
+    debugPrint('Hearth & Tails first interactive frame: ${elapsedMs}ms');
   }
 }

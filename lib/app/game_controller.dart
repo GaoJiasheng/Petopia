@@ -1275,7 +1275,9 @@ class GameController extends AsyncNotifier<GameView> {
           stackTrace,
           source: 'lifecycle-$source',
         );
-        debugPrint('Petopia lifecycle $source skipped: $error\n$stackTrace');
+        debugPrint(
+          'Hearth & Tails lifecycle $source skipped: $error\n$stackTrace',
+        );
       }
     });
     _lifecycleTail = next;
@@ -1303,7 +1305,7 @@ class GameController extends AsyncNotifier<GameView> {
   void _persist() {
     unawaited(
       _persistTracked().catchError((Object error, StackTrace stackTrace) {
-        debugPrint('Petopia save skipped: $error\n$stackTrace');
+        debugPrint('Hearth & Tails save skipped: $error\n$stackTrace');
       }),
     );
   }
@@ -1341,13 +1343,17 @@ class GameController extends AsyncNotifier<GameView> {
         await portableSave.flushAutoSave();
       } catch (error, stackTrace) {
         AppErrorLog.instance.record(error, stackTrace, source: 'portable-save');
-        debugPrint('Petopia portable backup skipped: $error\n$stackTrace');
+        debugPrint(
+          'Hearth & Tails portable backup skipped: $error\n$stackTrace',
+        );
       }
       return;
     }
     unawaited(
       portableSave.autoSave().catchError((Object error, StackTrace stackTrace) {
-        debugPrint('Petopia portable backup skipped: $error\n$stackTrace');
+        debugPrint(
+          'Hearth & Tails portable backup skipped: $error\n$stackTrace',
+        );
       }),
     );
   }
@@ -1396,7 +1402,7 @@ class GameController extends AsyncNotifier<GameView> {
                   'A new story is waiting in your journal',
                 ),
           body: switch (language) {
-            AppLanguage.en => 'Open Petopia to see what happened.',
+            AppLanguage.en => 'Open Hearth & Tails to see what happened.',
             AppLanguage.zhHant => TraditionalCopy.translateKnown(event.title),
             _ => event.title,
           },
@@ -1521,7 +1527,7 @@ class GameController extends AsyncNotifier<GameView> {
     try {
       await _persistTracked();
     } catch (error, stackTrace) {
-      debugPrint('Petopia action save skipped: $error\n$stackTrace');
+      debugPrint('Hearth & Tails action save skipped: $error\n$stackTrace');
     }
   }
 

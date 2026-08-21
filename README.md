@@ -1,4 +1,4 @@
-# Petopia
+# Hearth & Tails
 
 一个手绘水彩（奶油可爱风）的小院子养宠手游。一次只养一只宠物，陪它从幼崽长大，满级后它「毕业」去环游世界——不是告别：它会持续寄回明信片，偶尔回院子串门。送走一只，再迎来下一只。院子里不时有野生动物访客路过，慢慢填满你的图鉴。
 
@@ -24,6 +24,6 @@ flutter build ios --simulator --no-codesign
 ## License
 
 本项目源代码基于 [Apache License 2.0](LICENSE) 开源。美术、音频和运行时
-衍生素材使用独立的 [Petopia Asset License](ASSET_LICENSE)，不纳入
+衍生素材使用独立的 [Hearth & Tails Asset License](ASSET_LICENSE)，不纳入
 Apache-2.0；来源、生成服务条款与发布哈希见
 [`asset-rights-register.md`](docs/app-store/asset-rights-register.md)。

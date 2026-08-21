@@ -1,4 +1,4 @@
-# Petopia · 内容数据格式契约（assets/data/*.json）
+# Hearth & Tails · 内容数据格式契约（assets/data/*.json）
 
 > **版本：v0.3** ｜ 配套 DESIGN.md / spec-technical.md §5.2 ｜ 本文件是 **content-*.md → JSON 转换的产出目标**（Minimax）与 **ContentRepository 解析契约**（Codex）的权威来源。
 

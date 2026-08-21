@@ -1,6 +1,6 @@
-# Petopia iPad 自适应规格 · v0.1
+# Hearth & Tails iPad 自适应规格 · v0.1
 
-> 配套 `DESIGN.md`、`spec-ux.md`、`spec-devices.md`、`spec-art-overview.md`。本文件把 iPad 支持从「放大手机 UI」升级为「真正 adaptive app」。目标是兼容 iPad 全屏、横竖屏、Split View、Stage Manager 可变窗口，同时保持 Petopia 的奶油水彩、满幅无黑边、零焦虑体验。
+> 配套 `DESIGN.md`、`spec-ux.md`、`spec-devices.md`、`spec-art-overview.md`。本文件把 iPad 支持从「放大手机 UI」升级为「真正 adaptive app」。目标是兼容 iPad 全屏、横竖屏、Split View、Stage Manager 可变窗口，同时保持 Hearth & Tails 的奶油水彩、满幅无黑边、零焦虑体验。
 
 ---
 

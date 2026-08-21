@@ -31,7 +31,7 @@ class PrivacyScreen extends StatelessWidget {
                 const _PolicySection(
                   title: '你的院子只留在设备上',
                   body:
-                      'Petopia 不要求注册账号，也不会把宠物、明信片、互动记录或设备标识上传到服务器。游戏进度保存在当前设备的应用沙盒中。',
+                      '暖绒小院不要求注册账号，也不会把宠物、明信片、互动记录或设备标识上传到服务器。游戏进度保存在当前设备的应用沙盒中。',
                 ),
                 const _PolicySection(
                   title: '通知由你决定',
@@ -45,7 +45,7 @@ class PrivacyScreen extends StatelessWidget {
                 const _PolicySection(
                   title: '第三方服务',
                   body:
-                      '当前版本不包含广告、第三方分析、跨 App 追踪、社交登录或联网内容服务。只有在你主动支持小院时，购买和恢复购买会由 Apple App Store 处理；Petopia 不会接触支付卡或 Apple ID。',
+                      '当前版本不包含广告、第三方分析、跨 App 追踪、社交登录或联网内容服务。只有在你主动支持小院时，购买和恢复购买会由 Apple App Store 处理；暖绒小院不会接触支付卡或 Apple ID。',
                 ),
                 const _PolicySection(
                   title: '支持小院的本地记录',

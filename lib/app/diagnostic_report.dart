@@ -22,7 +22,7 @@ String buildDiagnosticReport({
       .length;
 
   return <String>[
-    'Petopia diagnostic report',
+    'Hearth & Tails diagnostic report',
     'generatedAtUtc=${generatedAt.toUtc().toIso8601String()}',
     'appVersion=$appVersion',
     'platform=$platform',

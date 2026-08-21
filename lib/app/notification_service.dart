@@ -213,7 +213,9 @@ class NotificationService {
       }
       return permissionGranted;
     } catch (error, stackTrace) {
-      debugPrint('Petopia notification sync skipped: $error\n$stackTrace');
+      debugPrint(
+        'Hearth & Tails notification sync skipped: $error\n$stackTrace',
+      );
       return null;
     }
   }

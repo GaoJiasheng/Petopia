@@ -20,13 +20,13 @@
 - iOS output: `ios/Runner/Assets.xcassets/AppIcon.appiconset/`
 - Android output: `android/app/src/main/res/mipmap-*/ic_launcher.png`
 
-The master was generated specifically for Petopia with the built-in OpenAI
-image-generation tool. Its only image references were Petopia's own orange
-kitten Stage A art and the previous Petopia App Icon.
+The master was generated specifically for Hearth & Tails with the built-in OpenAI
+image-generation tool. Its only image references were the project's own orange
+kitten Stage A art and the previous Hearth & Tails App Icon.
 
 ## Final Prompt Summary
 
-Create one large, irresistibly cute Petopia orange kitten in a relaxed upright
+Create one large, irresistibly cute Hearth & Tails orange kitten in a relaxed upright
 seated pose, facing the viewer with a tiny natural smile, trusting glossy eyes,
 and a slight friendly head tilt. Preserve the character's apricot tabby
 markings and cream muzzle. Render it as premium cream-cartoon watercolor on a

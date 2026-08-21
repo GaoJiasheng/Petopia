@@ -1,7 +1,7 @@
 # Visitor Redraw Provenance - 2026-08-10
 
-These chroma-key visitor masters were generated specifically for Petopia with
-OpenAI image generation. The only visual references were Petopia-owned visitor
+These chroma-key visitor masters were generated specifically for Hearth & Tails with
+OpenAI image generation. The only visual references were project-owned visitor
 specifications and Golden Set art direction. No third-party stock art,
 commercial character, brand, font, or living-artist style reference was used.
 

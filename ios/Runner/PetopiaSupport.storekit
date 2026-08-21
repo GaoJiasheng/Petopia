@@ -21,7 +21,7 @@
         }
       ],
       "productID" : "com.petopia.petopia.support.treat",
-      "referenceName" : "Petopia Support - Treat",
+      "referenceName" : "Hearth & Tails Support - Treat",
       "type" : "Consumable"
     },
     {
@@ -41,7 +41,7 @@
         }
       ],
       "productID" : "com.petopia.petopia.support.lantern",
-      "referenceName" : "Petopia Support - Lantern",
+      "referenceName" : "Hearth & Tails Support - Lantern",
       "type" : "Consumable"
     },
     {
@@ -61,7 +61,7 @@
         }
       ],
       "productID" : "com.petopia.petopia.support.bouquet",
-      "referenceName" : "Petopia Support - Bouquet",
+      "referenceName" : "Hearth & Tails Support - Bouquet",
       "type" : "Consumable"
     },
     {
@@ -81,7 +81,7 @@
         }
       ],
       "productID" : "com.petopia.petopia.support.guardian",
-      "referenceName" : "Petopia Support - Garden Keeper",
+      "referenceName" : "Hearth & Tails Support - Garden Keeper",
       "type" : "NonConsumable"
     }
   ],
