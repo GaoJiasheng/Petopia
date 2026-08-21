@@ -1,0 +1,424 @@
+{
+  "assets": [
+    {
+      "asset": "assets/art/support-open/support_open_treat.webp",
+      "size": [
+        4096,
+        512
+      ],
+      "mode": "RGBA",
+      "lossless": true,
+      "frame8_max_channel_delta": 0,
+      "frames": [
+        {
+          "bbox": [
+            51,
+            54,
+            461,
+            461
+          ],
+          "margins": [
+            51,
+            54,
+            51,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            59,
+            51,
+            453,
+            461
+          ],
+          "margins": [
+            59,
+            51,
+            59,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            111,
+            51,
+            400,
+            461
+          ],
+          "margins": [
+            111,
+            51,
+            112,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            89,
+            51,
+            423,
+            461
+          ],
+          "margins": [
+            89,
+            51,
+            89,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            88,
+            51,
+            424,
+            461
+          ],
+          "margins": [
+            88,
+            51,
+            88,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            99,
+            51,
+            412,
+            460
+          ],
+          "margins": [
+            99,
+            51,
+            100,
+            52
+          ],
+          "long_edge": 409,
+          "long_edge_ratio": 0.7988
+        },
+        {
+          "bbox": [
+            51,
+            103,
+            461,
+            461
+          ],
+          "margins": [
+            51,
+            103,
+            51,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            51,
+            145,
+            461,
+            461
+          ],
+          "margins": [
+            51,
+            145,
+            51,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        }
+      ]
+    },
+    {
+      "asset": "assets/art/support-open/support_open_lantern.webp",
+      "size": [
+        4096,
+        512
+      ],
+      "mode": "RGBA",
+      "lossless": true,
+      "frame8_max_channel_delta": 0,
+      "frames": [
+        {
+          "bbox": [
+            140,
+            51,
+            372,
+            461
+          ],
+          "margins": [
+            140,
+            51,
+            140,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            139,
+            51,
+            372,
+            461
+          ],
+          "margins": [
+            139,
+            51,
+            140,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            139,
+            51,
+            372,
+            461
+          ],
+          "margins": [
+            139,
+            51,
+            140,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            140,
+            51,
+            372,
+            461
+          ],
+          "margins": [
+            140,
+            51,
+            140,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            139,
+            51,
+            372,
+            461
+          ],
+          "margins": [
+            139,
+            51,
+            140,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            137,
+            51,
+            375,
+            461
+          ],
+          "margins": [
+            137,
+            51,
+            137,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            139,
+            51,
+            372,
+            461
+          ],
+          "margins": [
+            139,
+            51,
+            140,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            140,
+            51,
+            371,
+            461
+          ],
+          "margins": [
+            140,
+            51,
+            141,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        }
+      ]
+    },
+    {
+      "asset": "assets/art/support-open/support_open_bouquet.webp",
+      "size": [
+        4096,
+        512
+      ],
+      "mode": "RGBA",
+      "lossless": true,
+      "frame8_max_channel_delta": 0,
+      "frames": [
+        {
+          "bbox": [
+            159,
+            51,
+            353,
+            461
+          ],
+          "margins": [
+            159,
+            51,
+            159,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            125,
+            51,
+            387,
+            461
+          ],
+          "margins": [
+            125,
+            51,
+            125,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            133,
+            51,
+            379,
+            461
+          ],
+          "margins": [
+            133,
+            51,
+            133,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            127,
+            51,
+            384,
+            461
+          ],
+          "margins": [
+            127,
+            51,
+            128,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            120,
+            51,
+            391,
+            461
+          ],
+          "margins": [
+            120,
+            51,
+            121,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            103,
+            51,
+            409,
+            461
+          ],
+          "margins": [
+            103,
+            51,
+            103,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            56,
+            51,
+            456,
+            461
+          ],
+          "margins": [
+            56,
+            51,
+            56,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        },
+        {
+          "bbox": [
+            51,
+            96,
+            461,
+            461
+          ],
+          "margins": [
+            51,
+            96,
+            51,
+            51
+          ],
+          "long_edge": 410,
+          "long_edge_ratio": 0.8008
+        }
+      ]
+    }
+  ]
+}
