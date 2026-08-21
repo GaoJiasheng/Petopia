@@ -7,10 +7,10 @@
 
 - [x] 已确认 App 记录为 `com.petopia.petopia`、SKU `petopia001`、主语言
       English (U.S.)，商店名称为 `Hearth & Tails: Letters Home`。
-- [x] build 32 为带 `+1` 的内部 TestFlight 工具包；build 34 为不含内测入口的
+- [x] build 32 为带 `+1` 的内部 TestFlight 工具包；build 35 为不含内测入口的
       已上传正式候选，Apple 状态为 `VALID` / `APP_STORE_ELIGIBLE`。
-- [ ] 当前 `main` 已加入“今日故事”直达入口、繁体中文和主动邮件问题反馈；提交审核前
-      需升到未使用的新 build number，重新上传并关联 App 1.0，不能继续使用 build 34。
+- [x] 当前 `main` 已加入“今日故事”直达入口、繁体中文、主动邮件问题反馈及
+      `Hearth & Tails` 品牌，并已通过 build 35 上传并关联 App 1.0。
 - [ ] 确认 Apple Developer Program 协议、税务与银行资料没有待处理项目。
 - [ ] 在 App Store Connect 接受 Paid Applications Agreement，并确认税务与
       收款账户状态允许提交应用内购买。
@@ -59,7 +59,7 @@
 - [x] 已回答社交媒体能力问题；本版本无聊天、公开资料、
       用户生成内容或联网社交。
 - [x] 出口合规选择与 `ITSAppUsesNonExemptEncryption=false` 保持一致；Apple
-      已确认 build 34 的 `usesNonExemptEncryption=false`。
+      已确认 build 35 的 `usesNonExemptEncryption=false`。
 - [x] App Store Connect 内容版权字段已选择“不使用第三方内容”。
 - [ ] 完成 EU Digital Services Act trader / non-trader 声明；若作为 trader
       在欧盟发布，完成公开联系方式验证。
@@ -69,7 +69,7 @@
 ## 签名与人工验收
 
 - [x] 使用 Cloud Managed Apple Distribution 签名创建 build 24、25、26、27、28、29、
-      30、32、33 与 34 Archive；build 32 为 `INTERNAL_ONLY`，build 34 为当前已上传的
+      30、32、33、34 与 35 Archive；build 32 为 `INTERNAL_ONLY`，build 35 为当前已上传的
       无内测入口候选。
 - [ ] 在保留进度的设备上先安装 TestFlight build 18、19 或 20，再覆盖安装本轮新上传的
       正式候选，确认 schema 2 → 3 后宠物、货币、旅程、明信片、来客、成就和设置均保留。

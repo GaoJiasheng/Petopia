@@ -70,15 +70,20 @@
 
 ## 发布控制
 
-- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `32`）
+- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `35`）
 - [x] 内测日推进工具已改为双重编译门禁：Dart 仅在
       `PETOPIA_TESTFLIGHT_TOOLS=true` 时保留入口，Swift 仅在
       `PETOPIA_TESTFLIGHT_TOOLS` 条件下注册 StoreKit 环境通道。普通 Release
       不生成按钮、不调用通道，也不能从控制器推进时间。
 - [x] 使用 `tools/build_ios_variants.sh testflight-tools 32` 构建仅供内部
-      TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 24`
-      构建无内测入口的送审包。build 24 已选为 App Store 审核版本；build 32
+      TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 35`
+      构建无内测入口的送审包。build 35 已选为 App Store 审核版本；build 32
       仅对内部 TestFlight 组开放。
+- [x] build 35 已上传并通过 Apple 验证；Delivery UUID
+      `95f06845-823c-4978-b76b-51b320deaf26`，状态 `VALID` /
+      `APP_STORE_ELIGIBLE`，`usesNonExemptEncryption=false`，最低系统为 iOS 16.0。
+      该正式候选包含 `Hearth & Tails` 三语显示名，不含 `+1` 内测入口，并已替换
+      build 34 关联到 App 1.0 审核草稿。
 - [x] build 32 已上传并通过 Apple 验证；Delivery UUID
       `67486b67-5525-41aa-8c09-60ae36a3791e`，状态 `VALID` / `INTERNAL_ONLY`，
       `usesNonExemptEncryption=false`，最低系统为 iOS 16.0。中英文测试说明已同步，
@@ -140,7 +145,7 @@
 - [ ] 完成至少一次 iPhone 与 iPad 外部/内部测试
 - [ ] 检查 TestFlight 崩溃、卡死、资源缺失和通知权限行为
 - [ ] 在真机 TestFlight build 32 确认首页右上角出现 `+1` 日推进按钮，并验证
-      连续跨日时来客弹窗与院子模型一致；在正式 build 24 确认按钮不存在且
+      连续跨日时来客弹窗与院子模型一致；在正式 build 35 确认按钮不存在且
       控制器执行能力被编译门禁关闭
 - [x] 已选择手动发布
 
