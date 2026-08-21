@@ -269,7 +269,7 @@ class _SupportIntro extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppText(
-                      guardian ? '守护灯已点亮' : '自愿支持暖绒小院',
+                      guardian ? '小院守护者已解锁' : '自愿支持暖绒小院',
                       style: const TextStyle(
                         color: PetopiaColors.ink,
                         fontSize: 20,
@@ -279,7 +279,7 @@ class _SupportIntro extends StatelessWidget {
                     const SizedBox(height: 6),
                     AppText(
                       guardian
-                          ? '守护灯和纪念徽章已解锁，特别来信会保存在这里。'
+                          ? '纪念徽章和特别来信已经收好；每天都可以在这里免费点亮一盏 24 小时的暖灯。'
                           : '支持完全自愿。所有回礼都只是装饰，不会影响成长、收集或概率。',
                       style: const TextStyle(
                         color: PetopiaColors.mutedText,
@@ -311,20 +311,34 @@ class _SupportProductCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final now = DateTime.now();
     final offer = state.offers[product.id];
-    final busy = state.busyProductId == product.id;
+    final guardianLantern =
+        product.kind == SupportProductKind.lantern && state.benefits.guardian;
+    final freeLanternAvailable =
+        guardianLantern && state.benefits.canLightFreeLantern(now);
+    final freeLanternBusy = state.busyProductId == guardianFreeLanternActionId;
+    final busy =
+        state.busyProductId == product.id ||
+        (guardianLantern && freeLanternBusy);
     final owned =
         product.kind == SupportProductKind.guardian && state.benefits.guardian;
-    final activeLabel = _activeLabel(product, state.benefits);
+    final title = guardianLantern ? '今天的暖灯' : product.title;
+    final subtitle = guardianLantern
+        ? '今天也可以点一盏。\n暖灯会亮 24 小时。'
+        : product.subtitle;
+    final activeLabel = _activeLabel(product, state.benefits, now);
     final canBuy =
         state.storeAvailable &&
         offer != null &&
         !owned &&
         !state.restoring &&
         state.busyProductId == null;
+    final canActivateFreeLantern =
+        freeLanternAvailable && !state.restoring && state.busyProductId == null;
     return Semantics(
       container: true,
-      label: '${context.tr(product.title)}, ${context.tr(product.subtitle)}',
+      label: '${context.tr(title)}, ${context.tr(subtitle)}',
       child: SizedBox(
         height: height,
         child: DecoratedBox(
@@ -332,7 +346,9 @@ class _SupportProductCard extends ConsumerWidget {
             color: const Color(0xFFFFFCF6),
             borderRadius: BorderRadius.circular(8),
             border: Border.all(
-              color: owned ? const Color(0xFFA7C4A0) : PetopiaColors.line,
+              color: owned || guardianLantern
+                  ? const Color(0xFFA7C4A0)
+                  : PetopiaColors.line,
             ),
           ),
           child: Padding(
@@ -355,7 +371,7 @@ class _SupportProductCard extends ConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       AppText(
-                        product.title,
+                        title,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -366,7 +382,7 @@ class _SupportProductCard extends ConsumerWidget {
                       ),
                       const SizedBox(height: 5),
                       AppText(
-                        product.subtitle,
+                        subtitle,
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
@@ -392,9 +408,20 @@ class _SupportProductCard extends ConsumerWidget {
                         width: double.infinity,
                         child: FilledButton(
                           key: ValueKey<String>(
-                            'support_purchase_${product.kind.name}',
+                            guardianLantern
+                                ? 'support_free_guardian_lantern'
+                                : 'support_purchase_${product.kind.name}',
                           ),
-                          onPressed: canBuy
+                          onPressed: guardianLantern
+                              ? canActivateFreeLantern
+                                    ? () => ref
+                                          .read(
+                                            supportPurchaseControllerProvider
+                                                .notifier,
+                                          )
+                                          .lightFreeGuardianLantern()
+                                    : null
+                              : canBuy
                               ? () => ref
                                     .read(
                                       supportPurchaseControllerProvider
@@ -411,7 +438,11 @@ class _SupportProductCard extends ConsumerWidget {
                                   ),
                                 )
                               : AppText(
-                                  owned
+                                  guardianLantern
+                                      ? freeLanternAvailable
+                                            ? '免费点亮'
+                                            : '今天已经点亮'
+                                      : owned
                                       ? '已解锁'
                                       : offer?.displayPrice ??
                                             (state.loadingOffers
@@ -431,17 +462,32 @@ class _SupportProductCard extends ConsumerWidget {
     );
   }
 
-  String? _activeLabel(SupportProductSpec product, SupportBenefits benefits) {
-    final now = DateTime.now().toUtc();
+  String? _activeLabel(
+    SupportProductSpec product,
+    SupportBenefits benefits,
+    DateTime now,
+  ) {
     return switch (product.kind) {
       SupportProductKind.treat when benefits.treatActive(now) => '点心正在院子里',
+      SupportProductKind.lantern
+          when benefits.guardian && !benefits.canLightFreeLantern(now) =>
+        _remainingLanternLabel(benefits.lanternUntil, now),
       SupportProductKind.lantern when benefits.lanternActive(now) =>
-        benefits.guardian ? '守护灯已永久解锁' : '暖灯正在院子里亮着',
+        '暖灯正在院子里亮着',
       SupportProductKind.bouquet when benefits.bouquetActive(now) =>
         '鲜花正在院子里盛开',
       SupportProductKind.guardian when benefits.guardian => '小院守护者已解锁',
       _ => null,
     };
+  }
+
+  String _remainingLanternLabel(DateTime? until, DateTime now) {
+    if (until == null || !until.isAfter(now)) return '今天已经点亮';
+    final minutes = until.difference(now).inMinutes;
+    if (minutes <= 60) return '暖灯还会亮约 1 小时';
+    final hours = (minutes / 60).ceil();
+    if (hours <= 48) return '暖灯还会亮约 $hours 小时';
+    return '暖灯还会亮约 ${(hours / 24).ceil()} 天';
   }
 }
 

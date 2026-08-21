@@ -96,6 +96,16 @@ abstract final class EnglishCopy {
     match = RegExp(r'^(.+)，今日次数已完成$').firstMatch(source);
     if (match != null) return '${_term(match[1]!)} · Done for today';
 
+    match = RegExp(r'^暖灯还会亮约 (\d+) 小时$').firstMatch(source);
+    if (match != null) {
+      return 'The lantern will glow for about ${match[1]} hours';
+    }
+
+    match = RegExp(r'^暖灯还会亮约 (\d+) 天$').firstMatch(source);
+    if (match != null) {
+      return 'The lantern will glow for about ${match[1]} days';
+    }
+
     match = RegExp(r'^(.+)，增加(\d+)点经验$').firstMatch(source);
     if (match != null) return '${_term(match[1]!)} · +${match[2]} XP';
 
@@ -1025,6 +1035,8 @@ abstract final class EnglishCopy {
     '花篮已经放进院子，会展示七天。感谢你的支持。':
         'The bouquet is in the garden and will be displayed for seven days. Thank you for supporting Hearth & Tails.',
     '小院守护者': 'Garden Keeper',
+    '每天可免费点亮一盏 24 小时暖灯，并永久解锁纪念徽章和特别来信。':
+        'Light one 24-hour garden lantern free each day, and permanently unlock a keepsake badge and special letter.',
     '永久点亮守护灯，并解锁纪念徽章和一张特别来信。':
         'Keep the garden lantern lit permanently and unlock a keepsake badge and special letter.',
     '所有回礼均为装饰性内容，不会改变成长、暖绒、冷却、稀有度或可玩内容。':
@@ -1034,11 +1046,25 @@ abstract final class EnglishCopy {
     '暂不可用': 'Unavailable',
     '可重复': 'Repeatable',
     '小院守护者已解锁': 'Garden Keeper Unlocked',
+    '纪念徽章和特别来信已经收好；每天都可以在这里免费点亮一盏 24 小时的暖灯。':
+        'Your keepsake badge and special letter are safely here. You can also light one 24-hour lantern here for free each day.',
+    '今天的暖灯': "Today's Warm Lantern",
+    '今天也可以点一盏。\n暖灯会亮 24 小时。':
+        'You can light one today. It will glow for 24 hours.',
+    '免费点亮': 'Light for Free',
+    '今天已经点亮': 'Lit for Today',
     '已解锁': 'Unlocked',
     '恢复“小院守护者”': 'Restore Garden Keeper',
     '正在恢复': 'Restoring…',
     '感谢你支持暖绒小院。守护灯、纪念徽章和特别来信已经解锁。':
         'Thank you for supporting Hearth & Tails. The garden lantern, keepsake badge, and special letter are now unlocked.',
+    '感谢你支持暖绒小院。纪念徽章和特别来信已经解锁，今天也可以免费点亮一盏暖灯。':
+        'Thank you for supporting Hearth & Tails. Your keepsake badge and special letter are unlocked, and you can light a warm lantern for free today.',
+    '暖灯亮起来了，愿小院今天也暖暖的。':
+        'The lantern is glowing. May the garden feel a little warmer today.',
+    '暖灯暂时没有保存好，稍后再来看看吧。':
+        'The lantern could not be saved just yet. Please try again a little later.',
+    '暖灯还会亮约 1 小时': 'The lantern will glow for about 1 hour',
     '感谢你的支持': 'Thank You for Your Support',
     '小院的灯': 'The Garden Light',
     '守护灯已点亮': 'Garden Lantern Unlocked',

@@ -7,6 +7,8 @@ import 'support_benefits.dart';
 import 'support_catalog.dart';
 import 'support_storefront.dart';
 
+const guardianFreeLanternActionId = 'guardian_free_lantern';
+
 class SupportDelivery {
   const SupportDelivery({
     required this.product,
@@ -201,6 +203,41 @@ class SupportPurchaseController extends AsyncNotifier<SupportPurchaseState> {
     }
   }
 
+  Future<bool> lightFreeGuardianLantern({DateTime? now}) async {
+    await future;
+    final activationTime = now ?? DateTime.now();
+    if (_model.busyProductId != null ||
+        _model.restoring ||
+        !_model.benefits.canLightFreeLantern(activationTime)) {
+      return false;
+    }
+
+    _setModel(
+      _model.copyWith(
+        busyProductId: guardianFreeLanternActionId,
+        clearMessage: true,
+      ),
+    );
+    try {
+      final nextBenefits = _model.benefits.lightFreeLantern(activationTime);
+      await _benefitsStore.save(nextBenefits);
+      _setModel(
+        _model.copyWith(
+          benefits: nextBenefits,
+          clearBusyProduct: true,
+          message: '暖灯亮起来了，愿小院今天也暖暖的。',
+        ),
+      );
+      _scheduleExpiryRefresh();
+      return true;
+    } on Object {
+      _setModel(
+        _model.copyWith(clearBusyProduct: true, message: '暖灯暂时没有保存好，稍后再来看看吧。'),
+      );
+      return false;
+    }
+  }
+
   Future<void> _handleTransactions(
     List<SupportTransaction> transactions,
   ) async {
@@ -302,7 +339,7 @@ class SupportPurchaseController extends AsyncNotifier<SupportPurchaseState> {
     final now = DateTime.now().toUtc();
     final expiries = <DateTime?>[
       _model.benefits.treatUntil,
-      if (!_model.benefits.guardian) _model.benefits.lanternUntil,
+      _model.benefits.lanternUntil,
       _model.benefits.bouquetUntil,
     ].whereType<DateTime>().where((expiry) => expiry.isAfter(now)).toList();
     if (expiries.isEmpty) return;

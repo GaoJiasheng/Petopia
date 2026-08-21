@@ -90,6 +90,82 @@ void main() {
     expect(storefront.restoreCalls, 1);
   });
 
+  test(
+    'guardian free lantern is local-only and limited by calendar day',
+    () async {
+      final firstDay = DateTime(2026, 8, 22, 18);
+      benefitsStore.value = const SupportBenefits().apply(
+        product: SupportCatalog.guardian,
+        transactionKey: 'guardian-free',
+        now: firstDay,
+      );
+      await container.read(supportPurchaseControllerProvider.future);
+      final controller = container.read(
+        supportPurchaseControllerProvider.notifier,
+      );
+
+      expect(await controller.lightFreeGuardianLantern(now: firstDay), isTrue);
+      expect(
+        await controller.lightFreeGuardianLantern(
+          now: firstDay.add(const Duration(hours: 2)),
+        ),
+        isFalse,
+      );
+
+      final state = container
+          .read(supportPurchaseControllerProvider)
+          .requireValue;
+      expect(state.benefits.lastFreeLanternAt, firstDay);
+      expect(
+        state.benefits.lanternUntil,
+        firstDay.add(const Duration(days: 1)),
+      );
+      expect(benefitsStore.saves, 1);
+      expect(storefront.buyCalls, 0);
+      expect(storefront.lastBoughtId, isNull);
+    },
+  );
+
+  test(
+    'guardian free lantern is available after local midnight and stacks',
+    () async {
+      final firstDay = DateTime(2026, 8, 22, 23, 55);
+      final nextDay = DateTime(2026, 8, 23, 0, 5);
+      benefitsStore.value = const SupportBenefits().apply(
+        product: SupportCatalog.guardian,
+        transactionKey: 'guardian-midnight',
+        now: firstDay,
+      );
+      await container.read(supportPurchaseControllerProvider.future);
+      final controller = container.read(
+        supportPurchaseControllerProvider.notifier,
+      );
+
+      expect(await controller.lightFreeGuardianLantern(now: firstDay), isTrue);
+      final firstExpiry = benefitsStore.value.lanternUntil;
+      expect(await controller.lightFreeGuardianLantern(now: nextDay), isTrue);
+
+      expect(
+        benefitsStore.value.lanternUntil,
+        firstExpiry!.add(const Duration(days: 1)),
+      );
+      expect(benefitsStore.saves, 2);
+      expect(storefront.buyCalls, 0);
+    },
+  );
+
+  test('non-guardian cannot activate the free lantern', () async {
+    await container.read(supportPurchaseControllerProvider.future);
+
+    final activated = await container
+        .read(supportPurchaseControllerProvider.notifier)
+        .lightFreeGuardianLantern(now: DateTime(2026, 8, 22, 12));
+
+    expect(activated, isFalse);
+    expect(benefitsStore.saves, 0);
+    expect(storefront.buyCalls, 0);
+  });
+
   test('missing App Store products stay disabled', () async {
     storefront.notFoundIds = <String>{SupportCatalog.bouquet.id};
     final state = await container.read(
@@ -179,6 +255,7 @@ class _FakeStorefront implements SupportStorefront {
   String? lastBoughtId;
   var completed = 0;
   var restoreCalls = 0;
+  var buyCalls = 0;
 
   @override
   Stream<List<SupportTransaction>> get transactions => _controller.stream;
@@ -206,6 +283,7 @@ class _FakeStorefront implements SupportStorefront {
 
   @override
   Future<bool> buy(String productId, {required bool consumable}) async {
+    buyCalls += 1;
     lastBoughtId = productId;
     return true;
   }

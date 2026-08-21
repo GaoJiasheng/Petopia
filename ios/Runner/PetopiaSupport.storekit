@@ -70,14 +70,19 @@
       "internalID" : "949676BA-DAE5-4D43-9D59-1A453EC6ABF6",
       "localizations" : [
         {
-          "description" : "Permanent lantern, keepsake badge, and special letter.",
+          "description" : "Includes a daily free 24-hour lantern, keepsake badge, and special letter.",
           "displayName" : "Garden Keeper",
           "locale" : "en_US"
         },
         {
-          "description" : "永久点亮守护灯，并解锁纪念徽章和特别来信。",
+          "description" : "每天可免费点亮一盏24小时暖灯，并永久解锁纪念徽章和特别来信。",
           "displayName" : "小院守护者",
           "locale" : "zh_CN"
+        },
+        {
+          "description" : "每天可免費點亮一盞24小時暖燈，並永久解鎖紀念徽章與特別來信。",
+          "displayName" : "小院守護者",
+          "locale" : "zh_TW"
         }
       ],
       "productID" : "com.petopia.petopia.support.guardian",

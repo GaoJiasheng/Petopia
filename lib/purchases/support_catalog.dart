@@ -62,9 +62,9 @@ abstract final class SupportCatalog {
     kind: SupportProductKind.guardian,
     id: 'com.petopia.petopia.support.guardian',
     title: '小院守护者',
-    subtitle: '永久点亮守护灯，并解锁纪念徽章和一张特别来信。',
+    subtitle: '每天可免费点亮一盏 24 小时暖灯，并永久解锁纪念徽章和特别来信。',
     assetPath: 'assets/runtime/support/support_guardian_badge.webp',
-    thankYou: '感谢你支持暖绒小院。守护灯、纪念徽章和特别来信已经解锁。',
+    thankYou: '感谢你支持暖绒小院。纪念徽章和特别来信已经解锁，今天也可以免费点亮一盏暖灯。',
     fallbackPrice: r'$6.99',
     consumable: false,
   );

@@ -1,5 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter_test/flutter_test.dart';
+import 'package:petopia/app/game_state.dart';
+import 'package:petopia/domain/enums.dart';
+import 'package:petopia/domain/models/pet.dart';
+import 'package:petopia/domain/models/yard.dart';
 import 'package:petopia/l10n/english_copy.dart';
+import 'package:petopia/l10n/traditional_copy.dart';
 import 'package:petopia/purchases/support_benefits.dart';
 import 'package:petopia/purchases/support_catalog.dart';
 
@@ -43,6 +50,20 @@ void main() {
         );
       }
     }
+
+    for (final source in <String>[
+      '今天的暖灯',
+      '今天也可以点一盏。\n暖灯会亮 24 小时。',
+      '免费点亮',
+      '今天已经点亮',
+      '暖灯亮起来了，愿小院今天也暖暖的。',
+      '暖灯暂时没有保存好，稍后再来看看吧。',
+      '暖灯还会亮约 3 小时',
+      '暖灯还会亮约 2 天',
+    ]) {
+      expect(EnglishCopy.translate(source), isNot(source), reason: source);
+      expect(TraditionalCopy.translate(source), isNot(source), reason: source);
+    }
   });
 
   test('consumable benefits extend from the active expiry', () {
@@ -81,7 +102,7 @@ void main() {
     expect(duplicate.lastSupportedAt, first.lastSupportedAt);
   });
 
-  test('guardian permanently keeps the lantern active', () {
+  test('guardian lantern is active only while its duration remains', () {
     final now = DateTime.utc(2026, 7, 27, 12);
     final benefits = const SupportBenefits().apply(
       product: SupportCatalog.guardian,
@@ -90,7 +111,43 @@ void main() {
     );
 
     expect(benefits.guardian, isTrue);
-    expect(benefits.lanternActive(now.add(const Duration(days: 9999))), isTrue);
+    expect(benefits.lanternActive(now), isFalse);
+    final lit = benefits.lightFreeLantern(now);
+    expect(lit.lanternActive(now.add(const Duration(hours: 23))), isTrue);
+    expect(lit.lanternActive(now.add(const Duration(hours: 24))), isFalse);
+  });
+
+  test('guardian gets one free lantern per local calendar day', () {
+    final firstDay = DateTime(2026, 8, 22, 23, 55);
+    final nextDay = DateTime(2026, 8, 23, 0, 5);
+    final guardian = const SupportBenefits().apply(
+      product: SupportCatalog.guardian,
+      transactionKey: 'guardian-daily',
+      now: firstDay,
+    );
+
+    final first = guardian.lightFreeLantern(firstDay);
+    final duplicate = first.lightFreeLantern(
+      firstDay.add(const Duration(minutes: 3)),
+    );
+    final second = duplicate.lightFreeLantern(nextDay);
+
+    expect(first.canLightFreeLantern(firstDay), isFalse);
+    expect(identical(duplicate, first), isTrue);
+    expect(first.canLightFreeLantern(nextDay), isTrue);
+    expect(second.lastFreeLanternAt, nextDay);
+    expect(
+      second.lanternUntil,
+      first.lanternUntil!.add(const Duration(days: 1)),
+    );
+  });
+
+  test('non-guardian cannot use the free lantern', () {
+    final now = DateTime(2026, 8, 22, 12);
+    const benefits = SupportBenefits();
+
+    expect(benefits.canLightFreeLantern(now), isFalse);
+    expect(identical(benefits.lightFreeLantern(now), benefits), isTrue);
   });
 
   test('benefits round trip without storing payment details', () {
@@ -105,5 +162,101 @@ void main() {
     expect(restored.treatUntil, source.treatUntil);
     expect(restored.lastProductId, SupportCatalog.treat.id);
     expect(restored.processedTransactions, <String>['treat-1']);
+  });
+
+  test(
+    'free lantern timestamp round trips and old saves remain compatible',
+    () {
+      final now = DateTime(2026, 8, 22, 19, 30);
+      final source = const SupportBenefits()
+          .apply(
+            product: SupportCatalog.guardian,
+            transactionKey: 'guardian-roundtrip',
+            now: now,
+          )
+          .lightFreeLantern(now);
+
+      final restored = SupportBenefits.fromJson(source.toJson());
+      final legacy = SupportBenefits.fromJson(<String, Object?>{
+        'version': 1,
+        'guardian': true,
+        'processedTransactions': <String>['legacy-guardian'],
+      });
+
+      expect(restored.lastFreeLanternAt, source.lastFreeLanternAt!.toUtc());
+      expect(restored.lanternUntil, source.lanternUntil!.toUtc());
+      expect(legacy.lastFreeLanternAt, isNull);
+      expect(legacy.canLightFreeLantern(now), isTrue);
+    },
+  );
+
+  test('file store persists and restores the free lantern date', () async {
+    final directory = await Directory.systemTemp.createTemp(
+      'hearth-tails-support-benefits-',
+    );
+    addTearDown(() => directory.delete(recursive: true));
+    final store = FileSupportBenefitsStore(
+      supportDirectory: () async => directory,
+    );
+    final now = DateTime(2026, 8, 22, 19, 30);
+    final source = const SupportBenefits()
+        .apply(
+          product: SupportCatalog.guardian,
+          transactionKey: 'guardian-file-roundtrip',
+          now: now,
+        )
+        .lightFreeLantern(now);
+
+    await store.save(source);
+    final restored = await store.load();
+
+    expect(restored.lastFreeLanternAt, source.lastFreeLanternAt!.toUtc());
+    expect(restored.lanternUntil, source.lanternUntil!.toUtc());
+    expect(restored.canLightFreeLantern(now), isFalse);
+  });
+
+  test('free lantern leaves every gameplay value unchanged', () {
+    final now = DateTime(2026, 8, 22, 12);
+    final session = GameSession(
+      current: Pet(
+        id: 'pet-1',
+        speciesId: 'pet_cat',
+        variantId: 'pet_cat_var01',
+        name: '小橘',
+        personality: <String>['p_gentle', 'p_curious'],
+        bornAt: now.toUtc(),
+        lastOnlineAt: now.toUtc(),
+        offlineDayKey: '2026-08-22',
+        exp: 317,
+        level: 6,
+        stage: PetStage.b,
+        state: PetState.raising,
+      ),
+      wallet: CurrencyWallet(balance: 428),
+    );
+    session.careLedger.lastAt['feed'] = now.subtract(
+      const Duration(minutes: 4),
+    );
+    const visitorProbability = 0.18;
+    Map<String, Object?> snapshot() => <String, Object?>{
+      'petExp': session.current!.exp,
+      'warmfluff': session.wallet.balance,
+      'cooldowns': Map<String, DateTime>.from(session.careLedger.lastAt),
+      'visitorProbability': visitorProbability,
+    };
+    final before = snapshot();
+    final guardian = const SupportBenefits().apply(
+      product: SupportCatalog.guardian,
+      transactionKey: 'guardian-no-gameplay',
+      now: now,
+    );
+
+    final lit = guardian.lightFreeLantern(now);
+
+    expect(snapshot(), before);
+    expect(lit.toJson().keys, isNot(contains('petExp')));
+    expect(lit.toJson().keys, isNot(contains('warmfluff')));
+    expect(lit.toJson().keys, isNot(contains('cooldowns')));
+    expect(lit.toJson().keys, isNot(contains('visitorProbability')));
   });
 }

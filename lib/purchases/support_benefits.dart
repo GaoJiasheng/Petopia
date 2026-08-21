@@ -12,6 +12,7 @@ class SupportBenefits {
     this.treatUntil,
     this.lanternUntil,
     this.bouquetUntil,
+    this.lastFreeLanternAt,
     this.processedTransactions = const <String>[],
     this.lastProductId,
     this.lastSupportedAt,
@@ -21,18 +22,38 @@ class SupportBenefits {
   final DateTime? treatUntil;
   final DateTime? lanternUntil;
   final DateTime? bouquetUntil;
+  final DateTime? lastFreeLanternAt;
   final List<String> processedTransactions;
   final String? lastProductId;
   final DateTime? lastSupportedAt;
 
   bool treatActive(DateTime now) => treatUntil?.isAfter(now) ?? false;
 
-  bool lanternActive(DateTime now) =>
-      guardian || (lanternUntil?.isAfter(now) ?? false);
+  bool lanternActive(DateTime now) => lanternUntil?.isAfter(now) ?? false;
 
   bool bouquetActive(DateTime now) => bouquetUntil?.isAfter(now) ?? false;
 
   bool get hasSupported => lastSupportedAt != null || guardian;
+
+  bool canLightFreeLantern(DateTime now) {
+    if (!guardian) return false;
+    final last = lastFreeLanternAt;
+    return last == null || !_isSameLocalCalendarDay(last, now);
+  }
+
+  SupportBenefits lightFreeLantern(DateTime now) {
+    if (!canLightFreeLantern(now)) return this;
+    return SupportBenefits(
+      guardian: guardian,
+      treatUntil: treatUntil,
+      lanternUntil: _extend(lanternUntil, now, SupportCatalog.lantern.duration),
+      bouquetUntil: bouquetUntil,
+      lastFreeLanternAt: now,
+      processedTransactions: processedTransactions,
+      lastProductId: lastProductId,
+      lastSupportedAt: lastSupportedAt,
+    );
+  }
 
   SupportBenefits apply({
     required SupportProductSpec product,
@@ -41,13 +62,6 @@ class SupportBenefits {
   }) {
     if (processedTransactions.contains(transactionKey)) return this;
 
-    DateTime? extend(DateTime? current) {
-      final duration = product.duration;
-      if (duration == null) return current;
-      final anchor = current != null && current.isAfter(now) ? current : now;
-      return anchor.add(duration);
-    }
-
     final processed = <String>[...processedTransactions, transactionKey];
     final retained = processed.length <= 64
         ? processed
@@ -55,14 +69,15 @@ class SupportBenefits {
     return SupportBenefits(
       guardian: guardian || product.kind == SupportProductKind.guardian,
       treatUntil: product.kind == SupportProductKind.treat
-          ? extend(treatUntil)
+          ? _extend(treatUntil, now, product.duration)
           : treatUntil,
       lanternUntil: product.kind == SupportProductKind.lantern
-          ? extend(lanternUntil)
+          ? _extend(lanternUntil, now, product.duration)
           : lanternUntil,
       bouquetUntil: product.kind == SupportProductKind.bouquet
-          ? extend(bouquetUntil)
+          ? _extend(bouquetUntil, now, product.duration)
           : bouquetUntil,
+      lastFreeLanternAt: lastFreeLanternAt,
       processedTransactions: retained,
       lastProductId: product.id,
       lastSupportedAt: now,
@@ -70,11 +85,12 @@ class SupportBenefits {
   }
 
   Map<String, Object?> toJson() => <String, Object?>{
-    'version': 1,
+    'version': 2,
     'guardian': guardian,
     'treatUntil': treatUntil?.toUtc().toIso8601String(),
     'lanternUntil': lanternUntil?.toUtc().toIso8601String(),
     'bouquetUntil': bouquetUntil?.toUtc().toIso8601String(),
+    'lastFreeLanternAt': lastFreeLanternAt?.toUtc().toIso8601String(),
     'processedTransactions': processedTransactions,
     'lastProductId': lastProductId,
     'lastSupportedAt': lastSupportedAt?.toUtc().toIso8601String(),
@@ -90,6 +106,7 @@ class SupportBenefits {
       treatUntil: date(json['treatUntil']),
       lanternUntil: date(json['lanternUntil']),
       bouquetUntil: date(json['bouquetUntil']),
+      lastFreeLanternAt: date(json['lastFreeLanternAt']),
       processedTransactions: processed is List<Object?>
           ? processed.whereType<String>().take(64).toList(growable: false)
           : const <String>[],
@@ -98,6 +115,24 @@ class SupportBenefits {
           : null,
       lastSupportedAt: date(json['lastSupportedAt']),
     );
+  }
+
+  static DateTime? _extend(
+    DateTime? current,
+    DateTime now,
+    Duration? duration,
+  ) {
+    if (duration == null) return current;
+    final anchor = current != null && current.isAfter(now) ? current : now;
+    return anchor.add(duration);
+  }
+
+  static bool _isSameLocalCalendarDay(DateTime left, DateTime right) {
+    final localLeft = left.toLocal();
+    final localRight = right.toLocal();
+    return localLeft.year == localRight.year &&
+        localLeft.month == localRight.month &&
+        localLeft.day == localRight.day;
   }
 }
 

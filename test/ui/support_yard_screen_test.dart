@@ -78,7 +78,7 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('guardian state reveals the permanent thank-you letter', (
+  testWidgets('guardian state reveals the daily lantern and thank-you letter', (
     tester,
   ) async {
     final storefront = _UiStorefront();
@@ -101,10 +101,48 @@ void main() {
     );
     await tester.pumpAndSettle();
 
-    expect(find.text('守护灯已点亮'), findsOneWidget);
+    expect(find.text('小院守护者已解锁'), findsWidgets);
+    expect(find.text('今天的暖灯'), findsOneWidget);
+    expect(find.text('免费点亮'), findsOneWidget);
+    expect(find.text(r'$2.99'), findsNothing);
     expect(find.text('写给小院守护者'), findsOneWidget);
     expect(find.text('已解锁'), findsOneWidget);
   });
+
+  testWidgets(
+    'guardian daily lantern moves from free to used without StoreKit',
+    (tester) async {
+      final storefront = _UiStorefront();
+      addTearDown(storefront.dispose);
+      final benefits = const SupportBenefits().apply(
+        product: SupportCatalog.guardian,
+        transactionKey: 'guardian-daily-ui',
+        now: DateTime.now(),
+      );
+      final store = _UiBenefitsStore(benefits);
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            supportStorefrontProvider.overrideWithValue(storefront),
+            supportBenefitsStoreProvider.overrideWithValue(store),
+          ],
+          child: const MaterialApp(home: SupportYardScreen()),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(
+        find.byKey(const ValueKey<String>('support_free_guardian_lantern')),
+      );
+      await tester.pumpAndSettle();
+
+      expect(find.text('今天已经点亮'), findsOneWidget);
+      expect(find.textContaining('暖灯还会亮约'), findsOneWidget);
+      expect(storefront.buyCalls, 0);
+      expect(store.value.lastFreeLanternAt, isNotNull);
+      expect(store.value.lanternUntil, isNotNull);
+    },
+  );
 
   testWidgets('a treat thanks the current pet with its five-second animation', (
     tester,
@@ -176,6 +214,7 @@ class _UiBenefitsStore implements SupportBenefitsStore {
 
 class _UiStorefront implements SupportStorefront {
   final _controller = StreamController<List<SupportTransaction>>.broadcast();
+  var buyCalls = 0;
 
   @override
   Stream<List<SupportTransaction>> get transactions => _controller.stream;
@@ -199,7 +238,10 @@ class _UiStorefront implements SupportStorefront {
   }
 
   @override
-  Future<bool> buy(String productId, {required bool consumable}) async => true;
+  Future<bool> buy(String productId, {required bool consumable}) async {
+    buyCalls += 1;
+    return true;
+  }
 
   @override
   Future<void> complete(SupportTransaction transaction) async {}

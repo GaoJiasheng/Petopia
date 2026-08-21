@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -22,9 +21,10 @@ const _prefix = String.fromEnvironment(
   'PETOPIA_VISUAL_PREFIX',
   defaultValue: 'support',
 );
+late final IntegrationTestWidgetsFlutterBinding _binding;
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  _binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('render every voluntary-support state on device', (tester) async {
     await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
@@ -63,7 +63,7 @@ void main() {
     expect(tester.takeException(), isNull);
     await _capture(tester, 'treat-thanks');
 
-    await tester.tap(find.text('收下这份感谢'));
+    await tester.tap(find.text('完成'));
     await tester.pump(const Duration(milliseconds: 500));
 
     final guardian = const SupportBenefits().apply(
@@ -78,7 +78,27 @@ void main() {
       storefront: guardianStorefront,
       store: _VisualBenefitsStore(guardian),
     );
-    await _capture(tester, 'guardian-catalog');
+    final freeLanternButton = find.byKey(
+      const ValueKey<String>('support_free_guardian_lantern'),
+    );
+    await tester.scrollUntilVisible(
+      freeLanternButton,
+      320,
+      scrollable: find.byType(Scrollable).last,
+    );
+    await Scrollable.ensureVisible(
+      tester.element(find.text('今天的暖灯')),
+      alignment: 0.12,
+    );
+    await tester.pump(const Duration(milliseconds: 250));
+    expect(find.text('免费点亮'), findsOneWidget);
+    await _capture(tester, 'guardian-unused');
+
+    await tester.tap(freeLanternButton);
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(find.text('今天已经点亮'), findsOneWidget);
+    expect(guardianStorefront.buyCalls, 0);
+    await _capture(tester, 'guardian-used');
 
     await tester.scrollUntilVisible(
       find.text('写给小院守护者'),
@@ -167,17 +187,8 @@ Future<void> _capture(WidgetTester tester, String name) async {
     isFalse,
     reason: 'The support-page capture contains a solid dark lower band.',
   );
-  final data = await image.toByteData(format: ui.ImageByteFormat.png);
   image.dispose();
-  final bytes = data!.buffer.asUint8List(
-    data.offsetInBytes,
-    data.lengthInBytes,
-  );
-  final directory = Directory('/tmp/petopia-support-visual')
-    ..createSync(recursive: true);
-  await File(
-    '${directory.path}/$_prefix-$name.png',
-  ).writeAsBytes(bytes, flush: true);
+  await _binding.takeScreenshot('$_prefix-$name');
 }
 
 Future<bool> _hasSolidDarkBottomBand(ui.Image image) async {
@@ -216,6 +227,7 @@ class _VisualBenefitsStore implements SupportBenefitsStore {
 
 class _VisualStorefront implements SupportStorefront {
   final _controller = StreamController<List<SupportTransaction>>.broadcast();
+  var buyCalls = 0;
 
   @override
   Stream<List<SupportTransaction>> get transactions => _controller.stream;
@@ -239,7 +251,10 @@ class _VisualStorefront implements SupportStorefront {
   }
 
   @override
-  Future<bool> buy(String productId, {required bool consumable}) async => true;
+  Future<bool> buy(String productId, {required bool consumable}) async {
+    buyCalls += 1;
+    return true;
+  }
 
   @override
   Future<void> complete(SupportTransaction transaction) async {}

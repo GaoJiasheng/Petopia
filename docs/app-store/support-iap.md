@@ -10,12 +10,12 @@
 
 ## App Store Connect 商品
 
-| Product ID | 类型 | 美国基准价 | 英文名称 | 简体中文名称 |
-| --- | --- | ---: | --- | --- |
-| `com.petopia.petopia.support.treat` | Consumable | $0.99 | A Treat | 一份小点心 |
-| `com.petopia.petopia.support.lantern` | Consumable | $2.99 | A Warm Lantern | 点亮一盏暖灯 |
-| `com.petopia.petopia.support.bouquet` | Consumable | $4.99 | Garden Bouquet | 送来一篮花 |
-| `com.petopia.petopia.support.guardian` | Non-Consumable | $6.99 | Garden Keeper | 小院守护者 |
+| Product ID | 类型 | 美国基准价 | 英文名称 | 简体中文名称 | 繁体中文名称 |
+| --- | --- | ---: | --- | --- | --- |
+| `com.petopia.petopia.support.treat` | Consumable | $0.99 | A Treat | 一份小点心 | 一份小點心 |
+| `com.petopia.petopia.support.lantern` | Consumable | $2.99 | A Warm Lantern | 点亮一盏暖灯 | 點亮一盞暖燈 |
+| `com.petopia.petopia.support.bouquet` | Consumable | $4.99 | Garden Bouquet | 送来一篮花 | 送來一籃花 |
+| `com.petopia.petopia.support.guardian` | Non-Consumable | $6.99 | Garden Keeper | 小院守护者 | 小院守護者 |
 
 其他国家和地区使用 App Store Connect 的等值价格，不在 App 内硬编码货币或
 换算；界面始终显示 StoreKit 返回的本地价格。
@@ -27,7 +27,7 @@
 | 一份小点心 | 当前宠物播放约 5 秒进食反馈；点心在院子停留 24 小时 | 本地保存，可重复购买；消耗型商品不可恢复 |
 | 点亮一盏暖灯 | 暖灯在院子点亮 24 小时 | 本地保存，可重复购买；消耗型商品不可恢复 |
 | 送来一篮花 | 花篮在院子盛开 7 天 | 本地保存，可重复购买；消耗型商品不可恢复 |
-| 小院守护者 | 永久徽章、永久暖灯、特别感谢明信片 | 永久权益，可通过“恢复‘小院守护者’”恢复 |
+| 小院守护者 | 永久纪念徽章、特别感谢明信片；每个本地自然日可免费点亮一盏持续 24 小时的暖灯 | 永久权益，可通过“恢复‘小院守护者’”恢复；每日免费点亮只在本机存档，不产生 StoreKit 交易 |
 
 重复购买同一种固定时长回礼时，从当前有效期末尾继续顺延。交易按 App Store
 transaction ID 幂等处理；本地权益成功落盘后才完成交易，避免付款成功但回礼丢失。
@@ -46,10 +46,22 @@ transaction ID 幂等处理；本地权益成功落盘后才完成交易，避�
 : Flowers bloom in the garden for seven days.
 
 `Garden Keeper`
-: Permanent lantern, keepsake badge, and special letter.
+: Includes a daily free 24-hour lantern, keepsake badge, and special letter.
 
-简体中文描述已固化在 `ios/Runner/PetopiaSupport.storekit`。商品审核截图应使用
+`小院守护者`（简体中文）
+: 每天可免费点亮一盏24小时暖灯，并永久解锁纪念徽章和特别来信。
+
+`小院守護者`（繁體中文）
+: 每天可免費點亮一盞24小時暖燈，並永久解鎖紀念徽章與特別來信。
+
+中英繁三语描述已固化在 `ios/Runner/PetopiaSupport.storekit`。商品审核截图应使用
 支持页完整界面，不使用 TestFlight 标记、占位价格或本地调试提示。
+
+守护者每日免费点灯按设备本地日历日判断，只在玩家主动进入支持页时展示；不发送
+通知、不显示入口红点、不记录连续天数，也不会对漏点日期作任何提醒或补偿。
+
+> 提审前人工项：App Store Connect 不会从本地 `.storekit` 自动同步。账号持有人必须
+> 手动将 `Garden Keeper / 小院守护者 / 小院守護者` 的三语描述更新为本节文本。
 
 ## 审核与 Sandbox 验收
 
