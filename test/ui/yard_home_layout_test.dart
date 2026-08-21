@@ -187,6 +187,7 @@ GameView _view({
   bool careContented = false,
   List<YardMemoryView> recentMemories = const <YardMemoryView>[],
   List<YardSlotView> decorSlots = const <YardSlotView>[],
+  TodayYardView? todayYard = _today,
 }) {
   return GameView(
     pet: emptyYard ? null : (pet ?? _pet()),
@@ -204,7 +205,7 @@ GameView _view({
     onboardingComplete: true,
     needsFirstCare: false,
     careTutorialStep: careTutorialStep,
-    todayYard: careTutorialStep >= 3 ? _today : null,
+    todayYard: careTutorialStep >= 3 ? todayYard : null,
     preferredCareAction: preferredAction,
     careContented: careContented,
     recentMemories: recentMemories,
@@ -518,6 +519,55 @@ void main() {
     expect(find.text('院子记住的事'), findsOneWidget);
     expect(find.textContaining('流浪三花猫离开前'), findsOneWidget);
     expect(find.textContaining('/'), findsNothing);
+    expect(tester.takeException(), isNull);
+    await _disposeYard(tester);
+  });
+
+  testWidgets('unread story task opens its pending story from the notebook', (
+    tester,
+  ) async {
+    const event = EventPresentationView(
+      id: 'pending-d01',
+      eventId: 'ev_d01',
+      title: '窗边的新发现',
+      script: '它在窗边发现了一片会晃动的光，认真看了很久。',
+      type: EventType.daily,
+      expReward: 3,
+      currencyReward: 0,
+    );
+    const today = TodayYardView([
+      TodayYardItemView(
+        id: 'event:today',
+        kind: TodayYardKind.event,
+        label: '翻开今天刚写下的新故事',
+        completed: false,
+      ),
+    ]);
+    await _pumpYard(
+      tester,
+      size: const Size(393, 852),
+      safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+      view: _view(pendingEvent: event, todayYard: today),
+    );
+
+    // Dismiss the automatic presentation. The fixture intentionally keeps the
+    // pending event so the notebook path can be exercised in the same session.
+    await tester.tap(find.text('记进手账'));
+    await tester.pump(const Duration(milliseconds: 320));
+    await tester.tap(find.byKey(const ValueKey<String>('home_menu')));
+    await tester.pump(const Duration(milliseconds: 320));
+
+    expect(find.text('点按阅读'), findsOneWidget);
+    await tester.tap(
+      find.byKey(const ValueKey<String>('today_yard_read_story')),
+    );
+    await tester.pump(const Duration(milliseconds: 320));
+
+    expect(
+      find.byKey(const ValueKey<String>('home_notebook_panel')),
+      findsNothing,
+    );
+    expect(find.text('窗边的新发现'), findsOneWidget);
     expect(tester.takeException(), isNull);
     await _disposeYard(tester);
   });

@@ -1153,6 +1153,7 @@ abstract final class EnglishCopy {
     '糖果焙房 8 折券': 'Candy Bakehouse · 20% Off',
     '任意主题 5 折券': 'Any Garden Theme · 50% Off',
     '翻开今天刚写下的新故事': "Read today's new story",
+    '点按阅读': 'Read now',
     '旅行者': 'Traveler',
     '完整更换院子的季节、光影与景色': "Transforms the garden's season, light, and scenery",
     '可自由摆进院子，也可能吸引特别来客':

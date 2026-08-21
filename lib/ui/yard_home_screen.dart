@@ -727,7 +727,12 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                         reduceEffects: conserveMemory,
                       ),
                     ),
-                    _YardOverlay(view: view, ref: ref, wideLayout: wideLayout),
+                    _YardOverlay(
+                      view: view,
+                      ref: ref,
+                      wideLayout: wideLayout,
+                      onReadTodayStory: _readTodayStory,
+                    ),
                   ],
                 );
               },
@@ -1092,6 +1097,21 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
     );
   }
 
+  Future<void> _readTodayStory() async {
+    if (!mounted) return;
+    final view = ref.read(gameControllerProvider).valueOrNull;
+    final event = view?.pendingEvent;
+    if (view == null || event == null) return;
+    _eventPresentedThisActivation = true;
+    await _showEvent(
+      ref.read(gameControllerProvider.notifier),
+      event,
+      pet: view.pet,
+      activeThemeId: view.activeThemeId,
+      weather: view.weather,
+    );
+  }
+
   Future<void> _showRevisitorDialog(
     GameController ctrl,
     RevisitorPresenceView revisitor,
@@ -1410,10 +1430,12 @@ class _YardOverlay extends StatelessWidget {
   final GameView view;
   final WidgetRef ref;
   final bool wideLayout;
+  final Future<void> Function() onReadTodayStory;
   const _YardOverlay({
     required this.view,
     required this.ref,
     required this.wideLayout,
+    required this.onReadTodayStory,
   });
 
   @override
@@ -1439,10 +1461,12 @@ class _YardOverlay extends StatelessWidget {
                         ? _TopMenuOnly(
                             view: view,
                             showTestFlightControl: showTestFlightControl,
+                            onReadTodayStory: onReadTodayStory,
                           )
                         : _InfoCard(
                             view: view,
                             showTestFlightControl: showTestFlightControl,
+                            onReadTodayStory: onReadTodayStory,
                             onTap: () => _openPetDetail(context, pet),
                           ),
                   ),
@@ -2634,63 +2658,93 @@ _VisitorYardPlacement _visitorYardPlacement(VisitorPresenceView visitor) {
 }
 
 class _TodayYardRow extends StatelessWidget {
-  const _TodayYardRow({required this.item});
+  const _TodayYardRow({required this.item, this.onTap});
 
   final TodayYardItemView item;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Semantics(
-      checked: item.completed,
-      label: context.tr(item.label),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 5),
-        child: Row(
-          children: [
-            AnimatedContainer(
-              duration: PetopiaMotion.duration(
-                context,
-                const Duration(milliseconds: 220),
-              ),
-              width: 28,
-              height: 28,
-              decoration: BoxDecoration(
-                color: item.completed
-                    ? const Color(0xFFA7C4A0).withValues(alpha: 0.26)
-                    : const Color(0xFFFFE8C9),
-                shape: BoxShape.circle,
-              ),
-              child: item.completed
-                  ? const Icon(
-                      Icons.check_rounded,
-                      size: 19,
-                      color: Color(0xFF688463),
-                    )
-                  : Center(child: _todayYardIcon(item.kind, 18)),
+    final actionLabel = onTap == null ? null : context.tr('点按阅读');
+    final content = Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        children: [
+          AnimatedContainer(
+            duration: PetopiaMotion.duration(
+              context,
+              const Duration(milliseconds: 220),
             ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: AppText(
-                item.label,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(
-                  color: item.completed
-                      ? PetopiaColors.mutedText
-                      : const Color(0xFF604B3E),
-                  fontSize: 12.5,
-                  fontWeight: item.completed
-                      ? FontWeight.w600
-                      : FontWeight.w800,
-                  decoration: item.completed
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none,
-                ),
+            width: 28,
+            height: 28,
+            decoration: BoxDecoration(
+              color: item.completed
+                  ? const Color(0xFFA7C4A0).withValues(alpha: 0.26)
+                  : const Color(0xFFFFE8C9),
+              shape: BoxShape.circle,
+            ),
+            child: item.completed
+                ? const Icon(
+                    Icons.check_rounded,
+                    size: 19,
+                    color: Color(0xFF688463),
+                  )
+                : Center(child: _todayYardIcon(item.kind, 18)),
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: AppText(
+              item.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: item.completed
+                    ? PetopiaColors.mutedText
+                    : const Color(0xFF604B3E),
+                fontSize: 12.5,
+                fontWeight: item.completed ? FontWeight.w600 : FontWeight.w800,
+                decoration: item.completed
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
               ),
+            ),
+          ),
+          if (actionLabel != null) ...[
+            const SizedBox(width: 8),
+            const AppText(
+              '点按阅读',
+              style: TextStyle(
+                color: Color(0xFFC16F33),
+                fontSize: 11,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            const Icon(
+              Icons.chevron_right_rounded,
+              size: 18,
+              color: Color(0xFFC16F33),
             ),
           ],
-        ),
+        ],
       ),
+    );
+    return Semantics(
+      button: onTap != null,
+      checked: item.completed,
+      label: actionLabel == null
+          ? context.tr(item.label)
+          : '${context.tr(item.label)}，$actionLabel',
+      child: onTap == null
+          ? content
+          : Material(
+              color: Colors.transparent,
+              child: InkWell(
+                key: const ValueKey<String>('today_yard_read_story'),
+                borderRadius: BorderRadius.circular(6),
+                onTap: onTap,
+                child: content,
+              ),
+            ),
     );
   }
 }
@@ -3277,10 +3331,12 @@ class _InfoCard extends StatelessWidget {
   final GameView view;
   final VoidCallback onTap;
   final bool showTestFlightControl;
+  final Future<void> Function() onReadTodayStory;
   const _InfoCard({
     required this.view,
     required this.onTap,
     required this.showTestFlightControl,
+    required this.onReadTodayStory,
   });
 
   @override
@@ -3344,7 +3400,10 @@ class _InfoCard extends StatelessWidget {
                           const SizedBox(width: 6),
                           _WalletButton(wallet: view.wallet),
                           const SizedBox(width: 2),
-                          _HomeMenuButton(view: view),
+                          _HomeMenuButton(
+                            view: view,
+                            onReadTodayStory: onReadTodayStory,
+                          ),
                           if (showTestFlightControl) ...[
                             const SizedBox(width: 2),
                             const _TestFlightDayButton(),
@@ -3385,7 +3444,12 @@ class _InfoCard extends StatelessWidget {
 class _TopMenuOnly extends StatelessWidget {
   final GameView view;
   final bool showTestFlightControl;
-  const _TopMenuOnly({required this.view, required this.showTestFlightControl});
+  final Future<void> Function() onReadTodayStory;
+  const _TopMenuOnly({
+    required this.view,
+    required this.showTestFlightControl,
+    required this.onReadTodayStory,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -3396,7 +3460,7 @@ class _TopMenuOnly extends StatelessWidget {
         children: [
           _WalletButton(wallet: view.wallet),
           const SizedBox(width: 4),
-          _HomeMenuButton(view: view),
+          _HomeMenuButton(view: view, onReadTodayStory: onReadTodayStory),
           if (showTestFlightControl) ...[
             const SizedBox(width: 4),
             const _TestFlightDayButton(),
@@ -3531,6 +3595,10 @@ enum _HomeMenuTarget {
   support,
 }
 
+class _ReadTodayStorySelection {
+  const _ReadTodayStorySelection();
+}
+
 Widget _homeScreenFor(_HomeMenuTarget target, PetView? pet) => switch (target) {
   _HomeMenuTarget.journal => const GrowthJournalScreen(),
   _HomeMenuTarget.album => const AlbumScreen(),
@@ -3614,7 +3682,8 @@ const _homeMenuItems =
 
 class _HomeMenuButton extends ConsumerStatefulWidget {
   final GameView view;
-  const _HomeMenuButton({required this.view});
+  final Future<void> Function() onReadTodayStory;
+  const _HomeMenuButton({required this.view, required this.onReadTodayStory});
 
   @override
   ConsumerState<_HomeMenuButton> createState() => _HomeMenuButtonState();
@@ -3651,9 +3720,15 @@ class _HomeMenuButtonState extends ConsumerState<_HomeMenuButton> {
                         .valueOrNull
                         ?.benefits ??
                     const SupportBenefits();
-                final target = await _showAdaptiveNotebook(context, benefits);
-                if (target != null && context.mounted) {
-                  _openHomeTarget(context, target, pet: widget.view.pet);
+                final selection = await _showAdaptiveNotebook(
+                  context,
+                  benefits,
+                );
+                if (!context.mounted) return;
+                if (selection is _HomeMenuTarget) {
+                  _openHomeTarget(context, selection, pet: widget.view.pet);
+                } else if (selection is _ReadTodayStorySelection) {
+                  await widget.onReadTodayStory();
                 }
               } finally {
                 if (mounted) setState(() => _opening = false);
@@ -3662,11 +3737,11 @@ class _HomeMenuButtonState extends ConsumerState<_HomeMenuButton> {
     );
   }
 
-  Future<_HomeMenuTarget?> _showAdaptiveNotebook(
+  Future<Object?> _showAdaptiveNotebook(
     BuildContext context,
     SupportBenefits benefits,
   ) {
-    return showGeneralDialog<_HomeMenuTarget>(
+    return showGeneralDialog<Object>(
       context: context,
       requestFocus: true,
       barrierDismissible: true,
@@ -3821,7 +3896,14 @@ class _HomeMenuSheet extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (view.todayYard != null) ...[
-                    _NotebookTodayCard(today: view.todayYard!),
+                    _NotebookTodayCard(
+                      today: view.todayYard!,
+                      onReadStory: view.pendingEvent == null
+                          ? null
+                          : () => Navigator.of(
+                              context,
+                            ).pop(const _ReadTodayStorySelection()),
+                    ),
                     const SizedBox(height: 10),
                   ],
                   if (view.activeVisitor != null) ...[
@@ -3890,7 +3972,8 @@ class _HomeMenuSheet extends StatelessWidget {
 
 class _NotebookTodayCard extends StatelessWidget {
   final TodayYardView today;
-  const _NotebookTodayCard({required this.today});
+  final VoidCallback? onReadStory;
+  const _NotebookTodayCard({required this.today, this.onReadStory});
 
   @override
   Widget build(BuildContext context) {
@@ -3936,7 +4019,13 @@ class _NotebookTodayCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 5),
-          for (final item in today.items) _TodayYardRow(item: item),
+          for (final item in today.items)
+            _TodayYardRow(
+              item: item,
+              onTap: item.kind == TodayYardKind.event && !item.completed
+                  ? onReadStory
+                  : null,
+            ),
         ],
       ),
     );
