@@ -11,7 +11,8 @@
 | `assets/art/` | 为 Petopia 定向生成，经人工筛选、重绘、抠图、构图、校色与 QA | 无刻意使用的图库、素材包、品牌、字体、商标或受保护角色 | 生成服务条款、人工创作与编辑成果、`ASSET_LICENSE` |
 | `assets/runtime/` | 从项目母图转换出的移动端 WebP，不改变作品来源 | 无新增第三方内容 | 继承对应母图权利，母版和运行图哈希见发布清单 |
 | `assets/audio/` | 项目脚本进行原创程序化合成与转码 | 无采样包、循环、参考音频或商业旋律 | 生成脚本、音频 provenance、`ASSET_LICENSE` |
-| Flutter/Dart 依赖 | `pubspec.lock` 锁定的开源依赖 | 有 | App 内 Flutter License 页面展示依赖许可证 |
+| 字体与图标字体 | 未打包自定义字体；使用系统字体和 Flutter SDK Material Icons | Flutter SDK 内容 | Flutter SDK 许可证和 App 内 License 页面 |
+| Flutter/Dart 依赖 | `pubspec.lock` 锁定的开源依赖 | 有 | 自动许可证审计、App 内 Flutter License 页面与 iOS `NOTICES.Z` |
 
 ## 生成式美术记录
 
@@ -19,7 +20,7 @@
   编辑、重构、抠图、动画帧整理、尺寸适配和视觉检查。
 - 提示词和生产流程不使用在世艺术家姓名、商业游戏名、受保护角色名，也不要求
   复刻受版权保护的具体作品。
-- 截至 2026-07-27，OpenAI
+- 截至 2026-08-21，OpenAI
   [Terms of Use](https://openai.com/policies/terms-of-use/) 说明：在法律允许范围内，
   用户与 OpenAI 之间由用户保有输入权利并拥有输出，OpenAI 将其对输出可能拥有的
   权利转让给用户；条款同时说明输出可能不唯一，用户仍需负责内容及其使用。
@@ -80,7 +81,10 @@
   文件的 SHA-256、类型，以及可追溯时的母版路径与哈希。
 - `python3 tools/build_release_asset_manifest.py --check` 验证清单未过期。
 - `python3 tools/check_release_candidate.py` 同时验证运行图质量、母版一致性、
-  音频 provenance 和资产许可文件。
+  音频 provenance、资产许可文件和第三方依赖许可证。
+- `python3 tools/check_dependency_licenses.py` 已核验当前 124 个解析后的 Dart/Flutter
+  包均有许可证文件且可归类；详细结果、字体盘点和剩余发布人确认见
+  `docs/app-store/dependency-license-audit.md`。
 - 如果后续加入任何第三方素材，必须先在本登记中写明权利人、许可、授权范围、
   到期日和来源，再更新发布清单；不得只用口头确认替代记录。
 

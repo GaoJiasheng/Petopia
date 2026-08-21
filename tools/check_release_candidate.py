@@ -769,6 +769,10 @@ def main() -> int:
         [sys.executable, "tools/build_release_asset_manifest.py", "--check"],
     )
     run(
+        "dependency license audit",
+        [sys.executable, "tools/check_dependency_licenses.py"],
+    )
+    run(
         "postcard content alignment",
         [sys.executable, "tools/annotate_postcard_location_affinity.py"],
     )
