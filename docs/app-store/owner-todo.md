@@ -14,8 +14,14 @@
 - [ ] 确认 Apple Developer Program 协议、税务与银行资料没有待处理项目。
 - [ ] 在 App Store Connect 接受 Paid Applications Agreement，并确认税务与
       收款账户状态允许提交应用内购买。
-- [ ] 最终确认生成式美术、原创程序化音效、字体和所有第三方依赖均拥有商业发行权。
-- [ ] 确认 `Petopia：小院来信` 的产品名、商标与目标地区不存在不可接受的冲突。
+- [x] 工程侧已完成生成式美术、原创程序化音效、字体和 124 个 Flutter/Dart 依赖的
+      商业版权/许可证审计，并把自动门禁接入发版检查；结果见
+      `dependency-license-audit.md`。账号持有人仍需完成该文档末尾两项事实确认。
+- [x] 已完成 `Petopia` / `Petopia: Letters from Home` 的第一轮商店和主要法域
+      商标检索；结论不是“无冲突”，而是**高风险、需决策**，详见
+      `trademark-clearance.md`。
+- [ ] 在提交审核前决定：取得重点发行法域的专业商标清权意见并接受现名风险，或更换
+      更独特的核心品牌；不得把 App Store 允许建档视为商标无冲突证明。
 
 ## 商店资料
 
