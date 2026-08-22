@@ -14,6 +14,7 @@ import 'pet_action_cue.dart';
 import 'pet_art.dart';
 import 'petopia_theme.dart';
 import 'widgets/pet_sprite.dart';
+import 'widgets/sprite_sheet_player.dart';
 
 class SupportYardScreen extends ConsumerStatefulWidget {
   const SupportYardScreen({super.key, this.pet});
@@ -81,8 +82,9 @@ class _SupportYardScreenState extends ConsumerState<SupportYardScreen> {
       barrierLabel: '完成',
       barrierColor: Colors.black.withValues(alpha: 0.32),
       transitionDuration: PetopiaMotion.duration(context, PetopiaMotion.modal),
-      pageBuilder: (_, _, _) =>
-          _SupportThankYouDialog(delivery: delivery, pet: widget.pet),
+      pageBuilder: (_, _, _) => delivery.opened
+          ? _SupportGiftOpeningDialog(delivery: delivery)
+          : _SupportThankYouDialog(delivery: delivery, pet: widget.pet),
       transitionBuilder: (_, animation, _, child) {
         final eased = CurvedAnimation(
           parent: animation,
@@ -313,13 +315,21 @@ class _SupportProductCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final now = DateTime.now();
     final offer = state.offers[product.id];
+    final pendingCount = state.benefits.pendingCount(product.kind);
+    final hasPendingGift = pendingCount > 0;
     final guardianLantern =
-        product.kind == SupportProductKind.lantern && state.benefits.guardian;
+        product.kind == SupportProductKind.lantern &&
+        state.benefits.guardian &&
+        !hasPendingGift;
     final freeLanternAvailable =
         guardianLantern && state.benefits.canLightFreeLantern(now);
     final freeLanternBusy = state.busyProductId == guardianFreeLanternActionId;
+    final openGiftBusy =
+        state.busyProductId ==
+        '$supportOpenGiftActionPrefix${product.kind.name}';
     final busy =
         state.busyProductId == product.id ||
+        openGiftBusy ||
         (guardianLantern && freeLanternBusy);
     final owned =
         product.kind == SupportProductKind.guardian && state.benefits.guardian;
@@ -336,6 +346,8 @@ class _SupportProductCard extends ConsumerWidget {
         state.busyProductId == null;
     final canActivateFreeLantern =
         freeLanternAvailable && !state.restoring && state.busyProductId == null;
+    final canOpenGift =
+        hasPendingGift && !state.restoring && state.busyProductId == null;
     return Semantics(
       container: true,
       label: '${context.tr(title)}, ${context.tr(subtitle)}',
@@ -392,7 +404,17 @@ class _SupportProductCard extends ConsumerWidget {
                           fontWeight: FontWeight.w600,
                         ),
                       ),
-                      if (activeLabel != null) ...[
+                      if (hasPendingGift) ...[
+                        const SizedBox(height: 5),
+                        AppText(
+                          '有 $pendingCount 份礼物在这里',
+                          style: const TextStyle(
+                            color: Color(0xFF9A7045),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ] else if (activeLabel != null) ...[
                         const SizedBox(height: 5),
                         AppText(
                           activeLabel,
@@ -408,11 +430,22 @@ class _SupportProductCard extends ConsumerWidget {
                         width: double.infinity,
                         child: FilledButton(
                           key: ValueKey<String>(
-                            guardianLantern
+                            hasPendingGift
+                                ? 'support_open_${product.kind.name}'
+                                : guardianLantern
                                 ? 'support_free_guardian_lantern'
                                 : 'support_purchase_${product.kind.name}',
                           ),
-                          onPressed: guardianLantern
+                          onPressed: hasPendingGift
+                              ? canOpenGift
+                                    ? () => ref
+                                          .read(
+                                            supportPurchaseControllerProvider
+                                                .notifier,
+                                          )
+                                          .openGift(product)
+                                    : null
+                              : guardianLantern
                               ? canActivateFreeLantern
                                     ? () => ref
                                           .read(
@@ -438,7 +471,9 @@ class _SupportProductCard extends ConsumerWidget {
                                   ),
                                 )
                               : AppText(
-                                  guardianLantern
+                                  hasPendingGift
+                                      ? '拆开一份'
+                                      : guardianLantern
                                       ? freeLanternAvailable
                                             ? '免费点亮'
                                             : '今天已经点亮'
@@ -693,6 +728,142 @@ class _SupportThankYouDialog extends StatelessWidget {
                         autofocus: true,
                         onPressed: () => Navigator.of(context).pop(),
                         child: const AppText('完成'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _SupportGiftOpeningDialog extends StatefulWidget {
+  const _SupportGiftOpeningDialog({required this.delivery});
+
+  final SupportDelivery delivery;
+
+  @override
+  State<_SupportGiftOpeningDialog> createState() =>
+      _SupportGiftOpeningDialogState();
+}
+
+class _SupportGiftOpeningDialogState extends State<_SupportGiftOpeningDialog> {
+  var _finished = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final product = widget.delivery.product;
+    final reduceMotion = MediaQuery.disableAnimationsOf(context);
+    final openingAsset = product.openingAssetPath;
+    final finished = _finished || reduceMotion || openingAsset == null;
+    final openedGift = Padding(
+      key: const ValueKey<String>('support_gift_opened'),
+      padding: const EdgeInsets.all(21),
+      child: Image.asset(
+        product.assetPath,
+        fit: BoxFit.contain,
+        cacheWidth: 420,
+      ),
+    );
+    return SafeArea(
+      minimum: const EdgeInsets.all(18),
+      child: Center(
+        child: Material(
+          color: const Color(0xFFFFFCF6),
+          borderRadius: BorderRadius.circular(8),
+          clipBehavior: Clip.antiAlias,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 520),
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 18),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Semantics(
+                      image: true,
+                      label: context.tr('${product.title}正在慢慢拆开'),
+                      child: SizedBox.square(
+                        dimension: 210,
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 100),
+                          child: finished
+                              ? reduceMotion
+                                    ? TweenAnimationBuilder<double>(
+                                        key: const ValueKey<String>(
+                                          'support_gift_opened_reduced_motion',
+                                        ),
+                                        duration: const Duration(
+                                          milliseconds: 180,
+                                        ),
+                                        tween: Tween<double>(begin: 0, end: 1),
+                                        builder: (context, opacity, child) =>
+                                            Opacity(
+                                              opacity: opacity,
+                                              child: child,
+                                            ),
+                                        child: openedGift,
+                                      )
+                                    : openedGift
+                              : SpriteSheetPlayer(
+                                  key: ValueKey<String>(
+                                    'support_opening_${product.kind.name}',
+                                  ),
+                                  assetPath: openingAsset,
+                                  size: 210,
+                                  frameCount: 8,
+                                  duration: const Duration(milliseconds: 2200),
+                                  loop: false,
+                                  holdTailFraction: 0.06,
+                                  fallback: Padding(
+                                    padding: const EdgeInsets.all(21),
+                                    child: Image.asset(
+                                      product.assetPath,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                  onComplete: () {
+                                    if (mounted) {
+                                      setState(() => _finished = true);
+                                    }
+                                  },
+                                ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 14),
+                    AppText(
+                      finished ? '一份心意，慢慢收好' : '正在拆开礼物',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: PetopiaColors.ink,
+                        fontSize: 21,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    AppText(
+                      finished ? product.thankYou : '不用着急，让它慢慢打开。',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        color: PetopiaColors.mutedText,
+                        height: 1.65,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    const SizedBox(height: 18),
+                    SizedBox(
+                      width: double.infinity,
+                      child: FilledButton(
+                        key: const ValueKey<String>('support_gift_close'),
+                        onPressed: finished
+                            ? () => Navigator.of(context).pop()
+                            : null,
+                        child: const AppText('收好'),
                       ),
                     ),
                   ],

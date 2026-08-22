@@ -10,6 +10,7 @@ import 'package:petopia/purchases/support_catalog.dart';
 import 'package:petopia/purchases/support_purchase_controller.dart';
 import 'package:petopia/purchases/support_storefront.dart';
 import 'package:petopia/ui/support_yard_screen.dart';
+import 'package:petopia/ui/widgets/sprite_sheet_player.dart';
 
 void main() {
   for (final size in <Size>[
@@ -144,11 +145,89 @@ void main() {
     },
   );
 
-  testWidgets('a treat thanks the current pet with its five-second animation', (
+  testWidgets(
+    'a purchased treat waits until the player opens its hand-painted gift',
+    (tester) async {
+      final storefront = _UiStorefront();
+      addTearDown(storefront.dispose);
+      final pet = PetView(
+        name: '小橘',
+        speciesId: 'pet_cat',
+        speciesName: '橘猫',
+        variantId: 'pet_cat_var01',
+        level: 7,
+        exp: 320,
+        stage: PetStage.c,
+        personality: const <String>['p_gentle'],
+        bornAt: DateTime.utc(2026, 7, 20),
+      );
+      await tester.pumpWidget(
+        ProviderScope(
+          overrides: [
+            supportStorefrontProvider.overrideWithValue(storefront),
+            supportBenefitsStoreProvider.overrideWithValue(_UiBenefitsStore()),
+          ],
+          child: MaterialApp(home: SupportYardScreen(pet: pet)),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(
+        find.byKey(const ValueKey<String>('support_purchase_treat')),
+      );
+      storefront.emit(
+        SupportTransaction(
+          productId: SupportCatalog.treat.id,
+          status: SupportTransactionStatus.purchased,
+          raw: Object(),
+          verificationData: 'signed-treat',
+          purchaseId: 'treat-animation',
+          transactionDate: '1785144000000',
+          needsCompletion: true,
+        ),
+      );
+      await tester.pump(const Duration(milliseconds: 40));
+
+      expect(find.text('礼物已经送到，你想什么时候拆开都可以。'), findsOneWidget);
+      expect(find.text('有 1 份礼物在这里'), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey<String>('support_open_treat')),
+        findsOneWidget,
+      );
+      expect(find.text('感谢你的支持'), findsNothing);
+
+      await tester.tap(
+        find.byKey(const ValueKey<String>('support_open_treat')),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(find.text('正在拆开礼物'), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey<String>('support_opening_treat')),
+        findsOneWidget,
+      );
+      tester
+          .widget<SpriteSheetPlayer>(
+            find.byKey(const ValueKey<String>('support_opening_treat')),
+          )
+          .onComplete!();
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 120));
+      expect(find.text('一份心意，慢慢收好'), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey<String>('support_gift_close')),
+        findsOneWidget,
+      );
+      expect(tester.takeException(), isNull);
+    },
+  );
+
+  testWidgets('reduced motion opens a saved gift with a quiet fade', (
     tester,
   ) async {
     final storefront = _UiStorefront();
     addTearDown(storefront.dispose);
+    final store = _UiBenefitsStore(const SupportBenefits(pendingTreat: 1));
     final pet = PetView(
       name: '小橘',
       speciesId: 'pet_cat',
@@ -164,34 +243,37 @@ void main() {
       ProviderScope(
         overrides: [
           supportStorefrontProvider.overrideWithValue(storefront),
-          supportBenefitsStoreProvider.overrideWithValue(_UiBenefitsStore()),
+          supportBenefitsStoreProvider.overrideWithValue(store),
         ],
-        child: MaterialApp(home: SupportYardScreen(pet: pet)),
+        child: MaterialApp(
+          builder: (context, child) => MediaQuery(
+            data: MediaQuery.of(context).copyWith(disableAnimations: true),
+            child: child!,
+          ),
+          home: SupportYardScreen(pet: pet),
+        ),
       ),
     );
     await tester.pumpAndSettle();
 
-    await tester.tap(
-      find.byKey(const ValueKey<String>('support_purchase_treat')),
-    );
-    storefront.emit(
-      SupportTransaction(
-        productId: SupportCatalog.treat.id,
-        status: SupportTransactionStatus.purchased,
-        raw: Object(),
-        verificationData: 'signed-treat',
-        purchaseId: 'treat-animation',
-        transactionDate: '1785144000000',
-        needsCompletion: true,
-      ),
-    );
-    await tester.pump(const Duration(milliseconds: 20));
-    await tester.pump(const Duration(milliseconds: 420));
-    await tester.pump();
+    await tester.tap(find.byKey(const ValueKey<String>('support_open_treat')));
+    for (var tick = 0; tick < 6; tick += 1) {
+      await tester.pump(const Duration(milliseconds: 50));
+    }
 
-    expect(find.text('感谢你的支持'), findsOneWidget);
     expect(
-      find.byKey(const ValueKey<String>('pet_action_eat')),
+      find.byKey(const ValueKey<String>('support_gift_opened_reduced_motion')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey<String>('support_opening_treat')),
+      findsNothing,
+    );
+    expect(store.value.pendingTreat, 0);
+    expect(store.value.treatUntil, isNotNull);
+    await tester.pump(const Duration(milliseconds: 200));
+    expect(
+      find.byKey(const ValueKey<String>('support_gift_close')),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);

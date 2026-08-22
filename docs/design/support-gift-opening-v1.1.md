@@ -1,6 +1,6 @@
 # v1.1 支持礼物自主拆开设计
 
-状态：设计与资产准备完成后待 v1.1 实装。本文件不改变 1.0 运行逻辑。
+状态：已实装。存档、交易、三语界面与三条手绘序列帧均已接入运行时。
 
 ## 目标与边界
 
@@ -67,7 +67,7 @@ pendingBouquet
 
 ## 动画资产契约
 
-资产先存放在非运行时目录，v1.1 实装时再纳入清单：
+运行时资产：
 
 ```text
 assets/art/support-open/support_open_treat.webp
@@ -87,7 +87,7 @@ QA 接触表、逐帧透明边界检查和第 8 帧对照图统一放在 `assets
 
 ## 本单资产交付
 
-三条序列帧已作为 v1.1 预备资产交付，但未加入 `pubspec.yaml`，1.0 不会打包或加载：
+三条序列帧已加入 `pubspec.yaml` 并由支持页、小院待拆提示共同使用：
 
 - `assets/art/support-open/support_open_treat.webp`
 - `assets/art/support-open/support_open_lantern.webp`

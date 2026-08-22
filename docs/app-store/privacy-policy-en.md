@@ -17,9 +17,10 @@ analytics. The app does not collect, upload, sell, or share your personal
 information, gameplay activity, or device identifiers.
 
 Pets, postcards, compendiums, settings, and game progress remain on your device.
-The voluntary support feature also stores Product IDs, transaction idempotency
-keys, and thank-you gift expiration dates locally. These records prevent a gift
-from being granted twice and allow its decoration to be displayed. Hearth & Tails does
+The voluntary support feature also stores Product IDs, unopened gift counts,
+transaction idempotency keys, and thank-you gift expiration dates locally. These
+records prevent a gift from being granted twice and display its decoration only
+after you choose to open it. Hearth & Tails does
 not store payment card details, Apple IDs, order amounts, or store account data.
 
 Uninstalling the app or clearing app data may remove local records. The

@@ -16,6 +16,7 @@ class SpriteSheetPlayer extends StatefulWidget {
   final Duration? playDuration;
   final bool loop;
   final bool animate;
+  final int staticFrame;
   final int cycles;
   final double holdTailFraction;
   final VoidCallback? onComplete;
@@ -33,6 +34,7 @@ class SpriteSheetPlayer extends StatefulWidget {
     this.playDuration,
     this.loop = false,
     this.animate = true,
+    this.staticFrame = 0,
     this.cycles = 1,
     this.holdTailFraction = 0,
     this.onComplete,
@@ -200,11 +202,12 @@ class _SpriteSheetPlayerState extends State<SpriteSheetPlayer>
       child: AnimatedBuilder(
         animation: _c,
         builder: (context, _) {
-          final progress = _frameProgress(_c.value);
-          final frame = (progress * widget.frameCount).floor().clamp(
-            0,
-            widget.frameCount - 1,
-          );
+          final frame = widget.animate
+              ? (_frameProgress(_c.value) * widget.frameCount).floor().clamp(
+                  0,
+                  widget.frameCount - 1,
+                )
+              : widget.staticFrame.clamp(0, widget.frameCount - 1);
           return CustomPaint(
             painter: _FramePainter(img, frame, widget.frameCount),
           );

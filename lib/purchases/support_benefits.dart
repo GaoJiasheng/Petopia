@@ -12,6 +12,9 @@ class SupportBenefits {
     this.treatUntil,
     this.lanternUntil,
     this.bouquetUntil,
+    this.pendingTreat = 0,
+    this.pendingLantern = 0,
+    this.pendingBouquet = 0,
     this.lastFreeLanternAt,
     this.processedTransactions = const <String>[],
     this.lastProductId,
@@ -22,6 +25,9 @@ class SupportBenefits {
   final DateTime? treatUntil;
   final DateTime? lanternUntil;
   final DateTime? bouquetUntil;
+  final int pendingTreat;
+  final int pendingLantern;
+  final int pendingBouquet;
   final DateTime? lastFreeLanternAt;
   final List<String> processedTransactions;
   final String? lastProductId;
@@ -34,6 +40,26 @@ class SupportBenefits {
   bool bouquetActive(DateTime now) => bouquetUntil?.isAfter(now) ?? false;
 
   bool get hasSupported => lastSupportedAt != null || guardian;
+
+  int pendingCount(SupportProductKind kind) => switch (kind) {
+    SupportProductKind.treat => pendingTreat,
+    SupportProductKind.lantern => pendingLantern,
+    SupportProductKind.bouquet => pendingBouquet,
+    SupportProductKind.guardian => 0,
+  };
+
+  int get pendingGiftCount => pendingTreat + pendingLantern + pendingBouquet;
+
+  bool get hasPendingGifts => pendingGiftCount > 0;
+
+  SupportProductSpec? get nextPendingGift {
+    final last = SupportCatalog.byId(lastProductId ?? '');
+    if (last != null && pendingCount(last.kind) > 0) return last;
+    for (final product in SupportCatalog.all) {
+      if (pendingCount(product.kind) > 0) return product;
+    }
+    return null;
+  }
 
   bool canLightFreeLantern(DateTime now) {
     if (!guardian) return false;
@@ -48,6 +74,9 @@ class SupportBenefits {
       treatUntil: treatUntil,
       lanternUntil: _extend(lanternUntil, now, SupportCatalog.lantern.duration),
       bouquetUntil: bouquetUntil,
+      pendingTreat: pendingTreat,
+      pendingLantern: pendingLantern,
+      pendingBouquet: pendingBouquet,
       lastFreeLanternAt: now,
       processedTransactions: processedTransactions,
       lastProductId: lastProductId,
@@ -68,6 +97,29 @@ class SupportBenefits {
         : processed.sublist(processed.length - 64);
     return SupportBenefits(
       guardian: guardian || product.kind == SupportProductKind.guardian,
+      treatUntil: treatUntil,
+      lanternUntil: lanternUntil,
+      bouquetUntil: bouquetUntil,
+      pendingTreat:
+          pendingTreat + (product.kind == SupportProductKind.treat ? 1 : 0),
+      pendingLantern:
+          pendingLantern + (product.kind == SupportProductKind.lantern ? 1 : 0),
+      pendingBouquet:
+          pendingBouquet + (product.kind == SupportProductKind.bouquet ? 1 : 0),
+      lastFreeLanternAt: lastFreeLanternAt,
+      processedTransactions: retained,
+      lastProductId: product.id,
+      lastSupportedAt: now,
+    );
+  }
+
+  SupportBenefits openGift({
+    required SupportProductSpec product,
+    required DateTime now,
+  }) {
+    if (!product.consumable || pendingCount(product.kind) <= 0) return this;
+    return SupportBenefits(
+      guardian: guardian,
       treatUntil: product.kind == SupportProductKind.treat
           ? _extend(treatUntil, now, product.duration)
           : treatUntil,
@@ -77,19 +129,28 @@ class SupportBenefits {
       bouquetUntil: product.kind == SupportProductKind.bouquet
           ? _extend(bouquetUntil, now, product.duration)
           : bouquetUntil,
+      pendingTreat:
+          pendingTreat - (product.kind == SupportProductKind.treat ? 1 : 0),
+      pendingLantern:
+          pendingLantern - (product.kind == SupportProductKind.lantern ? 1 : 0),
+      pendingBouquet:
+          pendingBouquet - (product.kind == SupportProductKind.bouquet ? 1 : 0),
       lastFreeLanternAt: lastFreeLanternAt,
-      processedTransactions: retained,
+      processedTransactions: processedTransactions,
       lastProductId: product.id,
-      lastSupportedAt: now,
+      lastSupportedAt: lastSupportedAt,
     );
   }
 
   Map<String, Object?> toJson() => <String, Object?>{
-    'version': 2,
+    'version': 3,
     'guardian': guardian,
     'treatUntil': treatUntil?.toUtc().toIso8601String(),
     'lanternUntil': lanternUntil?.toUtc().toIso8601String(),
     'bouquetUntil': bouquetUntil?.toUtc().toIso8601String(),
+    'pendingTreat': pendingTreat,
+    'pendingLantern': pendingLantern,
+    'pendingBouquet': pendingBouquet,
     'lastFreeLanternAt': lastFreeLanternAt?.toUtc().toIso8601String(),
     'processedTransactions': processedTransactions,
     'lastProductId': lastProductId,
@@ -99,6 +160,7 @@ class SupportBenefits {
   static SupportBenefits fromJson(Map<String, Object?> json) {
     DateTime? date(Object? value) =>
         value is String ? DateTime.tryParse(value)?.toUtc() : null;
+    int pending(Object? value) => value is int && value > 0 ? value : 0;
 
     final processed = json['processedTransactions'];
     return SupportBenefits(
@@ -106,6 +168,9 @@ class SupportBenefits {
       treatUntil: date(json['treatUntil']),
       lanternUntil: date(json['lanternUntil']),
       bouquetUntil: date(json['bouquetUntil']),
+      pendingTreat: pending(json['pendingTreat']),
+      pendingLantern: pending(json['pendingLantern']),
+      pendingBouquet: pending(json['pendingBouquet']),
       lastFreeLanternAt: date(json['lastFreeLanternAt']),
       processedTransactions: processed is List<Object?>
           ? processed.whereType<String>().take(64).toList(growable: false)

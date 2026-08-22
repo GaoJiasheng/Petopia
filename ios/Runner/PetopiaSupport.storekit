@@ -10,14 +10,19 @@
       "internalID" : "002C7EBB-64B6-46D6-92C1-B59BDCC6A578",
       "localizations" : [
         {
-          "description" : "A decorative garden treat that stays for 24 hours.",
+          "description" : "Open this decorative treat whenever you like; it then stays in the garden for 24 hours.",
           "displayName" : "A Treat",
           "locale" : "en_US"
         },
         {
-          "description" : "在院子里展示 24 小时的装饰点心。",
+          "description" : "随时拆开这份装饰点心；拆开后会在院子里展示24小时。",
           "displayName" : "一份小点心",
           "locale" : "zh_CN"
+        },
+        {
+          "description" : "隨時拆開這份裝飾點心；拆開後會在院子裡展示24小時。",
+          "displayName" : "一份小點心",
+          "locale" : "zh_TW"
         }
       ],
       "productID" : "com.petopia.petopia.support.treat",
@@ -30,14 +35,19 @@
       "internalID" : "97A74C4E-BDEE-4497-B880-C3F036C8C161",
       "localizations" : [
         {
-          "description" : "Keeps the garden lantern glowing for 24 hours.",
+          "description" : "Open it whenever you like to light the garden lantern for 24 hours.",
           "displayName" : "A Warm Lantern",
           "locale" : "en_US"
         },
         {
-          "description" : "在小院里亮 24 小时的装饰暖灯。",
+          "description" : "随时拆开并点亮装饰暖灯；拆开后会在小院里亮24小时。",
           "displayName" : "点亮一盏暖灯",
           "locale" : "zh_CN"
+        },
+        {
+          "description" : "隨時拆開並點亮裝飾暖燈；拆開後會在小院裡亮24小時。",
+          "displayName" : "點亮一盞暖燈",
+          "locale" : "zh_TW"
         }
       ],
       "productID" : "com.petopia.petopia.support.lantern",
@@ -50,14 +60,19 @@
       "internalID" : "76738FEC-34F1-4C49-AA99-1707C3891D79",
       "localizations" : [
         {
-          "description" : "Flowers bloom in the garden for seven days.",
+          "description" : "Open the bouquet whenever you like; its flowers then bloom in the garden for seven days.",
           "displayName" : "Garden Bouquet",
           "locale" : "en_US"
         },
         {
-          "description" : "在院子里展示七天的装饰花篮。",
+          "description" : "随时拆开这份装饰花篮；拆开后会在院子里展示七天。",
           "displayName" : "送来一篮花",
           "locale" : "zh_CN"
+        },
+        {
+          "description" : "隨時拆開這份裝飾花籃；拆開後會在院子裡展示七天。",
+          "displayName" : "送來一籃花",
+          "locale" : "zh_TW"
         }
       ],
       "productID" : "com.petopia.petopia.support.bouquet",

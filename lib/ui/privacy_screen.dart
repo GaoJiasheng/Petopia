@@ -50,7 +50,7 @@ class PrivacyScreen extends StatelessWidget {
                 const _PolicySection(
                   title: '支持小院的本地记录',
                   body:
-                      'App 只在设备上保存回礼类型、交易幂等键和有效期，用于防止重复发放并展示装饰。普通支持不会写入可导出的游戏存档，也不会改变经验、暖绒、冷却或概率。',
+                      'App 只在设备上保存回礼类型、未拆数量、交易幂等键和有效期，用于防止重复发放并在你拆开后展示装饰。普通支持不会写入可导出的游戏存档，也不会改变经验、暖绒、冷却或概率。',
                 ),
                 const _PolicySection(
                   title: '删除数据',

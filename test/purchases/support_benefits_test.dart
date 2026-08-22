@@ -60,27 +60,51 @@ void main() {
       '暖灯暂时没有保存好，稍后再来看看吧。',
       '暖灯还会亮约 3 小时',
       '暖灯还会亮约 2 天',
+      '礼物已经送到，你想什么时候拆开都可以。',
+      '礼物暂时没有保存好，它还在这里。稍后再拆开吧。',
+      '有 2 份礼物在这里',
+      '有一份礼物在这里，打开支持小院',
+      '拆开一份',
+      '一份心意，慢慢收好',
+      '正在拆开礼物',
+      '不用着急，让它慢慢打开。',
+      '收好',
+      '一份小点心正在慢慢拆开',
     ]) {
       expect(EnglishCopy.translate(source), isNot(source), reason: source);
       expect(TraditionalCopy.translate(source), isNot(source), reason: source);
     }
   });
 
-  test('consumable benefits extend from the active expiry', () {
+  test('consumables wait unopened and extend only when opened', () {
     final now = DateTime.utc(2026, 7, 27, 12);
-    final first = const SupportBenefits().apply(
+    final firstPurchase = const SupportBenefits().apply(
       product: SupportCatalog.bouquet,
       transactionKey: 'bouquet-1',
       now: now,
     );
-    final second = first.apply(
+    final first = firstPurchase.openGift(
+      product: SupportCatalog.bouquet,
+      now: now,
+    );
+    final secondPurchase = first.apply(
       product: SupportCatalog.bouquet,
       transactionKey: 'bouquet-2',
       now: now.add(const Duration(days: 1)),
     );
+    final second = secondPurchase.openGift(
+      product: SupportCatalog.bouquet,
+      now: now.add(const Duration(days: 1)),
+    );
 
+    expect(firstPurchase.bouquetUntil, isNull);
+    expect(firstPurchase.pendingBouquet, 1);
     expect(first.bouquetUntil, now.add(const Duration(days: 7)));
+    expect(first.pendingBouquet, 0);
+    expect(secondPurchase.bouquetUntil, first.bouquetUntil);
+    expect(secondPurchase.pendingBouquet, 1);
     expect(second.bouquetUntil, now.add(const Duration(days: 14)));
+    expect(second.pendingBouquet, 0);
     expect(second.bouquetActive(now.add(const Duration(days: 13))), isTrue);
   });
 
@@ -97,7 +121,8 @@ void main() {
       now: now.add(const Duration(hours: 8)),
     );
 
-    expect(duplicate.lanternUntil, first.lanternUntil);
+    expect(duplicate.pendingLantern, 1);
+    expect(duplicate.lanternUntil, isNull);
     expect(duplicate.processedTransactions, first.processedTransactions);
     expect(duplicate.lastSupportedAt, first.lastSupportedAt);
   });
@@ -159,7 +184,8 @@ void main() {
     );
     final restored = SupportBenefits.fromJson(source.toJson());
 
-    expect(restored.treatUntil, source.treatUntil);
+    expect(restored.treatUntil, isNull);
+    expect(restored.pendingTreat, 1);
     expect(restored.lastProductId, SupportCatalog.treat.id);
     expect(restored.processedTransactions, <String>['treat-1']);
   });
@@ -189,6 +215,40 @@ void main() {
       expect(legacy.canLightFreeLantern(now), isTrue);
     },
   );
+
+  test('version 3 pending gifts round trip and malformed values are safe', () {
+    final restored = SupportBenefits.fromJson(<String, Object?>{
+      'version': 3,
+      'pendingTreat': 2,
+      'pendingLantern': -4,
+      'pendingBouquet': 'many',
+    });
+    final legacy = SupportBenefits.fromJson(<String, Object?>{
+      'version': 2,
+      'guardian': false,
+    });
+
+    expect(restored.pendingTreat, 2);
+    expect(restored.pendingLantern, 0);
+    expect(restored.pendingBouquet, 0);
+    expect(restored.pendingGiftCount, 2);
+    expect(legacy.pendingGiftCount, 0);
+    expect(restored.toJson()['version'], 3);
+  });
+
+  test('opening without inventory is a no-op', () {
+    const benefits = SupportBenefits();
+    expect(
+      identical(
+        benefits.openGift(
+          product: SupportCatalog.treat,
+          now: DateTime.utc(2026, 8, 22),
+        ),
+        benefits,
+      ),
+      isTrue,
+    );
+  });
 
   test('file store persists and restores the free lantern date', () async {
     final directory = await Directory.systemTemp.createTemp(
@@ -252,7 +312,16 @@ void main() {
     );
 
     final lit = guardian.lightFreeLantern(now);
+    final opened = const SupportBenefits()
+        .apply(
+          product: SupportCatalog.treat,
+          transactionKey: 'treat-no-gameplay',
+          now: now,
+        )
+        .openGift(product: SupportCatalog.treat, now: now);
 
+    expect(snapshot(), before);
+    expect(opened.treatUntil, now.add(const Duration(days: 1)));
     expect(snapshot(), before);
     expect(lit.toJson().keys, isNot(contains('petExp')));
     expect(lit.toJson().keys, isNot(contains('warmfluff')));

@@ -123,6 +123,9 @@ flutter:
     - assets/art/ui/ui_icon_gift.png
     - assets/art/ui/ui_icon_warmfluff.png
     - assets/runtime/support/
+    - assets/art/support-open/support_open_treat.webp
+    - assets/art/support-open/support_open_lantern.webp
+    - assets/art/support-open/support_open_bouquet.webp
     - assets/runtime/postcards/backgrounds/
     - assets/runtime/postcards/poses/
     - assets/art/postcards/stamps/

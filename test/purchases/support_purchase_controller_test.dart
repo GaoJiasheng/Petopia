@@ -48,11 +48,26 @@ void main() {
       final delivered = container
           .read(supportPurchaseControllerProvider)
           .requireValue;
-      final firstExpiry = delivered.benefits.treatUntil;
-      expect(firstExpiry, isNotNull);
-      expect(delivered.delivery?.product, SupportCatalog.treat);
+      expect(delivered.benefits.treatUntil, isNull);
+      expect(delivered.benefits.pendingTreat, 1);
+      expect(delivered.delivery, isNull);
+      expect(delivered.message, contains('什么时候拆开'));
       expect(storefront.completed, 1);
       expect(benefitsStore.saves, 1);
+
+      final opened = await container
+          .read(supportPurchaseControllerProvider.notifier)
+          .openGift(SupportCatalog.treat, now: DateTime.utc(2026, 8, 22));
+      expect(opened, isTrue);
+      final afterOpen = container
+          .read(supportPurchaseControllerProvider)
+          .requireValue;
+      final firstExpiry = afterOpen.benefits.treatUntil;
+      expect(firstExpiry, DateTime.utc(2026, 8, 23));
+      expect(afterOpen.benefits.pendingTreat, 0);
+      expect(afterOpen.delivery?.product, SupportCatalog.treat);
+      expect(afterOpen.delivery?.opened, isTrue);
+      expect(benefitsStore.saves, 2);
 
       storefront.emit(<SupportTransaction>[transaction]);
       await _flush();
@@ -61,7 +76,8 @@ void main() {
           .read(supportPurchaseControllerProvider)
           .requireValue;
       expect(duplicate.benefits.treatUntil, firstExpiry);
-      expect(benefitsStore.saves, 1);
+      expect(duplicate.benefits.pendingTreat, 0);
+      expect(benefitsStore.saves, 2);
       expect(storefront.completed, 2);
     },
   );
@@ -125,6 +141,47 @@ void main() {
       expect(storefront.lastBoughtId, isNull);
     },
   );
+
+  test('restored consumables do not create pending gifts', () async {
+    await container.read(supportPurchaseControllerProvider.future);
+    storefront.emit(<SupportTransaction>[
+      _transaction(
+        SupportCatalog.bouquet.id,
+        purchaseId: 'restored-consumable',
+        status: SupportTransactionStatus.restored,
+      ),
+    ]);
+    await _flush();
+
+    final state = container
+        .read(supportPurchaseControllerProvider)
+        .requireValue;
+    expect(state.benefits.pendingGiftCount, 0);
+    expect(benefitsStore.saves, 0);
+    expect(storefront.completed, 1);
+  });
+
+  test('failed opening retains the unopened gift', () async {
+    benefitsStore.value = const SupportBenefits().apply(
+      product: SupportCatalog.treat,
+      transactionKey: 'pending-treat',
+      now: DateTime.utc(2026, 8, 22),
+    );
+    await container.read(supportPurchaseControllerProvider.future);
+    benefitsStore.failWrites = true;
+
+    final opened = await container
+        .read(supportPurchaseControllerProvider.notifier)
+        .openGift(SupportCatalog.treat, now: DateTime.utc(2026, 8, 22));
+    final state = container
+        .read(supportPurchaseControllerProvider)
+        .requireValue;
+
+    expect(opened, isFalse);
+    expect(state.benefits.pendingTreat, 1);
+    expect(state.benefits.treatUntil, isNull);
+    expect(state.message, contains('它还在这里'));
+  });
 
   test(
     'guardian free lantern is available after local midnight and stacks',

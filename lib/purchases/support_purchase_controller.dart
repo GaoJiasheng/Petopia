@@ -8,17 +8,20 @@ import 'support_catalog.dart';
 import 'support_storefront.dart';
 
 const guardianFreeLanternActionId = 'guardian_free_lantern';
+const supportOpenGiftActionPrefix = 'support_open_gift_';
 
 class SupportDelivery {
   const SupportDelivery({
     required this.product,
     required this.sequence,
     this.restored = false,
+    this.opened = false,
   });
 
   final SupportProductSpec product;
   final int sequence;
   final bool restored;
+  final bool opened;
 }
 
 class SupportPurchaseState {
@@ -56,6 +59,7 @@ class SupportPurchaseState {
     String? message,
     bool clearMessage = false,
     SupportDelivery? delivery,
+    bool clearDelivery = false,
   }) {
     return SupportPurchaseState(
       storeAvailable: storeAvailable ?? this.storeAvailable,
@@ -68,7 +72,7 @@ class SupportPurchaseState {
           : busyProductId ?? this.busyProductId,
       restoring: restoring ?? this.restoring,
       message: clearMessage ? null : message ?? this.message,
-      delivery: delivery ?? this.delivery,
+      delivery: clearDelivery ? null : delivery ?? this.delivery,
     );
   }
 }
@@ -221,11 +225,17 @@ class SupportPurchaseController extends AsyncNotifier<SupportPurchaseState> {
     try {
       final nextBenefits = _model.benefits.lightFreeLantern(activationTime);
       await _benefitsStore.save(nextBenefits);
+      _deliverySequence += 1;
       _setModel(
         _model.copyWith(
           benefits: nextBenefits,
           clearBusyProduct: true,
           message: '暖灯亮起来了，愿小院今天也暖暖的。',
+          delivery: SupportDelivery(
+            product: SupportCatalog.lantern,
+            sequence: _deliverySequence,
+            opened: true,
+          ),
         ),
       );
       _scheduleExpiryRefresh();
@@ -233,6 +243,49 @@ class SupportPurchaseController extends AsyncNotifier<SupportPurchaseState> {
     } on Object {
       _setModel(
         _model.copyWith(clearBusyProduct: true, message: '暖灯暂时没有保存好，稍后再来看看吧。'),
+      );
+      return false;
+    }
+  }
+
+  Future<bool> openGift(SupportProductSpec product, {DateTime? now}) async {
+    await future;
+    if (!product.consumable ||
+        _model.benefits.pendingCount(product.kind) <= 0 ||
+        _model.busyProductId != null ||
+        _model.restoring) {
+      return false;
+    }
+
+    final actionId = '$supportOpenGiftActionPrefix${product.kind.name}';
+    _setModel(_model.copyWith(busyProductId: actionId, clearMessage: true));
+    try {
+      final nextBenefits = _model.benefits.openGift(
+        product: product,
+        now: now ?? DateTime.now().toUtc(),
+      );
+      await _benefitsStore.save(nextBenefits);
+      _deliverySequence += 1;
+      _setModel(
+        _model.copyWith(
+          benefits: nextBenefits,
+          clearBusyProduct: true,
+          clearMessage: true,
+          delivery: SupportDelivery(
+            product: product,
+            sequence: _deliverySequence,
+            opened: true,
+          ),
+        ),
+      );
+      _scheduleExpiryRefresh();
+      return true;
+    } on Object {
+      _setModel(
+        _model.copyWith(
+          clearBusyProduct: true,
+          message: '礼物暂时没有保存好，它还在这里。稍后再拆开吧。',
+        ),
       );
       return false;
     }
@@ -255,6 +308,13 @@ class SupportPurchaseController extends AsyncNotifier<SupportPurchaseState> {
           continue;
         case SupportTransactionStatus.purchased:
         case SupportTransactionStatus.restored:
+          if (transaction.status == SupportTransactionStatus.restored &&
+              product.consumable) {
+            _setModel(
+              _model.copyWith(clearBusyProduct: true, restoring: false),
+            );
+            break;
+          }
           final transactionKey = _transactionKey(transaction);
           final alreadyDelivered = _model.benefits.processedTransactions
               .contains(transactionKey);
@@ -266,19 +326,25 @@ class SupportPurchaseController extends AsyncNotifier<SupportPurchaseState> {
                 now: DateTime.now().toUtc(),
               );
               await _benefitsStore.save(nextBenefits);
-              _deliverySequence += 1;
+              final showDelivery = !product.consumable;
+              if (showDelivery) _deliverySequence += 1;
               _setModel(
                 _model.copyWith(
                   benefits: nextBenefits,
                   clearBusyProduct: true,
                   restoring: false,
-                  clearMessage: true,
-                  delivery: SupportDelivery(
-                    product: product,
-                    sequence: _deliverySequence,
-                    restored:
-                        transaction.status == SupportTransactionStatus.restored,
-                  ),
+                  message: product.consumable ? '礼物已经送到，你想什么时候拆开都可以。' : null,
+                  clearMessage: !product.consumable,
+                  clearDelivery: product.consumable,
+                  delivery: showDelivery
+                      ? SupportDelivery(
+                          product: product,
+                          sequence: _deliverySequence,
+                          restored:
+                              transaction.status ==
+                              SupportTransactionStatus.restored,
+                        )
+                      : null,
                 ),
               );
               _scheduleExpiryRefresh();

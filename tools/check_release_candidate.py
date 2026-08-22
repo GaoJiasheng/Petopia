@@ -769,6 +769,10 @@ def main() -> int:
         [sys.executable, "tools/build_release_asset_manifest.py", "--check"],
     )
     run(
+        "support gift opening art",
+        [sys.executable, "tools/build_support_open_assets.py", "--check"],
+    )
+    run(
         "dependency license audit",
         [sys.executable, "tools/check_dependency_licenses.py"],
     )

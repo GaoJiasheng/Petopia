@@ -1,12 +1,12 @@
 {
   "bytesByCategory": {
-    "art": 33396716,
+    "art": 36610794,
     "audio": 23934476,
     "content-data": 401844,
     "runtime-art": 81245592
   },
   "counts": {
-    "art": 233,
+    "art": 236,
     "audio": 59,
     "content-data": 10,
     "runtime-art": 439
@@ -562,6 +562,24 @@
       "bytes": 55800,
       "category": "art",
       "sha256": "bfd627dd194b0a4da0ff7d91365a123a7c9400a26f548228f6dbeef87c98ecc7"
+    },
+    {
+      "asset": "assets/art/support-open/support_open_bouquet.webp",
+      "bytes": 1138950,
+      "category": "art",
+      "sha256": "8ed08dec96206f94138fb59f626888687d5f361c19c7ed8f73603717a93ff315"
+    },
+    {
+      "asset": "assets/art/support-open/support_open_lantern.webp",
+      "bytes": 985162,
+      "category": "art",
+      "sha256": "b92cecd6b4bf233682c0cf6ddbc54c3a248c9dda9a7f88f4e875c1a8031733a7"
+    },
+    {
+      "asset": "assets/art/support-open/support_open_treat.webp",
+      "bytes": 1089966,
+      "category": "art",
+      "sha256": "1d8aa143fdb6d6c93298023a82477e0d2c176ec770b3c9f537524ec568a8f6a7"
     },
     {
       "asset": "assets/art/ui/ui_frame_offline_card.png",

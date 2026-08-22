@@ -7,6 +7,7 @@ class SupportProductSpec {
     required this.title,
     required this.subtitle,
     required this.assetPath,
+    this.openingAssetPath,
     required this.thankYou,
     required this.fallbackPrice,
     this.duration,
@@ -18,6 +19,7 @@ class SupportProductSpec {
   final String title;
   final String subtitle;
   final String assetPath;
+  final String? openingAssetPath;
   final String thankYou;
   final String fallbackPrice;
   final Duration? duration;
@@ -29,8 +31,9 @@ abstract final class SupportCatalog {
     kind: SupportProductKind.treat,
     id: 'com.petopia.petopia.support.treat',
     title: '一份小点心',
-    subtitle: '点心会在院子里保留 24 小时，伙伴也会来尝一口。',
+    subtitle: '拆开后，点心会在院子里保留 24 小时，伙伴也会来尝一口。',
     assetPath: 'assets/runtime/support/support_treat.webp',
+    openingAssetPath: 'assets/art/support-open/support_open_treat.webp',
     thankYou: '点心已经放进院子，将保留 24 小时。感谢你的支持。',
     fallbackPrice: r'$0.99',
     duration: Duration(hours: 24),
@@ -40,8 +43,9 @@ abstract final class SupportCatalog {
     kind: SupportProductKind.lantern,
     id: 'com.petopia.petopia.support.lantern',
     title: '点亮一盏暖灯',
-    subtitle: '暖灯会在院子里亮 24 小时。',
+    subtitle: '拆开后，暖灯会在院子里亮 24 小时。',
     assetPath: 'assets/runtime/support/support_lantern.webp',
+    openingAssetPath: 'assets/art/support-open/support_open_lantern.webp',
     thankYou: '暖灯已经点亮，将持续 24 小时。感谢你的支持。',
     fallbackPrice: r'$2.99',
     duration: Duration(hours: 24),
@@ -51,8 +55,9 @@ abstract final class SupportCatalog {
     kind: SupportProductKind.bouquet,
     id: 'com.petopia.petopia.support.bouquet',
     title: '送来一篮花',
-    subtitle: '花篮会在院子里展示七天。',
+    subtitle: '拆开后，花篮会在院子里展示七天。',
     assetPath: 'assets/runtime/support/support_bouquet.webp',
+    openingAssetPath: 'assets/art/support-open/support_open_bouquet.webp',
     thankYou: '花篮已经放进院子，会展示七天。感谢你的支持。',
     fallbackPrice: r'$4.99',
     duration: Duration(days: 7),

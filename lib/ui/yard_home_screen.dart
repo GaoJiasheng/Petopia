@@ -592,6 +592,22 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                         alignment: const Alignment(0.16, 0.60),
                         width: 60 * sceneScale,
                       ),
+                    if (supportBenefits.hasPendingGifts)
+                      Align(
+                        alignment: Alignment(
+                          visitorUsesRightLane ? -0.82 : 0.82,
+                          0.02,
+                        ),
+                        child: _PendingSupportGift(
+                          product: supportBenefits.nextPendingGift!,
+                          size: 64 * sceneScale,
+                          onTap: () => _openHomeTarget(
+                            context,
+                            _HomeMenuTarget.support,
+                            pet: pet,
+                          ),
+                        ),
+                      ),
                     if (view.activeVisitor != null)
                       Builder(
                         builder: (context) {
@@ -2369,6 +2385,44 @@ class _SupportYardDecor extends StatelessWidget {
             fit: BoxFit.contain,
             cacheWidth: 512,
             errorBuilder: (_, _, _) => const SizedBox.shrink(),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _PendingSupportGift extends StatelessWidget {
+  const _PendingSupportGift({
+    required this.product,
+    required this.size,
+    required this.onTap,
+  });
+
+  final SupportProductSpec product;
+  final double size;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: context.tr('有一份礼物在这里，打开支持小院'),
+      child: Material(
+        type: MaterialType.transparency,
+        child: InkResponse(
+          key: const ValueKey<String>('pending_support_gift'),
+          radius: size * 0.55,
+          onTap: onTap,
+          child: SizedBox.square(
+            dimension: math.max(size, 48),
+            child: SpriteSheetPlayer(
+              assetPath: product.openingAssetPath!,
+              size: size,
+              animate: false,
+              staticFrame: 0,
+              fallback: Image.asset(product.assetPath, fit: BoxFit.contain),
+            ),
           ),
         ),
       ),
@@ -4187,6 +4241,7 @@ class _NotebookSupportMemoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final product =
+        benefits.nextPendingGift ??
         SupportCatalog.byId(benefits.lastProductId ?? '') ??
         SupportCatalog.guardian;
     return Semantics(
@@ -4229,7 +4284,9 @@ class _NotebookSupportMemoryCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 3),
                       AppText(
-                        product.thankYou,
+                        benefits.hasPendingGifts
+                            ? '有一份礼物在这里'
+                            : product.thankYou,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(

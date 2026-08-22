@@ -101,6 +101,17 @@ abstract final class EnglishCopy {
       return 'The lantern will glow for about ${match[1]} hours';
     }
 
+    match = RegExp(r'^有 (\d+) 份礼物在这里$').firstMatch(source);
+    if (match != null) {
+      final count = int.parse(match[1]!);
+      return count == 1
+          ? '1 gift is waiting here'
+          : '$count gifts are waiting here';
+    }
+
+    match = RegExp(r'^(.+)正在慢慢拆开$').firstMatch(source);
+    if (match != null) return 'Opening ${_term(match[1]!)}';
+
     match = RegExp(r'^暖灯还会亮约 (\d+) 天$').firstMatch(source);
     if (match != null) {
       return 'The lantern will glow for about ${match[1]} days';
@@ -1021,17 +1032,29 @@ abstract final class EnglishCopy {
     '支持完全自愿。所有回礼都只是装饰，不会影响成长、收集或概率。':
         'Support is optional. Every thank-you is cosmetic and does not affect progression, collecting, or odds.',
     '一份小点心': 'A Treat',
-    '点心会在院子里保留 24 小时，伙伴也会来尝一口。':
-        'A treat will stay in the garden for 24 hours, and your friend will stop by for a bite.',
+    '拆开后，点心会在院子里保留 24 小时，伙伴也会来尝一口。':
+        'Once opened, the treat stays in the garden for 24 hours, and your friend will stop by for a bite.',
     '点心已经放进院子，将保留 24 小时。感谢你的支持。':
         'The treat is now in the garden and will remain for 24 hours. Thank you for supporting Hearth & Tails.',
     '点亮一盏暖灯': 'A Warm Lantern',
-    '暖灯会在院子里亮 24 小时。': 'The lantern will glow in the garden for 24 hours.',
+    '拆开后，暖灯会在院子里亮 24 小时。':
+        'Once opened, the lantern glows in the garden for 24 hours.',
     '暖灯已经点亮，将持续 24 小时。感谢你的支持。':
         'The lantern is lit for the next 24 hours. Thank you for supporting Hearth & Tails.',
     '送来一篮花': 'Garden Bouquet',
-    '花篮会在院子里展示七天。':
-        'The bouquet will be displayed in the garden for seven days.',
+    '拆开后，花篮会在院子里展示七天。':
+        'Once opened, the bouquet is displayed in the garden for seven days.',
+    '礼物已经送到，你想什么时候拆开都可以。':
+        'Your gift is here. Open it whenever you feel like it.',
+    '礼物暂时没有保存好，它还在这里。稍后再拆开吧。':
+        'The gift could not be saved just yet. It is still here whenever you are ready.',
+    '有一份礼物在这里': 'A gift is waiting here',
+    '有一份礼物在这里，打开支持小院': 'A gift is waiting here. Open Support the Garden',
+    '拆开一份': 'Open One',
+    '一份心意，慢慢收好': 'A Little Gift, Safely Kept',
+    '正在拆开礼物': 'Opening Your Gift',
+    '不用着急，让它慢慢打开。': 'No rush. Let it open in its own time.',
+    '收好': 'Keep It',
     '花篮已经放进院子，会展示七天。感谢你的支持。':
         'The bouquet is in the garden and will be displayed for seven days. Thank you for supporting Hearth & Tails.',
     '小院守护者': 'Garden Keeper',
@@ -1107,8 +1130,8 @@ abstract final class EnglishCopy {
         'Source code uses Apache-2.0. Hearth & Tails artwork and audio are proprietary.',
     '暖绒小院专有素材 · 禁止单独转载':
         'Hearth & Tails proprietary assets · Redistribution prohibited',
-    'App 只在设备上保存回礼类型、交易幂等键和有效期，用于防止重复发放并展示装饰。普通支持不会写入可导出的游戏存档，也不会改变经验、暖绒、冷却或概率。':
-        'Hearth & Tails keeps only the thank-you type, transaction key, and expiry on this device so rewards are never granted twice. Regular support never enters your exported save or changes XP, Sunfluff, cooldowns, or odds.',
+    'App 只在设备上保存回礼类型、未拆数量、交易幂等键和有效期，用于防止重复发放并在你拆开后展示装饰。普通支持不会写入可导出的游戏存档，也不会改变经验、暖绒、冷却或概率。':
+        'Hearth & Tails keeps only the thank-you type, unopened count, transaction key, and expiry on this device so gifts are never granted twice and appear only after you open them. Support never enters your exported save or changes XP, Sunfluff, cooldowns, or odds.',
     '暖绒小院不要求注册账号，也不会把宠物、明信片、互动记录或设备标识上传到服务器。游戏进度保存在当前设备的应用沙盒中。':
         'Hearth & Tails needs no account and does not upload pets, postcards, interactions, or device identifiers. Progress stays in the app sandbox on this device.',
     '一只刚来到院子的奶油橘色小猫': 'A cream-orange kitten, newly arrived in the garden',
