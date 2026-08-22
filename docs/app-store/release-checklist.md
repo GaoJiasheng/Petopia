@@ -70,7 +70,7 @@
 
 ## 发布控制
 
-- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `35`）
+- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `36`）
 - [x] 内测日推进工具已改为双重编译门禁：Dart 仅在
       `PETOPIA_TESTFLIGHT_TOOLS=true` 时保留入口，Swift 仅在
       `PETOPIA_TESTFLIGHT_TOOLS` 条件下注册 StoreKit 环境通道。普通 Release
@@ -79,6 +79,11 @@
       TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 35`
       构建无内测入口的送审包。build 35 已选为 App Store 审核版本；build 32
       仅对内部 TestFlight 组开放。
+- [x] build 36 已上传并通过 Apple 验证；Delivery UUID
+      `bc69eb36-37db-4d5f-bb57-60411089c28c`，状态 `VALID` / `INTERNAL_ONLY`，
+      `usesNonExemptEncryption=false`，最低系统为 iOS 16.0。英文、简中、繁中内测
+      说明已同步，内部测试组启用全部构建访问。该构建包含守护者每日免费暖灯、
+      三类支持礼物自主拆开及手绘序列动画，并保留仅限内测的 `+1` 日推进工具。
 - [x] build 35 已上传并通过 Apple 验证；Delivery UUID
       `95f06845-823c-4978-b76b-51b320deaf26`，状态 `VALID` /
       `APP_STORE_ELIGIBLE`，`usesNonExemptEncryption=false`，最低系统为 iOS 16.0。

@@ -7,11 +7,12 @@
 
 - [x] 已确认 App 记录为 `com.petopia.petopia`、SKU `petopia001`、主语言
       English (U.S.)，商店名称为 `Hearth & Tails: Letters Home`。
-- [x] build 32 为带 `+1` 的旧内部 TestFlight 工具包；build 35 为不含内测入口的
-      已上传正式候选，Apple 状态为 `VALID` / `APP_STORE_ELIGIBLE`。本轮 S1/S2 完成后
-      将上传新的带 `+1` 内部测试包，正式版编译条件仍不包含该入口。
-- [x] 当前 `main` 已加入“今日故事”直达入口、繁体中文、主动邮件问题反馈及
-      `Hearth & Tails` 品牌，并已通过 build 35 上传并关联 App 1.0。
+- [x] build 36 为带 `+1` 的当前内部 TestFlight 工具包，Apple 状态为 `VALID` /
+      `INTERNAL_ONLY`；build 35 为不含内测入口的已上传正式候选，状态为 `VALID` /
+      `APP_STORE_ELIGIBLE`。两种构建继续使用独立的双重编译门禁。
+- [x] 当前 `main` 已加入“今日故事”直达入口、繁体中文、主动邮件问题反馈、
+      守护者每日暖灯与礼物自主拆开，并以 build 36 上传到内部 TestFlight；
+      build 35 仍是关联 App 1.0 的无内测入口正式候选。
 - [ ] 确认 Apple Developer Program 协议、税务与银行资料没有待处理项目。
 - [ ] 在 App Store Connect 接受 Paid Applications Agreement，并确认税务与
       收款账户状态允许提交应用内购买。
@@ -68,7 +69,7 @@
 - [x] 已回答社交媒体能力问题；本版本无聊天、公开资料、
       用户生成内容或联网社交。
 - [x] 出口合规选择与 `ITSAppUsesNonExemptEncryption=false` 保持一致；Apple
-      已确认 build 35 的 `usesNonExemptEncryption=false`。
+      已确认 build 35 与内部 build 36 的 `usesNonExemptEncryption=false`。
 - [x] App Store Connect 内容版权字段已选择“不使用第三方内容”。
 - [ ] 完成 EU Digital Services Act trader / non-trader 声明；若作为 trader
       在欧盟发布，完成公开联系方式验证。
@@ -78,11 +79,11 @@
 ## 签名与人工验收
 
 - [x] 使用 Cloud Managed Apple Distribution 签名创建 build 24、25、26、27、28、29、
-      30、32、33、34 与 35 Archive；build 32 为 `INTERNAL_ONLY`，build 35 为当前已上传的
-      无内测入口候选。
+      30、32、33、34、35 与 36 Archive；build 36 为 `INTERNAL_ONLY`，build 35 为当前
+      已上传的无内测入口候选。
 - [ ] 在保留进度的设备上先安装 TestFlight build 18、19 或 20，再覆盖安装本轮新上传的
       正式候选，确认 schema 2 → 3 后宠物、货币、旅程、明信片、来客、成就和设置均保留。
-- [ ] 在 TestFlight build 32 连续点击 `+1`，确认新来客弹窗、院子模型和来客图鉴
+- [ ] 在 TestFlight build 36 连续点击 `+1`，确认新来客弹窗、院子模型和来客图鉴
       始终为同一访客；build 21/22 不再作为验收或送审候选。
 - [ ] 在本轮带 `+1` 的 TestFlight 上验证 S1/S2：守护者每天只可免费点一盏灯；三个
       消耗型支持购买后均先显示为待拆礼物；拆开前不开始计时，拆开后分别播放点心盒、
