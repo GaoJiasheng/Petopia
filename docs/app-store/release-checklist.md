@@ -70,15 +70,30 @@
 
 ## 发布控制
 
-- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `36`）
+- [x] 将 `pubspec.yaml` build number 提升为未使用的新值（当前 `37`）
 - [x] 内测日推进工具已改为双重编译门禁：Dart 仅在
       `PETOPIA_TESTFLIGHT_TOOLS=true` 时保留入口，Swift 仅在
       `PETOPIA_TESTFLIGHT_TOOLS` 条件下注册 StoreKit 环境通道。普通 Release
       不生成按钮、不调用通道，也不能从控制器推进时间。
-- [x] 使用 `tools/build_ios_variants.sh testflight-tools 32` 构建仅供内部
+- [x] 内测模拟支持购买要求同时启用 `PETOPIA_TESTFLIGHT_TOOLS=true` 与
+      `PETOPIA_SIMULATED_SUPPORT_PURCHASES=true`。模拟交易复用正式权益、礼物拆开和
+      存档流程，但不会请求付款；普通 Release 未同时启用这两个开关，始终使用
+      StoreKit。支持页会持续显示“不会产生费用”的内测提示，避免与真实购买混淆。
+- [x] 使用 `tools/build_ios_variants.sh testflight-tools 38` 构建仅供内部
       TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 35`
-      构建无内测入口的送审包。build 35 已选为 App Store 审核版本；build 32
+      构建无内测入口的送审包。build 35 已选为 App Store 审核版本；build 38
       仅对内部 TestFlight 组开放。
+- [x] build 38 已于 2026-08-23 上传并通过 Apple 验证；Delivery UUID
+      `8cc2191a-4505-4cd1-8f08-8efbbbd17c21`，状态 `VALID` / `INTERNAL_ONLY`，
+      `usesNonExemptEncryption=false`，最低系统为 iOS 16.0。三语 TestFlight 说明已同步；
+      该内部构建包含本轮互动按钮、院子布局和回归修正，并保留仅限内测的 `+1` 与
+      无扣费模拟支持购买。
+- [x] build 37 已于 2026-08-22 上传并通过 Apple 验证；Delivery UUID
+      `a7a38808-268f-449b-8a45-584122a78a5c`，状态 `VALID` /
+      `IN_BETA_TESTING`，`usesNonExemptEncryption=false`，最低系统为 iOS 16.0。
+      三语 TestFlight 说明已同步，内部测试组已获得访问。该内部构建包含最新商店
+      成品素材、首页手绘功能图标和字号优化，并保留仅限内测的 `+1` 与无扣费模拟
+      支持购买。
 - [x] build 36 已上传并通过 Apple 验证；Delivery UUID
       `bc69eb36-37db-4d5f-bb57-60411089c28c`，状态 `VALID` / `INTERNAL_ONLY`，
       `usesNonExemptEncryption=false`，最低系统为 iOS 16.0。英文、简中、繁中内测
@@ -149,7 +164,7 @@
 - [ ] 从 TestFlight build 18、19 或 20 覆盖安装 build 24，验证 schema 2 → 3 升级
 - [ ] 完成至少一次 iPhone 与 iPad 外部/内部测试
 - [ ] 检查 TestFlight 崩溃、卡死、资源缺失和通知权限行为
-- [ ] 在真机 TestFlight build 32 确认首页右上角出现 `+1` 日推进按钮，并验证
+- [ ] 在真机 TestFlight build 38 确认首页右上角出现 `+1` 日推进按钮，并验证
       连续跨日时来客弹窗与院子模型一致；在正式 build 35 确认按钮不存在且
       控制器执行能力被编译门禁关闭
 - [x] 已选择手动发布

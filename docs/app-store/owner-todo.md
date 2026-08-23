@@ -3,15 +3,43 @@
 以下项目需要 Apple Developer / App Store Connect 账号持有人亲自确认。工程侧
 自动化、素材审计、无签名 Release 构建和模拟器矩阵不重复列在这里。
 
+## 当前剩余事项（按阻断顺序）
+
+### 1. App Store Connect 必须完成
+
+- [ ] 清空 Apple Developer 协议、税务和银行资料中的待处理项目；接受 Paid
+      Applications Agreement，并确认应用内购买收款状态正常。
+- [ ] 把仓库内 2026-08-22 三语隐私稿重新发布到
+      `https://blog.gavingao.cn/petopia/privacy.html`。
+- [ ] 为简体中文商店页补齐 iPhone 6.9 英寸和 iPad 13 英寸截图。
+- [ ] 按 `support-iap.md` 在 ASC 手工更新四个 IAP 的英文、简中、繁中描述。
+- [ ] 完成 App Privacy、EU DSA 和 Accessibility Nutrition Labels。
+
+### 2. Build 38 真机验收
+
+- [ ] 在一台真实 iPhone 和一台真实 iPad 安装内部 TestFlight build 38，完整走通
+      首次领养、四种互动、来客、回访、明信片、存档导入导出和旋转。
+- [ ] 用右上角 `+1` 连续跨日，确认来客弹窗、院子模型和来客图鉴始终一致。
+- [ ] 验证模拟支持购买、每日免费暖灯、三类礼物拆开动画、减少动态效果和存档恢复。
+- [ ] 从旧 TestFlight 覆盖安装，验证游戏存档与支持存档 schema 2 → 3 不丢数据。
+- [ ] 用 Sandbox Apple Account 验证正式 StoreKit 的购买、取消、弱网和恢复购买。
+- [ ] 完成 iPhone/iPad Profile 性能采样，并持续使用 TestFlight 至少 24 小时。
+
+### 3. 提交审核
+
+- [ ] 确认 App 1.0 和四个 IAP 共五项仍为 `READY_FOR_REVIEW`，然后点击“提交审核”。
+- [ ] 提交后监控 App Store Connect 崩溃报告和支持邮箱。
+
 ## 提交前
 
 - [x] 已确认 App 记录为 `com.petopia.petopia`、SKU `petopia001`、主语言
       English (U.S.)，商店名称为 `Hearth & Tails: Letters Home`。
-- [x] build 36 为带 `+1` 的当前内部 TestFlight 工具包，Apple 状态为 `VALID` /
-      `INTERNAL_ONLY`；build 35 为不含内测入口的已上传正式候选，状态为 `VALID` /
+- [x] build 38 为带 `+1` 和模拟支持购买的当前内部 TestFlight 工具包，Apple 状态为
+      `VALID` / `INTERNAL_ONLY`；build 35 为不含内测入口的已上传正式候选，状态为 `VALID` /
       `APP_STORE_ELIGIBLE`。两种构建继续使用独立的双重编译门禁。
 - [x] 当前 `main` 已加入“今日故事”直达入口、繁体中文、主动邮件问题反馈、
-      守护者每日暖灯与礼物自主拆开，并以 build 36 上传到内部 TestFlight；
+      守护者每日暖灯、礼物自主拆开、商店成品素材与首页手绘图标，并以 build 38
+      发布到内部 TestFlight；
       build 35 仍是关联 App 1.0 的无内测入口正式候选。
 - [ ] 确认 Apple Developer Program 协议、税务与银行资料没有待处理项目。
 - [ ] 在 App Store Connect 接受 Paid Applications Agreement，并确认税务与
@@ -69,7 +97,8 @@
 - [x] 已回答社交媒体能力问题；本版本无聊天、公开资料、
       用户生成内容或联网社交。
 - [x] 出口合规选择与 `ITSAppUsesNonExemptEncryption=false` 保持一致；Apple
-      已确认 build 35 与内部 build 36 的 `usesNonExemptEncryption=false`。
+      已确认 build 35 与内部 build 36、37 的 `usesNonExemptEncryption=false`，build 38
+      也已验证为 false。
 - [x] App Store Connect 内容版权字段已选择“不使用第三方内容”。
 - [ ] 完成 EU Digital Services Act trader / non-trader 声明；若作为 trader
       在欧盟发布，完成公开联系方式验证。
@@ -79,11 +108,11 @@
 ## 签名与人工验收
 
 - [x] 使用 Cloud Managed Apple Distribution 签名创建 build 24、25、26、27、28、29、
-      30、32、33、34、35 与 36 Archive；build 36 为 `INTERNAL_ONLY`，build 35 为当前
-      已上传的无内测入口候选。
+      30、32、33、34、35、36、37 与 38 Archive；build 38 为当前 `INTERNAL_ONLY`
+      内部工具包，build 35 为当前已上传的无内测入口候选。
 - [ ] 在保留进度的设备上先安装 TestFlight build 18、19 或 20，再覆盖安装本轮新上传的
       正式候选，确认 schema 2 → 3 后宠物、货币、旅程、明信片、来客、成就和设置均保留。
-- [ ] 在 TestFlight build 36 连续点击 `+1`，确认新来客弹窗、院子模型和来客图鉴
+- [ ] 在 TestFlight build 38 连续点击 `+1`，确认新来客弹窗、院子模型和来客图鉴
       始终为同一访客；build 21/22 不再作为验收或送审候选。
 - [ ] 在本轮带 `+1` 的 TestFlight 上验证 S1/S2：守护者每天只可免费点一盏灯；三个
       消耗型支持购买后均先显示为待拆礼物；拆开前不开始计时，拆开后分别播放点心盒、
