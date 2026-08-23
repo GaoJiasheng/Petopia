@@ -1066,6 +1066,10 @@ abstract final class EnglishCopy {
         'All thank-yous are cosmetic. They do not affect growth, Sunfluff, cooldowns, rarity, or playable content.',
     '购买由 App Store 处理。前三项是有固定展示时长的可重复装饰；小院守护者为一次性购买，可恢复。':
         'Purchases are handled by the App Store. The first three are repeatable decorations with fixed display durations; Garden Keeper is a one-time, restorable purchase.',
+    '内测模拟支持已开启，不会产生费用。回礼、礼物和守护者权益会按正式流程保存。':
+        'Test purchases are enabled and will not charge you. Thank-yous, gifts, and Garden Keeper benefits follow the same flow as the release version.',
+    '当前为内测模拟购买，不会产生费用。正式版购买仍由 App Store 处理。':
+        'This internal build uses test purchases with no charge. Release purchases are still handled by the App Store.',
     '暂不可用': 'Unavailable',
     '可重复': 'Repeatable',
     '小院守护者已解锁': 'Garden Keeper Unlocked',

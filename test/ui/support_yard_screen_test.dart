@@ -79,6 +79,31 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
+  testWidgets('internal simulated purchases are clearly disclosed', (
+    tester,
+  ) async {
+    final storefront = _UiStorefront()..simulated = true;
+    addTearDown(storefront.dispose);
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          supportStorefrontProvider.overrideWithValue(storefront),
+          supportBenefitsStoreProvider.overrideWithValue(_UiBenefitsStore()),
+        ],
+        child: const MaterialApp(home: SupportYardScreen()),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(
+      find.byKey(const ValueKey<String>('simulated_support_notice')),
+      findsOneWidget,
+    );
+    expect(find.textContaining('不会产生费用'), findsNWidgets(2));
+    expect(find.textContaining('购买由 App Store 处理。前三项'), findsNothing);
+    expect(tester.takeException(), isNull);
+  });
+
   testWidgets('guardian state reveals the daily lantern and thank-you letter', (
     tester,
   ) async {
@@ -297,6 +322,7 @@ class _UiBenefitsStore implements SupportBenefitsStore {
 class _UiStorefront implements SupportStorefront {
   final _controller = StreamController<List<SupportTransaction>>.broadcast();
   var buyCalls = 0;
+  var simulated = false;
 
   @override
   Stream<List<SupportTransaction>> get transactions => _controller.stream;
@@ -316,6 +342,7 @@ class _UiStorefront implements SupportStorefront {
             displayPrice: product.fallbackPrice,
           ),
       ],
+      simulated: simulated,
     );
   }
 

@@ -82,6 +82,58 @@ void main() {
     },
   );
 
+  test(
+    'simulated storefront exercises gifts and permanent benefits without StoreKit',
+    () async {
+      final simulated = SimulatedSupportStorefront(
+        transactionDelay: Duration.zero,
+      );
+      final simulatedBenefits = _MemoryBenefitsStore();
+      final simulatedContainer = ProviderContainer(
+        overrides: [
+          supportStorefrontProvider.overrideWithValue(simulated),
+          supportBenefitsStoreProvider.overrideWithValue(simulatedBenefits),
+        ],
+      );
+      addTearDown(() async {
+        simulatedContainer.dispose();
+        await simulated.dispose();
+      });
+
+      final initial = await simulatedContainer.read(
+        supportPurchaseControllerProvider.future,
+      );
+      expect(initial.simulatedPurchases, isTrue);
+      expect(initial.offers.keys, containsAll(SupportCatalog.ids));
+
+      final controller = simulatedContainer.read(
+        supportPurchaseControllerProvider.notifier,
+      );
+      await controller.buy(SupportCatalog.treat);
+      await _flush();
+      expect(simulatedBenefits.value.pendingTreat, 1);
+      expect(simulatedBenefits.value.treatUntil, isNull);
+
+      expect(
+        await controller.openGift(
+          SupportCatalog.treat,
+          now: DateTime.utc(2026, 8, 22),
+        ),
+        isTrue,
+      );
+      expect(simulatedBenefits.value.pendingTreat, 0);
+      expect(simulatedBenefits.value.treatUntil, DateTime.utc(2026, 8, 23));
+
+      await controller.buy(SupportCatalog.guardian);
+      await _flush();
+      final purchased = simulatedContainer
+          .read(supportPurchaseControllerProvider)
+          .requireValue;
+      expect(purchased.benefits.guardian, isTrue);
+      expect(purchased.delivery?.product, SupportCatalog.guardian);
+    },
+  );
+
   test('restoring guardian grants permanent entitlement', () async {
     await container.read(supportPurchaseControllerProvider.future);
     final restore = container

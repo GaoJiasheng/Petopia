@@ -132,6 +132,13 @@ class _SupportBody extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     _SupportIntro(guardian: state.benefits.guardian),
+                    if (state.simulatedPurchases) ...[
+                      const SizedBox(height: 14),
+                      const _SupportStatus(
+                        key: ValueKey<String>('simulated_support_notice'),
+                        message: '内测模拟支持已开启，不会产生费用。回礼、礼物和守护者权益会按正式流程保存。',
+                      ),
+                    ],
                     if (state.message != null) ...[
                       const SizedBox(height: 14),
                       _SupportStatus(message: state.message!),
@@ -218,10 +225,12 @@ class _SupportBody extends ConsumerWidget {
                       ),
                     ),
                     const SizedBox(height: 4),
-                    const AppText(
-                      '购买由 App Store 处理。前三项是有固定展示时长的可重复装饰；小院守护者为一次性购买，可恢复。',
+                    AppText(
+                      state.simulatedPurchases
+                          ? '当前为内测模拟购买，不会产生费用。正式版购买仍由 App Store 处理。'
+                          : '购买由 App Store 处理。前三项是有固定展示时长的可重复装饰；小院守护者为一次性购买，可恢复。',
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: PetopiaColors.mutedText,
                         fontSize: 12,
                         height: 1.45,
@@ -588,7 +597,7 @@ class _GuardianLetter extends StatelessWidget {
 }
 
 class _SupportStatus extends StatelessWidget {
-  const _SupportStatus({required this.message});
+  const _SupportStatus({super.key, required this.message});
 
   final String message;
 

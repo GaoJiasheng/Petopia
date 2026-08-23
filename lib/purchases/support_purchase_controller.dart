@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../app/distribution_environment.dart';
 import 'support_benefits.dart';
 import 'support_catalog.dart';
 import 'support_storefront.dart';
@@ -28,6 +29,7 @@ class SupportPurchaseState {
   const SupportPurchaseState({
     this.storeAvailable = false,
     this.loadingOffers = true,
+    this.simulatedPurchases = false,
     this.offers = const <String, SupportOffer>{},
     this.notFoundIds = const <String>{},
     this.benefits = const SupportBenefits(),
@@ -39,6 +41,7 @@ class SupportPurchaseState {
 
   final bool storeAvailable;
   final bool loadingOffers;
+  final bool simulatedPurchases;
   final Map<String, SupportOffer> offers;
   final Set<String> notFoundIds;
   final SupportBenefits benefits;
@@ -50,6 +53,7 @@ class SupportPurchaseState {
   SupportPurchaseState copyWith({
     bool? storeAvailable,
     bool? loadingOffers,
+    bool? simulatedPurchases,
     Map<String, SupportOffer>? offers,
     Set<String>? notFoundIds,
     SupportBenefits? benefits,
@@ -64,6 +68,7 @@ class SupportPurchaseState {
     return SupportPurchaseState(
       storeAvailable: storeAvailable ?? this.storeAvailable,
       loadingOffers: loadingOffers ?? this.loadingOffers,
+      simulatedPurchases: simulatedPurchases ?? this.simulatedPurchases,
       offers: offers ?? this.offers,
       notFoundIds: notFoundIds ?? this.notFoundIds,
       benefits: benefits ?? this.benefits,
@@ -77,9 +82,14 @@ class SupportPurchaseState {
   }
 }
 
-final supportStorefrontProvider = Provider<SupportStorefront>(
-  (_) => InAppPurchaseSupportStorefront(),
-);
+final supportStorefrontProvider = Provider<SupportStorefront>((ref) {
+  if (internalSimulatedSupportPurchasesEnabled) {
+    final storefront = SimulatedSupportStorefront();
+    ref.onDispose(storefront.dispose);
+    return storefront;
+  }
+  return InAppPurchaseSupportStorefront();
+});
 
 final supportBenefitsStoreProvider = Provider<SupportBenefitsStore>(
   (_) => FileSupportBenefitsStore(),
@@ -138,6 +148,7 @@ class SupportPurchaseController extends AsyncNotifier<SupportPurchaseState> {
         _model = _model.copyWith(
           storeAvailable: true,
           loadingOffers: false,
+          simulatedPurchases: query.simulated,
           offers: <String, SupportOffer>{
             for (final offer in query.offers) offer.id: offer,
           },

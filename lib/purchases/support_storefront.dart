@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:in_app_purchase/in_app_purchase.dart';
 
+import 'support_catalog.dart';
+
 class SupportOffer {
   const SupportOffer({
     required this.id,
@@ -21,11 +23,125 @@ class SupportOfferQuery {
     required this.offers,
     this.notFoundIds = const <String>{},
     this.error,
+    this.simulated = false,
   });
 
   final List<SupportOffer> offers;
   final Set<String> notFoundIds;
   final String? error;
+  final bool simulated;
+}
+
+/// In-memory storefront used only by explicitly flagged internal builds.
+///
+/// It emits the same transaction shapes as StoreKit, allowing the production
+/// controller, persistence, gift-opening, and entitlement paths to run
+/// unchanged without initiating a payment.
+class SimulatedSupportStorefront implements SupportStorefront {
+  SimulatedSupportStorefront({
+    this.transactionDelay = const Duration(milliseconds: 650),
+  });
+
+  final Duration transactionDelay;
+  final _transactions = StreamController<List<SupportTransaction>>.broadcast();
+  var _sequence = 0;
+  var _disposed = false;
+  var _guardianPurchased = false;
+
+  @override
+  Stream<List<SupportTransaction>> get transactions => _transactions.stream;
+
+  @override
+  Future<bool> isAvailable() async => true;
+
+  @override
+  Future<SupportOfferQuery> queryOffers(Set<String> productIds) async {
+    final offers = <SupportOffer>[];
+    final notFoundIds = <String>{};
+    for (final productId in productIds) {
+      final product = SupportCatalog.byId(productId);
+      if (product == null) {
+        notFoundIds.add(productId);
+        continue;
+      }
+      offers.add(
+        SupportOffer(
+          id: product.id,
+          title: product.title,
+          description: product.subtitle,
+          displayPrice: product.fallbackPrice,
+        ),
+      );
+    }
+    return SupportOfferQuery(
+      offers: offers,
+      notFoundIds: notFoundIds,
+      simulated: true,
+    );
+  }
+
+  @override
+  Future<bool> buy(String productId, {required bool consumable}) async {
+    if (SupportCatalog.byId(productId) == null || _disposed) return false;
+    _sequence += 1;
+    final purchaseId =
+        'simulated-${DateTime.now().microsecondsSinceEpoch}-$_sequence';
+    _emit(
+      SupportTransaction(
+        productId: productId,
+        status: SupportTransactionStatus.pending,
+        raw: purchaseId,
+        verificationData: 'simulated-pending-$purchaseId',
+        purchaseId: purchaseId,
+      ),
+    );
+    await Future<void>.delayed(transactionDelay);
+    if (_disposed) return false;
+    if (!consumable) _guardianPurchased = true;
+    _emit(
+      SupportTransaction(
+        productId: productId,
+        status: SupportTransactionStatus.purchased,
+        raw: purchaseId,
+        verificationData: 'simulated-verified-$purchaseId',
+        purchaseId: purchaseId,
+        transactionDate: DateTime.now().toUtc().toIso8601String(),
+        needsCompletion: true,
+      ),
+    );
+    return true;
+  }
+
+  @override
+  Future<void> restore() async {
+    if (!_guardianPurchased || _disposed) return;
+    _sequence += 1;
+    final purchaseId = 'simulated-restore-$_sequence';
+    _emit(
+      SupportTransaction(
+        productId: SupportCatalog.guardian.id,
+        status: SupportTransactionStatus.restored,
+        raw: purchaseId,
+        verificationData: 'simulated-restored-$purchaseId',
+        purchaseId: purchaseId,
+        transactionDate: DateTime.now().toUtc().toIso8601String(),
+        needsCompletion: true,
+      ),
+    );
+  }
+
+  @override
+  Future<void> complete(SupportTransaction transaction) async {}
+
+  Future<void> dispose() async {
+    if (_disposed) return;
+    _disposed = true;
+    await _transactions.close();
+  }
+
+  void _emit(SupportTransaction transaction) {
+    if (!_disposed) _transactions.add(<SupportTransaction>[transaction]);
+  }
 }
 
 enum SupportTransactionStatus { pending, purchased, restored, canceled, error }

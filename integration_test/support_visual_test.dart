@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:petopia/app/game_controller.dart';
+import 'package:petopia/audio/audio_service.dart';
 import 'package:petopia/domain/enums.dart';
 import 'package:petopia/purchases/support_benefits.dart';
 import 'package:petopia/purchases/support_catalog.dart';
@@ -22,6 +23,47 @@ const _prefix = String.fromEnvironment(
   defaultValue: 'support',
 );
 late final IntegrationTestWidgetsFlutterBinding _binding;
+
+class _SilentAudio implements AudioService {
+  @override
+  bool get effectsEnabled => false;
+
+  @override
+  bool get musicEnabled => false;
+
+  @override
+  Future<void> dispose() async {}
+
+  @override
+  Future<void> initialize() async {}
+
+  @override
+  Future<void> pauseForInterruption() async {}
+
+  @override
+  Future<void> playBgm(Bgm bgm) async {}
+
+  @override
+  Future<void> playYardAmbience(YardAmbience ambience) async {}
+
+  @override
+  Future<void> resumeAfterInterruption() async {}
+
+  @override
+  Future<void> setEffectsEnabled(bool enabled) async {}
+
+  @override
+  Future<void> setMusicEnabled(bool enabled) async {}
+
+  @override
+  Future<void> sfx(Sfx s) async {}
+
+  @override
+  Future<void> sting(Sting s) async {}
+
+  @override
+  Future<void> visitorVoice(String visitorId) async {}
+}
 
 void main() {
   _binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -57,14 +99,19 @@ void main() {
     );
     await tester.pump(const Duration(milliseconds: 700));
     expect(
-      find.byKey(const ValueKey<String>('pet_action_eat')),
+      find.byKey(const ValueKey<String>('support_open_treat')),
       findsOneWidget,
     );
     expect(tester.takeException(), isNull);
-    await _capture(tester, 'treat-thanks');
+    await _capture(tester, 'treat-arrived');
 
-    await tester.tap(find.text('完成'));
-    await tester.pump(const Duration(milliseconds: 500));
+    await tester.tap(find.byKey(const ValueKey<String>('support_open_treat')));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(
+      find.byKey(const ValueKey<String>('support_opening_treat')),
+      findsOneWidget,
+    );
+    await _capture(tester, 'treat-opening');
 
     final guardian = const SupportBenefits().apply(
       product: SupportCatalog.guardian,
@@ -122,6 +169,7 @@ Future<void> _pumpSupport(
     ProviderScope(
       key: UniqueKey(),
       overrides: <Override>[
+        audioServiceProvider.overrideWithValue(_SilentAudio()),
         supportStorefrontProvider.overrideWithValue(storefront),
         supportBenefitsStoreProvider.overrideWithValue(store),
       ],
@@ -247,6 +295,7 @@ class _VisualStorefront implements SupportStorefront {
             displayPrice: product.fallbackPrice,
           ),
       ],
+      simulated: true,
     );
   }
 
