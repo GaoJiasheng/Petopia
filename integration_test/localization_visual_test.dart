@@ -82,7 +82,7 @@ class _VisualController extends GameController {
       id: 'shop_feed_salmon_cookie',
       name: '三文鱼小饼干 ×5',
       category: '特殊食粮',
-      artRef: 'ui_shop_salmon_cookie',
+      artRef: 'assets/runtime/shop/products/shop_feed_salmon_cookie.webp',
       effectType: EffectType.feedBonus,
       effectSummary: '下一次使用时，经验提升至 6 点',
       price: 80,

@@ -361,7 +361,7 @@
           "delta": 0.8
         }
       },
-      "artRef": "ui_shop_grain_bag",
+      "artRef": "assets/runtime/shop/products/shop_food_grain_bag.webp",
       "consumable": true,
       "stackCount": 3
     },
@@ -377,7 +377,7 @@
           "delta": 0.65
         }
       },
-      "artRef": "ui_shop_dried_fish",
+      "artRef": "assets/runtime/shop/products/shop_food_dried_fish.webp",
       "consumable": true,
       "stackCount": 3
     },
@@ -393,7 +393,7 @@
           "delta": 1.0
         }
       },
-      "artRef": "ui_shop_nut_jar",
+      "artRef": "assets/runtime/shop/products/shop_food_nut_jar.webp",
       "consumable": true,
       "stackCount": 3
     },
@@ -409,7 +409,7 @@
           "delta": 0.5
         }
       },
-      "artRef": "ui_shop_apple_slices",
+      "artRef": "assets/runtime/shop/products/shop_food_apple_slices.webp",
       "consumable": true,
       "stackCount": 3
     },
@@ -425,7 +425,7 @@
           "expTo": 6
         }
       },
-      "artRef": "ui_shop_salmon_cookie",
+      "artRef": "assets/runtime/shop/products/shop_feed_salmon_cookie.webp",
       "consumable": true,
       "stackCount": 5
     },
@@ -441,7 +441,7 @@
           "expTo": 6
         }
       },
-      "artRef": "ui_shop_rainbow_jelly",
+      "artRef": "assets/runtime/shop/products/shop_feed_rainbow_jelly.webp",
       "consumable": true,
       "stackCount": 3
     },
@@ -457,7 +457,7 @@
           "expTo": 5
         }
       },
-      "artRef": "ui_shop_honey_oat",
+      "artRef": "assets/runtime/shop/products/shop_feed_honey_oat.webp",
       "consumable": true,
       "stackCount": 5
     },
@@ -473,7 +473,7 @@
           "expTo": 9
         }
       },
-      "artRef": "ui_shop_bubble_soap",
+      "artRef": "assets/runtime/shop/products/shop_feed_bubble_soap.webp",
       "consumable": true,
       "stackCount": 2
     },
@@ -489,7 +489,7 @@
           "expTo": 6
         }
       },
-      "artRef": "ui_shop_yarn_ball",
+      "artRef": "assets/runtime/shop/products/shop_toy_yarn_ball.webp",
       "consumable": false,
       "stackCount": null
     },
@@ -505,7 +505,7 @@
           "expTo": 6
         }
       },
-      "artRef": "ui_shop_wind_up_duck",
+      "artRef": "assets/runtime/shop/products/shop_toy_wind_up_duck.webp",
       "consumable": false,
       "stackCount": null
     },
@@ -521,7 +521,7 @@
           "expTo": 6
         }
       },
-      "artRef": "ui_shop_cat_wand",
+      "artRef": "assets/runtime/shop/products/shop_toy_cat_wand.webp",
       "consumable": false,
       "stackCount": null
     },
@@ -537,7 +537,7 @@
           "expTo": 6
         }
       },
-      "artRef": "ui_shop_wooden_disc",
+      "artRef": "assets/runtime/shop/products/shop_toy_wooden_disc.webp",
       "consumable": false,
       "stackCount": null
     },
@@ -552,7 +552,7 @@
           "skinId": "paper"
         }
       },
-      "artRef": "ui_shop_paper",
+      "artRef": "assets/runtime/shop/products/shop_album_paper.webp",
       "consumable": false,
       "stackCount": null
     },
@@ -567,7 +567,7 @@
           "skinId": "picnic"
         }
       },
-      "artRef": "ui_shop_picnic",
+      "artRef": "assets/runtime/shop/products/shop_album_picnic.webp",
       "consumable": false,
       "stackCount": null
     },
@@ -582,7 +582,7 @@
           "skinId": "dried_flower"
         }
       },
-      "artRef": "ui_shop_dried_flower",
+      "artRef": "assets/runtime/shop/products/shop_album_dried_flower.webp",
       "consumable": false,
       "stackCount": null
     },
@@ -597,7 +597,7 @@
           "skinId": "star_chart"
         }
       },
-      "artRef": "ui_shop_star_chart",
+      "artRef": "assets/runtime/shop/products/shop_album_star_chart.webp",
       "consumable": false,
       "stackCount": null
     }

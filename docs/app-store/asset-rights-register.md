@@ -68,6 +68,21 @@
   接触表、最终帧衔接图和透明边界验证位于 `assets/art/qa/support-open/`。该批次仅
   对齐 Hearth & Tails 自有支持页静态回礼与 Golden Set，不含第三方角色、品牌、
   字体、图库或外部参考图。
+- 2026-08-22 的暖绒商店商品重绘批次包含 8 份特餐、4 件玩具和 4 款相册封面，
+  共 16 份独立透明水彩母图。生成过程只使用项目自有 Golden Set 的色彩、媒介和
+  完整边界约束，没有输入第三方图片、角色、品牌、Logo、字体、图库或艺术家姓名。
+  母图与逐项 brief 位于 `assets/art/shop/products/source/`，带透明安全边的运行时
+  WebP 位于 `assets/runtime/shop/products/`；商品数据逐项绑定独立文件，并由测试
+  禁止回退到旧的几何占位图。
+- 2026-08-22 的首页功能图标批次包含成长手账、相册、宠物图鉴、来客图鉴、成就、
+  商店、院子布置与设置共 8 份透明水彩母图；只参考项目自有 Golden Set、既有 UI
+  色板和功能语义，不含第三方图片、角色、品牌、Logo、字体、图库或艺术家姓名。
+  母图与声明位于 `assets/art/source/home_menu/`，运行时图标位于 `assets/art/ui/`。
+- 同日重新整理首页四个互动按钮，其中喂食、摸头与玩具沿用项目自有母图，洗澡盆
+  重新定向生成并经过色键移除与边缘清理。生成源图、派生脚本和权利声明位于
+  `assets/art/qa/chroma_sources/action_control_refresh_20260822/`、
+  `assets/art/source/action_controls/` 与 `tools/build_action_control_icons.py`；未使用
+  第三方图片、角色、品牌、Logo、字体、图库或艺术家姓名。
 
 ## 音频来源记录
 

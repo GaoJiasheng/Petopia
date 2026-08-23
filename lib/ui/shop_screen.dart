@@ -7,7 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
 import '../audio/route_audio.dart';
-import '../domain/enums.dart';
 import '../l10n/petopia_localizations.dart';
 import '../l10n/petopia_text.dart';
 import 'adaptive_layout.dart';
@@ -234,8 +233,7 @@ class _ShopContent extends StatelessWidget {
                           _SectionHeader(
                             title: selected,
                             subtitle: '${grouped[selected]!.length} 件小物',
-                            iconName: _categoryIconName(selected),
-                            fallbackIcon: _categoryFallbackIcon(selected),
+                            category: selected,
                           ),
                           const SizedBox(height: 12),
                           _ShopItemWrap(
@@ -270,8 +268,7 @@ class _ShopContent extends StatelessWidget {
                   _SectionHeader(
                     title: group.key,
                     subtitle: '${group.value.length} 件小物',
-                    iconName: _categoryIconName(group.key),
-                    fallbackIcon: _categoryFallbackIcon(group.key),
+                    category: group.key,
                   ),
                   const SizedBox(height: 10),
                   for (final item in group.value) ...[
@@ -412,11 +409,7 @@ class _CategoryButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
           child: Row(
             children: [
-              AppIcon(
-                _categoryIconName(category),
-                size: 22,
-                fallback: _categoryFallbackIcon(category),
-              ),
+              _ShopCategoryMark(category: category, size: 24),
               const SizedBox(width: 10),
               Expanded(
                 child: AppText(
@@ -520,21 +513,19 @@ class _WalletCard extends StatelessWidget {
 class _SectionHeader extends StatelessWidget {
   final String title;
   final String subtitle;
-  final String iconName;
-  final IconData fallbackIcon;
+  final String category;
 
   const _SectionHeader({
     required this.title,
     required this.subtitle,
-    required this.iconName,
-    required this.fallbackIcon,
+    required this.category,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        AppIcon(iconName, size: 20, fallback: fallbackIcon),
+        _ShopCategoryMark(category: category, size: 24),
         const SizedBox(width: 8),
         Flexible(
           child: AppText(
@@ -609,7 +600,7 @@ class _ShopItemCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _ItemIcon(category: item.category),
+              _ItemIcon(item: item),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(
@@ -755,70 +746,104 @@ class _ItemPreview extends StatelessWidget {
                   fit: BoxFit.cover,
                   alignment: const Alignment(0, -0.62),
                   cacheWidth: 480,
-                  errorBuilder: (_, _, _) => _ProductIcon(item: item),
+                  errorBuilder: (_, _, _) => _ProductArtwork(item: item),
                 )
               : decorId != null
-              ? Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: Image.asset(
-                    YardArt.decor(decorId),
-                    fit: BoxFit.contain,
-                    cacheWidth: 260,
-                    errorBuilder: (_, _, _) => _ProductIcon(item: item),
-                  ),
-                )
-              : _ProductIcon(item: item),
+              ? _DecorItemPreview(item: item, decorId: decorId)
+              : _ProductArtwork(item: item),
         ),
       ),
     );
   }
 }
 
-class _ProductIcon extends StatelessWidget {
+class _DecorItemPreview extends StatelessWidget {
   final ShopItemView item;
+  final String decorId;
 
-  const _ProductIcon({required this.item});
+  const _DecorItemPreview({required this.item, required this.decorId});
 
   @override
   Widget build(BuildContext context) {
-    final asset = switch (item.id) {
-      final id when id.contains('grain') =>
-        'assets/art/ui/ui_icon_food_grain.png',
-      final id when id.contains('dried_fish') =>
-        'assets/art/ui/ui_icon_food_fish.png',
-      final id when id.contains('nut') => 'assets/art/ui/ui_icon_food_nut.png',
-      final id when id.contains('apple') =>
-        'assets/art/ui/ui_icon_food_apple.png',
-      _ when item.effectType == EffectType.toyPermanentBonus =>
-        'assets/art/ui/ui_icon_shop_toy.png',
-      _ when item.effectType == EffectType.albumSkin =>
-        'assets/art/ui/ui_icon_shop_albumskin.png',
-      _ => 'assets/art/ui/ui_icon_shop_food.png',
-    };
+    final crop = YardArt.decorCrop(decorId);
+    final subjectAspect =
+        crop.canvasAspectRatio * crop.heightFraction / crop.widthFraction;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final maxSubjectHeight = constraints.maxHeight * 0.88;
+        final maxSubjectWidth = constraints.maxWidth * 0.72;
+        final widthFromHeight = maxSubjectHeight / subjectAspect;
+        final subjectWidth = widthFromHeight.clamp(0.0, maxSubjectWidth);
+        final subjectHeight = subjectWidth * subjectAspect;
+        final fullWidth = subjectWidth / crop.widthFraction;
+        final fullHeight = fullWidth * crop.canvasAspectRatio;
+        return Center(
+          child: SizedBox(
+            key: ValueKey('shop_decor_subject_$decorId'),
+            width: subjectWidth,
+            height: subjectHeight,
+            child: ClipRect(
+              child: OverflowBox(
+                alignment: Alignment.topLeft,
+                minWidth: fullWidth,
+                maxWidth: fullWidth,
+                minHeight: fullHeight,
+                maxHeight: fullHeight,
+                child: Transform.translate(
+                  offset: Offset(
+                    -fullWidth * crop.left,
+                    -fullHeight * crop.top,
+                  ),
+                  child: Image.asset(
+                    YardArt.decor(decorId),
+                    width: fullWidth,
+                    height: fullHeight,
+                    fit: BoxFit.fill,
+                    cacheWidth: 512,
+                    errorBuilder: (_, _, _) => _ProductArtwork(item: item),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _ProductArtwork extends StatelessWidget {
+  final ShopItemView item;
+
+  const _ProductArtwork({required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_isBundledProductArt(item.artRef)) {
+      return _ShopCategoryMark(category: item.category, size: 48);
+    }
     return Padding(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(6),
       child: Image.asset(
-        asset,
+        item.artRef,
         fit: BoxFit.contain,
-        cacheWidth: 180,
-        errorBuilder: (_, _, _) => Icon(
-          _categoryFallbackIcon(item.category),
-          size: 44,
-          color: _categoryColor(item.category),
-        ),
+        cacheWidth: 384,
+        semanticLabel: item.name,
+        errorBuilder: (_, _, _) =>
+            _ShopCategoryMark(category: item.category, size: 48),
       ),
     );
   }
 }
 
 class _ItemIcon extends StatelessWidget {
-  final String category;
+  final ShopItemView item;
 
-  const _ItemIcon({required this.category});
+  const _ItemIcon({required this.item});
 
   @override
   Widget build(BuildContext context) {
-    final color = _categoryColor(category);
+    final color = _categoryColor(item.category);
     return Container(
       width: 52,
       height: 52,
@@ -827,11 +852,51 @@ class _ItemIcon extends StatelessWidget {
         borderRadius: BorderRadius.circular(18),
       ),
       child: Center(
-        child: AppIcon(
-          _categoryIconName(category),
-          size: 27,
-          fallback: _categoryFallbackIcon(category),
-        ),
+        child: _isBundledProductArt(item.artRef)
+            ? Padding(
+                padding: const EdgeInsets.all(3),
+                child: Image.asset(
+                  item.artRef,
+                  fit: BoxFit.contain,
+                  cacheWidth: 128,
+                  semanticLabel: item.name,
+                  errorBuilder: (_, _, _) =>
+                      _ShopCategoryMark(category: item.category, size: 27),
+                ),
+              )
+            : _ShopCategoryMark(category: item.category, size: 27),
+      ),
+    );
+  }
+}
+
+class _ShopCategoryMark extends StatelessWidget {
+  final String category;
+  final double size;
+
+  const _ShopCategoryMark({required this.category, required this.size});
+
+  @override
+  Widget build(BuildContext context) {
+    final artwork = _categoryArtwork(category);
+    if (artwork == null) {
+      return AppIcon(
+        _categoryIconName(category),
+        size: size,
+        fallback: _categoryFallbackIcon(category),
+      );
+    }
+    return Image.asset(
+      artwork,
+      width: size,
+      height: size,
+      fit: BoxFit.contain,
+      cacheWidth: (size * 4).round(),
+      excludeFromSemantics: true,
+      errorBuilder: (_, _, _) => AppIcon(
+        _categoryIconName(category),
+        size: size,
+        fallback: _categoryFallbackIcon(category),
       ),
     );
   }
@@ -966,7 +1031,7 @@ String _categoryIconName(String category) {
     'decor' || 'deco' || '装饰小物' => 'shop_deco',
     'food' || '特殊食粮' => 'shop_food',
     'toy' || '特殊玩具' => 'shop_toy',
-    'albumskin' || '明信片' => 'shop_albumskin',
+    'albumskin' || '明信片' || '相册与皮肤' => 'shop_albumskin',
     _ => 'shop_deco',
   };
 }
@@ -977,7 +1042,7 @@ IconData _categoryFallbackIcon(String category) {
     'decor' || 'deco' || '装饰小物' => Icons.yard_rounded,
     'food' || '特殊食粮' => Icons.restaurant_menu_rounded,
     'toy' || '特殊玩具' => Icons.sports_baseball_rounded,
-    'albumskin' || '明信片' => Icons.local_post_office_rounded,
+    'albumskin' || '明信片' || '相册与皮肤' => Icons.photo_album_rounded,
     _ => Icons.sell_rounded,
   };
 }
@@ -988,8 +1053,22 @@ Color _categoryColor(String category) {
     '装饰小物' => ShopScreen._green,
     '特殊食粮' => ShopScreen._accent,
     '特殊玩具' => const Color(0xFFD88F7A),
-    '明信片' => const Color(0xFFB6A3CF),
+    '明信片' || '相册与皮肤' => const Color(0xFFB6A3CF),
     _ => ShopScreen._accent,
+  };
+}
+
+bool _isBundledProductArt(String artRef) =>
+    artRef.startsWith('assets/runtime/shop/products/');
+
+String? _categoryArtwork(String category) {
+  return switch (category.trim().toLowerCase()) {
+    'food' || '特殊食粮' => 'assets/runtime/shop/products/shop_food_grain_bag.webp',
+    'toy' || '特殊玩具' => 'assets/runtime/shop/products/shop_toy_yarn_ball.webp',
+    'albumskin' ||
+    '明信片' ||
+    '相册与皮肤' => 'assets/runtime/shop/products/shop_album_paper.webp',
+    _ => null,
   };
 }
 

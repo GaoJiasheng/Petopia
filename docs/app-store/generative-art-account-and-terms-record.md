@@ -37,6 +37,14 @@
   源图位于 `assets/art/support-open/source/`，生产图位于
   `assets/art/support-open/`，验证图和逐帧数据位于
   `assets/art/qa/support-open/`；提交为 `9dd2b1a`。
+- 2026-08-22 的暖绒商店商品批次包括 8 份特餐、4 件玩具和 4 款相册封面，
+  通过同一 Codex 桌面工作区中的 OpenAI 图像生成能力定向生成。母图、逐项 brief
+  和无外部参考声明位于 `assets/art/shop/products/source/README.md`，运行时衍生
+  文件位于 `assets/runtime/shop/products/`。
+- 2026-08-22 的 8 份首页功能图标与洗澡互动按钮也通过同一 Codex 桌面工作区中的
+  OpenAI 图像生成能力定向生成。首页图标声明位于
+  `assets/art/source/home_menu/README.md`；互动按钮的生成与派生记录位于
+  `assets/art/qa/chroma_sources/action_control_refresh_20260822/README.md`。
 - 2026-08-22，发布人确认当前仓库之外没有为本候选包手工注入或替换未登记的美术、
   音频、字体或 SDK。
 

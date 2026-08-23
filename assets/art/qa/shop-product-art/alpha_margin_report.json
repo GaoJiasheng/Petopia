@@ -1,0 +1,341 @@
+{
+  "generated": "2026-08-22",
+  "assets": [
+    {
+      "asset": "assets/runtime/shop/products/shop_album_dried_flower.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        66,
+        83,
+        710,
+        686
+      ],
+      "marginsPx": [
+        66,
+        83,
+        58,
+        82
+      ],
+      "minimumMarginPx": 58
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_album_paper.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        81,
+        96,
+        679,
+        669
+      ],
+      "marginsPx": [
+        81,
+        96,
+        89,
+        99
+      ],
+      "minimumMarginPx": 81
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_album_picnic.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        63,
+        105,
+        698,
+        686
+      ],
+      "marginsPx": [
+        63,
+        105,
+        70,
+        82
+      ],
+      "minimumMarginPx": 63
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_album_star_chart.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        96,
+        87,
+        698,
+        674
+      ],
+      "marginsPx": [
+        96,
+        87,
+        70,
+        94
+      ],
+      "minimumMarginPx": 70
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_feed_bubble_soap.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        75,
+        122,
+        707,
+        648
+      ],
+      "marginsPx": [
+        75,
+        122,
+        61,
+        120
+      ],
+      "minimumMarginPx": 61
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_feed_honey_oat.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        69,
+        77,
+        705,
+        682
+      ],
+      "marginsPx": [
+        69,
+        77,
+        63,
+        86
+      ],
+      "minimumMarginPx": 63
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_feed_rainbow_jelly.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        62,
+        58,
+        706,
+        701
+      ],
+      "marginsPx": [
+        62,
+        58,
+        62,
+        67
+      ],
+      "minimumMarginPx": 58
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_feed_salmon_cookie.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        74,
+        78,
+        698,
+        691
+      ],
+      "marginsPx": [
+        74,
+        78,
+        70,
+        77
+      ],
+      "minimumMarginPx": 70
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_food_apple_slices.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        95,
+        72,
+        696,
+        687
+      ],
+      "marginsPx": [
+        95,
+        72,
+        72,
+        81
+      ],
+      "minimumMarginPx": 72
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_food_dried_fish.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        76,
+        66,
+        703,
+        700
+      ],
+      "marginsPx": [
+        76,
+        66,
+        65,
+        68
+      ],
+      "minimumMarginPx": 65
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_food_grain_bag.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        77,
+        79,
+        693,
+        686
+      ],
+      "marginsPx": [
+        77,
+        79,
+        75,
+        82
+      ],
+      "minimumMarginPx": 75
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_food_nut_jar.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        64,
+        78,
+        709,
+        698
+      ],
+      "marginsPx": [
+        64,
+        78,
+        59,
+        70
+      ],
+      "minimumMarginPx": 59
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_toy_cat_wand.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        84,
+        61,
+        693,
+        700
+      ],
+      "marginsPx": [
+        84,
+        61,
+        75,
+        68
+      ],
+      "minimumMarginPx": 61
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_toy_wind_up_duck.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        97,
+        93,
+        704,
+        668
+      ],
+      "marginsPx": [
+        97,
+        93,
+        64,
+        100
+      ],
+      "minimumMarginPx": 64
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_toy_wooden_disc.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        86,
+        80,
+        681,
+        648
+      ],
+      "marginsPx": [
+        86,
+        80,
+        87,
+        120
+      ],
+      "minimumMarginPx": 80
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_toy_yarn_ball.webp",
+      "size": [
+        768,
+        768
+      ],
+      "mode": "RGBA",
+      "alphaBounds": [
+        168,
+        82,
+        655,
+        649
+      ],
+      "marginsPx": [
+        168,
+        82,
+        113,
+        119
+      ],
+      "minimumMarginPx": 82
+    }
+  ]
+}

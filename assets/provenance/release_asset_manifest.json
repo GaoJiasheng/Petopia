@@ -1,15 +1,15 @@
 {
   "bytesByCategory": {
-    "art": 36610794,
+    "art": 36821557,
     "audio": 23934476,
-    "content-data": 401844,
-    "runtime-art": 81245592
+    "content-data": 402420,
+    "runtime-art": 83542858
   },
   "counts": {
-    "art": 236,
+    "art": 244,
     "audio": 59,
     "content-data": 10,
-    "runtime-art": 439
+    "runtime-art": 455
   },
   "declarations": {
     "generatedForPetopia": true,
@@ -613,27 +613,27 @@
     },
     {
       "asset": "assets/art/ui/ui_icon_act_bath.png",
-      "bytes": 10774,
+      "bytes": 11074,
       "category": "art",
-      "sha256": "dbcf90e5a2b333962912a75aa212c4ef208ba1a615e4be81e0906e43121e68ce"
+      "sha256": "7d1ee53105bc9373acbad3ed93105578866b33f3497189040483f24d509c8e69"
     },
     {
       "asset": "assets/art/ui/ui_icon_act_feed.png",
-      "bytes": 8884,
+      "bytes": 10645,
       "category": "art",
-      "sha256": "07dce56bd99abe4f290a6d619bc835b01cbcf375f8b3de06a9e365d9dbde7848"
+      "sha256": "770fe093fafb1b7c7191fc8381da2df15d383decf111e7e374f472dc978e832c"
     },
     {
       "asset": "assets/art/ui/ui_icon_act_pat.png",
-      "bytes": 7553,
+      "bytes": 6821,
       "category": "art",
-      "sha256": "0447dd2f454ac69891d0e7501090db146d344773ff1b7d81be4aac13df42cc20"
+      "sha256": "17ce19cfd39cd2f459ed0d1ec32a8b00e045b9fb5fc225f04601696c260b96ef"
     },
     {
       "asset": "assets/art/ui/ui_icon_act_toy.png",
-      "bytes": 9617,
+      "bytes": 8420,
       "category": "art",
-      "sha256": "883754bd97102180b2ab048407726928c0701ebc419099f5fbb0b72ea2af9d4e"
+      "sha256": "261711e51e311f6c66f1494d7d1fbc7dbd25576f33ee2e378819cac4661e484d"
     },
     {
       "asset": "assets/art/ui/ui_icon_food_apple.png",
@@ -664,6 +664,54 @@
       "bytes": 8475,
       "category": "art",
       "sha256": "2bd22c4312b62aa605af401996ad74d08db589c8509f58dac9e5b9fad9e676a9"
+    },
+    {
+      "asset": "assets/art/ui/ui_icon_home_achievements.png",
+      "bytes": 29263,
+      "category": "art",
+      "sha256": "dbcae3f6bfa79ee5fc4b17bc9e029df5edb8aafc11d4e695797d18b515dea03c"
+    },
+    {
+      "asset": "assets/art/ui/ui_icon_home_album.png",
+      "bytes": 30774,
+      "category": "art",
+      "sha256": "37bb2834f914742dc01b37d2e2b6f6290b9dc2e537fa7158428681ac71138e3b"
+    },
+    {
+      "asset": "assets/art/ui/ui_icon_home_decorate.png",
+      "bytes": 31690,
+      "category": "art",
+      "sha256": "28355b417f882937f104cc1c1d6053a1a8742ffd1b4e1c6270d84ba36219b5eb"
+    },
+    {
+      "asset": "assets/art/ui/ui_icon_home_journal.png",
+      "bytes": 9119,
+      "category": "art",
+      "sha256": "f1a943f674e8bfe04b375450d14a39e6c88ea848572bcce95996c52cb02ee189"
+    },
+    {
+      "asset": "assets/art/ui/ui_icon_home_petdex.png",
+      "bytes": 10149,
+      "category": "art",
+      "sha256": "d4c6f300a6c675e70298ac4c81f4a93c37306c1f9111a97b8c780723cf3592d5"
+    },
+    {
+      "asset": "assets/art/ui/ui_icon_home_settings.png",
+      "bytes": 32846,
+      "category": "art",
+      "sha256": "34c3740f122d093a0202a0b68ec187c8decd6ee8b8b2083a551eb7b89aa26b82"
+    },
+    {
+      "asset": "assets/art/ui/ui_icon_home_shop.png",
+      "bytes": 31555,
+      "category": "art",
+      "sha256": "146f1400db9398909aa91d49cd3842e2bb11a2f032f2505a08907de86bd5d619"
+    },
+    {
+      "asset": "assets/art/ui/ui_icon_home_visitordex.png",
+      "bytes": 35235,
+      "category": "art",
+      "sha256": "a7c069042b14c031768900df37e3c1201c207e605c11b8f445c72eaafee9d4bd"
     },
     {
       "asset": "assets/art/ui/ui_icon_nav_album.png",
@@ -1877,9 +1925,9 @@
     },
     {
       "asset": "assets/data/shop_items.json",
-      "bytes": 13905,
+      "bytes": 14481,
       "category": "content-data",
-      "sha256": "545aae98d304d96f88a11b01c33385c37636aa9cd858baad1b52782f36fe9213"
+      "sha256": "2a537cfe6b0f5928887530236e14538293a481901827ae91d0a486e4ee784e55"
     },
     {
       "asset": "assets/data/species.json",
@@ -5178,6 +5226,102 @@
       "sha256": "bb6027700d19092956c42d6c173af5b2fc2f95d59cd95d6d3da3e2d48215f971",
       "source": "assets/art/postcards/stickers/pc_sticker_wish_star.png",
       "sourceSha256": "d6c2d70ac3eb617e6704729b7088ce2896abbdb68c748078a3234f945abac62c"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_album_dried_flower.webp",
+      "bytes": 170502,
+      "category": "runtime-art",
+      "sha256": "7b2b70599fbb97ece0a3b9627334544b660d51b9882a770ea5b0db6d8f77eddc"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_album_paper.webp",
+      "bytes": 128384,
+      "category": "runtime-art",
+      "sha256": "d14a1fe40a1d8c50e6289d2e329a23f92a3b5e5abd8dcd6ac2e24c4c18b0e8d8"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_album_picnic.webp",
+      "bytes": 151570,
+      "category": "runtime-art",
+      "sha256": "ee6d528e3825a756ab3b134f56497e4ed2a37981fcbd7ae12323850e361b27e7"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_album_star_chart.webp",
+      "bytes": 149320,
+      "category": "runtime-art",
+      "sha256": "ba17078f8bed2eb1e591b28af9732f6fd11a61b237a5c5faedaea49182cc1bbf"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_feed_bubble_soap.webp",
+      "bytes": 119480,
+      "category": "runtime-art",
+      "sha256": "6331afd309db8af591a509f84cdd3d0f5404cb46a943f4c9d666ccdd2497723b"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_feed_honey_oat.webp",
+      "bytes": 186434,
+      "category": "runtime-art",
+      "sha256": "cd8b1899bad39110c0b80d4c23e0ea8d28e452738f00cadf9fda7bfa73235216"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_feed_rainbow_jelly.webp",
+      "bytes": 139034,
+      "category": "runtime-art",
+      "sha256": "1dd302a71f2afe64cd6d2c0d02d3cff9ec04b59ac6ef42c0f57490ad0d5b7909"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_feed_salmon_cookie.webp",
+      "bytes": 133554,
+      "category": "runtime-art",
+      "sha256": "621d246b6758a944adabdb96ae8dfafbdb77599bc11d6387cd46ea99ca29ea26"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_food_apple_slices.webp",
+      "bytes": 137834,
+      "category": "runtime-art",
+      "sha256": "2811a7f768166166c03250bbe07dc9ac8e975b9049b62cd2b3e23a44960c0f80"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_food_dried_fish.webp",
+      "bytes": 160876,
+      "category": "runtime-art",
+      "sha256": "1a8892355e9ea104c09a77198bf5130e11d38a2d62af29f46fadbb812e80aa41"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_food_grain_bag.webp",
+      "bytes": 173096,
+      "category": "runtime-art",
+      "sha256": "7e1cd74097436ac7d61a1492ace8e8272eb405b27d6bc5a2ed9904f995bd02b7"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_food_nut_jar.webp",
+      "bytes": 151174,
+      "category": "runtime-art",
+      "sha256": "c416aebc87007f057545b07e29b6f8f2696d0a5b8d096838f0ae7fa4663ce0e5"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_toy_cat_wand.webp",
+      "bytes": 116140,
+      "category": "runtime-art",
+      "sha256": "92887065e362f43b38c9883ad966f882b879e443efb7c8541be396edb5f489a3"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_toy_wind_up_duck.webp",
+      "bytes": 114652,
+      "category": "runtime-art",
+      "sha256": "3b73daca2f1bff25bf6d4d00419deab6bd8abf2ef3fc72e512a1a5074b93d802"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_toy_wooden_disc.webp",
+      "bytes": 139030,
+      "category": "runtime-art",
+      "sha256": "987365b6cbf60d729bcbc0972213e4addb6820ec6a1a97e3bdd7a566abbb88ce"
+    },
+    {
+      "asset": "assets/runtime/shop/products/shop_toy_yarn_ball.webp",
+      "bytes": 126186,
+      "category": "runtime-art",
+      "sha256": "f1ed01e9008321f1ae0b6f885dcd96d39da7b9c06bffff87e18bf90724c4430c"
     },
     {
       "asset": "assets/runtime/support/support_bouquet.webp",
