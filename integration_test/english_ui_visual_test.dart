@@ -50,6 +50,10 @@ const _visualLanguage = String.fromEnvironment(
   defaultValue: 'en',
 );
 const _visualLandscape = bool.fromEnvironment('PETOPIA_VISUAL_LANDSCAPE');
+const _visualShopOnly = bool.fromEnvironment('PETOPIA_VISUAL_SHOP_ONLY');
+const _visualSettingsOnly = bool.fromEnvironment(
+  'PETOPIA_VISUAL_SETTINGS_ONLY',
+);
 const _visualTextScaleSource = String.fromEnvironment(
   'PETOPIA_VISUAL_TEXT_SCALE',
   defaultValue: '1.0',
@@ -545,7 +549,7 @@ class _VisualController extends GameController {
       id: 'shop_feed_salmon_cookie',
       name: '三文鱼小饼干 ×5',
       category: '特殊食粮',
-      artRef: 'ui_shop_salmon_cookie',
+      artRef: 'assets/runtime/shop/products/shop_feed_salmon_cookie.webp',
       effectType: EffectType.feedBonus,
       effectSummary: '下一次使用时，经验提升至 6 点',
       price: 80,
@@ -558,7 +562,7 @@ class _VisualController extends GameController {
       id: 'shop_toy_yarn_ball',
       name: '会咕咕叫的毛线球',
       category: '特殊玩具',
-      artRef: 'ui_shop_yarn_ball',
+      artRef: 'assets/runtime/shop/products/shop_toy_yarn_ball.webp',
       effectType: EffectType.toyPermanentBonus,
       effectSummary: '永久拥有，玩耍经验提升至 6 点',
       price: 200,
@@ -571,7 +575,7 @@ class _VisualController extends GameController {
       id: 'shop_album_paper',
       name: '相册皮肤·牛皮纸',
       category: '相册与皮肤',
-      artRef: 'ui_shop_paper',
+      artRef: 'assets/runtime/shop/products/shop_album_paper.webp',
       effectType: EffectType.albumSkin,
       effectSummary: '更换相册纸张与收藏页的整体气氛',
       price: 150,
@@ -885,6 +889,50 @@ void main() {
       expect(tester.takeException(), isNull, reason: '$name has a UI error');
     }
 
+    Future<void> captureShop() async {
+      await show('shop', const ShopScreen());
+      await captureLastScrollAt('shop-themes-middle-1', 0.34);
+      await captureLastScrollAt('shop-themes-middle-2', 0.67);
+      await captureLastScrollAt('shop-themes-bottom', 1);
+      final logicalWidth =
+          tester.view.physicalSize.width / tester.view.devicePixelRatio;
+      if (logicalWidth < 820) return;
+      for (final category in const <(String, String, String)>[
+        ('Garden Themes', '院子主题', 'shop-category-themes'),
+        ('Decor', '装饰小物', 'shop-category-decor'),
+        ('Special Treats', '特殊食粮', 'shop-category-treats'),
+        ('Special Toys', '特殊玩具', 'shop-category-toys'),
+        ('Albums & Covers', '相册与皮肤', 'shop-category-albums'),
+      ]) {
+        final label = _localizedLabel(en: category.$1, zhHans: category.$2);
+        final labelFinder = find.text(label);
+        expect(labelFinder, findsWidgets, reason: '${category.$3} is missing');
+        await tester.tap(labelFinder.first);
+        await tester.pump(const Duration(milliseconds: 350));
+        _expectNoVisibleHanText(tester, category.$3);
+        await _captureVisual(tester, category.$3);
+        expect(
+          tester.takeException(),
+          isNull,
+          reason: '${category.$3} has a UI error',
+        );
+      }
+    }
+
+    if (_visualShopOnly) {
+      await captureShop();
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump(const Duration(milliseconds: 300));
+      return;
+    }
+
+    if (_visualSettingsOnly) {
+      await show('settings-top', const SettingsScreen());
+      await tester.pumpWidget(const SizedBox.shrink());
+      await tester.pump(const Duration(milliseconds: 300));
+      return;
+    }
+
     await show('yard', const YardHomeScreen(enableCooldownRefresh: false));
     await show(
       'event-dialog',
@@ -927,34 +975,7 @@ void main() {
     await show('visitor-compendium', const VisitorDexScreen());
     await captureScrollEnd('visitor-compendium-bottom');
     await show('achievements', const AchievementsScreen());
-    await show('shop', const ShopScreen());
-    await captureLastScrollAt('shop-themes-middle-1', 0.34);
-    await captureLastScrollAt('shop-themes-middle-2', 0.67);
-    await captureLastScrollAt('shop-themes-bottom', 1);
-    final logicalWidth =
-        tester.view.physicalSize.width / tester.view.devicePixelRatio;
-    if (logicalWidth >= 820) {
-      for (final category in const <(String, String, String)>[
-        ('Garden Themes', '院子主题', 'shop-category-themes'),
-        ('Decor', '装饰小物', 'shop-category-decor'),
-        ('Special Treats', '特殊食粮', 'shop-category-treats'),
-        ('Special Toys', '特殊玩具', 'shop-category-toys'),
-        ('Albums & Covers', '相册与皮肤', 'shop-category-albums'),
-      ]) {
-        final label = _localizedLabel(en: category.$1, zhHans: category.$2);
-        final labelFinder = find.text(label);
-        expect(labelFinder, findsWidgets, reason: '${category.$3} is missing');
-        await tester.tap(labelFinder.first);
-        await tester.pump(const Duration(milliseconds: 350));
-        _expectNoVisibleHanText(tester, category.$3);
-        await _captureVisual(tester, category.$3);
-        expect(
-          tester.takeException(),
-          isNull,
-          reason: '${category.$3} has a UI error',
-        );
-      }
-    }
+    await captureShop();
 
     await show('settings-top', const SettingsScreen());
     await tester.scrollUntilVisible(
@@ -1033,7 +1054,7 @@ Future<void> _captureVisual(WidgetTester tester, String name) async {
 
 void _expectNoVisibleHanText(WidgetTester tester, String screen) {
   if (!_visualEnglish) return;
-  const intentionalNativeLanguageLabels = <String>{'简中'};
+  const intentionalNativeLanguageLabels = <String>{'简体', '繁體'};
   final untranslated = <String>{};
   for (final text in tester.widgetList<Text>(find.byType(Text))) {
     final value = text.data ?? text.textSpan?.toPlainText() ?? '';

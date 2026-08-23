@@ -653,27 +653,26 @@ class _LanguageCard extends StatelessWidget {
           children: [
             SegmentedButton<AppLanguage>(
               showSelectedIcon: false,
-              segments: const <ButtonSegment<AppLanguage>>[
-                ButtonSegment(
+              segments: <ButtonSegment<AppLanguage>>[
+                const ButtonSegment(
                   value: AppLanguage.system,
-                  icon: Icon(Icons.phone_iphone_rounded),
                   label: AppText('系统'),
                 ),
                 ButtonSegment(
                   value: AppLanguage.zhHans,
-                  icon: Icon(Icons.translate_rounded),
-                  label: AppText('简中'),
+                  label: Semantics(
+                    label: context.tr('简体中文'),
+                    child: const ExcludeSemantics(child: Text('简体')),
+                  ),
                 ),
                 ButtonSegment(
                   value: AppLanguage.zhHant,
-                  icon: Icon(Icons.translate_rounded),
-                  label: AppText('繁中'),
+                  label: Semantics(
+                    label: context.tr('繁体中文'),
+                    child: const ExcludeSemantics(child: Text('繁體')),
+                  ),
                 ),
-                ButtonSegment(
-                  value: AppLanguage.en,
-                  icon: Icon(Icons.language_rounded),
-                  label: AppText('EN'),
-                ),
+                const ButtonSegment(value: AppLanguage.en, label: Text('EN')),
               ],
               selected: <AppLanguage>{value},
               onSelectionChanged: (selected) => onChanged(selected.first),

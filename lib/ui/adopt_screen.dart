@@ -29,6 +29,7 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen>
 
   String? _selectedId;
   final _nameCtrl = TextEditingController();
+  bool _nameWasManuallyEdited = false;
   bool _adopting = false;
 
   @override
@@ -127,7 +128,7 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen>
                     onTap: () {
                       setState(() {
                         _selectedId = c.speciesId;
-                        if (_nameCtrl.text.trim().isEmpty) {
+                        if (!_nameWasManuallyEdited) {
                           _nameCtrl.text = c.name;
                           _nameCtrl.selection = TextSelection(
                             baseOffset: 0,
@@ -169,6 +170,7 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen>
                               enabled: _selectedId != null && !_adopting,
                               adopting: _adopting,
                               onConfirm: _confirm,
+                              onNameChanged: _markNameAsManuallyEdited,
                               grouped: true,
                             ),
                           ),
@@ -191,6 +193,7 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen>
                       enabled: _selectedId != null && !_adopting,
                       adopting: _adopting,
                       onConfirm: _confirm,
+                      onNameChanged: _markNameAsManuallyEdited,
                     ),
                   ],
                 ),
@@ -200,6 +203,11 @@ class _AdoptScreenState extends ConsumerState<AdoptScreen>
         ),
       ),
     );
+  }
+
+  void _markNameAsManuallyEdited(String _) {
+    if (_nameWasManuallyEdited) return;
+    setState(() => _nameWasManuallyEdited = true);
   }
 }
 
@@ -294,12 +302,14 @@ class _NameAndConfirm extends StatelessWidget {
   final bool enabled;
   final bool adopting;
   final VoidCallback onConfirm;
+  final ValueChanged<String> onNameChanged;
   final bool grouped;
   const _NameAndConfirm({
     required this.controller,
     required this.enabled,
     required this.adopting,
     required this.onConfirm,
+    required this.onNameChanged,
     this.grouped = false,
   });
 
@@ -340,10 +350,12 @@ class _NameAndConfirm extends StatelessWidget {
         builder: (context, constraints) {
           final stackControls = largeText || constraints.maxWidth < 360;
           final field = TextField(
+            key: const ValueKey<String>('adopt_name'),
             controller: controller,
             maxLength: 12,
             enabled: enabled || adopting,
             textInputAction: TextInputAction.done,
+            onChanged: onNameChanged,
             onSubmitted: enabled ? (_) => onConfirm() : null,
             decoration: InputDecoration(
               labelText: context.tr('伙伴名字'),

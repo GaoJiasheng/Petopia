@@ -104,8 +104,8 @@ class _VisitorDexGrid extends StatelessWidget {
                 : width >= 600
                 ? (english ? (enlargedText ? 0.64 : 0.68) : 0.74)
                 : english
-                ? (enlargedText ? 0.48 : 0.52)
-                : 0.62;
+                ? (enlargedText ? 0.43 : 0.46)
+                : 0.55;
             final margin = PetopiaAdaptive.sideMargin(context);
             return CustomScrollView(
               slivers: [
@@ -770,11 +770,12 @@ class _VisitorMark extends StatelessWidget {
         : Icon(Icons.question_mark_rounded, color: color, size: 40);
 
     return Container(
-      width: 76,
-      height: 76,
+      key: ValueKey('visitor_dex_mark_$id'),
+      width: 112,
+      height: 112,
       decoration: BoxDecoration(
         color: color.withValues(alpha: collected ? 0.20 : 0.13),
-        borderRadius: BorderRadius.circular(collected ? 26 : 38),
+        borderRadius: BorderRadius.circular(collected ? 32 : 56),
         border: Border.all(
           color: collected
               ? color.withValues(alpha: 0.40)
@@ -784,13 +785,13 @@ class _VisitorMark extends StatelessWidget {
       ),
       child: collected
           ? Padding(
-              padding: const EdgeInsets.all(2),
+              padding: const EdgeInsets.all(3),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(28),
                 child: Image.asset(
                   visitorArtAsset(id, 'portrait'),
                   fit: BoxFit.contain,
-                  cacheWidth: 220,
+                  cacheWidth: 320,
                   errorBuilder: (_, _, _) => icon,
                 ),
               ),

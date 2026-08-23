@@ -1616,20 +1616,17 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
             ],
           ),
           const SizedBox(height: 12),
-          Container(
-            width: 132,
-            height: 132,
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFFF1DF),
-              borderRadius: BorderRadius.circular(30),
-            ),
+          SizedBox(
+            key: const ValueKey<String>('visitor_arrival_portrait'),
+            width: 190,
+            height: 190,
             child: Image.asset(
               visitor.portraitAsset,
               fit: BoxFit.contain,
+              filterQuality: FilterQuality.high,
               errorBuilder: (_, _, _) => const AppIcon(
                 'ach_visitor',
-                size: 56,
+                size: 72,
                 fallback: Icons.emoji_nature_rounded,
               ),
             ),
@@ -2304,7 +2301,7 @@ class _YardDecor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final crop = _decorCrop(decorId);
+    final crop = YardArt.decorCrop(decorId);
     // Subject aspect ratio: how tall the cropped subject is per unit of width.
     final subjectAspect =
         crop.canvasAspectRatio * crop.heightFraction / crop.widthFraction;
@@ -2821,112 +2818,6 @@ class _DecorAnchor {
   const _DecorAnchor(this.align, this.width);
 }
 
-class _DecorCrop {
-  final double canvasAspectRatio;
-  final double left;
-  final double top;
-  final double right;
-  final double bottom;
-
-  const _DecorCrop({
-    this.canvasAspectRatio = 1,
-    this.left = 0,
-    this.top = 0,
-    this.right = 1,
-    this.bottom = 1,
-  });
-
-  double get widthFraction => right - left;
-  double get heightFraction => bottom - top;
-}
-
-// The source PNGs intentionally carry transparent safety margins. Yard layout
-// works from the painted footprint so a tall vane, shallow bowl and square
-// flower box can each keep a natural visual size without colliding because of
-// invisible canvas pixels.
-_DecorCrop _decorCrop(String decorId) => switch (decorId) {
-  'mailbox_wood' => const _DecorCrop(
-    left: 18 / 256,
-    top: 18 / 256,
-    right: 237 / 256,
-    bottom: 248 / 256,
-  ),
-  'food_bowl_full' => const _DecorCrop(
-    left: 19 / 256,
-    top: 69 / 256,
-    right: 237 / 256,
-    bottom: 248 / 256,
-  ),
-  'flowerbed_small' => const _DecorCrop(
-    left: 13 / 256,
-    top: 114 / 256,
-    right: 243 / 256,
-    bottom: 248 / 256,
-  ),
-  'water_bowl' => const _DecorCrop(
-    left: 20 / 256,
-    top: 81 / 256,
-    right: 236 / 256,
-    bottom: 248 / 256,
-  ),
-  'night_light' => const _DecorCrop(
-    left: 40 / 256,
-    top: 18 / 256,
-    right: 215 / 256,
-    bottom: 248 / 256,
-  ),
-  'fireplace' => const _DecorCrop(
-    left: 65 / 256,
-    top: 18 / 256,
-    right: 187 / 256,
-    bottom: 210 / 256,
-  ),
-  'wind_chime' => const _DecorCrop(
-    canvasAspectRatio: 2,
-    left: 10 / 256,
-    top: 12 / 512,
-    right: 246 / 256,
-    bottom: 499 / 512,
-  ),
-  'flower_box' => const _DecorCrop(top: 35 / 256, right: 226 / 256),
-  'mushroom_bench' => const _DecorCrop(top: 46 / 256),
-  'scarecrow' => const _DecorCrop(
-    canvasAspectRatio: 2,
-    left: 13 / 256,
-    top: 100 / 512,
-    right: 243 / 256,
-    bottom: 385 / 512,
-  ),
-  'wind_vane' => const _DecorCrop(
-    canvasAspectRatio: 2,
-    left: 18 / 256,
-    top: 48 / 512,
-    right: 238 / 256,
-    bottom: 462 / 512,
-  ),
-  'wood_sign' => const _DecorCrop(
-    canvasAspectRatio: 2,
-    left: 13 / 256,
-    top: 261 / 512,
-    right: 243 / 256,
-    bottom: 504 / 512,
-  ),
-  'pond_small' => const _DecorCrop(
-    canvasAspectRatio: 384 / 512,
-    left: 110 / 512,
-    top: 94 / 384,
-    right: 401 / 512,
-    bottom: 330 / 384,
-  ),
-  'album_shelf' => const _DecorCrop(
-    left: 13 / 256,
-    top: 21 / 256,
-    right: 243 / 256,
-    bottom: 248 / 256,
-  ),
-  _ => const _DecorCrop(),
-};
-
 class _VisibleDecor {
   final String decorId;
   final _DecorAnchor anchor;
@@ -2941,76 +2832,76 @@ class _VisibleDecor {
 // the lawn read as two shelves flanking an empty corridor, so each side keeps
 // its own depth rhythm and the near row is allowed to step inward.
 const _compactDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.84, 0.05), 56),
-  1: _DecorAnchor(Alignment(0.82, 0.17), 58),
-  2: _DecorAnchor(Alignment(-0.88, 0.40), 64),
-  3: _DecorAnchor(Alignment(0.86, 0.37), 66),
-  4: _DecorAnchor(Alignment(-0.80, 0.68), 72),
-  5: _DecorAnchor(Alignment(0.78, 0.67), 74),
+  0: _DecorAnchor(Alignment(-0.84, 0.05), 62),
+  1: _DecorAnchor(Alignment(0.82, 0.17), 64),
+  2: _DecorAnchor(Alignment(-0.94, 0.40), 66),
+  3: _DecorAnchor(Alignment(0.86, 0.37), 72),
+  4: _DecorAnchor(Alignment(-0.92, 0.68), 79),
+  5: _DecorAnchor(Alignment(0.90, 0.67), 81),
   // 后排：宠物下移后腾出的远景地面，可以靠近中线，但基线必须高于宠物顶边。
-  6: _DecorAnchor(Alignment(-0.30, 0.04), 50),
-  7: _DecorAnchor(Alignment(0.32, 0.07), 52),
+  6: _DecorAnchor(Alignment(-0.30, 0.04), 56),
+  7: _DecorAnchor(Alignment(0.32, 0.07), 58),
 };
 
 const _wideDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.84, 0.02), 54),
-  1: _DecorAnchor(Alignment(0.82, 0.16), 56),
-  2: _DecorAnchor(Alignment(-0.88, 0.40), 62),
-  3: _DecorAnchor(Alignment(0.86, 0.38), 64),
-  4: _DecorAnchor(Alignment(-0.80, 0.72), 70),
-  5: _DecorAnchor(Alignment(0.78, 0.76), 72),
-  6: _DecorAnchor(Alignment(-0.30, 0.01), 48),
-  7: _DecorAnchor(Alignment(0.32, 0.04), 50),
+  0: _DecorAnchor(Alignment(-0.84, 0.02), 60),
+  1: _DecorAnchor(Alignment(0.82, 0.16), 62),
+  2: _DecorAnchor(Alignment(-0.94, 0.40), 64),
+  3: _DecorAnchor(Alignment(0.86, 0.38), 70),
+  4: _DecorAnchor(Alignment(-0.92, 0.72), 77),
+  5: _DecorAnchor(Alignment(0.90, 0.76), 79),
+  6: _DecorAnchor(Alignment(-0.30, 0.01), 54),
+  7: _DecorAnchor(Alignment(0.32, 0.04), 56),
 };
 
 const _tabletPortraitDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.84, 0.03), 46),
-  1: _DecorAnchor(Alignment(0.82, 0.16), 48),
-  2: _DecorAnchor(Alignment(-0.88, 0.40), 53),
-  3: _DecorAnchor(Alignment(0.86, 0.38), 55),
-  4: _DecorAnchor(Alignment(-0.80, 0.72), 60),
-  5: _DecorAnchor(Alignment(0.78, 0.76), 61),
-  6: _DecorAnchor(Alignment(-0.30, 0.02), 42),
-  7: _DecorAnchor(Alignment(0.32, 0.05), 44),
+  0: _DecorAnchor(Alignment(-0.84, 0.03), 52),
+  1: _DecorAnchor(Alignment(0.82, 0.12), 54),
+  2: _DecorAnchor(Alignment(-0.94, 0.40), 56),
+  3: _DecorAnchor(Alignment(0.86, 0.38), 61),
+  4: _DecorAnchor(Alignment(-0.92, 0.72), 67),
+  5: _DecorAnchor(Alignment(0.90, 0.76), 68),
+  6: _DecorAnchor(Alignment(-0.30, 0.02), 47),
+  7: _DecorAnchor(Alignment(0.32, 0.05), 49),
 };
 
 // When both social actors are present, the outer pair drops below their feet
 // while the center pair stays in the rear lawn. This leaves the shallow
 // foreground to the pet's two bowls instead of forming another prop row.
 const _compactDualActorDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.84, 0.56), 62),
-  1: _DecorAnchor(Alignment(0.84, 0.58), 64),
-  6: _DecorAnchor(Alignment(-0.30, 0.04), 54),
-  7: _DecorAnchor(Alignment(0.32, 0.08), 56),
+  0: _DecorAnchor(Alignment(-0.84, 0.56), 68),
+  1: _DecorAnchor(Alignment(0.84, 0.58), 70),
+  6: _DecorAnchor(Alignment(-0.30, 0.04), 60),
+  7: _DecorAnchor(Alignment(0.32, 0.08), 62),
 };
 
 const _tabletDualActorDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.84, 0.56), 52),
-  1: _DecorAnchor(Alignment(0.84, 0.58), 54),
-  6: _DecorAnchor(Alignment(-0.30, 0.03), 46),
-  7: _DecorAnchor(Alignment(0.32, 0.07), 48),
+  0: _DecorAnchor(Alignment(-0.84, 0.56), 58),
+  1: _DecorAnchor(Alignment(0.84, 0.58), 60),
+  6: _DecorAnchor(Alignment(-0.30, 0.03), 51),
+  7: _DecorAnchor(Alignment(0.32, 0.07), 53),
 };
 
 const _wideDualActorDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.84, 0.56), 60),
-  1: _DecorAnchor(Alignment(0.84, 0.58), 62),
-  6: _DecorAnchor(Alignment(-0.30, 0.02), 52),
-  7: _DecorAnchor(Alignment(0.32, 0.06), 54),
+  0: _DecorAnchor(Alignment(-0.84, 0.56), 66),
+  1: _DecorAnchor(Alignment(0.84, 0.58), 68),
+  6: _DecorAnchor(Alignment(-0.30, 0.02), 58),
+  7: _DecorAnchor(Alignment(0.32, 0.06), 60),
 };
 
 const _compactUtilityAnchors = <String, _DecorAnchor>{
-  'food_bowl_full': _DecorAnchor(Alignment(-0.18, 0.59), 50),
-  'water_bowl': _DecorAnchor(Alignment(0.19, 0.64), 50),
+  'food_bowl_full': _DecorAnchor(Alignment(-0.14, 0.50), 54),
+  'water_bowl': _DecorAnchor(Alignment(0.15, 0.50), 54),
 };
 
 const _tabletPortraitUtilityAnchors = <String, _DecorAnchor>{
-  'food_bowl_full': _DecorAnchor(Alignment(-0.17, 0.60), 50),
-  'water_bowl': _DecorAnchor(Alignment(0.18, 0.65), 50),
+  'food_bowl_full': _DecorAnchor(Alignment(-0.14, 0.51), 54),
+  'water_bowl': _DecorAnchor(Alignment(0.15, 0.51), 54),
 };
 
 const _wideUtilityAnchors = <String, _DecorAnchor>{
-  'food_bowl_full': _DecorAnchor(Alignment(-0.17, 0.59), 58),
-  'water_bowl': _DecorAnchor(Alignment(0.18, 0.64), 58),
+  'food_bowl_full': _DecorAnchor(Alignment(-0.14, 0.49), 62),
+  'water_bowl': _DecorAnchor(Alignment(0.15, 0.49), 62),
 };
 
 List<_VisibleDecor> _fixedYardUtilities({
@@ -3686,49 +3577,49 @@ const _homeMenuItems =
     >[
       (
         target: _HomeMenuTarget.journal,
-        iconName: 'nav_menu',
+        iconName: 'home_journal',
         fallback: Icons.auto_stories_rounded,
         label: '成长手账',
       ),
       (
         target: _HomeMenuTarget.album,
-        iconName: 'nav_album',
+        iconName: 'home_album',
         fallback: Icons.photo_album_rounded,
         label: '相册',
       ),
       (
         target: _HomeMenuTarget.dex,
-        iconName: 'nav_codex',
+        iconName: 'home_petdex',
         fallback: Icons.pets_rounded,
         label: '宠物图鉴',
       ),
       (
         target: _HomeMenuTarget.visitorDex,
-        iconName: 'ach_visitor',
+        iconName: 'home_visitordex',
         fallback: Icons.people_alt_rounded,
         label: '来客图鉴',
       ),
       (
         target: _HomeMenuTarget.achievements,
-        iconName: 'ach_firstgrad',
+        iconName: 'home_achievements',
         fallback: Icons.emoji_events_rounded,
         label: '成就',
       ),
       (
         target: _HomeMenuTarget.shop,
-        iconName: 'nav_shop',
+        iconName: 'home_shop',
         fallback: Icons.storefront_rounded,
         label: '商店',
       ),
       (
         target: _HomeMenuTarget.decorate,
-        iconName: 'shop_deco',
+        iconName: 'home_decorate',
         fallback: Icons.yard_rounded,
         label: '院子布置',
       ),
       (
         target: _HomeMenuTarget.settings,
-        iconName: 'set_save',
+        iconName: 'home_settings',
         fallback: Icons.settings_rounded,
         label: '设置',
       ),
@@ -4343,8 +4234,8 @@ class _HomeFeatureTile extends StatelessWidget {
             ),
             child: Row(
               children: [
-                AppIcon(item.iconName, size: 27, fallback: item.fallback),
-                const SizedBox(width: 9),
+                AppIcon(item.iconName, size: 44, fallback: item.fallback),
+                const SizedBox(width: 11),
                 Expanded(
                   child: AppText(
                     item.label,
@@ -4352,8 +4243,9 @@ class _HomeFeatureTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Color(0xFF6B5445),
-                      fontSize: 12,
+                      fontSize: 16,
                       fontWeight: FontWeight.w800,
+                      height: 1.15,
                     ),
                   ),
                 ),

@@ -101,7 +101,7 @@ class _DexGrid extends StatelessWidget {
                 : PetopiaAdaptive.postcardGridColumns(width);
             final tileHeight = largeText
                 ? 520.0
-                : (width >= 1100 ? 264.0 : (width >= 600 ? 278.0 : 300.0));
+                : (width >= 1100 ? 288.0 : 300.0);
             final margin = PetopiaAdaptive.sideMargin(context);
             return CustomScrollView(
               slivers: [
@@ -293,8 +293,9 @@ class _DexMark extends StatelessWidget {
   Widget build(BuildContext context) {
     if (lockedHidden) {
       return Container(
-        width: 86,
-        height: 86,
+        key: ValueKey('pet_dex_mark_${entry.speciesId}'),
+        width: 112,
+        height: 112,
         decoration: BoxDecoration(
           color: const Color(0xFFE6DFD0),
           shape: BoxShape.circle,
@@ -318,11 +319,12 @@ class _DexMark extends StatelessWidget {
     }
 
     return Container(
-      width: 90,
-      height: 90,
+      key: ValueKey('pet_dex_mark_${entry.speciesId}'),
+      width: 112,
+      height: 112,
       decoration: BoxDecoration(
         color: accent.withValues(alpha: lockedKnown ? 0.12 : 0.20),
-        borderRadius: BorderRadius.circular(28),
+        borderRadius: BorderRadius.circular(32),
         border: Border.all(
           color: lockedKnown
               ? PetDexScreen._line
@@ -337,7 +339,7 @@ class _DexMark extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(2),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(24),
+                borderRadius: BorderRadius.circular(28),
                 child: Image.asset(
                   _assetFor(entry),
                   fit: BoxFit.contain,

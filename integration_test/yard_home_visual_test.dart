@@ -254,6 +254,21 @@ VisitorPresenceView _visitor() {
   );
 }
 
+VisitorPresenceView _arrivalVisitor() {
+  return VisitorPresenceView(
+    id: 'visitor_fox',
+    name: '狐狸小茜',
+    rarity: VisitorRarity.rare,
+    message: '小茜三招骗到了仓鼠一粒瓜子，第四招时良心发作，偷偷还回去三粒。',
+    arrivedAt: DateTime.utc(2026, 8, 22),
+    leavesAt: DateTime.utc(2026, 8, 23),
+    arrivalSeen: false,
+    interacted: true,
+    yardAsset: 'assets/art/world/visitors/visitor_fox_yard.png',
+    portraitAsset: 'assets/art/world/visitors/visitor_fox_portrait.png',
+  );
+}
+
 VisitorPresenceView _placementVisitor({required bool rightLane}) {
   final id = rightLane ? 'visitor_butterfly' : 'visitor_deer';
   return VisitorPresenceView(
@@ -478,6 +493,7 @@ GameView _view({
     activeThemeId: theme,
     decorSlots: decorSlots,
     activeVisitor: visitor,
+    visitorArrival: visitor != null && !visitor.arrivalSeen ? visitor : null,
     revisitor: revisitor,
     pendingEvent: pendingEvent,
     weather: Weather.clear,
@@ -790,6 +806,10 @@ void main() {
         ),
       ),
       (
+        name: 'visitor-arrival',
+        view: _view(visitor: _arrivalVisitor(), careContented: true),
+      ),
+      (
         name: 'special-event',
         view: _view(
           theme: 'starry_camp',
@@ -1003,6 +1023,13 @@ void main() {
     for (final scenario in scenarios) {
       await _pumpScenario(tester, scenario.view);
       expect(tester.takeException(), isNull, reason: scenario.name);
+      if (scenario.name == 'visitor-arrival') {
+        final portrait = find.byKey(
+          const ValueKey<String>('visitor_arrival_portrait'),
+        );
+        expect(portrait, findsOneWidget);
+        expect(tester.getSize(portrait), const Size.square(190));
+      }
       if (_catalogMode == 'actions') {
         final action = scenario.name.split('-').last;
         final buttonAction = switch (action) {

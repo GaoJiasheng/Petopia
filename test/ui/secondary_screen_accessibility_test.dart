@@ -228,6 +228,20 @@ class _FixtureController extends GameController {
       affordable: true,
       consumable: true,
     ),
+    ShopItemView(
+      id: 'decor_scarecrow_test',
+      name: '稻草人邮差',
+      category: '摆件',
+      artRef: '',
+      effectType: EffectType.decor,
+      effectSummary: '可摆进院子，也可能吸引特别来客。',
+      price: 130,
+      originalPrice: 130,
+      owned: true,
+      affordable: true,
+      consumable: false,
+      decorId: 'scarecrow',
+    ),
   ];
 
   @override
@@ -525,5 +539,51 @@ void main() {
     expect(find.bySemanticsLabel('灯塔海湾的旅行风景'), findsOneWidget);
 
     semantics.dispose();
+  });
+
+  testWidgets('collection and shop artwork keeps a strong focal size', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      size: const Size(393, 852),
+      screen: const PetDexScreen(),
+      textScaleFactor: 1,
+    );
+    expect(
+      tester.getSize(find.byKey(const ValueKey('pet_dex_mark_pet_rabbit'))),
+      const Size.square(112),
+    );
+
+    await _pump(
+      tester,
+      size: const Size(393, 852),
+      screen: const VisitorDexScreen(),
+      textScaleFactor: 1,
+    );
+    expect(
+      tester.getSize(
+        find.byKey(const ValueKey('visitor_dex_mark_visitor_calico')),
+      ),
+      const Size.square(112),
+    );
+
+    await _pump(
+      tester,
+      size: const Size(393, 852),
+      screen: const ShopScreen(),
+      textScaleFactor: 1,
+    );
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('shop_decor_subject_scarecrow')),
+      320,
+      scrollable: find.byType(Scrollable).first,
+    );
+    final decorSize = tester.getSize(
+      find.byKey(const ValueKey('shop_decor_subject_scarecrow')),
+    );
+    expect(decorSize.height, greaterThanOrEqualTo(96));
+    expect(decorSize.width, greaterThan(70));
+    expect(tester.takeException(), isNull);
   });
 }
