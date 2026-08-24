@@ -16,6 +16,7 @@ import 'package:petopia/domain/enums.dart';
 import 'package:petopia/domain/models/logs.dart';
 import 'package:petopia/l10n/english_narrative.dart';
 import 'package:petopia/l10n/petopia_localizations.dart';
+import 'package:petopia/l10n/traditional_copy.dart';
 import 'package:petopia/purchases/support_benefits.dart';
 import 'package:petopia/purchases/support_catalog.dart';
 import 'package:petopia/purchases/support_purchase_controller.dart';
@@ -59,13 +60,18 @@ const _visualTextScaleSource = String.fromEnvironment(
   defaultValue: '1.0',
 );
 const _visualEnglish = _visualLanguage == 'en';
+const _visualTraditional = _visualLanguage == 'zh-Hant';
 final _visualTextScale = double.tryParse(_visualTextScaleSource) ?? 1.0;
 const _captureBoundaryKey = ValueKey<String>(
   'english_ui_visual_capture_boundary',
 );
 
 String _localizedLabel({required String en, required String zhHans}) =>
-    _visualEnglish ? en : zhHans;
+    _visualEnglish
+    ? en
+    : _visualTraditional
+    ? TraditionalCopy.translateKnown(zhHans)
+    : zhHans;
 
 class _SilentAudio implements AudioService {
   @override
@@ -224,7 +230,11 @@ class _VisualController extends GameController {
         createdAt: DateTime.utc(2026, 7, 27),
       ),
     ],
-    appLanguage: _visualEnglish ? AppLanguage.en : AppLanguage.zhHans,
+    appLanguage: _visualEnglish
+        ? AppLanguage.en
+        : _visualTraditional
+        ? AppLanguage.zhHant
+        : AppLanguage.zhHans,
   );
 
   @override
@@ -707,7 +717,11 @@ class _EnglishEventController extends _VisualController {
     todayYard: _VisualController.fixture.todayYard,
     preferredCareAction: _VisualController.fixture.preferredCareAction,
     recentMemories: _VisualController.fixture.recentMemories,
-    appLanguage: _visualEnglish ? AppLanguage.en : AppLanguage.zhHans,
+    appLanguage: _visualEnglish
+        ? AppLanguage.en
+        : _visualTraditional
+        ? AppLanguage.zhHant
+        : AppLanguage.zhHans,
   );
 
   @override
@@ -767,7 +781,11 @@ class _VisualHost extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      locale: _visualEnglish ? const Locale('en') : const Locale('zh', 'CN'),
+      locale: _visualEnglish
+          ? const Locale('en')
+          : _visualTraditional
+          ? const Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hant')
+          : const Locale('zh', 'CN'),
       builder: (context, child) => MediaQuery(
         data: MediaQuery.of(
           context,

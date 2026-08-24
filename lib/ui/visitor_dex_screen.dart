@@ -100,7 +100,7 @@ class _VisitorDexGrid extends StatelessWidget {
                 : (width >= 900 ? 4 : (width >= 600 ? 3 : 2));
             final english = context.l10n.isEnglish;
               final ratio = width >= 900
-                  ? (english ? (enlargedText ? 0.66 : 0.78) : 0.86)
+                  ? (english ? (enlargedText ? 0.66 : 0.78) : 0.78)
                   : width >= 600
                   ? (english ? (enlargedText ? 0.62 : 0.66) : 0.72)
                   : english
