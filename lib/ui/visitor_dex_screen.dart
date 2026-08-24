@@ -99,13 +99,13 @@ class _VisitorDexGrid extends StatelessWidget {
                 ? (width >= 900 ? 2 : 1)
                 : (width >= 900 ? 4 : (width >= 600 ? 3 : 2));
             final english = context.l10n.isEnglish;
-            final ratio = width >= 900
-                ? (english ? (enlargedText ? 0.68 : 0.80) : 0.88)
-                : width >= 600
-                ? (english ? (enlargedText ? 0.64 : 0.68) : 0.74)
-                : english
-                ? (enlargedText ? 0.43 : 0.46)
-                : 0.55;
+              final ratio = width >= 900
+                  ? (english ? (enlargedText ? 0.66 : 0.78) : 0.86)
+                  : width >= 600
+                  ? (english ? (enlargedText ? 0.62 : 0.66) : 0.72)
+                  : english
+                  ? (enlargedText ? 0.41 : 0.44)
+                  : 0.52;
             final margin = PetopiaAdaptive.sideMargin(context);
             return CustomScrollView(
               slivers: [
@@ -728,8 +728,10 @@ class _VisitorMemoryRow extends StatelessWidget {
                 const SizedBox(height: 7),
                 AppText(
                   [
-                    if (memory.petName != null) '和 ${memory.petName}',
-                    if (memory.expReward > 0) '陪伴经验 +${memory.expReward}',
+                    if (memory.petName != null)
+                      context.tr('和 ${memory.petName}'),
+                    if (memory.expReward > 0)
+                      context.tr('陪伴经验 +${memory.expReward}'),
                   ].join(' · '),
                   style: const TextStyle(
                     color: VisitorDexScreen._accent,
@@ -759,44 +761,40 @@ class _VisitorMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final icon = collected
+    final fallback = collected
         ? const Center(
             child: AppIcon(
               'ach_visitor',
-              size: 44,
+              size: 52,
               fallback: Icons.emoji_nature_rounded,
             ),
           )
         : Icon(Icons.question_mark_rounded, color: color, size: 40);
+
+    if (collected) {
+      return SizedBox(
+        key: ValueKey('visitor_dex_mark_$id'),
+        width: 136,
+        height: 124,
+        child: Image.asset(
+          visitorArtAsset(id, 'yard_base'),
+          fit: BoxFit.contain,
+          cacheWidth: 420,
+          errorBuilder: (_, _, _) => fallback,
+        ),
+      );
+    }
 
     return Container(
       key: ValueKey('visitor_dex_mark_$id'),
       width: 112,
       height: 112,
       decoration: BoxDecoration(
-        color: color.withValues(alpha: collected ? 0.20 : 0.13),
-        borderRadius: BorderRadius.circular(collected ? 32 : 56),
-        border: Border.all(
-          color: collected
-              ? color.withValues(alpha: 0.40)
-              : VisitorDexScreen._line,
-          width: 2,
-        ),
+        color: color.withValues(alpha: 0.13),
+        shape: BoxShape.circle,
+        border: Border.all(color: VisitorDexScreen._line, width: 2),
       ),
-      child: collected
-          ? Padding(
-              padding: const EdgeInsets.all(3),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(28),
-                child: Image.asset(
-                  visitorArtAsset(id, 'portrait'),
-                  fit: BoxFit.contain,
-                  cacheWidth: 320,
-                  errorBuilder: (_, _, _) => icon,
-                ),
-              ),
-            )
-          : icon,
+      child: fallback,
     );
   }
 }

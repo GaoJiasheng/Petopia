@@ -445,6 +445,20 @@ class _SupportProductCard extends ConsumerWidget {
                                 ? 'support_free_guardian_lantern'
                                 : 'support_purchase_${product.kind.name}',
                           ),
+                          style: hasPendingGift
+                              ? FilledButton.styleFrom(
+                                  backgroundColor: const Color(0xFF52766B),
+                                  foregroundColor: Colors.white,
+                                  disabledBackgroundColor: const Color(
+                                    0xFFAABEB7,
+                                  ),
+                                  disabledForegroundColor: Colors.white70,
+                                  side: const BorderSide(
+                                    color: Color(0xFF3F6258),
+                                    width: 1,
+                                  ),
+                                )
+                              : null,
                           onPressed: hasPendingGift
                               ? canOpenGift
                                     ? () => ref
@@ -479,10 +493,33 @@ class _SupportProductCard extends ConsumerWidget {
                                     strokeWidth: 2,
                                   ),
                                 )
+                              : hasPendingGift
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image.asset(
+                                      'assets/art/ui/ui_icon_gift_open.webp',
+                                      key: ValueKey<String>(
+                                        'support_open_gift_icon_${product.kind.name}',
+                                      ),
+                                      width: 28,
+                                      height: 28,
+                                      fit: BoxFit.contain,
+                                      cacheWidth: 96,
+                                      excludeFromSemantics: true,
+                                    ),
+                                    const SizedBox(width: 8),
+                                    const AppText(
+                                      '拆开一份',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w800,
+                                      ),
+                                    ),
+                                  ],
+                                )
                               : AppText(
-                                  hasPendingGift
-                                      ? '拆开一份'
-                                      : guardianLantern
+                                  guardianLantern
                                       ? freeLanternAvailable
                                             ? '免费点亮'
                                             : '今天已经点亮'

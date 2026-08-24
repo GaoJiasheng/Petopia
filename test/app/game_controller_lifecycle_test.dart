@@ -14,6 +14,7 @@ import 'package:petopia/data/save/session_store.dart';
 import 'package:petopia/domain/models/game_state.dart';
 import 'package:petopia/domain/models/logs.dart';
 import 'package:petopia/domain/models/pet.dart';
+import 'package:petopia/domain/models/yard.dart';
 import 'package:petopia/services/clock_service.dart';
 import 'package:petopia/services/log_port.dart';
 
@@ -390,6 +391,21 @@ void main() {
       final clock = _MutableClock(DateTime.utc(2026, 7, 26, 10));
       final services = _services(content: content, saveDir: root, clock: clock);
       services.session.careLedger.counts[CareAction.feed.name] = 1;
+      services.session.yard
+        ..luxuryStage = 6
+        ..slots = <YardSlot>[
+          YardSlot(pos: 0, itemId: 'night_light'),
+          YardSlot(pos: 1, itemId: 'wind_chime'),
+          YardSlot(pos: 2, itemId: 'flower_box'),
+          YardSlot(pos: 3, itemId: 'mushroom_bench'),
+          YardSlot(pos: 4, itemId: 'scarecrow'),
+          YardSlot(pos: 5, itemId: 'wood_sign'),
+          YardSlot(pos: 6, itemId: 'wind_vane'),
+          YardSlot(pos: 7, itemId: 'pond_small'),
+        ];
+      final arrangedDecor = services.session.yard.visibleDecorSlots
+          .map((slot) => (slot.pos, slot.itemId))
+          .toList(growable: false);
       final environment = _FixedDistributionEnvironment(true);
       final container = _container(
         services: services,
@@ -417,11 +433,25 @@ void main() {
       expect(services.session.current!.exp, greaterThan(0));
       expect(services.session.careLedger.counts, isEmpty);
       expect(services.session.settings.loginStreakCurrent, 1);
+      expect(
+        services.session.yard.visibleDecorSlots
+            .map((slot) => (slot.pos, slot.itemId))
+            .toList(growable: false),
+        arrangedDecor,
+        reason: 'advancing a day must not rewrite the player arrangement',
+      );
 
       final restored = await SessionStore(root).load();
       expect(restored, isNotNull);
       expect(restored!.current!.bornAt, services.session.current!.bornAt);
       expect(restored.current!.exp, services.session.current!.exp);
+      expect(
+        restored.yard.visibleDecorSlots
+            .map((slot) => (slot.pos, slot.itemId))
+            .toList(growable: false),
+        arrangedDecor,
+        reason: 'the unchanged arrangement must survive persistence',
+      );
     },
     skip: !testFlightToolsCompiled,
   );

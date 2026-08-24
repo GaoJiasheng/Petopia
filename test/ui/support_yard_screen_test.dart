@@ -219,6 +219,17 @@ void main() {
         find.byKey(const ValueKey<String>('support_open_treat')),
         findsOneWidget,
       );
+      expect(
+        find.byKey(const ValueKey<String>('support_open_gift_icon_treat')),
+        findsOneWidget,
+      );
+      final openButton = tester.widget<FilledButton>(
+        find.byKey(const ValueKey<String>('support_open_treat')),
+      );
+      expect(
+        openButton.style?.backgroundColor?.resolve(<WidgetState>{}),
+        const Color(0xFF52766B),
+      );
       expect(find.text('感谢你的支持'), findsNothing);
 
       await tester.tap(

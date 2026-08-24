@@ -101,7 +101,7 @@ class _DexGrid extends StatelessWidget {
                 : PetopiaAdaptive.postcardGridColumns(width);
             final tileHeight = largeText
                 ? 520.0
-                : (width >= 1100 ? 288.0 : 300.0);
+                : (width >= 1100 ? 288.0 : 316.0);
             final margin = PetopiaAdaptive.sideMargin(context);
             return CustomScrollView(
               slivers: [
@@ -318,47 +318,43 @@ class _DexMark extends StatelessWidget {
       );
     }
 
-    return Container(
+    return SizedBox(
       key: ValueKey('pet_dex_mark_${entry.speciesId}'),
-      width: 112,
-      height: 112,
-      decoration: BoxDecoration(
-        color: accent.withValues(alpha: lockedKnown ? 0.12 : 0.20),
-        borderRadius: BorderRadius.circular(32),
-        border: Border.all(
-          color: lockedKnown
-              ? PetDexScreen._line
-              : accent.withValues(alpha: 0.4),
-          width: 2,
-        ),
-      ),
+      width: 136,
+      height: 124,
       child: Stack(
         alignment: Alignment.center,
         children: [
           Positioned.fill(
             child: Padding(
-              padding: const EdgeInsets.all(2),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(28),
-                child: Image.asset(
-                  _assetFor(entry),
-                  fit: BoxFit.contain,
-                  errorBuilder: (_, _, _) => _fallbackFor(
-                    entry.category,
-                    lockedKnown ? const Color(0xFF9C948A) : accent,
-                  ),
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: Image.asset(
+                _assetFor(entry),
+                fit: BoxFit.contain,
+                errorBuilder: (_, _, _) => _fallbackFor(
+                  entry.category,
+                  lockedKnown ? const Color(0xFF9C948A) : accent,
                 ),
               ),
             ),
           ),
           if (lockedKnown)
-            const Positioned(
-              right: 12,
-              bottom: 12,
-              child: Icon(
-                Icons.lock_outline_rounded,
-                color: PetDexScreen._muted,
-                size: 20,
+            Positioned(
+              right: 4,
+              bottom: 4,
+              child: Container(
+                width: 30,
+                height: 30,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF9F3E8).withValues(alpha: 0.95),
+                  shape: BoxShape.circle,
+                  border: Border.all(color: PetDexScreen._line),
+                ),
+                child: const Icon(
+                  Icons.lock_outline_rounded,
+                  color: PetDexScreen._muted,
+                  size: 18,
+                ),
               ),
             ),
         ],

@@ -10,7 +10,6 @@ import '../app/game_services.dart';
 import '../app/home_moment_queue.dart';
 import '../app/notification_service.dart';
 import '../app/startup_metrics.dart';
-import '../app/distribution_environment.dart';
 import '../audio/audio_service.dart';
 import '../audio/route_audio.dart';
 import '../config/game_config.dart';
@@ -465,6 +464,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
               builder: (context, constraints) {
                 final size = Size(constraints.maxWidth, constraints.maxHeight);
                 final wideLayout = PetopiaAdaptive.useYardSidePanels(size);
+                final tabletPortrait = !wideLayout && size.width >= 600;
                 final sceneScale = PetopiaAdaptive.yardSceneScale(size);
                 final petWidth = PetopiaAdaptive.petStageWidth(size);
                 final petAlignment = PetopiaAdaptive.yardPetAlignment(size);
@@ -482,41 +482,25 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                 final treatActive = supportBenefits.treatActive(supportNow);
                 final lanternActive = supportBenefits.lanternActive(supportNow);
                 final bouquetActive = supportBenefits.bouquetActive(supportNow);
+                final supportTreatAnchor = _supportTreatAnchor(
+                  wideLayout: wideLayout,
+                  tabletPortrait: tabletPortrait,
+                );
                 final visitorUsesRightLane =
                     view.activeVisitor != null &&
                     _visitorYardPlacement(view.activeVisitor!).alignment.x > 0;
-                final bothSocialActors =
-                    view.activeVisitor != null && view.revisitor != null;
-                final occupiedAnimalPoints = <int>{
-                  if (bothSocialActors) ...const <int>{4, 5},
-                  if (view.activeVisitor != null)
-                    ...(bothSocialActors
-                        ? visitorUsesRightLane
-                              ? const <int>{3}
-                              : const <int>{2}
-                        : visitorUsesRightLane
-                        ? const <int>{1, 3}
-                        : const <int>{0, 2}),
-                  if (view.revisitor != null)
-                    ...(bothSocialActors
-                        ? visitorUsesRightLane
-                              ? const <int>{2}
-                              : const <int>{3}
-                        : const <int>{1, 3}),
-                };
                 final visibleDecor =
                     <_VisibleDecor>[
                           ..._visibleDecor(
                             view.decorSlots,
                             view.luxuryStage,
                             wideLayout: wideLayout,
-                            tabletPortrait: !wideLayout && size.width >= 600,
-                            excludedPositions: occupiedAnimalPoints,
+                            tabletPortrait: tabletPortrait,
                           ),
                           ..._fixedYardUtilities(
                             waterBowlOwned: view.waterBowlOwned,
                             wideLayout: wideLayout,
-                            tabletPortrait: !wideLayout && size.width >= 600,
+                            tabletPortrait: tabletPortrait,
                           ),
                         ]
                         .where(
@@ -568,7 +552,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                         luxuryStage: view.luxuryStage,
                         heightDriven: usesPlacedDecorPerspective,
                         wideLayout: wideLayout,
-                        tabletPortrait: !wideLayout && size.width >= 600,
+                        tabletPortrait: tabletPortrait,
                         sceneScale: sceneScale,
                       ),
                     if (lanternActive)
@@ -589,8 +573,8 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                       _SupportYardDecor(
                         key: const ValueKey<String>('support_yard_treat'),
                         assetPath: SupportCatalog.treat.assetPath,
-                        alignment: const Alignment(0.16, 0.60),
-                        width: 60 * sceneScale,
+                        alignment: supportTreatAnchor.align,
+                        width: supportTreatAnchor.width * sceneScale,
                       ),
                     if (supportBenefits.hasPendingGifts)
                       Align(
@@ -1457,9 +1441,6 @@ class _YardOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pet = view.pet;
-    final showTestFlightControl =
-        testFlightToolsCompiled &&
-        (ref.watch(isTestFlightProvider).valueOrNull ?? false);
     return SafeArea(
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -1476,12 +1457,10 @@ class _YardOverlay extends StatelessWidget {
                     child: pet == null
                         ? _TopMenuOnly(
                             view: view,
-                            showTestFlightControl: showTestFlightControl,
                             onReadTodayStory: onReadTodayStory,
                           )
                         : _InfoCard(
                             view: view,
-                            showTestFlightControl: showTestFlightControl,
                             onReadTodayStory: onReadTodayStory,
                             onTap: () => _openPetDetail(context, pet),
                           ),
@@ -1570,6 +1549,13 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
   Widget build(BuildContext context) {
     final visitor = widget.visitor;
     final interacted = visitor.interacted || _outcome != null;
+    final interactionStatus = interacted
+        ? [
+            context.tr('这段相遇已经收进来客图鉴。'),
+            if ((_outcome?.expApplied ?? 0) > 0)
+              context.tr('伙伴经验 +${_outcome!.expApplied}'),
+          ].join('  ')
+        : context.tr('它会在小窝附近待到明天。和它打个招呼，就能留下这次相遇。');
     return Container(
       constraints: const BoxConstraints(maxWidth: 420),
       padding: const EdgeInsets.fromLTRB(22, 20, 22, 18),
@@ -1676,13 +1662,7 @@ class _VisitorArrivalCardState extends State<_VisitorArrivalCard> {
               borderRadius: BorderRadius.circular(16),
             ),
             child: AppText(
-              interacted
-                  ? [
-                      '这段相遇已经收进来客图鉴。',
-                      if ((_outcome?.expApplied ?? 0) > 0)
-                        '伙伴经验 +${_outcome!.expApplied}',
-                    ].join('  ')
-                  : '它会在小窝附近待到明天。和它打个招呼，就能留下这次相遇。',
+              interactionStatus,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Color(0xFF6B5445),
@@ -1753,6 +1733,19 @@ class _RevisitorDialogState extends State<_RevisitorDialog> {
     final days =
         revisitor.leavesAt.difference(DateTime.now().toUtc()).inDays + 1;
     final interacted = revisitor.interacted || _outcome != null;
+    final visitSummary = _outcome == null
+        ? context.tr(
+            interacted
+                ? '它会在院子里歇一歇，接下来约 $days 天都能看见这个熟悉的身影。'
+                : '它从旅途中回来串门。欢迎它回家，听听这次带回了什么故事。',
+          )
+        : [
+            context.tr('它把一小包暖绒放进你手里：暖绒 +${_outcome!.gift}。'),
+            if (_outcome!.currentPetExp > 0)
+              context.tr('新伙伴也和它聊了很久，经验 +${_outcome!.currentPetExp}。'),
+            if (_outcome!.broughtCompanion) context.tr('远处还跟着一位害羞的旅行伙伴。'),
+            context.tr('接下来约 $days 天，它会留在院子里。'),
+          ].join('\n');
     return AlertDialog(
       backgroundColor: const Color(0xFFFFFDF7),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
@@ -1778,17 +1771,7 @@ class _RevisitorDialogState extends State<_RevisitorDialog> {
           ),
           const SizedBox(height: 12),
           AppText(
-            _outcome == null
-                ? (interacted
-                      ? '它会在院子里歇一歇，接下来约 $days 天都能看见这个熟悉的身影。'
-                      : '它从旅途中回来串门。欢迎它回家，听听这次带回了什么故事。')
-                : [
-                    '它把一小包暖绒放进你手里：暖绒 +${_outcome!.gift}。',
-                    if (_outcome!.currentPetExp > 0)
-                      '新伙伴也和它聊了很久，经验 +${_outcome!.currentPetExp}。',
-                    if (_outcome!.broughtCompanion) '远处还跟着一位害羞的旅行伙伴。',
-                    '接下来约 $days 天，它会留在院子里。',
-                  ].join('\n'),
+            visitSummary,
             textAlign: TextAlign.center,
             style: const TextStyle(
               color: Color(0xFF6B5445),
@@ -1840,6 +1823,11 @@ class _EventDialogState extends State<_EventDialog> {
   Widget build(BuildContext context) {
     final event = widget.event;
     final special = event.type == EventType.special;
+    final eventIconName = event.eventId == 'ev_s07'
+        ? 'event_keepsake'
+        : special
+        ? 'ach_firstgrad'
+        : 'src_event';
     final hasChoices = event.choices.isNotEmpty;
     final selected = _selectedChoice == null
         ? null
@@ -1874,7 +1862,7 @@ class _EventDialogState extends State<_EventDialog> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             AppIcon(
-                              special ? 'ach_firstgrad' : 'src_event',
+                              eventIconName,
                               size: 28,
                               fallback: special
                                   ? Icons.auto_awesome_rounded
@@ -1976,9 +1964,11 @@ class _EventDialogState extends State<_EventDialog> {
                                 if (event.expReward +
                                         (selected?.expDelta ?? 0) >
                                     0)
-                                  '经验 +${event.expReward + (selected?.expDelta ?? 0)}',
+                                  context.tr(
+                                    '经验 +${event.expReward + (selected?.expDelta ?? 0)}',
+                                  ),
                                 if (event.currencyReward > 0)
-                                  '暖绒 +${event.currencyReward}',
+                                  context.tr('暖绒 +${event.currencyReward}'),
                               ].join(' · '),
                               style: const TextStyle(
                                 color: Color(0xFFE08F42),
@@ -2865,30 +2855,6 @@ const _tabletPortraitDecorAnchors = <int, _DecorAnchor>{
   7: _DecorAnchor(Alignment(0.32, 0.05), 49),
 };
 
-// When both social actors are present, the outer pair drops below their feet
-// while the center pair stays in the rear lawn. This leaves the shallow
-// foreground to the pet's two bowls instead of forming another prop row.
-const _compactDualActorDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.84, 0.56), 68),
-  1: _DecorAnchor(Alignment(0.84, 0.58), 70),
-  6: _DecorAnchor(Alignment(-0.30, 0.04), 60),
-  7: _DecorAnchor(Alignment(0.32, 0.08), 62),
-};
-
-const _tabletDualActorDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.84, 0.56), 58),
-  1: _DecorAnchor(Alignment(0.84, 0.58), 60),
-  6: _DecorAnchor(Alignment(-0.30, 0.03), 51),
-  7: _DecorAnchor(Alignment(0.32, 0.07), 53),
-};
-
-const _wideDualActorDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.84, 0.56), 66),
-  1: _DecorAnchor(Alignment(0.84, 0.58), 68),
-  6: _DecorAnchor(Alignment(-0.30, 0.02), 58),
-  7: _DecorAnchor(Alignment(0.32, 0.06), 60),
-};
-
 const _compactUtilityAnchors = <String, _DecorAnchor>{
   'food_bowl_full': _DecorAnchor(Alignment(-0.14, 0.50), 54),
   'water_bowl': _DecorAnchor(Alignment(0.15, 0.50), 54),
@@ -2904,16 +2870,43 @@ const _wideUtilityAnchors = <String, _DecorAnchor>{
   'water_bowl': _DecorAnchor(Alignment(0.15, 0.49), 62),
 };
 
+Map<String, _DecorAnchor> _yardUtilityAnchors({
+  required bool wideLayout,
+  required bool tabletPortrait,
+}) {
+  return wideLayout
+      ? _wideUtilityAnchors
+      : tabletPortrait
+      ? _tabletPortraitUtilityAnchors
+      : _compactUtilityAnchors;
+}
+
+_DecorAnchor _supportTreatAnchor({
+  required bool wideLayout,
+  required bool tabletPortrait,
+}) {
+  final foodBowl = _yardUtilityAnchors(
+    wideLayout: wideLayout,
+    tabletPortrait: tabletPortrait,
+  )['food_bowl_full']!;
+  // The treat replaces the food bowl and stays in the same utility row. Its
+  // illustration is wider than the bowl, so keep it farther outward to leave
+  // a visible gap from the adjacent water bowl even on compact phones.
+  return _DecorAnchor(
+    Alignment(foodBowl.align.x - 0.09, foodBowl.align.y),
+    wideLayout ? 68 : 60,
+  );
+}
+
 List<_VisibleDecor> _fixedYardUtilities({
   required bool waterBowlOwned,
   required bool wideLayout,
   required bool tabletPortrait,
 }) {
-  final anchors = wideLayout
-      ? _wideUtilityAnchors
-      : tabletPortrait
-      ? _tabletPortraitUtilityAnchors
-      : _compactUtilityAnchors;
+  final anchors = _yardUtilityAnchors(
+    wideLayout: wideLayout,
+    tabletPortrait: tabletPortrait,
+  );
   return <_VisibleDecor>[
     _VisibleDecor('food_bowl_full', anchors['food_bowl_full']!),
     if (waterBowlOwned) _VisibleDecor('water_bowl', anchors['water_bowl']!),
@@ -3069,7 +3062,6 @@ List<_VisibleDecor> _visibleDecor(
   int luxuryStage, {
   required bool wideLayout,
   bool tabletPortrait = false,
-  Set<int> excludedPositions = const <int>{},
 }) {
   if (slots.isEmpty) {
     if (wideLayout) {
@@ -3082,19 +3074,6 @@ List<_VisibleDecor> _visibleDecor(
       : tabletPortrait
       ? _tabletPortraitDecorAnchors
       : _compactDecorAnchors;
-  final dualActorLayout = excludedPositions.containsAll(const <int>{
-    2,
-    3,
-    4,
-    5,
-  });
-  final anchors = dualActorLayout
-      ? wideLayout
-            ? _wideDualActorDecorAnchors
-            : tabletPortrait
-            ? _tabletDualActorDecorAnchors
-            : _compactDualActorDecorAnchors
-      : standardAnchors;
   final selectedSlots =
       slots
           .where(
@@ -3104,37 +3083,14 @@ List<_VisibleDecor> _visibleDecor(
           )
           .toList(growable: false)
         ..sort((a, b) => a.pos.compareTo(b.pos));
-  final availablePositions = anchors.keys
-      .where((pos) => !excludedPositions.contains(pos))
-      .toSet();
   final visible = <_VisibleDecor>[];
 
-  // A visitor may temporarily occupy a configured decor point. Preserve the
-  // player's selected item by moving it to the nearest free lawn anchor. Slot
-  // order remains the display priority, so a newly arranged rear row cannot
-  // disappear and expose unrelated items from lower, older points instead.
+  // Decor slots are persistent physical places in the yard. Daily visitor
+  // turnover must never move, hide, or substitute the player's arrangement;
+  // temporary characters use their own side lanes instead.
   for (final slot in selectedSlots) {
-    if (availablePositions.isEmpty) break;
-    final preferredAnchor = anchors[slot.pos];
-    final targetPos = availablePositions.reduce((best, candidate) {
-      if (candidate == slot.pos) return candidate;
-      if (best == slot.pos) return best;
-      if (preferredAnchor == null) return candidate < best ? candidate : best;
-      final bestAnchor = anchors[best]!;
-      final candidateAnchor = anchors[candidate]!;
-      final bestDistance =
-          math.pow(bestAnchor.align.x - preferredAnchor.align.x, 2) +
-          math.pow(bestAnchor.align.y - preferredAnchor.align.y, 2);
-      final candidateDistance =
-          math.pow(candidateAnchor.align.x - preferredAnchor.align.x, 2) +
-          math.pow(candidateAnchor.align.y - preferredAnchor.align.y, 2);
-      if (candidateDistance == bestDistance) {
-        return candidate < best ? candidate : best;
-      }
-      return candidateDistance < bestDistance ? candidate : best;
-    });
-    availablePositions.remove(targetPos);
-    visible.add(_VisibleDecor(slot.itemId!, anchors[targetPos]!));
+    final anchor = standardAnchors[slot.pos];
+    if (anchor != null) visible.add(_VisibleDecor(slot.itemId!, anchor));
   }
   return visible;
 }
@@ -3275,12 +3231,10 @@ class _AdoptCta extends StatelessWidget {
 class _InfoCard extends StatelessWidget {
   final GameView view;
   final VoidCallback onTap;
-  final bool showTestFlightControl;
   final Future<void> Function() onReadTodayStory;
   const _InfoCard({
     required this.view,
     required this.onTap,
-    required this.showTestFlightControl,
     required this.onReadTodayStory,
   });
 
@@ -3349,10 +3303,6 @@ class _InfoCard extends StatelessWidget {
                             view: view,
                             onReadTodayStory: onReadTodayStory,
                           ),
-                          if (showTestFlightControl) ...[
-                            const SizedBox(width: 2),
-                            const _TestFlightDayButton(),
-                          ],
                         ],
                       ),
                       const SizedBox(height: 6),
@@ -3388,13 +3338,8 @@ class _InfoCard extends StatelessWidget {
 
 class _TopMenuOnly extends StatelessWidget {
   final GameView view;
-  final bool showTestFlightControl;
   final Future<void> Function() onReadTodayStory;
-  const _TopMenuOnly({
-    required this.view,
-    required this.showTestFlightControl,
-    required this.onReadTodayStory,
-  });
+  const _TopMenuOnly({required this.view, required this.onReadTodayStory});
 
   @override
   Widget build(BuildContext context) {
@@ -3406,84 +3351,9 @@ class _TopMenuOnly extends StatelessWidget {
           _WalletButton(wallet: view.wallet),
           const SizedBox(width: 4),
           _HomeMenuButton(view: view, onReadTodayStory: onReadTodayStory),
-          if (showTestFlightControl) ...[
-            const SizedBox(width: 4),
-            const _TestFlightDayButton(),
-          ],
         ],
       ),
     );
-  }
-}
-
-class _TestFlightDayButton extends ConsumerStatefulWidget {
-  const _TestFlightDayButton();
-
-  @override
-  ConsumerState<_TestFlightDayButton> createState() =>
-      _TestFlightDayButtonState();
-}
-
-class _TestFlightDayButtonState extends ConsumerState<_TestFlightDayButton> {
-  bool _working = false;
-
-  @override
-  Widget build(BuildContext context) {
-    final label = context.tr(_working ? '正在推进内测时间' : '测试：推进一天');
-    return Tooltip(
-      message: label,
-      child: Semantics(
-        button: true,
-        label: label,
-        child: SizedBox(
-          width: 42,
-          height: 42,
-          child: OutlinedButton(
-            key: const ValueKey<String>('testflight_advance_day'),
-            onPressed: _working ? null : _advance,
-            style: OutlinedButton.styleFrom(
-              padding: EdgeInsets.zero,
-              foregroundColor: const Color(0xFF8A6F5D),
-              backgroundColor: const Color(0xFFFFFBF2).withValues(alpha: 0.84),
-              disabledForegroundColor: const Color(0xFFB8AA9E),
-              side: const BorderSide(color: Color(0xFFE3D5C1)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: _working
-                ? const SizedBox.square(
-                    dimension: 15,
-                    child: CircularProgressIndicator(strokeWidth: 1.8),
-                  )
-                : const AppText(
-                    '+1',
-                    style: TextStyle(fontSize: 13, fontWeight: FontWeight.w900),
-                  ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Future<void> _advance() async {
-    setState(() => _working = true);
-    final advanced = await ref
-        .read(gameControllerProvider.notifier)
-        .advanceOneDayForTesting();
-    if (!mounted) return;
-    setState(() => _working = false);
-    if (!advanced) return;
-    final messenger = ScaffoldMessenger.of(context);
-    messenger
-      ..clearSnackBars()
-      ..showSnackBar(
-        SnackBar(
-          behavior: SnackBarBehavior.floating,
-          duration: const Duration(milliseconds: 1600),
-          content: AppText(context.tr('内测时间已推进 1 天')),
-        ),
-      );
   }
 }
 
@@ -4216,9 +4086,11 @@ class _HomeFeatureTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isEnglish = context.l10n.isEnglish;
+    final localizedLabel = context.tr(item.label);
     return Semantics(
       button: true,
-      label: context.tr(item.label),
+      label: localizedLabel,
       child: Material(
         color: const Color(0xFFFFFDF9),
         borderRadius: BorderRadius.circular(8),
@@ -4234,23 +4106,62 @@ class _HomeFeatureTile extends StatelessWidget {
             ),
             child: Row(
               children: [
-                AppIcon(item.iconName, size: 44, fallback: item.fallback),
-                const SizedBox(width: 11),
+                AppIcon(
+                  item.iconName,
+                  size: isEnglish ? 42 : 44,
+                  fallback: item.fallback,
+                ),
+                SizedBox(width: isEnglish ? 9 : 11),
                 Expanded(
-                  child: AppText(
-                    item.label,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Color(0xFF6B5445),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w800,
-                      height: 1.15,
-                    ),
-                  ),
+                  child: isEnglish
+                      ? _EnglishHomeFeatureLabel(
+                          key: ValueKey<String>(
+                            'menu_label_${item.target.name}',
+                          ),
+                          label: localizedLabel,
+                        )
+                      : AppText(
+                          item.label,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Color(0xFF6B5445),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w800,
+                            height: 1.15,
+                          ),
+                        ),
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _EnglishHomeFeatureLabel extends StatelessWidget {
+  final String label;
+  const _EnglishHomeFeatureLabel({super.key, required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    final wordSafeLabel = label.trim().split(RegExp(r'\s+')).join('\n');
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Text(
+          wordSafeLabel,
+          maxLines: 2,
+          softWrap: false,
+          style: const TextStyle(
+            color: Color(0xFF6B5445),
+            fontSize: 15,
+            fontWeight: FontWeight.w800,
+            height: 1.12,
           ),
         ),
       ),

@@ -7,12 +7,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../app/game_controller.dart';
 import '../audio/audio_service.dart';
 import '../audio/route_audio.dart';
+import '../domain/enums.dart';
 import '../l10n/petopia_localizations.dart';
 import '../l10n/petopia_text.dart';
 import 'adaptive_layout.dart';
 import 'app_error_state.dart';
 import 'app_icons.dart';
+import 'pet_action_cue.dart';
+import 'pet_art.dart';
 import 'petopia_theme.dart';
+import 'widgets/pet_sprite.dart';
 import 'yard_art.dart';
 
 /// 暖绒商店：按分类展示商品，并通过 GameController 完成兑换。
@@ -77,6 +81,7 @@ class _ShopScreenState extends ConsumerState<ShopScreen>
 
   Future<void> _buy(ShopItemView item) async {
     if (_buyingId != null || item.owned || !item.affordable) return;
+    final pet = ref.read(gameControllerProvider).asData?.value.pet;
     setState(() => _buyingId = item.id);
     try {
       final success = await ref
@@ -85,8 +90,17 @@ class _ShopScreenState extends ConsumerState<ShopScreen>
       if (!mounted) return;
       final discount = item.discountLabel;
       if (success) {
-        unawaited(ref.read(audioServiceProvider).sfx(Sfx.tapSoft));
         unawaited(HapticFeedback.lightImpact());
+        if (_isTreatPurchase(item) && pet != null) {
+          unawaited(
+            ref
+                .read(audioServiceProvider)
+                .sfx(_treatAction(item) == 'bath' ? Sfx.bath : Sfx.feed),
+          );
+          await _showTreatCelebration(item: item, pet: pet);
+          return;
+        }
+        unawaited(ref.read(audioServiceProvider).sfx(Sfx.tapSoft));
       }
       _showMessage(
         success
@@ -104,6 +118,42 @@ class _ShopScreenState extends ConsumerState<ShopScreen>
         setState(() => _buyingId = null);
       }
     }
+  }
+
+  static bool _isTreatPurchase(ShopItemView item) =>
+      item.effectType == EffectType.visitorProb ||
+      item.effectType == EffectType.feedBonus;
+
+  static String _treatAction(ShopItemView item) =>
+      item.id == 'shop_feed_bubble_soap' ? 'bath' : 'eat';
+
+  Future<void> _showTreatCelebration({
+    required ShopItemView item,
+    required PetView pet,
+  }) {
+    return showGeneralDialog<void>(
+      context: context,
+      barrierDismissible: true,
+      barrierLabel: context.tr('关闭'),
+      barrierColor: Colors.black.withValues(alpha: 0.42),
+      transitionDuration: const Duration(milliseconds: 260),
+      pageBuilder: (context, animation, secondaryAnimation) =>
+          _TreatPurchaseCelebration(item: item, pet: pet),
+      transitionBuilder: (context, animation, secondaryAnimation, child) {
+        final eased = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutCubic,
+          reverseCurve: Curves.easeInCubic,
+        );
+        return FadeTransition(
+          opacity: eased,
+          child: ScaleTransition(
+            scale: Tween<double>(begin: 0.96, end: 1).animate(eased),
+            child: child,
+          ),
+        );
+      },
+    );
   }
 
   void _apply(ShopItemView item) {
@@ -131,6 +181,214 @@ class _ShopScreenState extends ConsumerState<ShopScreen>
           behavior: SnackBarBehavior.floating,
         ),
       );
+  }
+}
+
+class _TreatPurchaseCelebration extends StatelessWidget {
+  const _TreatPurchaseCelebration({required this.item, required this.pet});
+
+  final ShopItemView item;
+  final PetView pet;
+
+  bool get _isVisitorTreat => item.effectType == EffectType.visitorProb;
+  bool get _isBathTreat => item.id == 'shop_feed_bubble_soap';
+
+  String get _title {
+    if (_isBathTreat) return '${pet.name}先试了试新泡泡';
+    if (_isVisitorTreat) return '${pet.name}闻香来尝了一口';
+    return '${pet.name}先尝了一小口';
+  }
+
+  String get _status {
+    if (_isBathTreat) return '浴皂已经收好';
+    if (_isVisitorTreat) return '来客食粮已摆好';
+    return '小点心已经收好';
+  }
+
+  String get _message {
+    if (_isBathTreat) {
+      return '${item.name}已经收好，下次洗澡时会自动使用。';
+    }
+    if (_isVisitorTreat) {
+      return '${item.name}已经添进来客食盆，来客缘分正在生效。';
+    }
+    return '${item.name}已经收好，下次喂食时会自动享用。';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final titleStyle = Theme.of(context).textTheme.titleLarge?.copyWith(
+      color: ShopScreen._ink,
+      fontWeight: FontWeight.w800,
+    );
+    final bodyStyle = Theme.of(
+      context,
+    ).textTheme.bodyLarge?.copyWith(color: ShopScreen._muted, height: 1.45);
+    return SafeArea(
+      child: Dialog(
+        key: const ValueKey<String>('shop_treat_celebration'),
+        insetPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 24),
+        backgroundColor: ShopScreen._paper,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 460),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.fromLTRB(22, 22, 22, 18),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Expanded(child: AppText(_title, style: titleStyle)),
+                    IconButton(
+                      tooltip: context.tr('关闭'),
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(Icons.close_rounded),
+                      color: ShopScreen._muted,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final productSize = constraints.maxWidth < 290
+                        ? 68.0
+                        : 94.0;
+                    final petSize = (constraints.maxWidth - productSize - 4)
+                        .clamp(148.0, 206.0)
+                        .toDouble();
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        _ShopTreatPetReaction(
+                          key: const ValueKey<String>('shop_treat_pet_action'),
+                          pet: pet,
+                          action: _isBathTreat ? 'bath' : 'eat',
+                          size: petSize,
+                        ),
+                        const SizedBox(width: 4),
+                        Container(
+                          key: ValueKey<String>(
+                            'shop_treat_product_art_${item.id}',
+                          ),
+                          width: productSize,
+                          height: productSize,
+                          margin: EdgeInsets.only(
+                            bottom: productSize < 80 ? 12 : 18,
+                          ),
+                          child: _ProductArtwork(item: item),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                const SizedBox(height: 2),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: ShopScreen._green.withValues(alpha: 0.12),
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: AppText(
+                    _status,
+                    style: const TextStyle(
+                      color: ShopScreen._green,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 14),
+                AppText(
+                  _message,
+                  textAlign: TextAlign.center,
+                  style: bodyStyle,
+                ),
+                if (item.discountLabel != null) ...[
+                  const SizedBox(height: 6),
+                  AppText(
+                    '本次已使用${item.discountLabel}。',
+                    textAlign: TextAlign.center,
+                    style: bodyStyle,
+                  ),
+                ],
+                const SizedBox(height: 18),
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    key: const ValueKey<String>('shop_treat_continue'),
+                    style: FilledButton.styleFrom(
+                      backgroundColor: ShopScreen._accent,
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size.fromHeight(52),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const AppText('继续逛逛'),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ShopTreatPetReaction extends StatefulWidget {
+  const _ShopTreatPetReaction({
+    super.key,
+    required this.pet,
+    required this.action,
+    required this.size,
+  });
+
+  final PetView pet;
+  final String action;
+  final double size;
+
+  @override
+  State<_ShopTreatPetReaction> createState() => _ShopTreatPetReactionState();
+}
+
+class _ShopTreatPetReactionState extends State<_ShopTreatPetReaction> {
+  PetActionCue? _cue;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) setState(() => _cue = PetActionCue(widget.action, 1));
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final pet = widget.pet;
+    return SizedBox.square(
+      dimension: widget.size,
+      child: PetSprite(
+        assetPath: PetArt.stage(
+          pet.speciesId,
+          pet.stage,
+          variantId: pet.variantId,
+        ),
+        width: widget.size,
+        speciesId: pet.speciesId,
+        variantId: pet.variantId,
+        stage: pet.stage,
+        cue: _cue,
+        semanticLabel: context.tr(
+          widget.action == 'bath' ? '${pet.name}正在试用新泡泡' : '${pet.name}正在享用小点心',
+        ),
+      ),
+    );
   }
 }
 
@@ -765,13 +1023,40 @@ class _DecorItemPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _DecorSubject(
+      item: item,
+      decorId: decorId,
+      subjectKey: ValueKey('shop_decor_subject_$decorId'),
+      maxWidthFraction: 0.72,
+      maxHeightFraction: 0.88,
+    );
+  }
+}
+
+class _DecorSubject extends StatelessWidget {
+  final ShopItemView item;
+  final String decorId;
+  final Key subjectKey;
+  final double maxWidthFraction;
+  final double maxHeightFraction;
+
+  const _DecorSubject({
+    required this.item,
+    required this.decorId,
+    required this.subjectKey,
+    required this.maxWidthFraction,
+    required this.maxHeightFraction,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     final crop = YardArt.decorCrop(decorId);
     final subjectAspect =
         crop.canvasAspectRatio * crop.heightFraction / crop.widthFraction;
     return LayoutBuilder(
       builder: (context, constraints) {
-        final maxSubjectHeight = constraints.maxHeight * 0.88;
-        final maxSubjectWidth = constraints.maxWidth * 0.72;
+        final maxSubjectHeight = constraints.maxHeight * maxHeightFraction;
+        final maxSubjectWidth = constraints.maxWidth * maxWidthFraction;
         final widthFromHeight = maxSubjectHeight / subjectAspect;
         final subjectWidth = widthFromHeight.clamp(0.0, maxSubjectWidth);
         final subjectHeight = subjectWidth * subjectAspect;
@@ -779,7 +1064,7 @@ class _DecorItemPreview extends StatelessWidget {
         final fullHeight = fullWidth * crop.canvasAspectRatio;
         return Center(
           child: SizedBox(
-            key: ValueKey('shop_decor_subject_$decorId'),
+            key: subjectKey,
             width: subjectWidth,
             height: subjectHeight,
             child: ClipRect(
@@ -800,6 +1085,7 @@ class _DecorItemPreview extends StatelessWidget {
                     height: fullHeight,
                     fit: BoxFit.fill,
                     cacheWidth: 512,
+                    semanticLabel: item.name,
                     errorBuilder: (_, _, _) => _ProductArtwork(item: item),
                   ),
                 ),
@@ -845,28 +1131,67 @@ class _ItemIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = _categoryColor(item.category);
     return Container(
+      key: ValueKey('shop_item_thumbnail_${item.id}'),
       width: 52,
       height: 52,
+      clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.18),
         borderRadius: BorderRadius.circular(18),
       ),
-      child: Center(
-        child: _isBundledProductArt(item.artRef)
-            ? Padding(
-                padding: const EdgeInsets.all(3),
-                child: Image.asset(
-                  item.artRef,
-                  fit: BoxFit.contain,
-                  cacheWidth: 128,
-                  semanticLabel: item.name,
-                  errorBuilder: (_, _, _) =>
-                      _ShopCategoryMark(category: item.category, size: 27),
-                ),
-              )
-            : _ShopCategoryMark(category: item.category, size: 27),
-      ),
+      child: _ItemThumbnail(item: item),
     );
+  }
+}
+
+class _ItemThumbnail extends StatelessWidget {
+  final ShopItemView item;
+
+  const _ItemThumbnail({required this.item});
+
+  @override
+  Widget build(BuildContext context) {
+    final themeId = item.themeId;
+    final decorId = item.decorId;
+    if (themeId != null) {
+      return Image.asset(
+        YardArt.themeBg(
+          themeId,
+          night: themeId == 'starry_camp' || themeId == 'moonlight',
+        ),
+        key: ValueKey('shop_item_theme_art_$themeId'),
+        fit: BoxFit.cover,
+        alignment: const Alignment(0, -0.62),
+        cacheWidth: 160,
+        semanticLabel: item.name,
+        errorBuilder: (_, _, _) =>
+            _ShopCategoryMark(category: item.category, size: 27),
+      );
+    }
+    if (decorId != null) {
+      return _DecorSubject(
+        item: item,
+        decorId: decorId,
+        subjectKey: ValueKey('shop_item_decor_art_$decorId'),
+        maxWidthFraction: 0.9,
+        maxHeightFraction: 0.9,
+      );
+    }
+    if (_isBundledProductArt(item.artRef)) {
+      return Padding(
+        padding: const EdgeInsets.all(3),
+        child: Image.asset(
+          item.artRef,
+          key: ValueKey('shop_item_product_art_${item.id}'),
+          fit: BoxFit.contain,
+          cacheWidth: 128,
+          semanticLabel: item.name,
+          errorBuilder: (_, _, _) =>
+              _ShopCategoryMark(category: item.category, size: 27),
+        ),
+      );
+    }
+    return _ShopCategoryMark(category: item.category, size: 27);
   }
 }
 

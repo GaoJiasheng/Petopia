@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:petopia/ui/yard_art.dart';
 
 void main() {
   const productIds = <String>{
@@ -67,6 +68,37 @@ void main() {
       'ui_icon_shop_albumskin.png',
     ]) {
       expect(source, isNot(contains(legacy)), reason: 'legacy asset: $legacy');
+    }
+  });
+
+  test('every decor product thumbnail resolves to its rendered yard asset', () {
+    final payload =
+        jsonDecode(File('assets/data/shop_items.json').readAsStringSync())
+            as Map<String, dynamic>;
+    final decorProducts = (payload['items'] as List<dynamic>)
+        .cast<Map<String, dynamic>>()
+        .where((item) => item['category'] == '装饰小物')
+        .toList(growable: false);
+
+    expect(decorProducts, hasLength(9));
+    final decorIds = <String>{};
+    for (final product in decorProducts) {
+      final effect = product['effect'] as Map<String, dynamic>;
+      final params = effect['params'] as Map<String, dynamic>;
+      final decorId = params['decorId'] as String;
+      expect(decorIds.add(decorId), isTrue, reason: 'duplicate $decorId');
+
+      final artwork = File(YardArt.decor(decorId));
+      expect(
+        artwork.existsSync(),
+        isTrue,
+        reason: '${product['id']} is missing ${artwork.path}',
+      );
+      expect(
+        artwork.lengthSync(),
+        greaterThan(20 * 1024),
+        reason: '${product['id']} must use production artwork',
+      );
     }
   });
 }

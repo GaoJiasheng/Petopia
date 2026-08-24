@@ -550,10 +550,11 @@ void main() {
       screen: const PetDexScreen(),
       textScaleFactor: 1,
     );
-    expect(
-      tester.getSize(find.byKey(const ValueKey('pet_dex_mark_pet_rabbit'))),
-      const Size.square(112),
+    final petMarkSize = tester.getSize(
+      find.byKey(const ValueKey('pet_dex_mark_pet_rabbit')),
     );
+    expect(petMarkSize.width, greaterThanOrEqualTo(124));
+    expect(petMarkSize.height, greaterThanOrEqualTo(124));
 
     await _pump(
       tester,
@@ -561,12 +562,11 @@ void main() {
       screen: const VisitorDexScreen(),
       textScaleFactor: 1,
     );
-    expect(
-      tester.getSize(
-        find.byKey(const ValueKey('visitor_dex_mark_visitor_calico')),
-      ),
-      const Size.square(112),
+    final visitorMarkSize = tester.getSize(
+      find.byKey(const ValueKey('visitor_dex_mark_visitor_calico')),
     );
+    expect(visitorMarkSize.width, greaterThanOrEqualTo(124));
+    expect(visitorMarkSize.height, greaterThanOrEqualTo(124));
 
     await _pump(
       tester,
@@ -584,6 +584,16 @@ void main() {
     );
     expect(decorSize.height, greaterThanOrEqualTo(96));
     expect(decorSize.width, greaterThan(70));
+    expect(
+      tester.getSize(
+        find.byKey(const ValueKey('shop_item_thumbnail_decor_scarecrow_test')),
+      ),
+      const Size.square(52),
+    );
+    expect(
+      find.byKey(const ValueKey('shop_item_decor_art_scarecrow')),
+      findsOneWidget,
+    );
     expect(tester.takeException(), isNull);
   });
 }

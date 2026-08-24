@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,6 +9,10 @@ import 'package:petopia/app/game_services.dart';
 import 'package:petopia/audio/audio_service.dart';
 import 'package:petopia/audio/route_audio.dart';
 import 'package:petopia/domain/enums.dart';
+import 'package:petopia/l10n/petopia_localizations.dart';
+import 'package:petopia/purchases/support_benefits.dart';
+import 'package:petopia/purchases/support_catalog.dart';
+import 'package:petopia/purchases/support_purchase_controller.dart';
 import 'package:petopia/ui/petopia_theme.dart';
 import 'package:petopia/ui/yard_home_screen.dart';
 
@@ -106,6 +111,15 @@ class _FixtureGameController extends GameController {
   EventResolution? resolveEvent(String id, {int? choiceIndex}) => null;
 }
 
+class _FixtureSupportPurchaseController extends SupportPurchaseController {
+  _FixtureSupportPurchaseController(this.fixture);
+
+  final SupportPurchaseState fixture;
+
+  @override
+  Future<SupportPurchaseState> build() async => fixture;
+}
+
 var _fixtureSequence = 0;
 
 PetView _pet({int level = 6, int exp = 310, PetStage stage = PetStage.b}) {
@@ -188,6 +202,7 @@ GameView _view({
   List<YardMemoryView> recentMemories = const <YardMemoryView>[],
   List<YardSlotView> decorSlots = const <YardSlotView>[],
   TodayYardView? todayYard = _today,
+  bool waterBowlOwned = false,
 }) {
   return GameView(
     pet: emptyYard ? null : (pet ?? _pet()),
@@ -209,6 +224,7 @@ GameView _view({
     preferredCareAction: preferredAction,
     careContented: careContented,
     recentMemories: recentMemories,
+    waterBowlOwned: waterBowlOwned,
   );
 }
 
@@ -220,6 +236,11 @@ Future<void> _pumpYard(
   double textScale = 1,
   AudioService? audio,
   bool testFlight = false,
+  Locale locale = const Locale.fromSubtags(
+    languageCode: 'zh',
+    scriptCode: 'Hans',
+  ),
+  SupportBenefits supportBenefits = const SupportBenefits(),
 }) async {
   await tester.binding.setSurfaceSize(size);
   tester.platformDispatcher.textScaleFactorTestValue = textScale;
@@ -229,10 +250,26 @@ Future<void> _pumpYard(
       overrides: [
         audioServiceProvider.overrideWithValue(audio ?? _SilentAudio()),
         gameControllerProvider.overrideWith(() => _FixtureGameController(view)),
+        supportPurchaseControllerProvider.overrideWith(
+          () => _FixtureSupportPurchaseController(
+            SupportPurchaseState(
+              loadingOffers: false,
+              benefits: supportBenefits,
+            ),
+          ),
+        ),
         isTestFlightProvider.overrideWith((_) async => testFlight),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
+        locale: locale,
+        supportedLocales: PetopiaLocalizations.supportedLocales,
+        localizationsDelegates: const <LocalizationsDelegate<dynamic>>[
+          PetopiaLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
         navigatorObservers: <NavigatorObserver>[petopiaRouteObserver],
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(
@@ -265,6 +302,12 @@ Future<void> _disposeYard(WidgetTester tester) async {
   await tester.pump();
   tester.platformDispatcher.clearTextScaleFactorTestValue();
   await tester.binding.setSurfaceSize(null);
+}
+
+String? _assetName(ImageProvider<Object> provider) {
+  if (provider is AssetImage) return provider.assetName;
+  if (provider is ResizeImage) return _assetName(provider.imageProvider);
+  return null;
 }
 
 void main() {
@@ -331,6 +374,53 @@ void main() {
     expect(tester.takeException(), isNull);
     await _disposeYard(tester);
   });
+
+  testWidgets(
+    'active support treat replaces the food bowl without touching the water bowl',
+    (tester) async {
+      final benefits = SupportBenefits(treatUntil: DateTime.utc(2099, 1, 1));
+      for (final size in const <Size>[
+        Size(393, 852),
+        Size(834, 1194),
+        Size(1366, 1024),
+      ]) {
+        await _pumpYard(
+          tester,
+          size: size,
+          safeArea: const EdgeInsets.only(top: 24, bottom: 20),
+          view: _view(waterBowlOwned: true),
+          supportBenefits: benefits,
+        );
+
+        final treat = find.byWidgetPredicate(
+          (widget) =>
+              widget is Image &&
+              _assetName(widget.image) == SupportCatalog.treat.assetPath,
+        );
+        final water = find.byKey(
+          const ValueKey<String>('yard_decor_1_water_bowl'),
+        );
+        expect(treat, findsOneWidget);
+        expect(water, findsOneWidget);
+        expect(
+          find.byKey(const ValueKey<String>('yard_decor_1_food_bowl_full')),
+          findsNothing,
+        );
+
+        final treatRect = tester.getRect(treat);
+        final waterRect = tester.getRect(water);
+        expect(treatRect.center.dx, lessThan(waterRect.center.dx));
+        expect(treatRect.overlaps(waterRect), isFalse);
+        expect(
+          waterRect.left - treatRect.right,
+          greaterThanOrEqualTo(2),
+          reason: 'support treat needs a visible gap at $size',
+        );
+        expect(tester.takeException(), isNull);
+      }
+      await _disposeYard(tester);
+    },
+  );
 
   testWidgets(
     'TestFlight tools build shows the compact day control without overflow',
@@ -519,6 +609,30 @@ void main() {
     expect(find.text('院子记住的事'), findsOneWidget);
     expect(find.textContaining('流浪三花猫离开前'), findsOneWidget);
     expect(find.textContaining('/'), findsNothing);
+    expect(tester.takeException(), isNull);
+    await _disposeYard(tester);
+  });
+
+  testWidgets('English notebook menu keeps complete words on iPhone', (
+    tester,
+  ) async {
+    await _pumpYard(
+      tester,
+      size: const Size(393, 852),
+      safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+      view: _view(),
+      locale: const Locale('en'),
+    );
+    await tester.tap(find.byKey(const ValueKey<String>('home_menu')));
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 320));
+
+    expect(find.text('Growth\nJournal'), findsOneWidget);
+    expect(find.text('Pet\nCompendium'), findsOneWidget);
+    expect(find.text('Visitor\nCompendium'), findsOneWidget);
+    expect(find.text('Achievements'), findsOneWidget);
+    expect(find.text('Garden\nLayout'), findsOneWidget);
+    expect(find.textContaining('...'), findsNothing);
     expect(tester.takeException(), isNull);
     await _disposeYard(tester);
   });
@@ -909,7 +1023,7 @@ void main() {
   });
 
   testWidgets(
-    'visitor reflow preserves selected decor identity instead of exposing stale slots',
+    'social turnover preserves every selected decor and its visual position',
     (tester) async {
       const selected = <YardSlotView>[
         YardSlotView(pos: 0, itemId: 'night_light'),
@@ -918,7 +1032,32 @@ void main() {
         YardSlotView(pos: 3, itemId: 'mushroom_bench'),
         YardSlotView(pos: 4, itemId: 'scarecrow'),
         YardSlotView(pos: 5, itemId: 'wood_sign'),
+        YardSlotView(pos: 6, itemId: 'wind_vane'),
+        YardSlotView(pos: 7, itemId: 'pond_small'),
       ];
+      await _pumpYard(
+        tester,
+        size: const Size(393, 852),
+        safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+        view: _view(luxuryStage: 6, decorSlots: selected),
+      );
+      final originalRects = <String, Rect>{
+        for (final itemId in const <String>[
+          'night_light',
+          'wind_chime',
+          'flower_box',
+          'mushroom_bench',
+          'scarecrow',
+          'wood_sign',
+          'wind_vane',
+          'pond_small',
+        ])
+          itemId: tester.getRect(
+            find.byKey(ValueKey<String>('yard_decor_6_$itemId')),
+          ),
+      };
+      await _disposeYard(tester);
+
       await _pumpYard(
         tester,
         size: const Size(393, 852),
@@ -936,18 +1075,20 @@ void main() {
         'wind_chime',
         'flower_box',
         'mushroom_bench',
+        'scarecrow',
+        'wood_sign',
+        'wind_vane',
+        'pond_small',
       ]) {
         expect(
           find.byKey(ValueKey<String>('yard_decor_6_$itemId')),
           findsOneWidget,
-          reason: '$itemId should move to a free lawn point',
+          reason: '$itemId should remain visible after daily social turnover',
         );
-      }
-      for (final staleItemId in const <String>['scarecrow', 'wood_sign']) {
         expect(
-          find.byKey(ValueKey<String>('yard_decor_6_$staleItemId')),
-          findsNothing,
-          reason: '$staleItemId must not replace a higher-priority selection',
+          tester.getRect(find.byKey(ValueKey<String>('yard_decor_6_$itemId'))),
+          originalRects[itemId],
+          reason: '$itemId must remain in its player-selected physical slot',
         );
       }
       expect(find.byKey(const ValueKey<String>('active_visitor')), findsOne);

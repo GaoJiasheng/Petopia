@@ -178,6 +178,38 @@ abstract final class EnglishCopy {
     match = RegExp(r'^(.+)正在享用小点心$').firstMatch(source);
     if (match != null) return '${_term(match[1]!)} is enjoying a treat';
 
+    match = RegExp(r'^(.+)闻香来尝了一口$').firstMatch(source);
+    if (match != null) {
+      return '${_term(match[1]!)} came over for a little taste';
+    }
+
+    match = RegExp(r'^(.+)先尝了一小口$').firstMatch(source);
+    if (match != null) return '${_term(match[1]!)} tried a little taste';
+
+    match = RegExp(r'^(.+)先试了试新泡泡$').firstMatch(source);
+    if (match != null) return '${_term(match[1]!)} tried the new bubbles';
+
+    match = RegExp(r'^(.+)正在试用新泡泡$').firstMatch(source);
+    if (match != null) return '${_term(match[1]!)} is trying the new bubbles';
+
+    match = RegExp(r'^(.+)已经添进来客食盆，来客缘分正在生效。$').firstMatch(source);
+    if (match != null) {
+      return '${_term(match[1]!)} is now in the visitor bowl, and its welcome boost is active.';
+    }
+
+    match = RegExp(r'^(.+)已经收好，下次喂食时会自动享用。$').firstMatch(source);
+    if (match != null) {
+      return '${_term(match[1]!)} is tucked away and will be enjoyed automatically at the next feeding.';
+    }
+
+    match = RegExp(r'^(.+)已经收好，下次洗澡时会自动使用。$').firstMatch(source);
+    if (match != null) {
+      return '${_term(match[1]!)} is tucked away and will be used automatically at the next bath.';
+    }
+
+    match = RegExp(r'^本次已使用(.+)。$').firstMatch(source);
+    if (match != null) return '${match[1]} applied to this purchase.';
+
     match = RegExp(r'^(.+)的旅程，已走过 (\d+) / (\d+) 站，$').firstMatch(source);
     if (match != null) {
       return "${_term(match[1]!)}'s journey · ${match[2]} of ${match[3]} stops,";
@@ -839,6 +871,10 @@ abstract final class EnglishCopy {
     '院子主题': 'Garden Themes',
     '装饰小物': 'Decor',
     '特殊食粮': 'Special Treats',
+    '来客食粮已摆好': 'Visitor treat is ready',
+    '小点心已经收好': 'Treat saved for later',
+    '浴皂已经收好': 'Bath soap saved for later',
+    '继续逛逛': 'Keep Browsing',
     '特殊玩具': 'Special Toys',
     '相册装帧': 'Album Covers',
     '商店暂时没有开门': 'The shop is temporarily unavailable',

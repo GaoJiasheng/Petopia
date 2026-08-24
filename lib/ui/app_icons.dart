@@ -14,6 +14,7 @@ import 'petopia_theme.dart';
 ///         ach_revisit / ach_visitor / ach_yard / ach_hidden_q
 ///  - 来源 src_feed / src_pat / src_toy / src_bath / src_event /
 ///         src_offline / src_revisit / src_visitor
+///  - 事件 event_keepsake
 ///  - 设置 set_music / set_sound / set_notif / set_save / set_about / set_credits
 ///  - 商店 shop_theme / shop_deco / shop_food / shop_toy / shop_albumskin
 ///  - 天气 wx_sunny / wx_rain / wx_snow / wx_wind

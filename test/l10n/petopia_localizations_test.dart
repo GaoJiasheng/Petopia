@@ -135,6 +135,45 @@ void main() {
       expect(english.text('喂食 +3'), 'Feed +3');
     });
 
+    test('localizes visitor and returning-friend summaries by sentence', () {
+      const visitorSaved = '这段相遇已经收进来客图鉴。';
+      const visitorXp = '伙伴经验 +4';
+      const gift = '它把一小包暖绒放进你手里：暖绒 +11。';
+      const currentPetXp = '新伙伴也和它聊了很久，经验 +5。';
+      const stay = '接下来约 2 天，它会留在院子里。';
+
+      expect(
+        [visitorSaved, visitorXp].map(english.text).join('  '),
+        'This meeting is now saved in your Visitor Compendium.  Friend XP +4',
+      );
+      expect(
+        [gift, currentPetXp, stay].map(english.text).join('\n'),
+        'They left a little pouch in your hand · +11 Sunfluff.\n'
+        'Your friend stayed for a long chat · +5 XP.\n'
+        'They will stay in the garden for about 2 days.',
+      );
+      expect(
+        [visitorSaved, visitorXp].map(traditional.text).join('  '),
+        '這段相遇已經收進來客圖鑑。  夥伴經驗 +4',
+      );
+      expect(
+        [gift, currentPetXp, stay].map(traditional.text).join('\n'),
+        '它把一小包暖絨放進你手裡：暖絨 +11。\n'
+        '新夥伴也和它聊了很久，經驗 +5。\n'
+        '接下來約 2 天，它會留在院子裡。',
+      );
+      expect(
+        [gift, currentPetXp, stay].map(chinese.text).join('\n'),
+        '$gift\n$currentPetXp\n$stay',
+      );
+      expect(english.text('经验 +5'), '+5 XP');
+      expect(english.text('暖绒 +11'), '+11 Sunfluff');
+      expect(english.text('陪伴经验 +4'), 'Friendship XP +4');
+      expect(traditional.text('经验 +5'), '經驗 +5');
+      expect(traditional.text('暖绒 +11'), '暖絨 +11');
+      expect(traditional.text('陪伴经验 +4'), '陪伴經驗 +4');
+    });
+
     test('leaves unknown player-authored copy untouched', () {
       expect(english.text('我自己取的名字'), '我自己取的名字');
     });
