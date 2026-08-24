@@ -83,6 +83,15 @@
   `assets/art/qa/chroma_sources/action_control_refresh_20260822/`、
   `assets/art/source/action_controls/` 与 `tools/build_action_control_icons.py`；未使用
   第三方图片、角色、品牌、Logo、字体、图库或艺术家姓名。
+- 2026-08-23 将首页右上角早期扁平菜单占位图替换为透明水彩袖珍手账图标；生成只
+  参考项目自有首页手账母图的媒介、色板与完成度，未输入第三方图片、品牌、Logo、
+  字体、图库或艺术家姓名。母图为 `assets/art/source/home_menu/nav_menu_master.webp`，
+  运行时衍生图为 `assets/art/ui/ui_icon_nav_menu.png`。
+- 2026-08-23 将老朋友信物、院子主题、来客贴纸册与拆礼操作四处早期通用占位图
+  替换为独立语义的透明奶油水彩图标。生成仅参考 Hearth & Tails 自有 Golden Set、
+  UI 色板与功能描述，未输入第三方图片、角色、品牌、Logo、字体、图库或艺术家姓名。
+  母图、运行时衍生关系和提示边界记录在
+  `assets/art/source/ui_semantic_refresh/README.md`。
 
 ## 音频来源记录
 

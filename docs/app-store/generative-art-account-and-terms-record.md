@@ -45,6 +45,13 @@
   OpenAI 图像生成能力定向生成。首页图标声明位于
   `assets/art/source/home_menu/README.md`；互动按钮的生成与派生记录位于
   `assets/art/qa/chroma_sources/action_control_refresh_20260822/README.md`。
+- 2026-08-23 的首页袖珍手账菜单图标通过同一工作区中的 OpenAI 图像生成能力定向
+  生成，仅参考项目自有手账母图的媒介和色板；母图与运行时衍生关系记录在
+  `assets/art/source/home_menu/README.md`。
+- 2026-08-23 的四枚语义 UI 图标（老朋友信物、院子主题、来客贴纸册、拆礼操作）
+  通过同一工作区中的 OpenAI 图像生成能力定向生成，仅参考项目自有 Golden Set、
+  奶油水彩色板和对应功能语义；母图、运行时映射与无外部参考声明记录在
+  `assets/art/source/ui_semantic_refresh/README.md`。
 - 2026-08-22，发布人确认当前仓库之外没有为本候选包手工注入或替换未登记的美术、
   音频、字体或 SDK。
 

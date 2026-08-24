@@ -1,12 +1,12 @@
 {
   "bytesByCategory": {
-    "art": 36821557,
+    "art": 36816765,
     "audio": 23934476,
     "content-data": 402420,
     "runtime-art": 83542858
   },
   "counts": {
-    "art": 244,
+    "art": 246,
     "audio": 59,
     "content-data": 10,
     "runtime-art": 455
@@ -613,9 +613,9 @@
     },
     {
       "asset": "assets/art/ui/ui_icon_act_bath.png",
-      "bytes": 11074,
+      "bytes": 4649,
       "category": "art",
-      "sha256": "7d1ee53105bc9373acbad3ed93105578866b33f3497189040483f24d509c8e69"
+      "sha256": "78646c197535ef4bb961b2f91e5c2b6cdbcf122be5933716483632749b61fee5"
     },
     {
       "asset": "assets/art/ui/ui_icon_act_feed.png",
@@ -634,6 +634,12 @@
       "bytes": 8420,
       "category": "art",
       "sha256": "261711e51e311f6c66f1494d7d1fbc7dbd25576f33ee2e378819cac4661e484d"
+    },
+    {
+      "asset": "assets/art/ui/ui_icon_event_keepsake.png",
+      "bytes": 4688,
+      "category": "art",
+      "sha256": "027a1e019495ad216bd58e7f04ae944b2ebab7373d4bae62a59517b535d47912"
     },
     {
       "asset": "assets/art/ui/ui_icon_food_apple.png",
@@ -664,6 +670,12 @@
       "bytes": 8475,
       "category": "art",
       "sha256": "2bd22c4312b62aa605af401996ad74d08db589c8509f58dac9e5b9fad9e676a9"
+    },
+    {
+      "asset": "assets/art/ui/ui_icon_gift_open.webp",
+      "bytes": 2620,
+      "category": "art",
+      "sha256": "1d3476ed5592d84d52dae8b4f22b003182fd92639b99a2d22e33eed045fcd79c"
     },
     {
       "asset": "assets/art/ui/ui_icon_home_achievements.png",
@@ -721,15 +733,15 @@
     },
     {
       "asset": "assets/art/ui/ui_icon_nav_codex.png",
-      "bytes": 8273,
+      "bytes": 4782,
       "category": "art",
-      "sha256": "35dfb8b1d51a84b67f84e2fc0125c2c7991acc264c257a478d62fc0c6cd31209"
+      "sha256": "d2fc8c3bb3aa4ecf2aa4be5be1d42f71fdc2b6642ca990dbf873dbd63d97230a"
     },
     {
       "asset": "assets/art/ui/ui_icon_nav_menu.png",
-      "bytes": 6267,
+      "bytes": 5442,
       "category": "art",
-      "sha256": "288c53846c2fb23f56b22d8f048d1d1b7f3bb99551a9f6ef0b90969cd81e5b64"
+      "sha256": "617b348e30e3033b4230739459eb2f877d55835313e7b2a160598efcfa4439ae"
     },
     {
       "asset": "assets/art/ui/ui_icon_nav_shop.png",
@@ -787,9 +799,9 @@
     },
     {
       "asset": "assets/art/ui/ui_icon_shop_theme.png",
-      "bytes": 6703,
+      "bytes": 5344,
       "category": "art",
-      "sha256": "66b322c1193bb8859e8443d17be539d0ffc6b7097bdf173db7a84e3eefcaea80"
+      "sha256": "cc29dbefcfecc044a4c227d8cf0f2f13c93bffc11da6914180ea0b3c78699536"
     },
     {
       "asset": "assets/art/ui/ui_icon_shop_toy.png",
