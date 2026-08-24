@@ -80,9 +80,12 @@
       存档流程，但不会请求付款；普通 Release 未同时启用这两个开关，始终使用
       StoreKit。支持页会持续显示“不会产生费用”的内测提示，避免与真实购买混淆。
 - [x] 使用 `tools/build_ios_variants.sh testflight-tools 38` 构建仅供内部
-      TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 35`
-      构建无内测入口的送审包。build 35 已选为 App Store 审核版本；build 38
+      TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 40`
+      构建无内测入口的正式候选包。build 40 为 App Store 审核候选；build 38
       仅对内部 TestFlight 组开放。
+- [x] build 40 已于 2026-08-24 上传并通过 Apple 验证；Delivery UUID
+      `8854670b-4dce-47e4-af7a-1cba9d3d9822`，不含 `+1` 与模拟购买，
+      最低系统为 iOS 16.0。
 - [x] build 38 已于 2026-08-23 上传并通过 Apple 验证；Delivery UUID
       `8cc2191a-4505-4cd1-8f08-8efbbbd17c21`，状态 `VALID` / `INTERNAL_ONLY`，
       `usesNonExemptEncryption=false`，最低系统为 iOS 16.0。三语 TestFlight 说明已同步；

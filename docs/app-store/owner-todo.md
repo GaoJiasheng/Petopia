@@ -15,12 +15,13 @@
 - [ ] 按 `support-iap.md` 在 ASC 手工更新四个 IAP 的英文、简中、繁中描述。
 - [ ] 完成 App Privacy、EU DSA 和 Accessibility Nutrition Labels。
 
-### 2. Build 38 真机验收
+### 2. Build 40 正式候选真机验收
 
-- [ ] 在一台真实 iPhone 和一台真实 iPad 安装内部 TestFlight build 38，完整走通
+- [ ] 在一台真实 iPhone 和一台真实 iPad 安装 TestFlight build 40，完整走通
       首次领养、四种互动、来客、回访、明信片、存档导入导出和旋转。
-- [ ] 用右上角 `+1` 连续跨日，确认来客弹窗、院子模型和来客图鉴始终一致。
-- [ ] 验证模拟支持购买、每日免费暖灯、三类礼物拆开动画、减少动态效果和存档恢复。
+- [ ] 至少经历一次真实本地日历日切换，确认来客弹窗、院子模型、来客图鉴和院子摆件
+      保持一致。build 38 的 `+1` 仅用于内部排查，不能替代正式候选的真实跨日验收。
+- [ ] 验证正式 StoreKit 购买、每日免费暖灯、三类礼物拆开动画、减少动态效果和存档恢复。
 - [ ] 从旧 TestFlight 覆盖安装，验证游戏存档与支持存档 schema 2 → 3 不丢数据。
 - [ ] 用 Sandbox Apple Account 验证正式 StoreKit 的购买、取消、弱网和恢复购买。
 - [ ] 完成 iPhone/iPad Profile 性能采样，并持续使用 TestFlight 至少 24 小时。
@@ -34,13 +35,12 @@
 
 - [x] 已确认 App 记录为 `com.petopia.petopia`、SKU `petopia001`、主语言
       English (U.S.)，商店名称为 `Hearth & Tails: Letters Home`。
-- [x] build 38 为带 `+1` 和模拟支持购买的当前内部 TestFlight 工具包，Apple 状态为
-      `VALID` / `INTERNAL_ONLY`；build 35 为不含内测入口的已上传正式候选，状态为 `VALID` /
-      `APP_STORE_ELIGIBLE`。两种构建继续使用独立的双重编译门禁。
+- [x] build 40 为不含 `+1`、不含模拟购买入口的当前正式候选，Delivery UUID 为
+      `8854670b-4dce-47e4-af7a-1cba9d3d9822`；待 App Store Connect 处理完成后选择该构建。
+      build 38 仅保留为带 `+1` 和模拟购买的内部排查工具包，不得用于提交审核。
 - [x] 当前 `main` 已加入“今日故事”直达入口、繁体中文、主动邮件问题反馈、
       守护者每日暖灯、礼物自主拆开、商店成品素材与首页手绘图标，并以 build 38
-      发布到内部 TestFlight；
-      build 35 仍是关联 App 1.0 的无内测入口正式候选。
+      完成内部验证；上述正式功能与后续上架打磨已汇总进 build 40。
 - [ ] 确认 Apple Developer Program 协议、税务与银行资料没有待处理项目。
 - [ ] 在 App Store Connect 接受 Paid Applications Agreement，并确认税务与
       收款账户状态允许提交应用内购买。
