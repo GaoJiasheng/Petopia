@@ -1,138 +1,82 @@
-# Hearth & Tails 上架前 Owner Todo
+# Hearth & Tails 上架 Owner Todo
 
-以下项目需要 Apple Developer / App Store Connect 账号持有人亲自确认。工程侧
-自动化、素材审计、无签名 Release 构建和模拟器矩阵不重复列在这里。
+> 状态更新：**2026-08-27** — 1.0 (build 40) 与 4 个 IAP 已于 06:52 UTC 提交审核，
+> 当前 `WAITING_FOR_REVIEW`。本文件只保留**尚未完成**与**上架后**事项；
+> 已完成项归档在文末，避免与实际状态脱节。
 
-## 当前剩余事项（按阻断顺序）
+---
 
-### 1. App Store Connect 必须完成
+## 🔵 现在：等待审核（无需操作）
 
-- [ ] 清空 Apple Developer 协议、税务和银行资料中的待处理项目；接受 Paid
-      Applications Agreement，并确认应用内购买收款状态正常。
-- [ ] 把仓库内 2026-08-22 三语隐私稿重新发布到
-      `https://blog.gavingao.cn/petopia/privacy.html`。
-- [ ] 为简体中文商店页补齐 iPhone 6.9 英寸和 iPad 13 英寸截图。
-- [ ] 按 `support-iap.md` 在 ASC 手工更新四个 IAP 的英文、简中、繁中描述。
-- [ ] 完成 App Privacy、EU DSA 和 Accessibility Nutrition Labels。
+- [ ] 等待状态从 `WAITING_FOR_REVIEW` → `IN_REVIEW` → `PENDING_DEVELOPER_RELEASE`
+      （通常 24–48 小时；Apple 的问询会发到 App Review 联系邮箱）
 
-### 2. Build 40 正式候选真机验收
+## 🟡 审核通过后（需要你亲自操作）
 
-- [ ] 在一台真实 iPhone 和一台真实 iPad 安装 TestFlight build 40，完整走通
-      首次领养、四种互动、来客、回访、明信片、存档导入导出和旋转。
-- [ ] 至少经历一次真实本地日历日切换，确认来客弹窗、院子模型、来客图鉴和院子摆件
-      保持一致。build 38 的 `+1` 仅用于内部排查，不能替代正式候选的真实跨日验收。
-- [ ] 验证正式 StoreKit 购买、每日免费暖灯、三类礼物拆开动画、减少动态效果和存档恢复。
-- [ ] 从旧 TestFlight 覆盖安装，验证游戏存档与支持存档 schema 2 → 3 不丢数据。
-- [ ] 用 Sandbox Apple Account 验证正式 StoreKit 的购买、取消、弱网和恢复购买。
-- [ ] 完成 iPhone/iPad Profile 性能采样，并持续使用 TestFlight 至少 24 小时。
+- [ ] **点击"发布"**：发布方式为**手动**，审核通过不会自动上架，需你确认后才对外可见。
+- [ ] 上架当天确认：三语商店页文案/截图显示正常；下载安装后首启无异常。
 
-### 3. 提交审核
+## 🔴 如果被拒
 
-- [ ] 确认 App 1.0 和四个 IAP 共五项仍为 `READY_FOR_REVIEW`，然后点击“提交审核”。
-- [ ] 提交后监控 App Store Connect 崩溃报告和支持邮箱。
+- [ ] 阅读拒审信，定位 Guideline 条目；常见风险点按可能性排序：
+      ① IAP 在审核环境无法完成购买（2.1）② 元数据与实际功能不符（2.3）
+      ③ 截图与实际界面不一致（2.3.3）
+- [ ] 修复后按需重打 build → 重新挂载版本 → 重新提交（IAP 会随版本一起重审）
 
-## 提交前
+## 🟢 上架后持续
 
-- [x] 已确认 App 记录为 `com.petopia.petopia`、SKU `petopia001`、主语言
-      English (U.S.)，商店名称为 `Hearth & Tails: Letters Home`。
-- [x] build 40 为不含 `+1`、不含模拟购买入口的当前正式候选，Delivery UUID 为
-      `8854670b-4dce-47e4-af7a-1cba9d3d9822`；待 App Store Connect 处理完成后选择该构建。
-      build 38 仅保留为带 `+1` 和模拟购买的内部排查工具包，不得用于提交审核。
-- [x] 当前 `main` 已加入“今日故事”直达入口、繁体中文、主动邮件问题反馈、
-      守护者每日暖灯、礼物自主拆开、商店成品素材与首页手绘图标，并以 build 38
-      完成内部验证；上述正式功能与后续上架打磨已汇总进 build 40。
-- [ ] 确认 Apple Developer Program 协议、税务与银行资料没有待处理项目。
-- [ ] 在 App Store Connect 接受 Paid Applications Agreement，并确认税务与
-      收款账户状态允许提交应用内购买。
-- [x] 工程侧已完成生成式美术、原创程序化音效、字体和 124 个 Flutter/Dart 依赖的
-      商业版权/许可证审计，并把自动门禁接入发版检查；结果见
-      `dependency-license-audit.md`。
-- [x] 已将生成美术账号控制人、使用入口和 2026-08-22 可见的 OpenAI 条款版本记录在
-      `generative-art-account-and-terms-record.md`；Gavin Gao 已确认当前候选包没有
-      仓库外未登记素材。
-- [x] 已停用高风险曾用名 `Petopia`，并完成 `Hearth & Tails` /
-      `Hearth & Tails: Letters Home` 的第一轮商店和公开商标检索；未发现精确同名的
-      在架宠物游戏，但这不是正式法律意见，详见 `trademark-clearance.md`。
-- [x] Gavin Gao 已于 2026-08-22 阅读 `trademark-clearance.md` 并接受当前组合名称的
-      剩余商业风险；App Store 允许建档仍不等于商标无冲突证明。专业清权可在扩大
-      市场投放前另行完成。
+- [ ] 监控 ASC 崩溃报告与支持邮箱 `gaojiasheng.him@foxmail.com`
+- [ ] 预留首个热修 build number（下一个可用值：**41**）
 
-## 商店资料
+---
 
-- [x] 已按 `metadata-zh-Hans.md` 填写名称、副标题、描述、关键词、分类和促销文本。
-- [x] 已为英语地区按 `metadata-en-US.md` 填写独立的英文名称、副标题、描述、关键词
-      和促销文本；不要依赖 App Store 自动翻译。
-- [ ] **重新同步公开隐私页**：仓库内三语隐私稿已补充“未拆礼物数量”的本地保存说明；
-      需把 2026-08-22 版本重新发布到
-      `https://blog.gavingao.cn/petopia/privacy.html`，并检查三语切换入口。
-- [x] 已将 `privacy-policy-en.md`、`support-en.md` 与 `marketing-en.md` 的英文内容同步
-      到隐私、支持和产品公开页，并在每页提供明确的中英文切换入口。
-- [x] 已填写版权主体 `2026 Gavin Gao`、App Review 联系人姓名、邮箱和电话。
-- [x] 已将 `screenshots/release/en-US/` 中通过门禁的 iPhone 6.9 英寸与
-      iPad 13 英寸最终截图上传到 App Store Connect。14 张成品已逐张确认无
-      TestFlight 标记、调试信息、占位图、裁切、alpha 透明通道或过期文案。
-- [ ] **补 zh-Hans 截图**（提审前必做）：当前 zh-Hans 本地化 0 张截图，简中
-      设备用户（港澳台/新马/海外华人）的商店页正在 fallback 显示英文截图。
-      按 `screenshot-plan.md` 用中文界面重拍 iPhone 6.9 英寸 + iPad 13 英寸
-      两组（可用焕新后 12 套主题选最上相场景），过
-      `tools/check_app_store_screenshots.py --require-release-set` 后上传。
-- [x] App 内已支持 zh-Hant：台湾、香港、澳门设备会自动选择繁中，设置页也可手动
-      切换；界面、叙事和本地通知均覆盖。繁中商店元数据、隐私与支持稿已归档为
-      `metadata-zh-Hant.md`、`privacy-policy-zh-Hant.md` 与 `support-zh-Hant.md`。
-- [x] 已在 App Store Connect 新增繁体中文本地化并同步 `metadata-zh-Hant.md`；
-      公开隐私页也已加入繁中入口。繁中商店截图可随 1.0 一并补齐或作为 v1.x 优化。
-- [x] 已选择免费价格、手动发布；当前开放 173 个地区，中国大陆和越南未开放。
-- [x] 已按 `support-iap.md` 创建 4 个应用内购买商品，补齐英文和简体中文本地化、
-      价格和审核截图，并把 4 个商品与 App 1.0 加入同一审核草稿。
-- [ ] **在 ASC 更新四个 IAP 的三语商品描述**：本地 `.storekit` 不会自动同步。
-      三个消耗型商品现在是“购买后成为待拆礼物，拆开才开始计时”；守护者现在是
-      “每天可免费点亮一盏 24 小时暖灯”。英文、简中、繁中的最终文本逐条列在
-      `support-iap.md` 的“商品描述”一节，四个商品都必须人工更新。
+## 📋 1.0.1 修复清单（已知问题，均不阻塞首发）
 
-## 合规问卷
+- [ ] **iPad 中文来客图鉴卡片 25px 溢出**——修复已在仓库
+      （`visitor_dex_screen.dart` 卡片比例 0.86→0.78，commit `c17c7ed`），
+      但 build 40 打包早于该提交，故未包含。
+- [ ] 美术边角：4 项 1% 占比偏差（turtle var02-04 stageC、uni dex_color）
+- [ ] `snowhut` 主题商店预览带辨识度偏弱（雪屋本体不在裁切带内）
+- [ ] 极地通用明信片模板 2 条未绑定地点（`tpl_gl_jd_01`、`tpl_cl_jd_02`），
+      夏季运河小城抽到会轻微违和
 
-- [ ] 完成 App Privacy 问卷，并按当前实现复核“无账号、无广告、无第三方分析、
-      数据仅保存在设备本地”；与 Xcode Privacy Report 逐项一致。
-- [x] 已完成年龄分级问卷，当前评级为 4+。
-- [x] 已回答社交媒体能力问题；本版本无聊天、公开资料、
-      用户生成内容或联网社交。
-- [x] 出口合规选择与 `ITSAppUsesNonExemptEncryption=false` 保持一致；Apple
-      已确认 build 35 与内部 build 36、37 的 `usesNonExemptEncryption=false`，build 38
-      也已验证为 false。
-- [x] App Store Connect 内容版权字段已选择“不使用第三方内容”。
-- [ ] 完成 EU Digital Services Act trader / non-trader 声明；若作为 trader
-      在欧盟发布，完成公开联系方式验证。
-- [ ] 在 App Accessibility 中按真机结果填写 Larger Text、Reduced Motion
-      等标签；只有全部常用任务均可完成时才声明 VoiceOver 或 Voice Control。
+## 🔮 v1.x 候选（详见 `docs/prompt-codex-theme-revamp.md` §批次 B）
 
-## 签名与人工验收
+- [ ] 5 套强特征付费主题（云端/萤火/新春/海底/万圣），概念稿已在 `docs/theme-concepts/`
+      ——其中"灯笼新春"需新增 `winter` scope（扩 `game_services.dart` 的 switch）
+- [ ] 繁中商店截图（当前已有，但可随主题更新重拍）
+- [ ] 仓库 LFS 瘦身：`.git/lfs` 中未打包的 `.wav` 音频母带
+- [ ] 变现：观察 1–2 个月真实付费数据后，再决定是否加高价档位或季节主题包
+      （原则见下方"数值绝缘铁律"）
 
-- [x] 使用 Cloud Managed Apple Distribution 签名创建 build 24、25、26、27、28、29、
-      30、32、33、34、35、36、37 与 38 Archive；build 38 为当前 `INTERNAL_ONLY`
-      内部工具包，build 35 为当前已上传的无内测入口候选。
-- [ ] 在保留进度的设备上先安装 TestFlight build 18、19 或 20，再覆盖安装本轮新上传的
-      正式候选，确认 schema 2 → 3 后宠物、货币、旅程、明信片、来客、成就和设置均保留。
-- [ ] 在 TestFlight build 38 连续点击 `+1`，确认新来客弹窗、院子模型和来客图鉴
-      始终为同一访客；build 21/22 不再作为验收或送审候选。
-- [ ] 在本轮带 `+1` 的 TestFlight 上验证 S1/S2：守护者每天只可免费点一盏灯；三个
-      消耗型支持购买后均先显示为待拆礼物；拆开前不开始计时，拆开后分别播放点心盒、
-      暖灯、花束的手绘序列并正确叠加有效期；开启“减少动态效果”后改为安静淡入。
-- [ ] 使用保留旧支持记录的真机覆盖安装本轮 TestFlight，确认支持存档 schema 2 → 3
-      后守护者、有效期和交易幂等记录均保留，未拆数量从 0 安全初始化。
-- [ ] 在至少一台真实 iPhone 和一台真实 iPad 上走完：首次领养、四种互动、
-      后台恢复、来客、明信片、存档导出与导入、横竖屏旋转。
-- [ ] 使用 Sandbox Apple Account 分别验证 3 个消耗型支持、取消购买、弱网重试、
-      “小院守护者”首次购买，以及卸载重装后的恢复购买。
-- [ ] 按 `performance-budget.md` 在物理设备执行四互动 Profile 帧时序门禁，
-      再用 Instruments 复核冷启动、院子待机、首次动作、事件弹框和旋转时的
-      峰值内存与温度。
-- [ ] TestFlight 连续使用至少 24 小时，检查崩溃、卡死、音频中断、通知权限、
-      真实时间事件和资源缺失。
-- [x] 英文审核说明已写入，隐私、支持、营销三个 URL 已填写；最终提交前仍需
-      快速确认三个公开页可访问。
-- [x] 设置页已接入问题反馈邮箱 `gaojiasheng.him@foxmail.com`：仅在用户主动操作时
-      打开邮件并预填脱敏诊断摘要；无邮件 App 时回退系统分享，不后台上传数据。
-- [ ] 最终检查审核草稿中 App 1.0 与四个 IAP 共五项，并点击“提交审核”。当前
-      五项均为 `READY_FOR_REVIEW`，尚未正式提交。
-- [ ] 提交后监控 App Store Connect 崩溃报告与支持邮箱，准备首个修复版本的
-      build number。
+## ⚖️ 数值绝缘铁律（任何付费功能必须遵守）
+
+1. `SupportBenefits` 只允许 `bool` 与 `DateTime` 字段，**不得**新增经验/暖绒/概率/冷却相关字段
+2. 任何付费 PR **不得**触碰 `lib/config/game_config.dart`
+3. 每次新增付费内容必跑回归：购买前后经验/暖绒/冷却/来客概率**逐项不变**
+
+---
+
+<details>
+<summary>✅ 已完成归档（2026-08-27 及之前）</summary>
+
+**账务与协议**：Apple Developer 协议已接受；**付费 App 协议「有效」**（8/25–2027/5/4）；
+银行账户 UOB「可用」；W-8BEN + 外国身份证明「使用中」；中国合规声明有效。
+
+**商店资料**：三语（en-US / zh-Hans / zh-Hant）名称、副标题、描述、关键词、促销文本齐全；
+**42 张截图全部 COMPLETE**（三语 × iPhone 6.9" + iPad 13"）；版权主体、审核联系人已填；
+隐私/支持/营销三个 URL 已上线并验证（含 8/22 版"未拆礼物数量"修订）。
+
+**IAP**：4 个商品创建完毕，三语描述已同步 ASC（英文因 55 字符上限使用短版），
+价格档配置完成，随 1.0 一同送审。
+
+**合规问卷**：App Privacy 已发布（"未收集数据"）；年龄分级 4+；出口合规
+`ITSAppUsesNonExemptEncryption=false`；内容版权已声明；Accessibility 已声明
+iPhone+iPad「更大字体 + 减弱动态效果」；**EU DSA 因关闭欧盟 27 国而免除**。
+
+**区域**：146 个国家/地区在售，已排除中国大陆（ICP/版号限制）与欧盟 27 国（DSA）。
+
+**验收**：模拟器全流程走查（六维 review W1–W5 已修）；本地内测模拟模式验证
+拆礼流程与回礼落盘；真机 TestFlight 内购验证（用户确认）。
+
+</details>
