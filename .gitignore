@@ -50,3 +50,6 @@ docs/art-review/theme-placement-regression-*/**/*.jpeg
 docs/art-review/theme-redesign/**/*.png
 docs/art-review/theme-redesign/**/*.jpg
 docs/art-review/theme-redesign/**/*.jpeg
+
+# ASC 审核状态轮询缓存
+tools/.asc_watch_state.json
