@@ -97,6 +97,8 @@ class PetopiaAdaptive {
     required Alignment petAlignment,
     required Alignment preferredAlignment,
     required double preferredSize,
+    Iterable<Rect> decorRects = const [],
+    Rect? actionBarRect,
   }) {
     // Pet PNGs keep generous transparent safety margins so ears and tails are
     // never clipped. Secondary actors should avoid the painted silhouette,
@@ -133,7 +135,78 @@ class PetopiaAdaptive {
         .max(math.min(preferredTop, companionTop), groundedTop)
         .clamp(0.0, sceneSize.height - actorSize)
         .toDouble();
-    return Rect.fromLTWH(left, top, actorSize, actorSize);
+    final preferredRect = Rect.fromLTWH(left, top, actorSize, actorSize);
+    final maxTop = (actionBarRect?.top ?? sceneSize.height) - 9 - actorSize;
+    if (decorRects.isEmpty && top <= maxTop) return preferredRect;
+
+    // Leave the painted bases in place. Transparent sprite margins can share
+    // space, but the animal itself must clear every visible prop and the pet.
+    final actorInset = actorSize * 0.10;
+    final obstacles = [
+      alignedSquareRect(
+        sceneSize: sceneSize,
+        squareSize: petWidth,
+        alignment: petAlignment,
+      ).deflate(petWidth * 0.10),
+      for (final rect in decorRects)
+        rect.deflate(math.min(rect.width, rect.height) * 0.10),
+    ];
+    bool isClear(Rect rect) =>
+        rect.top <= maxTop &&
+        obstacles.every(
+          (obstacle) => !rect.deflate(actorInset).overlaps(obstacle.inflate(4)),
+        );
+    if (isClear(preferredRect)) return preferredRect;
+
+    // Try lower positions in the existing lane first, then move inward. The
+    // opposite half remains available to a simultaneous returning companion.
+    final tops = <double>{
+      top,
+      for (final obstacle in obstacles)
+        if (obstacle.bottom + 4 - actorInset >= top &&
+            obstacle.bottom + 4 - actorInset <= maxTop)
+          obstacle.bottom + 4 - actorInset,
+    }.toList()..sort();
+    final innerLeft = placeOnRight
+        ? sceneSize.width / 2
+        : sceneSize.width / 2 - actorSize;
+    final lefts =
+        <double>{
+              left,
+              innerLeft,
+              for (final obstacle in obstacles)
+                placeOnRight
+                    ? obstacle.left - 4 - actorSize + actorInset
+                    : obstacle.right + 4 - actorInset,
+            }
+            .where(
+              (x) => placeOnRight
+                  ? x >= innerLeft && x <= left
+                  : x >= left && x <= innerLeft,
+            )
+            .toList()
+          ..sort((a, b) => (a - left).abs().compareTo((b - left).abs()));
+    for (final x in lefts) {
+      for (final y in tops) {
+        final candidate = Rect.fromLTWH(x, y, actorSize, actorSize);
+        if (isClear(candidate)) return candidate;
+      }
+    }
+    // On the smallest lawn, tall props can leave no full-size opening. Fit the
+    // temporary actor to that gap only after trying both movement directions;
+    // the player's arrangement and the minimum touch target stay intact.
+    if (actorSize > 48) {
+      return yardSideActorRect(
+        sceneSize: sceneSize,
+        petWidth: petWidth,
+        petAlignment: petAlignment,
+        preferredAlignment: preferredAlignment,
+        preferredSize: math.max(48, actorSize - 2),
+        decorRects: decorRects,
+        actionBarRect: actionBarRect,
+      );
+    }
+    return preferredRect;
   }
 
   static Rect alignedSquareRect({

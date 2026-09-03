@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../app/game_controller.dart';
@@ -190,6 +191,8 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
   bool _automaticMomentPresentedThisActivation = false;
   bool _eventPresentedThisActivation = false;
   bool _memoryPressureConstrained = false;
+  final _sceneKey = GlobalKey();
+  ({Size sceneSize, Rect rect})? _actionBounds;
 
   @override
   void initState() {
@@ -463,6 +466,9 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
             body: LayoutBuilder(
               builder: (context, constraints) {
                 final size = Size(constraints.maxWidth, constraints.maxHeight);
+                final actionBarRect = _actionBounds?.sceneSize == size
+                    ? _actionBounds!.rect
+                    : null;
                 final wideLayout = PetopiaAdaptive.useYardSidePanels(size);
                 final tabletPortrait = !wideLayout && size.width >= 600;
                 final sceneScale = PetopiaAdaptive.yardSceneScale(size);
@@ -517,6 +523,17 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                         (a, b) => a.anchor.align.y.compareTo(b.anchor.align.y),
                       );
                 final usesPlacedDecorPerspective = view.decorSlots.isNotEmpty;
+                final decorRects = [
+                  for (final decor in visibleDecor)
+                    _placedDecor(
+                      decor,
+                      luxuryStage: view.luxuryStage,
+                      heightDriven: usesPlacedDecorPerspective,
+                      wideLayout: wideLayout,
+                      tabletPortrait: tabletPortrait,
+                      sceneScale: sceneScale,
+                    ).paintedRect(size),
+                ];
                 final rearDecor = visibleDecor
                     .where((decor) => decor.anchor.align.y < 0.44)
                     .toList(growable: false);
@@ -524,6 +541,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                     .where((decor) => decor.anchor.align.y >= 0.44)
                     .toList(growable: false);
                 return Stack(
+                  key: _sceneKey,
                   fit: StackFit.expand,
                   children: [
                     Image.asset(
@@ -592,7 +610,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                           ),
                         ),
                       ),
-                    if (view.activeVisitor != null)
+                    if (view.activeVisitor != null && actionBarRect != null)
                       Builder(
                         builder: (context) {
                           final visitor = view.activeVisitor!;
@@ -603,6 +621,8 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                             petAlignment: petAlignment,
                             preferredAlignment: placement.alignment,
                             preferredSize: placement.size * sceneScale,
+                            decorRects: decorRects,
+                            actionBarRect: actionBarRect,
                           );
                           return Positioned.fromRect(
                             rect: rect,
@@ -656,7 +676,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                           },
                         ),
                       ),
-                    if (view.revisitor != null)
+                    if (view.revisitor != null && actionBarRect != null)
                       Builder(
                         builder: (context) {
                           final revisitor = view.revisitor!;
@@ -670,6 +690,8 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                             petAlignment: petAlignment,
                             preferredAlignment: revisitorAlignment,
                             preferredSize: petWidth * 0.48,
+                            decorRects: decorRects,
+                            actionBarRect: actionBarRect,
                           );
                           return Positioned.fromRect(
                             rect: rect,
@@ -731,6 +753,13 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                       view: view,
                       ref: ref,
                       wideLayout: wideLayout,
+                      sceneKey: _sceneKey,
+                      onActionBounds: (rect) {
+                        if (!mounted) return;
+                        setState(
+                          () => _actionBounds = (sceneSize: size, rect: rect),
+                        );
+                      },
                       onReadTodayStory: _readTodayStory,
                     ),
                   ],
@@ -1430,11 +1459,15 @@ class _YardOverlay extends StatelessWidget {
   final GameView view;
   final WidgetRef ref;
   final bool wideLayout;
+  final GlobalKey sceneKey;
+  final ValueChanged<Rect> onActionBounds;
   final Future<void> Function() onReadTodayStory;
   const _YardOverlay({
     required this.view,
     required this.ref,
     required this.wideLayout,
+    required this.sceneKey,
+    required this.onActionBounds,
     required this.onReadTodayStory,
   });
 
@@ -1481,7 +1514,11 @@ class _YardOverlay extends StatelessWidget {
                     child: SingleChildScrollView(
                       reverse: true,
                       child: pet == null
-                          ? const _AdoptCta()
+                          ? _YardActionBounds(
+                              sceneKey: sceneKey,
+                              onBounds: onActionBounds,
+                              child: const _AdoptCta(),
+                            )
                           : Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -1491,6 +1528,8 @@ class _YardOverlay extends StatelessWidget {
                                   ),
                                 _ActionBar(
                                   ref: ref,
+                                  sceneKey: sceneKey,
+                                  onActionBounds: onActionBounds,
                                   cooldown: view.cooldownSec,
                                   dailyMaxed: view.dailyMaxed,
                                   preferredAction: view.preferredCareAction,
@@ -2289,10 +2328,27 @@ class _YardDecor extends StatelessWidget {
          'Provide exactly one of width or height.',
        );
 
+  Rect paintedRect(Size sceneSize) {
+    final crop = YardArt.decorCrop(decorId);
+    final subjectAspect =
+        crop.canvasAspectRatio * crop.heightFraction / crop.widthFraction;
+    final width = this.width ?? (height! / subjectAspect);
+    final visibleHeight =
+        width /
+        crop.widthFraction *
+        crop.canvasAspectRatio *
+        crop.heightFraction;
+    return Rect.fromLTWH(
+      (sceneSize.width - width) * (align.x + 1) / 2,
+      sceneSize.height * (align.y + 1) / 2 - visibleHeight,
+      width,
+      visibleHeight,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final crop = YardArt.decorCrop(decorId);
-    // Subject aspect ratio: how tall the cropped subject is per unit of width.
     final subjectAspect =
         crop.canvasAspectRatio * crop.heightFraction / crop.widthFraction;
     final width = this.width ?? (height! / subjectAspect);
@@ -4521,8 +4577,62 @@ class _DecorChoiceButton extends StatelessWidget {
   }
 }
 
+/// Reports the feed button's laid-out rectangle in yard coordinates. Measuring
+/// the real control also follows safe areas, text scaling and the two-row bar.
+class _YardActionBounds extends SingleChildRenderObjectWidget {
+  const _YardActionBounds({
+    required this.sceneKey,
+    required this.onBounds,
+    required super.child,
+  });
+
+  final GlobalKey sceneKey;
+  final ValueChanged<Rect> onBounds;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) =>
+      _RenderYardActionBounds(sceneKey, onBounds);
+
+  @override
+  void updateRenderObject(
+    BuildContext context,
+    _RenderYardActionBounds renderObject,
+  ) {
+    renderObject.onBounds = onBounds;
+    // Ancestors can reposition the same-sized button without relaying it out.
+    renderObject.markNeedsLayout();
+  }
+}
+
+class _RenderYardActionBounds extends RenderProxyBox {
+  _RenderYardActionBounds(this.sceneKey, this.onBounds);
+
+  final GlobalKey sceneKey;
+  ValueChanged<Rect> onBounds;
+  Rect? _lastBounds;
+  bool _scheduled = false;
+
+  @override
+  void performLayout() {
+    super.performLayout();
+    if (_scheduled) return;
+    _scheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _scheduled = false;
+      final scene = sceneKey.currentContext?.findRenderObject();
+      if (!attached || scene is! RenderBox || !scene.attached) return;
+      final bounds = localToGlobal(Offset.zero, ancestor: scene) & size;
+      if (bounds == _lastBounds) return;
+      _lastBounds = bounds;
+      onBounds(bounds);
+    });
+  }
+}
+
 class _ActionBar extends StatefulWidget {
   final WidgetRef ref;
+  final GlobalKey sceneKey;
+  final ValueChanged<Rect> onActionBounds;
   final Map<CareAction, int> cooldown;
   final Set<CareAction> dailyMaxed;
   final CareAction? preferredAction;
@@ -4531,6 +4641,8 @@ class _ActionBar extends StatefulWidget {
   final VoidCallback onTutorialDone;
   const _ActionBar({
     required this.ref,
+    required this.sceneKey,
+    required this.onActionBounds,
     required this.cooldown,
     required this.dailyMaxed,
     required this.preferredAction,
@@ -4646,27 +4758,39 @@ class _ActionBarState extends State<_ActionBar> {
         () => run(ctrl.bath, 'bath'),
       ),
     ];
+    Widget measureFeed(CareAction action, Widget child) =>
+        action == CareAction.feed
+        ? _YardActionBounds(
+            sceneKey: widget.sceneKey,
+            onBounds: widget.onActionBounds,
+            child: child,
+          )
+        : child;
     final buttons = [
       for (final (action, iconName, label, exp, onTap) in actions)
-        _ActionButton(
-          key: ValueKey<String>('care_action_${action.name}'),
-          iconName: iconName,
-          label: label,
-          exp: exp,
-          cooldownSec: _remaining[action] ?? 0,
-          dailyMaxed: widget.dailyMaxed.contains(action),
-          preferred:
-              widget.preferredAction == action && widget.careTutorialStep >= 3,
-          contented: widget.careContented,
-          highlighted:
-              (widget.careTutorialStep == 0 && action == CareAction.pat) ||
-              (widget.careTutorialStep == 1 && action == CareAction.feed),
-          highlightLabel: widget.careTutorialStep == 0
-              ? '先摸摸头'
-              : widget.careTutorialStep == 1
-              ? '再喂点东西'
-              : null,
-          onTap: onTap,
+        measureFeed(
+          action,
+          _ActionButton(
+            key: ValueKey<String>('care_action_${action.name}'),
+            iconName: iconName,
+            label: label,
+            exp: exp,
+            cooldownSec: _remaining[action] ?? 0,
+            dailyMaxed: widget.dailyMaxed.contains(action),
+            preferred:
+                widget.preferredAction == action &&
+                widget.careTutorialStep >= 3,
+            contented: widget.careContented,
+            highlighted:
+                (widget.careTutorialStep == 0 && action == CareAction.pat) ||
+                (widget.careTutorialStep == 1 && action == CareAction.feed),
+            highlightLabel: widget.careTutorialStep == 0
+                ? '先摸摸头'
+                : widget.careTutorialStep == 1
+                ? '再喂点东西'
+                : null,
+            onTap: onTap,
+          ),
         ),
     ];
     final textScaler = MediaQuery.textScalerOf(context);
