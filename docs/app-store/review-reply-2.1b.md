@@ -62,3 +62,5 @@ Gavin Gao
 审核员几乎必然把它当成付费入口。这就是被拒的直接原因。
 
 **1.0.1 建议**：把「支持小院」加进 `_homeMenuItems`，作为独立菜单项。
+
+> 勘误（2026-09-02）：上文第 2 步写的是 "upper-left corner"，实际手账按钮位于顶部 HUD 胶囊的右端（暖绒余额旁）。审核已通过，此处仅备注，下次回复时改为 "the book icon at the right end of the top status bar"。

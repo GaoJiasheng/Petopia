@@ -51,6 +51,14 @@ const _visualLanguage = String.fromEnvironment(
   defaultValue: 'en',
 );
 const _visualLandscape = bool.fromEnvironment('PETOPIA_VISUAL_LANDSCAPE');
+// flutter test 下 setPreferredOrientations 不会旋转模拟器；给定期望像素尺寸时
+// 用 setSurfaceSize 强制逻辑尺寸（与 yard_home_visual_test 同名开关）。
+const _expectedScreenshotWidth = int.fromEnvironment(
+  'PETOPIA_VISUAL_EXPECTED_WIDTH',
+);
+const _expectedScreenshotHeight = int.fromEnvironment(
+  'PETOPIA_VISUAL_EXPECTED_HEIGHT',
+);
 const _visualShopOnly = bool.fromEnvironment('PETOPIA_VISUAL_SHOP_ONLY');
 const _visualSettingsOnly = bool.fromEnvironment(
   'PETOPIA_VISUAL_SETTINGS_ONLY',
@@ -833,6 +841,16 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('capture and audit the complete localized UI', (tester) async {
+    if (_expectedScreenshotWidth > 0 && _expectedScreenshotHeight > 0) {
+      final pixelRatio = tester.view.devicePixelRatio;
+      await tester.binding.setSurfaceSize(
+        Size(
+          _expectedScreenshotWidth / pixelRatio,
+          _expectedScreenshotHeight / pixelRatio,
+        ),
+      );
+      addTearDown(() => tester.binding.setSurfaceSize(null));
+    }
     await SystemChrome.setPreferredOrientations(<DeviceOrientation>[
       _visualLandscape
           ? DeviceOrientation.landscapeLeft
@@ -912,8 +930,10 @@ void main() {
       await captureLastScrollAt('shop-themes-middle-1', 0.34);
       await captureLastScrollAt('shop-themes-middle-2', 0.67);
       await captureLastScrollAt('shop-themes-bottom', 1);
-      final logicalWidth =
-          tester.view.physicalSize.width / tester.view.devicePixelRatio;
+      // setSurfaceSize 不会改 view.physicalSize，横屏强制尺寸时以其为准。
+      final logicalWidth = _expectedScreenshotWidth > 0
+          ? _expectedScreenshotWidth / tester.view.devicePixelRatio
+          : tester.view.physicalSize.width / tester.view.devicePixelRatio;
       if (logicalWidth < 820) return;
       for (final category in const <(String, String, String)>[
         ('Garden Themes', '院子主题', 'shop-category-themes'),
