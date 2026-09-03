@@ -2880,10 +2880,10 @@ class _VisibleDecor {
 const _compactDecorAnchors = <int, _DecorAnchor>{
   0: _DecorAnchor(Alignment(-0.84, 0.05), 62),
   1: _DecorAnchor(Alignment(0.82, 0.17), 64),
-  2: _DecorAnchor(Alignment(-0.94, 0.40), 66),
+  2: _DecorAnchor(Alignment(-0.94, 0.34), 66),
   3: _DecorAnchor(Alignment(0.86, 0.37), 72),
   4: _DecorAnchor(Alignment(-0.92, 0.68), 79),
-  5: _DecorAnchor(Alignment(0.90, 0.67), 81),
+  5: _DecorAnchor(Alignment(0.90, 0.67), 78),
   // 后排：宠物下移后腾出的远景地面，可以靠近中线，但基线必须高于宠物顶边。
   6: _DecorAnchor(Alignment(-0.30, 0.04), 56),
   7: _DecorAnchor(Alignment(0.32, 0.07), 58),
@@ -2903,7 +2903,7 @@ const _wideDecorAnchors = <int, _DecorAnchor>{
 const _tabletPortraitDecorAnchors = <int, _DecorAnchor>{
   0: _DecorAnchor(Alignment(-0.84, 0.03), 52),
   1: _DecorAnchor(Alignment(0.82, 0.12), 54),
-  2: _DecorAnchor(Alignment(-0.94, 0.40), 56),
+  2: _DecorAnchor(Alignment(-0.94, 0.32), 56),
   3: _DecorAnchor(Alignment(0.86, 0.38), 61),
   4: _DecorAnchor(Alignment(-0.92, 0.72), 67),
   5: _DecorAnchor(Alignment(0.90, 0.76), 68),
