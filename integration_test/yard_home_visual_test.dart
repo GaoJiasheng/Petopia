@@ -285,12 +285,6 @@ VisitorPresenceView _placementVisitor({required bool rightLane}) {
   );
 }
 
-bool _visitorUsesRightLaneForTest(VisitorPresenceView visitor) => const {
-  'visitor_butterfly',
-  'visitor_firefly',
-  'visitor_starbug',
-  'visitor_campfire_light',
-}.contains(visitor.id);
 
 RevisitorPresenceView _revisitor() {
   return RevisitorPresenceView(
@@ -374,26 +368,8 @@ const _wideDecorAnchorAlignmentsForTest = <int, Alignment>{
   7: Alignment(0.32, 0.04),
 };
 
-const _compactDualActorAlignmentsForTest = <int, Alignment>{
-  0: Alignment(-0.84, 0.56),
-  1: Alignment(0.84, 0.58),
-  6: Alignment(-0.30, 0.04),
-  7: Alignment(0.32, 0.08),
-};
 
-const _tabletDualActorAlignmentsForTest = <int, Alignment>{
-  0: Alignment(-0.84, 0.56),
-  1: Alignment(0.84, 0.58),
-  6: Alignment(-0.30, 0.03),
-  7: Alignment(0.32, 0.07),
-};
 
-const _wideDualActorAlignmentsForTest = <int, Alignment>{
-  0: Alignment(-0.84, 0.56),
-  1: Alignment(0.84, 0.58),
-  6: Alignment(-0.30, 0.02),
-  7: Alignment(0.32, 0.06),
-};
 
 List<({YardSlotView slot, int targetPos})> _resolvedDecorSlotsForTest(
   List<YardSlotView> slots,
@@ -1070,35 +1046,19 @@ void main() {
           await _capture(tester, '${scenario.name}-t4000');
         }
       }
+      // 先截图再做摆放断言：失败时也留下现场，供人工复核。
+      final fingerprint = await _capture(tester, scenario.name);
       if (_placementRegression) {
         expect(
           find.byKey(const ValueKey<String>('yard_pet_sprite')),
           findsOneWidget,
           reason: '${scenario.name} is missing its current pet',
         );
-        final visitorUsesRightLane =
-            scenario.view.activeVisitor != null &&
-            _visitorUsesRightLaneForTest(scenario.view.activeVisitor!);
-        final bothSocialActors =
-            scenario.view.activeVisitor != null &&
-            scenario.view.revisitor != null;
-        final occupiedAnimalPoints = <int>{
-          if (bothSocialActors) ...const <int>{4, 5},
-          if (scenario.view.activeVisitor != null)
-            ...(bothSocialActors
-                ? visitorUsesRightLane
-                      ? const <int>{3}
-                      : const <int>{2}
-                : visitorUsesRightLane
-                ? const <int>{1, 3}
-                : const <int>{0, 2}),
-          if (scenario.view.revisitor != null)
-            ...(bothSocialActors
-                ? visitorUsesRightLane
-                      ? const <int>{2}
-                      : const <int>{3}
-                : const <int>{1, 3}),
-        };
+        // 自 3a9d761 起摆件槽位是院子里固定的物理位置：来客/回访轮换绝不
+        // 移动、隐藏或替换玩家的摆放，临时角色使用自己的侧车道。因此不再
+        // 有任何槽位被动物占用；下方的"摆件与来客重叠"断言负责验证侧车道
+        // 确实避开了摆件。
+        const occupiedAnimalPoints = <int>{};
         final sceneSize = tester.getSize(
           find.byKey(const ValueKey<String>('yard_background')),
         );
@@ -1110,23 +1070,10 @@ void main() {
             : tabletPortrait
             ? _tabletDecorAnchorAlignmentsForTest
             : _compactDecorAnchorAlignmentsForTest;
-        final dualActorLayout = occupiedAnimalPoints.containsAll(const <int>{
-          2,
-          3,
-          4,
-          5,
-        });
-        final anchorAlignments = dualActorLayout
-            ? wideLayout
-                  ? _wideDualActorAlignmentsForTest
-                  : tabletPortrait
-                  ? _tabletDualActorAlignmentsForTest
-                  : _compactDualActorAlignmentsForTest
-            : standardAnchorAlignments;
         final resolvedDecor = _resolvedDecorSlotsForTest(
           scenario.view.decorSlots,
           occupiedAnimalPoints,
-          anchorAlignments,
+          standardAnchorAlignments,
         );
         final decorFinders =
             <({YardSlotView slot, int targetPos, Finder finder})>[];
@@ -1318,7 +1265,6 @@ void main() {
               '${decorRects.map((entry) => '${entry.slot.pos}->${entry.targetPos}: ${entry.rect}').join('\n')}',
         );
       }
-      final fingerprint = await _capture(tester, scenario.name);
       expect(
         fingerprint.luminanceDeviation,
         greaterThan(18),

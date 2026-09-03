@@ -755,6 +755,15 @@ def main() -> int:
         action="store_true",
         help="also require a device Release build within package budgets",
     )
+    parser.add_argument(
+        "--placements-device",
+        metavar="UDID",
+        help=(
+            "run the yard decor placement regression "
+            "(PETOPIA_VISUAL_PLACEMENTS) on this booted simulator; "
+            "portrait only until the iPad landscape anchors are re-tuned"
+        ),
+    )
     args = parser.parse_args()
 
     static_checks()
@@ -783,6 +792,18 @@ def main() -> int:
     if not args.skip_flutter:
         run("Flutter analyze", ["flutter", "analyze"])
         run("Flutter tests", ["flutter", "test"])
+    if args.placements_device:
+        # 3a9d761 changed the yard policy (visitors never displace decor) without
+        # updating this oracle; build 40 shipped with it red. Keep it in the gate.
+        run(
+            "yard decor placement regression",
+            [
+                "flutter", "test", "integration_test/yard_home_visual_test.dart",
+                "-d", args.placements_device,
+                "--dart-define=PETOPIA_VISUAL_PLACEMENTS=true",
+                "--dart-define=PETOPIA_VISUAL_DIR=/tmp/petopia-placements-gate",
+            ],
+        )
 
     print("\n== release result ==")
     if FAILURES:

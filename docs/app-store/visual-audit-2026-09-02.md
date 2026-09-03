@@ -32,7 +32,7 @@ iPhone 仅支持竖屏（`Info.plist`），iPad 四向。
 | 08 界面 | 28–33 屏 × 3 语 × 6 配置 | 540 | **18/18 PASS，零 overflow** |
 | 09 明信片 | 40 地点 × 2 设备 | 80 | 2/2 PASS |
 | 10 支持页 | 6 态 × 2 设备（drive） | 12 | 2/2 PASS |
-| 11 摆放回归 | 6 配置 | 4 | **0/6 PASS**（见 P1 / P2） |
+| 11 摆放回归 | 6 配置（oracle 修正后重跑） | 6 | **0/6 PASS**：竖屏 4 组 = 真问题 P3'（T0），横屏 2 组 = 真问题 P2（T1） |
 | 12 本地化 | 3（drive） | 3 | PASS |
 | **合计** | 50 组 run | **1869** | **44 PASS / 6 FAIL** |
 
@@ -61,7 +61,8 @@ iPhone 仅支持竖屏（`Info.plist`），iPad 四向。
 | M1 | P3 | 中布局（600–819pt） | **iPad mini 竖屏商店 / 支持页仍走手机单列**：744pt 宽的主题卡一屏只放 3 张，支持页卡片图小、右侧大片空白（U2 在此档最重）。同档来客图鉴已正确切 3 列，商店/支持页可比照切双列 | `08-ui/en/ipadmini-port/ui-shop.png`、`ui-support.png` |
 | V2 | P3 | 院子·来客 | **来客在院子里普遍偏小**：104pt 档（狐狸/鹿/白鹭）约屏宽 7.5%（宠物 20%）尚可辨认；**72pt 档（蝴蝶/萤火/篝火光/星星虫）与默认 78pt 档在缩略图里接近一个点**。来客到访是核心收集时刻，弹窗里很大、落到院子里存在感弱。尺寸在 `yard_home_screen.dart:2680–2697` `_visitorYardPlacement`，受 `adaptive_layout.dart:117` 车道宽约束，放大需连 `PETOPIA_VISUAL_PLACEMENTS` 回归一起调。**回访者**（毕业伙伴）尺寸与 104pt 档同级、可辨认，但站在右侧花坛旁时**左侧与石圈轻微重叠**，景深含糊 | `_contact-sheets/04-visitors-iphone69.png`；`04-visitors/iphone69/yard-visitor-fox.png`；`05-revisitors/iphone69/yard-revisitor-shiba-v1.png` |
 | L1 | P2 | 玩法·豪华阶段 | **豪华阶段（`luxuryStage`，毕业 1/3/5/8/12 次 → 阶段 2–6，`graduation_service_impl.dart:60`）在 iPhone / iPad 竖屏没有任何可见表现**：6 张 luxury 截图完全相同。`yard_home_screen.dart:3062` `_visibleDecor` 只在 `wideLayout && slots.isEmpty` 时返回 `_wideLuxuryDecor[stage]`（iPad 横屏 6 套专属摆件：铃铛→蘑菇凳→路牌→树→池塘→长椅），竖屏分支直接 `_defaultDecor`；且任何布局只要玩家放过一件摆件就不再显示。`yard.dart:130` 的 `deco_tree` / `deco_pond` 只进 `activeDecorIds`（成就/来客权重），从不渲染；`assets/art/world/decor/deco_tree_seasonal_{spring,summer,autumn,winter}.png` 与 `deco_pond_small.png` 已画好但零引用。毕业是核心情感节点，其长期奖励目前对 iPhone 玩家不可见 | `_contact-sheets/06-luxury-iphone69.png`（6 张相同） vs `_contact-sheets/06-luxury-ipad13-land.png`（6 张各异） |
-| P1 | P2 | 流程·门禁 | **摆放回归 oracle 自 8/24 起过期、且发布门禁不跑它**。`3a9d761`（Codex build 40 polish）把 App 改成"来客绝不移动/隐藏玩家摆件，临时角色走侧车道"（`yard_home_screen.dart:3089` 注释），但 `yard_home_visual_test.dart:1085` 的 `occupiedAnimalPoints` 仍按 8/15 的旧规则要求来客在场时槽位 {0,2}/{1,3} 让路、低优先级摆件溢出。结果 `PETOPIA_VISUAL_PLACEMENTS` 在三台竖屏设备上都在 `meadow-visitor-left` 挂掉（`album_shelf` 被渲染而 oracle 期望溢出）。`check_release_candidate.py` 未包含该门禁，所以 build 40 带着红门禁上架。**修法：更新 oracle 到新策略（来客不占槽位），并把 PLACEMENTS（竖屏 + `EXPECTED_WIDTH/HEIGHT` 横屏）加进发布门禁** | `_logs/11-placements-{iphone69,iphone61,ipadmini,ipad13}-port.log` |
+| P1 | **已修** | 流程·门禁 | 摆放回归 oracle 自 8/24 起过期、且发布门禁不跑它。`3a9d761` 把 App 改成"来客绝不移动/隐藏玩家摆件，临时角色走侧车道"，但 `yard_home_visual_test.dart` 的 `occupiedAnimalPoints` 仍按旧规则要求摆件让路。**本次已修**：oracle 清空占用槽位、删除双角色重排锚点、截图提前到断言前（失败留现场）；`check_release_candidate.py` 新增 `--placements-device <udid>` 把该回归纳入门禁（竖屏；横屏待 T1）。修好的 oracle 随即暴露出下面的 P3' | `integration_test/yard_home_visual_test.dart`、`tools/check_release_candidate.py` |
+| P3' | P2 | 院子·来客车道 | **来客左车道与槽位 0 摆件重叠**（四台竖屏全部复现）：玩家在左上槽位放了摆件时，来客站在摆件正前方压住底座。`_visitorYardPlacement` 车道与 `_compactDecorAnchors` 槽位 0 同区，`yardSideActorRect` 只避宠物不避摆件。→ Codex 工单 **T0** | `11-placements/iphone69-port/yard-meadow-visitor-left.png`；四台竖屏 `_logs/11-placements-*-port.log` |
 | P2 | P2 | iPad 横屏·摆放 | **iPad 横屏满摆件时右列 1/3/5 三件两两重叠，mini 横屏槽位 4/5 还被动作栏盖住**——首次真横屏验证暴露的真几何问题。iPad 13 横（1376×1032）：slots 1/3 纵向重叠 37px、3/5 重叠 38px；iPad mini 横（1133×744）：0/2、1/3、3/5 重叠，slot 4 底边超动作栏 8px、slot 5 超 23px。`_wideDecorAnchors` 的右列 y 值按 1032pt 高排的，744pt 高时挤不下。**修法：右列 1/3/5 在横屏按画布高度缩放 y 间距，或 mini 横屏降到 6 槽** | `_logs/11-placements-ipad13-land.log`、`_logs/11-placements-ipadmini-land.log`（含精确 Rect） |
 | I2 | P3 | iPad·院子 | **iPad 13 竖屏宠物占比偏小**（约 14% 画布宽，iPhone 约 30%），配饰按同比例放大后宠物显得"被淹"。25% 缩小是按 iPhone 调的，iPad 竖屏可单独给一档 | `_contact-sheets/01-themes-ipad13-port.png` |
 | U3 | 已验证 | UI·手账 | 1.0.1 新增的「小院的灯 / 支持小院」入口：**iPad 侧栏 + iPhone 底部弹层两种形态均已验证**（真机全新存档、滚到底可见，网格下方，礼物图标 + 副标题 + 箭头） | `02-yard-states/ipad13-port/yard-notebook.png`；`13-real-app/iphone69-notebook-bottom-support-entry.png` |
@@ -113,8 +114,8 @@ iPhone 仅支持竖屏（`Info.plist`），iPad 四向。
 
 - [x] U3（iPad）：`02-yard-states/ipad13-port/yard-notebook.png` 已确认
 - [x] U3（iPhone）：真机 `13-real-app/iphone69-notebook-bottom-support-entry.png` 已确认
-- [ ] P1：更新摆放 oracle 后重跑 6 组 `11-placements-*`，补齐全配饰 × 全主题截图（本次仅各得 0–1 张）
-- [ ] P1 补一张 `meadow-visitor-left` 满摆件 + 来客同框截图，确认新策略下无视觉重叠
+- [x] P1：oracle 已修并重跑 6 组；竖屏 4 组停在 `meadow-visitor-left`（T0），横屏 2 组停在 `meadow-decor-only`（T1），全配饰 × 全主题截图待 T0/T1 修后补
+- [x] `meadow-visitor-left` 满摆件 + 来客同框截图已得（截图提前到断言前），确认来客压住槽位 0 摆件
 - [x] iPad mini 横屏商店 5 张分类页：harness 宽度门已修，en / zh-Hans 用 `PETOPIA_VISUAL_SHOP_ONLY=true` 补截完成（各 33 张）
 - [x] U4：`08-ui-en-ipad13-port` 修复后重跑 33 屏全过、日志零 overflow；`ui-visitor-compendium.png` 已替换为修复后截图
 - [ ] 本次截图基线说明：`08-ui-en-ipad13-port` 之前的 run 是修复前代码，`01-themes-ipad13-land` 起为修复后
@@ -140,3 +141,6 @@ flutter test integration_test/english_ui_visual_test.dart -d <udid> \
   --dart-define=PETOPIA_VISUAL_EXPECTED_WIDTH=2752 --dart-define=PETOPIA_VISUAL_EXPECTED_HEIGHT=2064
 ```
 
+## Codex 工单
+
+P2 全部整理为 `docs/prompt-codex-visual-audit-p2.md`（T0–T9）。
