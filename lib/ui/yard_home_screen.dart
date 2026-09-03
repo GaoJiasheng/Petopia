@@ -3754,6 +3754,17 @@ class _HomeMenuSheet extends StatelessWidget {
                         _HomeFeatureTile(item: item),
                     ],
                   ),
+                  const SizedBox(height: 16),
+                  const AppText(
+                    '小院的灯',
+                    style: TextStyle(
+                      color: Color(0xFF8A786A),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const _NotebookSupportEntryCard(),
                 ],
               ),
             ),
@@ -4051,6 +4062,78 @@ class _NotebookSupportMemoryCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
+                          color: Color(0xFF817063),
+                          fontSize: 12,
+                          height: 1.35,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 6),
+                const Icon(
+                  Icons.chevron_right_rounded,
+                  color: Color(0xFFA68E77),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// 手账里常驻的「支持小院」入口。1.0 时支持页只能从设置页底部进入，
+/// 审核员与玩家都找不到（Guideline 2.1(b) 拒审），故在手账中给它固定位置。
+class _NotebookSupportEntryCard extends StatelessWidget {
+  const _NotebookSupportEntryCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return Semantics(
+      button: true,
+      label: context.tr('支持小院'),
+      child: Material(
+        color: const Color(0xFFFFFAEF),
+        borderRadius: BorderRadius.circular(8),
+        child: InkWell(
+          key: const ValueKey<String>('notebook_support_entry'),
+          borderRadius: BorderRadius.circular(8),
+          onTap: () => Navigator.of(context).pop(_HomeMenuTarget.support),
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(12, 11, 12, 11),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: const Color(0xFFE8D8BC)),
+            ),
+            child: Row(
+              children: [
+                const AppIcon(
+                  'gift',
+                  size: 40,
+                  fallback: Icons.favorite_outline_rounded,
+                ),
+                const SizedBox(width: 11),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: const [
+                      AppText(
+                        '支持小院',
+                        style: TextStyle(
+                          color: Color(0xFF604B3E),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w900,
+                        ),
+                      ),
+                      SizedBox(height: 3),
+                      AppText(
+                        '支持完全自愿，装饰回礼不会影响成长与收集。',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
                           color: Color(0xFF817063),
                           fontSize: 12,
                           height: 1.35,

@@ -100,7 +100,9 @@ class _VisitorDexGrid extends StatelessWidget {
                 : (width >= 900 ? 4 : (width >= 600 ? 3 : 2));
             final english = context.l10n.isEnglish;
               final ratio = width >= 900
-                  ? (english ? (enlargedText ? 0.66 : 0.78) : 0.78)
+                  // 英文来客名常折两行（如 Chestnut the Squirrel），
+                  // 0.78 在 iPad 竖屏 4 列下底部溢出 18px，留高到 0.72。
+                  ? (english ? (enlargedText ? 0.66 : 0.72) : 0.78)
                   : width >= 600
                   ? (english ? (enlargedText ? 0.62 : 0.66) : 0.72)
                   : english
