@@ -102,9 +102,36 @@ flutter test integration_test/english_ui_visual_test.dart -d ED7AC183-F9B7-4784-
 
 修改文件：无。验证命令：未运行。复核截图：未生成。
 
-## T9 — 未开始
+## T9 — 完成
 
-修改文件：无。验证命令：未运行。复核截图：未生成。
+修改文件：`lib/ui/support_yard_screen.dart`、本报告。单列商品卡取消固定高度，正文按标题 → 描述 → 状态（如有）→ 按钮自然堆叠，间距为 8/10pt；卡片取文字与 104pt 商品图的较大高度，图片垂直居中。现有双列阈值实际为 760pt（工单写作 ≥600pt）；保持既有阈值、双列尺寸与间距，没有另改布局分档。
+
+验证命令与结果：
+
+- `python3 tools/check_release_candidate.py`（不带 `--placements-device`）：**PASS**；内含 `flutter analyze`：0 issue，`flutter test`：308 项通过、3 项原有跳过。日志：`build/visual-audit-p2/T9/logs/release.log`。
+- 三语 × iPhone 6.9 / 17e / iPad mini 竖屏，共 9 组完整 `english_ui_visual_test` **全部 PASS**，252 张截图，所有尺寸正确、无 overflow。逐组完整命令和结果保存在 `build/visual-audit-p2/T9/ui-validation.json`。
+
+```bash
+flutter test integration_test/english_ui_visual_test.dart -d <下表 UDID> --dart-define=PETOPIA_VISUAL_LANGUAGE=<en|zh-Hans|zh-Hant> --dart-define=PETOPIA_CAPTURE_DIR=/Users/gavin/work/petopia/build/visual-audit-p2/T9/<语言>/<配置> --dart-define=PETOPIA_CAPTURE_PREFIX=ui
+```
+
+| 配置 | UDID | 物理像素 | en / zh-Hans / zh-Hant |
+| --- | --- | --- | --- |
+| iphone69-port | 00701277-220E-4074-BCAF-245FE12A5253 | 1320×2868 | PASS / PASS / PASS |
+| iphone61-port | E35A99F1-F6C1-4BF8-8EED-018CDDB93917 | 1170×2532 | PASS / PASS / PASS |
+| ipadmini-port | 7759EEF5-F257-4C08-BBE0-600B320B724E | 1488×2266 | PASS / PASS / PASS |
+
+```bash
+flutter drive --driver=test_driver/integration_test.dart --target=integration_test/support_visual_test.dart -d 00701277-220E-4074-BCAF-245FE12A5253 --dart-define=PETOPIA_VISUAL_PREFIX=petopia-T9-support-20260903
+```
+
+以上 drive **PASS**，catalog / treat-arrived / treat-opening / guardian-unused / guardian-used / guardian-letter 六态通过，使用模拟交易数据。日志 `T9/logs/support-drive.log`，原始六态截图归档在 `T9/support-drive/`。
+
+复核截图根目录：`/Users/gavin/work/petopia/build/visual-audit-p2/T9/`。三语三台各保留 `ui-support.png`、`ui-support-middle.png`、`ui-support-bottom.png`。
+
+![T9 单列卡片复核](/Users/gavin/work/petopia/build/visual-audit-p2/T9/contact-sheet.png)
+
+![T9 支持六态](/Users/gavin/work/petopia/build/visual-audit-p2/T9/support-drive-contact-sheet.png)
 
 ## 需要账号持有人手动做的事
 

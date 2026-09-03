@@ -188,7 +188,7 @@ class _SupportBody extends ConsumerWidget {
                         _SupportProductCard(
                           product: SupportCatalog.all[index],
                           state: state,
-                          height: productExtent,
+                          height: null,
                         ),
                         if (index != SupportCatalog.all.length - 1)
                           const SizedBox(height: 12),
@@ -318,7 +318,7 @@ class _SupportProductCard extends ConsumerWidget {
 
   final SupportProductSpec product;
   final SupportPurchaseState state;
-  final double height;
+  final double? height;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -388,6 +388,9 @@ class _SupportProductCard extends ConsumerWidget {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
+                    mainAxisSize: height == null
+                        ? MainAxisSize.min
+                        : MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -401,7 +404,7 @@ class _SupportProductCard extends ConsumerWidget {
                           fontWeight: FontWeight.w900,
                         ),
                       ),
-                      const SizedBox(height: 5),
+                      SizedBox(height: height == null ? 8 : 5),
                       AppText(
                         subtitle,
                         maxLines: 3,
@@ -414,7 +417,7 @@ class _SupportProductCard extends ConsumerWidget {
                         ),
                       ),
                       if (hasPendingGift) ...[
-                        const SizedBox(height: 5),
+                        SizedBox(height: height == null ? 8 : 5),
                         AppText(
                           '有 $pendingCount 份礼物在这里',
                           style: const TextStyle(
@@ -424,7 +427,7 @@ class _SupportProductCard extends ConsumerWidget {
                           ),
                         ),
                       ] else if (activeLabel != null) ...[
-                        const SizedBox(height: 5),
+                        SizedBox(height: height == null ? 8 : 5),
                         AppText(
                           activeLabel,
                           style: const TextStyle(
@@ -434,7 +437,10 @@ class _SupportProductCard extends ConsumerWidget {
                           ),
                         ),
                       ],
-                      const Spacer(),
+                      if (height == null)
+                        const SizedBox(height: 10)
+                      else
+                        const Spacer(),
                       SizedBox(
                         width: double.infinity,
                         child: FilledButton(
