@@ -332,7 +332,7 @@ abstract final class EnglishCopy {
 
     match = RegExp(r'^第一次见面：(\d{4})\.(\d{2})\.(\d{2})$').firstMatch(source);
     if (match != null) {
-      return 'First met: ${int.parse(match[2]!)}/${int.parse(match[3]!)}/${match[1]!.substring(2)}';
+      return 'First met: ${int.parse(match[2]!)}/${int.parse(match[3]!)}/${match[1]}';
     }
 
     match = RegExp(r'^第一次见面：(.+)$').firstMatch(source);
@@ -368,11 +368,11 @@ abstract final class EnglishCopy {
 
     match = RegExp(r'^首次 (\d{4})\.(\d{2})\.(\d{2})$').firstMatch(source);
     if (match != null) {
-      return 'First seen ${int.parse(match[2]!)}/${int.parse(match[3]!)}/${match[1]}';
+      return 'Seen ${int.parse(match[2]!)}/${int.parse(match[3]!)}/${match[1]!.substring(2)}';
     }
 
     match = RegExp(r'^首次 (.+)$').firstMatch(source);
-    if (match != null) return 'First seen ${match[1]}';
+    if (match != null) return 'Seen ${_term(match[1]!)}';
 
     match = RegExp(r'^再送 (\d+) 只毕业就能遇见它$').firstMatch(source);
     if (match != null) {

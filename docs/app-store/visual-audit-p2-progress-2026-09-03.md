@@ -44,7 +44,7 @@ flutter test integration_test/yard_home_visual_test.dart   -d ED7AC183-F9B7-4784
 
 接触表使用 `python3 tools/build_ui_audit_contact_sheet.py build/visual-audit-p2/T0/contact-sheet-source build/visual-audit-p2/T0/contact-sheet.png --columns 4` 生成。原始截图均保留。
 
-提交按工单拆为 `fix(yard): T0a 来客/回访车道避让已放置摆件` 和 `fix(yard): T0b 紧凑/平板竖屏左列锚点间距`。以上门禁验证的是 T0a + T0b 的完整修复组合。
+提交按工单拆为 `fix(yard): T0a 来客/回访车道避让已放置摆件` 和 `fix(yard): T0b 紧凑/平板竖屏左列锚点间距`。T0a 提交为 `66389bb`，T0b 为 `ab33479`。以上门禁验证的是 T0a + T0b 的完整修复组合。
 
 ## T1 — 未开始
 
@@ -62,9 +62,33 @@ flutter test integration_test/yard_home_visual_test.dart   -d ED7AC183-F9B7-4784
 
 修改文件：无。验证命令：未运行。复核截图：未生成。
 
-## T5 — 未开始
+## T5 — 完成
 
-修改文件：无。验证命令：未运行。复核截图：未生成。
+修改文件：`lib/l10n/english_copy.dart`、本报告。英文列表日期统一为 `Seen M/d/yy`；详情“第一次见面”按工单目标显示四位年份 `First met: M/d/yyyy`（基线原为两位年份，已恢复）。中文源串及布局代码未改。
+
+验证命令与结果：
+
+- `python3 tools/check_release_candidate.py`（不带 `--placements-device`）：**PASS**。内部 `flutter analyze` 为 0 issue；`flutter test` 为 308 项通过、3 项跳过。日志：`build/visual-audit-p2/T5/logs/release.log`。
+- `dart /tmp/petopia-t5-copy.dart`：实际输出 `Seen 7/21/26 / First met: 7/21/2026`；日志：`build/visual-audit-p2/T5/logs/copy-probe.log`。
+- 以下 4 组完整英文界面套件 **全部 PASS**，共 122 张截图，无尺寸错误或 overflow。iPhone 17e 图鉴日期完整、无省略号；iPad 三档保持原有布局，统一短日期在各档均生效。
+
+```bash
+flutter test integration_test/english_ui_visual_test.dart -d E35A99F1-F6C1-4BF8-8EED-018CDDB93917 --dart-define=PETOPIA_VISUAL_LANGUAGE=en --dart-define=PETOPIA_CAPTURE_DIR=/Users/gavin/work/petopia/build/visual-audit-p2/T5/en/iphone61-port --dart-define=PETOPIA_CAPTURE_PREFIX=ui
+flutter test integration_test/english_ui_visual_test.dart -d 7759EEF5-F257-4C08-BBE0-600B320B724E --dart-define=PETOPIA_VISUAL_LANGUAGE=en --dart-define=PETOPIA_CAPTURE_DIR=/Users/gavin/work/petopia/build/visual-audit-p2/T5/en/ipadmini-port --dart-define=PETOPIA_CAPTURE_PREFIX=ui
+flutter test integration_test/english_ui_visual_test.dart -d ED7AC183-F9B7-4784-9DF3-C5394AB51952 --dart-define=PETOPIA_VISUAL_LANGUAGE=en --dart-define=PETOPIA_CAPTURE_DIR=/Users/gavin/work/petopia/build/visual-audit-p2/T5/en/ipad13-port --dart-define=PETOPIA_CAPTURE_PREFIX=ui
+flutter test integration_test/english_ui_visual_test.dart -d ED7AC183-F9B7-4784-9DF3-C5394AB51952 --dart-define=PETOPIA_VISUAL_LANGUAGE=en --dart-define=PETOPIA_CAPTURE_DIR=/Users/gavin/work/petopia/build/visual-audit-p2/T5/en/ipad13-land --dart-define=PETOPIA_CAPTURE_PREFIX=ui --dart-define=PETOPIA_VISUAL_LANDSCAPE=true --dart-define=PETOPIA_VISUAL_EXPECTED_WIDTH=2752 --dart-define=PETOPIA_VISUAL_EXPECTED_HEIGHT=2064
+```
+
+| 配置 | 物理像素 | 截图数 | 日志（T5/logs/ 下） |
+| --- | --- | --- | --- |
+| iphone61-port | 1170×2532 | 28 | `ui-en-iphone61-port.log` |
+| ipadmini-port | 1488×2266 | 28 | `ui-en-ipadmini-port.log` |
+| ipad13-port | 2064×2752 | 33 | `ui-en-ipad13-port.log` |
+| ipad13-land | 2752×2064 | 33 | `ui-en-ipad13-land.log` |
+
+复核截图根目录：`/Users/gavin/work/petopia/build/visual-audit-p2/T5/en/`；每台保留 `ui-visitor-compendium.png` 与 `ui-visitor-compendium-bottom.png`。
+
+[最窄 iPhone 图鉴截图](/Users/gavin/work/petopia/build/visual-audit-p2/T5/en/iphone61-port/ui-visitor-compendium.png)。
 
 ## T6 — 未开始
 
