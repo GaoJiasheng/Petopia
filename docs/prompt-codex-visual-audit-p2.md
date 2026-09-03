@@ -35,6 +35,18 @@
 
 **验收**：`PETOPIA_VISUAL_PLACEMENTS` 四台竖屏全绿（横屏另见 T1）；贴 `meadow-visitor-left` 与 `meadow-visitor-right` 的 iPhone 6.9" + iPad 13 竖屏截图。
 
+### T0 范围修订（2026-09-03，回应执行报告）
+
+执行中发现基线 `dc0e2f9` 第 49 场景 `selected-decor-both-actors`（snow_house，全槽位）**槽位 2 花箱压在槽位 4 稻草人帽子上**（重叠约较小矩形 23%），与来客无关，是 8 槽改造时左列 2/4 纵向间距不足。
+
+**批准纳入 T0**，规则澄清：
+- "摆件一像素不能动"指**来客/回访到访时不得移动玩家摆件**（运行时不变），**不禁止修订静态锚点表**。
+- 允许调整 `_compactDecorAnchors` 与 `_tabletPortraitDecorAnchors` 的槽位 2/4（必要时 3/5）纵向间距或尺寸，使两格同时放高个子摆件（花箱/稻草人、风铃/风向标）也不重叠；后排 6/7 与前排 0/1 不动。
+- 锚点改动要同时过全部 placements 场景（不只第 49 个），四台竖屏全绿；横屏仍归 T1。
+- 车道算法里 `maxTop = sceneSize.height - 140 - actorSize` 的 140 是写死的动作栏高度，改用实际动作栏矩形（oracle 用的是 `care_action_feed` 的 top）。
+
+提交拆两个 commit：`fix(yard): T0a 来客/回访车道避让已放置摆件` 与 `fix(yard): T0b 紧凑/平板竖屏左列锚点间距`，便于回滚。
+
 ---
 
 ## T1｜iPad 横屏满摆件右列重叠 + mini 横屏被动作栏盖住（P2）
