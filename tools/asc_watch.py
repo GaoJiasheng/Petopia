@@ -43,6 +43,7 @@ def save_prev(cur):
 
 
 prev = load_prev()
+initial = prev
 if prev is not None:
     print(f"[watch] 恢复基线 版本={prev[0]} 提审={prev[1]}，每 {INTERVAL // 60} 分钟查一次", flush=True)
 while True:
@@ -52,12 +53,14 @@ while True:
         print(f"[warn] 查询失败: {e}", flush=True)
         time.sleep(INTERVAL); continue
     if prev is None:
+        initial = cur
         print(f"[watch] 起始状态 版本={cur[0]} 提审={cur[1]}", flush=True)
     elif cur != prev:
         print(f"[变化] 版本 {prev[0]} -> {cur[0]} ｜ 提审 {prev[1]} -> {cur[1]}", flush=True)
     prev = cur
     save_prev(cur)
-    if cur[0] in TERMINAL:
+    # 起始时就处于的状态不算终态：被拒后回复审核、等待复审期间仍是 REJECTED
+    if cur[0] in TERMINAL and cur != initial:
         print(f"[终态] 版本状态 = {cur[0]}，监控结束", flush=True)
         break
     time.sleep(INTERVAL)
