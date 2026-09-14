@@ -1218,6 +1218,16 @@ void main() {
           }
 
           for (var i = 0; i < props.length; i++) {
+            if (props[i].bottom > pet.bottom) {
+              // Outstretched hands and sign tips remain painted all the way
+              // to the crop edge. Keep that whole foreground crop off the
+              // pet's face, beyond the general subject-overlap oracle.
+              expect(
+                props[i].overlaps(subject(pet)),
+                isFalse,
+                reason: '$size ${items[i]} reaches into the pet silhouette',
+              );
+            }
             expect(
               substantial(subject(props[i]), subject(pet)),
               isFalse,
@@ -1249,6 +1259,11 @@ void main() {
                 find.byKey(ValueKey('yard_decor_6_$item')),
               );
               final painted = decor.deflate(decor.shortestSide * .1);
+              expect(
+                decor.overlaps(subject),
+                isFalse,
+                reason: '$size $item painted edge reaches $key',
+              );
               expect(
                 painted.overlaps(subject),
                 isFalse,

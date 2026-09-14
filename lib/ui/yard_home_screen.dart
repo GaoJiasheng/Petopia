@@ -472,7 +472,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                 final wideLayout = PetopiaAdaptive.useYardSidePanels(size);
                 final tabletPortrait = !wideLayout && size.width >= 600;
                 final sceneScale = PetopiaAdaptive.yardSceneScale(size);
-                final petWidth = PetopiaAdaptive.petStageWidth(size);
+                final petWidth = PetopiaAdaptive.yardPetWidth(size);
                 final petAlignment = PetopiaAdaptive.yardPetAlignment(size);
                 final wideBackground = size.width >= 600;
                 final sourceWidth = wideBackground ? 2732 : 1290;
@@ -524,16 +524,12 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                       ..sort(
                         (a, b) => a.anchor.align.y.compareTo(b.anchor.align.y),
                       );
-                const usesPlacedDecorPerspective = true;
                 final decorRects = [
                   for (final decor in visibleDecor)
                     _placedDecor(
                       decor,
                       luxuryStage: view.luxuryStage,
-                      heightDriven: usesPlacedDecorPerspective,
-                      wideLayout: wideLayout,
-                      tabletPortrait: tabletPortrait,
-                      sceneScale: sceneScale,
+                      sceneSize: size,
                     ).paintedRect(size),
                 ];
                 final rearDecor = visibleDecor
@@ -576,10 +572,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                       _placedDecor(
                         decor,
                         luxuryStage: view.luxuryStage,
-                        heightDriven: usesPlacedDecorPerspective,
-                        wideLayout: wideLayout,
-                        tabletPortrait: tabletPortrait,
-                        sceneScale: sceneScale,
+                        sceneSize: size,
                       ),
                     if (lanternActive)
                       _SupportYardDecor(
@@ -690,14 +683,14 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                           final revisitor = view.revisitor!;
                           final revisitorAlignment = Alignment(
                             visitorUsesRightLane ? -0.56 : 0.56,
-                            0.46,
+                            0.38,
                           );
                           final rect = PetopiaAdaptive.yardSideActorRect(
                             sceneSize: size,
                             petWidth: petWidth,
                             petAlignment: petAlignment,
                             preferredAlignment: revisitorAlignment,
-                            preferredSize: petWidth * 0.66,
+                            preferredSize: petWidth * 0.72,
                             decorRects: decorRects,
                             actionBarRect: actionBarRect,
                           );
@@ -746,10 +739,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                       _placedDecor(
                         decor,
                         luxuryStage: view.luxuryStage,
-                        heightDriven: usesPlacedDecorPerspective,
-                        wideLayout: wideLayout,
-                        tabletPortrait: !wideLayout && size.width >= 600,
-                        sceneScale: sceneScale,
+                        sceneSize: size,
                       ),
                     Positioned.fill(
                       child: _YardAtmosphere(
@@ -2747,16 +2737,16 @@ _VisitorYardPlacement _visitorYardPlacement(VisitorPresenceView visitor) {
     ),
     'visitor_firefly' || 'visitor_starbug' || 'visitor_campfire_light' =>
       const _VisitorYardPlacement(Alignment(0.46, 0.22), 72),
-    'visitor_egret' ||
-    'visitor_deer' ||
-    'visitor_fox' => const _VisitorYardPlacement(Alignment(-0.54, 0.38), 104),
+    'visitor_deer' => const _VisitorYardPlacement(Alignment(-0.54, 0.20), 185),
+    'visitor_egret' => const _VisitorYardPlacement(Alignment(-0.54, 0.20), 148),
+    'visitor_fox' => const _VisitorYardPlacement(Alignment(-0.54, 0.26), 118),
     'visitor_calico' ||
     'visitor_tanuki' ||
     'visitor_owl' ||
     'visitor_crow' ||
     'visitor_snowhare' => const _VisitorYardPlacement(
-      Alignment(-0.50, 0.43),
-      92,
+      Alignment(-0.50, 0.28),
+      118,
     ),
     _ => const _VisitorYardPlacement(Alignment(-0.52, 0.46), 78),
   };
@@ -2869,7 +2859,7 @@ Widget _todayYardIcon(TodayYardKind kind, double size) {
 class _DecorAnchor {
   final Alignment align;
   final double width;
-  const _DecorAnchor(this.align, this.width);
+  const _DecorAnchor(this.align, [this.width = 1]);
 }
 
 class _VisibleDecor {
@@ -2879,44 +2869,41 @@ class _VisibleDecor {
   const _VisibleDecor(this.decorId, this.anchor, {this.fixedWidth = false});
 }
 
-// Every anchor is the painted footprint on the lawn, never the visual center.
-// Even the deepest row starts below the fence line on every shipped portrait
-// background. Tall artwork may rise in front of foliage, but its base must
-// always remain visibly planted in grass.
-// Slots are deliberately not mirrored. Paired anchors at matching depths made
-// the lawn read as two shelves flanking an empty corridor, so each side keeps
-// its own depth rhythm and the near row is allowed to step inward.
+// Anchors are ground footprints. The far garden contains four separate
+// places near the fence; the middle lawn has a small central garden feature
+// and a right-side seat. Two foreground places sit at unequal distances from
+// the edges. Object dimensions come from one world scale, never slot widths.
 const _compactDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.62, 0.12), 60),
-  1: _DecorAnchor(Alignment(0.60, 0.14), 60),
-  2: _DecorAnchor(Alignment(-0.92, 0.20), 48),
-  3: _DecorAnchor(Alignment(0.90, 0.20), 52),
-  4: _DecorAnchor(Alignment(-0.84, 0.65), 54),
-  5: _DecorAnchor(Alignment(0.78, 0.68), 54),
-  6: _DecorAnchor(Alignment(-0.30, 0.10), 45),
-  7: _DecorAnchor(Alignment(0.28, 0.12), 48),
+  0: _DecorAnchor(Alignment(-0.78, 0.03)),
+  1: _DecorAnchor(Alignment(0.82, 0.07)),
+  2: _DecorAnchor(Alignment(0.00, 0.30)),
+  3: _DecorAnchor(Alignment(0.84, 0.22)),
+  4: _DecorAnchor(Alignment(-0.92, 0.66)),
+  5: _DecorAnchor(Alignment(0.80, 0.68)),
+  6: _DecorAnchor(Alignment(-0.23, 0.00)),
+  7: _DecorAnchor(Alignment(0.28, 0.10)),
 };
 
 const _wideDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.76, 0.02), 60),
-  1: _DecorAnchor(Alignment(0.74, 0.04), 60),
-  2: _DecorAnchor(Alignment(-0.86, 0.22), 50),
-  3: _DecorAnchor(Alignment(0.86, 0.24), 52),
-  4: _DecorAnchor(Alignment(-0.66, 0.58), 64),
-  5: _DecorAnchor(Alignment(0.68, 0.60), 54),
-  6: _DecorAnchor(Alignment(-0.38, 0.00), 45),
-  7: _DecorAnchor(Alignment(0.36, 0.06), 48),
+  0: _DecorAnchor(Alignment(-0.80, 0.02)),
+  1: _DecorAnchor(Alignment(0.60, 0.08)),
+  2: _DecorAnchor(Alignment(-0.22, 0.28)),
+  3: _DecorAnchor(Alignment(0.84, 0.40)),
+  4: _DecorAnchor(Alignment(-0.60, 0.60)),
+  5: _DecorAnchor(Alignment(0.50, 0.62)),
+  6: _DecorAnchor(Alignment(-0.42, 0.00)),
+  7: _DecorAnchor(Alignment(0.33, 0.12)),
 };
 
 const _tabletPortraitDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.62, 0.12), 60),
-  1: _DecorAnchor(Alignment(0.64, 0.14), 60),
-  2: _DecorAnchor(Alignment(-0.88, 0.22), 50),
-  3: _DecorAnchor(Alignment(0.88, 0.24), 54),
-  4: _DecorAnchor(Alignment(-0.76, 0.64), 58),
-  5: _DecorAnchor(Alignment(0.72, 0.68), 54),
-  6: _DecorAnchor(Alignment(-0.36, 0.10), 48),
-  7: _DecorAnchor(Alignment(0.46, 0.12), 52),
+  0: _DecorAnchor(Alignment(-0.80, 0.03)),
+  1: _DecorAnchor(Alignment(0.76, 0.07)),
+  2: _DecorAnchor(Alignment(-0.16, 0.24)),
+  3: _DecorAnchor(Alignment(0.66, 0.22)),
+  4: _DecorAnchor(Alignment(-0.80, 0.66)),
+  5: _DecorAnchor(Alignment(0.68, 0.68)),
+  6: _DecorAnchor(Alignment(-0.40, 0.00)),
+  7: _DecorAnchor(Alignment(0.20, 0.10)),
 };
 
 const _compactUtilityAnchors = <String, _DecorAnchor>{
@@ -2967,13 +2954,13 @@ List<_VisibleDecor> _fixedYardUtilities({
   required Size sceneSize,
   required double sceneScale,
 }) {
-  final petWidth = PetopiaAdaptive.petStageWidth(sceneSize);
+  final petWidth = PetopiaAdaptive.yardPetWidth(sceneSize);
   final petRect = PetopiaAdaptive.alignedSquareRect(
     sceneSize: sceneSize,
     squareSize: petWidth,
     alignment: PetopiaAdaptive.yardPetAlignment(sceneSize),
   );
-  final bowlWidth = petWidth * 0.25;
+  final bowlWidth = petWidth * 0.32;
   final footprintY =
       (petRect.bottom + petWidth * 0.015) * 2 / sceneSize.height - 1;
   _DecorAnchor anchor(double side) => _DecorAnchor(
@@ -2992,116 +2979,53 @@ List<_VisibleDecor> _fixedYardUtilities({
   ];
 }
 
-double _decorPerspectiveScale(
-  double footprintY, {
-  required bool wideLayout,
-  required bool tabletPortrait,
-}) {
-  final farY = wideLayout ? 0.18 : 0.22;
-  final nearY = wideLayout
-      ? 0.74
-      : tabletPortrait
-      ? 0.84
-      : 0.72;
-  final progress = ((footprintY - farY) / (nearY - farY)).clamp(0.0, 1.0);
-  return 0.78 + progress * 0.30;
-}
-
-double _decorWidthScale(String decorId) => switch (decorId) {
-  // Tall, narrow objects remain prominent but leave air around their tips.
-  'wind_vane' => 0.92,
-  'wind_chime' => 0.94,
-  // Ground-hugging objects benefit from a little more horizontal presence.
-  'pond_small' || 'flowerbed_small' => 1.06,
-  _ => 1.0,
+/// Dimensions are authoring references in metres for the existing storybook
+/// artwork, not gameplay values. Each prop uses either standing height or
+/// ground width; the original painted aspect ratio remains untouched.
+/// The small scarecrow and freestanding chime are garden ornaments, while
+/// the seasonal tree is a young garden tree, not a bowl-sized bonsai.
+({double metres, bool ground}) _decorDimensions(String id) => switch (id) {
+  'scarecrow' => (metres: 0.95, ground: false),
+  'wind_chime' => (metres: 0.90, ground: false),
+  'wind_vane' => (metres: 0.90, ground: false),
+  'wood_sign' => (metres: 0.70, ground: false),
+  'mailbox_wood' => (metres: 0.65, ground: false),
+  'album_shelf' => (metres: 0.60, ground: false),
+  'tree_seasonal_spring' ||
+  'tree_seasonal_summer' ||
+  'tree_seasonal_autumn' ||
+  'tree_seasonal_winter' => (metres: 1.40, ground: false),
+  'fireplace' => (metres: 0.55, ground: false),
+  'night_light' => (metres: 0.35, ground: false),
+  'mushroom_bench' => (metres: 0.35, ground: false),
+  'flower_box' => (metres: 0.35, ground: false),
+  'welcome_bell' => (metres: 0.70, ground: false),
+  'pond_small' => (metres: 1.35, ground: true),
+  'flowerbed_small' => (metres: 0.85, ground: true),
+  _ => (metres: 0.50, ground: false),
 };
 
-double _decorDepthEmphasis(String decorId, double footprintY) {
-  if (footprintY >= 0.20) return 1;
-  return switch (decorId) {
-    // These low silhouettes lose too much presence after normal far-row
-    // perspective scaling. Restore their readable painted footprint without
-    // changing the depth or enlarging copies placed nearer to the pet.
-    'flower_box' || 'mushroom_bench' => 1.9,
-    _ => 1.0,
-  };
-}
-
-/// Builds one prop on the lawn.
-///
-/// Placed decor (the slot system) is sized by height so authored proportions
-/// survive the source canvases' wildly different aspect ratios. The fixed
-/// scenery presets keep width sizing because their anchors encode art width.
 _YardDecor _placedDecor(
   _VisibleDecor decor, {
   required int luxuryStage,
-  required bool heightDriven,
-  required bool wideLayout,
-  required bool tabletPortrait,
-  required double sceneScale,
+  required Size sceneSize,
 }) {
-  heightDriven = heightDriven && !decor.fixedWidth;
-  final unit =
-      decor.anchor.width *
-      sceneScale *
-      (heightDriven
-          ? _decorPerspectiveScale(
-              decor.anchor.align.y,
-              wideLayout: wideLayout,
-              tabletPortrait: tabletPortrait,
-            )
-          : 1);
-  final groundWidth = switch (decor.decorId) {
-    'pond_small' => unit * 1.85,
-    'flowerbed_small' => unit * 1.25,
-    _ => null,
-  };
+  final dimensions = _decorDimensions(decor.decorId);
+  final extent =
+      dimensions.metres *
+      PetopiaAdaptive.yardMetreScale(sceneSize, decor.anchor.align.y);
   return _YardDecor(
     imageKey: ValueKey<String>('yard_decor_${luxuryStage}_${decor.decorId}'),
     align: decor.anchor.align,
     decorId: decor.decorId,
-    width:
-        groundWidth ??
-        (heightDriven ? null : unit * _decorWidthScale(decor.decorId)),
-    height: heightDriven && groundWidth == null
-        ? unit *
-              _decorHeightRatio(decor.decorId) *
-              _decorDepthEmphasis(decor.decorId, decor.anchor.align.y)
+    width: decor.fixedWidth
+        ? decor.anchor.width * PetopiaAdaptive.yardSceneScale(sceneSize)
+        : dimensions.ground
+        ? extent
         : null,
+    height: decor.fixedWidth || dimensions.ground ? null : extent,
   );
 }
-
-/// How tall a placed prop stands, as a multiple of its slot unit.
-///
-/// Placed decor is sized by height, not width: the source canvases range from
-/// 0.58 to 2.06 in subject aspect ratio, so a shared width made a wind chime
-/// render 3.2x taller than a flower bed and the lawn read as a shelf. Sizing by
-/// height puts the ordering back under authorship — a pond stays flat and a
-/// chime stays tall — and lets each canvas derive its own width.
-double _decorHeightRatio(String decorId) => switch (decorId) {
-  // Standing structures a person could lean on.
-  'scarecrow' => 1.89,
-  'wind_chime' => 1.83,
-  'wind_vane' => 1.71,
-  'wood_sign' => 1.55,
-  'mailbox_wood' => 1.48,
-  'album_shelf' => 1.33,
-  'tree_seasonal_spring' ||
-  'tree_seasonal_summer' ||
-  'tree_seasonal_autumn' ||
-  'tree_seasonal_winter' => 1.65,
-  // Waist-high furniture.
-  'fireplace' => 1.04,
-  'night_light' => 1.02,
-  'mushroom_bench' => 0.94,
-  'flower_box' => 0.90,
-  // Ground-hugging props: wide and low, never towers.
-  'food_bowl_full' => 0.66,
-  'flowerbed_small' => 0.45,
-  'water_bowl' => 0.63,
-  'pond_small' => 0.39,
-  _ => 1.12,
-};
 
 String _seasonalTree(String themeId) => switch (themeId) {
   'autumn_jam' || 'wheat_kite' => 'tree_seasonal_autumn',
@@ -3131,7 +3055,9 @@ List<_VisibleDecor> _visibleDecor(
       ? <YardSlotView>[
           const YardSlotView(pos: 0, itemId: 'mailbox_wood'),
           const YardSlotView(pos: 1, itemId: 'flowerbed_small'),
-          if (stage >= 2) const YardSlotView(pos: 2, itemId: 'welcome_bell'),
+          // The wall-mounted bell has no support on open grass. Its existing
+          // freestanding counterpart belongs here without adding new art.
+          if (stage >= 2) const YardSlotView(pos: 2, itemId: 'wind_chime'),
           if (stage >= 5) const YardSlotView(pos: 3, itemId: 'mushroom_bench'),
           if (stage >= 6) const YardSlotView(pos: 4, itemId: 'album_shelf'),
         ]

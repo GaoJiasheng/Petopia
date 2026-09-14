@@ -68,6 +68,26 @@ class PetopiaAdaptive {
     return (size.width * 0.465).clamp(156.0, 189.0);
   }
 
+  /// The yard is a view into a garden, rather than a close-up pet portrait.
+  /// Keep the larger stage size above for the graduation ceremony.
+  static double yardPetWidth(Size size) {
+    if (useYardSidePanels(size)) {
+      return (size.height * 0.16).clamp(110.0, 166.0);
+    }
+    if (size.width >= 600) return (size.width * 0.19).clamp(140.0, 180.0);
+    return (size.width * 0.25).clamp(80.0, 114.0);
+  }
+
+  /// Authored metre reference: a seated pet is about half a metre including
+  /// its raised tail, with the painted subject filling 80% of its canvas.
+  /// Ground distance from the horizon supplies the same perspective to every
+  /// object; a distant chair must not be enlarged to fill an arbitrary slot.
+  static double yardMetreScale(Size size, double footprintY) {
+    final petFoot = useYardSidePanels(size) ? 0.74 : 0.76;
+    final depth = ((footprintY + 1) / 2 - 0.40) / (petFoot - 0.40);
+    return yardPetWidth(size) * 0.8 / 0.5 * depth;
+  }
+
   /// Keeps hand-painted yard actors at a consistent visual proportion instead
   /// of applying one tablet multiplier to every iPad width. Portrait tablets
   /// track the phone composition closely; landscape uses the wider anchor map
@@ -82,10 +102,12 @@ class PetopiaAdaptive {
   /// Keeps the current pet visually central in the open lawn, above the care
   /// controls and clear of the secondary character lanes.
   static Alignment yardPetAlignment(Size size) {
-    // Landscape keeps the animal in command of the composition while leaving
-    // a shallow foreground for bowls and other low, grounded props.
-    if (useYardSidePanels(size)) return const Alignment(0, 0.26);
-    return const Alignment(0, 0.36);
+    final width = yardPetWidth(size);
+    final foot = useYardSidePanels(size) ? 0.74 : 0.76;
+    return Alignment(
+      0,
+      (size.height * foot - width) * 2 / (size.height - width) - 1,
+    );
   }
 
   /// Places a secondary yard character inside a side lane that cannot overlap
@@ -135,12 +157,9 @@ class PetopiaAdaptive {
       fullPetRect.bottom - petWidth * 0.10,
     );
     final maxTop = maxBottom - actorSize;
-    final top = math
-        .max(
-          sceneSize.height * 0.56 - actorSize,
-          fullPetRect.bottom - petWidth * 0.25 - actorSize,
-        )
-        .clamp(0.0, maxTop)
+    final minTop = sceneSize.height * 0.56 - actorSize;
+    final top = (sceneSize.height * (preferredAlignment.y + 1) / 2 - actorSize)
+        .clamp(minTop, maxTop)
         .toDouble();
     final preferredRect = Rect.fromLTWH(left, top, actorSize, actorSize);
     if (decorRects.isEmpty && top <= maxTop) return preferredRect;
@@ -154,8 +173,9 @@ class PetopiaAdaptive {
         squareSize: petWidth,
         alignment: petAlignment,
       ).deflate(petWidth * 0.10),
-      for (final rect in decorRects)
-        rect.deflate(math.min(rect.width, rect.height) * 0.10),
+      // Decor rectangles already describe the cropped painted artwork.
+      // Deflating them again lets feet meet hats, hands, and sign tips.
+      ...decorRects,
     ];
     bool isClear(Rect rect) =>
         rect.top <= maxTop &&
@@ -164,15 +184,19 @@ class PetopiaAdaptive {
         );
     if (isClear(preferredRect)) return preferredRect;
 
-    // Start beside the pet, then try the outer lawn without crossing its feet.
-    // The opposite half remains available to a returning companion.
-    final tops = <double>{
-      top,
-      for (final obstacle in obstacles)
-        if (obstacle.bottom + 4 - actorInset >= top &&
-            obstacle.bottom + 4 - actorInset <= maxTop)
-          obstacle.bottom + 4 - actorInset,
-    }.toList()..sort();
+    // Search the whole depth of this half of the lawn, including farther
+    // openings. Visitors need not crowd the current pet to remain visible.
+    final tops =
+        <double>{
+            top,
+            minTop,
+            maxTop,
+            for (final obstacle in obstacles) ...[
+              obstacle.bottom + 4 - actorInset,
+              obstacle.top - 4 + actorInset - actorSize,
+            ],
+          }.where((y) => y >= minTop && y <= maxTop).toList()
+          ..sort((a, b) => (a - top).abs().compareTo((b - top).abs()));
     final outerLeft = placeOnRight
         ? sceneSize.width - inset - actorSize
         : inset;

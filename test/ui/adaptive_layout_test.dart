@@ -134,13 +134,43 @@ void main() {
     test('yard pet remains above the lower interaction controls', () {
       expect(
         PetopiaAdaptive.yardPetAlignment(const Size(393, 852)),
-        const Alignment(0, 0.36),
+        const Alignment(0, 0.45743283582089544),
       );
       expect(
         PetopiaAdaptive.yardPetAlignment(const Size(1194, 834)),
-        const Alignment(0, 0.26),
+        const Alignment(0, 0.38095238095238093),
       );
     });
+
+    test(
+      'yard scale leaves distant props smaller and pet feet on the lawn',
+      () {
+        for (final scene in const [
+          Size(390, 844),
+          Size(440, 956),
+          Size(744, 1133),
+          Size(1032, 1376),
+          Size(1133, 744),
+          Size(1376, 1032),
+        ]) {
+          final pet = PetopiaAdaptive.alignedSquareRect(
+            sceneSize: scene,
+            squareSize: PetopiaAdaptive.yardPetWidth(scene),
+            alignment: PetopiaAdaptive.yardPetAlignment(scene),
+          );
+          expect(pet.center.dx, closeTo(scene.width / 2, .01));
+          expect(
+            pet.bottom / scene.height,
+            closeTo(PetopiaAdaptive.useYardSidePanels(scene) ? .74 : .76, .001),
+          );
+          expect(pet.width, greaterThanOrEqualTo(48));
+          final far = PetopiaAdaptive.yardMetreScale(scene, 0);
+          final near = PetopiaAdaptive.yardMetreScale(scene, .6);
+          expect(far, greaterThan(0));
+          expect(near / far, closeTo(4, .001));
+        }
+      },
+    );
 
     test('yard scene art keeps a stable visual proportion across devices', () {
       expect(PetopiaAdaptive.yardSceneScale(const Size(402, 874)), 1);
