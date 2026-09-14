@@ -285,7 +285,6 @@ VisitorPresenceView _placementVisitor({required bool rightLane}) {
   );
 }
 
-
 RevisitorPresenceView _revisitor() {
   return RevisitorPresenceView(
     id: 'visual-revisitor-rabbit',
@@ -367,9 +366,6 @@ const _wideDecorAnchorAlignmentsForTest = <int, Alignment>{
   6: Alignment(-0.30, 0.01),
   7: Alignment(0.32, 0.04),
 };
-
-
-
 
 List<({YardSlotView slot, int targetPos})> _resolvedDecorSlotsForTest(
   List<YardSlotView> slots,
@@ -578,6 +574,12 @@ Future<_VisualFingerprint> _capture(WidgetTester tester, String name) async {
   );
   expect(captureBoundary, findsOneWidget);
   final boundary = tester.renderObject<RenderRepaintBoundary>(captureBoundary);
+  final scene = find.byKey(const ValueKey<String>('yard_background'));
+  expect(
+    MediaQuery.sizeOf(tester.element(scene)),
+    tester.getSize(scene),
+    reason: 'The logical viewport must match the captured yard orientation',
+  );
   final pixelRatio = View.of(tester.element(captureBoundary)).devicePixelRatio;
   final image = await boundary.toImage(pixelRatio: pixelRatio);
   expect(
@@ -714,6 +716,12 @@ void main() {
   testWidgets('render every yard home state for visual review', (tester) async {
     if (_expectedScreenshotWidth > 0 && _expectedScreenshotHeight > 0) {
       final pixelRatio = tester.view.devicePixelRatio;
+      // Keep MediaQuery and the render surface in the same orientation.
+      tester.view.physicalSize = Size(
+        _expectedScreenshotWidth.toDouble(),
+        _expectedScreenshotHeight.toDouble(),
+      );
+      addTearDown(tester.view.resetPhysicalSize);
       await tester.binding.setSurfaceSize(
         Size(
           _expectedScreenshotWidth / pixelRatio,

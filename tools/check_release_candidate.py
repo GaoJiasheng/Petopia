@@ -759,9 +759,9 @@ def main() -> int:
         "--placements-device",
         metavar="UDID",
         help=(
-            "run the yard decor placement regression "
-            "(PETOPIA_VISUAL_PLACEMENTS) on this booted simulator; "
-            "portrait only until the iPad landscape anchors are re-tuned"
+            "run all six yard placement configurations; start with this booted "
+            "iPhone, and require the other iPhone, iPad mini and iPad 13 "
+            "simulators described in tools/run_yard_visual_matrix.py"
         ),
     )
     args = parser.parse_args()
@@ -793,15 +793,12 @@ def main() -> int:
         run("Flutter analyze", ["flutter", "analyze"])
         run("Flutter tests", ["flutter", "test"])
     if args.placements_device:
-        # 3a9d761 changed the yard policy (visitors never displace decor) without
-        # updating this oracle; build 40 shipped with it red. Keep it in the gate.
         run(
-            "yard decor placement regression",
+            "yard decor placement regression (4 portrait + 2 landscape)",
             [
-                "flutter", "test", "integration_test/yard_home_visual_test.dart",
-                "-d", args.placements_device,
-                "--dart-define=PETOPIA_VISUAL_PLACEMENTS=true",
-                "--dart-define=PETOPIA_VISUAL_DIR=/tmp/petopia-placements-gate",
+                sys.executable, "tools/run_yard_visual_matrix.py",
+                "--device", args.placements_device,
+                "--output", "build/release-candidate-placements",
             ],
         )
 

@@ -74,7 +74,7 @@ class PetopiaAdaptive {
   /// and a gentler multiplier so the side panels retain breathing room.
   static double yardSceneScale(Size size) {
     if (useYardSidePanels(size)) {
-      return (size.width / 760).clamp(1.55, 1.85);
+      return (size.height / 660).clamp(1.1, 1.65);
     }
     return math.min(size.width / 420, size.height / 900).clamp(1.0, 1.8);
   }

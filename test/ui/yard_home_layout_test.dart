@@ -1091,6 +1091,121 @@ void main() {
     },
   );
 
+  testWidgets(
+    'full yard leaves both companions behind the pet across viewports',
+    (tester) async {
+      for (final size in const [
+        Size(390, 844),
+        Size(440, 956),
+        Size(744, 1133),
+        Size(1032, 1376),
+        Size(1133, 744),
+        Size(1376, 1032),
+      ]) {
+        for (final items in const <List<String>>[
+          [
+            'night_light',
+            'wind_chime',
+            'flower_box',
+            'mushroom_bench',
+            'scarecrow',
+            'wind_vane',
+            'album_shelf',
+            'pond_small',
+          ],
+          [
+            'mailbox_wood',
+            'wind_chime',
+            'scarecrow',
+            'wood_sign',
+            'fireplace',
+            'wind_vane',
+            'album_shelf',
+            'night_light',
+          ],
+        ]) {
+          await _pumpYard(
+            tester,
+            size: size,
+            safeArea: const EdgeInsets.only(top: 24, bottom: 34),
+            view: _view(
+              luxuryStage: 6,
+              visitor: _visitor(),
+              revisitor: _revisitor(),
+              waterBowlOwned: true,
+              decorSlots: [
+                for (var i = 0; i < items.length; i++)
+                  YardSlotView(pos: i, itemId: items[i]),
+              ],
+            ),
+          );
+          final pet = tester.getRect(
+            find.byKey(const ValueKey('yard_pet_sprite')),
+          );
+          final bar = tester.getRect(
+            find.byKey(const ValueKey('care_action_feed')),
+          );
+          final props = [
+            for (final item in items)
+              tester.getRect(find.byKey(ValueKey('yard_decor_6_$item'))),
+          ];
+          Rect subject(Rect rect) => rect.deflate(rect.shortestSide * .1);
+          bool substantial(Rect a, Rect b) {
+            final overlap = a.intersect(b);
+            if (overlap.width <= 2 || overlap.height <= 2) return false;
+            final smaller = a.width * a.height < b.width * b.height
+                ? a.width * a.height
+                : b.width * b.height;
+            return overlap.width * overlap.height > smaller * .025;
+          }
+
+          for (var i = 0; i < props.length; i++) {
+            expect(
+              substantial(subject(props[i]), subject(pet)),
+              isFalse,
+              reason: '$size ${items[i]} overlaps pet',
+            );
+            for (var j = i + 1; j < props.length; j++) {
+              expect(
+                substantial(subject(props[i]), subject(props[j])),
+                isFalse,
+                reason: '$size ${items[i]} / ${items[j]} overlap',
+              );
+            }
+          }
+          for (final key in ['active_visitor', 'active_revisitor']) {
+            final actor = tester.getRect(find.byKey(ValueKey(key)));
+            expect(
+              actor.bottom,
+              lessThanOrEqualTo(pet.bottom - pet.width * .1),
+              reason: '$size $key must stay behind the pet',
+            );
+            expect(
+              actor.width,
+              greaterThanOrEqualTo(pet.width * .5),
+              reason: '$size $key should remain readable in a full yard',
+            );
+            final subject = actor.deflate(actor.width * .1);
+            for (final item in items) {
+              final decor = tester.getRect(
+                find.byKey(ValueKey('yard_decor_6_$item')),
+              );
+              final painted = decor.deflate(decor.shortestSide * .1);
+              expect(
+                painted.overlaps(subject),
+                isFalse,
+                reason: '$size $item covers $key: $painted / $subject',
+              );
+              expect(decor.bottom, lessThan(bar.top - 8));
+            }
+          }
+          expect(tester.takeException(), isNull);
+          await _disposeYard(tester);
+        }
+      }
+    },
+  );
+
   testWidgets('core yard controls meet platform accessibility guidelines', (
     tester,
   ) async {

@@ -2897,14 +2897,14 @@ const _compactDecorAnchors = <int, _DecorAnchor>{
 };
 
 const _wideDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.84, 0.02), 60),
-  1: _DecorAnchor(Alignment(0.82, 0.16), 62),
-  2: _DecorAnchor(Alignment(-0.94, 0.40), 64),
-  3: _DecorAnchor(Alignment(0.86, 0.38), 70),
-  4: _DecorAnchor(Alignment(-0.92, 0.72), 77),
-  5: _DecorAnchor(Alignment(0.90, 0.76), 79),
-  6: _DecorAnchor(Alignment(-0.30, 0.01), 54),
-  7: _DecorAnchor(Alignment(0.32, 0.04), 56),
+  0: _DecorAnchor(Alignment(-0.76, 0.02), 60),
+  1: _DecorAnchor(Alignment(0.74, 0.04), 60),
+  2: _DecorAnchor(Alignment(-0.86, 0.22), 50),
+  3: _DecorAnchor(Alignment(0.86, 0.24), 52),
+  4: _DecorAnchor(Alignment(-0.66, 0.58), 64),
+  5: _DecorAnchor(Alignment(0.68, 0.60), 54),
+  6: _DecorAnchor(Alignment(-0.38, 0.00), 45),
+  7: _DecorAnchor(Alignment(0.36, 0.06), 48),
 };
 
 const _tabletPortraitDecorAnchors = <int, _DecorAnchor>{

@@ -843,6 +843,12 @@ void main() {
   testWidgets('capture and audit the complete localized UI', (tester) async {
     if (_expectedScreenshotWidth > 0 && _expectedScreenshotHeight > 0) {
       final pixelRatio = tester.view.devicePixelRatio;
+      // Keep MediaQuery and the render surface in the same orientation.
+      tester.view.physicalSize = Size(
+        _expectedScreenshotWidth.toDouble(),
+        _expectedScreenshotHeight.toDouble(),
+      );
+      addTearDown(tester.view.resetPhysicalSize);
       await tester.binding.setSurfaceSize(
         Size(
           _expectedScreenshotWidth / pixelRatio,

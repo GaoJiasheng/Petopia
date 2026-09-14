@@ -154,7 +154,7 @@ void main() {
       );
       expect(
         PetopiaAdaptive.yardSceneScale(const Size(1366, 1024)),
-        closeTo(1.797, 0.001),
+        closeTo(1.552, 0.001),
       );
     });
   });
