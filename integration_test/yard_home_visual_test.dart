@@ -1014,6 +1014,27 @@ void main() {
         expect(portrait, findsOneWidget);
         expect(tester.getSize(portrait), const Size.square(190));
       }
+      if (_allLuxury) {
+        final stage = scenario.view.luxuryStage;
+        final scenery = find.byWidgetPredicate(
+          (widget) =>
+              widget.key is ValueKey<String> &&
+              (widget.key! as ValueKey<String>).value.startsWith(
+                'yard_decor_${stage}_',
+              ),
+        );
+        expect(scenery, findsNWidgets(stage + 2), reason: scenario.name);
+        expect(
+          find.byKey(ValueKey('yard_decor_${stage}_tree_seasonal_spring')),
+          stage >= 3 ? findsOneWidget : findsNothing,
+          reason: scenario.name,
+        );
+        expect(
+          find.byKey(ValueKey('yard_decor_${stage}_pond_small')),
+          stage >= 4 ? findsOneWidget : findsNothing,
+          reason: scenario.name,
+        );
+      }
       if (_catalogMode == 'actions') {
         final action = scenario.name.split('-').last;
         final buttonAction = switch (action) {

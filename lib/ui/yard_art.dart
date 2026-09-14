@@ -63,6 +63,10 @@ class YardArt {
   };
 
   static const Map<String, String> _decorFile = {
+    'tree_seasonal_spring': 'deco_tree_seasonal_spring.webp',
+    'tree_seasonal_summer': 'deco_tree_seasonal_summer.webp',
+    'tree_seasonal_autumn': 'deco_tree_seasonal_autumn.webp',
+    'tree_seasonal_winter': 'deco_tree_seasonal_winter.webp',
     'water_bowl': 'deco_water_bowl.png',
     'night_light': 'deco_night_lamp.png',
     'fireplace': 'deco_heater_stove.png',
@@ -158,6 +162,34 @@ class YardArt {
       top: 94 / 384,
       right: 401 / 512,
       bottom: 330 / 384,
+    ),
+    'tree_seasonal_spring' => const DecorCrop(
+      canvasAspectRatio: 768 / 512,
+      left: 115 / 512,
+      top: 486 / 768,
+      right: 396 / 512,
+      bottom: 760 / 768,
+    ),
+    'tree_seasonal_summer' => const DecorCrop(
+      canvasAspectRatio: 768 / 512,
+      left: 115 / 512,
+      top: 476 / 768,
+      right: 396 / 512,
+      bottom: 760 / 768,
+    ),
+    'tree_seasonal_autumn' => const DecorCrop(
+      canvasAspectRatio: 768 / 512,
+      left: 116 / 512,
+      top: 476 / 768,
+      right: 396 / 512,
+      bottom: 760 / 768,
+    ),
+    'tree_seasonal_winter' => const DecorCrop(
+      canvasAspectRatio: 768 / 512,
+      left: 123 / 512,
+      top: 483 / 768,
+      right: 389 / 512,
+      bottom: 760 / 768,
     ),
     'album_shelf' => const DecorCrop(
       left: 13 / 256,

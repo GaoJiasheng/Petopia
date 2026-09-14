@@ -501,6 +501,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                           ..._visibleDecor(
                             view.decorSlots,
                             view.luxuryStage,
+                            themeId: view.activeThemeId,
                             wideLayout: wideLayout,
                             tabletPortrait: tabletPortrait,
                           ),
@@ -523,7 +524,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                       ..sort(
                         (a, b) => a.anchor.align.y.compareTo(b.anchor.align.y),
                       );
-                final usesPlacedDecorPerspective = view.decorSlots.isNotEmpty;
+                const usesPlacedDecorPerspective = true;
                 final decorRects = [
                   for (final decor in visibleDecor)
                     _placedDecor(
@@ -3085,6 +3086,10 @@ double _decorHeightRatio(String decorId) => switch (decorId) {
   'wood_sign' => 1.55,
   'mailbox_wood' => 1.48,
   'album_shelf' => 1.33,
+  'tree_seasonal_spring' ||
+  'tree_seasonal_summer' ||
+  'tree_seasonal_autumn' ||
+  'tree_seasonal_winter' => 1.65,
   // Waist-high furniture.
   'fireplace' => 1.04,
   'night_light' => 1.02,
@@ -3098,70 +3103,41 @@ double _decorHeightRatio(String decorId) => switch (decorId) {
   _ => 1.12,
 };
 
-const _defaultDecor = <_VisibleDecor>[
-  _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.72, -0.02), 84)),
-  _VisibleDecor('flowerbed_small', _DecorAnchor(Alignment(0.72, 0.08), 94)),
-];
-
-const _wideLuxuryDecor = <int, List<_VisibleDecor>>{
-  1: [
-    _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.76, 0.02), 128)),
-    _VisibleDecor('flowerbed_small', _DecorAnchor(Alignment(0.78, 0.34), 142)),
-  ],
-  2: [
-    _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.76, 0.02), 128)),
-    _VisibleDecor('flowerbed_small', _DecorAnchor(Alignment(0.78, 0.34), 142)),
-    _VisibleDecor('welcome_bell', _DecorAnchor(Alignment(-0.48, 0.34), 104)),
-  ],
-  3: [
-    _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.78, 0.04), 128)),
-    _VisibleDecor('mushroom_bench', _DecorAnchor(Alignment(0.72, 0.10), 146)),
-    _VisibleDecor('night_light', _DecorAnchor(Alignment(-0.50, 0.36), 104)),
-    _VisibleDecor('flowerbed_small', _DecorAnchor(Alignment(0.80, 0.46), 138)),
-  ],
-  4: [
-    _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.80, 0.08), 126)),
-    _VisibleDecor('arch_flower', _DecorAnchor(Alignment(-0.08, 0.02), 230)),
-    _VisibleDecor('mushroom_bench', _DecorAnchor(Alignment(0.72, 0.12), 142)),
-    _VisibleDecor('wood_sign', _DecorAnchor(Alignment(-0.56, 0.48), 116)),
-    _VisibleDecor('flowerbed_small', _DecorAnchor(Alignment(0.82, 0.48), 136)),
-  ],
-  5: [
-    _VisibleDecor('tree_seasonal', _DecorAnchor(Alignment(-0.70, -0.02), 270)),
-    _VisibleDecor('attic_house', _DecorAnchor(Alignment(0.74, -0.02), 248)),
-    _VisibleDecor('mailbox_wood', _DecorAnchor(Alignment(-0.82, 0.52), 122)),
-    _VisibleDecor('arch_flower', _DecorAnchor(Alignment(-0.08, 0.10), 220)),
-    _VisibleDecor('flowerbed_small', _DecorAnchor(Alignment(0.80, 0.48), 134)),
-  ],
-  6: [
-    _VisibleDecor('tree_seasonal', _DecorAnchor(Alignment(-0.72, 0.01), 286)),
-    _VisibleDecor('attic_house', _DecorAnchor(Alignment(0.74, -0.04), 264)),
-    _VisibleDecor('arch_flower', _DecorAnchor(Alignment(-0.08, 0.08), 228)),
-    _VisibleDecor('album_shelf', _DecorAnchor(Alignment(-0.70, 0.54), 190)),
-    _VisibleDecor('pond_small', _DecorAnchor(Alignment(0.68, 0.54), 192)),
-    _VisibleDecor('mailbox_red', _DecorAnchor(Alignment(0.86, 0.20), 116)),
-  ],
+String _seasonalTree(String themeId) => switch (themeId) {
+  'autumn_jam' || 'wheat_kite' => 'tree_seasonal_autumn',
+  'snow_house' => 'tree_seasonal_winter',
+  'sea_breeze' ||
+  'rain_moss' ||
+  'bamboo_tea' ||
+  'starry_camp' ||
+  'moonlight' => 'tree_seasonal_summer',
+  _ => 'tree_seasonal_spring',
 };
 
 List<_VisibleDecor> _visibleDecor(
   List<YardSlotView> slots,
   int luxuryStage, {
+  required String themeId,
   required bool wideLayout,
   bool tabletPortrait = false,
 }) {
-  if (slots.isEmpty) {
-    if (wideLayout) {
-      return _wideLuxuryDecor[luxuryStage.clamp(1, 6)] ?? _wideLuxuryDecor[1]!;
-    }
-    return _defaultDecor;
-  }
   final standardAnchors = wideLayout
       ? _wideDecorAnchors
       : tabletPortrait
       ? _tabletPortraitDecorAnchors
       : _compactDecorAnchors;
+  final stage = luxuryStage.clamp(1, 6);
+  final arrangedSlots = slots.isEmpty
+      ? <YardSlotView>[
+          const YardSlotView(pos: 0, itemId: 'mailbox_wood'),
+          const YardSlotView(pos: 1, itemId: 'flowerbed_small'),
+          if (stage >= 2) const YardSlotView(pos: 2, itemId: 'welcome_bell'),
+          if (stage >= 5) const YardSlotView(pos: 3, itemId: 'mushroom_bench'),
+          if (stage >= 6) const YardSlotView(pos: 4, itemId: 'album_shelf'),
+        ]
+      : slots;
   final selectedSlots =
-      slots
+      arrangedSlots
           .where(
             (slot) =>
                 slot.itemId != null &&
@@ -3177,6 +3153,17 @@ List<_VisibleDecor> _visibleDecor(
   for (final slot in selectedSlots) {
     final anchor = standardAnchors[slot.pos];
     if (anchor != null) visible.add(_VisibleDecor(slot.itemId!, anchor));
+  }
+  // Graduation scenery uses only the two free rear slots. A player's choice
+  // always wins, including an existing pond placed elsewhere in the yard.
+  final occupied = selectedSlots.map((slot) => slot.pos).toSet();
+  if (stage >= 3 && !occupied.contains(6)) {
+    visible.add(_VisibleDecor(_seasonalTree(themeId), standardAnchors[6]!));
+  }
+  if (stage >= 4 &&
+      !occupied.contains(7) &&
+      !selectedSlots.any((slot) => slot.itemId == 'pond_small')) {
+    visible.add(_VisibleDecor('pond_small', standardAnchors[7]!));
   }
   return visible;
 }

@@ -32,14 +32,14 @@ WIDE_THEME_SLUGS = (
     "wheatkite",
 )
 PORTRAIT_THEME_SLUGS = WIDE_THEME_SLUGS
-WIDE_LUXURY_DECOR_FILES = (
+LUXURY_DECOR_FILES = (
     "deco_welcome_bell.png",
-    "deco_arch_flower.png",
-    "deco_tree_seasonal.png",
-    "deco_attic_house.png",
+    "deco_tree_seasonal_spring.webp",
+    "deco_tree_seasonal_summer.webp",
+    "deco_tree_seasonal_autumn.webp",
+    "deco_tree_seasonal_winter.webp",
     "deco_album_shelf.png",
     "deco_pond_small.png",
-    "deco_mailbox_red.png",
 )
 POSTCARD_BACKGROUND_COUNT = 40
 SUPPORT_PRODUCTS = {
@@ -413,10 +413,10 @@ def asset_checks() -> None:
                 )
 
     decor_dir = ROOT / "assets/art/world/decor"
-    for filename in WIDE_LUXURY_DECOR_FILES:
+    for filename in LUXURY_DECOR_FILES:
         relative = f"assets/art/world/decor/{filename}"
-        require((decor_dir / filename).exists(), f"missing wide luxury decor {relative}")
-        require(relative in pubspec, f"wide luxury decor is not bundled: {relative}")
+        require((decor_dir / filename).exists(), f"missing luxury decor {relative}")
+        require(relative in pubspec, f"luxury decor is not bundled: {relative}")
 
     wide_dir = ROOT / "assets/art/world/themes/wide"
     runtime_wide_dir = ROOT / "assets/runtime/yard/themes/wide"
@@ -602,10 +602,11 @@ def asset_checks() -> None:
         *ROOT.glob("assets/runtime/postcards/stickers/*.webp"),
         *ROOT.glob("assets/art/world/layouts/yard_luxury0[2-6]_delta.webp"),
         *ROOT.glob("assets/art/world/fx/yard_fx_*.webp"),
+        *ROOT.glob("assets/art/world/decor/deco_tree_seasonal_*.webp"),
     ]
     require(
-        len(lossless_runtime_assets) == 380,
-        f"expected 380 lossless WebP runtime assets, found {len(lossless_runtime_assets)}",
+        len(lossless_runtime_assets) == 384,
+        f"expected 384 lossless WebP runtime assets, found {len(lossless_runtime_assets)}",
     )
     for webp_path in lossless_runtime_assets:
         relative = webp_path.relative_to(ROOT)

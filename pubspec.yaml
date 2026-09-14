@@ -182,12 +182,12 @@ flutter:
     - assets/art/world/decor/deco_food_bowl_full.png
     - assets/art/world/decor/deco_flowerbed_small.png
     - assets/art/world/decor/deco_welcome_bell.png
-    - assets/art/world/decor/deco_arch_flower.png
-    - assets/art/world/decor/deco_tree_seasonal.png
-    - assets/art/world/decor/deco_attic_house.png
+    - assets/art/world/decor/deco_tree_seasonal_spring.webp
+    - assets/art/world/decor/deco_tree_seasonal_summer.webp
+    - assets/art/world/decor/deco_tree_seasonal_autumn.webp
+    - assets/art/world/decor/deco_tree_seasonal_winter.webp
     - assets/art/world/decor/deco_album_shelf.png
     - assets/art/world/decor/deco_pond_small.png
-    - assets/art/world/decor/deco_mailbox_red.png
     - assets/art/world/visitors/visitor_butterfly_portrait.png
     - assets/art/world/visitors/visitor_butterfly_yard.png
     - assets/art/world/visitors/visitor_butterfly_yard_base.png

@@ -1,6 +1,6 @@
 {
   "bytesByCategory": {
-    "art": 36816765,
+    "art": 36695474,
     "audio": 23934476,
     "content-data": 402420,
     "runtime-art": 83542858
@@ -870,18 +870,6 @@
       "sha256": "849485ecd3683cffe1497b857f07ab8a748a510a9d37dc9f9dd2503a4df9e859"
     },
     {
-      "asset": "assets/art/world/decor/deco_arch_flower.png",
-      "bytes": 115519,
-      "category": "art",
-      "sha256": "a90cac81c522a604c8dfde6c52f82a2063de02247ff282fb997bfd23b141c64b"
-    },
-    {
-      "asset": "assets/art/world/decor/deco_attic_house.png",
-      "bytes": 155895,
-      "category": "art",
-      "sha256": "8059f99eda2ec31b1c24665e476b32faadb34916e857a3ada6ff533a5690c792"
-    },
-    {
       "asset": "assets/art/world/decor/deco_flowerbed_small.png",
       "bytes": 64804,
       "category": "art",
@@ -904,12 +892,6 @@
       "bytes": 55069,
       "category": "art",
       "sha256": "49ea40a376c054c7912c9464edb43d0aeb524c5b8567377ab1c6d22238a2dd7f"
-    },
-    {
-      "asset": "assets/art/world/decor/deco_mailbox_red.png",
-      "bytes": 102241,
-      "category": "art",
-      "sha256": "147092db2279b74b3dff309b989bc30aee12fb54c562d3f6c91f33829c53ee33"
     },
     {
       "asset": "assets/art/world/decor/deco_mailbox_wood.png",
@@ -954,10 +936,36 @@
       "sha256": "5fc5ef6d01816077492915b40e48a725ef9aca39df672e9142cad9890671bf74"
     },
     {
-      "asset": "assets/art/world/decor/deco_tree_seasonal.png",
-      "bytes": 152466,
+      "asset": "assets/art/world/decor/deco_tree_seasonal_autumn.webp",
+      "bytes": 106044,
       "category": "art",
-      "sha256": "aa5076f152b6b7037275c3a355088912dd3ddd28c95575e2f541a2e6761efa44"
+      "sha256": "f2e3e3900f59757524c038eb0296ad3152f8b5ad032261cedfcbdacc53efc601",
+      "source": "assets/art/world/decor/deco_tree_seasonal_autumn.png",
+      "sourceSha256": "cc9b79368cc6ddeadc83bcaf41ce2d977ab79428605347b0a7c3f880e08a32d5"
+    },
+    {
+      "asset": "assets/art/world/decor/deco_tree_seasonal_spring.webp",
+      "bytes": 113224,
+      "category": "art",
+      "sha256": "1038a2ce099bb520f4818984c79b102f7db3376a5ea739a8a7036b2283d7f15c",
+      "source": "assets/art/world/decor/deco_tree_seasonal_spring.png",
+      "sourceSha256": "c11ff0d60120917e1fe6200803947a01528639c6d751e796a64bb5ad7740e089"
+    },
+    {
+      "asset": "assets/art/world/decor/deco_tree_seasonal_summer.webp",
+      "bytes": 111890,
+      "category": "art",
+      "sha256": "ac052c2d7c7709f4be47e9412ead964a468ce62c715ba9644933d0088f675991",
+      "source": "assets/art/world/decor/deco_tree_seasonal_summer.png",
+      "sourceSha256": "aa5076f152b6b7037275c3a355088912dd3ddd28c95575e2f541a2e6761efa44"
+    },
+    {
+      "asset": "assets/art/world/decor/deco_tree_seasonal_winter.webp",
+      "bytes": 73672,
+      "category": "art",
+      "sha256": "163d112302a1494c4762dd11776e237a55131247b22bdb7a053348517cdf7ee5",
+      "source": "assets/art/world/decor/deco_tree_seasonal_winter.png",
+      "sourceSha256": "7932da6aa0a7710f28fa80643326b1d09b54b40996a5394c978f66f6b5cc8ebd"
     },
     {
       "asset": "assets/art/world/decor/deco_water_bowl.png",

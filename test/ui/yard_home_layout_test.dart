@@ -338,12 +338,12 @@ void main() {
       manifest.listAssets(),
       containsAll(const [
         'assets/art/world/decor/deco_welcome_bell.png',
-        'assets/art/world/decor/deco_arch_flower.png',
-        'assets/art/world/decor/deco_tree_seasonal.png',
-        'assets/art/world/decor/deco_attic_house.png',
+        'assets/art/world/decor/deco_tree_seasonal_spring.webp',
+        'assets/art/world/decor/deco_tree_seasonal_summer.webp',
+        'assets/art/world/decor/deco_tree_seasonal_autumn.webp',
+        'assets/art/world/decor/deco_tree_seasonal_winter.webp',
         'assets/art/world/decor/deco_album_shelf.png',
         'assets/art/world/decor/deco_pond_small.png',
-        'assets/art/world/decor/deco_mailbox_red.png',
       ]),
     );
   });
@@ -758,7 +758,7 @@ void main() {
   ) async {
     const size = Size(1366, 1024);
     // Each stage includes its composed scenery plus the pet-side food bowl.
-    const minimumDecorCount = <int, int>{1: 3, 2: 4, 3: 5, 4: 6, 5: 6, 6: 7};
+    const minimumDecorCount = <int, int>{1: 3, 2: 4, 3: 5, 4: 6, 5: 7, 6: 8};
     for (var stage = 1; stage <= 6; stage++) {
       await _pumpYard(
         tester,
@@ -809,11 +809,11 @@ void main() {
     }
   });
 
-  testWidgets('portrait iPad keeps a quiet stage with compact default decor', (
+  testWidgets('portrait iPad shows six distinct graduation compositions', (
     tester,
   ) async {
     const size = Size(1024, 1366);
-    for (var stage = 2; stage <= 6; stage++) {
+    for (var stage = 1; stage <= 6; stage++) {
       await _pumpYard(
         tester,
         size: size,
@@ -828,11 +828,69 @@ void main() {
               'yard_decor_${stage}_',
             ),
       );
-      expect(decor, findsNWidgets(3));
+      expect(decor, findsNWidgets(stage + 2));
       expect(tester.takeException(), isNull);
       await _disposeYard(tester);
     }
   });
+
+  testWidgets(
+    'graduation scenery yields to rear slots and follows theme season',
+    (tester) async {
+      for (final theme in const [
+        'sakura',
+        'sea_breeze',
+        'autumn_jam',
+        'snow_house',
+      ]) {
+        final season = const {
+          'sakura': 'spring',
+          'sea_breeze': 'summer',
+          'autumn_jam': 'autumn',
+          'snow_house': 'winter',
+        }[theme]!;
+        await _pumpYard(
+          tester,
+          size: const Size(390, 844),
+          safeArea: const EdgeInsets.only(top: 24, bottom: 34),
+          view: _view(
+            theme: theme,
+            luxuryStage: 4,
+            decorSlots: const [YardSlotView(pos: 0, itemId: 'night_light')],
+          ),
+        );
+        expect(
+          find.byKey(ValueKey('yard_decor_4_tree_seasonal_$season')),
+          findsOne,
+        );
+        expect(find.byKey(const ValueKey('yard_decor_4_pond_small')), findsOne);
+        await _disposeYard(tester);
+      }
+      await _pumpYard(
+        tester,
+        size: const Size(390, 844),
+        safeArea: const EdgeInsets.only(top: 24, bottom: 34),
+        view: _view(
+          luxuryStage: 6,
+          decorSlots: const [
+            YardSlotView(pos: 6, itemId: 'album_shelf'),
+            YardSlotView(pos: 7, itemId: 'night_light'),
+          ],
+        ),
+      );
+      expect(
+        find.byKey(const ValueKey('yard_decor_6_tree_seasonal_spring')),
+        findsNothing,
+      );
+      expect(
+        find.byKey(const ValueKey('yard_decor_6_pond_small')),
+        findsNothing,
+      );
+      expect(find.byKey(const ValueKey('yard_decor_6_album_shelf')), findsOne);
+      expect(find.byKey(const ValueKey('yard_decor_6_night_light')), findsOne);
+      await _disposeYard(tester);
+    },
+  );
 
   testWidgets('iPad notebook opens as a right-side sheet', (tester) async {
     const size = Size(1366, 1024);
