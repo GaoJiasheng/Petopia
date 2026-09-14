@@ -39,7 +39,7 @@ class YardArt {
 
   /// 当前主题背景图。未知/默认主题回落到 meadow。
   ///
-  /// iPad 横屏使用单独重绘的 4:3 母图，避免把竖屏背景裁切或拉伸。
+  /// iPad 使用单独重绘的 4:3 母图，避免裁掉竖版画面的顶部标志物。
   static String themeBg(
     String themeId, {
     bool wide = false,

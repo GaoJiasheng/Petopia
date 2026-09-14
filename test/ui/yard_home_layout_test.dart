@@ -745,15 +745,8 @@ void main() {
       final backgroundAsset = resizedBackground.imageProvider as AssetImage;
       expect(hud.center.dx, closeTo(size.width / 2, 1));
       expect(action.center.dx, lessThan(size.width / 2));
-      expect(
-        resizedBackground.width,
-        lessThanOrEqualTo(name.endsWith('landscape') ? 2732 : 1290),
-      );
-      if (name.endsWith('landscape')) {
-        expect(backgroundAsset.assetName, contains('/themes/wide/'));
-      } else {
-        expect(backgroundAsset.assetName, isNot(contains('/themes/wide/')));
-      }
+      expect(resizedBackground.width, lessThanOrEqualTo(2732));
+      expect(backgroundAsset.assetName, contains('/themes/wide/'));
       expect(find.text('今日院子'), findsNothing);
       expect(tester.takeException(), isNull, reason: '$name overflowed');
     }

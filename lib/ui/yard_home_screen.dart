@@ -474,7 +474,8 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                 final sceneScale = PetopiaAdaptive.yardSceneScale(size);
                 final petWidth = PetopiaAdaptive.petStageWidth(size);
                 final petAlignment = PetopiaAdaptive.yardPetAlignment(size);
-                final sourceWidth = wideLayout ? 2732 : 1290;
+                final wideBackground = size.width >= 600;
+                final sourceWidth = wideBackground ? 2732 : 1290;
                 final backgroundCacheWidth = math.min(
                   sourceWidth,
                   math.max(
@@ -547,16 +548,22 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                     Image.asset(
                       YardArt.themeBg(
                         view.activeThemeId,
-                        wide: wideLayout,
+                        wide: wideBackground,
                         night: nightTheme,
                       ),
                       key: const ValueKey<String>('yard_background'),
                       fit: BoxFit.cover,
+                      // The camp's tent peak sits just outside the centered
+                      // portrait crop of the wide master. Keep it in frame.
+                      alignment:
+                          tabletPortrait && view.activeThemeId == 'starry_camp'
+                          ? const Alignment(0.25, 0)
+                          : Alignment.center,
                       cacheWidth: backgroundCacheWidth,
                       errorBuilder: (_, _, _) => Image.asset(
                         YardArt.themeBg(
                           '',
-                          wide: wideLayout,
+                          wide: wideBackground,
                           night: nightTheme,
                         ),
                         fit: BoxFit.cover,
