@@ -36,8 +36,11 @@ void main() {
       expect(PetopiaAdaptive.postcardMaxWidth(1024), closeTo(737.28, 0.01));
       expect(PetopiaAdaptive.postcardMaxWidth(1600), 860);
 
-      expect(PetopiaAdaptive.petStageWidth(const Size(390, 844)), closeTo(181.35, 0.01));
-      expect(PetopiaAdaptive.petStageWidth(const Size(1024, 1366)), 288);
+      expect(
+        PetopiaAdaptive.petStageWidth(const Size(390, 844)),
+        closeTo(181.35, 0.01),
+      );
+      expect(PetopiaAdaptive.petStageWidth(const Size(1024, 1366)), 340);
       expect(
         PetopiaAdaptive.petStageWidth(const Size(1194, 834)),
         closeTo(268.97, 0.01),
@@ -143,9 +146,12 @@ void main() {
       expect(PetopiaAdaptive.yardSceneScale(const Size(402, 874)), 1);
       expect(
         PetopiaAdaptive.yardSceneScale(const Size(834, 1194)),
-        closeTo(1.986, 0.001),
+        closeTo(1.327, 0.001),
       );
-      expect(PetopiaAdaptive.yardSceneScale(const Size(1024, 1366)), 2.35);
+      expect(
+        PetopiaAdaptive.yardSceneScale(const Size(1024, 1366)),
+        closeTo(1.518, 0.001),
+      );
       expect(
         PetopiaAdaptive.yardSceneScale(const Size(1366, 1024)),
         closeTo(1.797, 0.001),

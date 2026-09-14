@@ -63,7 +63,7 @@ class PetopiaAdaptive {
       return (math.min(size.width, size.height) * 0.3225).clamp(240.0, 285.0);
     }
     if (size.width >= 600) {
-      return (math.min(size.width, size.height) * 0.30).clamp(225.0, 288.0);
+      return (math.min(size.width, size.height) * 0.36).clamp(270.0, 340.0);
     }
     return (size.width * 0.465).clamp(156.0, 189.0);
   }
@@ -76,7 +76,7 @@ class PetopiaAdaptive {
     if (useYardSidePanels(size)) {
       return (size.width / 760).clamp(1.55, 1.85);
     }
-    return (size.width / 420).clamp(1.0, 2.35);
+    return math.min(size.width / 420, size.height / 900).clamp(1.0, 1.8);
   }
 
   /// Keeps the current pet visually central in the open lawn, above the care
@@ -120,23 +120,29 @@ class PetopiaAdaptive {
       preferredSize,
       math.max(1.0, laneWidth - inset - gap),
     );
-    final left = placeOnRight ? sceneSize.width - inset - actorSize : inset;
-    // Secondary characters belong beside the pet, not in the decor field.
-    // Their horizontal lane still follows the preferred side, while the
-    // vertical center tracks the current pet so the lower lawn remains usable.
-    final preferredTop =
-        (sceneSize.height - actorSize) * (preferredAlignment.y + 1) / 2;
-    // Secondary animals are smaller and read as one depth step behind the
-    // current pet. Their visible feet therefore sit slightly higher in the
-    // lawn perspective instead of sharing an implausibly flat baseline.
-    final companionTop = petRect.bottom - actorSize * 2.30;
-    final groundedTop = sceneSize.height * 0.58 - actorSize;
+    final left = placeOnRight
+        ? petRect.right + gap
+        : petRect.left - gap - actorSize;
+    final fullPetRect = alignedSquareRect(
+      sceneSize: sceneSize,
+      squareSize: petWidth,
+      alignment: petAlignment,
+    );
+    // Companions occupy the lawn beside and just behind the current pet.
+    // Their foreground limit follows the pet's feet as well as the real bar.
+    final maxBottom = math.min(
+      (actionBarRect?.top ?? sceneSize.height) - 9,
+      fullPetRect.bottom - petWidth * 0.10,
+    );
+    final maxTop = maxBottom - actorSize;
     final top = math
-        .max(math.min(preferredTop, companionTop), groundedTop)
-        .clamp(0.0, sceneSize.height - actorSize)
+        .max(
+          sceneSize.height * 0.56 - actorSize,
+          fullPetRect.bottom - petWidth * 0.25 - actorSize,
+        )
+        .clamp(0.0, maxTop)
         .toDouble();
     final preferredRect = Rect.fromLTWH(left, top, actorSize, actorSize);
-    final maxTop = (actionBarRect?.top ?? sceneSize.height) - 9 - actorSize;
     if (decorRects.isEmpty && top <= maxTop) return preferredRect;
 
     // Leave the painted bases in place. Transparent sprite margins can share
@@ -158,8 +164,8 @@ class PetopiaAdaptive {
         );
     if (isClear(preferredRect)) return preferredRect;
 
-    // Try lower positions in the existing lane first, then move inward. The
-    // opposite half remains available to a simultaneous returning companion.
+    // Start beside the pet, then try the outer lawn without crossing its feet.
+    // The opposite half remains available to a returning companion.
     final tops = <double>{
       top,
       for (final obstacle in obstacles)
@@ -167,22 +173,22 @@ class PetopiaAdaptive {
             obstacle.bottom + 4 - actorInset <= maxTop)
           obstacle.bottom + 4 - actorInset,
     }.toList()..sort();
-    final innerLeft = placeOnRight
-        ? sceneSize.width / 2
-        : sceneSize.width / 2 - actorSize;
+    final outerLeft = placeOnRight
+        ? sceneSize.width - inset - actorSize
+        : inset;
     final lefts =
         <double>{
               left,
-              innerLeft,
+              outerLeft,
               for (final obstacle in obstacles)
                 placeOnRight
-                    ? obstacle.left - 4 - actorSize + actorInset
-                    : obstacle.right + 4 - actorInset,
+                    ? obstacle.right + 4 - actorInset
+                    : obstacle.left - 4 - actorSize + actorInset,
             }
             .where(
               (x) => placeOnRight
-                  ? x >= innerLeft && x <= left
-                  : x >= left && x <= innerLeft,
+                  ? x >= left && x <= outerLeft
+                  : x >= outerLeft && x <= left,
             )
             .toList()
           ..sort((a, b) => (a - left).abs().compareTo((b - left).abs()));

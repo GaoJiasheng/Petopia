@@ -506,8 +506,8 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                           ),
                           ..._fixedYardUtilities(
                             waterBowlOwned: view.waterBowlOwned,
-                            wideLayout: wideLayout,
-                            tabletPortrait: tabletPortrait,
+                            sceneSize: size,
+                            sceneScale: sceneScale,
                           ),
                         ]
                         .where(
@@ -627,7 +627,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                             petWidth: petWidth,
                             petAlignment: petAlignment,
                             preferredAlignment: placement.alignment,
-                            preferredSize: placement.size * sceneScale,
+                            preferredSize: petWidth * (placement.size / 148),
                             decorRects: decorRects,
                             actionBarRect: actionBarRect,
                           );
@@ -696,7 +696,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                             petWidth: petWidth,
                             petAlignment: petAlignment,
                             preferredAlignment: revisitorAlignment,
-                            preferredSize: petWidth * 0.48,
+                            preferredSize: petWidth * 0.66,
                             decorRects: decorRects,
                             actionBarRect: actionBarRect,
                           );
@@ -2874,7 +2874,8 @@ class _DecorAnchor {
 class _VisibleDecor {
   final String decorId;
   final _DecorAnchor anchor;
-  const _VisibleDecor(this.decorId, this.anchor);
+  final bool fixedWidth;
+  const _VisibleDecor(this.decorId, this.anchor, {this.fixedWidth = false});
 }
 
 // Every anchor is the painted footprint on the lawn, never the visual center.
@@ -2885,15 +2886,14 @@ class _VisibleDecor {
 // the lawn read as two shelves flanking an empty corridor, so each side keeps
 // its own depth rhythm and the near row is allowed to step inward.
 const _compactDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.84, 0.05), 62),
-  1: _DecorAnchor(Alignment(0.82, 0.17), 64),
-  2: _DecorAnchor(Alignment(-0.94, 0.34), 66),
-  3: _DecorAnchor(Alignment(0.86, 0.37), 72),
-  4: _DecorAnchor(Alignment(-0.92, 0.68), 79),
-  5: _DecorAnchor(Alignment(0.90, 0.67), 78),
-  // 后排：宠物下移后腾出的远景地面，可以靠近中线，但基线必须高于宠物顶边。
-  6: _DecorAnchor(Alignment(-0.30, 0.04), 56),
-  7: _DecorAnchor(Alignment(0.32, 0.07), 58),
+  0: _DecorAnchor(Alignment(-0.62, 0.12), 60),
+  1: _DecorAnchor(Alignment(0.60, 0.14), 60),
+  2: _DecorAnchor(Alignment(-0.92, 0.20), 48),
+  3: _DecorAnchor(Alignment(0.90, 0.20), 52),
+  4: _DecorAnchor(Alignment(-0.84, 0.65), 54),
+  5: _DecorAnchor(Alignment(0.78, 0.68), 54),
+  6: _DecorAnchor(Alignment(-0.30, 0.10), 45),
+  7: _DecorAnchor(Alignment(0.28, 0.12), 48),
 };
 
 const _wideDecorAnchors = <int, _DecorAnchor>{
@@ -2908,14 +2908,14 @@ const _wideDecorAnchors = <int, _DecorAnchor>{
 };
 
 const _tabletPortraitDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.84, 0.03), 52),
-  1: _DecorAnchor(Alignment(0.82, 0.12), 54),
-  2: _DecorAnchor(Alignment(-0.94, 0.32), 56),
-  3: _DecorAnchor(Alignment(0.86, 0.38), 61),
-  4: _DecorAnchor(Alignment(-0.92, 0.72), 67),
-  5: _DecorAnchor(Alignment(0.90, 0.76), 68),
-  6: _DecorAnchor(Alignment(-0.30, 0.02), 47),
-  7: _DecorAnchor(Alignment(0.32, 0.05), 49),
+  0: _DecorAnchor(Alignment(-0.62, 0.12), 60),
+  1: _DecorAnchor(Alignment(0.64, 0.14), 60),
+  2: _DecorAnchor(Alignment(-0.88, 0.22), 50),
+  3: _DecorAnchor(Alignment(0.88, 0.24), 54),
+  4: _DecorAnchor(Alignment(-0.76, 0.64), 58),
+  5: _DecorAnchor(Alignment(0.72, 0.68), 54),
+  6: _DecorAnchor(Alignment(-0.36, 0.10), 48),
+  7: _DecorAnchor(Alignment(0.46, 0.12), 52),
 };
 
 const _compactUtilityAnchors = <String, _DecorAnchor>{
@@ -2963,16 +2963,31 @@ _DecorAnchor _supportTreatAnchor({
 
 List<_VisibleDecor> _fixedYardUtilities({
   required bool waterBowlOwned,
-  required bool wideLayout,
-  required bool tabletPortrait,
+  required Size sceneSize,
+  required double sceneScale,
 }) {
-  final anchors = _yardUtilityAnchors(
-    wideLayout: wideLayout,
-    tabletPortrait: tabletPortrait,
+  final petWidth = PetopiaAdaptive.petStageWidth(sceneSize);
+  final petRect = PetopiaAdaptive.alignedSquareRect(
+    sceneSize: sceneSize,
+    squareSize: petWidth,
+    alignment: PetopiaAdaptive.yardPetAlignment(sceneSize),
   );
+  final bowlWidth = petWidth * 0.25;
+  final footprintY =
+      (petRect.bottom + petWidth * 0.015) * 2 / sceneSize.height - 1;
+  _DecorAnchor anchor(double side) => _DecorAnchor(
+    Alignment(
+      side * petWidth * 0.62 / (sceneSize.width - bowlWidth),
+      footprintY,
+    ),
+    bowlWidth / sceneScale,
+  );
+  // Utilities share the pet's scale and foot position, regardless of whether
+  // the player has filled any decor slots.
   return <_VisibleDecor>[
-    _VisibleDecor('food_bowl_full', anchors['food_bowl_full']!),
-    if (waterBowlOwned) _VisibleDecor('water_bowl', anchors['water_bowl']!),
+    _VisibleDecor('food_bowl_full', anchor(-1), fixedWidth: true),
+    if (waterBowlOwned)
+      _VisibleDecor('water_bowl', anchor(1), fixedWidth: true),
   ];
 }
 
@@ -3024,6 +3039,7 @@ _YardDecor _placedDecor(
   required bool tabletPortrait,
   required double sceneScale,
 }) {
+  heightDriven = heightDriven && !decor.fixedWidth;
   final unit =
       decor.anchor.width *
       sceneScale *
@@ -3034,12 +3050,19 @@ _YardDecor _placedDecor(
               tabletPortrait: tabletPortrait,
             )
           : 1);
+  final groundWidth = switch (decor.decorId) {
+    'pond_small' => unit * 1.85,
+    'flowerbed_small' => unit * 1.25,
+    _ => null,
+  };
   return _YardDecor(
     imageKey: ValueKey<String>('yard_decor_${luxuryStage}_${decor.decorId}'),
     align: decor.anchor.align,
     decorId: decor.decorId,
-    width: heightDriven ? null : unit * _decorWidthScale(decor.decorId),
-    height: heightDriven
+    width:
+        groundWidth ??
+        (heightDriven ? null : unit * _decorWidthScale(decor.decorId)),
+    height: heightDriven && groundWidth == null
         ? unit *
               _decorHeightRatio(decor.decorId) *
               _decorDepthEmphasis(decor.decorId, decor.anchor.align.y)
