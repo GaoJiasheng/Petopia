@@ -1150,7 +1150,7 @@ void main() {
   );
 
   testWidgets(
-    'full yard leaves both companions behind the pet across viewports',
+    'full yard puts both companions at the pet\'s front sides across viewports',
     (tester) async {
       for (final size in const [
         Size(390, 844),
@@ -1237,16 +1237,31 @@ void main() {
               expect(
                 substantial(subject(props[i]), subject(props[j])),
                 isFalse,
-                reason: '$size ${items[i]} / ${items[j]} overlap',
+                reason:
+                    '$size ${items[i]} / ${items[j]} overlap: ${props[i]} / ${props[j]}',
               );
             }
           }
           for (final key in ['active_visitor', 'active_revisitor']) {
             final actor = tester.getRect(find.byKey(ValueKey(key)));
+            // 2026-09-18：伙伴从主宠后方改到两侧前方，主宠仍是画面主体。
             expect(
               actor.bottom,
-              lessThanOrEqualTo(pet.bottom - pet.width * .1),
-              reason: '$size $key must stay behind the pet',
+              lessThanOrEqualTo(bar.top - 8),
+              reason: '$size $key must stay clear of the care bar',
+            );
+            expect(
+              actor.bottom,
+              greaterThan(pet.bottom - pet.width * .1),
+              reason: '$size $key should stand at the pet\'s front side',
+            );
+            expect(
+              substantial(
+                actor.deflate(actor.width * .1),
+                pet.deflate(pet.shortestSide * .1),
+              ),
+              isFalse,
+              reason: '$size $key overlaps the pet',
             );
             expect(
               actor.width,
@@ -1271,6 +1286,26 @@ void main() {
               );
               expect(decor.bottom, lessThan(bar.top - 8));
             }
+          }
+          // 饭盆和水盆放在完整主宠画布下方，不与模型叠加。
+          for (final bowl in ['food_bowl_full', 'water_bowl']) {
+            final rect = tester.getRect(
+              find.byKey(ValueKey('yard_decor_6_$bowl')),
+            );
+            // 与本组其他重叠检查一致，按绘制主体（去掉 10% 透明边）判断；
+            // 矮横屏上盆可以进入宠物脚下的透明边，但不得碰到模型本身。
+            expect(
+              subject(rect).overlaps(subject(pet)),
+              isFalse,
+              reason: '$size $bowl overlaps the pet: $rect / $pet',
+            );
+            // 盆贴在主宠脚下（间距 6pt），最窄的 iPhone 17e 上离操作栏约 6pt；
+            // 摆件仍沿用 8pt，盆只要求不碰操作栏。
+            expect(
+              rect.bottom,
+              lessThan(bar.top - 4),
+              reason: '$size $bowl touches the care bar: $rect / $bar',
+            );
           }
           expect(tester.takeException(), isNull);
           await _disposeYard(tester);

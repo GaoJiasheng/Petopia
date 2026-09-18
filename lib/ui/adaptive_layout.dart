@@ -68,14 +68,11 @@ class PetopiaAdaptive {
     return (size.width * 0.465).clamp(156.0, 189.0);
   }
 
-  /// The yard is a view into a garden, rather than a close-up pet portrait.
-  /// Keep the larger stage size above for the graduation ceremony.
+  /// The current pet is the focal subject; garden props have their own scale.
   static double yardPetWidth(Size size) {
-    if (useYardSidePanels(size)) {
-      return (size.height * 0.16).clamp(110.0, 166.0);
-    }
-    if (size.width >= 600) return (size.width * 0.19).clamp(140.0, 180.0);
-    return (size.width * 0.25).clamp(80.0, 114.0);
+    if (useYardSidePanels(size)) return (size.height * .26).clamp(180.0, 270.0);
+    if (size.width >= 600) return (size.width * .27).clamp(200.0, 280.0);
+    return (size.width * .40).clamp(128.0, 180.0);
   }
 
   /// Authored metre reference: a seated pet is about half a metre including
@@ -83,9 +80,15 @@ class PetopiaAdaptive {
   /// Ground distance from the horizon supplies the same perspective to every
   /// object; a distant chair must not be enlarged to fill an arbitrary slot.
   static double yardMetreScale(Size size, double footprintY) {
-    final petFoot = useYardSidePanels(size) ? 0.74 : 0.76;
-    final depth = ((footprintY + 1) / 2 - 0.40) / (petFoot - 0.40);
-    return yardPetWidth(size) * 0.8 / 0.5 * depth;
+    // Preserve the garden's authoring reference when enlarging the hero pet.
+    final referenceFoot = useYardSidePanels(size) ? 0.74 : 0.76;
+    final depth = ((footprintY + 1) / 2 - 0.40) / (referenceFoot - 0.40);
+    final gardenReference = useYardSidePanels(size)
+        ? (size.height * .16).clamp(110.0, 166.0)
+        : size.width >= 600
+        ? (size.width * .19).clamp(140.0, 180.0)
+        : (size.width * .25).clamp(80.0, 114.0);
+    return gardenReference * 0.8 / 0.5 * depth;
   }
 
   /// Keeps hand-painted yard actors at a consistent visual proportion instead
@@ -103,7 +106,7 @@ class PetopiaAdaptive {
   /// controls and clear of the secondary character lanes.
   static Alignment yardPetAlignment(Size size) {
     final width = yardPetWidth(size);
-    final foot = useYardSidePanels(size) ? 0.74 : 0.76;
+    final foot = useYardSidePanels(size) ? 0.78 : 0.80;
     return Alignment(
       0,
       (size.height * foot - width) * 2 / (size.height - width) - 1,
@@ -150,17 +153,14 @@ class PetopiaAdaptive {
       squareSize: petWidth,
       alignment: petAlignment,
     );
-    // Companions occupy the lawn beside and just behind the current pet.
-    // Their foreground limit follows the pet's feet as well as the real bar.
+    // Companions own the front side stations, clear of the actual care bar.
     final maxBottom = math.min(
       (actionBarRect?.top ?? sceneSize.height) - 9,
-      fullPetRect.bottom - petWidth * 0.10,
+      fullPetRect.bottom + petWidth * 0.22,
     );
     final maxTop = maxBottom - actorSize;
-    final minTop = sceneSize.height * 0.56 - actorSize;
-    final top = (sceneSize.height * (preferredAlignment.y + 1) / 2 - actorSize)
-        .clamp(minTop, maxTop)
-        .toDouble();
+    final minTop = math.min(maxTop, fullPetRect.bottom - actorSize);
+    final top = maxTop;
     final preferredRect = Rect.fromLTWH(left, top, actorSize, actorSize);
     if (decorRects.isEmpty && top <= maxTop) return preferredRect;
 
@@ -184,8 +184,7 @@ class PetopiaAdaptive {
         );
     if (isClear(preferredRect)) return preferredRect;
 
-    // Search the whole depth of this half of the lawn, including farther
-    // openings. Visitors need not crowd the current pet to remain visible.
+    // Search the available foreground band without moving a player's prop.
     final tops =
         <double>{
             top,

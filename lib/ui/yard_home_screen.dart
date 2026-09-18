@@ -509,6 +509,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                             waterBowlOwned: view.waterBowlOwned,
                             sceneSize: size,
                             sceneScale: sceneScale,
+                            actionBarRect: actionBarRect,
                           ),
                         ]
                         .where(
@@ -732,9 +733,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                           );
                         },
                       ),
-                    // Bowls and low foreground props sit in front of the pet's
-                    // feet. This small depth split makes the composition read
-                    // as one lawn rather than independent stickers.
+                    // Only the pet's utilities occupy the front garden layer.
                     for (final decor in foregroundDecor)
                       _placedDecor(
                         decor,
@@ -2869,42 +2868,31 @@ class _VisibleDecor {
   const _VisibleDecor(this.decorId, this.anchor, {this.fixedWidth = false});
 }
 
-// Anchors are ground footprints. The far garden contains four separate
-// places near the fence; the middle lawn has a small central garden feature
-// and a right-side seat. Two foreground places sit at unequal distances from
-// the edges. Object dimensions come from one world scale, never slot widths.
+// All eight player footprints belong to the rear garden. The front lawn is
+// reserved for the current pet, its bowls, and the two visiting animals.
 const _compactDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.78, 0.03)),
-  1: _DecorAnchor(Alignment(0.82, 0.07)),
-  2: _DecorAnchor(Alignment(0.00, 0.30)),
-  3: _DecorAnchor(Alignment(0.84, 0.22)),
-  4: _DecorAnchor(Alignment(-0.92, 0.66)),
-  5: _DecorAnchor(Alignment(0.80, 0.68)),
-  6: _DecorAnchor(Alignment(-0.23, 0.00)),
-  7: _DecorAnchor(Alignment(0.28, 0.10)),
+  0: _DecorAnchor(Alignment(-0.86, 0.00)),
+  1: _DecorAnchor(Alignment(0.86, 0.00)),
+  2: _DecorAnchor(Alignment(-0.30, 0.22)),
+  3: _DecorAnchor(Alignment(0.30, 0.22)),
+  4: _DecorAnchor(Alignment(-0.90, 0.22)),
+  5: _DecorAnchor(Alignment(0.90, 0.22)),
+  6: _DecorAnchor(Alignment(-0.28, 0.00)),
+  7: _DecorAnchor(Alignment(0.28, 0.00)),
 };
 
 const _wideDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.80, 0.02)),
-  1: _DecorAnchor(Alignment(0.60, 0.08)),
-  2: _DecorAnchor(Alignment(-0.22, 0.28)),
-  3: _DecorAnchor(Alignment(0.84, 0.40)),
-  4: _DecorAnchor(Alignment(-0.60, 0.60)),
-  5: _DecorAnchor(Alignment(0.50, 0.62)),
-  6: _DecorAnchor(Alignment(-0.42, 0.00)),
-  7: _DecorAnchor(Alignment(0.33, 0.12)),
+  0: _DecorAnchor(Alignment(-0.62, 0.00)),
+  1: _DecorAnchor(Alignment(0.62, 0.00)),
+  2: _DecorAnchor(Alignment(-0.44, 0.22)),
+  3: _DecorAnchor(Alignment(0.44, 0.22)),
+  4: _DecorAnchor(Alignment(-0.86, 0.28)),
+  5: _DecorAnchor(Alignment(0.86, 0.28)),
+  6: _DecorAnchor(Alignment(-0.18, 0.00)),
+  7: _DecorAnchor(Alignment(0.18, 0.00)),
 };
 
-const _tabletPortraitDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.80, 0.03)),
-  1: _DecorAnchor(Alignment(0.76, 0.07)),
-  2: _DecorAnchor(Alignment(-0.16, 0.24)),
-  3: _DecorAnchor(Alignment(0.66, 0.22)),
-  4: _DecorAnchor(Alignment(-0.80, 0.66)),
-  5: _DecorAnchor(Alignment(0.68, 0.68)),
-  6: _DecorAnchor(Alignment(-0.40, 0.00)),
-  7: _DecorAnchor(Alignment(0.20, 0.10)),
-};
+const _tabletPortraitDecorAnchors = _compactDecorAnchors;
 
 const _compactUtilityAnchors = <String, _DecorAnchor>{
   'food_bowl_full': _DecorAnchor(Alignment(-0.14, 0.50), 54),
@@ -2953,6 +2941,7 @@ List<_VisibleDecor> _fixedYardUtilities({
   required bool waterBowlOwned,
   required Size sceneSize,
   required double sceneScale,
+  Rect? actionBarRect,
 }) {
   final petWidth = PetopiaAdaptive.yardPetWidth(sceneSize);
   final petRect = PetopiaAdaptive.alignedSquareRect(
@@ -2960,22 +2949,40 @@ List<_VisibleDecor> _fixedYardUtilities({
     squareSize: petWidth,
     alignment: PetopiaAdaptive.yardPetAlignment(sceneSize),
   );
-  final bowlWidth = petWidth * 0.32;
-  final footprintY =
-      (petRect.bottom + petWidth * 0.015) * 2 / sceneSize.height - 1;
-  _DecorAnchor anchor(double side) => _DecorAnchor(
-    Alignment(
-      side * petWidth * 0.62 / (sceneSize.width - bowlWidth),
-      footprintY,
-    ),
-    bowlWidth / sceneScale,
-  );
-  // Utilities share the pet's scale and foot position, regardless of whether
-  // the player has filled any decor slots.
+  final bowlWidth = petWidth * 0.24;
+  _DecorAnchor anchor(String decorId, double side) {
+    final crop = YardArt.decorCrop(decorId);
+    final bowlHeight =
+        bowlWidth *
+        crop.canvasAspectRatio *
+        crop.heightFraction /
+        crop.widthFraction;
+    // Short landscape canvases (iPad mini) leave less than a bowl's height
+    // between the pet's canvas and the care bar. There the bowl rises into the
+    // transparent margin under the pet's feet rather than under the controls.
+    final preferredBottom = petRect.bottom + 6 + bowlHeight;
+    final bottom = actionBarRect == null
+        ? preferredBottom
+        : math.min(preferredBottom, actionBarRect.top - 6);
+    return _DecorAnchor(
+      Alignment(
+        side * petWidth * 0.34 / (sceneSize.width - bowlWidth),
+        bottom * 2 / sceneSize.height - 1,
+      ),
+      bowlWidth / sceneScale,
+    );
+  }
+
+  // Measure the painted bowl, leaving a visible gap below the entire pet
+  // canvas without pushing the utilities into the care controls.
   return <_VisibleDecor>[
-    _VisibleDecor('food_bowl_full', anchor(-1), fixedWidth: true),
+    _VisibleDecor(
+      'food_bowl_full',
+      anchor('food_bowl_full', -1),
+      fixedWidth: true,
+    ),
     if (waterBowlOwned)
-      _VisibleDecor('water_bowl', anchor(1), fixedWidth: true),
+      _VisibleDecor('water_bowl', anchor('water_bowl', 1), fixedWidth: true),
   ];
 }
 

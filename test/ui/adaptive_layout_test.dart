@@ -132,14 +132,20 @@ void main() {
     });
 
     test('yard pet remains above the lower interaction controls', () {
-      expect(
-        PetopiaAdaptive.yardPetAlignment(const Size(393, 852)),
-        const Alignment(0, 0.45743283582089544),
-      );
-      expect(
-        PetopiaAdaptive.yardPetAlignment(const Size(1194, 834)),
-        const Alignment(0, 0.38095238095238093),
-      );
+      // 2026-09-18 主宠成为画面主体：脚点从 0.76/0.74 下移到 0.80/0.78，
+      // 仍留在操作栏（约 0.87 起）之上。
+      for (final (scene, foot) in const [
+        (Size(393, 852), .80),
+        (Size(1194, 834), .78),
+      ]) {
+        final pet = PetopiaAdaptive.alignedSquareRect(
+          sceneSize: scene,
+          squareSize: PetopiaAdaptive.yardPetWidth(scene),
+          alignment: PetopiaAdaptive.yardPetAlignment(scene),
+        );
+        expect(pet.bottom / scene.height, closeTo(foot, .001));
+        expect(pet.bottom, lessThan(scene.height * .85));
+      }
     });
 
     test(
@@ -161,7 +167,7 @@ void main() {
           expect(pet.center.dx, closeTo(scene.width / 2, .01));
           expect(
             pet.bottom / scene.height,
-            closeTo(PetopiaAdaptive.useYardSidePanels(scene) ? .74 : .76, .001),
+            closeTo(PetopiaAdaptive.useYardSidePanels(scene) ? .78 : .80, .001),
           );
           expect(pet.width, greaterThanOrEqualTo(48));
           final far = PetopiaAdaptive.yardMetreScale(scene, 0);

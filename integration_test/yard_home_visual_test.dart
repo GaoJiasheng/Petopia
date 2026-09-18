@@ -1159,9 +1159,10 @@ void main() {
           scenario.view.revisitor != null ? findsOneWidget : findsNothing,
           reason: '${scenario.name} revisitor visibility mismatch',
         );
-        final petRect = _visualSubjectRect(
-          tester.getRect(find.byKey(const ValueKey<String>('yard_pet_sprite'))),
+        final rawPetRect = tester.getRect(
+          find.byKey(const ValueKey<String>('yard_pet_sprite')),
         );
+        final petRect = _visualSubjectRect(rawPetRect);
         final yardRect = tester.getRect(
           find.byKey(const ValueKey<String>('yard_background')),
         );
@@ -1170,8 +1171,6 @@ void main() {
         // sky/fence anchors instead of merely checking screen bounds.
         final farGroundStart = yardRect.top + yardRect.height * 0.50;
         final animalGroundStart = yardRect.top + yardRect.height * 0.56;
-        final sideGroundStart = yardRect.top + yardRect.height * 0.60;
-        final foregroundStart = yardRect.top + yardRect.height * 0.78;
         final actionBarTop = tester
             .getRect(find.byKey(const ValueKey<String>('care_action_feed')))
             .top;
@@ -1231,19 +1230,19 @@ void main() {
         final placementIssues = <String>[];
         for (var i = 0; i < decorRects.length; i++) {
           final current = decorRects[i];
-          // 6/7 are the back row that sits behind the pet; 4/5 are the near
-          // foreground; 2/3 flank the pet; 0/1 are the upper side pair.
-          final minimumBaseline =
-              current.targetPos >= 4 && current.targetPos <= 5
-              ? foregroundStart
-              : current.targetPos >= 2 && current.targetPos <= 3
-              ? sideGroundStart
-              : farGroundStart;
-          if (current.rawRect.bottom < minimumBaseline) {
+          // 2026-09-18：主宠是画面主体，八个摆件位全部退到后场（到访时仍
+          // 不移动）。每件的底座必须落在草地上，且不得比主宠画布更靠前，
+          // 前景留给主宠、饭盆和两侧伙伴。
+          if (current.rawRect.bottom < farGroundStart) {
             placementIssues.add(
               'slot ${current.slot.pos}->${current.targetPos} floats above '
-              'its depth band: '
-              '${current.rawRect}',
+              'the lawn: ${current.rawRect}',
+            );
+          }
+          if (current.rawRect.bottom > rawPetRect.bottom) {
+            placementIssues.add(
+              'slot ${current.slot.pos}->${current.targetPos} intrudes into '
+              'the animal foreground: ${current.rawRect} / pet $rawPetRect',
             );
           }
           if (current.rawRect.bottom > actionBarTop - 8) {
@@ -1287,7 +1286,7 @@ void main() {
           isEmpty,
           reason:
               '${scenario.name} placement issues (ground bands start at '
-              '$farGroundStart/$sideGroundStart/$foregroundStart, '
+              '$farGroundStart, pet bottom ${rawPetRect.bottom}, '
               'action bar starts at $actionBarTop, pet: '
               '$petRect, side actors: $actorRects):\n'
               '${placementIssues.join('\n')}\nall decor:\n'
