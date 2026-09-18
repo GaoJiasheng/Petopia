@@ -975,6 +975,8 @@ abstract final class EnglishCopy {
     '这组筛选还没有明信片\n换一位伙伴或地点看看':
         'No postcards match this view.\nTry another friend or place.',
     '这里会收好旅途中寄回的每一封信。': 'Every letter from the road will be kept here.',
+    '毕业的伙伴会从每一站寄回明信片，这里会慢慢填满。':
+        'Your graduated friends will send postcards from each stop, slowly filling this space with memories.',
     '还没有毕业的旅行伙伴\n把宠物养到毕业，它就会踏上旅途 🎒':
         'No traveling friends yet.\nHelp a pet grow, and a journey will begin.',
     '也许很快会有新信': 'A new letter may arrive soon',

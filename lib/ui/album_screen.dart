@@ -589,35 +589,49 @@ class _TravelList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (pets.isEmpty) {
-      return const _Empty(
-        icon: Icons.card_travel_rounded,
-        text: '还没有毕业的旅行伙伴\n把宠物养到毕业，它就会踏上旅途 🎒',
-      );
-    }
     return LayoutBuilder(
       builder: (context, constraints) {
         final columns = PetopiaAdaptive.travelColumns(constraints.maxWidth);
         final largeText = MediaQuery.textScalerOf(context).scale(14) >= 28;
         final margin = PetopiaAdaptive.sideMargin(context);
+        final showGuide = pets.length < 2;
+        final guide = _TravelGuide(
+          maxWidth: constraints.maxHeight < 700 ? 480 : 600,
+        );
         if (columns > 1 && !largeText) {
+          final grid = GridView.builder(
+            shrinkWrap: showGuide,
+            physics: showGuide ? const NeverScrollableScrollPhysics() : null,
+            padding: showGuide
+                ? EdgeInsets.zero
+                : EdgeInsets.fromLTRB(margin, 16, margin, 24),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisExtent: 126,
+              crossAxisSpacing: 14,
+              mainAxisSpacing: 14,
+            ),
+            itemCount: pets.length,
+            itemBuilder: (context, i) => _TravelPetCard(
+              pet: pets[i],
+              onTap: () => _showJourney(context, pets[i]),
+            ),
+          );
           return Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1040),
-              child: GridView.builder(
-                padding: EdgeInsets.fromLTRB(margin, 16, margin, 24),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisExtent: 126,
-                  crossAxisSpacing: 14,
-                  mainAxisSpacing: 14,
-                ),
-                itemCount: pets.length,
-                itemBuilder: (context, i) => _TravelPetCard(
-                  pet: pets[i],
-                  onTap: () => _showJourney(context, pets[i]),
-                ),
-              ),
+              child: showGuide
+                  ? ListView(
+                      padding: EdgeInsets.fromLTRB(margin, 16, margin, 24),
+                      children: [
+                        if (pets.isNotEmpty) ...[
+                          grid,
+                          const SizedBox(height: 24),
+                        ],
+                        guide,
+                      ],
+                    )
+                  : grid,
             ),
           );
         }
@@ -626,12 +640,15 @@ class _TravelList extends StatelessWidget {
             constraints: const BoxConstraints(maxWidth: 680),
             child: ListView.separated(
               padding: EdgeInsets.fromLTRB(margin, 16, margin, 24),
-              itemCount: pets.length,
-              separatorBuilder: (_, _) => const SizedBox(height: 12),
-              itemBuilder: (context, i) => _TravelPetCard(
-                pet: pets[i],
-                onTap: () => _showJourney(context, pets[i]),
-              ),
+              itemCount: pets.length + (showGuide ? 1 : 0),
+              separatorBuilder: (_, i) =>
+                  SizedBox(height: showGuide && i == pets.length - 1 ? 24 : 12),
+              itemBuilder: (context, i) => i == pets.length
+                  ? guide
+                  : _TravelPetCard(
+                      pet: pets[i],
+                      onTap: () => _showJourney(context, pets[i]),
+                    ),
             ),
           ),
         );
@@ -653,6 +670,51 @@ class _TravelList extends StatelessWidget {
       backgroundColor: const Color(0xFFFFFDF7),
       constraints: const BoxConstraints(maxWidth: 900),
       builder: (context) => _TravelJourneySheet(pet: pet, cards: petCards),
+    );
+  }
+}
+
+class _TravelGuide extends StatelessWidget {
+  const _TravelGuide({required this.maxWidth});
+
+  final double maxWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: maxWidth),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Opacity(
+                opacity: 0.6,
+                child: Image.asset(
+                  'assets/runtime/postcards/backgrounds/pc_bg_oak_postbox.webp',
+                  width: double.infinity,
+                  fit: BoxFit.fitWidth,
+                  excludeFromSemantics: true,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: AppText(
+                '毕业的伙伴会从每一站寄回明信片，这里会慢慢填满。',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: AlbumScreen._muted,
+                  fontSize: 14,
+                  height: 1.6,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
