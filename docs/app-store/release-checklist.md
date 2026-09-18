@@ -83,6 +83,15 @@
       TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 40`
       构建无内测入口的正式候选包。build 40 为 App Store 审核候选；build 38
       仅对内部 TestFlight 组开放。
+- [x] **build 41（1.0.1）** 已于 2026-09-18 上传并通过 Apple 验证；Delivery UUID
+      `0de5de47-0d2c-4b58-840c-d4febfe1563c`，源码提交 `582eeb0`（tag `v1.0.1-build41`），
+      `app-store` 变体（真实 StoreKit、无 `+1`），`usesNonExemptEncryption=false`，最低 iOS 16.0，
+      内部组 `test001` 可用（`IN_BETA_TESTING`），三语 What to Test 已同步。
+      本机无 Apple Distribution 证书：`build_ios_variants.sh` 只能产出归档，IPA 需以
+      `xcodebuild -exportArchive -allowProvisioningUpdates -authenticationKeyPath … -authenticationKeyID
+      AMDBKB83K9 -authenticationKeyIssuerID …` 云签名导出，再用 `xcrun altool --upload-app` 上传。
+      发布门禁在临时 worktree 中跑时，需把被忽略的 `docs/art-review/theme-redesign/**/*.png`
+      源图带进去，否则资源清单只因缺溯源字段误报 stale。
 - [x] build 40 已于 2026-08-24 上传并通过 Apple 验证；Delivery UUID
       `8854670b-4dce-47e4-af7a-1cba9d3d9822`，不含 `+1` 与模拟购买，
       最低系统为 iOS 16.0。

@@ -2,6 +2,8 @@
 
 起始产品基线：`dc0e2f9`，版本 `1.0.1+41`；后续工单规则修订至 `04896d1`。顺序：T0 → T5 → T9 → T8 → T3 → T4 → T1 → T2 → T6 → T7。仅已完成的条目标为 PASS；未开始的工单不代表已验收。
 
+> 2026-09-14 院子后续：用户批准整体构图方案后，T0 追加修订及 T1/T2/T3 已实施并通过六配置门禁。最新文件、结果和截图见 [院子实施报告](yard-layout-implementation-2026-09-14.md)。下文 T1/T2/T3 和横屏 harness 的“未开始 / 未应用”为 9/3 历史记录。T4/T6/T7/T8 不因此视为完成。
+
 ## T0 — 完成
 
 修改文件：
@@ -58,9 +60,20 @@ flutter test integration_test/yard_home_visual_test.dart   -d ED7AC183-F9B7-4784
 
 修改文件：无。验证命令：未运行。复核截图：未生成。
 
-## T4 — 未开始
+## T4 — 暂停，横屏证据与实际代码不符
 
-修改文件：无。验证命令：未运行。复核截图：未生成。
+产品文件尚未修改。`onboarding_screen.dart:108` 已对宽度 ≥820 且宽大于高的设备选择 wide 母图；实际横屏截图却仍走竖屏分支。独立诊断确认，现有 `EXPECTED_WIDTH/HEIGHT` 只改变绘制画布，未改变 `MediaQuery`：
+
+```text
+surface-only: constraints=1133×744, MediaQuery=744×1133, view=1488×2266
+surface-and-view: constraints=1133×744, MediaQuery=1133×744, view=2266×1488
+```
+
+诊断命令：`flutter test integration_test/visual_size_probe_test.dart -d 7759EEF5-F257-4C08-BBE0-600B320B724E`，PASS。临时诊断文件已移除，原文和日志保留在 `build/visual-audit-p2/diagnostics/`（脚本原文另存）。只读检查 Flutter 当前 SDK 也确认 `MediaQueryData.fromView` 直接取 `view.physicalSize`。
+
+拟议验证修复：两个现有视觉 harness 在显式 EXPECTED 尺寸时同时设置 `tester.view.physicalSize`，并在 teardown 恢复；不改 placements 场景、重叠算法或阈值。可审阅补丁：`build/visual-audit-p2/diagnostics/landscape-view-size.patch`。按“描述不符先停并报告”的要求，未应用补丁、未猜测修改 T4 产品代码。需先补正横屏验证并重拍，再判断 T4 实际剩余问题。
+
+T5 已完成的四组截图中，iPad 横屏组须按补正后的 harness 重验；三台竖屏结果有效。T0/T9 的验收均为竖屏，不受此问题影响。
 
 ## T5 — 完成
 
@@ -98,9 +111,11 @@ flutter test integration_test/english_ui_visual_test.dart -d ED7AC183-F9B7-4784-
 
 修改文件：无。验证命令：未运行。复核截图：未生成。
 
-## T8 — 未开始
+## T8 — 修复已写入，验证中
 
-修改文件：无。验证命令：未运行。复核截图：未生成。
+修改文件：`lib/ui/album_screen.dart`、`lib/l10n/english_copy.dart`。复用大树邮筒明信片，以 60% 透明度显示；少于两位旅行伙伴时显示中英说明，两位及以上隐藏。矮屏将插画上限从 600pt 缩至 480pt。
+
+`python3 tools/check_release_candidate.py`（不带设备）：PASS；`flutter analyze` 0 issue、`flutter test` 308 项通过、3 项原有跳过。日志 `build/visual-audit-p2/T8/logs/release.log`。三语六配置截图尚未完成，不能提交。首轮截图归档于 `T8/first-pass/`；修正插画尺寸后重新复核。横屏 harness 的尺寸问题见 T4 条目。
 
 ## T9 — 完成
 
