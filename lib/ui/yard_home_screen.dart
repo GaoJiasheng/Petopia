@@ -630,13 +630,17 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                             actionBarRect.top - 12,
                             petRect.bottom + petWidth * .30,
                           );
-                          final height = math.max(
-                            60.0,
-                            PetopiaAdaptive.yardMetreScale(
-                                  size,
-                                  foot * 2 / size.height - 1,
-                                ) *
-                                placement.size,
+                          final height = math.min(
+                            petWidth * .72,
+                            math.max(
+                              60.0,
+                              PetopiaAdaptive.yardMetreScale(
+                                    size,
+                                    foot * 2 / size.height - 1,
+                                  ) *
+                                  placement.size *
+                                  .72,
+                            ),
                           );
                           final rect = PetopiaAdaptive.yardSideActorRect(
                             sceneSize: size,
@@ -728,7 +732,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                                           size.height -
                                       1,
                                 ) *
-                                .54,
+                                .38,
                             preferredFoot: math.min(
                               actionBarRect.top - 12,
                               size.height * (wideLayout ? .78 : .80) +
@@ -2961,7 +2965,7 @@ const _wideDecorAnchors = <int, _DecorAnchor>{
   0: _DecorAnchor(Alignment(-.55, .00)),
   1: _DecorAnchor(Alignment(.70, .02)),
   2: _DecorAnchor(Alignment(-.36, .22)),
-  3: _DecorAnchor(Alignment(.45, .20)),
+  3: _DecorAnchor(Alignment(.45, .38)),
   4: _DecorAnchor(Alignment(-.86, .32)),
   5: _DecorAnchor(Alignment(.86, .30)),
   6: _DecorAnchor(Alignment(-.17, .00)),
@@ -3108,12 +3112,30 @@ _YardDecor _placedDecor(
   required Size sceneSize,
 }) {
   final dimensions = _decorDimensions(decor.decorId);
+  final lawnEdge = sceneSize.width >= 600 && sceneSize.height > sceneSize.width
+      ? .76
+      : .66;
+  // Rear ground props need their front rim inside the lawn. Preserve the
+  // player's other slot choices; these offsets never depend on visitors.
+  final alignment = decor.decorId == 'pond_small' && decor.anchor.align.y <= .06
+      ? Alignment(
+          PetopiaAdaptive.useYardSidePanels(sceneSize)
+              ? (decor.anchor.align.x + .28).clamp(-.80, .80)
+              : decor.anchor.align.x,
+          decor.anchor.align.y + .12,
+        )
+      : decor.decorId == 'fireplace'
+      ? Alignment(
+          decor.anchor.align.x.clamp(-lawnEdge, lawnEdge),
+          decor.anchor.align.y,
+        )
+      : decor.anchor.align;
   final extent =
       dimensions.metres *
-      PetopiaAdaptive.yardMetreScale(sceneSize, decor.anchor.align.y);
+      PetopiaAdaptive.yardMetreScale(sceneSize, alignment.y);
   return _YardDecor(
     imageKey: ValueKey<String>('yard_decor_${luxuryStage}_${decor.decorId}'),
-    align: decor.anchor.align,
+    align: alignment,
     decorId: decor.decorId,
     width: decor.fixedWidth
         ? decor.anchor.width * PetopiaAdaptive.yardSceneScale(sceneSize)
