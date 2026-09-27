@@ -75,20 +75,12 @@ class PetopiaAdaptive {
     return (size.width * .40).clamp(128.0, 180.0);
   }
 
-  /// Authored metre reference: a seated pet is about half a metre including
-  /// its raised tail, with the painted subject filling 80% of its canvas.
-  /// Ground distance from the horizon supplies the same perspective to every
-  /// object; a distant chair must not be enlarged to fill an arbitrary slot.
+  /// One ground projection for animals, garden objects and their utilities.
+  /// The pet's painted height (including its raised tail) represents 0.60 m.
   static double yardMetreScale(Size size, double footprintY) {
-    // Preserve the garden's authoring reference when enlarging the hero pet.
-    final referenceFoot = useYardSidePanels(size) ? 0.74 : 0.76;
-    final depth = ((footprintY + 1) / 2 - 0.40) / (referenceFoot - 0.40);
-    final gardenReference = useYardSidePanels(size)
-        ? (size.height * .16).clamp(110.0, 166.0)
-        : size.width >= 600
-        ? (size.width * .19).clamp(140.0, 180.0)
-        : (size.width * .25).clamp(80.0, 114.0);
-    return gardenReference * 0.8 / 0.5 * depth;
+    final referenceFoot = useYardSidePanels(size) ? .78 : .80;
+    final depth = ((footprintY + 1) / 2 - .40) / (referenceFoot - .40);
+    return yardPetWidth(size) * .80 / .60 * depth;
   }
 
   /// Keeps hand-painted yard actors at a consistent visual proportion instead
@@ -122,6 +114,8 @@ class PetopiaAdaptive {
     required Alignment petAlignment,
     required Alignment preferredAlignment,
     required double preferredSize,
+    double aspectRatio = 1,
+    double? preferredFoot,
     Iterable<Rect> decorRects = const [],
     Rect? actionBarRect,
   }) {
@@ -139,34 +133,43 @@ class PetopiaAdaptive {
     final laneWidth = placeOnRight
         ? sceneSize.width - petRect.right
         : petRect.left;
-    final inset = sceneSize.width < 360 ? 6.0 : 12.0;
-    final gap = sceneSize.width < 360 ? 6.0 : 8.0;
-    final actorSize = math.min(
-      preferredSize,
+    final inset = sceneSize.width < 360 ? 6.0 : 8.0;
+    const gap = 6.0;
+    final actorWidth = math.min(
+      preferredSize * aspectRatio,
       math.max(1.0, laneWidth - inset - gap),
     );
+    final actorHeight = actorWidth / aspectRatio;
     final left = placeOnRight
         ? petRect.right + gap
-        : petRect.left - gap - actorSize;
+        : petRect.left - gap - actorWidth;
     final fullPetRect = alignedSquareRect(
       sceneSize: sceneSize,
       squareSize: petWidth,
       alignment: petAlignment,
     );
     // Companions own the front side stations, clear of the actual care bar.
+    final horizon = sceneSize.height * .40;
+    // If a narrow viewport requires a smaller actor, move it farther away
+    // by the same projection ratio rather than miniaturising it in place.
+    final projectedFoot = preferredFoot == null
+        ? fullPetRect.bottom + petWidth * .22
+        : horizon + (preferredFoot - horizon) * actorHeight / preferredSize;
     final maxBottom = math.min(
       (actionBarRect?.top ?? sceneSize.height) - 9,
-      fullPetRect.bottom + petWidth * 0.22,
+      projectedFoot,
     );
-    final maxTop = maxBottom - actorSize;
-    final minTop = math.min(maxTop, fullPetRect.bottom - actorSize);
+    final maxTop = maxBottom - actorHeight;
+    final minTop = preferredFoot == null
+        ? math.min(maxTop, fullPetRect.bottom - actorHeight)
+        : maxTop;
     final top = maxTop;
-    final preferredRect = Rect.fromLTWH(left, top, actorSize, actorSize);
+    final preferredRect = Rect.fromLTWH(left, top, actorWidth, actorHeight);
     if (decorRects.isEmpty && top <= maxTop) return preferredRect;
 
     // Leave the painted bases in place. Transparent sprite margins can share
     // space, but the animal itself must clear every visible prop and the pet.
-    final actorInset = actorSize * 0.10;
+    final actorInset = math.min(actorWidth, actorHeight) * 0.10;
     final obstacles = [
       alignedSquareRect(
         sceneSize: sceneSize,
@@ -192,12 +195,12 @@ class PetopiaAdaptive {
             maxTop,
             for (final obstacle in obstacles) ...[
               obstacle.bottom + 4 - actorInset,
-              obstacle.top - 4 + actorInset - actorSize,
+              obstacle.top - 4 + actorInset - actorHeight,
             ],
           }.where((y) => y >= minTop && y <= maxTop).toList()
           ..sort((a, b) => (a - top).abs().compareTo((b - top).abs()));
     final outerLeft = placeOnRight
-        ? sceneSize.width - inset - actorSize
+        ? sceneSize.width - inset - actorWidth
         : inset;
     final lefts =
         <double>{
@@ -206,7 +209,7 @@ class PetopiaAdaptive {
               for (final obstacle in obstacles)
                 placeOnRight
                     ? obstacle.right + 4 - actorInset
-                    : obstacle.left - 4 - actorSize + actorInset,
+                    : obstacle.left - 4 - actorWidth + actorInset,
             }
             .where(
               (x) => placeOnRight
@@ -217,20 +220,27 @@ class PetopiaAdaptive {
           ..sort((a, b) => (a - left).abs().compareTo((b - left).abs()));
     for (final x in lefts) {
       for (final y in tops) {
-        final candidate = Rect.fromLTWH(x, y, actorSize, actorSize);
+        final candidate = Rect.fromLTWH(x, y, actorWidth, actorHeight);
         if (isClear(candidate)) return candidate;
       }
     }
     // On the smallest lawn, tall props can leave no full-size opening. Fit the
     // temporary actor to that gap only after trying both movement directions;
     // the player's arrangement and the minimum touch target stay intact.
-    if (actorSize > 48) {
+    if (math.min(actorWidth, actorHeight) > 48) {
       return yardSideActorRect(
         sceneSize: sceneSize,
         petWidth: petWidth,
         petAlignment: petAlignment,
         preferredAlignment: preferredAlignment,
-        preferredSize: math.max(48, actorSize - 2),
+        preferredSize: math.max(48, actorHeight - 2),
+        aspectRatio: aspectRatio,
+        preferredFoot: preferredFoot == null
+            ? null
+            : horizon +
+                  (maxBottom - horizon) *
+                      math.max(48, actorHeight - 2) /
+                      actorHeight,
         decorRects: decorRects,
         actionBarRect: actionBarRect,
       );

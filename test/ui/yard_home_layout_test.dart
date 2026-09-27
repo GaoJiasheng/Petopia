@@ -1314,6 +1314,81 @@ void main() {
     },
   );
 
+  testWidgets('a deer remains a foreground animal even with eight tall props', (
+    tester,
+  ) async {
+    for (final size in const [
+      Size(390, 844),
+      Size(440, 956),
+      Size(744, 1133),
+      Size(1032, 1376),
+      Size(1133, 744),
+      Size(1376, 1032),
+    ]) {
+      final visitor = VisitorPresenceView(
+        id: 'visitor_deer',
+        name: '小鹿',
+        rarity: VisitorRarity.uncommon,
+        message: '',
+        arrivedAt: DateTime.utc(2026, 7, 22),
+        leavesAt: DateTime.utc(2026, 7, 23),
+        arrivalSeen: true,
+        interacted: true,
+        yardAsset: 'assets/art/world/visitors/visitor_deer_yard.png',
+        portraitAsset: 'assets/art/world/visitors/visitor_deer_portrait.png',
+      );
+      const items = [
+        'mailbox_wood',
+        'wind_chime',
+        'scarecrow',
+        'wood_sign',
+        'fireplace',
+        'wind_vane',
+        'album_shelf',
+        'night_light',
+      ];
+      await _pumpYard(
+        tester,
+        size: size,
+        safeArea: const EdgeInsets.only(top: 24, bottom: 34),
+        view: _view(
+          luxuryStage: 6,
+          visitor: visitor,
+          revisitor: _revisitor(),
+          waterBowlOwned: true,
+          decorSlots: [
+            for (var i = 0; i < items.length; i++)
+              YardSlotView(pos: i, itemId: items[i]),
+          ],
+        ),
+      );
+      final pet = tester.getRect(find.byKey(const ValueKey('yard_pet_sprite')));
+      final deer = tester.getRect(find.byKey(const ValueKey('active_visitor')));
+      expect(
+        deer.bottom,
+        greaterThan(pet.bottom - pet.width * .1),
+        reason: '$size deer retreats behind the pet: $deer / $pet',
+      );
+      expect(
+        deer.height,
+        greaterThan(pet.width * .9),
+        reason: '$size deer becomes a miniature',
+      );
+      for (final item in items) {
+        final decor = tester.getRect(
+          find.byKey(ValueKey('yard_decor_6_$item')),
+        );
+        expect(
+          decor.overlaps(deer.deflate(deer.shortestSide * .1)),
+          isFalse,
+          reason: '$size $item reaches the deer',
+        );
+      }
+      expect(tester.takeException(), isNull);
+      await _disposeYard(tester);
+    }
+  });
+
   testWidgets('core yard controls meet platform accessibility guidelines', (
     tester,
   ) async {

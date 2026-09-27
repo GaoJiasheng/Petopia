@@ -27,6 +27,7 @@ import 'pet_action_cue.dart';
 import 'pet_art.dart';
 import 'petopia_theme.dart';
 import 'yard_art.dart';
+import 'yard_visitor_geometry.dart';
 import 'yard_render_policy.dart';
 import 'widgets/pet_sprite.dart';
 import 'widgets/sprite_sheet_player.dart';
@@ -617,12 +618,34 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                         builder: (context) {
                           final visitor = view.activeVisitor!;
                           final placement = _visitorYardPlacement(visitor);
+                          final bounds = yardVisitorFrameBounds(
+                            visitor.yardAsset,
+                          );
+                          final petRect = PetopiaAdaptive.alignedSquareRect(
+                            sceneSize: size,
+                            squareSize: petWidth,
+                            alignment: petAlignment,
+                          );
+                          final foot = math.min(
+                            actionBarRect.top - 12,
+                            petRect.bottom + petWidth * .30,
+                          );
+                          final height = math.max(
+                            60.0,
+                            PetopiaAdaptive.yardMetreScale(
+                                  size,
+                                  foot * 2 / size.height - 1,
+                                ) *
+                                placement.size,
+                          );
                           final rect = PetopiaAdaptive.yardSideActorRect(
                             sceneSize: size,
                             petWidth: petWidth,
                             petAlignment: petAlignment,
                             preferredAlignment: placement.alignment,
-                            preferredSize: petWidth * (placement.size / 148),
+                            preferredSize: height,
+                            aspectRatio: bounds.width / bounds.height,
+                            preferredFoot: foot,
                             decorRects: decorRects,
                             actionBarRect: actionBarRect,
                           );
@@ -630,7 +653,8 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                             rect: rect,
                             child: _YardVisitor(
                               visitor: visitor,
-                              size: rect.width,
+                              size: rect.width / bounds.width,
+                              frameBounds: bounds,
                               reduceEffects: conserveMemory,
                               onTap: () {
                                 _runMoment(() async {
@@ -691,7 +715,25 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                             petWidth: petWidth,
                             petAlignment: petAlignment,
                             preferredAlignment: revisitorAlignment,
-                            preferredSize: petWidth * 0.72,
+                            preferredSize:
+                                PetopiaAdaptive.yardMetreScale(
+                                  size,
+                                  (math.min(
+                                            actionBarRect.top - 12,
+                                            size.height *
+                                                    (wideLayout ? .78 : .80) +
+                                                petWidth * .24,
+                                          )) *
+                                          2 /
+                                          size.height -
+                                      1,
+                                ) *
+                                .54,
+                            preferredFoot: math.min(
+                              actionBarRect.top - 12,
+                              size.height * (wideLayout ? .78 : .80) +
+                                  petWidth * .24,
+                            ),
                             decorRects: decorRects,
                             actionBarRect: actionBarRect,
                           );
@@ -2577,11 +2619,13 @@ _VisitorMotionProfile _visitorMotionProfile(String id) {
 class _YardVisitor extends StatefulWidget {
   final VisitorPresenceView visitor;
   final double size;
+  final Rect frameBounds;
   final bool reduceEffects;
   final VoidCallback onTap;
   const _YardVisitor({
     required this.visitor,
     required this.size,
+    required this.frameBounds,
     required this.reduceEffects,
     required this.onTap,
   });
@@ -2637,6 +2681,7 @@ class _YardVisitorState extends State<_YardVisitor>
     final profile = _visitorMotionProfile(visitor.id);
     final reduceMotion =
         widget.reduceEffects || MediaQuery.disableAnimationsOf(context);
+    final bounds = widget.frameBounds;
     final sprite = SpriteSheetPlayer(
       key: ValueKey<String>('visitor_sprite:${visitor.yardAsset}'),
       assetPath: visitor.yardAsset,
@@ -2644,7 +2689,38 @@ class _YardVisitorState extends State<_YardVisitor>
       duration: profile.frameDuration,
       loop: true,
       animate: !reduceMotion,
-      fallback: _VisitorLogoFallback(visitor: visitor, size: widget.size),
+      fallback: Padding(
+        padding: EdgeInsets.fromLTRB(
+          bounds.left * widget.size,
+          bounds.top * widget.size,
+          (1 - bounds.right) * widget.size,
+          (1 - bounds.bottom) * widget.size,
+        ),
+        child: _VisitorLogoFallback(
+          visitor: visitor,
+          size: widget.size * math.min(bounds.width, bounds.height),
+        ),
+      ),
+    );
+    final paintedSprite = SizedBox(
+      width: widget.size * bounds.width,
+      height: widget.size * bounds.height,
+      child: ClipRect(
+        child: OverflowBox(
+          alignment: Alignment.topLeft,
+          minWidth: widget.size,
+          maxWidth: widget.size,
+          minHeight: widget.size,
+          maxHeight: widget.size,
+          child: Transform.translate(
+            offset: Offset(
+              -bounds.left * widget.size,
+              -bounds.top * widget.size,
+            ),
+            child: sprite,
+          ),
+        ),
+      ),
     );
     return Semantics(
       key: const ValueKey<String>('active_visitor'),
@@ -2656,11 +2732,11 @@ class _YardVisitorState extends State<_YardVisitor>
           onTap: widget.onTap,
           radius: widget.size * 0.5,
           child: reduceMotion
-              ? Opacity(opacity: 0.94, child: sprite)
+              ? Opacity(opacity: 0.94, child: paintedSprite)
               : RepaintBoundary(
                   child: AnimatedBuilder(
                     animation: _motion,
-                    child: sprite,
+                    child: paintedSprite,
                     builder: (context, child) {
                       final phase = math.sin(_motion.value * math.pi * 2);
                       final lift = profile.hop
@@ -2732,22 +2808,22 @@ _VisitorYardPlacement _visitorYardPlacement(VisitorPresenceView visitor) {
   return switch (visitor.id) {
     'visitor_butterfly' => const _VisitorYardPlacement(
       Alignment(0.47, 0.24),
-      68,
+      .18,
     ),
     'visitor_firefly' || 'visitor_starbug' || 'visitor_campfire_light' =>
-      const _VisitorYardPlacement(Alignment(0.46, 0.22), 72),
-    'visitor_deer' => const _VisitorYardPlacement(Alignment(-0.54, 0.20), 185),
-    'visitor_egret' => const _VisitorYardPlacement(Alignment(-0.54, 0.20), 148),
-    'visitor_fox' => const _VisitorYardPlacement(Alignment(-0.54, 0.26), 118),
+      const _VisitorYardPlacement(Alignment(0.46, 0.22), .20),
+    'visitor_deer' => const _VisitorYardPlacement(Alignment(-0.54, 0.20), .80),
+    'visitor_egret' => const _VisitorYardPlacement(Alignment(-0.54, 0.20), .65),
+    'visitor_fox' => const _VisitorYardPlacement(Alignment(-0.54, 0.26), .46),
     'visitor_calico' ||
     'visitor_tanuki' ||
     'visitor_owl' ||
     'visitor_crow' ||
     'visitor_snowhare' => const _VisitorYardPlacement(
       Alignment(-0.50, 0.28),
-      118,
+      .46,
     ),
-    _ => const _VisitorYardPlacement(Alignment(-0.52, 0.46), 78),
+    _ => const _VisitorYardPlacement(Alignment(-0.52, 0.46), .26),
   };
 }
 
@@ -2871,28 +2947,37 @@ class _VisibleDecor {
 // All eight player footprints belong to the rear garden. The front lawn is
 // reserved for the current pet, its bowls, and the two visiting animals.
 const _compactDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.86, 0.00)),
-  1: _DecorAnchor(Alignment(0.86, 0.00)),
-  2: _DecorAnchor(Alignment(-0.30, 0.22)),
-  3: _DecorAnchor(Alignment(0.30, 0.22)),
-  4: _DecorAnchor(Alignment(-0.90, 0.22)),
-  5: _DecorAnchor(Alignment(0.90, 0.22)),
-  6: _DecorAnchor(Alignment(-0.28, 0.00)),
-  7: _DecorAnchor(Alignment(0.28, 0.00)),
+  0: _DecorAnchor(Alignment(-.42, .00)),
+  1: _DecorAnchor(Alignment(.78, .03)),
+  2: _DecorAnchor(Alignment(-.14, .27)),
+  3: _DecorAnchor(Alignment(.36, .28)),
+  4: _DecorAnchor(Alignment(-.90, .20)),
+  5: _DecorAnchor(Alignment(.85, .35)),
+  6: _DecorAnchor(Alignment(-.24, .02)),
+  7: _DecorAnchor(Alignment(.32, .00)),
 };
 
 const _wideDecorAnchors = <int, _DecorAnchor>{
-  0: _DecorAnchor(Alignment(-0.62, 0.00)),
-  1: _DecorAnchor(Alignment(0.62, 0.00)),
-  2: _DecorAnchor(Alignment(-0.44, 0.22)),
-  3: _DecorAnchor(Alignment(0.44, 0.22)),
-  4: _DecorAnchor(Alignment(-0.86, 0.28)),
-  5: _DecorAnchor(Alignment(0.86, 0.28)),
-  6: _DecorAnchor(Alignment(-0.18, 0.00)),
-  7: _DecorAnchor(Alignment(0.18, 0.00)),
+  0: _DecorAnchor(Alignment(-.55, .00)),
+  1: _DecorAnchor(Alignment(.70, .02)),
+  2: _DecorAnchor(Alignment(-.36, .22)),
+  3: _DecorAnchor(Alignment(.45, .20)),
+  4: _DecorAnchor(Alignment(-.86, .32)),
+  5: _DecorAnchor(Alignment(.86, .30)),
+  6: _DecorAnchor(Alignment(-.17, .00)),
+  7: _DecorAnchor(Alignment(.20, .06)),
 };
 
-const _tabletPortraitDecorAnchors = _compactDecorAnchors;
+const _tabletPortraitDecorAnchors = <int, _DecorAnchor>{
+  0: _DecorAnchor(Alignment(-.30, .00)),
+  1: _DecorAnchor(Alignment(.78, .03)),
+  2: _DecorAnchor(Alignment(-.58, .20)),
+  3: _DecorAnchor(Alignment(.55, .28)),
+  4: _DecorAnchor(Alignment(-.91, .19)),
+  5: _DecorAnchor(Alignment(.86, .32)),
+  6: _DecorAnchor(Alignment(-.18, .02)),
+  7: _DecorAnchor(Alignment(.22, .00)),
+};
 
 const _compactUtilityAnchors = <String, _DecorAnchor>{
   'food_bowl_full': _DecorAnchor(Alignment(-0.14, 0.50), 54),
@@ -2949,7 +3034,12 @@ List<_VisibleDecor> _fixedYardUtilities({
     squareSize: petWidth,
     alignment: PetopiaAdaptive.yardPetAlignment(sceneSize),
   );
-  final bowlWidth = petWidth * 0.24;
+  final bowlWidth =
+      PetopiaAdaptive.yardMetreScale(
+        sceneSize,
+        petRect.bottom * 2 / sceneSize.height - 1,
+      ) *
+      .18;
   _DecorAnchor anchor(String decorId, double side) {
     final crop = YardArt.decorCrop(decorId);
     final bowlHeight =
@@ -2966,7 +3056,7 @@ List<_VisibleDecor> _fixedYardUtilities({
         : math.min(preferredBottom, actionBarRect.top - 6);
     return _DecorAnchor(
       Alignment(
-        side * petWidth * 0.34 / (sceneSize.width - bowlWidth),
+        (side * .34 + .12) * petWidth / (sceneSize.width - bowlWidth),
         bottom * 2 / sceneSize.height - 1,
       ),
       bowlWidth / sceneScale,
