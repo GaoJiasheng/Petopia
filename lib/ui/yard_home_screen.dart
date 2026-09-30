@@ -2383,7 +2383,8 @@ class _YardDecor extends StatelessWidget {
         crop.heightFraction;
     return Rect.fromLTWH(
       (sceneSize.width - width) * (align.x + 1) / 2,
-      sceneSize.height * (align.y + 1) / 2 - visibleHeight,
+      sceneSize.height * (align.y + 1) / 2 -
+          visibleHeight * crop.groundAnchorFraction,
       width,
       visibleHeight,
     );
@@ -2411,7 +2412,7 @@ class _YardDecor extends StatelessWidget {
           children: [
             Positioned(
               left: left,
-              top: baseline - visibleHeight,
+              top: baseline - visibleHeight * crop.groundAnchorFraction,
               child: SizedBox(
                 key: imageKey,
                 width: width,
@@ -3115,14 +3116,14 @@ _YardDecor _placedDecor(
   final lawnEdge = sceneSize.width >= 600 && sceneSize.height > sceneSize.width
       ? .76
       : .66;
-  // Rear ground props need their front rim inside the lawn. Preserve the
-  // player's other slot choices; these offsets never depend on visitors.
+  // The pond's anchor is its ground centre, not the top of the reeds or its
+  // front rim. Keep the centre in the rear lawn independently of visitors.
   final alignment = decor.decorId == 'pond_small' && decor.anchor.align.y <= .06
       ? Alignment(
           PetopiaAdaptive.useYardSidePanels(sceneSize)
               ? (decor.anchor.align.x + .28).clamp(-.80, .80)
               : decor.anchor.align.x,
-          decor.anchor.align.y + .12,
+          decor.anchor.align.y + .06,
         )
       : decor.decorId == 'fireplace'
       ? Alignment(

@@ -160,7 +160,10 @@ def _audit_cutout(path: Path) -> int:
     with Image.open(path) as source:
         image = source.convert("RGBA")
         width, height = image.size
-        if width >= height * 2 and width % height == 0:
+        # Landscape decor is a single ground prop, even at a 2:1 canvas ratio.
+        # Only animation assets may use the square-frame strip heuristic.
+        is_static_decor = path.parent == ROOT / "assets/art/world/decor"
+        if not is_static_decor and width >= height * 2 and width % height == 0:
             frame_count = width // height
             for index in range(frame_count):
                 frame = image.crop((index * height, 0, (index + 1) * height, height))
@@ -183,6 +186,8 @@ def _cutout_paths() -> list[Path]:
         "assets/art/world/visitors/*_portrait.png",
         "assets/art/world/decor/deco_scarecrow_postman.png",
         "assets/art/world/decor/deco_star_vane.png",
+        "assets/art/world/decor/deco_pond_small_ground_v2.png",
+        "assets/art/world/decor/deco_pond_small_ground_v2.webp",
     )
     paths: set[Path] = set()
     for pattern in patterns:

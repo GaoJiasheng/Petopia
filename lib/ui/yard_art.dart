@@ -6,12 +6,17 @@ class DecorCrop {
   final double right;
   final double bottom;
 
+  /// Ground contact within the painted height. Standing props use their
+  /// bottom edge; a flat pond uses the centre of its water footprint.
+  final double groundAnchorFraction;
+
   const DecorCrop({
     this.canvasAspectRatio = 1,
     this.left = 0,
     this.top = 0,
     this.right = 1,
     this.bottom = 1,
+    this.groundAnchorFraction = 1,
   });
 
   double get widthFraction => right - left;
@@ -63,6 +68,7 @@ class YardArt {
   };
 
   static const Map<String, String> _decorFile = {
+    'pond_small': 'deco_pond_small_ground_v2.webp',
     'tree_seasonal_spring': 'deco_tree_seasonal_spring.webp',
     'tree_seasonal_summer': 'deco_tree_seasonal_summer.webp',
     'tree_seasonal_autumn': 'deco_tree_seasonal_autumn.webp',
@@ -157,11 +163,12 @@ class YardArt {
       bottom: 504 / 512,
     ),
     'pond_small' => const DecorCrop(
-      canvasAspectRatio: 384 / 512,
-      left: 110 / 512,
-      top: 94 / 384,
-      right: 401 / 512,
-      bottom: 330 / 384,
+      canvasAspectRatio: 887 / 1774,
+      left: 73 / 1774,
+      top: 114 / 887,
+      right: 1715 / 1774,
+      bottom: 816 / 887,
+      groundAnchorFraction: (570 - 114) / (816 - 114),
     ),
     'tree_seasonal_spring' => const DecorCrop(
       canvasAspectRatio: 768 / 512,

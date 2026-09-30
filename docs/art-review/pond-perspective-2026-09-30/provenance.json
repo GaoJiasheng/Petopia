@@ -1,0 +1,29 @@
+{
+  "tool": "built-in image_gen",
+  "mode": "precise-object-edit",
+  "edit_target": "assets/art/world/decor/deco_pond_small.png",
+  "camera_reference": "build/yard-grounding-2026-09-27/final/placements/ipad13-land/yard-full-player-decor-both-actors.png",
+  "output": "assets/art/world/decor/deco_pond_small_ground_v2.png",
+  "sha256": "ad5b8381585072c374af8c436f378546656bd6155613bea554c38aa65332c5e9",
+  "native_pixels": [
+    1774,
+    887
+  ],
+  "transparent_background": true,
+  "crop_pixels": [
+    73,
+    114,
+    1715,
+    816
+  ],
+  "ground_center_y_pixels": 570,
+  "notes": "Native generated PNG retained as an unbundled master. Runtime WebP uses lossless encoding after uniform resizing, with alpha preserved; no runtime vertical squash.",
+  "runtime": "assets/art/world/decor/deco_pond_small_ground_v2.webp",
+  "runtime_pixels": [
+    480,
+    240
+  ],
+  "runtime_conversion": "cwebp -lossless -z 9 -exact -resize 480 240 -metadata none",
+  "runtime_sha256": "a3773844129a08a13f963fec8a0c645023de83e1fc3a16890d6f3394aa066f21",
+  "runtime_bytes": 122892
+}

@@ -1,12 +1,12 @@
 {
   "bytesByCategory": {
-    "art": 36695474,
+    "art": 36818366,
     "audio": 23934476,
     "content-data": 402420,
     "runtime-art": 83542858
   },
   "counts": {
-    "art": 246,
+    "art": 247,
     "audio": 59,
     "content-data": 10,
     "runtime-art": 455
@@ -916,6 +916,14 @@
       "bytes": 133972,
       "category": "art",
       "sha256": "fe67825fba197f25df0e05cc807cbf8e74dc149cb7c6d0e1c42f911e8559f630"
+    },
+    {
+      "asset": "assets/art/world/decor/deco_pond_small_ground_v2.webp",
+      "bytes": 122892,
+      "category": "art",
+      "sha256": "a3773844129a08a13f963fec8a0c645023de83e1fc3a16890d6f3394aa066f21",
+      "source": "assets/art/world/decor/deco_pond_small_ground_v2.png",
+      "sourceSha256": "ad5b8381585072c374af8c436f378546656bd6155613bea554c38aa65332c5e9"
     },
     {
       "asset": "assets/art/world/decor/deco_scarecrow_postman.png",

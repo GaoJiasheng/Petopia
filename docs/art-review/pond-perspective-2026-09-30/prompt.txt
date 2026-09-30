@@ -1,0 +1,8 @@
+Use case: precise-object-edit.
+Asset type: transparent watercolor game-yard pond sprite.
+Input images: Image 1 is the pond edit target; Image 2 is supporting camera/perspective and watercolor-style reference ONLY, not an output scene.
+Primary request: Redraw the SAME little natural stone-edged garden pond to sit HORIZONTALLY IN THE GROUND of the second image's lawn. Camera looks across the yard from a low elevated angle, about 25 degrees above the ground. The water must be a broad shallow ellipse: visible water depth front-to-back about 35–40% of its horizontal width, NOT a near-circle tipped toward the viewer. It is an excavated pond flush with the grass, NOT a bowl, raised tub, upright disc, tilted platter, or floating prop.
+Preserve: turquoise water, small lily pads, irregular warm gray rounded stones, a few delicate cattails and upright reeds at the back and sides, soft hand-painted watercolor texture and warm daylight, original recognizable design and palette.
+Perspective: far rim smaller and thin; near rim modestly larger with a small visible inward stone face; water sits below the stone lip. Grass tufts gently meet the outer stone edge. Reeds stand vertically at natural slender proportions; do not squash the whole original image. No exaggerated raised outer stone wall or platform. Water surface level and undistorted.
+Composition: ONE complete isolated pond, broad landscape silhouette, centered with generous transparent safety margin around every reed tip, no stray fragments at canvas edges. No yard/background, no characters, no other decor, no text, no checkerboard painted into the image, no opaque background, no cast-shadow ellipse outside the pond.
+Output: genuine transparent RGBA background.
