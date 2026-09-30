@@ -2,6 +2,9 @@
 
 > 状态更新：**2026-09-02** — **1.0 已上架开卖（`READY_FOR_SALE`）**，4 个内购全部 `APPROVED`。
 > 本文件保留上架后事项与 1.0.1 进展；1.0 全过程归档在文末。
+>
+> 2026-09-30：**1.0.1 (42) 已提交审核，`WAITING_FOR_REVIEW`**；审核通过后自动发布。
+> 构建及最终关联已反向核对，详见 [提审记录](release-1.0.1-build42-2026-09-30.md)。
 
 App Store：https://apps.apple.com/app/id6787161287
 
@@ -16,7 +19,7 @@ App Store：https://apps.apple.com/app/id6787161287
 
 ## 🚧 1.0.1 进行中
 
-版本号已打 **`1.0.1+41`**。
+版本号已打 **`1.0.1+42`**。
 
 - [x] **支持页入口进主菜单**（本次拒审的根因，见下）
       手账底部新增「小院的灯」区与常驻「支持小院」入口卡片
@@ -25,7 +28,7 @@ App Store：https://apps.apple.com/app/id6787161287
 - [ ] 美术边角：4 项 1% 占比偏差（turtle var02-04 stageC、uni dex_color）
 - [ ] `snowhut` 主题商店预览带辨识度偏弱（雪屋本体不在裁切带内）
 - [ ] 极地通用明信片模板 2 条未绑定地点（`tpl_gl_jd_01`、`tpl_cl_jd_02`）
-- [ ] 打包 build 41 → TestFlight 验收 → 提交 1.0.1 审核
+- [x] build 42 正式包构建、发布门禁与 Apple 验证通过；用户批准院子复核截图后提交 1.0.1 审核
 
 ## 🔮 v1.x 候选（详见 `docs/prompt-codex-theme-revamp.md` §批次 B）
 

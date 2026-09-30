@@ -32,7 +32,11 @@ Hearth & Tails is a single-player, local-first companion game with on-device sav
    This preview does not alter progress.
 6. Use the journal menu to inspect the compendiums, Shop, Visitor Compendium, and
    Settings.
-7. In Settings > Garden Light > Support the Garden, inspect all four IAPs.
+7. Tap the book icon at the right end of the top status bar to open the journal
+   menu. Scroll to "The Garden Light" and tap "Support the Garden" to inspect
+   all four IAPs. This entry is always available, including on a new save.
+   The same screen is also available in Settings > The Garden Light >
+   Support the Garden.
    Restore "Garden Keeper" is available at the bottom. The three ordinary
    support products are consumables and cannot be restored.
 8. Settings also contains separate music, sound, and gentle-haptics controls,

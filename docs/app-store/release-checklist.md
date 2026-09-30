@@ -83,6 +83,10 @@
       TestFlight 的工具包；使用 `tools/build_ios_variants.sh app-store 40`
       构建无内测入口的正式候选包。build 40 为 App Store 审核候选；build 38
       仅对内部 TestFlight 组开放。
+- [x] **build 42（1.0.1）** 已于 2026-09-30 正式提交 App Review，版本及审核单均为
+      `WAITING_FOR_REVIEW`；关联构建已反向确认为 42，`VALID` / `APP_STORE_ELIGIBLE`。
+      本地归档及实际 iOS 包体发布门禁 PASS，上传 0 errors / 0 warnings。
+      当前为审核通过后自动发布。详见 [build 42 提审记录](release-1.0.1-build42-2026-09-30.md)。
 - [x] **build 41（1.0.1）** 已于 2026-09-18 上传并通过 Apple 验证；Delivery UUID
       `0de5de47-0d2c-4b58-840c-d4febfe1563c`，源码提交 `582eeb0`（tag `v1.0.1-build41`），
       `app-store` 变体（真实 StoreKit、无 `+1`），`usesNonExemptEncryption=false`，最低 iOS 16.0，
