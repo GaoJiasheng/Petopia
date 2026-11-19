@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../l10n/petopia_localizations.dart';
 import 'petopia_theme.dart';
 
 /// 统一 UI 美术助手：把语义名映射到 assets/art/ui/ 下的水彩图标/徽章，
@@ -21,26 +22,39 @@ import 'petopia_theme.dart';
 ///  - 时段 tm_morning / tm_noon / tm_dusk / tm_night
 ///  - 杂项 back / close / bell / gift / dice / flip / hourglass_wc /
 ///         warmfluff / warmfluff_lg
+///
+/// VoiceOver：图标默认视为装饰（旁边总有文字或按钮自带说明），不进入无障碍树，
+/// 否则 VoiceOver 会念出一个没有名字的"图像"。图标本身承载信息时传
+/// [semanticLabel]（中文源串，内部按当前语言翻译）。
 class AppIcon extends StatelessWidget {
   final String name;
   final double size;
   final IconData fallback;
+  final String? semanticLabel;
   const AppIcon(
     this.name, {
     super.key,
     this.size = 28,
     this.fallback = Icons.circle,
+    this.semanticLabel,
   });
 
   @override
   Widget build(BuildContext context) {
+    final label = semanticLabel == null ? null : context.tr(semanticLabel!);
     return Image.asset(
       'assets/art/ui/ui_icon_$name.png',
       width: size,
       height: size,
       fit: BoxFit.contain,
-      errorBuilder: (_, _, _) =>
-          Icon(fallback, size: size, color: PetopiaColors.mutedText),
+      semanticLabel: label,
+      excludeFromSemantics: label == null,
+      errorBuilder: (_, _, _) => Icon(
+        fallback,
+        size: size,
+        color: PetopiaColors.mutedText,
+        semanticLabel: label,
+      ),
     );
   }
 }
@@ -49,15 +63,19 @@ class AppIcon extends StatelessWidget {
 class AppBadge extends StatelessWidget {
   final String name;
   final double size;
-  const AppBadge(this.name, {super.key, this.size = 24});
+  final String? semanticLabel;
+  const AppBadge(this.name, {super.key, this.size = 24, this.semanticLabel});
 
   @override
   Widget build(BuildContext context) {
+    final label = semanticLabel == null ? null : context.tr(semanticLabel!);
     return Image.asset(
       'assets/art/ui/ui_badge_$name.png',
       width: size,
       height: size,
       fit: BoxFit.contain,
+      semanticLabel: label,
+      excludeFromSemantics: label == null,
       errorBuilder: (_, _, _) => const SizedBox.shrink(),
     );
   }
@@ -66,8 +84,13 @@ class AppBadge extends StatelessWidget {
 /// 软性货币「暖绒」图标（钱包展示）。
 class WarmfluffIcon extends StatelessWidget {
   final double size;
-  const WarmfluffIcon({super.key, this.size = 18});
+  final String? semanticLabel;
+  const WarmfluffIcon({super.key, this.size = 18, this.semanticLabel});
   @override
-  Widget build(BuildContext context) =>
-      AppIcon('warmfluff', size: size, fallback: Icons.cloud);
+  Widget build(BuildContext context) => AppIcon(
+    'warmfluff',
+    size: size,
+    fallback: Icons.cloud,
+    semanticLabel: semanticLabel,
+  );
 }

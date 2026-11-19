@@ -21,6 +21,8 @@ import 'package:petopia/ui/settings_screen.dart';
 import 'package:petopia/ui/shop_screen.dart';
 import 'package:petopia/ui/visitor_dex_screen.dart';
 
+import 'voiceover_audit.dart';
+
 class _SilentAudio implements AudioService {
   @override
   bool get effectsEnabled => false;
@@ -355,6 +357,31 @@ void main() {
         );
       }
     }
+  });
+
+  testWidgets('VoiceOver never meets an unnamed image on secondary screens', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    for (final (name, screen) in screens) {
+      for (final locale in const [Locale('zh', 'CN'), Locale('en')]) {
+        await _pump(
+          tester,
+          size: const Size(393, 852),
+          screen: screen,
+          locale: locale,
+          textScaleFactor: 1,
+        );
+        expect(
+          unlabeledImageAssets(tester),
+          isEmpty,
+          reason:
+              '$name (${locale.languageCode}) has images VoiceOver reads '
+              'only as "image"',
+        );
+      }
+    }
+    semantics.dispose();
   });
 
   testWidgets('secondary screen controls meet accessibility guidelines', (

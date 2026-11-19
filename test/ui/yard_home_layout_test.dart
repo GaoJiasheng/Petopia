@@ -16,6 +16,8 @@ import 'package:petopia/purchases/support_purchase_controller.dart';
 import 'package:petopia/ui/petopia_theme.dart';
 import 'package:petopia/ui/yard_home_screen.dart';
 
+import 'voiceover_audit.dart';
+
 class _SilentAudio implements AudioService {
   @override
   bool get effectsEnabled => false;
@@ -73,9 +75,26 @@ class _RecordingAudio extends _SilentAudio {
 }
 
 class _FixtureGameController extends GameController {
-  _FixtureGameController(this.fixture);
+  _FixtureGameController(this.fixture, {this.careFeedback});
 
   final GameView fixture;
+
+  /// When set, care actions succeed and hand out this feedback once.
+  final CareFeedbackView? careFeedback;
+  CareFeedbackView? _pendingFeedback;
+
+  Future<bool> _care() async {
+    if (careFeedback == null) return false;
+    _pendingFeedback = careFeedback;
+    return true;
+  }
+
+  @override
+  CareFeedbackView? takeCareFeedback() {
+    final feedback = _pendingFeedback;
+    _pendingFeedback = null;
+    return feedback;
+  }
 
   @override
   Future<GameView> build() async => fixture;
@@ -87,16 +106,16 @@ class _FixtureGameController extends GameController {
   void refreshView() {}
 
   @override
-  Future<bool> feed() async => false;
+  Future<bool> feed() => _care();
 
   @override
-  Future<bool> pat() async => false;
+  Future<bool> pat() => _care();
 
   @override
-  Future<bool> toy() async => false;
+  Future<bool> toy() => _care();
 
   @override
-  Future<bool> bath() async => false;
+  Future<bool> bath() => _care();
 
   @override
   void completeCareTutorial() {}
@@ -203,6 +222,7 @@ GameView _view({
   List<YardSlotView> decorSlots = const <YardSlotView>[],
   TodayYardView? todayYard = _today,
   bool waterBowlOwned = false,
+  Weather weather = Weather.clear,
 }) {
   return GameView(
     pet: emptyYard ? null : (pet ?? _pet()),
@@ -216,7 +236,7 @@ GameView _view({
     activeVisitor: visitor,
     revisitor: revisitor,
     pendingEvent: pendingEvent,
-    weather: Weather.clear,
+    weather: weather,
     onboardingComplete: true,
     needsFirstCare: false,
     careTutorialStep: careTutorialStep,
@@ -241,6 +261,7 @@ Future<void> _pumpYard(
     scriptCode: 'Hans',
   ),
   SupportBenefits supportBenefits = const SupportBenefits(),
+  CareFeedbackView? careFeedback,
 }) async {
   await tester.binding.setSurfaceSize(size);
   tester.platformDispatcher.textScaleFactorTestValue = textScale;
@@ -249,7 +270,9 @@ Future<void> _pumpYard(
       key: ValueKey<String>('yard_fixture_${_fixtureSequence++}'),
       overrides: [
         audioServiceProvider.overrideWithValue(audio ?? _SilentAudio()),
-        gameControllerProvider.overrideWith(() => _FixtureGameController(view)),
+        gameControllerProvider.overrideWith(
+          () => _FixtureGameController(view, careFeedback: careFeedback),
+        ),
         supportPurchaseControllerProvider.overrideWith(
           () => _FixtureSupportPurchaseController(
             SupportPurchaseState(
@@ -1013,6 +1036,220 @@ void main() {
       expect(tester.takeException(), isNull, reason: '$name overflowed');
     }
     await _disposeYard(tester);
+  });
+
+  testWidgets('VoiceOver never meets an unnamed image in the yard', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    const fullYard = <YardSlotView>[
+      YardSlotView(pos: 0, itemId: 'mailbox_wood'),
+      YardSlotView(pos: 1, itemId: 'wind_chime'),
+      YardSlotView(pos: 2, itemId: 'flower_box'),
+      YardSlotView(pos: 3, itemId: 'mushroom_bench'),
+      YardSlotView(pos: 4, itemId: 'scarecrow'),
+      YardSlotView(pos: 5, itemId: 'wind_vane'),
+      YardSlotView(pos: 6, itemId: 'album_shelf'),
+      YardSlotView(pos: 7, itemId: 'pond_small'),
+    ];
+    for (final (name, view) in [
+      ('standard', _view()),
+      ('empty luxury 6', _view(luxuryStage: 6)),
+      (
+        'full yard with visitors',
+        _view(
+          visitor: _visitor(),
+          revisitor: _revisitor(),
+          waterBowlOwned: true,
+          luxuryStage: 6,
+          decorSlots: fullYard,
+        ),
+      ),
+    ]) {
+      for (final (size, locale) in const [
+        (
+          Size(393, 852),
+          Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
+        ),
+        (Size(1194, 834), Locale('en')),
+      ]) {
+        await _pumpYard(
+          tester,
+          size: size,
+          safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+          view: view,
+          locale: locale,
+        );
+        expect(
+          unlabeledImageAssets(tester),
+          isEmpty,
+          reason:
+              '$name $size ${locale.languageCode} has images VoiceOver '
+              'reads only as "image"',
+        );
+        await _disposeYard(tester);
+      }
+    }
+
+    // Props announce what they are, so the yard can be explored by touch.
+    await _pumpYard(
+      tester,
+      size: const Size(393, 852),
+      safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+      view: _view(waterBowlOwned: true, decorSlots: fullYard),
+    );
+    for (final label in const ['亮闪闪风铃', '稻草人邮差', '小池塘', '饭盆', '陶瓷小水碗']) {
+      expect(find.bySemanticsLabel(label), findsOneWidget, reason: label);
+    }
+    // The wallet button speaks its balance once, not "…, open shop, 237".
+    expect(find.bySemanticsLabel('暖绒 237，打开商店'), findsOneWidget);
+    await _disposeYard(tester);
+    semantics.dispose();
+  });
+
+  testWidgets('VoiceOver audit covers transient yard states', (tester) async {
+    final semantics = tester.ensureSemantics();
+    final arriving = VisitorPresenceView(
+      id: 'visitor_fox',
+      name: '狐狸小茜',
+      rarity: VisitorRarity.rare,
+      message: '小茜三招骗到了仓鼠一粒瓜子。',
+      arrivedAt: DateTime.utc(2026, 7, 22),
+      leavesAt: DateTime.utc(2026, 7, 23),
+      arrivalSeen: false,
+      interacted: false,
+      yardAsset: 'assets/art/world/visitors/visitor_fox_yard.png',
+      portraitAsset: 'assets/art/world/visitors/visitor_fox_portrait.png',
+    );
+    const event = EventPresentationView(
+      id: 'pending-s03',
+      eventId: 'ev_s03',
+      title: '流星雨之夜',
+      script: '它仰头守着一颗慢慢划过院子的星星。',
+      type: EventType.special,
+      expReward: 12,
+      currencyReward: 8,
+      illustrationRef: 'ill_s03',
+    );
+    Future<void> audit(String name) async {
+      await tester.pump(const Duration(milliseconds: 500));
+      expect(
+        unlabeledImageAssets(tester),
+        isEmpty,
+        reason: '$name has images VoiceOver reads only as "image"',
+      );
+    }
+
+    for (final size in const [Size(393, 852), Size(1194, 834)]) {
+      for (final weather in const [Weather.rain, Weather.snow]) {
+        await _pumpYard(
+          tester,
+          size: size,
+          safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+          view: _view(weather: weather),
+        );
+        await audit('$size $weather');
+        await _disposeYard(tester);
+      }
+      await _pumpYard(
+        tester,
+        size: size,
+        safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+        view: _view(visitor: arriving),
+      );
+      await audit('$size visitor arrival');
+      await _disposeYard(tester);
+
+      await _pumpYard(
+        tester,
+        size: size,
+        safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+        view: _view(theme: 'starry_camp', pendingEvent: event),
+      );
+      await audit('$size special event');
+      await _disposeYard(tester);
+
+      await _pumpYard(
+        tester,
+        size: size,
+        safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+        view: _view(visitor: _visitor()),
+        supportBenefits: SupportBenefits(
+          treatUntil: DateTime.utc(2099, 1, 1),
+          lanternUntil: DateTime.utc(2099, 1, 1),
+          bouquetUntil: DateTime.utc(2099, 1, 1),
+          pendingTreat: 1,
+          lastProductId: 'com.petopia.petopia.support.treat',
+        ),
+      );
+      await audit('$size support gifts');
+      await tester.tap(find.byKey(const ValueKey<String>('home_menu')));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 600));
+      await audit('$size notebook');
+      await _disposeYard(tester);
+    }
+    semantics.dispose();
+  });
+
+  testWidgets('VoiceOver announces each completed care action', (tester) async {
+    final semantics = tester.ensureSemantics();
+    final announcements = <String>[];
+    tester.binding.defaultBinaryMessenger.setMockDecodedMessageHandler<dynamic>(
+      SystemChannels.accessibility,
+      (message) async {
+        final map = message as Map<Object?, Object?>;
+        if (map['type'] == 'announce') {
+          announcements.add(
+            (map['data']! as Map<Object?, Object?>)['message']! as String,
+          );
+        }
+        return null;
+      },
+    );
+    addTearDown(
+      () => tester.binding.defaultBinaryMessenger
+          .setMockDecodedMessageHandler<dynamic>(
+            SystemChannels.accessibility,
+            null,
+          ),
+    );
+    for (final (locale, expected) in const [
+      (
+        Locale.fromSubtags(languageCode: 'zh', scriptCode: 'Hans'),
+        '它吃得很香，经验 +3',
+      ),
+      (Locale('en'), '+3 EXP'),
+    ]) {
+      announcements.clear();
+      await _pumpYard(
+        tester,
+        size: const Size(393, 852),
+        safeArea: const EdgeInsets.only(top: 59, bottom: 34),
+        view: _view(),
+        locale: locale,
+        careFeedback: const CareFeedbackView(
+          message: '它吃得很香',
+          expApplied: 3,
+          preferred: false,
+          contented: false,
+        ),
+      );
+      for (final action in CareAction.values) {
+        announcements.clear();
+        await tester.tap(find.byKey(ValueKey('care_action_${action.name}')));
+        await tester.pump(const Duration(milliseconds: 300));
+        expect(
+          announcements,
+          [contains(expected)],
+          reason: '${action.name} (${locale.languageCode}) was not announced',
+        );
+      }
+      // Let the visual feedback bar and pose cue finish before teardown.
+      await tester.pump(const Duration(seconds: 5));
+      await _disposeYard(tester);
+    }
+    semantics.dispose();
   });
 
   testWidgets('core yard interactions expose meaningful accessibility labels', (

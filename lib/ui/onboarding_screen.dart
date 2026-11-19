@@ -119,6 +119,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen>
               YardArt.themeBg('meadow', wide: wideBackground, night: night),
               fit: BoxFit.cover,
               alignment: Alignment.topCenter,
+              excludeFromSemantics: true,
             ),
             ColoredBox(
               color: Colors.white.withValues(alpha: night ? 0.08 : 0.16),

@@ -3,10 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:petopia/ui/onboarding_screen.dart';
 
+import 'voiceover_audit.dart';
+
 void main() {
   testWidgets('onboarding remains readable on a compact large-text device', (
     tester,
   ) async {
+    final semantics = tester.ensureSemantics();
     tester.view.physicalSize = const Size(320, 568);
     tester.view.devicePixelRatio = 1;
     addTearDown(tester.view.resetPhysicalSize);
@@ -29,12 +32,15 @@ void main() {
 
     expect(find.text('院子醒来了'), findsOneWidget);
     expect(find.text('继续'), findsOneWidget);
+    expect(unlabeledImageAssets(tester), isEmpty);
     expect(tester.takeException(), isNull);
 
     await tester.drag(find.byType(PageView), const Offset(-280, 0));
     await tester.pumpAndSettle();
     expect(find.text('陪它慢慢长大'), findsOneWidget);
+    expect(unlabeledImageAssets(tester), isEmpty);
     expect(tester.takeException(), isNull);
+    semantics.dispose();
   });
 
   for (final size in const <Size>[

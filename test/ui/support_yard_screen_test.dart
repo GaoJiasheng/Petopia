@@ -12,6 +12,8 @@ import 'package:petopia/purchases/support_storefront.dart';
 import 'package:petopia/ui/support_yard_screen.dart';
 import 'package:petopia/ui/widgets/sprite_sheet_player.dart';
 
+import 'voiceover_audit.dart';
+
 void main() {
   for (final size in <Size>[
     const Size(390, 844),
@@ -21,6 +23,7 @@ void main() {
     testWidgets('support page is usable at ${size.width}x${size.height}', (
       tester,
     ) async {
+      final semantics = tester.ensureSemantics();
       final storefront = _UiStorefront();
       addTearDown(storefront.dispose);
       await tester.binding.setSurfaceSize(size);
@@ -43,7 +46,13 @@ void main() {
       expect(find.text(r'$0.99'), findsOneWidget);
       expect(find.text(r'$6.99'), findsOneWidget);
       expect(find.byType(OverflowBar), findsNothing);
+      expect(
+        unlabeledImageAssets(tester),
+        isEmpty,
+        reason: 'VoiceOver must not meet an unnamed product picture',
+      );
       expect(tester.takeException(), isNull);
+      semantics.dispose();
     });
   }
 

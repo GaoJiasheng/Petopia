@@ -85,6 +85,7 @@ class _GraduationCeremonyScreenState
             YardArt.themeBg('meadow', wide: wideBackground, night: night),
             fit: BoxFit.cover,
             alignment: Alignment.center,
+            excludeFromSemantics: true,
           ),
           ColoredBox(
             color: const Color(

@@ -87,6 +87,29 @@ class YardArt {
     'flowerbed_small': 'deco_flowerbed_small.png',
   };
 
+  /// VoiceOver 用的摆件名称（中文源串，界面按当前语言翻译）。商店摆件与商品名
+  /// 一致；豪华阶段、饭盆等非商品摆件单独命名。未知 id 返回 null（按装饰处理）。
+  static String? decorName(String decorId) {
+    if (decorId.startsWith('tree_seasonal')) return '四季树';
+    return const <String, String>{
+      'water_bowl': '陶瓷小水碗',
+      'night_light': '夜灯',
+      'fireplace': '暖炉',
+      'wind_chime': '亮闪闪风铃',
+      'flower_box': '野花花坛箱',
+      'mushroom_bench': '蘑菇石凳',
+      'scarecrow': '稻草人邮差',
+      'wind_vane': '星星风向标',
+      'wood_sign': '木牌门号「1号院」',
+      'mailbox_wood': '木头信箱',
+      'food_bowl_full': '饭盆',
+      'flowerbed_small': '小花坛',
+      'pond_small': '小池塘',
+      'album_shelf': '相册书架',
+      'welcome_bell': '迎客铃',
+    }[decorId];
+  }
+
   /// 院子摆件图。shop_items 里 decorId 不一定等于文件名，统一在这里映射。
   static String decor(String decorId) {
     final file = _decorFile[decorId] ?? 'deco_$decorId.png';

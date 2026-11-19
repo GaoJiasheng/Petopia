@@ -494,6 +494,10 @@ class _PostcardPhoto extends StatelessWidget {
                               card.speciesId,
                               card.variantId,
                               size: size,
+                              semanticLabel: context.l10n.bilingual(
+                                zhHans: '${card.petName}的旅行身影',
+                                en: '${card.petName} on the journey',
+                              ),
                             ),
                           ),
                         ),
@@ -553,10 +557,12 @@ class _TravelerSceneAsset extends StatelessWidget {
   final String speciesId;
   final String variantId;
   final double size;
+  final String? semanticLabel;
   const _TravelerSceneAsset(
     this.speciesId,
     this.variantId, {
     required this.size,
+    this.semanticLabel,
   });
 
   @override
@@ -574,6 +580,8 @@ class _TravelerSceneAsset extends StatelessWidget {
         width: size,
         height: size,
         fit: BoxFit.contain,
+        semanticLabel: semanticLabel,
+        excludeFromSemantics: semanticLabel == null,
         errorBuilder: (_, _, _) => const SizedBox.shrink(),
       ),
     );
@@ -587,6 +595,8 @@ class _TravelerSceneAsset extends StatelessWidget {
       width: size,
       height: size,
       fit: BoxFit.contain,
+      semanticLabel: semanticLabel,
+      excludeFromSemantics: semanticLabel == null,
       errorBuilder: (_, _, _) =>
           _buildAsset(paths.sublist(1), fallback: fallback),
     );

@@ -74,6 +74,17 @@ DateTime nextYardDaypartBoundary(DateTime now) {
 
 void _showCareFeedback(BuildContext context, CareFeedbackView? feedback) {
   if (feedback == null) return;
+  // 弹条是视觉反馈，VoiceOver 不会自动朗读新出现的 SnackBar；主动播报同一句话，
+  // 让读屏用户知道照护已经完成、获得了多少经验。
+  final message = context.tr(feedback.message);
+  SemanticsService.sendAnnouncement(
+    View.of(context),
+    context.l10n.bilingual(
+      zhHans: '$message，经验 +${feedback.expApplied}',
+      en: '$message +${feedback.expApplied} EXP',
+    ),
+    Directionality.of(context),
+  );
   final messenger = ScaffoldMessenger.of(context);
   messenger
     ..hideCurrentSnackBar()
@@ -552,6 +563,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                       ),
                       key: const ValueKey<String>('yard_background'),
                       fit: BoxFit.cover,
+                      excludeFromSemantics: true,
                       // The camp's tent peak sits just outside the centered
                       // portrait crop of the wide master. Keep it in frame.
                       alignment:
@@ -567,6 +579,7 @@ class _YardHomeScreenState extends ConsumerState<YardHomeScreen>
                         ),
                         fit: BoxFit.cover,
                         cacheWidth: backgroundCacheWidth,
+                        excludeFromSemantics: true,
                       ),
                     ),
                     // 摆件中景层（渲染在宠物之下）：自定义 slots 为空时使用默认布置。
@@ -2137,11 +2150,16 @@ class _EventMoment extends StatelessWidget {
                     ),
                     fit: BoxFit.cover,
                     alignment: profile.backgroundAlignment,
+                    excludeFromSemantics: true,
                   ),
                   if (profile.overlayAsset case final overlay?)
                     Opacity(
                       opacity: profile.overlayOpacity,
-                      child: Image.asset(overlay, fit: BoxFit.cover),
+                      child: Image.asset(
+                        overlay,
+                        fit: BoxFit.cover,
+                        excludeFromSemantics: true,
+                      ),
                     ),
                   DecoratedBox(
                     decoration: BoxDecoration(
@@ -2311,7 +2329,11 @@ class _YardAtmosphereState extends State<_YardAtmosphere>
           if (weatherAsset.isNotEmpty)
             Opacity(
               opacity: widget.weather == Weather.snow ? 0.30 : 0.16,
-              child: Image.asset(weatherAsset, fit: BoxFit.cover),
+              child: Image.asset(
+                weatherAsset,
+                fit: BoxFit.cover,
+                excludeFromSemantics: true,
+              ),
             ),
           if (widget.weather == Weather.cloudy)
             ColoredBox(color: const Color(0xFFB8C6C4).withValues(alpha: 0.08)),
@@ -2392,6 +2414,7 @@ class _YardDecor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final name = YardArt.decorName(decorId);
     final crop = YardArt.decorCrop(decorId);
     final subjectAspect =
         crop.canvasAspectRatio * crop.heightFraction / crop.widthFraction;
@@ -2434,6 +2457,8 @@ class _YardDecor extends StatelessWidget {
                         width: fullWidth,
                         height: fullHeight,
                         fit: BoxFit.fill,
+                        semanticLabel: name == null ? null : context.tr(name),
+                        excludeFromSemantics: name == null,
                         errorBuilder: (_, _, _) => const SizedBox(),
                       ),
                     ),
@@ -3494,20 +3519,24 @@ class _WalletButton extends StatelessWidget {
             constraints: const BoxConstraints(minHeight: 48),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const WarmfluffIcon(size: 18),
-                  const SizedBox(width: 3),
-                  AppText(
-                    '$wallet',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w700,
-                      color: Color(0xFFD99048),
+              // The button label already says the balance; keep VoiceOver
+              // from reading the visible number a second time.
+              child: ExcludeSemantics(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const WarmfluffIcon(size: 18),
+                    const SizedBox(width: 3),
+                    AppText(
+                      '$wallet',
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFFD99048),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
